@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "status": "rejected",
+  "reason": "Direct indexed right restriction was LSP-clean but standalone Lean rejected dependent FinalModelRing Semiring/CommRing/Algebra reconstruction after 30 minutes; later naturality errors cascade.",
+  "created_at": "2026-08-18T06:14:47.492394+00:00",
+  "files": [
+    {
+      "path": "MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0FiniteStageRightRestrictionNaturality.lean",
+      "artifact": "files/MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0FiniteStageRightRestrictionNaturality.lean",
+      "bytes": 4877,
+      "lines": 120
+    }
+  ],
+  "diagnostics": ""
+}

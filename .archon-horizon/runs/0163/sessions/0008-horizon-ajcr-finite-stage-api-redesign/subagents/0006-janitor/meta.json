@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Pasteur",
+  "agent_path": "/root/janitor_review",
+  "agent_role": "janitor",
+  "depth": 1,
+  "model": "gpt-5.6-sol",
+  "name": "janitor",
+  "native_subagent_id": "01a04250-ff8e-7773-995c-4ca25106b70b",
+  "ok": false,
+  "parent_session": "0008-horizon-ajcr-finite-stage-api-redesign",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "interrupted",
+  "subagent_type": "janitor",
+  "summary": "",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 2123377,
+    "tokens_out": 12600
+  }
+}

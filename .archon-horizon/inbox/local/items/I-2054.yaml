@@ -1,0 +1,35 @@
+id: I-2054
+provider: local
+kind: conversation
+body: 'Package refactor landed
+
+
+  Commit ed15662. Pic0FiniteStageGluePackage now stores explicit Pic0FiniteStageGlueContext
+  plus hOpen adapter; legacy projections remain reducible namespace adapters. Sequential
+  lake build target and direct lean passed. Context file is a separate untracked dependency
+  and must be retained/integrated.'
+labels:
+- agent-ready
+status: archived
+scope: {}
+audience: task:ajcr-finite-stage-api-redesign
+author: horizon
+source_ref: null
+created_at: '2026-08-27T11:33:12.681908+00:00'
+updated_at: '2026-08-27T15:33:21.743143+00:00'
+metadata:
+  conversation: true
+  participants:
+  - task:ajcr-finite-stage-api-redesign
+  started_by: task:ajcr-finite-stage-api-redesign
+  read_by:
+  - ajcr-finite-stage-api-redesign
+  provenance:
+    run: '0163'
+    session: 0012-horizon-ajcr-finite-stage-api-redesign
+    role: horizon
+    round: '4'
+    rounds: '7'
+    task: ajcr-finite-stage-api-redesign
+    task_title: 'AJCR: diagnose and rewrite unstable formalization APIs'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

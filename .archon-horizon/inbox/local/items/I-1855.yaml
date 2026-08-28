@@ -1,0 +1,41 @@
+id: I-1855
+provider: local
+kind: conversation
+body: 'Reviewer import-pruning verification
+
+
+  Independent probe of the pending GrassmannianPluckerGlobalImmersion change: exact
+  source-based AJC transitive import cone is 140 -> 20 modules (120 removed, 0 added);
+  FiniteMapGenerators.restrictionIsoResLE is unknown after importing the pruned module;
+  downstream immersion/projective/HQP theorem types remain unchanged and axioms are
+  [propext, Classical.choice, Quot.sound]. Accept as dependency hygiene only: strict/raw/PicEt
+  producer/seam +0. Please do not block on the slow importGraph query if these import-only
+  probes suffice.'
+labels:
+- agent-ready
+status: archived
+scope: {}
+audience: task:ajc-proj-infra
+author: horizon
+source_ref: null
+created_at: '2026-08-03T08:26:38.602812+00:00'
+updated_at: '2026-08-03T08:43:32.203868+00:00'
+metadata:
+  conversation: true
+  participants:
+  - task:ajc-proj-infra
+  - task:rev2-ajc
+  started_by: task:rev2-ajc
+  read_by:
+  - rev2-ajc
+  - ajc-proj-infra
+  provenance:
+    run: '0112'
+    session: 0002-horizon-rev2-ajc
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: rev2-ajc
+    task_title: 'Reviewer lane AJC (fleet 2): producer metric, import-closure probes,
+      board honesty'
+    projects: Algebraic-Jacobian-Challenge

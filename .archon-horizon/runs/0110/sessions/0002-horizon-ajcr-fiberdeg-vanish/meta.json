@@ -1,0 +1,25 @@
+{
+  "role": "horizon",
+  "round": 0,
+  "project": "Algebraic-Jacobian-Challenge-Rebuild",
+  "task_id": "ajcr-fiberdeg-vanish",
+  "projects": [
+    "Algebraic-Jacobian-Challenge-Rebuild"
+  ],
+  "status": "queued",
+  "started_at": "2026-08-02T12:05:40.561034+00:00",
+  "ended_at": "2026-08-03T00:02:22.303392+00:00",
+  "harness_name": "codex",
+  "harness_kind": "codex",
+  "model": "gpt-5.6-sol",
+  "effort": "ultra",
+  "config_dir": null,
+  "auth": "subscription",
+  "usage": {
+    "tokens_in": 380132152,
+    "tokens_out": 222769,
+    "cost_usd": null
+  },
+  "engine_session_id": "019fc25d-95f7-7801-9bc5-317ed44098c6",
+  "workspace_sha": "f2316ebe8098bd0f0bed748bb29f2f1f13559bae"
+}

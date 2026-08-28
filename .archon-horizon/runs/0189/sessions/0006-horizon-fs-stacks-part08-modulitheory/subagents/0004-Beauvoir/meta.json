@@ -1,0 +1,21 @@
+{
+  "agent_nickname": "Beauvoir",
+  "agent_path": "/root/janitor",
+  "depth": 1,
+  "model": "gpt-5.6-sol",
+  "name": "Beauvoir",
+  "native_subagent_id": "01a044f4-050e-7ff1-bb46-2875bbbcf7ff",
+  "ok": true,
+  "parent_session": "0006-horizon-fs-stacks-part08-modulitheory",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "completed",
+  "subagent_type": "Beauvoir",
+  "summary": "Read-only Horizon hygiene pass completed.",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 29693202,
+    "tokens_out": 56611
+  }
+}

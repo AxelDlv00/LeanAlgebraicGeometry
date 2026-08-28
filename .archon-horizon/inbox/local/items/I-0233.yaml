@@ -1,0 +1,57 @@
+id: I-0233
+provider: local
+kind: info
+body: 'P-fib-N LANDED (W4-G4 §1.4): RiemannRoch/PFibPack.lean + PFibPackLedger.lean,
+  commit b84ebab7b. Axiom-clean [propext, Classical.choice, Quot.sound], lake build
+  green (8643 jobs), root-wired via only-my-lines protocol.
+
+
+  WHAT LANDED (all pi-free, abstract curve Y over field K, CarveDegreePinch context):
+
+  - existsUnique_effective_divisor_of_carve_pack (PFibPack.lean) — P-fib-N, the FULL
+  existsUnique restatement (not staged): abstract windows N (~M·F transport), S (~s·F
+  transport), shifted window spelled N + S; conclusion ∃! D ≥ 0, deg D = g, KM = H⁰(N−D),
+  K'' = H⁰(N+S−D).
+
+  - mulSpan_eq_divisorSections_of_basepointFree_pack — the F3-core bpf-span lemma
+  against the pack (the normalization/achiever layer for the G-4 seed lane''s fibre
+  steps).
+
+  - subsingleton_hModule_one_of_normalization — bridge: a normalization family at
+  depth t below N₀ IS a vanishing threshold at β = deg N₀ − t (turns landed subsingleton_h1_windowN_sub
+  into the pack''s hvan at β = M·δ − 2g).
+
+  - existsUnique_effective_divisor_of_carve_of_pack (PFibPackLedger.lean) — consistency
+  smoke test: pack hypotheses discharged by DD-0 ledger names, re-deriving PFib''s
+  keystone through the pack; the discharge TEMPLATE for the fibre consumer.
+
+
+  AUDIT FINDING (supersedes the §1.4 hypothesis sketch; §1.4 mandated the audit):
+  the five-fact list hNwin/hSwin/hNdeg/hNnorm/hNsnorm is INSUFFICIENT for the landed
+  bpf-span route — the descent stage (Scheme.descent_baseDivisor_le) visits levels
+  N+S−D−G with deg G up to 2·deg S (sups of two multiplier shifts), far below the
+  ≤2g normalization families; the tower stage visits S-side levels at depth ≤2g below
+  S. Honest interface: vanishing threshold β with hvan : ∀ W, β ≤ deg W → H¹(𝒪(W))
+  = 0 (the DAT-0a windowBound_spec avatar; at κ(p) produced by peeling subsingleton_hModule_one_of_witness
+  from a transported witness or by the bridge from a transported normalization family),
+  plus budgets hNdeg (2g ≤ deg N), hSdeg (2g ≤ deg S), hβS (β + 2g ≤ deg S, tower),
+  hβN (β + 2g + deg S ≤ deg N, descent, verbatim windowBound_add_two_mul_genus_le_M_sub_S_mul
+  avatar). The worksheet''s five facts are one-line consequences of hvan + budgets.
+
+
+  G-4 SEED LANE CONSUMPTION at κ(p): fire the pack keystone with N := windowN, S :=
+  s-exponent transport; hNdeg = two_mul_genus_le_deg_windowN (landed); hβN comfortable
+  from windowM_spec''s (g+2)(s+1) slack. hvan/hβS have an arithmetic seam — see companion
+  issue.'
+labels:
+- agent-ready
+status: archived
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: human
+source_ref: null
+created_at: '2026-07-18T14:36:23.603582+00:00'
+updated_at: '2026-07-20T03:14:43.113586+00:00'
+metadata: {}

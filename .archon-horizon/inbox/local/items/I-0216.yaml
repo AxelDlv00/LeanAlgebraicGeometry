@@ -1,0 +1,64 @@
+id: I-0216
+provider: local
+kind: info
+body: 'W7-B4b landed: theta — consumer notes for B-5/B-6a/B-6b (JacobianDataBaseChange)
+  and K-1 (theta-cocycle).
+
+
+  From the w7-b4b lane (commits 25e797e2c Picard/PicEtCrossBase.lean + 3a1c9f1f4 Picard/Pic0ThetaAssembly.lean
+  + 434302503 root wiring [root build GREEN 8938 jobs] + 1364e4b74 blueprint). Roadmap
+  AJCR.w7-functor.b4 now DONE (B-4a+B-4b complete).
+
+
+  FOR B-5 (transported datum): theta''s Type form is pic0ThetaType k L C : pic0TypeFunctor
+  ((baseChange k L).obj C) ≅ (Over.map σ).op ⋙ pic0TypeFunctor C, σ := Spec.map (CommRingCat.ofHom
+  (algebraMap k L)) — typechecks literally against RepresentableBy.ofIso after your
+  mapPullbackAdj/whisker leg; you want its .symm face ((Over.map σ).op ⋙ pic0TypeFunctor
+  C ≅ pic0TypeFunctor C_L). Its components are DEFINITIONALLY the CommGrpCat components:
+  pic0ThetaType_hom_app/_inv_app (rfl, @[simp]) read them as pic0CrossBaseEquiv k
+  L C T.unop / its symm; the underlying picEt class transport is pic0CrossBaseEquiv_apply_coe/_symm_apply_coe
+  (rfl): hom-side lam ↦ picEtCrossBaseInv (backward lift), inv-side mu ↦ picEtCrossBase
+  (forward lift). Per I-0206(a): when you transport d.rep along theta''s Type form,
+  the pic0Subgroup memberships correspond through mem_pic0Subgroup_picEtCrossBase_iff
+  — already discharged here; do NOT re-derive field-point bookkeeping.
+
+
+  FOR B-6a (mapGrp coherence): theta is CommGrpCat-valued (D2-i as ratified) — pic0Theta_hom_app
+  T is a group hom whose multiplicativity is the map_mul'' of pic0CrossBaseEquiv;
+  nothing to re-prove. The naturality square at any test morphism f is, on underlying
+  classes, picEtMap_picEtCrossBase/_inv (PicEtCrossBase.lean) — element-level, no
+  Grp(Over) diagram chases needed (R3 discipline).
+
+
+  FOR K-1 (theta-cocycle): every statement here is for arbitrary [Field L] [Algebra
+  k L] — no finiteness/separability/Galois — so at a tower k → L → M the three thetas
+  pic0Theta k L C, pic0Theta L M ((baseChange k L).obj C), pic0Theta k M C are all
+  legal, and composed shuffles are legal inputs (I-0208''s two-family + picEtAffHom_picEtAffHom
+  pattern reusable at the picEt level via picEtCrossBaseEquiv). The degAt/degree layer
+  needed for cocycle degree checks: degAff_baseFieldShuffle (degAff K invariance at
+  every tower field K) and degAt_pushFieldPoint_picEtCrossBase.
+
+
+  ELABORATION NOTES (R4/R5 flavor, extending I-0206): (1) the Γ(T.left,U)-vs-Γ(((Over.map
+  σ).obj T).left,U) spellings are defeq only at default transparency; every letI for
+  the pushed k-structure MUST be type-ascribed at the T.left spelling (letI : Algebra
+  k Γ(T.left,U) := Over.sectionsAlgebra ((Over.map σ).obj T) U) or instance synthesis
+  fails — the tower instance is Over.isScalarTower_sections_map k L T U (letI-wrapped
+  statement, B-4a fieldPointAlgebra pattern). (2) rw/kabstract dies on goals mixing
+  the two spellings (''target not type-correct under instances transparency'') — do
+  ALL seam-crossing steps term-mode (congrArg/Eq.trans), as in ofHom_algebraMap_sections_map
+  and the affine-face proof. (3) elaboration ORDER matters at mapAlg_baseFieldShuffle
+  call sites whose A-slot is a section ring: bind with have + @-application placing
+  the tower instance explicitly (see picEtAffineEquiv_picEtCrossBase), or the a-argument
+  fixes the A-slot at the pushed spelling first and synthesis fails. (4) overSpecTopAffine''s
+  implicit base field is ambiguous at pushed tests — always write (k := L)/(k := k).'
+labels:
+- agent-ready
+status: archived
+scope: {}
+audience: horizon
+author: human
+source_ref: null
+created_at: '2026-07-17T13:43:40.559534+00:00'
+updated_at: '2026-07-20T03:14:28.881678+00:00'
+metadata: {}

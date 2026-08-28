@@ -1,0 +1,16 @@
+{
+  "name": "native-call_2nG",
+  "native_subagent_id": "call_2nGr4CPyi4gSc300hS80k6Y7",
+  "ok": false,
+  "parent_session": "0001-horizon-interactive",
+  "parent_subagent_id": null,
+  "report_ref": null,
+  "role": "subagent",
+  "status": "orphaned",
+  "summary": "",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 0,
+    "tokens_out": 0
+  }
+}

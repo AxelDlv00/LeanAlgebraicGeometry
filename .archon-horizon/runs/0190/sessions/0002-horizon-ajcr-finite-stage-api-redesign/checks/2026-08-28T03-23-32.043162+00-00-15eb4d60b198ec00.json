@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "fingerprint": "15eb4d60b198ec00",
+  "command": [
+    "lake",
+    "env",
+    "lean",
+    "/home/axel/LeanAlgebraicGeometry-Horizon/MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0FiniteStageOrbitAffine.lean"
+  ],
+  "cwd": "MainProjects/Algebraic-Jacobian-Challenge-Rebuild",
+  "status": "failed",
+  "ok": false,
+  "returncode": 1,
+  "timed_out": false,
+  "reused": false,
+  "wait_seconds": 208.728,
+  "duration_seconds": 6.63,
+  "started_at": "2026-08-28T03:23:25.412758+00:00",
+  "finished_at": "2026-08-28T03:23:32.043162+00:00",
+  "finished_epoch": 1787887412.043162
+}

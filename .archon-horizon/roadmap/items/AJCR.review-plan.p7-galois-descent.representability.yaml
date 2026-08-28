@@ -1,0 +1,28 @@
+id: AJCR.review-plan.p7-galois-descent.representability
+title: Assemble and consume pic0_representableBy
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+summary: 'Final original-field assembly gate: conditional quotient, invariant/equivariant,
+  transport, and PicRepDatum/JacobianData consumers are artifact-backed, but no unconditional
+  producer exists. The finite-stage RepresentableBy producer is structurally ordered
+  under universal.yoneda because orbit-affine.exact-carrier consumes it; this parent-level
+  dependency on orbit-affine applies only to the later quotient/original-field assembly
+  and is not a prerequisite for the finite-stage child. The filtered-colimit row remains
+  downstream.'
+status: pending
+kind: proof
+priority: urgent
+depends_on:
+- AJCR.review-plan.p7-galois-descent.universal
+- AJCR.review-plan.p7-galois-descent.orbit-affine
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+metadata:
+  author: human
+  created_at: '2026-08-18T06:12:03.341554+00:00'
+  parent: AJCR.review-plan.p7-galois-descent
+  milestone: AJCR.review-plan
+  updated_at: '2026-08-23T03:04:03.654045+00:00'

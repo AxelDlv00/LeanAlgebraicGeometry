@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Schrodinger",
+  "agent_path": "/root/janitor_start",
+  "agent_role": "janitor",
+  "depth": 1,
+  "model": "gpt-5.6-luna",
+  "name": "janitor",
+  "native_subagent_id": "01a0425b-4a0d-7f52-9c2f-26ff31716ab2",
+  "ok": true,
+  "parent_session": "0002-horizon-fs-stacks-part01-prelim",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "completed",
+  "subagent_type": "janitor",
+  "summary": "Hygiene audit complete; no Lean, blueprint, docs, roadmap, or inbox state was modified.",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 810362,
+    "tokens_out": 4669
+  }
+}

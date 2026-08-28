@@ -1,0 +1,1 @@
+No durable authored change exists after `714ee1c4dcd9`. All subsequent commands were read-only ancestry, blob, inbox-list, and shared-index audits; the temporary `/tmp` probe deletions were completed before the final ledger commits. No additional commit is warranted.

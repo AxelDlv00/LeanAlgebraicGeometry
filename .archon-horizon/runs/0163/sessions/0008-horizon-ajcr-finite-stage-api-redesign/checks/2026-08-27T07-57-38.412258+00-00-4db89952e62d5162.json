@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "fingerprint": "4db89952e62d5162",
+  "command": [
+    "lake",
+    "env",
+    "lean",
+    "/home/axel/LeanAlgebraicGeometry-Horizon/MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0FiniteStageTripleOverlapRings.lean"
+  ],
+  "cwd": "MainProjects/Algebraic-Jacobian-Challenge-Rebuild",
+  "status": "passed",
+  "ok": true,
+  "returncode": 0,
+  "timed_out": false,
+  "reused": false,
+  "wait_seconds": 0.0,
+  "duration_seconds": 34.295,
+  "started_at": "2026-08-27T07:57:04.116990+00:00",
+  "finished_at": "2026-08-27T07:57:38.412258+00:00",
+  "finished_epoch": 1787817458.412258
+}

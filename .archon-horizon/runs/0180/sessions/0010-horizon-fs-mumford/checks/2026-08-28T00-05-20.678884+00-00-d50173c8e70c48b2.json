@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "fingerprint": "d50173c8e70c48b2",
+  "command": [
+    "lake",
+    "build",
+    "MumfordLib"
+  ],
+  "cwd": "FormalizedSources/AbelianVarieties/Mumford",
+  "status": "passed",
+  "ok": true,
+  "returncode": 0,
+  "timed_out": false,
+  "reused": false,
+  "wait_seconds": 0.0,
+  "duration_seconds": 31.69,
+  "started_at": "2026-08-28T00:04:48.988565+00:00",
+  "finished_at": "2026-08-28T00:05:20.678884+00:00",
+  "finished_epoch": 1787875520.678884
+}

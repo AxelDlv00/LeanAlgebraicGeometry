@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Boole",
+  "agent_path": "/root/janitor_queue",
+  "agent_role": "janitor",
+  "depth": 1,
+  "model": "gpt-5.6-sol",
+  "name": "janitor",
+  "native_subagent_id": "01a042e4-4389-7f03-b8b2-c1c4b1204203",
+  "ok": false,
+  "parent_session": "0004-horizon-fs-mumford",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "interrupted",
+  "subagent_type": "janitor",
+  "summary": "",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 2671162,
+    "tokens_out": 13859
+  }
+}

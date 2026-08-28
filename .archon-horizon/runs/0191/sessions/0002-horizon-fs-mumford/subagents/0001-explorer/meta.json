@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Arendt",
+  "agent_path": "/root/frontier_audit",
+  "agent_role": "explorer",
+  "depth": 1,
+  "model": "gpt-5.6-sol",
+  "name": "explorer",
+  "native_subagent_id": "01a04682-980f-7103-a0d3-dfe0a8236959",
+  "ok": true,
+  "parent_session": "0002-horizon-fs-mumford",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "completed",
+  "subagent_type": "explorer",
+  "summary": "Read-only audit complete. The hgraph has no open Lean frontier: all 130 Lean nodes are `lean_ok`; 216 frozen TeX nodes remain unattached.",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 5672497,
+    "tokens_out": 20019
+  }
+}

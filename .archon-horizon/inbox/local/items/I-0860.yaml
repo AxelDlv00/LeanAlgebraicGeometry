@@ -1,0 +1,66 @@
+id: I-0860
+provider: local
+kind: conversation
+body: 'REVIEWER: your c9b target (I-0855) is real, but ''antecedent 1 of 3'' overstates
+  what closing it buys. `IsChartUniv`''s `V` is a FREE parameter.
+
+
+  MEASURED at HEAD, `lake env lean` EXIT=0, probes in run 0082 session dir /probes:
+
+  1. `IsChartUniv C pi n rep m Z hdeg V` (Pic0ChartPair.lean:173) = `IsOpenImmersion.presheaf
+  (restrictChart (abelSigmaChart ..) V)`, `V` quantified by the consumer. `isChartUniv_of_isChartLocusFibre`
+  says so itself (Pic0ChartUnivReduce.lean:166: ''the open V is arbitrary'').
+
+  2. `pic0RepresentableByOfCharts` (Pic0SigmaSheaf.lean:161) takes `ι` arbitrary.
+  At `ι = PEmpty` the call ELABORATES with `hf := fun i => PEmpty.elim i` (probe3).
+  Same for `mixedParamRepresentableBy` (Pic0ChartAtlasParamFree.lean:125). So the
+  seam accepts an atlas with no charts, no `rep`, no `IsChartUniv`.
+
+  3. The seam is still HONEST: at `ι = PEmpty` the sup sieve is BOTTOM (probe5) and
+  bottom is covering only for an empty test (probe6). But that means every bit of
+  content pinning the atlas to be an atlas lives in the LOCAL-SURJECTIVITY instance,
+  not in `hf`.
+
+  4. `IsChartUniv .. (bottom open)` is also cheap: no nonempty test has a point of
+  the empty open subscheme (probe7), so injectivity is free there.
+
+
+  THE UNPRICED OBLIGATION no roadmap row names. Coverage (`chartsCoverLocally_of_pointwise`,
+  Pic0ChartCoveragePointwise.lean:128) must produce `x : (W : Scheme) ⟶ X i`, i.e.
+  into `(V i : Scheme)` for the real atlas. So the coverage witness must land in the
+  SAME `V` at which `hf` was certified. `chartLocus` is an open of the TEST; `V` is
+  an open of the DIVISOR SCHEME. Measured: ZERO files in the tree mention both `IsChartUniv`
+  and `ChartsCoverLocally`.
+
+
+  NEXT ACTION for you: close `exists_factor` if you can -- it is genuine content and
+  buys `hf` at every `V`. But do NOT report an antecedent discharged; and consider
+  stating the coupling lemma (coverage witness in `V i` vs the `V i` `hf` is certified
+  at) first, since it decides whether the three antecedents compose at all.'
+labels:
+- agent-ready
+status: archived
+scope: {}
+audience: task:ajcr-p2
+author: horizon
+source_ref: null
+created_at: '2026-07-29T11:01:17.006448+00:00'
+updated_at: '2026-07-29T11:47:21.893691+00:00'
+metadata:
+  provenance:
+    run: 0082
+    session: 0002-horizon-review-ajcr
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: review-ajcr
+    task_title: 'REVIEWER (AJCR): audit the Pic^0 route, the rejection cluster and
+      the costings'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  conversation: true
+  participants:
+  - task:ajcr-p2
+  - task:review-ajcr
+  started_by: task:review-ajcr
+  read_by:
+  - review-ajcr

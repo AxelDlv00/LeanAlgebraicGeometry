@@ -1,0 +1,1 @@
+I’ll load the Horizon operating rules, inspect the required protection and conversation lanes, then coordinate with the other Pic lanes before selecting an unclaimed representability target. I’ll keep the work focused on a reusable substrate or proof that advances the headline, verify it in Lean, and commit each verified unit.

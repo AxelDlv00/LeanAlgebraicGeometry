@@ -1,0 +1,1 @@
+The target is Stacks tag 02ZU: product of two representable 1-morphisms. The local Part07 API currently has composition and base-change closure for `RepresentableTransformation`, but no product declaration; I’m now checking Mathlib’s indexed declarations and the exact category-theoretic product/base-change interfaces.

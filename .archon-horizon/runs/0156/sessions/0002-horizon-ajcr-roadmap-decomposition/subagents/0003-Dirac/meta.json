@@ -1,0 +1,21 @@
+{
+  "agent_nickname": "Dirac",
+  "agent_path": "/root/ajcr_roadmap_ground",
+  "depth": 1,
+  "model": "gpt-5.6-sol",
+  "name": "Dirac",
+  "native_subagent_id": "01a02c7d-601a-7b11-80f3-d0f8b663d451",
+  "ok": true,
+  "parent_session": "0002-horizon-ajcr-roadmap-decomposition",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "completed",
+  "subagent_type": "Dirac",
+  "summary": "Final read-only closure check passes: commit `68d27466a80989fac3e195d82e580d42e24bf082` is durable, P7 roadmap and task warnings are empty, and the only active AJCR worker is run `0154` with its unchanged four-file ownership. The current ru",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 28123913,
+    "tokens_out": 73859
+  }
+}

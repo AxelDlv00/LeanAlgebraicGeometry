@@ -1,0 +1,105 @@
+id: I-0244
+provider: local
+kind: info
+body: 'G-4 (c1)-finiteness brick: LANDED (probe verdict: mathlib had the heart again;
+  one honest statement correction)
+
+
+  Commit 721167334e5. New file Picard/SupportTubeFinite.lean (307 L), root wired (HEAD
+  blob + only my line; sibling PicEtCrossBaseGraph line left uncommitted in working
+  tree). Zero sorries; all keystones axiom-clean [propext, Classical.choice, Quot.sound];
+  single-module LEAN_NUM_THREADS=1 lake build green under the mkdir lock (8667 jobs,
+  module 7.3s); zero warnings in my file. NO Noetherian hypothesis anywhere in the
+  brick.
+
+
+  PROBE VERDICT (the statement-shape finding, BINDING for CertUniv): fibrewise finiteness
+  data alone (each fibre colength artinian, even of constant total dimension g) CANNOT
+  give per-piece Module.Finite — counterexample: two disjoint base sections over k[t]
+  with a piece missing one point of one section; piece colength k[t] x k[t,1/t], flat,
+  every fibre artinian, glued fibre dim constant 2, NOT finite. The honest engine
+  input is topological: the piece trace supportLocus INTER pieces j is CLOSED in the
+  relative curve. The P-fib-N artinian input enters only through its topological shadow
+  (the fibrewise no-leak criterion below), produced by the SEED DESIGN (each fibre
+  support point isolated inside its piece with its local branch); artinian data alone
+  does not discharge it. The A^1 and hyperbola guards are excluded by [UniversallyClosed]
+  and by the closed-trace hypothesis respectively (file header documents all three
+  guards).
+
+
+  KEYSTONES (verbatim):
+
+  (1) abstract engine, AlgebraicGeometry.IsAffineOpen.finite_quotient_span_singleton_of_isClosed
+  : {X} [X.Over (Spec (.of R))] (hV : IsAffineOpen V) [UniversallyClosed (X down Spec
+  (.of R))] [LocallyOfFiniteType (X down Spec (.of R))] (g : Gamma(X,V)) (hclosed
+  : IsClosed ((V : Set X) \ (X.basicOpen g : Set X))) : Module.Finite R (Gamma(X,
+  V) / Ideal.span {g}).
+
+  (2) DivisorAdaptation.finite_colength_of_isClosed_supportLocus_inter (j) (hclosed
+  : IsClosed (d.supportLocus INTER (A.pieces j : Set (relCurve C R)))) : Module.Finite
+  R (A.colength j)  [under [IsProper C.hom] [IsFinite pi] — the licence fires by resolution].
+
+  (3) DivisorAdaptation.finite_colength_of_supportLeak_eq_empty (j) (hleak : d.supportLeak
+  (A.pieces j) = EMPTY).
+
+  (4) THE CERTUNIV SLOT DivisorAdaptation.finite_colength_of_forall_fibre_closure_subset
+  (j) (hfib : forall s : Spec (.of R), (relCurve C R down Spec (.of R)).base preimage
+  {s} INTER closure (d.supportLocus INTER A.pieces j) SUBSET A.pieces j).
+
+  (5) DivisorAdaptation.finite_colength_of_supportLocus_subset (j) (hsub : d.supportLocus
+  SUBSET A.pieces j) — the shape the tube produces after base shrinking.
+
+  LEAK KIT (Scheme.LocalEquations): supportLeak U := closure (supportLocus INTER U)
+  \ U; isClosed_supportLeak; supportLeak_subset_sdiff; isClosed_supportLocus_inter_iff_supportLeak_eq_empty;
+  supportLeak_eq_empty_of_forall_fibre; isClosed_image_supportLeak (f) [UniversallyClosed
+  f] — the Zariski-open no-leak base locus for local assembly (base-change glue lives
+  CertUniv-side via the pullback machinery + RingHom.Finite ofLocalizationSpan if
+  needed).
+
+
+  ROUTE + MATHLIB FINDINGS (the SlicingFlatKernel luck repeats): Spec(Gamma(V)/(g))
+  -> Spec Gamma(V) = fromSpec -> X is a preimmersion (comp instances) with range =
+  X.zeroLocus INTER V (range_comap_of_surjective — NOTE: ROOT-level name, not PrimeSpectrum-namespaced
+  — + Ideal.mk_ker + fromSpec_image_zeroLocus) = V \ D(g); IsClosedImmersion.of_isPreimmersion;
+  composite with the structure morphism is UC (comp) + affine (isAffineHom_of_isAffine,
+  both ends Spec) + lft (closed imm -> IsFinite -> lft, comp), hence IsIntegralHom.iff_universallyClosed_and_isAffineHom
+  + IsFinite.iff_isIntegralHom_and_locallyOfFiniteType; the composite IS Spec.map
+  (algebraMap R (Gamma(V)/I)) via the NEW triangle IsAffineOpen.specMap_quotient_mk_fromSpec_over
+  (SpecMap_appLE_fromSpec at U := top + fromSpec_top + isoSpec_Spec_inv + the ChartColength
+  happ identity appLE top V le_top = overAlgebraMap leg — all rfl-level); then IsFinite.SpecMap_iff
+  + RingHom.finite_algebraMap. The licence instances (UniversallyClosed + LocallyOfFiniteType
+  of relCurve down Spec R) fire from instIsProperRelCurveHom since IsProper extends
+  both.
+
+
+  WHAT CERTUNIV CONSUMES AND THREADS: fire (4) per piece with hfib from the seed design
+  + P-fib-N (fibre support = finitely many pairwise-incomparable closed points of
+  the fibre curve, each with its branch inside its piece); or prove the closed trace
+  directly and fire (2). The output Module.Finite R (A.colength j) is instance-shaped
+  for IsCertified.finite_colength and is exactly the [Module.Finite] input of the
+  landed projective_colength_of_forall_tmul_residueField (SupportTube:329). NOTE for
+  the seed lane: the no-leak clause is a NEW obligation on the seed pieces (h z choices)
+  — the two-sections counterexample shows it is not free; record it in the DivSchemeSeedUniv
+  piece-selection step (the Nakayama-neighbourhood shrink is the natural place).
+
+
+  LEAN GOTCHAS (confirming lists): (a) I-0236(b) struck: proof-only hV needs include-hV-in
+  placed BEFORE the docstring (I-0240(c)); (b) range_comap_of_surjective is at FILE
+  ROOT in Spectrum/Prime/RingHom.lean (after end PrimeSpectrum) — PrimeSpectrum.range_comap_of_surjective
+  is Unknown constant; (c) PrimeSpectrum.comap is now a plain function (not ContinuousMap)
+  — no coercion, and the Spec.map hom-coe is defeq to it (exact closes what rw cannot,
+  instance-transparency); (d) FinCoverData.isAffineOpen_pieces already exists (DivisorFamilyPullbackMap:97)
+  — do not re-declare.'
+labels:
+- agent-ready
+status: archived
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: agent
+source_ref: null
+created_at: '2026-07-19T06:13:32.418751+00:00'
+updated_at: '2026-07-20T03:14:57.378925+00:00'
+metadata:
+  agent: g4-c1-finiteness-lane

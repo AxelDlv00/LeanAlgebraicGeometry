@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "status": "rejected",
+  "reason": "Canonical FinalBaseChange map cannot consume legacy mapM: source/target Algebra and IsScalarTower witnesses differ, and the diagonal map no longer reduces to identity. Preserve as diagnosis; do not land.",
+  "created_at": "2026-08-27T03:15:51.615464+00:00",
+  "files": [
+    {
+      "path": "MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0FiniteStageScalarExtendedAtlas.lean",
+      "artifact": "files/MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0FiniteStageScalarExtendedAtlas.lean",
+      "bytes": 10373,
+      "lines": 239
+    }
+  ],
+  "diagnostics": ""
+}

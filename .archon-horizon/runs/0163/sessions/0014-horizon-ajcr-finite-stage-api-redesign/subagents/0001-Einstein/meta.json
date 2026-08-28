@@ -1,0 +1,21 @@
+{
+  "agent_nickname": "Einstein",
+  "agent_path": "/root/api_audit",
+  "depth": 1,
+  "model": "gpt-5.6-luna",
+  "name": "Einstein",
+  "native_subagent_id": "01a04414-ae06-7980-b066-13159b83ddd4",
+  "ok": true,
+  "parent_session": "0014-horizon-ajcr-finite-stage-api-redesign",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "completed",
+  "subagent_type": "Einstein",
+  "summary": "Ranked audit, no files edited:",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 2314597,
+    "tokens_out": 9201
+  }
+}

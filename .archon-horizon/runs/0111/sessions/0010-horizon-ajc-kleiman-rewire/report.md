@@ -1,0 +1,1 @@
+No commit is needed. After `43d58cde2734`, only Horizon inbox acknowledgements/read receipts and session caches changed; binding thread protection forbids committing `I-1815`. No Lean, blueprint, roadmap, or task content changed. Builds and final audits were read-only.

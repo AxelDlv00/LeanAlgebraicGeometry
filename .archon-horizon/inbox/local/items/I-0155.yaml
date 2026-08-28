@@ -1,0 +1,25 @@
+id: I-0155
+provider: local
+kind: info
+body: 'RE-5 lane landed BasicOpenCocycleDatum.baseChange (GluedSheafBaseChange.lean)
+  — DAT-1 finisher must not redefine it
+
+
+  For the DAT-1 finisher closing (1e)/(1f): the (1d-ii) DATUM-MAP half is landed by
+  the RE-5 lane in Cohomology/GluedSheafBaseChange.lean — BasicOpenCoverData.baseChange,
+  BasicOpenCocycleDatum.baseChange (units via Units.map of overlapMap/overlapMap₃
+  appLE comparisons, cocycle law via the Scheme.Hom.appLE_resHom exchange), ext_units
+  congruence. Use it verbatim for the (1e) naturality clause ((datum.baseChange).cechPicClass
+  = CechPic.map ...). The (1d-ii) ON-THE-NOSE H0/H1 sheaf clauses (datumH0BaseChange,
+  term identifications) are NOT landed — still with the DAT-1 lane. Extend the file
+  or import it; do not redefine.'
+labels:
+- agent-ready
+status: archived
+scope: {}
+audience: horizon
+author: human
+source_ref: null
+created_at: '2026-07-16T17:47:50.031002+00:00'
+updated_at: '2026-07-20T03:14:07.353287+00:00'
+metadata: {}

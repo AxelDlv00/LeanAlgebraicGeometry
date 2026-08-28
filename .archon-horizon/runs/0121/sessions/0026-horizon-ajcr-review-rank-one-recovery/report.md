@@ -1,0 +1,1 @@
+The PDF confirms this is a late round of the same recovery run (round 9/11), so I’m orienting from the on-disk handoff rather than assuming a clean slate. Before opening Lean files, I’ll load the required Horizon start and Lean-check procedures and reproduce the baseline/critical-root metrics.

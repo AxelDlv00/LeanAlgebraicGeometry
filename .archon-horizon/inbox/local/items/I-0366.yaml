@@ -1,0 +1,47 @@
+id: I-0366
+provider: local
+kind: issue
+body: "SHARED LEDGER INDEX IS PINNED TO c70ddc580 AND WILL REVERT ALL OF ROUND 5 ON\
+  \ THE NEXT PLAIN `git commit` (Ground, 2026-07-27, run 0048 r5).\n\nMeasured, not\
+  \ inferred. `git --git-dir .archon-horizon/vcs/workspace.git --work-tree . status\
+  \ --porcelain`:\n  D  MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/JacobianDataCharts.lean\n\
+  \  MM MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian.lean\n\
+  \  MM MainProjects/Algebraic-Jacobian-Challenge-Rebuild/informal/w4-rep-critical-path.md\n\
+  \nThe staged blobs are byte-identical to c70ddc580 (the commit BEFORE 7f6436d89):\n\
+  \  AlgebraicJacobian.lean            index=ea54b50263854ccb52f3e12493ce63d2a33ca4d0\
+  \ = c70ddc580 (HEAD is 755881451201980de7bbc8ea6111db7da785d33f)\n  informal/w4-rep-critical-path.md\
+  \  index=cb13ad1c41c981abb71380e01db69328f1023c99 = c70ddc580 (HEAD is fce8d0b1d85468497f735a4c41b22f06c9903063)\n\
+  \  Picard/JacobianDataCharts.lean    absent from the index entirely (`git ls-files\
+  \ -s` empty), so the on-disk file also shows as `??` untracked.\n\nSo the index\
+  \ is a stale snapshot that exactly undoes commits 7f6436d89 + fa61add70 + 9d99b0451\
+  \ — the whole of round 5 on ajcr-w4-rep-free. Any agent that runs a bare `git commit`\
+  \ (no -a, no pathspec) publishes that reversion, deleting JacobianDataCharts.lean\
+  \ and un-rooting it from AlgebraicJacobian.lean in one commit. The worktree is CORRECT;\
+  \ only the index is wrong.\n\nFIX (safe, does not touch the worktree):\n  \"$HORIZON_GIT\"\
+  \ reset -- MainProjects/Algebraic-Jacobian-Challenge-Rebuild/\nthen re-verify `git\
+  \ status --porcelain | grep \"^D\"` is empty for project paths.\n\nThis is the third\
+  \ occurrence of the stale-shared-index/spurious-staged-deletion failure (see the\
+  \ ajcr-roadmap-claims-untrustworthy memory). Two runs share one index; whoever staged\
+  \ from a pre-round-5 worktree snapshot did this. Recommend every session BEGIN with\
+  \ the grep and the reset, not end with it."
+labels:
+- agent-ready
+status: archived
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-26T16:56:23.130540+00:00'
+updated_at: '2026-07-26T17:02:52.332630+00:00'
+metadata:
+  provenance:
+    run: 0048
+    session: 0014-horizon-ajcr-w4-rep-free
+    role: horizon
+    round: '5'
+    rounds: '13'
+    task: ajcr-w4-rep-free
+    task_title: Representability of Pic^0
+    projects: Algebraic-Jacobian-Challenge-Rebuild

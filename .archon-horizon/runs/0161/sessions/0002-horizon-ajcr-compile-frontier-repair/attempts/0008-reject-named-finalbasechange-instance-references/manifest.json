@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "status": "rejected",
+  "reason": "Reject named FinalBaseChange instance references; GluePackage does not import that module, so use explicit local tensor witnesses.",
+  "created_at": "2026-08-25T11:59:43.035847+00:00",
+  "files": [
+    {
+      "path": "MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0FiniteStageGluePackage.lean",
+      "artifact": "files/MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0FiniteStageGluePackage.lean",
+      "bytes": 15549,
+      "lines": 357
+    }
+  ],
+  "diagnostics": ""
+}

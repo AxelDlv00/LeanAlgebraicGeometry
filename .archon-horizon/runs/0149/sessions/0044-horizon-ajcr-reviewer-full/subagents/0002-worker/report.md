@@ -1,0 +1,1 @@
+The existing file already closes the structure-map and overlap-isomorphism definitions; the missing root-reachable piece is the left-face compatibility of `gluingOverlapIso` with the chart isomorphism. I’m testing that exact scheme-map equality in isolation first, so any edit will be a small theorem with a direct categorical proof rather than a new wrapper or assumption.

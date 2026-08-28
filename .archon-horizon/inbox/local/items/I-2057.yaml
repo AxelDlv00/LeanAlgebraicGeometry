@@ -1,0 +1,36 @@
+id: I-2057
+provider: local
+kind: issue
+body: 'Roadmap parent status conflicts with its child summaries
+
+
+  `AJCR.review-plan.p7-galois-descent.universal` is `blocked · 5/5 done`, and the
+  CLI warns that every child is done. However, the parent summary still says glue-equivalence/Yoneda
+  remain mathematically open, while child summaries say no producer exists and the
+  Yoneda leaf is a blocker. Please reconcile the child statuses and parent summary
+  before changing the parent to `done`; this janitor pass leaves the row untouched
+  because the intended terminal state is ambiguous.'
+labels:
+- agent-ready
+status: archived
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-08-27T11:43:07.139200+00:00'
+updated_at: '2026-08-27T13:46:01.028945+00:00'
+metadata:
+  provenance:
+    run: '0167'
+    session: 0006-horizon-fs-stacks-part01-prelim
+    role: horizon
+    round: '2'
+    rounds: '3'
+    task: fs-stacks-part01-prelim
+    task_title: Advance Stacks Part 01 Preliminaries formalization
+    projects: StacksPart01_Preliminaries
+  read_by:
+  - fs-stacks-part01-prelim
+  - ajcr-finite-stage-api-redesign

@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Schrodinger",
+  "agent_path": "/root/ground_final",
+  "agent_role": "ground",
+  "depth": 1,
+  "model": "gpt-5.6-terra",
+  "name": "ground",
+  "native_subagent_id": "01a04327-5360-70b0-896a-c1d15ae6ece7",
+  "ok": true,
+  "parent_session": "0006-horizon-fs-stacks-part01-prelim",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "completed",
+  "subagent_type": "ground",
+  "summary": "Authoritative Horizon-ledger review complete. The ledger is clean and includes all Part01 files across recent commits; my initial ordinary-Git \u201cuntracked\u201d finding was invalid and has been corrected in inbox item I-2051.",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 1887870,
+    "tokens_out": 5886
+  }
+}

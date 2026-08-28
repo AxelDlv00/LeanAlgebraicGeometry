@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "fingerprint": "96e418273b16d243",
+  "command": [
+    "lake",
+    "env",
+    "lean",
+    "/home/axel/LeanAlgebraicGeometry-Horizon/FormalizedSources/StacksProject/Part05_TopicsInGeometry/StacksPart05Lib/Groupoids.lean"
+  ],
+  "cwd": "FormalizedSources/StacksProject/Part05_TopicsInGeometry",
+  "status": "passed",
+  "ok": true,
+  "returncode": 0,
+  "timed_out": false,
+  "reused": false,
+  "wait_seconds": 5.134,
+  "duration_seconds": 2.069,
+  "started_at": "2026-08-27T16:37:48.112746+00:00",
+  "finished_at": "2026-08-27T16:37:50.182054+00:00",
+  "finished_epoch": 1787848670.182054
+}

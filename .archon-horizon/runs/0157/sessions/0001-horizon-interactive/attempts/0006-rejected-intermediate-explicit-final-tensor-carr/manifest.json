@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "status": "rejected",
+  "reason": "Rejected intermediate: explicit final tensor carrier witnesses and @instCommRing fixed inner Algebra; outer Semiring and model tower still pending",
+  "created_at": "2026-08-24T05:19:51.041577+00:00",
+  "files": [
+    {
+      "path": "MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0FiniteStageFinalBaseChange.lean",
+      "artifact": "files/MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0FiniteStageFinalBaseChange.lean",
+      "bytes": 11679,
+      "lines": 261
+    }
+  ],
+  "diagnostics": ""
+}

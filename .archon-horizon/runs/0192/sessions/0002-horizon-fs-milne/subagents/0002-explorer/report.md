@@ -1,0 +1,1 @@
+I see your new stalkwise-isomorphism declarations are already present and graph-linked (`schemeModule_isIso_of_bijective_on_stalks`, `schemeModule_isIso_iff_isIso_on_stalks`, both `lean_ok`). I’m reviewing their exact signatures against the existing `toPresheaf`/stalk APIs and checking whether they close the invertible-sheaf packaging cleanly.

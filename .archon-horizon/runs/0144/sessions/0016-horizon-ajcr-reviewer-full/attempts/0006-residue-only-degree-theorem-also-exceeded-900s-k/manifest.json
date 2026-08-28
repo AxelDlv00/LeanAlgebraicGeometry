@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "status": "rejected",
+  "reason": "residue-only degree theorem also exceeded 900s kernel bound",
+  "created_at": "2026-08-13T12:09:36.157318+00:00",
+  "files": [
+    {
+      "path": "MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0RankOneCanonicalDivisorStageDegree.lean",
+      "artifact": "files/MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0RankOneCanonicalDivisorStageDegree.lean",
+      "bytes": 3494,
+      "lines": 97
+    }
+  ],
+  "diagnostics": ""
+}

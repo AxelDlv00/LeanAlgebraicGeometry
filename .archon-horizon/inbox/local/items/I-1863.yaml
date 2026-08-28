@@ -1,0 +1,41 @@
+id: I-1863
+provider: local
+kind: conversation
+body: 'ABEL-QUOTIENT BLOCKED AFTER VERIFIED DIRECT-PATH PROGRESS
+
+
+  Implemented and committed concrete admissible Abel map/kernel/Sigma comparison (7b0a4ca99f,
+  f65c7e6c55, d3df15eaf8) and the actual admissible source closed project-local embedding
+  (17c77bae01, 87364139f3). Per-module builds 9199/9199 and 9191/9191; root build
+  9468/9468; every claimed declaration has axioms [propext, Classical.choice, Quot.sound].
+  The exact representer is absent: accepted arbitrary-AffCoverData etale-local surjectivity,
+  exact pic0 etale sheafness, a Scheme kernel-pair representer, and the Altman-Kleiman
+  effective Scheme quotient are missing. No forbidden binder/wrapper was introduced.
+  Owned row/task states and comments committed at b2e29a213b.'
+labels:
+- agent-ready
+status: closed
+scope: {}
+audience: task:rev3-ajcr
+author: horizon
+source_ref: null
+created_at: '2026-08-03T10:27:55.094408+00:00'
+updated_at: '2026-08-03T11:04:07.766625+00:00'
+metadata:
+  conversation: true
+  participants:
+  - task:rev3-ajcr
+  - task:ajcr-abel-quotient
+  started_by: task:ajcr-abel-quotient
+  read_by:
+  - rev3-ajcr
+  - ajcr-abel-quotient
+  provenance:
+    run: '0115'
+    session: 0002-horizon-ajcr-abel-quotient
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajcr-abel-quotient
+    task_title: 'Own the Altman-Kleiman quotient: pic0AdmissibleAbelQuotientRepresenter'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "fingerprint": "d6840317fc184c04",
+  "command": [
+    "lake",
+    "env",
+    "lean",
+    "/home/axel/LeanAlgebraicGeometry-Horizon/FormalizedSources/StacksProject/Part07_AlgebraicStacks/StacksPart07Lib/RelationGroupoid.lean"
+  ],
+  "cwd": "FormalizedSources/StacksProject/Part07_AlgebraicStacks",
+  "status": "passed",
+  "ok": true,
+  "returncode": 0,
+  "timed_out": false,
+  "reused": false,
+  "wait_seconds": 2.452,
+  "duration_seconds": 2.52,
+  "started_at": "2026-08-27T21:58:47.038081+00:00",
+  "finished_at": "2026-08-27T21:58:49.558154+00:00",
+  "finished_epoch": 1787867929.558154
+}

@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Bohr",
+  "agent_path": "/root/queue_hygiene",
+  "agent_role": "janitor",
+  "depth": 1,
+  "model": "gpt-5.6-luna",
+  "name": "janitor",
+  "native_subagent_id": "01a045f5-f6df-7ff1-a91c-19a5bacef795",
+  "ok": true,
+  "parent_session": "0002-horizon-ajcr-finite-stage-api-redesign",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "completed",
+  "subagent_type": "janitor",
+  "summary": "Audit complete; no files, Lean source, task statuses, or inbox items were changed.",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 721781,
+    "tokens_out": 4376
+  }
+}

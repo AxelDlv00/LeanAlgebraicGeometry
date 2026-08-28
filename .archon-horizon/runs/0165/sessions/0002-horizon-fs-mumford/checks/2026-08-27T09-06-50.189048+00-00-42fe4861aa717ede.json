@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "fingerprint": "42fe4861aa717ede",
+  "command": [
+    "lake",
+    "env",
+    "lean",
+    "/home/axel/LeanAlgebraicGeometry-Horizon/FormalizedSources/AbelianVarieties/Mumford/MumfordLib.lean"
+  ],
+  "cwd": "FormalizedSources/AbelianVarieties/Mumford",
+  "status": "passed",
+  "ok": true,
+  "returncode": 0,
+  "timed_out": false,
+  "reused": false,
+  "wait_seconds": 0.0,
+  "duration_seconds": 3.982,
+  "started_at": "2026-08-27T09:06:46.206546+00:00",
+  "finished_at": "2026-08-27T09:06:50.189048+00:00",
+  "finished_epoch": 1787821610.189048
+}

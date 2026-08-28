@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Jason",
+  "agent_path": "/root/sibling_api",
+  "agent_role": "explorer",
+  "depth": 1,
+  "model": "gpt-5.6-sol",
+  "name": "explorer",
+  "native_subagent_id": "01a0436b-797b-7f40-b77a-2fb4faea9ca9",
+  "ok": true,
+  "parent_session": "0002-horizon-fs-hartshorne",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "completed",
+  "subagent_type": "explorer",
+  "summary": "Reconnaissance is complete; I made no edits.",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 20323018,
+    "tokens_out": 37578
+  }
+}

@@ -1,0 +1,1 @@
+A new Mumford commit landed while I was probing the API (`e6e38c238d`, additive torsion equivalences). I’m reviewing that implementation against the tested constructors and running focused checks so the report reflects the actual latest source, not just a hypothetical API sketch.

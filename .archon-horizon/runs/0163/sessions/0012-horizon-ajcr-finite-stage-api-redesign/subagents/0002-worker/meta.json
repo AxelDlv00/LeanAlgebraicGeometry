@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Boole",
+  "agent_path": "/root/package_migration",
+  "agent_role": "worker",
+  "depth": 1,
+  "model": "gpt-5.6-luna",
+  "name": "worker",
+  "native_subagent_id": "01a042f6-eb92-79b3-9be0-54ec7694e739",
+  "ok": true,
+  "parent_session": "0012-horizon-ajcr-finite-stage-api-redesign",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "completed",
+  "subagent_type": "worker",
+  "summary": "Process ownership checked. The lingering GluePackage build (`PID 3103811`) belongs to the parent run `0163`; GlueDataFace and StableGluePackage workers belong to other parent/LSP processes. I started no currently-live processes, so I termin",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 3605469,
+    "tokens_out": 12211
+  }
+}

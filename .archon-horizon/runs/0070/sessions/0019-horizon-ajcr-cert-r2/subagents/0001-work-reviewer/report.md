@@ -1,0 +1,35 @@
+You are reviewing four commits made TODAY by lane ajcr-cert-r2 in the Archon Horizon workspace at /home/axel/LeanAlgebraicGeometry-Horizon, project MainProjects/Algebraic-Jacobian-Challenge-Rebuild.
+
+BE ADVERSARIAL. Your value is in finding what is WRONG or OVERCLAIMED, not in confirming. Prior reviews in this workspace have refuted lane headlines and those were the most valuable outputs. If the work is sound, say so briefly and spend your effort on the sharpest objection you can construct.
+
+COMMITS (in the workspace ledger; use: git --git-dir=/home/axel/LeanAlgebraicGeometry-Horizon/.archon-horizon/vcs/workspace.git ...):
+  2b8cef366  new file Picard/DivisorFamilyAffThetaTyping.lean + root import
+  4d975132a  the a=0 producer and the separation theorem
+  6dc39641f  the Theta layer re-indexed
+  341c193c8  informal/spec-dd-r.md ADDENDUM 12
+
+CONTEXT. Human protection I-0492 widened the DD-R divisor certificate carrier to ARBITRARY AFFINE OPEN cover pieces, and its clause 3 forbids "smuggling the old typing back in by typing pieces INTO the charts". Another lane (ajcr-divrep) built Picard/DivisorFamilyAffTheta.lean, a Theta-layer over the widened cover indexed by `tau : ChartTyping C R pi D` whose field `piece_le` puts each piece inside one of a FIXED PAIR of pinned P1 charts. A reviewer (inbox I-0779) proved in that same file that a cover with a STRADDLING piece (one holding a point off V0 and a point off V1) admits NO ChartTyping -- so that layer is vacuous on exactly the divisors the widening exists for.
+
+MY CLAIM, which you are auditing: I replaced that index with a chart-free one, `ThetaTrivData`, carrying (read, unit, matching, germ_read) and NO piece_le; showed the old index maps in; proved EVERY widened cover carries one at exponent a=0; proved the separation (new index Nonempty AND ChartTyping IsEmpty on straddling hypotheses); and re-proved the layer through the kernel bridge and window carve on the new index.
+
+CHECKS I RAN (verify these independently rather than trusting me):
+  lake build AlgebraicJacobian.Picard.DivisorFamilyAffThetaTyping -> "Build completed successfully (8701 jobs)", BUILD_EXIT=0, no warning naming my file
+  axiom probe: 12 headlines all [propext, Classical.choice, Quot.sound]; two controls I introduced both fire sorryAx
+
+THE QUESTIONS I MOST WANT ATTACKED, in priority order:
+
+1. IS `ThetaTrivData` SECRETLY STILL CHART-CONFINING, or secretly VACUOUS in some other way? Its `germ_read` field mentions `relPinnedChart`. Is that a genuine reference to the SHEAF's two-chart model (my claim: relThetaSections IS defined as chart pairs, for every family, so mentioning it constrains no divisor), or have I re-introduced the confinement in a subtler place? Read the field statement literally.
+
+2. IS `AffCoverData.thetaTrivDataZero` REALLY unconditional? Check the actual binders of the def and of everything it invokes -- especially `glueThetaZero` / `existsUnique_glueThetaZero` / `le_iSup_top_inf_relPinnedChart`. Does any hypothesis on the pieces sneak in via an instance argument or a variable in scope? Does it truly work for a STRADDLING cover?
+
+3. IS THE SEPARATION THEOREM `nonempty_thetaTrivData_and_isEmpty_chartTyping` MEANINGFUL, or is it two unrelated statements stapled together (the Nonempty half at a=0, the IsEmpty half at any a)? Note the exponents. Is that a defect that undermines the "strictly wider" claim, and if so how badly?
+
+4. Is `ker_trivGluedEval`'s right-hand side genuinely the SAME submodule as the chart-typed `ker_thetaGluedEval` and `AffAdaptation.ker_thetaGluedEval` land on -- i.e. would a consumer switching index really see no changed statement? Or is there a spelling/instance difference that makes my claim glib?
+
+5. Does ADDENDUM 12 in informal/spec-dd-r.md overclaim anywhere relative to what the Lean actually proves? I explicitly tried to state limits (a>0 inhabitation is a BUNDLE condition and open; surjectivity untouched). Are those limits stated at FULL strength, or is there a hedged phrase alongside a flatly stronger one? Check especially whether "every widened cover carries one" is qualified by "at a = 0" everywhere it appears.
+
+USEFUL BACKGROUND FILES: Picard/DivisorFamilyAffTheta.lean (the ChartTyping-indexed layer + isEmpty_chartTyping_of_straddling), Picard/DivisorFamilyAffCover.lean (AffCoverData, ChartTyping), Picard/DivisorFamilyTheta.lean:59 (relThetaSections definition), Picard/DivSchemeFamilySide.lean (relPinnedChart, relThetaResSide, relThetaSideUnit), informal/spec-dd-r.md ADDENDUM 3/11/12.
+
+To check Lean facts use the lean-lsp MCP if available, or `lake env lean` from the project root. THE MACHINE IS UNDER HEAVY LOAD (load average ~65, swap full) and there is a MANDATORY mkdir directory lock at /tmp/claude-1001/ajcr-locks/lake.lock for any lake invocation -- acquire with mkdir (NEVER flock), write your pid to $LOCK/pid, and rmdir on exit. Prefer reading source and using already-built oleans over new builds; a full elaboration of this import cone takes minutes.
+
+Report: the sharpest objections you can support with evidence, each marked CONFIRMED (you verified it) or PLAUSIBLE (you reason it but did not verify), and state plainly which of my five claims survive.

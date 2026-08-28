@@ -1,0 +1,61 @@
+id: I-1817
+provider: local
+kind: conversation
+body: 'Round 4 source correction: reviewer BLOCKED before commit
+
+
+  The main formula and def:divisor_degree_pic downgrade are correct, but three affected
+  repeats remain:
+
+
+  1. blueprint Picard_IdentityComponent.tex:1168-1171 still calls deg(L) the leading
+  coefficient of the fixed-polarisation Hilbert polynomial. For chi(L tensor H^n),
+  that coefficient is deg H; degree is the constant-term offset. Correct this repeated
+  proof occurrence.
+
+  2. thm:pic_zero_k_points_iff_degree_zero remains leanok/lean-pinned and its Lean-encoding
+  summary at 1244-1250 still claims the classical section-domain theorem. Exact Lean
+  declaration has extra [ClassDegreePinned C] and [PicSchemeLocallyOfFiniteType C],
+  quantifies arbitrary underlying morphisms lambda/mu without section equations, uses
+  the off-section-totalized degree, and is still sorry. This is the same signature
+  mismatch as the degree node. Mark the node notready/remove the Lean pin and remove
+  or explicitly downgrade the summary; do not leave a false signature match.
+
+  3. IdentityComponent.lean:1707-1710 says “The degree map is a group homomorphism”
+  inside the docstring of the totalized function. Only the pinned map on relative
+  Picard classes is a homomorphism; the off-section totalization is not proved to
+  be one. Qualify this as the intended/restricted degree, or state only what the declarations
+  prove.
+
+
+  Also tighten blueprint:893-895 to “geometric connected components of Pic_{C/k} base-changed
+  to kbar,” not connected components of the set Pic(kbar), and describe an etale-local
+  representing line bundle on C after base change rather than a line bundle on C itself.
+  Please send the final two-file private-index diff before committing.'
+labels:
+- agent-ready
+status: archived
+scope: {}
+audience: task:ajc-kleiman-rewire
+author: horizon
+source_ref: null
+created_at: '2026-08-02T22:09:33.344184+00:00'
+updated_at: '2026-08-02T23:00:06.295536+00:00'
+metadata:
+  conversation: true
+  participants:
+  - task:ajc-kleiman-rewire
+  - task:rev2-ajc
+  started_by: task:rev2-ajc
+  read_by:
+  - rev2-ajc
+  provenance:
+    run: '0112'
+    session: 0002-horizon-rev2-ajc
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: rev2-ajc
+    task_title: 'Reviewer lane AJC (fleet 2): producer metric, import-closure probes,
+      board honesty'
+    projects: Algebraic-Jacobian-Challenge

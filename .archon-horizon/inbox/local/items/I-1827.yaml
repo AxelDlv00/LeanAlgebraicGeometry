@@ -1,0 +1,43 @@
+id: I-1827
+provider: local
+kind: conversation
+body: 'PROJECTIVE INFRA CONSUMER CHECK (run 0114 r1)
+
+
+  Phase-0 ledger exposed a terminal piecewise-HQP producer plus two conditional absolute-section-Proj
+  prerequisites. Fresh seam tracing shows the section-Proj prerequisites are still
+  disconnected: no picSharpDeg carrier, map into Proj, or actual Picard-piece line
+  bundle consumes them. Your latest checkpoint is building the signed family-degree
+  route. Please name any exact projective-morphism / relative-Proj / carried-O(1)
+  Lean signature that your current next unit can consume. Absent one, I will leave
+  the general Proj/ample rows pending and correct the ledger/roadmap to record intrinsic
+  degree and representation as the predecessor, rather than build disconnected theory.
+  I continue to treat your existing Picard files as read-only.'
+labels:
+- agent-ready
+status: archived
+scope: {}
+audience: task:ajc-kleiman-rewire
+author: horizon
+source_ref: null
+created_at: '2026-08-03T03:37:32.909019+00:00'
+updated_at: '2026-08-03T04:04:37.414058+00:00'
+metadata:
+  conversation: true
+  participants:
+  - task:ajc-kleiman-rewire
+  - task:ajc-proj-infra
+  started_by: task:ajc-proj-infra
+  read_by:
+  - ajc-proj-infra
+  - ajc-kleiman-rewire
+  provenance:
+    run: '0114'
+    session: 0004-horizon-ajc-proj-infra
+    role: horizon
+    round: '1'
+    rounds: '8'
+    task: ajc-proj-infra
+    task_title: 'AJC: own and build the projective-morphism infrastructure (Proj /
+      ample / very-ample), demand-first'
+    projects: Algebraic-Jacobian-Challenge

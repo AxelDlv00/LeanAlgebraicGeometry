@@ -1,0 +1,78 @@
+id: I-0284
+provider: local
+kind: info
+body: "shared brick BUILD + COMMIT — hdiv/hinj NOT landed (XL residual, precisely\
+  \ scoped)\n\nLanded the SHARED fibre-window↔colength brick (I-0282 residual, the\
+  \ identification both seed-close cores consume). hdiv_seedUniv and hinj_seedUniv\
+  \ NOT built — genuinely XL achiever/carve content (divisor-order bookkeeping + carve\
+  \ rank-g fibre kernel), see residual below. Full-root stays GREEN (single-module\
+  \ build replayed all 8759 jobs).\n\n=== COMMIT (this lane) ===\n- 2b6b00cf5  shared\
+  \ brick: piece-level compared-side triangle (new file Picard/DivSchemeUnivFibreWindow.lean,\
+  \ 128 L; root HEAD-blob + own line only, sibling PicEtCrossBaseGraph line NOT swept)\n\
+  \n=== KEYSTONES (VERBATIM, namespace AlgebraicGeometry.ThetaGeneratorSeed) ===\n\
+  (1) pinnedPieceSectionsMap_resHom (R') (b : Bool) (h s : Γ(relCurve C R, relPinnedChart\
+  \ C R π b)) :\n      pinnedPieceSectionsMap R' b h ((relCurve C R).resHom ((relCurve\
+  \ C R).basicOpen_le h) s)\n        = (relCurve C R').resHom ((relCurve C R').basicOpen_le\
+  \ (relPinnedSectionsMap C R R' π b h)) (relPinnedSectionsMap C R R' π b s)\n   \
+  \ — piece-vs-chart naturality of the side-uniform piece comparison (pieceSectionsMap_algebraMap,\
+  \ side-cased). General R'.\n(2) pinnedPieceSectionsMap_relThetaResSide_windowEquiv\
+  \ (C R K π a hH1) (b : Bool) (h : Γ(relCurve C R, relPinnedChart C R π b)) (x :\
+  \ R ⊗[k] H_a) :\n      pinnedPieceSectionsMap K b h (relThetaResSide a b ((relCurve\
+  \ C R).basicOpen_le h) (relThetaWindowEquiv C R π a hH1 x))\n        = relThetaResSide\
+  \ a b ((relCurve C K).basicOpen_le (relPinnedSectionsMap C R K π b h)) (relThetaWindowEquiv\
+  \ C K π a hH1 (windowCompare R K x))\n    — THE SHARED BRICK. Section vars: K field,\
+  \ [Algebra R K][IsScalarTower k R K], C.left Smooth/Integral/LFT/QC, IsDominant\
+  \ π, hH1. Both keystones axiom-clean [propext, Classical.choice, Quot.sound]; zero\
+  \ sorries/warnings.\n\n=== HOW THE CORES CONSUME THE BRICK ===\nAt seedUniv, K =\
+  \ divUniversalSeedK = image of divUniversalFstWindow under relThetaWindowEquiv (DivSchemeSeedUniv:186;\
+  \ so every ψ∈K is Θ x_ψ). For side b = seedUniv.side z, h = the piece generator\
+  \ (seedUniv.h z is algebraMap f, but the brick applies to any chart section h :\
+  \ Γ(relPinnedChart)). The brick turns:\n  pinnedPieceSectionsMap κ(p) b (h z) (relThetaResSide\
+  \ a b (piece_le) ψ)  ==>  relThetaResSide a b (basicOpen_le h') (Θ_κ(p) (windowCompare\
+  \ x_ψ))   [h' = relPinnedSectionsMap b (h z)]\n  pinnedPieceSectionsMap κ(p) b (h\
+  \ z) (eqn z)                             ==>  relThetaResSide a b (basicOpen_le\
+  \ h') (Θ_κ(p) (windowCompare x_sec))\nSo BOTH cores reduce to pure fibre-piece statements\
+  \ over κ(p) about side components of fibre theta window sections Θ_κ(p)(windowCompare\
+  \ x). Note eqn z = relThetaResSide a b (piece_le) (sec z), sec z = Θ x_sec (seedUniv).\n\
+  \n=== RESIDUAL — hdiv_seedUniv (hfield core), XL ===\nNeed: reading(ψ) := relThetaResSide\
+  \ a b (basicOpen_le h') (Θ_κ(p)(windowCompare x_ψ)) ∈ Ideal.span {reading(sec)}\
+  \ in Γ(D(h') over κ(p)), for all ψ∈divUniversalSeedK, all primes p, feeding seedUniv.hfield_of_forall_pinnedPieceSectionsMap_mem\
+  \ hdiv_seedUniv (KerSpan:147).\nRoute (I-0247): thetaFieldRead-bridge reading(·)\
+  \ ↔ divFamPhi (DivisorFamilyFieldDictionary:286, = mulLinear(thetaFieldShiftUnit)∘thetaFieldRead∘relThetaWindowEquiv)\
+  \ shows the fibre reading of Θ_κ(p)(windowCompare x) reads to divFamPhi(windowCompare\
+  \ x) ∈ divUniversalFibreKM (divFamPhi_windowCompare_mem_divUniversalFibreKM, Res:423).\
+  \ divUniversalFibreKM = divisorSections(windowN − d_p) (divUniversalSeedFibreDivisor_spec\
+  \ Fields:146, d_p effective deg g cutting the window). MISSING PIECE = divisor-order\
+  \ bookkeeping: e_p=reading(sec) cuts d_p and reading(ψ) ∈ H⁰(windowN−d_p) ⟹ div(reading\
+  \ ψ) ≥ div(e_p) on D(h') ⟹ divisibility in the piece ring (via achiever exists_coeffAt_eq_baseDivisorAt\
+  \ BaseDivisor:143 / bpf-span BpfSpan.lean). NOTE: seedUniv.sec is NOT constructed\
+  \ as the achiever (only windowCompare≠0 surviving on D(f)) — the closer likely needs\
+  \ the achiever-at-x property or a base-point-free argument that e_p locally generates\
+  \ divUniversalFibreKM on D(h'); this is the honest wall. No section→functionField\
+  \ germ bridge (relThetaResSide on D(h') ↔ thetaFieldRead) is built yet — that is\
+  \ the first sub-brick to add.\n\n=== RESIDUAL — hinj_seedUniv (hspan core), XL ===\n\
+  Need: Function.Injective ((ker f_z).liftQ f_z le_rfl).rTensor κ(p)) [f_z = kColengthMap\
+  \ z ∘ K.subtype], feeding seedUniv.hspan_of_forall_liftQ_rTensor_injective hinj_seedUniv\
+  \ (KerSpan:190). This is injectivity of (K/ker) ⊗ κ → colength ⊗ κ, i.e. the induced\
+  \ map's fibre kernel is trivial — the genuine carve rank-g content, NOT deducible\
+  \ from flatness (that is what c4 PRODUCES from it). Route: identify colength⊗κ ≅\
+  \ fibre colength via pinnedPieceQuotBaseChangeAlg (KerSpan) and the (K/ker)⊗κ image\
+  \ via the shared brick with the fibre window / tautological-quotient kernel controlled\
+  \ by divUniversal_carve_residueField (FamilyUniv:135, carvePairArrow=0) + ker_baseChangeMkQ_eq_span_windowCompare\
+  \ (Res:207). The carve-pair=0 forces the induced fibre map's kernel to vanish. Multi-layer;\
+  \ unbuilt.\n\n=== STATE ===\n4 cheap facts (hcolFin/hcolFlat/hreg/hfib) = SIBLING\
+  \ lane (DivSchemeSeedUnivFacts.lean). Final assembly (feed all six to isGenerator_of_fibrewise_ker_span_of_field_vanishing\
+  \ → relDivisor) still gated on hdiv+hinj. Dead: DivSchemeUnivFibreKerInj.lean (FibreInjective\
+  \ FALSE, I-0279). Zero sorries introduced; full-root GREEN."
+labels:
+- agent-ready
+status: archived
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: human
+source_ref: null
+created_at: '2026-07-19T18:13:43.104587+00:00'
+updated_at: '2026-07-20T03:15:47.688603+00:00'
+metadata: {}

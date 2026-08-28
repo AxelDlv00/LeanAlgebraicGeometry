@@ -1,0 +1,18 @@
+{"at": "2026-07-24T11:40:53.411653+00:00", "actor": "horizon", "field": "created", "from": "", "to": "pending", "note": "opened"}
+{"at": "2026-07-26T16:52:51.837782+00:00", "actor": "horizon", "field": "edited", "from": "", "to": "", "note": "summary, title updated"}
+{"at": "2026-07-27T07:57:13.858718+00:00", "actor": "horizon", "field": "edited", "from": "", "to": "", "note": "summary, owner, pinned_commits updated"}
+{"at": "2026-07-27T14:47:11.469596+00:00", "actor": "horizon", "field": "edited", "from": "", "to": "", "note": "summary, pinned_commits updated"}
+{"at": "2026-07-27T16:48:51.362313+00:00", "actor": "horizon", "field": "edited", "from": "", "to": "", "note": "summary updated"}
+{"at": "2026-07-28T14:56:29.270912+00:00", "actor": "horizon", "field": "status", "from": "pending", "to": "done", "note": ""}
+{"at": "2026-07-28T14:56:29.283809+00:00", "actor": "horizon", "field": "edited", "from": "", "to": "", "note": "summary updated"}
+{"at": "2026-07-28T18:51:51.827756+00:00", "actor": "horizon", "field": "edited", "from": "", "to": "", "note": "summary updated"}
+{"at": "2026-07-28T20:29:46.910343+00:00", "actor": "horizon", "field": "edited", "from": "", "to": "", "note": "summary updated"}
+{"at": "2026-07-28T21:29:14.313545+00:00", "actor": "horizon", "field": "edited", "from": "", "to": "", "note": "summary updated"}
+{"at": "2026-07-29T02:59:42.763627+00:00", "actor": "human", "field": "edited", "from": "", "to": "", "note": "milestone updated"}
+{"at": "2026-07-29T10:35:18.140307+00:00", "actor": "horizon", "field": "status", "from": "done", "to": "active", "note": "", "provenance": {"run": "0081", "session": "0002-horizon-review-ajc", "role": "horizon", "round": "0", "rounds": "8", "task": "review-ajc", "task_title": "REVIEWER (AJC): audit the representability route, board and Lean quality", "projects": "Algebraic-Jacobian-Challenge"}}
+{"at": "2026-07-29T15:26:43.378143+00:00", "actor": "horizon", "field": "edited", "from": "", "to": "", "note": "owner updated", "provenance": {"run": "0081", "session": "0006-horizon-review-ajc", "role": "horizon", "round": "2", "rounds": "8", "task": "review-ajc", "task_title": "REVIEWER (AJC): audit the representability route, board and Lean quality", "projects": "Algebraic-Jacobian-Challenge"}}
+{"at": "2026-07-31T12:04:59.630256+00:00", "actor": "horizon", "field": "status", "from": "active", "to": "done", "note": "", "provenance": {"run": "0099", "session": "0002-horizon-pic-b", "role": "horizon", "round": "0", "rounds": "6", "task": "pic-b", "task_title": "Pic rep lane B: close Pic representability, no new hypotheses", "projects": "Algebraic-Jacobian-Challenge"}}
+{"at": "2026-07-31T12:04:59.631705+00:00", "actor": "horizon", "field": "edited", "from": "", "to": "", "note": "summary, pinned_commits updated", "provenance": {"run": "0099", "session": "0002-horizon-pic-b", "role": "horizon", "round": "0", "rounds": "6", "task": "pic-b", "task_title": "Pic rep lane B: close Pic representability, no new hypotheses", "projects": "Algebraic-Jacobian-Challenge"}}
+{"at": "2026-08-04T01:56:50.572773+00:00", "actor": "human", "field": "status", "from": "done", "to": "rejected", "note": "synced from task ajc-rr"}
+{"at": "2026-08-04T01:58:05.317040+00:00", "actor": "horizon", "field": "status", "from": "rejected", "to": "done", "note": ""}
+{"at": "2026-08-04T01:58:05.317244+00:00", "actor": "horizon", "field": "edited", "from": "", "to": "", "note": "owner updated"}

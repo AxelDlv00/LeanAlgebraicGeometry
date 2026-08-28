@@ -1,0 +1,1 @@
+I’m running the bounded fallback audit now: loading the absolute Horizon instructions, then checking protection/conversation lanes, roadmap/task state, and source/commit hygiene without mutating anything.

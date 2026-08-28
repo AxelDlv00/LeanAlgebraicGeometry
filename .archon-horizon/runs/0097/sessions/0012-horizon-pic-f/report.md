@@ -1,0 +1,1 @@
+I’ll load the Horizon workflow, inspect the protection and conversation inbox lanes, then review the current Pic-representability ledger before claiming a concrete item. I’ll announce the claim to the shared inbox, implement and verify a reusable Lean unit, commit it, and finish with the required Horizon report.

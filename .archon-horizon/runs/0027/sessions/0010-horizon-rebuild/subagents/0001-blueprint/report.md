@@ -1,0 +1,19 @@
+## Summary
+
+I authored the blueprint chapter for the étale-plus construction of the relative Picard functor, covering all four assigned Lean files.
+
+**Files created/edited** (all under `blueprint/**`, no `.lean` touched):
+- Created: `/home/Axel/LeanAlgebraicGeometry-Horizon/MainProjects/Algebraic-Jacobian-Challenge-Rebuild/blueprint/src/chapters/PicardEtale.tex` (1033 lines, 55 nodes: 25 definitions, 18 lemmas, 12 theorems, all `\leanok`)
+- Edited: `/home/Axel/LeanAlgebraicGeometry-Horizon/MainProjects/Algebraic-Jacobian-Challenge-Rebuild/blueprint/src/content.tex` — added `\input{chapters/PicardEtale}` between `Cohomology` and `AbelianVariety`.
+
+**Node graph** (labels + section grouping, dependency order):
+- **§1 Presented étale covers** (`Algebra/EtaleCover.lean`, pure ring theory over a general commutative ring `A`, no `k`): `def:etale_cover` → `def:etale_cover_of`/`lem:etale_cover_ofEquiv` → `def:etale_cover_refines`(+preorder) → `def:etale_cover_prod`(+coprojections, `prod_refines`, `prodLift`+section, `exists_refines_prod`) → `def:etale_cover_self`(+`fromSelf`, `refines_self`) → `def:etale_cover_baseChange`(+`baseChangeInclude`, `baseChangeMap`+naturality) → `lem:etale_cover_nontrivial_carrier` → `thm:etale_cover_field_cofinality` → `def:etale_cover_ofField`.
+- **§2 Algebra-indexed relative Picard functor** (`RelPicAlgebra.lean`): `def:overSpecMap`+functor laws → `def:relPicAlgMap`+functor laws.
+- **§3 Descent classes** (`PicEtAff.lean` pt. 1): `def:doubleInl_doubleInr` → `def:descentClasses` (`\source{kleiman-picard}`) → `lem:relPicAlgMap_mem_descentClasses` → `def:descentMap`+id/comp → **`thm:relPicAlgMap_congr`** (the keystone) → `thm:descentMap_congr`.
+- **§4 The one-step plus** (`PicEtAff.lean` pt. 2): `def:picEtAffSetoid` → `def:PicEtAff` (`\source{kleiman-picard}`) → `mk`/`ind`/`mk_eq_mk_iff`/`mk_descentMap`.
+- **§5 Group structure and unit**: `descentMap_prodLift` → `mk_mul_mk`/`mk_mul_mk_same` → `one`/`mk_one` → `inv` → `thm:PicEtAff_commGroup` → `tautological_mem_descentClasses` → `def:PicEtAff_unit` (`\source{kleiman-picard}`).
+- **§6 Functoriality in the test algebra** (`PicEtAffMap.lean`): `baseChangeInclude_mem_descentClasses` → `descentBaseChange` → `descentMap_baseChangeMap` → `PicEtAff.map` → `map_unit`/`map_id`/`map_map`.
+
+**Verification performed**: balanced `begin/end` environments and braces; no duplicate labels; every `\uses{}` target resolves within the file (no dangling refs) and appears earlier in the file (no forward refs/cycles); every `\lean{}` name cross-checked against the real Lean declarations (including two anonymous-instance names, `PicEtAff.instCommGroup`/`instMul`/`instOne`/`instInv`, confirmed via `#print prefix` in `lean_run_code`); no `sorry` in any of the four source files, so every `\leanok` is honest; the three `\source{kleiman-picard}` anchors (on `descentClasses`, `PicEtAff`, `PicEtAff.unit`) were placed only after reading the corresponding passages in `references/kleiman-picard-src/kleiman-picard.tex` (the descent-condition paragraph following `df:Pfs`, and the Čech-cocycle/descent-data remark in `rk:coh`); no blueprint build tool (`leanblueprint`/`latexmk`) was available in this environment, so I relied on the environment/label/macro checks described above (all commands used are already used elsewhere in the blueprint or defined in `macros/common.tex`; one undefined `\Type` macro I initially introduced was caught and rephrased in plain prose).
+
+**Out of scope, left alone**: `relPic`, `relPicMap`, `overSpec` (defined in `Picard/RelPic.lean` and `Cohomology/SectionsBaseChange.lean`) have no existing blueprint chapter, so they are recalled only as unlabeled ambient notation in the chapter's opening paragraph rather than given fresh nodes — per instructions not to author nodes outside the assigned slice.

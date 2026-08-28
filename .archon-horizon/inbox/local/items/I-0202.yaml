@@ -1,0 +1,42 @@
+id: I-0202
+provider: local
+kind: memory
+body: 'DDR-4 probe verdict: YES — gluedSubmodule↔engine-H⁰ junction closes with landed
+  kit
+
+
+  PROBE VERDICT (certificate transport lane, spec-dd-r §3 item 4 + §4 probe rule):
+  YES — probed in scratch (uncommitted DDR4Probe.lean, lake-env-lean green end to
+  end) BEFORE freezing structure. ROUTE: (1) engine H⁰-carrier Sheaf.HModule (A.thetaIdealDatum
+  a).sheaf 0 collapses onto ThetaIdealSections a ⊤ via Sheaf.HModule.linearEquiv₀
+  (Opens.grothendieckTopology) isTerminalTop — elaborates directly, R-linear. (2)
+  FORWARD (glued→vanishing pair): gluedToIdeal₀/₁ at W := ⊤⊓V₀/⊤⊓V₁ of secRes-restricted
+  global datum sections; twistSubmodule membership from gluedToIdeal₀_eq_theta_mul_gluedToIdeal₁
+  at ⊤⊓V₀⊓V₁ + gluedToIdeal₀/₁_secRes + secRes_secRes + one congrArg (no new math);
+  vanishing membership = germ_gluedToIdeal₀/₁_mem verbatim. (3) BACKWARD (vanishing
+  pair→global datum section): global matched family t_p := A.eqnDiv p inf_le_right
+  (resHom (inf_le_inf le_rfl pieces_le) x-side) (germ data) over ⊤⊓piece p — NO sheaf
+  gluing needed, datum sections are definitionally matched families; the RISKIEST
+  matching case (mixed inl/inr, unit = eqnRatio·θ-restrict) closed via eqn_res_cancel
+  + congrArg-restricted eqn_mul_eqnDiv both sides + eqn_mul_eqnRatio + mem_twistSubmodule_iff
+  of x restricted + hval : ↑thetaIdealUnit = ↑eqnRatio * resHom … ↑θ := rfl + ONE
+  key-have in the ADAPTATION spelling closed by linear_combination (certificate: hL
+  + hmatch − Th·hR − Th·B_q·hratio − E_p·B_q·hunit), then exact key bridges the datum
+  spelling definitionally. HAZARD CONFIRMED LOAD-BEARING (I-0197 (b)/(c)): type-ASCRIBING
+  the datum unit at A.pieces types FAILS (unifier will not unfold thetaIdealDatum
+  through Γ); the key-have+exact bridge is mandatory; state everything at A.pieces/A.thetaIdealUnit
+  spelling inside proofs, only the final exact touches the datum spelling. NEXT: building
+  Picard/DivSchemeCertificate.lean — gluedEquivVanishing (junction equiv) → datumRigidEngine
+  transport ⟹ K_a(d) = vanishingSubmodule/divisorWindow finite projective over Noetherian
+  R given hπ + complex-form hfib of the theta-ideal datum pair (the P-fib fibrewise
+  h¹-data boundary, same shape as thetaGluedEval_surjective).'
+labels:
+- agent-ready
+status: archived
+scope: {}
+audience: horizon
+author: human
+source_ref: null
+created_at: '2026-07-17T08:01:21.654348+00:00'
+updated_at: '2026-07-20T03:16:28.721889+00:00'
+metadata: {}

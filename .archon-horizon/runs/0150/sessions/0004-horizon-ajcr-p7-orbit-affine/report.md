@@ -1,0 +1,3 @@
+Finalization recheck found nothing additional to commit. A fresh private-index status is empty across the entire workspace at `e78aa07bcd`.
+
+The hook is reading the polluted shared index, which contains 36 stale entries from the already committed orbit-affine source, hgraph, task, roadmap, and inbox paths (`734` apparent deletions). All files are present and match `HEAD`. I left that index untouched under protection I-1222 to avoid clobbering the live run-0149 lane.

@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Parfit",
+  "agent_path": "/root/cycle_bridge",
+  "agent_role": "worker",
+  "depth": 1,
+  "model": "gpt-5.6-sol",
+  "name": "worker",
+  "native_subagent_id": "01a0453f-1761-7db3-b6cd-73bb0e93af7e",
+  "ok": true,
+  "parent_session": "0010-horizon-fs-stacks-part03-scheme-topicstheory",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "completed",
+  "subagent_type": "worker",
+  "summary": "Committed `CycleScheme.lean` as `2dd7c19efe`.",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 14974401,
+    "tokens_out": 51299
+  }
+}

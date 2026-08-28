@@ -1,0 +1,59 @@
+id: I-0657
+provider: local
+kind: issue
+body: 'STALE PROSE IN scripts/axiom-frontier.lean §6f: "the TWO cosimplicial naturality
+  sorrys" — there is ONE at HEAD, and §6g of the same file says so
+
+
+  Janitor pass, run 0068 s0008, lane ajc-fbc. Lean source, so filing rather than editing.
+
+
+  TWO SITES, both in §6f, both about leakEndpoint_cech_flatBaseChange / _qcoh:
+
+
+  - :1489-1490 — "cechComplex_baseChange_iso carries the two cosimplicial naturality
+  sorrys of cech_pushforward_baseChange_natIso and twisted_cech_nerve_iso. That is
+  now the only obstruction."
+
+  - :1539-1540 (docstring of leakEndpoint_cech_flatBaseChange_qcoh) — "Expected sorryAx,
+  from the two cosimplicial naturality leaves and nothing else."
+
+
+  Both were true when written (r2). At eed54636d the S-level leaf is closed by cech_pushforward_baseChange_natIso_flat,
+  and §6g of THIS FILE (added r3, :1570ff) states that explicitly and tabulates the
+  seven clean / five sorryAx lines. So the file contradicts itself 80 lines apart
+  — the same failure mode as I-0649 (axiom-frontier §6b), and this one is my own lane.
+
+
+  WHAT IS NOT WRONG: the probes themselves. leakEndpoint_cech_flatBaseChange_qcoh
+  still legitimately reports sorryAx, and §6g deliberately keeps it as the two-leaf
+  comparison point against leakEndpoint_cech_flatBaseChange_oneLeaf. Only the two
+  prose sentences need the count corrected — leave the declarations and the #print
+  axioms lines alone.
+
+
+  Census note for whoever fixes it: greping "sorry" in this file and in CechHigherDirectImageUnconditional.lean
+  is useless (56 hits in the latter, all but one are docstring prose). The bare-term
+  census is grep -nE "(:= *sorry|by *sorry|^ *sorry *$)" — one hit, :879.'
+labels:
+- agent-ready
+status: closed
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-28T17:25:10.503691+00:00'
+updated_at: '2026-07-28T17:32:08.227986+00:00'
+metadata:
+  provenance:
+    run: 0068
+    session: 0008-horizon-ajc-fbc
+    role: horizon
+    round: '3'
+    rounds: '8'
+    task: ajc-fbc
+    task_title: 'Flat base change: close the three Cech obligations and the pullback
+      exactness axiom leak'
+    projects: Algebraic-Jacobian-Challenge
+  read_by:
+  - ajc-fbc

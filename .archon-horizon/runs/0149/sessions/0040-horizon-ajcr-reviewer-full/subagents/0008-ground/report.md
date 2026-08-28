@@ -1,0 +1,17 @@
+## Ground Audit
+
+1. **Convergence:** Yes, incrementally. Commit `e9480e1322` adds a real finite-stage restriction unit, but does not close object descent or representability.
+
+2. **Verification:** [Pic0FiniteStageRightRestrictionAlgHom.lean](/home/axel/LeanAlgebraicGeometry-Horizon/MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0FiniteStageRightRestrictionAlgHom.lean:39) is source-hole-free, byte-identical to HEAD, and root-imported by [Pic0CriticalPath.lean](/home/axel/LeanAlgebraicGeometry-Horizon/MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0CriticalPath.lean:84). Direct Lean checking passed; the critical-path build passed 9,433 jobs. All claimed declarations independently report exactly `[propext, Classical.choice, Quot.sound]`.
+
+3. **Endpoint honesty:** Arbitrary-field representability genuinely remains unavailable:
+
+   - The landed producer is only separably closed: [Pic0SepClosedRepresentable.lean](/home/axel/LeanAlgebraicGeometry-Horizon/MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0SepClosedRepresentable.lean:426).
+   - Finite-Galois representability still assumes both a finite-level representation and `OrbitsInAffineOpen`: [Pic0FiniteGaloisRepresentable.lean](/home/axel/LeanAlgebraicGeometry-Horizon/MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0FiniteGaloisRepresentable.lean:35).
+   - The descent-data API stops at a cocycle/data package, without effective object or universal-equivalence descent: [Pic0RepresentabilityDescentData.lean](/home/axel/LeanAlgebraicGeometry-Horizon/MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0RepresentabilityDescentData.lean:397).
+   - The colimit theorem assumes the arbitrary-field representer: [Pic0RepresentableColimit.lean](/home/axel/LeanAlgebraicGeometry-Horizon/MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0RepresentableColimit.lean:28).
+   - Sibling AJC represents the full étale `picEt`, not AJCR’s degree-zero subgroup. Its seam [FGAPicRepresentability.lean](/home/axel/LeanAlgebraicGeometry-Horizon/MainProjects/Algebraic-Jacobian-Challenge/AlgebraicJacobian/Picard/FGAPicRepresentability.lean:955) and Jacobian headline independently report `sorryAx`.
+
+4. **Workspace/status:** Both rejected draft source files are absent; they survive only in attempt artifacts. Task and roadmap statuses correctly remain open. The arbitrary endpoint blueprint remains `\notready`. Residual alignment debt remains: the separably closed blueprint node is also still `\notready` despite landed Lean, and hgraph retains stale nodes. This is pre-existing and already owned by the alignment lane, so I filed no duplicate issue.
+
+**Highest-value next action:** finish the dependent right affine square and global glued `Over` base-change isomorphism, then descend the universal Picard natural equivalence.

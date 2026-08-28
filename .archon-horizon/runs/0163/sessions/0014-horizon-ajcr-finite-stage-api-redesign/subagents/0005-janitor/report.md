@@ -1,0 +1,1 @@
+The session directory shows this is round 5 of run 0163 with many prior AJCR handoffs; I’m checking each report and the ledger independently because the combined status command stopped while querying usage.

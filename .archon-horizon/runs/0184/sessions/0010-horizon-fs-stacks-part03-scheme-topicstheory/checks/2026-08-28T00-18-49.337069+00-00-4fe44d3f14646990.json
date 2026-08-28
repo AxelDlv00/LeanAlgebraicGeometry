@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "fingerprint": "4fe44d3f14646990",
+  "command": [
+    "lake",
+    "env",
+    "lean",
+    "/home/axel/LeanAlgebraicGeometry-Horizon/FormalizedSources/StacksProject/Part03_TopicsInSchemeTheory/StacksPart03Lib/PeriodicEuler.lean"
+  ],
+  "cwd": "FormalizedSources/StacksProject/Part03_TopicsInSchemeTheory",
+  "status": "passed",
+  "ok": true,
+  "returncode": 0,
+  "timed_out": false,
+  "reused": false,
+  "wait_seconds": 0.001,
+  "duration_seconds": 8.222,
+  "started_at": "2026-08-28T00:18:41.114982+00:00",
+  "finished_at": "2026-08-28T00:18:49.337069+00:00",
+  "finished_epoch": 1787876329.337069
+}

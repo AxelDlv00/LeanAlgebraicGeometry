@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Huygens",
+  "agent_path": "/root/pdf_contract",
+  "agent_role": "explorer",
+  "depth": 1,
+  "model": "gpt-5.6-luna",
+  "name": "explorer",
+  "native_subagent_id": "01a017bb-7948-7091-89e7-0e31faed6e53",
+  "ok": true,
+  "parent_session": "0059-horizon-ajcr-reviewer-full",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "completed",
+  "subagent_type": "explorer",
+  "summary": "Read-only extraction completed; no files or inbox state were changed.",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 697457,
+    "tokens_out": 6631
+  }
+}

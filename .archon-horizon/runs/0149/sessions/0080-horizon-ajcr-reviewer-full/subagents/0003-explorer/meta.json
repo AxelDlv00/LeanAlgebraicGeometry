@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "McClintock",
+  "agent_path": "/root/heavy_fst_audit",
+  "agent_role": "explorer",
+  "depth": 1,
+  "model": "gpt-5.6-sol",
+  "name": "explorer",
+  "native_subagent_id": "01a01ea1-a973-7592-9e45-b34ea2a63a68",
+  "ok": true,
+  "parent_session": "0080-horizon-ajcr-reviewer-full",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "completed",
+  "subagent_type": "explorer",
+  "summary": "",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 582843,
+    "tokens_out": 3627
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "status": "rejected",
+  "reason": "Rejected outer-instance coherence probe: outer custom Semiring/Algebra/Module made cancelBaseChange AlgEquiv structures non-definitional",
+  "created_at": "2026-08-24T05:41:40.469002+00:00",
+  "files": [
+    {
+      "path": "MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0FiniteStageFinalBaseChange.lean",
+      "artifact": "files/MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0FiniteStageFinalBaseChange.lean",
+      "bytes": 15854,
+      "lines": 353
+    }
+  ],
+  "diagnostics": ""
+}

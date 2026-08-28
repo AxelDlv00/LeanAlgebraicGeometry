@@ -1,0 +1,1 @@
+The build is still healthy at the process level: the remaining Lean worker is consuming CPU rather than hung, but this particular fibre-core declaration has a roughly million-heartbeat scale. I’m leaving it untouched; the semantic audit is already complete and only verification/reporting remain.

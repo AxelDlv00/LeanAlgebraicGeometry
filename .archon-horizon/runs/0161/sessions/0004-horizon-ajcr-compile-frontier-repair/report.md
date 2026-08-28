@@ -1,0 +1,5 @@
+Finalization is complete. Authored source, task state, session report, and this session’s probe/check evidence are committed through `5aca93bfaa` (including `86d3bec20c`). No staged authored paths remain.
+
+The requested result is still a measured blocker: `Pic0FiniteStageGluingDiagramIso.olean` was not produced. GluePackage and GluedOver compile artifacts are present; the isolated `overlapBaseChangeIso_hom_ι` probe passes in 27.72s / 7,245,776 KB RSS. Full DiagramIso timed out at 900.07s and again at 480.52s with no Lean diagnostic, reaching 7,871,676 KB RSS and no artifact. The task is marked `blocked`.
+
+The next safe refactor remains splitting `overlapBaseChangeIso_hom_atlas_f_ι` and independently benchmarking `restrictionBaseChangeMap_fromSpec`, while regenerating stale `.olean.hash`/`.trace` metadata. Remaining blueprint/events/inbox/search/hgraph changes and prior-session runtime snapshots are concurrent Horizon state and were intentionally not staged; this ownership distinction is recorded in the session report.

@@ -1,0 +1,27 @@
+Read-only audit complete. No files or index changed.
+
+Shortest honest chain is already present:
+
+```lean
+J.hom.IsProjective
+  -> Scheme.finiteInAffine_of_isProjective
+  -> Scheme.orbitsInAffineOpen_of_finiteInAffine
+  -> pic0RepresentableBy_finiteGaloisDescent
+```
+
+The last consumer is [Pic0FiniteGaloisRepresentable.lean](/home/axel/LeanAlgebraicGeometry-Horizon/MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0FiniteGaloisRepresentable.lean:35); the two generic links are [QuasiProjectiveFiniteInAffine.lean](/home/axel/LeanAlgebraicGeometry-Horizon/MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Descent/QuasiProjectiveFiniteInAffine.lean:64) and [FiniteInAffine.lean](/home/axel/LeanAlgebraicGeometry-Horizon/MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Descent/FiniteInAffine.lean:66). This gives the exact target action with no further equivariance work.
+
+What is missing is genuinely geometric: bare `rep` supplies neither `J.hom.IsProjective` nor `FiniteInAffine J.left`. Even `JacobianData` adds only `GrpObj J`, `LocallyOfFiniteType J.hom`, and `QuasiCompact J.hom` ([JacobianData.lean](/home/axel/LeanAlgebraicGeometry-Horizon/MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/JacobianData.lean:87)); none entails the needed property. The finite-Galois-point theorem only gives a point on `C_L`, not geometry of `J`.
+
+The alternative group theorem, `finiteInAffine_of_isAlgClosed_of_irreducible`, requires `[IsAlgClosed L]`, `[LocallyOfFiniteType J.hom]`, `[IrreducibleSpace J.left]`, and `[GrpObj J]` ([GroupAffineOpen.lean](/home/axel/LeanAlgebraicGeometry-Horizon/MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Descent/GroupAffineOpen.lean:162)). It cannot apply at a nontrivial finite Galois stage because `L` is not algebraically closed. Mathlib supplies no quasi-projectivity API that closes this gap.
+
+Recommended bounded non-wrapper theorem:
+
+```lean
+theorem finiteInAffine_of_geometricallyIrreducible_group
+    (G : Over (Spec (.of L))) [GrpObj G]
+    [LocallyOfFiniteType G.hom] [GeometricallyIrreducible G.hom] :
+    Scheme.FiniteInAffine G.left
+```
+
+This is the arbitrary-field descent/generalization of the existing algebraically-closed group argument, not a Picard wrapper. It would be consumed immediately by `orbitsInAffineOpen_of_finiteInAffine` for the Pic0 action once the finite-stage spread records the natural group, lft, and geometric-irreducibility certificates. The remaining missing finite-stage data are exactly those noted in [Pic0CriticalPath.lean](/home/axel/LeanAlgebraicGeometry-Horizon/MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0CriticalPath.lean:149).

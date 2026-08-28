@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Aquinas",
+  "agent_path": "/root/adjacent_audit",
+  "agent_role": "explorer",
+  "depth": 1,
+  "model": "gpt-5.6-luna",
+  "name": "explorer",
+  "native_subagent_id": "01a042f7-354f-7690-a382-3337edd0fc6b",
+  "ok": true,
+  "parent_session": "0012-horizon-ajcr-finite-stage-api-redesign",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "completed",
+  "subagent_type": "explorer",
+  "summary": "Fresh-context checkpoint completed and sent to `/root`.",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 2700690,
+    "tokens_out": 9815
+  }
+}

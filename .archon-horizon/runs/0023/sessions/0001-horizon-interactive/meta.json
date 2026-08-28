@@ -1,0 +1,8 @@
+{
+  "role": "horizon",
+  "interactive": true,
+  "engine": "claude",
+  "engine_session_id": "c7c8318d-6a21-4c0a-a3e7-5b6c03a80e4d",
+  "started_at": "2026-07-10T15:25:55.796445+00:00",
+  "status": "running"
+}

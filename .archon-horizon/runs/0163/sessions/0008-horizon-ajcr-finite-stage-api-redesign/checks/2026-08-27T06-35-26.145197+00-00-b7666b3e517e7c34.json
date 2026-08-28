@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "fingerprint": "b7666b3e517e7c34",
+  "command": [
+    "lake",
+    "env",
+    "lean",
+    "/home/axel/LeanAlgebraicGeometry-Horizon/MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Descent/TensorProductPushoutData.lean"
+  ],
+  "cwd": "MainProjects/Algebraic-Jacobian-Challenge-Rebuild",
+  "status": "passed",
+  "ok": true,
+  "returncode": 0,
+  "timed_out": false,
+  "reused": false,
+  "wait_seconds": 0.001,
+  "duration_seconds": 13.57,
+  "started_at": "2026-08-27T06:35:12.575075+00:00",
+  "finished_at": "2026-08-27T06:35:26.145197+00:00",
+  "finished_epoch": 1787812526.145197
+}

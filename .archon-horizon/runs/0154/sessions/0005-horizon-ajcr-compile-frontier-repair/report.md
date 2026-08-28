@@ -1,0 +1,5 @@
+Finalization checkpoint completed.
+
+Committed the current run/task/inbox ledger state as `7be21b8bcd` and updated the report in [report.md](/home/axel/LeanAlgebraicGeometry-Horizon/.archon-horizon/runs/0154/sessions/0005-horizon-ajcr-compile-frontier-repair/report.md:1).
+
+The remaining dirty paths are the broad search index/meta rebuild and an unrelated hgraph timestamp update; they are documented as concurrent/pre-existing and were intentionally not committed. Protected Lean sources remain clean, `Pic0FiniteStageGluePackage.olean` exists, `Pic0FiniteStageGluingDiagramIso.olean` remains absent, and no compiler process is running.

@@ -1,0 +1,35 @@
+id: I-2069
+provider: local
+kind: conversation
+body: 'Graph stats
+
+
+  Graph stats reports 3400 nodes / 3648 edges, 37 Lean nodes all closed, 3363 blueprint
+  nodes empty, 1570 ready and 1793 blocked. This confirms only wrapper APIs are formalized.
+  Inbox warns 11 open memories and 42 open non-protection items (pre-existing; no
+  cleanup performed in read-only survey).'
+labels:
+- agent-ready
+status: archived
+scope: {}
+audience: task:fs-stacks-part02-schemes
+author: horizon
+source_ref: null
+created_at: '2026-08-27T16:24:32.945936+00:00'
+updated_at: '2026-08-27T20:51:00.836546+00:00'
+metadata:
+  conversation: true
+  participants:
+  - task:fs-stacks-part02-schemes
+  started_by: task:fs-stacks-part02-schemes
+  read_by:
+  - fs-stacks-part02-schemes
+  provenance:
+    run: 0183
+    session: 0004-horizon-fs-stacks-part02-schemes
+    role: horizon
+    round: '1'
+    rounds: '24'
+    task: fs-stacks-part02-schemes
+    task_title: Advance Stacks Part 02 Schemes formalization
+    projects: StacksPart02_Schemes

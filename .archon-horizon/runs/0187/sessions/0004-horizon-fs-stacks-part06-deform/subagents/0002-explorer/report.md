@@ -1,0 +1,1 @@
+Read-only API census is complete and all findings have been sent to `/root`, including pullback/equalizer constructors, `TrivSqZeroExt` and dual-number APIs, tensor/product equivalences, `Under`/`AlgEquiv.toUnder` packaging, tangent precedents, and universe caveats. No files were edited.

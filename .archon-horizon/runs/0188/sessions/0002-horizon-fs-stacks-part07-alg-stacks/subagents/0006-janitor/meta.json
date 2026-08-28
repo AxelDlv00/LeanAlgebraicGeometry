@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Peirce",
+  "agent_path": "/root/queue_hygiene",
+  "agent_role": "janitor",
+  "depth": 1,
+  "model": "gpt-5.6-sol",
+  "name": "janitor",
+  "native_subagent_id": "01a043dd-f43d-7b10-93e2-f7ac477bbd43",
+  "ok": false,
+  "parent_session": "0002-horizon-fs-stacks-part07-alg-stacks",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "interrupted",
+  "subagent_type": "janitor",
+  "summary": "",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 3348242,
+    "tokens_out": 12355
+  }
+}

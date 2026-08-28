@@ -1,0 +1,1 @@
+A parallel worker has now added `GroupoidFunctoriality.lean` with `functor_map_inv`; I’m treating that as the “RelationGroupoid” milestone and checking what follows it can reuse. I’ll test candidate theorem shapes in temporary, non-repo snippets so the recommendation includes elaboration details rather than just names.

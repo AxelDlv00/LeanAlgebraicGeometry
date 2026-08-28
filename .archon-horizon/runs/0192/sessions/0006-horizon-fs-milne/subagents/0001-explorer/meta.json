@@ -1,0 +1,21 @@
+{
+  "agent_nickname": "Anscombe",
+  "agent_path": "/root/coherent_stalk_audit",
+  "agent_role": "explorer",
+  "depth": 1,
+  "model": "gpt-5.6-sol",
+  "name": "explorer",
+  "native_subagent_id": "01a04740-ec4f-7d30-a58a-59f6ea80d2ad",
+  "parent_session": "0006-horizon-fs-milne",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "running",
+  "subagent_type": "explorer",
+  "summary": "",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 20643731,
+    "tokens_out": 53508
+  }
+}

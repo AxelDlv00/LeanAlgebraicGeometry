@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "fingerprint": "4d3ef681560c379a",
+  "command": [
+    "lake",
+    "build",
+    "StacksPart05Lib"
+  ],
+  "cwd": ".",
+  "status": "failed",
+  "ok": false,
+  "returncode": 1,
+  "timed_out": false,
+  "reused": false,
+  "wait_seconds": 1.198,
+  "duration_seconds": 0.116,
+  "started_at": "2026-08-27T20:45:45.634056+00:00",
+  "finished_at": "2026-08-27T20:45:45.749598+00:00",
+  "finished_epoch": 1787863545.749598
+}

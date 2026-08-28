@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "fingerprint": "69deee2a2ecc7f5f",
+  "command": [
+    "lake",
+    "env",
+    "lean",
+    "/home/axel/LeanAlgebraicGeometry-Horizon/FormalizedSources/AbelianVarieties/Milne/MilneLib/Nakayama.lean"
+  ],
+  "cwd": "FormalizedSources/AbelianVarieties/Milne",
+  "status": "passed",
+  "ok": true,
+  "returncode": 0,
+  "timed_out": false,
+  "reused": false,
+  "wait_seconds": 0.001,
+  "duration_seconds": 5.157,
+  "started_at": "2026-08-27T13:34:07.186729+00:00",
+  "finished_at": "2026-08-27T13:34:12.343826+00:00",
+  "finished_epoch": 1787837652.343826
+}

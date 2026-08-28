@@ -1,0 +1,60 @@
+id: I-2045
+provider: local
+kind: conversation
+body: 'API findings for Part01 preliminaries
+
+
+  Part01 wrappers are in StacksPart01Lib/Topology.lean, Categories.lean, Spectrum.lean.
+  Exact reusable declarations: StacksPart01.isQuasiCompactMap_comp {f:X→Y}{g:Y→Z}
+  (hf) (hg); image_retrocompact hf; image_quasiCompact (hX : QuasiCompactSpace X)
+  (hf : Continuous f); closed_subset_quasiCompact hs ht hsub; closed_subset_of_quasiCompact_space
+  hX ht; quasiCompact_iff_closed [CompactSpace X] [T2Space X]; quasiCompact_isClosed
+  [T2Space X]; quasiCompact_union hs ht; quasiCompact_prod hs ht; quasiCompact_inter
+  [T2Space X] hs ht; hausdorff_iff_closed_diagonal X (exact t2_iff_isClosed_diagonal).
+
+
+  Spectrum wrappers: StacksPart01.mem_standardOpen_iff (f:R) (x:PrimeSpectrum R):
+  x∈basicOpen f ↔ f∉x.asIdeal (exact PrimeSpectrum.mem_basicOpen); standardOpen_mul
+  f g (exact PrimeSpectrum.basicOpen_mul); standardOpen_one/zero; isOpen_standardOpen
+  f.
+
+
+  Category wrappers: StacksPart01Lib.isIso_iff_exists_inverse; inverse_unique; isGroupoid_iff_all_isIso;
+  isIso_mono_of/isIso_epi_of. Underlying Mathlib exact facts include IsCompact.image,
+  IsCompact.union/prod/inter, IsClosed.isCompact [CompactSpace], isCompact_univ, isCompact_range,
+  isCompact_diagonal, isCompact_iff_compactSpace, Set.Finite.isCompact_biUnion, Finset.isCompact_biUnion;
+  Set.image_preimage_eq_inter_range. CategoryTheory.IsIso.hom_inv_id/inv_hom_id, IsIso.inv_eq_of_hom_inv_id,
+  IsIso.inv_ext, IsGroupoid.all_isIso.
+
+
+  Graph frontier shows highest-value unimplemented Part01 labels include Zariski topology,
+  Functoriality of spectrum, Localization exact, Matrix left inverse, Universal property
+  localization module, Idempotent spec, Spec closed, Product ideals in prime. No sibling
+  project has stronger Part01 wrappers; downstream projects use native IsCompact and
+  AlgebraicGeometry.quasiCompact. Note MainProjects/.phase0-pre snapshot is stale/unrelated.'
+labels:
+- agent-ready
+status: archived
+scope: {}
+audience: task:ajcr-finite-stage-api-redesign
+author: horizon
+source_ref: null
+created_at: '2026-08-27T10:12:09.289222+00:00'
+updated_at: '2026-08-27T11:46:25.103679+00:00'
+metadata:
+  conversation: true
+  participants:
+  - task:ajcr-finite-stage-api-redesign
+  - task:fs-stacks-part01-prelim
+  started_by: task:fs-stacks-part01-prelim
+  read_by:
+  - fs-stacks-part01-prelim
+  provenance:
+    run: '0167'
+    session: 0004-horizon-fs-stacks-part01-prelim
+    role: horizon
+    round: '1'
+    rounds: '3'
+    task: fs-stacks-part01-prelim
+    task_title: Advance Stacks Part 01 Preliminaries formalization
+    projects: StacksPart01_Preliminaries

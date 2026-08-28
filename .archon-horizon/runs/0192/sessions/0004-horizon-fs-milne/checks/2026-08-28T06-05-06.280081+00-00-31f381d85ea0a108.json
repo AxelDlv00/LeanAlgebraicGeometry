@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "fingerprint": "31f381d85ea0a108",
+  "command": [
+    "lake",
+    "env",
+    "lean",
+    "/home/axel/LeanAlgebraicGeometry-Horizon/FormalizedSources/AbelianVarieties/Milne/MilneLib/Tensor.lean"
+  ],
+  "cwd": "FormalizedSources/AbelianVarieties/Milne",
+  "status": "passed",
+  "ok": true,
+  "returncode": 0,
+  "timed_out": false,
+  "reused": false,
+  "wait_seconds": 187.551,
+  "duration_seconds": 140.386,
+  "started_at": "2026-08-28T06:02:45.893801+00:00",
+  "finished_at": "2026-08-28T06:05:06.280081+00:00",
+  "finished_epoch": 1787897106.280081
+}

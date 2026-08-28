@@ -1,0 +1,21 @@
+{
+  "agent_nickname": "Turing",
+  "agent_path": "/root/frontier_probe",
+  "agent_role": "explorer",
+  "depth": 1,
+  "model": "gpt-5.6-sol",
+  "name": "explorer",
+  "native_subagent_id": "01a04365-00ff-7b61-b670-9a6c9f28e2a9",
+  "parent_session": "0002-horizon-fs-stacks-part07-alg-stacks",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "running",
+  "subagent_type": "explorer",
+  "summary": "",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 76193,
+    "tokens_out": 599
+  }
+}

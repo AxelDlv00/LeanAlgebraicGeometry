@@ -1,0 +1,30 @@
+## Summary
+
+AJC cleanup is substantially advanced but not complete. The scoped Lean and blueprint source trees are clean, all bounded checks passed, and the task remains `running` intentionally.
+
+## Progress
+
+- Roadmap: nested AJC tree now shows `4/24` completed with explicit Albanese, Cech/FBC, Pic0, Picard, assembly, and substrate subitems. Key commits: `f74c2c3db`, `164b152c5`.
+- Warning cleanup: [QcohRestrictBasicOpen.lean](/home/axel/LeanAlgebraicGeometry-Horizon/MainProjects/Algebraic-Jacobian-Challenge/AlgebraicJacobian/Cohomology/QcohRestrictBasicOpen.lean), `QcohTildeSections`, `CechBridge`, `CechToCohomology`, and `AffineSerreVanishing` are warning-free under LSP and standalone builds. Commits: `ca97f8944`, `bb7003245`, `80cd53ae6`, `ea983b5b5`, `d0ce26a1d`.
+- Cech structure: [CechSectionContractibilityCore.lean:30](/home/axel/LeanAlgebraicGeometry-Horizon/MainProjects/Algebraic-Jacobian-Challenge/AlgebraicJacobian/Cohomology/CechSectionContractibilityCore.lean:30) now exposes a reusable additive product equivalence, reused by [CechSectionContractibility.lean:36](/home/axel/LeanAlgebraicGeometry-Horizon/MainProjects/Algebraic-Jacobian-Challenge/AlgebraicJacobian/Cohomology/CechSectionContractibility.lean:36). Commit: `360fba5e3`.
+- Homological cleanup: [AcyclicResolution.lean:388](/home/axel/LeanAlgebraicGeometry-Horizon/MainProjects/Algebraic-Jacobian-Challenge/AlgebraicJacobian/Cohomology/AcyclicResolution.lean:388) has scoped instance variables and explicit categorical rewrites. Commit: `d340f7d53`.
+- Blueprint cleanup: Albanese and FGA chapters were rewritten as timeless mathematics while preserving labels, dependency lists, Lean pins, and `leanok` markers. Added the Nitsure citation in [content.tex:44](/home/axel/LeanAlgebraicGeometry-Horizon/MainProjects/Algebraic-Jacobian-Challenge/blueprint/src/content.tex:44), matching [Nitsure's arXiv record](https://arxiv.org/abs/math/0504590). Commits: `bd9f91a59`, `2697d9062`, `46cab8ffb`.
+- Verification: `CechBridge`, `CechToCohomology`, `AffineSerreVanishing`, Cech contractibility Core/consumer, `AcyclicResolution`, and `CechAugmentedResolution` all passed without direct warnings. The contractibility consumer took `22:05.97` and peaked at `10,111,404 KB`. Three full LuaLaTeX passes produced a 641-page PDF with zero undefined labels/citations, zero duplicate-label diagnostics, 879 overfull boxes, and zero underfull boxes.
+- Horizon bookkeeping and ground-review handoff were committed in `d08315cae`, `9df9170e8`, and `32a1414cf`. The graph quarantine was preserved by `4067082c0`.
+
+## Issues
+
+- The Cech refactor is structural; it did not produce a measured cold-build speedup. Dependent transport in `cechSection_comm_one` remains the hotspot, and heavy LSP diagnostics timed out.
+- `CechTermAcyclic` and `CechToHigherDirectImage` were not fully diagnosed because the shared LSP/build environment was unavailable. A full project-wide `lake build` was not run.
+- Broader debt remains: the janitor baseline records 190 heartbeat settings, 290 transparency settings, 8 recursion settings, and 15 synthesis-depth settings across 68 Lean files. Blueprint cleanup still has 217 iteration/run markers across 19 files and 879 layout overflows.
+- I-0311, I-0312, I-0314, and I-0315 remain open by design. Shared hgraph and generated workspace paths are still dirty and were not touched.
+
+## Why I stopped
+
+The objective is partly advanced, not fully complete. Safe bounded cleanup, authoritative target builds, full blueprint verification, metadata commits, and a fresh ground review are complete. Further optimization needs isolated profiling and multi-hour dependent builds; graph-derived work must wait for the quarantined hgraph baseline.
+
+## Next
+
+1. Profile the dependent transport in `cechSection_comm_one` and investigate the remaining Cech modules in an isolated scratch worktree.
+2. Continue chapter-local overflow and iteration-marker cleanup.
+3. Run a full project build only after the remaining Cech diagnostics are understood, and resolve I-0311 before any graph synchronization.

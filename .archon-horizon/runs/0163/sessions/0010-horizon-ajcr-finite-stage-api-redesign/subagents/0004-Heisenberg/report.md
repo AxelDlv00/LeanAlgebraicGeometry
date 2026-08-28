@@ -1,0 +1,3 @@
+Ground review complete. The committed AJCR units (`6655666759`, `f90b60bcfd`, and predecessors) are clean and serialized-checked; I found no correctness regression or staged AJCR contamination. The stable facade has no sorry and is intentionally lightweight, but it is currently additive with no downstream consumer import, while `GluePackage`, `GlueDataAssembly`, and `GlueDataFace` remain unverified/dirty and the dependent-header timeout persists.
+
+Recommendation: keep `ajcr-finite-stage-api-redesign` running, not complete or blocked. The task asks for APIs rewritten so later work can proceed stably; consumer migration and boundary verification are still outstanding. Progress is substantive, so the Horizon blocked condition is not met.

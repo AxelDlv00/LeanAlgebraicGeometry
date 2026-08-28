@@ -1,0 +1,23 @@
+{
+  "role": "ground",
+  "round": 1,
+  "status": "ok",
+  "engine_session_id": "cf6f3193-7d36-4d5c-9e16-c0bbfaa134ca",
+  "harness_name": "ground-default",
+  "harness_kind": "claude-code",
+  "model": "claude-opus-4-8",
+  "usage": {
+    "tokens_in": 10291,
+    "tokens_out": 41182,
+    "cost_usd": 6.736771749999999
+  },
+  "workspace_sha": "a921682369eb5aec595e647245b468c47fdc2a1b",
+  "project_revisions": {
+    "Algebraic-Jacobian-Challenge": "9e52fed0075792867fca02bb73248e962ad83ace",
+    "Line-Bundle-Comparison-Iso": "e2d0923f67462e4dd0795fdeea83dc46c9e4d48a",
+    "Albanese": "aaab72691192f38d7bc230235f51811b3eed06c0",
+    "Cech-Cohomology": "c6804100e7f2d375b525ece2c81f2dc9b24ef424",
+    "GR-Quot-Closure": "0929bff3e878fa74469b585c570e7d24abd49f46",
+    "MR0555258-Compactifying-Picard": "0da3d3f50dac0e61fffe671e1c441bdf05dd61e8"
+  }
+}

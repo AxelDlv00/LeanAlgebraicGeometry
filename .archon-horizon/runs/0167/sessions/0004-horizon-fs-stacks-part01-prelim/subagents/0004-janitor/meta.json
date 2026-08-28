@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Kuhn",
+  "agent_path": "/root/janitor_audit",
+  "agent_role": "janitor",
+  "depth": 1,
+  "model": "gpt-5.6-luna",
+  "name": "janitor",
+  "native_subagent_id": "01a042b6-2e0b-7013-812b-2f1d129aa1cc",
+  "ok": true,
+  "parent_session": "0004-horizon-fs-stacks-part01-prelim",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "completed",
+  "subagent_type": "janitor",
+  "summary": "Hygiene audit complete; no files, tasks, inbox items, or protections were modified.",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 586675,
+    "tokens_out": 5880
+  }
+}

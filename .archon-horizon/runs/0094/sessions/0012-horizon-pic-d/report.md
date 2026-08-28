@@ -1,0 +1,1 @@
+The new projection computation is ready, but its target build is compiling one missing universal second-window base-change object before it can reach the file. CPU and memory are normal; I’m keeping this foreground build alive to get a real kernel verdict.

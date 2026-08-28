@@ -1,0 +1,1 @@
+The protection scan confirms the Hartshorne project is read-only for this pass, and the local Lean library currently has no textual `sorry` markers. The first roadmap/graph calls did not emit data (likely project-name or CLI-option mismatch), so I’m checking the task metadata and CLI syntax directly before ranking declarations.

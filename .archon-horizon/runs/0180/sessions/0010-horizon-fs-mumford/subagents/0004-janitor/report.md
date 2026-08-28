@@ -1,0 +1,1 @@
+The Mumford task is live and has no stale/orphaned status; the only task warning is the global 20-open-task queue. Mumford’s graph is present and internally consistent (`346` nodes, `164` edges, `0` stale), but all `216` frozen TeX nodes remain intentionally unattached; I’m checking the current session artifacts and project-only filesystem delta for any hygiene-specific problem.

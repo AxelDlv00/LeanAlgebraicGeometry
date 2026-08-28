@@ -1,0 +1,13 @@
+## Checklist
+
+- [x] Started run 0148 (8 rounds).
+- [x] Recorded run 0148 baseline: 837a798.
+- [x] Workspace skills differ from the bundled ones (horizon, horizon-start); agents will follow this workspace's copy. Run `horizon skills install` to refresh (it overwrites local edits).
+- [x] Inbox synced.
+- [x] Synced hgraph JSON cache(s): Algebraic-Jacobian-Challenge-Rebuild (1329 nodes, 3390 edges).
+- [x] Published deterministic artifacts (1 hgraph JSON cache(s)).
+- [x] Synced hgraph JSON cache(s): Algebraic-Jacobian-Challenge-Rebuild (1329 nodes, 3390 edges).
+
+## Issues
+
+- None.

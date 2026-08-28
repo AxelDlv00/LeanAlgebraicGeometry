@@ -1,0 +1,23 @@
+`descentMap_injective` is also axiom-clean. All headline results verified. The session's work is complete, committed, and kernel-green.
+
+## Summary
+
+I closed **G2(b) — Speiser's theorem (Galois descent for semilinear representations)**, the algebraic heart of the finite Galois quotient engine in the T15 `instHasPicScheme` campaign. The campaign was effectively wave-0 (only `Carriers.lean` + a partial `SectionRingUniversal.lean` existed), so I committed one session to the cleanest fully-independent, mathlib-only, reusable XL pole rather than the higher-leverage but not-one-session-closeable affine Serre vanishing root. New file `Picard/GaloisDescent/SemilinearModules.lean` proves `descentEquiv : L ⊗[K] V^G ≃ₗ[L] V` for finite Galois `L/K` and **any** `L`-module `V` with a semilinear `Gal(L/K)`-action — the full module form G3 consumes, not just the finite-dimensional case.
+
+## Progress
+- AlgebraicJacobian/Picard/GaloisDescent/SemilinearModules.lean: NEW, ~390 LOC, sorry-free; framework (`IsSemilinear`, `invariants` V^G, `avg`, `descentMap`), Galois-matrix core (Dedekind independence → `galoisRow_span`/`galoisMatrix_eq_zero_of`/`galoisCol_span`), surjectivity (`span_invariants_eq_top`, `descentMap_surjective`), injectivity (`tensorFromPi` + `descentMap_injective`), capstone (`descentMap_bijective`, `descentEquiv`, `finrank_invariants`), and a regular-representation `IsSemilinear K L L` instance.
+- AlgebraicJacobian.lean: added the import so the brick is in the tracked build; full build 8690 jobs, exit 0.
+- informal/pic-representability-campaign.md: added Part IV recording the G2(b) landing, proof architecture, and remaining scheme-side G2 work.
+
+## Issues
+- No new issues introduced. Pre-existing warnings/sorries in other files (AlbaneseUP, QuotRepresentability, GrassmannianZariskiSheaf style) are untouched and unrelated.
+- Verification: file kernel-checks via `lake env lean` (5.5s, exit 0); `descentMap_bijective`, `descentMap_injective`, `finrank_invariants` all verified `[propext, Classical.choice, Quot.sound]` — no `sorryAx`.
+- The overall objective (`instHasPicScheme`) remains open — one XL milestone of ~30 is now closed; the true highest-leverage root `IsAffineHModuleVanishing` (affine Serre vanishing) is still a from-scratch multi-session build with no Mathlib backstop.
+
+## Why I stopped
+The assigned objective (close `instHasPicScheme`) is **partly advanced, not complete** — it is a ~30-milestone campaign and I closed one fully-independent XL milestone (G2(b)) to a clean, axiom-clean, committed, kernel-green state. I stopped at this natural boundary rather than starting the scheme-side G2(a)/(c) (GlueData/orbit-in-affine — scheme-land, not one-session-closeable), which would only add scaffolding-with-sorries to a currently-clean tree. Status left unset so the task returns to the queue.
+
+## Next
+- G2(a)/(c): `galoisDescendScheme` (orbit-in-affine + glue `Spec(A^Γ)` via `Scheme.GlueData`) and the `Hom_k(T,X) ≅ Hom_{k'}(T_{k'},X')^Γ` scheme-point statement — both consume the landed `descentEquiv`.
+- The two remaining independent wave-1 XL poles: `IsAffineHModuleVanishing` (affine Serre vanishing — also unblocks the T16 north star) and B3 rigid pushforward.
+- Optional: a blueprint node `sec:galois_descent` for the now-real `descentEquiv`/`finrank_invariants` (cluster G is currently greenfield in the blueprint).

@@ -1,0 +1,1 @@
+The module check also passed (`lake env lean StacksPart04Lib/Descent.lean`, exit 0), with no source `sorry`/`admit`/`axiom`. I’m adding one final extensionality result for a connected presentation, which is the key descent uniqueness principle and remains independent of quotient constructions.

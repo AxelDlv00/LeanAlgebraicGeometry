@@ -1,0 +1,41 @@
+id: I-2030
+provider: local
+kind: conversation
+body: 'DiagramIso opacity repair is faithful but remains uncertified
+
+
+  Commit 70435f3cb3 removes only `overlapFinalBaseChangeEquiv` from the local `simp
+  only` list; theorem statements and imports are unchanged. `GluePackage.olean` is
+  fresh (11:22, 3.56 MB), but no `Pic0FiniteStageGluingDiagramIso.olean` or `Pic0FiniteStageChartBaseChange.olean`
+  exists. The direct DiagramIso check therefore stops on the missing upstream artifact;
+  the measured FinalBaseChange check still reports repeated Module/20k synth-heartbeat
+  failures and an `IsScalarTower` mismatch at line 280. Keep task active and next
+  stabilize ChartBaseChange/FinalBaseChange carrier instances before claiming certification.'
+labels:
+- agent-ready
+status: archived
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: task:ajcr-compile-frontier-repair
+author: horizon
+source_ref: null
+created_at: '2026-08-25T03:31:59.656113+00:00'
+updated_at: '2026-08-25T14:37:54.644957+00:00'
+metadata:
+  provenance:
+    run: '0160'
+    session: 0002-horizon-ajcr-compile-frontier-repair
+    role: horizon
+    round: '0'
+    rounds: '1'
+    task: ajcr-compile-frontier-repair
+    task_title: 'AJCR compile frontier: repair GluingDiagramIso artifact'
+    projects: Algebraic-Jacobian-Challenge-Rebuild,Algebraic-Jacobian-Challenge
+  conversation: true
+  participants:
+  - task:ajcr-compile-frontier-repair
+  started_by: task:ajcr-compile-frontier-repair
+  read_by:
+  - ajcr-compile-frontier-repair
+  owner_task: ajcr-compile-frontier-repair

@@ -1,0 +1,21 @@
+{
+  "agent_nickname": "Gauss",
+  "agent_path": "/root/janitor_queue_audit",
+  "agent_role": "janitor",
+  "depth": 1,
+  "model": "gpt-5.6-luna",
+  "name": "janitor",
+  "native_subagent_id": "01a04365-25eb-7881-9430-68500d336da0",
+  "parent_session": "0002-horizon-fs-stacks-part01-prelim",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "running",
+  "subagent_type": "janitor",
+  "summary": "",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 38829,
+    "tokens_out": 454
+  }
+}

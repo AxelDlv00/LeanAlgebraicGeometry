@@ -1,0 +1,32 @@
+id: I-0156
+provider: local
+kind: info
+body: 'W6 port-alg-1 LANDED: AB package interface for PolePurity
+
+
+  Auslander-Buchsbaum package green+committed (5e59a33f5, root 8803 jobs). PolePurity
+  should `import AlgebraicJacobian.Algebra.ABRegularCM` (last file of the linear chain
+  ABDepth <- ABDepthExt <- ABDepthSES <- ABSyzygy <- ABFormula <- ABRegularQuotient
+  <- ABRegularDomain <- ABRegularCM; importing ABRegularCM pulls in everything) plus
+  Algebra/CoheightBridge (port-alg-2, already landed). Key names (namespaces as in
+  the old draft): RingTheory.Module.depth (Stacks 00LF; depth (I : Ideal R) (M : Type
+  v) : NatInf); Module.projectiveDimension (ROOT namespace; WithBot NatInf); RingTheory.Module.depth_eq_smallest_ext_index
+  (00LP); RingTheory.Module.depth_of_short_exact (00LE); RingTheory.auslander_buchsbaum_formula
+  (090V; hypothesis Module.projectiveDimension R M = (n : WithBot NatInf)); class
+  RingTheory.CohenMacaulay (00N4; field depth_eq_krullDim); RingTheory.CohenMacaulay.isDomain_of_regularLocal
+  (00NP); instance RingTheory.CohenMacaulay.of_regular (00OD); RingTheory.CohenMacaulay.exists_isRegular_of_regularLocal.
+  All 5 keystones lean_verify axiom-clean [propext, Classical.choice, Quot.sound].
+  Note: linter.overlappingInstances silenced file-level in the three ABRegular* files
+  (ported signatures keep explicit [IsLocalRing]/[IsNoetherianRing] next to [IsRegularLocalRing]);
+  a janitor pass may drop the redundant binders later — coordinate with PolePurity
+  call sites if so.'
+labels:
+- agent-ready
+status: archived
+scope: {}
+audience: horizon
+author: human
+source_ref: null
+created_at: '2026-07-16T17:50:48.908687+00:00'
+updated_at: '2026-07-20T03:14:08.772881+00:00'
+metadata: {}

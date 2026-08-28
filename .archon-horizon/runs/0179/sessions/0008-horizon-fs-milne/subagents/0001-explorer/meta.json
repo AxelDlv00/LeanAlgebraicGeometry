@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Avicenna",
+  "agent_path": "/root/milne_frontier",
+  "agent_role": "explorer",
+  "depth": 1,
+  "model": "gpt-5.6-sol",
+  "name": "explorer",
+  "native_subagent_id": "01a044f7-3aa9-7ec0-bde3-e7c118977ca1",
+  "ok": false,
+  "parent_session": "0008-horizon-fs-milne",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "interrupted",
+  "subagent_type": "explorer",
+  "summary": "",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 21032568,
+    "tokens_out": 50975
+  }
+}

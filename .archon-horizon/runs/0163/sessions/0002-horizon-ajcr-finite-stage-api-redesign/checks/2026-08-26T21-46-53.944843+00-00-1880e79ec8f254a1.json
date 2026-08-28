@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "fingerprint": "1880e79ec8f254a1",
+  "command": [
+    "lake",
+    "build",
+    "AlgebraicJacobian.Picard.Pic0FiniteStageGlueData"
+  ],
+  "cwd": "MainProjects/Algebraic-Jacobian-Challenge-Rebuild",
+  "status": "passed",
+  "ok": true,
+  "returncode": 0,
+  "timed_out": false,
+  "reused": false,
+  "wait_seconds": 0.0,
+  "duration_seconds": 5.577,
+  "started_at": "2026-08-26T21:46:48.368214+00:00",
+  "finished_at": "2026-08-26T21:46:53.944843+00:00",
+  "finished_epoch": 1787780813.944843
+}

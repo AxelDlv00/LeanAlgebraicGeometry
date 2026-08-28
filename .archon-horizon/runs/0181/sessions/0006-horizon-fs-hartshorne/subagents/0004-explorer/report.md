@@ -1,0 +1,1 @@
+Both relevant Lean modules now pass LSP diagnostics with no errors or warnings. I’m using the indexed signatures and axiom checks to pin down the final recommendations, including the one missing local-ring theorem and the declarations that are only auxiliary.

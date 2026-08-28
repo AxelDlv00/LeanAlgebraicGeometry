@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Ohm",
+  "agent_path": "/root/glued_base_change_edge",
+  "agent_role": "explorer",
+  "depth": 1,
+  "model": "gpt-5.6-sol",
+  "name": "explorer",
+  "native_subagent_id": "01a01555-1f24-7d22-8673-995c7f0ee792",
+  "ok": true,
+  "parent_session": "0042-horizon-ajcr-reviewer-full",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "completed",
+  "subagent_type": "explorer",
+  "summary": "## Audit Result",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 6817437,
+    "tokens_out": 17450
+  }
+}

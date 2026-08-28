@@ -1,0 +1,1 @@
+No durable authored changes remain after `b3430027e2`. Private-index audit is clean for all source, roadmap, task, inbox-comment, and hgraph paths. Only Horizon’s generated `inbox-hook-state.json` and `notify_cache.json` changed, so no additional commit is appropriate.

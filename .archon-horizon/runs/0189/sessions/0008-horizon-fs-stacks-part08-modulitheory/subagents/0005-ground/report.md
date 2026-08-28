@@ -1,0 +1,1 @@
+The task is still an intentionally long-lived `running` task, and the latest recorded Part 08 work is the two commits named in the handoff. I’m now checking those commits against the current file contents and graph-derived statuses, with special attention to whether “source-facing criterion” claims are merely facades or actually formalize the blueprint’s geometric nodes.

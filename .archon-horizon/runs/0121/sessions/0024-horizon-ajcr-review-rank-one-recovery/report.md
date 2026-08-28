@@ -1,0 +1,1 @@
+The root build has reached the final replay set and is still running in the foreground. Its output so far contains only the established workspace lints and the known `Challenge.lean` sorries; I’m waiting for the definitive exit before staging anything.

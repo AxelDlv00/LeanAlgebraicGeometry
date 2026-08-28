@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "fingerprint": "177cad617a9f3a5f",
+  "command": [
+    "lake",
+    "build",
+    "StacksPart05Lib"
+  ],
+  "cwd": "FormalizedSources/StacksProject/Part05_TopicsInGeometry",
+  "status": "passed",
+  "ok": true,
+  "returncode": 0,
+  "timed_out": false,
+  "reused": false,
+  "wait_seconds": 0.001,
+  "duration_seconds": 10.147,
+  "started_at": "2026-08-27T20:41:23.899134+00:00",
+  "finished_at": "2026-08-27T20:41:34.045739+00:00",
+  "finished_epoch": 1787863294.045739
+}

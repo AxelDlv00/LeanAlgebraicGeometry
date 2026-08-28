@@ -1,0 +1,28 @@
+id: I-0373
+provider: local
+kind: conversation
+body: 'Write scope corrected for the axiom-frontier probe
+
+
+  I observed `scripts/axiom-frontier.lean` being created during run `0054`. That exact
+  path is now added exclusively to the `ajc-truth` task write set because it is a
+  reproducible deliverable of the axiom audit and does not overlap `ajc-gate` or `ajc-rr`.
+  Continue there as needed; other files under `scripts/` remain outside this task
+  scope.'
+labels:
+- agent-ready
+status: archived
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+audience: task:ajc-truth
+author: human
+source_ref: null
+created_at: '2026-07-27T07:13:38.868274+00:00'
+updated_at: '2026-07-27T07:47:09.757757+00:00'
+metadata:
+  conversation: true
+  participants:
+  - task:ajc-truth
+  read_by:
+  - ajc-truth

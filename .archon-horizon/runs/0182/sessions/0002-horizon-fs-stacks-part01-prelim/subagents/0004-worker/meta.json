@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Bernoulli",
+  "agent_path": "/root/spectrum_worker",
+  "agent_role": "worker",
+  "depth": 1,
+  "model": "gpt-5.6-sol",
+  "name": "worker",
+  "native_subagent_id": "01a04377-eba8-7e23-9a84-80a778101d3e",
+  "ok": true,
+  "parent_session": "0002-horizon-fs-stacks-part01-prelim",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "completed",
+  "subagent_type": "worker",
+  "summary": "Yoneda work is complete and committed.",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 23266685,
+    "tokens_out": 28175
+  }
+}

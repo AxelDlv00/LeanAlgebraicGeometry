@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Wegener",
+  "agent_path": "/root/frontier_survey",
+  "agent_role": "explorer",
+  "depth": 1,
+  "model": "gpt-5.6-sol",
+  "name": "explorer",
+  "native_subagent_id": "01a043ec-53a8-7bb0-af43-0ca084d60f0f",
+  "ok": false,
+  "parent_session": "0004-horizon-fs-stacks-part05-geom-topics",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "interrupted",
+  "subagent_type": "explorer",
+  "summary": "",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 11006107,
+    "tokens_out": 17897
+  }
+}

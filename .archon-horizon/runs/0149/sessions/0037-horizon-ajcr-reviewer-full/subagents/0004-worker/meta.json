@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Anscombe",
+  "agent_path": "/root/right_naturality",
+  "agent_role": "worker",
+  "depth": 1,
+  "model": "gpt-5.6-sol",
+  "name": "worker",
+  "native_subagent_id": "01a01408-5ce6-7760-88b6-5dd434257181",
+  "ok": true,
+  "parent_session": "0037-horizon-ajcr-reviewer-full",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "completed",
+  "subagent_type": "worker",
+  "summary": "Read-only audit complete. No files were changed and no standalone build was run.",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 14061755,
+    "tokens_out": 39271
+  }
+}

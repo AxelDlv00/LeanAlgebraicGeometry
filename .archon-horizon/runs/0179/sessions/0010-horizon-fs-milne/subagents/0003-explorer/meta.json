@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Pasteur",
+  "agent_path": "/root/api_explorer",
+  "agent_role": "explorer",
+  "depth": 1,
+  "model": "gpt-5.6-sol",
+  "name": "explorer",
+  "native_subagent_id": "01a0454b-91bf-7750-9d1a-4a9605026f10",
+  "ok": false,
+  "parent_session": "0010-horizon-fs-milne",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "interrupted",
+  "subagent_type": "explorer",
+  "summary": "",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 13000406,
+    "tokens_out": 30502
+  }
+}

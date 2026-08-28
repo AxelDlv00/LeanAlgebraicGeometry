@@ -1,0 +1,1 @@
+The periodic chain has one immediate theorem, one foundational API layer, and then a genuine long-exact-sequence boundary; I’m separating those so the report does not overstate what is ready. I’m also matching the new `PointCycle` declarations against Tags `02QR`, `0GU2`, `0H46`, and `0H47` to identify which nodes merit progress comments without changing the graph.

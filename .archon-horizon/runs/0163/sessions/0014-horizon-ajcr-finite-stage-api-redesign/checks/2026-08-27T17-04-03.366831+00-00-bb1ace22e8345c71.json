@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "fingerprint": "bb1ace22e8345c71",
+  "command": [
+    "lake",
+    "env",
+    "lean",
+    "/home/axel/LeanAlgebraicGeometry-Horizon/MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0FiniteStageStableGluedOver.lean"
+  ],
+  "cwd": "MainProjects/Algebraic-Jacobian-Challenge-Rebuild",
+  "status": "passed",
+  "ok": true,
+  "returncode": 0,
+  "timed_out": false,
+  "reused": false,
+  "wait_seconds": 18.804,
+  "duration_seconds": 77.813,
+  "started_at": "2026-08-27T17:02:45.553913+00:00",
+  "finished_at": "2026-08-27T17:04:03.366831+00:00",
+  "finished_epoch": 1787850243.366831
+}

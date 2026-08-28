@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Curie",
+  "agent_path": "/root/cleanup_review",
+  "agent_role": "ground",
+  "depth": 1,
+  "model": "gpt-5.6-terra",
+  "name": "ground",
+  "native_subagent_id": "01a0272e-1e98-7730-bf03-fe7ab3d5cdea",
+  "ok": true,
+  "parent_session": "0104-horizon-ajcr-reviewer-full",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "completed",
+  "subagent_type": "ground",
+  "summary": "Fresh checkpoint findings:",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 844596,
+    "tokens_out": 3457
+  }
+}

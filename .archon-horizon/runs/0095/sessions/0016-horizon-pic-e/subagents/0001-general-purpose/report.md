@@ -1,0 +1,23 @@
+Read-only reconnaissance in the Lean project at /home/axel/LeanAlgebraicGeometry-Horizon/MainProjects/Algebraic-Jacobian-Challenge (mathlib pinned; use `grep`/`Read`, and the CLI `/home/axel/.archon-env/bin/horizon search "<words>" --json` which indexes mathlib + all workspace projects).
+
+I need a precise inventory of what exists for PROJECTIVITY / IMMERSIONS INTO Proj, to decide whether I can prove this statement:
+
+  `FiniteInAffine X := ∀ s : Set X, s.Finite → ∃ U : X.affineOpens, s ⊆ U.1`
+
+for a scheme `X` that is projective (or quasi-projective) over a field. Definition lives at AlgebraicJacobian/Picard/PicEtPointedReduction.lean:163.
+
+Report EXACTLY these, with file:line and the full signature of each declaration you name (verify names by reading the source, do not guess):
+
+1. In AJC (AlgebraicJacobian/**): every declaration about projectivity / closed immersion into projective space / Proj. Look at least at Picard/CurveProjectivity.lean, Picard/FiniteMapProjectiveImmersion.lean, Picard/FiniteMapProjectiveGluing.lean, Picard/FiniteMapProjectiveCoordinates.lean, Picard/FiniteMorphismEmbedding.lean, Picard/GrassmannianRepresentability.lean, Picard/AmbientPicNotProper.lean. What is the exact PREDICATE the project uses to say "X is projective over k"? Is it a class? Give its definition verbatim.
+
+2. `AlgebraicJacobian.GaloisDescent.exists_basicOpen_le_of_finite` and `AlgebraicJacobian.GaloisDescent.exists_mem_basicOpen_le_of_finite` — read the source, give full signatures, docstrings and where they live, and say exactly what they prove and what they assume. Are they about an affine scheme or about Proj? Is either one already the "finite set of points lies in an affine open" statement for some class of schemes?
+
+3. In mathlib at this pin: what exists about
+   - `AlgebraicGeometry.Proj.isAffineOpen_basicOpen` (full signature + hypotheses),
+   - graded/homogeneous prime avoidance: a homogeneous ideal not contained in finitely many homogeneous primes has a homogeneous element outside all of them. Search hard (`Ideal.subset_union_prime_finite`, `ProjectiveSpectrum`, `HomogeneousIdeal`, `ProjectiveSpectrum.basicOpen`). Report what IS there and what is NOT.
+   - is there ANY mathlib lemma of the form "finitely many points of a quasi-projective / projective scheme lie in a common affine open"? Report the exact search queries you ran and their outcomes.
+   - anything about `IsAffineOpen` of the preimage of an affine open under a closed/affine morphism (e.g. `IsAffineOpen.preimage`, `IsAffineOpen.of_isAffine_hom`).
+
+4. Does AJC have ANY declaration already stating something equivalent to FiniteInAffine besides the two in PicEtPointedReduction.lean (finiteInAffine_of_isAffine, finiteInAffine_of_iso, finiteInAffine_left_of_isAffineHom)? grep for `affineOpens` and for `⊆ U` patterns, and search the sibling project Algebraic-Jacobian-Challenge-Rebuild too.
+
+Be precise and terse. Do not write files. Do not edit anything. Report the facts with file:line anchors, and clearly separate WHAT EXISTS from WHAT IS ABSENT (and how you established absence).

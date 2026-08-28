@@ -1,0 +1,1 @@
+Confirmed both are dead (only a docstring mention) — cleanup debt, not worth build-churn this round; there's already a memory note. Now I'll wait for the build+checkdecls result before filing inbox items and reporting.

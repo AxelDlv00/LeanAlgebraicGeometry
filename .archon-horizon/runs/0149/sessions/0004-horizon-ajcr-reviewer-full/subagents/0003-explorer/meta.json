@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Tesla",
+  "agent_path": "/root/ajc_headline_audit",
+  "agent_role": "explorer",
+  "depth": 1,
+  "model": "gpt-5.6-terra",
+  "name": "explorer",
+  "native_subagent_id": "019fff41-b88d-74a2-98fa-3878d0745625",
+  "ok": true,
+  "parent_session": "0004-horizon-ajcr-reviewer-full",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "completed",
+  "subagent_type": "explorer",
+  "summary": "Read-only audit complete; no source or metadata edited.",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 3963454,
+    "tokens_out": 12456
+  }
+}

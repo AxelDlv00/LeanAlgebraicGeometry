@@ -1,0 +1,1 @@
+I’ve mapped the chapter-1 representability nodes onto mathlib’s existing `MorphismProperty` API. I’m checking exact graph dependencies and local naming/import conventions now so the recommendation is directly actionable.

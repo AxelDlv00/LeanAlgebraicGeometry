@@ -1,0 +1,75 @@
+id: I-0260
+provider: local
+kind: info
+body: 'G-4 SEED BLOCKED at hdvd (Wall C / ThetaGeneratorSeed.IsGenerator.dvd). The
+  sec=f nuance BITES. Verified analytically; NO Lean written, NO sorries introduced,
+  nothing committed (a bridge-sec seed would bake in a sec for which dvd is FALSE).
+
+
+  VERDICT (the binding check the lane brief requested): I-0258 is CORRECT that dvd
+  does not need sec = one SPECIFIC achiever f pointwise, but INCORRECT that dvd is
+  dischargeable "against the same windowCompare-ne-0 sec". It conflates fibre_regular
+  (dischargeable) with dvd (NOT). windowCompare (DivSchemeSeedUnivRes:70) is DEFINITIONALLY
+  the base-change map S->S2 on the S-tensor (windowCompare_tmul: s⊗h |-> algebraMap
+  s ⊗ h). windowCompare R_Z κ(p) x ne 0 means ONLY that the fibre section divFamPhi(windowCompare
+  x) is nonzero (div ge d_p FIBREWISE, possibly extra zeros incl. at z). It carries
+  NO minimal-vanishing/achiever data.
+
+
+  WHY dvd needs more: IsGenerator.dvd (DivSchemeFamily:130) = forall ψ∈K, relThetaResSide(side
+  z)(ψ) ∈ Ideal.span {eqn z} on piece D(h z) = "sec z GENERATES K·O on D(h z) RELATIVELY
+  over R_Z". Generation <=> sec z cuts exactly the relative divisor d near z = relative
+  base-point-free generator of O(windowN − d). Corroboration: (a) field-level generation
+  stalkIdeal_le_span_windowGerm_of_field / windowGen_of_field (DivSchemeMonoBridgeField:193,451)
+  USES the achiever exists_coeffAt_eq_baseDivisorAt + window normalization; (b) I-0231
+  BINDING: fibrewise => relative divisibility is FALSE ((t) vs (t+eps)), so fibrewise
+  generation cannot lift; (c) DivSchemeFamily header line 44 states the seed-with-IsGenerator
+  is the gated follow-up that CONSUMES the DD-4 base-field-transport seam = route
+  1.
+
+
+  SlicingFlat regular-cancellation (includeRight_mem_nonZeroDivisors_of_forall_tmul_residueField
+  SlicingFlat:356, mem_smul_top_of_apply_mem_smul_top :79) discharges fibre_regular
+  (relative REGULARITY of eqn z), NOT dvd (relative GENERATION). Wall C as scoped
+  in I-0258/lane-brief is mis-scoped.
+
+
+  Route-1 realization is additionally FALSE in the naive single-window-vector form
+  (I-0258: an arbitrary κ(p)-combination f is not divFamPhi(windowCompare x) for one
+  x). hdvd truly needs a RELATIVE base-point-free generator sec z ∈ divUniversalSeedK
+  for O(windowN − d) over R_Z (deferred DDR-3 (ii)=>(iii) over the test ring). Available
+  BPF infra (BpfSpan.mulSpan_eq_divisorSections_of_basepointFree, BaseDivisorSpan.exists_achiever_of_span)
+  is FIELD-level ONLY; no relative/R_Z version exists.
+
+
+  LANDED & FORWARD-COMPATIBLE (real, sorry-free on disk): bridge DivSchemeSeedUnivBridge
+  (3 keystones); bricks 1-3 DivSchemeSeedUnivFields (divUniversalSeedFibreDivisor(_spec/_unique);
+  Brick2 exists_forall_windowCompare_ne_zero; Brick3 relPinnedSectionsMap_relThetaResSide_windowEquiv_ne_zero);
+  THE TRIANGLE resHom_relThetaWindowEquiv_cancelBaseChange_fst/snd (DivisorFamilyWindowTriangle:347
+  — READING naturality, powers hfib not achievers). hfib (fibre_regular) is FULLY
+  UNBLOCKED for any windowCompare-ne-0 sec. ONLY hdvd is blocked.
+
+
+  CONSEQUENCE: seedUniv + isGenerator_seedUniv cannot be completed by consuming the
+  bridge. Walls B (no-leak piece choice) and D (assemble) are also blocked (no valid
+  seed => no pieces). CertUniv/EpsUniv via ThetaGeneratorSeed.divFamEps_certifiedFamily
+  (DivSchemeEps:312) require hD.IsGenerator and cannot launch.
+
+
+  RECOMMENDATION (orchestrator): build the missing RELATIVE base-point-free / achiever-transport
+  seam (DD-4 base-field-transport, DivSchemeFamily:44) producing per z a generator
+  sec z ∈ divUniversalSeedK cutting d relatively near z, THEN hdvd, THEN the seed
+  struct+isGenerator. This is route-1-class, out of the consume-the-bridge mandate;
+  NOT attempted per lane brief.'
+labels:
+- agent-ready
+status: archived
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: agent
+source_ref: null
+created_at: '2026-07-19T12:33:32.562260+00:00'
+updated_at: '2026-07-20T03:15:16.300864+00:00'
+metadata: {}

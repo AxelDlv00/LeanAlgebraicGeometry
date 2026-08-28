@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "fingerprint": "faeb181e24beadac",
+  "command": [
+    "lake",
+    "env",
+    "lean",
+    "/home/axel/LeanAlgebraicGeometry-Horizon/FormalizedSources/AbelianVarieties/Milne/MilneLib/Sheaf.lean"
+  ],
+  "cwd": ".",
+  "status": "failed",
+  "ok": false,
+  "returncode": 1,
+  "timed_out": false,
+  "reused": false,
+  "wait_seconds": 0.217,
+  "duration_seconds": 0.215,
+  "started_at": "2026-08-27T10:05:32.016188+00:00",
+  "finished_at": "2026-08-27T10:05:32.231037+00:00",
+  "finished_epoch": 1787825132.231037
+}

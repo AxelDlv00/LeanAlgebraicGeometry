@@ -1,0 +1,18 @@
+{
+  "model": "claude-fable-5",
+  "name": "blueprint",
+  "native_subagent_id": "toolu_015ZDyi7EkQT2mENd5ojXD2P",
+  "ok": false,
+  "parent_session": "0071-horizon-T12",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "orphaned",
+  "subagent_type": "blueprint",
+  "summary": "",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 11738,
+    "tokens_out": 570
+  }
+}

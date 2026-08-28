@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "fingerprint": "43ed4d30f16d38a0",
+  "command": [
+    "lake",
+    "build"
+  ],
+  "cwd": "FormalizedSources/StacksProject/Part08_TopicsInModuliTheory",
+  "status": "passed",
+  "ok": true,
+  "returncode": 0,
+  "timed_out": false,
+  "reused": false,
+  "wait_seconds": 0.0,
+  "duration_seconds": 3.738,
+  "started_at": "2026-08-27T13:52:48.985002+00:00",
+  "finished_at": "2026-08-27T13:52:52.722993+00:00",
+  "finished_epoch": 1787838772.722993
+}

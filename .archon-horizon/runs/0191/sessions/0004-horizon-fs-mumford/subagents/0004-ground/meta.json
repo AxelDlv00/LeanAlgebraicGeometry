@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Poincare",
+  "agent_path": "/root/final_ground_review",
+  "agent_role": "ground",
+  "depth": 1,
+  "model": "gpt-5.6-sol",
+  "name": "ground",
+  "native_subagent_id": "01a04751-8288-7582-9901-a05e51a9e8b4",
+  "ok": true,
+  "parent_session": "0004-horizon-fs-mumford",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "completed",
+  "subagent_type": "ground",
+  "summary": "Independent review verdict:",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 5626192,
+    "tokens_out": 17310
+  }
+}

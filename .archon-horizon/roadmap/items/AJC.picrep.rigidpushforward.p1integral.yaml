@@ -1,0 +1,39 @@
+id: AJC.picrep.rigidpushforward.p1integral
+title: IsIntegral P^1_k -- the last H0-finiteness leaf
+projects:
+- Algebraic-Jacobian-Challenge
+summary: 'IsIntegral (P^1_k) -- CLOSED (run 0053 s0004) as the instance Adelic.instIsIntegralP1OverLeft
+  (Picard/RigidPushforwardInstance.lean). Chain: p1AwayAlgEquiv (the chart ring of
+  the INTEGRAL model Proj Z[X0,X1] is a polynomial ring, over any base ring; the field
+  case was ported from the Rebuild project) -> p1ChartSectionsAlgEquivX/Y (Gamma(P^1_k,
+  D+(Xi)) =alg[k]= k[T], the injectivity half coming from a retraction built on the
+  CommRingCat section-ring pushout, whose compatibility square is free because Gamma(top_Scheme)
+  is initial) -> IsDomain of both chart rings -> IsReduced.of_openCover plus the overlap
+  being a dense irreducible subset -> IsIntegral. Axiom-clean; the instance fires
+  by synthesis.'
+status: done
+kind: proof
+priority: normal
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+metadata:
+  author: horizon
+  created_at: '2026-07-27T07:50:00.321134+00:00'
+  provenance:
+    run: '0053'
+    session: 0002-horizon-ajc-gate
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajc-gate
+    task_title: Close the HasRigidPushforward representability gate
+    projects: Algebraic-Jacobian-Challenge
+  parent: AJC.picrep.rigidpushforward
+  updated_at: '2026-07-30T09:00:53.001917+00:00'
+  pinned_commits:
+  - e4a026eb7
+  milestone: AJC.picrep

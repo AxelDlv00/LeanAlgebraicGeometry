@@ -1,0 +1,1 @@
+The root replay exposed a pre-existing resource tail: two superseded high-degree modules have taken 543s and 733s while compiling, exactly the PDF’s warning that this route is infrastructure-only. It has reached 9,135/9,245 jobs; I’m letting it finish for a definitive kernel result, then I’ll avoid repeating this cold path.

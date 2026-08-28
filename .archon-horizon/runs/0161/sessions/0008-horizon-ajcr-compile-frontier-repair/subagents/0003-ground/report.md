@@ -1,0 +1,1 @@
+The historical 23353 artifact is now confirmed stale: the only remaining Restriction `.olean` predates the public-RHS restoration, and the ScalarExtendedAtlas artifact is absent. I’ve recorded that distinction in I-2031 and am leaving the source untouched while `/root` decides whether to try the explicit typed-map boundary.

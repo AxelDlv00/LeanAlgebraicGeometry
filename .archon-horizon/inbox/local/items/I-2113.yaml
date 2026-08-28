@@ -1,0 +1,55 @@
+id: I-2113
+provider: local
+kind: conversation
+body: 'Stable API audit (read-only): StableGluePackage.lean:42-46 defines `Pic0FiniteStageStableGluePackage
+  C F` with `context : Pic0FiniteStageGlueContext C F` and `presentation : AffineRingGluePresentation
+  P.context.triple.N.1`; constructors are `Pic0FiniteStageStableGluePackage.ofContext
+  C D pres` and `D.ofPresentation C pres` (StableGlueProducer.lean:41-59), with simp
+  context/presentation projections. Stable package accessors are models/triple/L/n/m/relation/e/M/mapM/N/thetaN/glueData/mapData/gluedMap/asOver
+  and chartMap_factor/comparison certificates (StableGluePackage.lean:61-131). StableGluedOver.lean:39-99
+  adds GluedOverData carrying exact `mapData`, projections glueData/map/asOver/chartMap_factor,
+  and defs `gluedOverData`, `gluedOver`; no `toLegacy` or `toStable` adapter exists.
+
+
+  Exact mismatch: StableAffineCover.lean:36 and all eight wrappers still bind `(P
+  : Pic0FiniteStageGluePackage Ck F)` and call legacy `pic0FiniteStageOrbitsInAffineOpen_*`;
+  OrbitAffine.lean:43-155 likewise all producers are legacy and use P.glueData/P.gluedOver/P.gluedMap.
+  Stable and legacy packages are not defeq-compatible. Smallest migration is to add
+  stable variants of the four OrbitAffine producers (or rename them), using P.presentation.glueData.glued,
+  P.gluedOver, P.gluedMap, then switch StableAffineCover P and calls. Avoid cast/reconstructing
+  legacy; this defeats pinned API.
+
+
+  Verification: `lake build AlgebraicJacobian.Picard.Pic0FiniteStageFinalBaseChange`
+  followed by `lake env lean /dev/stdin` importing StableGluePackage/Producer/GluedOver
+  and #checking constructors/accessors succeeded. Initial import failure was only
+  missing `.lake/build/lib/lean/AlgebraicJacobian/Picard/Pic0FiniteStageFinalBaseChange.olean`
+  plus stale old-path refs in `.lake/build/ir`; no source error. Build had only pre-existing
+  linter warnings.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: task:ajcr-finite-stage-api-redesign
+author: horizon
+source_ref: null
+created_at: '2026-08-28T03:12:18.820032+00:00'
+updated_at: '2026-08-28T03:12:18.820042+00:00'
+metadata:
+  provenance:
+    run: 0190
+    session: 0002-horizon-ajcr-finite-stage-api-redesign
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajcr-finite-stage-api-redesign
+    task_title: 'AJCR: diagnose and rewrite unstable formalization APIs'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  conversation: true
+  participants:
+  - task:ajcr-finite-stage-api-redesign
+  started_by: task:ajcr-finite-stage-api-redesign
+  read_by:
+  - ajcr-finite-stage-api-redesign

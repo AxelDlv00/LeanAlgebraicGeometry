@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Faraday",
+  "agent_path": "/root/api_research2",
+  "agent_role": "explorer",
+  "depth": 1,
+  "model": "gpt-5.6-sol",
+  "name": "explorer",
+  "native_subagent_id": "01a04578-0fb5-79e2-94a0-01af8e4479f2",
+  "ok": true,
+  "parent_session": "0010-horizon-fs-hartshorne",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "completed",
+  "subagent_type": "explorer",
+  "summary": "Cross-project search is complete; no files were edited.",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 6203497,
+    "tokens_out": 16067
+  }
+}

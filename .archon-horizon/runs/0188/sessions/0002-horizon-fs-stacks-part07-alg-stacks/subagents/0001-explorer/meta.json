@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Nietzsche",
+  "agent_path": "/root/frontier_scan",
+  "agent_role": "explorer",
+  "depth": 1,
+  "model": "gpt-5.6-sol",
+  "name": "explorer",
+  "native_subagent_id": "01a0436a-dfc9-7983-932c-58b3d0aa996d",
+  "ok": false,
+  "parent_session": "0002-horizon-fs-stacks-part07-alg-stacks",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "interrupted",
+  "subagent_type": "explorer",
+  "summary": "",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 15238768,
+    "tokens_out": 31839
+  }
+}

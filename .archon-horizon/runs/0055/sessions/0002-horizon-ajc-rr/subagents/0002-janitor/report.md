@@ -1,0 +1,37 @@
+Both dispatch warnings are cleared. Here is what happened.
+
+## The short version
+
+**Both warnings you sent me for were already resolved before I could act on them** — by another janitor pass running concurrently in run 0053, committed as `e50ac3d09` about eight minutes before I started measuring. The task queue went 15 → 11 open and the inbox 38 → 30 non-protection in that commit, not in mine. I verified their work rather than redoing it, then handled what they left and what arrived after them.
+
+Final state: task warnings **none**, roadmap warnings **none**, inbox down to one residual advisory (11 memory vs cap 10), which is deliberate and documented.
+
+## What I verified from the concurrent pass
+
+I spot-checked the run-0053 closures rather than trusting the commit message. T13 `done` is correct — no `Genus0BaseObjects` directory and zero `Genus0` hits in AJC. T14/T15/AJCR.w4-rep cancellations are sound (T15 restated the already-failed T12 over the same file set). The `AJCR.w4-rep` roadmap row is back to `active`, so the CLI trap they hit and reverted is genuinely repaired. The orphaned Albanese `RationalCurveIso` drafts are gone from disk and from the ledger tree.
+
+**T12 stays `failed`, deliberately.** You flagged T15/T16 as possible successors. T15 was already cancelled as a duplicate; T12's `failed` is accurate history — the Quot-scheme route did fail, and both READMEs now say so. Its roadmap ref `AJC.picrep` is `pending` with the live leaf owned by `ajc-gate`, so the cone has an owner and nothing is orphaned.
+
+## What I changed
+
+**Docs** (committed as `a18c24c02`, ledger):
+- `roadmap.md`: Albanese is 12 open sorries, not 11. The twelfth is `Genus0BaseObjects/GmScaling.lean` — the genus-0 retirement was scoped to AJC only, and the roadmap read as if the split were gone workspace-wide. Added a leaf recording that. AJC (26 in 11 modules) and AJCR (16) re-verified unchanged.
+- `/home/axel/LeanAlgebraicGeometry-Horizon/MainProjects/Algebraic-Jacobian-Challenge-Rebuild/README.md`: the unrooted-module gap is 626 files vs 503 root imports (~90 unchecked), not 624/499/~125. It also cited inbox `I-0361` for the tracked list, but that item is closed — repointed to roadmap row `AJCR.w4-rep.build-reach`.
+
+I also corrected the AJC README's module/line census, then found run 0054 had committed the identical fix concurrently (`0be832b94`), so that edit is theirs, not mine.
+
+**Inbox** (2 actions, both conservative):
+- Archived `I-0389` as a verbatim duplicate of `I-0379` — same team, same numbers, same command block, filed 30 minutes after they archived the original. Left a comment saying to restore `I-0379` if the lesson should be visible rather than held twice.
+- Scoped `I-0320` to task `ajcr-w4-rep-free` (the one AJCR lane memory still shared).
+
+**Comments, no status change:** refreshed `I-0083`'s line pointers, which had drifted 30–60 lines — `pullback_preservesFiniteLimits` is at `:162` (cited as 197), and the two naturality fields at `:1634` and `:1705` (cited ~1690/~1758). A lane briefed from that body would have opened the wrong place. The claim itself is still correct.
+
+## What I deliberately left
+
+Your two new DMs to `task:ajc-gate` and `task:ajc-truth` are untouched and open, as instructed. All seven conversations are live cross-team traffic from the past hour — none stale.
+
+**The memory cap warning stays, and I recommend leaving it.** I audited all 11: `I-0065` and `I-0076` guard AJC dead ends still cited in the tree (`extend_of_codimOneFree_of_smooth` in five places; `pullback_preservesFiniteLimits` still a live sorry), `I-0362` is cited by name from the rebuild README, four are AJCR lane memories including two `[persistent]`, and four landed within the hour from live teams. Archiving any to hit the number would destroy exactly the failure memory the cap exists to protect.
+
+One concrete finding worth your attention: `I-0387` proposed fixing this by owning lane memory to tasks. **I tested that and it does not work** — the advisory counts owned items too. The count read 11 before and after I moved `I-0320`. That rules out the ownership remedy at the CLI level; it would need Archon Horizon to count only shared items. Recorded on `I-0387`.
+
+I touched no Lean source, nothing under `AlgebraicJacobian/RiemannRoch/**`, and no roadmap item owned by the three live tasks. Note the inbox count is a moving target — the live teams filed four items while I worked, so it drifted 30 → 32 → 31 independently of anything I did.

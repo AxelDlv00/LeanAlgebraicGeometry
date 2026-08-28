@@ -1,0 +1,10 @@
+import AlgebraicJacobian.Picard.Pic0ChartMonoUnconditional
+#check @AlgebraicGeometry.injective_abelSigmaChartZero
+#check @AlgebraicGeometry.not_pointwiseCoverage_abelSigmaChartZero_of_ne_top
+#check @AlgebraicGeometry.no_proper_open_abelSigmaChartZero
+#check @AlgebraicGeometry.opens_eq_bot_or_top_of_terminalRep
+#print axioms AlgebraicGeometry.injective_abelSigmaChartZero
+#print axioms AlgebraicGeometry.not_pointwiseCoverage_abelSigmaChartZero_of_ne_top
+#print axioms AlgebraicGeometry.no_proper_open_abelSigmaChartZero
+#print axioms AlgebraicGeometry.opens_eq_bot_or_top_of_terminalRep
+#print axioms AlgebraicGeometry.Jacobian

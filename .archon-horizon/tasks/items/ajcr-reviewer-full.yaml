@@ -1,0 +1,45 @@
+id: ajcr-reviewer-full
+project: Algebraic-Jacobian-Challenge-Rebuild
+objective: 'Read the two binding reviewer PDFs (MainProjects/Algebraic-Jacobian-Challenge/informal/Lean_Algebraic_Jacobian_Complete_Execution_Plan.pdf
+  and .../AJCR_Runs_121_122_123_Supervision_Note_2026-08-07.pdf), then own the whole
+  Pic^0 rank-one integration cone end-to-end and close it through rankOneAbelIso ->
+  pic0_representableBy -> the JacobianData/Challenge.lean headline, keeping every
+  milestone root-reachable, kernel-clean (#print axioms = [propext, Classical.choice,
+  Quot.sound]), and full-build green. You have full authority to edit any file on
+  the critical path, run full builds, and archive/delete any inbox item — including
+  protection or persistent items — that is stale, irrelevant, or blocking; report
+  honestly if a gate genuinely cannot close rather than faking it.
+
+
+  PS: This is an ultracode run — fan out with subagents/workflows and pick a relevant
+  model per subtask (Opus is often enough; reserve Fable 5 for where it is actually
+  needed) rather than defaulting everything to Fable 5 subagents.'
+title: Fully answer the two AJCR reviewer PDFs — land pic0_representableBy and the
+  Jacobian headline
+explanation: ''
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+- Algebraic-Jacobian-Challenge
+priority: urgent
+status: blocked
+write_set:
+  files: []
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+  - Algebraic-Jacobian-Challenge
+  declarations: []
+  blueprint_nodes: []
+  workspace: false
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+  - Algebraic-Jacobian-Challenge
+roadmap_refs:
+- AJCR.review-plan.p7-galois-descent
+- AJCR.review-plan.p8-jacobian
+inbox_refs: []
+artifact_refs: []
+created_at: '2026-08-12T02:35:23.632931+00:00'
+updated_at: '2026-08-23T02:34:52.443224+00:00'
+metadata:
+  author: human

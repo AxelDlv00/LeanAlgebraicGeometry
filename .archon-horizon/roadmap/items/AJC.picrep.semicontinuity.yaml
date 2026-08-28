@@ -1,0 +1,37 @@
+id: AJC.picrep.semicontinuity
+title: 'B5: h0 upper semicontinuity — unconditional curve instance'
+projects:
+- Algebraic-Jacobian-Challenge
+summary: CLOSED by a998c7c43f. instHasH0SemicontinuityOfCurve now synthesizes for
+  every smooth proper geometrically integral curve, with no additional hypothesis.
+  The proof pushes the line bundle to P1_A along the canonical finite map, obtains
+  flat Cech terms and finite H0/H1, forms the finite Mumford replacement, applies
+  kernel-rank upper semicontinuity, and transports residue fields across Gamma(Spec
+  A, O) ≃ A. The exact target and rooted AlgebraicJacobian builds pass; both new declarations
+  are source-clean and use only propext, Classical.choice, and Quot.sound.
+status: done
+kind: proof
+priority: high
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+metadata:
+  author: horizon
+  created_at: '2026-07-29T10:58:19.288730+00:00'
+  provenance:
+    run: 0086
+    session: 0002-horizon-ajc-p4
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajc-p4
+    task_title: 'AJC prover p4: claim and close the 4th-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge
+  parent: AJC.picrep
+  updated_at: '2026-07-30T04:47:32.851451+00:00'
+  pinned_commits:
+  - a998c7c43f2486c62884f421cf443499eb64de24

@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Dirac",
+  "agent_path": "/root/rep_transport_api",
+  "agent_role": "explorer",
+  "depth": 1,
+  "model": "gpt-5.6-sol",
+  "name": "explorer",
+  "native_subagent_id": "01a01503-d8cc-7c73-8647-81c8f5d3cc91",
+  "ok": true,
+  "parent_session": "0040-horizon-ajcr-reviewer-full",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "completed",
+  "subagent_type": "explorer",
+  "summary": "Audit complete and reported to the parent.",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 19322645,
+    "tokens_out": 39963
+  }
+}

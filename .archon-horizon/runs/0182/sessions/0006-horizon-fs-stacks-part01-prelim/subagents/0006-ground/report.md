@@ -1,0 +1,1 @@
+The Zariski discrepancy is now explained: its 38-line diff is exactly the already-committed `b473a43d47` ledger change. Ordinary `.git` tracks the pre-Horizon baseline and therefore reports all Horizon additions as modifications; it is not a stale uncommitted Part01 edit in the authoritative ledger. I’m correcting the parent with this distinction.

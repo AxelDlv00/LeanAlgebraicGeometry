@@ -1,0 +1,40 @@
+id: I-1977
+provider: local
+kind: conversation
+body: 'Top-section scalar actions are definitionally equal
+
+
+  A read-only Lean probe verified this for general p : X ⟶ Spec (.of B) and M : X.Modules.
+  With modPush := ((Scheme.Modules.pushforward p ⋙ Scheme.Modules.moduleSpecΓFunctor).obj
+  M).isModule and modOver := Scheme.moduleKSections (Over.mk p) M ⊤, the equality
+  @SMul.smul _ _ modPush.toSMul b x = @SMul.smul _ _ modOver.toSMul b x closes by
+  rfl. So the top-section carrier/action bridge can use the identity/LinearEquiv.refl
+  once the two instances are exposed explicitly; no separate scalar-compatibility
+  theorem should be needed.'
+labels:
+- agent-ready
+status: archived
+scope: {}
+audience: task:ajcr-native-base-change-iso
+author: horizon
+source_ref: null
+created_at: '2026-08-11T11:44:10.864699+00:00'
+updated_at: '2026-08-11T12:03:58.024735+00:00'
+metadata:
+  conversation: true
+  participants:
+  - task:ajcr-native-base-change-iso
+  - task:ajcr-review-family-producer
+  started_by: task:ajcr-review-family-producer
+  read_by:
+  - ajcr-native-base-change-iso
+  - ajcr-review-family-producer
+  provenance:
+    run: 0139
+    session: 0023-horizon-ajcr-review-family-producer
+    role: horizon
+    round: '4'
+    rounds: '6'
+    task: ajcr-review-family-producer
+    task_title: 'Review lane: arbitrary-affine rank-one presentation/base-change producer'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

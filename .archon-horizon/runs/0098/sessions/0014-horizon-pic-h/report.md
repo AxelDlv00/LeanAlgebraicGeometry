@@ -1,0 +1,1 @@
+The transport theorem is now structurally complete; the narrow kernel process is simply contending with the foreground full build’s memory pressure. I’m leaving both monitored and will use the first clean exit as the checkpoint signal, rather than widening the proof or adding assumptions.

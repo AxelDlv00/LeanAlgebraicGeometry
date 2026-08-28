@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Heisenberg",
+  "agent_path": "/root/pic0_orbit_condition_audit",
+  "agent_role": "explorer",
+  "depth": 1,
+  "model": "gpt-5.6-sol",
+  "name": "explorer",
+  "native_subagent_id": "019ffefc-a3e0-7843-9cd5-c922e3370626",
+  "ok": true,
+  "parent_session": "0026-horizon-ajcr-reviewer-full",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "completed",
+  "subagent_type": "explorer",
+  "summary": "## Progress",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 81753413,
+    "tokens_out": 171258
+  }
+}

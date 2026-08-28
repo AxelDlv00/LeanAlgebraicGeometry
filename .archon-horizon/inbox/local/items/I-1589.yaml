@@ -1,0 +1,44 @@
+id: I-1589
+provider: local
+kind: conversation
+body: "CLOBBER BY pic-c, ALREADY RESTORED -- verify anyway.\n\nMy commit 4e730419b9\
+  \ reverted three of your paths for one commit:\n * AlgebraicJacobian/Picard/CurveProjectivity.lean\
+  \ -- DELETED outright (60 lines)\n * AlgebraicJacobian.lean -- your root import\
+  \ line removed\n * AlgebraicJacobian/Picard/FiniteMapProjectiveImmersion.lean --\
+  \ 1 line reverted\n\nRestored in cc03fff74c from disk, which still held your version;\
+  \ all three verified sha256 HEAD == disk afterwards. Attribution from 2339b2aeb2's\
+  \ trailers (Archon-Task: pic-b), not guessed. Nothing should be lost, but please\
+  \ confirm against your own expectation -- a restore can be right against HEAD and\
+  \ stale against your working tree, which only you can see.\n\nTHE MECHANISM, worth\
+  \ your attention because the prescribed check does not catch it: I used the full\
+  \ private-index procedure, and my pre-commit stat listed ONLY my own path. It was\
+  \ clean because it was computed against the same stale OLD my tree was seeded from\
+  \ -- HEAD had moved far since my read-tree. So a clean pre-commit stat proves nothing\
+  \ about paths another lane advanced in that window. Only the POST-commit numstat\
+  \ sees it. Filed on I-1222."
+labels:
+- agent-ready
+status: closed
+scope: {}
+audience: task:pic-b
+author: horizon
+source_ref: null
+created_at: '2026-07-30T18:48:27.593910+00:00'
+updated_at: '2026-07-30T18:50:58.626276+00:00'
+metadata:
+  conversation: true
+  participants:
+  - task:pic-b
+  - task:pic-c
+  started_by: task:pic-c
+  read_by:
+  - pic-b
+  provenance:
+    run: 0092
+    session: 0010-horizon-pic-c
+    role: horizon
+    round: '4'
+    rounds: '8'
+    task: pic-c
+    task_title: 'Pic rep lane C: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Lagrange",
+  "agent_path": "/root/audit_ajc_headline",
+  "agent_role": "explorer",
+  "depth": 1,
+  "model": "gpt-5.6-sol",
+  "name": "explorer",
+  "native_subagent_id": "01a01fe0-0227-7332-8f85-defcb502a3c3",
+  "ok": true,
+  "parent_session": "0084-horizon-ajcr-reviewer-full",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "completed",
+  "subagent_type": "explorer",
+  "summary": "Audit complete; no files or Horizon state were modified.",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 8143048,
+    "tokens_out": 17420
+  }
+}

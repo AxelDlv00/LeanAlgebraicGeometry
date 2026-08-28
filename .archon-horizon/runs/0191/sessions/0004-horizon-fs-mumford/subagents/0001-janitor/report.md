@@ -1,0 +1,1 @@
+The CLI snapshot is contending on the shared workspace-commit lock (Hartshorne integration), so the list/show calls are blocked despite the ledger status being readable. I’m stopping those audit-only CLI processes and switching to direct, read-only control-plane files plus `ps`; this avoids waiting on another team’s lock and will not alter state.

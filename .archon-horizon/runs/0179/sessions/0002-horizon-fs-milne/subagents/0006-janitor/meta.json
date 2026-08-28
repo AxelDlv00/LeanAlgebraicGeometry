@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Boole",
+  "agent_path": "/root/janitor_checkpoint",
+  "agent_role": "janitor",
+  "depth": 1,
+  "model": "gpt-5.6-terra",
+  "name": "janitor",
+  "native_subagent_id": "01a04380-ea38-7bb3-ad9b-5f22ddce14a2",
+  "ok": true,
+  "parent_session": "0002-horizon-fs-milne",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "completed",
+  "subagent_type": "janitor",
+  "summary": "Audit complete; no files or Horizon metadata changed.",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 272156,
+    "tokens_out": 3718
+  }
+}

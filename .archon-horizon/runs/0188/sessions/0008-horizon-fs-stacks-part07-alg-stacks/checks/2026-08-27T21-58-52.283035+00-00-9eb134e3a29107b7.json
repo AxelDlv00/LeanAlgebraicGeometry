@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "fingerprint": "9eb134e3a29107b7",
+  "command": [
+    "lake",
+    "env",
+    "lean",
+    "/home/axel/LeanAlgebraicGeometry-Horizon/FormalizedSources/StacksProject/Part07_AlgebraicStacks/StacksPart07Lib/DescentFunctoriality.lean"
+  ],
+  "cwd": "FormalizedSources/StacksProject/Part07_AlgebraicStacks",
+  "status": "passed",
+  "ok": true,
+  "returncode": 0,
+  "timed_out": false,
+  "reused": false,
+  "wait_seconds": 4.954,
+  "duration_seconds": 2.722,
+  "started_at": "2026-08-27T21:58:49.561445+00:00",
+  "finished_at": "2026-08-27T21:58:52.283035+00:00",
+  "finished_epoch": 1787867932.283035
+}

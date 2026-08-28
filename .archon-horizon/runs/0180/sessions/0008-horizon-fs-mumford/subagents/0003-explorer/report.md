@@ -1,0 +1,1 @@
+I’m broadening the finite-quotient scan slightly to include Stacks and the original AJC modules, looking for any theorem that transfers `Finite`/`Nat.card` through quotient or subgroup equivalence. This may expose a better import than the Laurent-polynomial engine.

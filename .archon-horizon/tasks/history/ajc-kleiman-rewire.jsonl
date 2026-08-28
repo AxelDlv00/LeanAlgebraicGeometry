@@ -1,0 +1,19 @@
+{"at": "2026-08-02T11:46:03.831307+00:00", "actor": "human", "field": "created", "from": "", "to": "queued", "note": "opened"}
+{"at": "2026-08-02T12:05:54.611950+00:00", "actor": "system", "field": "status", "from": "queued", "to": "running", "note": "started by Horizon run"}
+{"at": "2026-08-02T12:15:50.922371+00:00", "actor": "horizon", "field": "edited", "from": "", "to": "", "note": "roadmap_refs, inbox_refs updated", "provenance": {"run": "0111", "session": "0002-horizon-ajc-kleiman-rewire", "role": "horizon", "round": "0", "rounds": "8", "task": "ajc-kleiman-rewire", "task_title": "AJC: consume the projectivity theorem and build the FiniteInAffine/very-ample substrate", "projects": "Algebraic-Jacobian-Challenge"}}
+{"at": "2026-08-02T14:32:10.952741+00:00", "actor": "horizon", "field": "status", "from": "running", "to": "queued", "note": "", "provenance": {"run": "0111", "session": "0002-horizon-ajc-kleiman-rewire", "role": "horizon", "round": "0", "rounds": "8", "task": "ajc-kleiman-rewire", "task_title": "AJC: consume the projectivity theorem and build the FiniteInAffine/very-ample substrate", "projects": "Algebraic-Jacobian-Challenge"}}
+{"at": "2026-08-02T14:50:02.513531+00:00", "actor": "system", "field": "status", "from": "queued", "to": "running", "note": "started by Horizon run"}
+{"at": "2026-08-02T18:07:28.313741+00:00", "actor": "system", "field": "status", "from": "running", "to": "queued", "note": "Horizon session ended without the agent recording a terminal status; returned to queued"}
+{"at": "2026-08-02T18:08:32.902961+00:00", "actor": "system", "field": "status", "from": "queued", "to": "running", "note": "started by Horizon run"}
+{"at": "2026-08-02T20:15:46.196993+00:00", "actor": "system", "field": "status", "from": "running", "to": "queued", "note": "Horizon session ended without the agent recording a terminal status; returned to queued"}
+{"at": "2026-08-02T20:16:53.721742+00:00", "actor": "system", "field": "status", "from": "queued", "to": "running", "note": "started by Horizon run"}
+{"at": "2026-08-02T21:47:01.627445+00:00", "actor": "system", "field": "status", "from": "running", "to": "queued", "note": "Horizon session ended without the agent recording a terminal status; returned to queued"}
+{"at": "2026-08-02T21:47:49.765744+00:00", "actor": "system", "field": "status", "from": "queued", "to": "running", "note": "started by Horizon run"}
+{"at": "2026-08-03T00:54:54.318184+00:00", "actor": "system", "field": "status", "from": "running", "to": "queued", "note": "Horizon session ended without the agent recording a terminal status; returned to queued"}
+{"at": "2026-08-03T00:55:43.588831+00:00", "actor": "system", "field": "status", "from": "queued", "to": "running", "note": "started by Horizon run"}
+{"at": "2026-08-03T03:55:53.787145+00:00", "actor": "system", "field": "status", "from": "running", "to": "queued", "note": "Horizon session ended without the agent recording a terminal status; returned to queued"}
+{"at": "2026-08-03T03:57:12.443766+00:00", "actor": "system", "field": "status", "from": "queued", "to": "running", "note": "started by Horizon run"}
+{"at": "2026-08-03T06:27:38.794031+00:00", "actor": "system", "field": "status", "from": "running", "to": "queued", "note": "Horizon session ended without the agent recording a terminal status; returned to queued"}
+{"at": "2026-08-03T06:28:39.705418+00:00", "actor": "system", "field": "status", "from": "queued", "to": "running", "note": "started by Horizon run"}
+{"at": "2026-08-03T08:00:09.381041+00:00", "actor": "system", "field": "status", "from": "running", "to": "queued", "note": "Horizon session ended without the agent recording a terminal status; returned to queued"}
+{"at": "2026-08-04T01:56:45.061059+00:00", "actor": "human", "field": "status", "from": "queued", "to": "cancelled", "note": ""}

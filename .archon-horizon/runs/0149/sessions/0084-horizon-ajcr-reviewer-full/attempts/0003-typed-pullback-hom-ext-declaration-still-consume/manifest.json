@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "status": "rejected",
+  "reason": "Typed pullback.hom_ext declaration still consumed >8 minutes in the foreground compiler; cached branch conversion did not complete. Replacing with the expanded projection calculation.",
+  "created_at": "2026-08-20T18:09:45.244009+00:00",
+  "files": [
+    {
+      "path": "MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0FiniteStageGluingOverlapIsoPreSnd.lean",
+      "artifact": "files/MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0FiniteStageGluingOverlapIsoPreSnd.lean",
+      "bytes": 3053,
+      "lines": 81
+    }
+  ],
+  "diagnostics": ""
+}

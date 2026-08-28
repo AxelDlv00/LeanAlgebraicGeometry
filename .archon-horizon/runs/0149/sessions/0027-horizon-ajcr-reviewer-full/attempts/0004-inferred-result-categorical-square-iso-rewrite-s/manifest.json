@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "status": "rejected",
+  "reason": "Inferred-result categorical square/iso rewrite still kernel-fails: whnf/pending-mvar timeouts and dependent tensor Semiring mismatch",
+  "created_at": "2026-08-16T19:46:58.097804+00:00",
+  "files": [
+    {
+      "path": "MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0FiniteStageTripleCategoricalComparison.lean",
+      "artifact": "files/MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0FiniteStageTripleCategoricalComparison.lean",
+      "bytes": 7066,
+      "lines": 159
+    }
+  ],
+  "diagnostics": ""
+}

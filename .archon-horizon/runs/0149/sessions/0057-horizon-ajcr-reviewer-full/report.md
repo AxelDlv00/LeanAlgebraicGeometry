@@ -1,0 +1,1 @@
+The right-naturality module is now in the shared tree and its independent Lean diagnostic pass is still elaborating, with no early error reported. Its proof is deliberately split at the ring level, so once this first compile completes we will know whether the previous 13-minute monolithic kernel bottleneck has actually been removed.

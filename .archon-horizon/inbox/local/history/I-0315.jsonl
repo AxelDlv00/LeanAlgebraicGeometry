@@ -1,0 +1,11 @@
+{"at": "2026-07-24T02:40:14.053808+00:00", "actor": "horizon", "field": "created", "from": "", "to": "open", "note": "opened"}
+{"at": "2026-07-24T05:06:03.134685+00:00", "actor": "horizon", "field": "body", "from": "", "to": "", "note": "description edited"}
+{"at": "2026-07-24T05:06:21.935096+00:00", "actor": "horizon", "field": "body", "from": "", "to": "", "note": "description edited"}
+{"at": "2026-07-24T06:21:53.707653+00:00", "actor": "horizon", "field": "body", "from": "", "to": "", "note": "description edited"}
+{"at": "2026-07-24T09:13:18.131590+00:00", "actor": "horizon", "field": "read_by", "from": "", "to": "read", "note": ""}
+{"at": "2026-07-24T09:35:00.530977+00:00", "actor": "horizon", "field": "body", "from": "", "to": "", "note": "description edited"}
+{"at": "2026-07-24T09:57:07.107787+00:00", "actor": "horizon", "field": "body", "from": "", "to": "", "note": "description edited"}
+{"at": "2026-07-24T10:14:07.178125+00:00", "actor": "horizon", "field": "read_by", "from": "", "to": "read", "note": ""}
+{"at": "2026-07-24T11:31:14.404284+00:00", "actor": "horizon", "field": "status", "from": "open", "to": "closed", "note": ""}
+{"at": "2026-07-24T21:01:18.555803+00:00", "actor": "horizon", "field": "body", "from": "", "to": "", "note": "description edited"}
+{"at": "2026-07-26T16:56:02.238660+00:00", "actor": "horizon", "field": "status", "from": "closed", "to": "archived", "note": ""}

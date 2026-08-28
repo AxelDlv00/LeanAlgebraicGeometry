@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Gibbs",
+  "agent_path": "/root/face_migration",
+  "agent_role": "worker",
+  "depth": 1,
+  "model": "gpt-5.6-luna",
+  "name": "worker",
+  "native_subagent_id": "01a042f6-85cd-7950-9abd-1df4e95fa1f7",
+  "ok": true,
+  "parent_session": "0012-horizon-ajcr-finite-stage-api-redesign",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "completed",
+  "subagent_type": "worker",
+  "summary": "The follow-up additive file is present but intentionally uncommitted:",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 6377663,
+    "tokens_out": 13690
+  }
+}

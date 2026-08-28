@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Kuhn",
+  "agent_path": "/root/frontier_audit",
+  "agent_role": "explorer",
+  "depth": 1,
+  "model": "gpt-5.6-luna",
+  "name": "explorer",
+  "native_subagent_id": "01a042e2-e235-7181-8b1a-800c667d9852",
+  "ok": true,
+  "parent_session": "0006-horizon-fs-hartshorne",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "completed",
+  "subagent_type": "explorer",
+  "summary": "Read-only audit complete; report sent to `task:fs-hartshorne` as Horizon conversation `I-2050`.",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 1309381,
+    "tokens_out": 6036
+  }
+}

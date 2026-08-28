@@ -1,0 +1,66 @@
+id: I-0239
+provider: local
+kind: info
+body: 'DDR-9.0 divFamEps_carve LANDED (F1)
+
+
+  DDR-9.0 (w4-ddr9 worksheet §2.0, file F1) LANDED, commits f2b951bb2 + 39684c70e
+  (doc-cap trim). Keystones AlgebraicGeometry.relThetaWindowEquiv_sectionMul_fst/_snd
+  (the cross-exponent multiplicativity compat) + AlgebraicGeometry.divFamEps_carve
+  (hcarve discharged for ANY certified family over ANY affine test ring, exactly the
+  DivSchemeClassifyAff hcarve slot shape). All three axiom-clean [propext, Classical.choice,
+  Quot.sound]; zero sorries; lake build green single-module (8703 jobs); no new warnings
+  (the 27 in the build log are pre-existing replays from Challenge/Pic/RelPic/ThetaRank).
+
+
+  FILES: the 500-line cap forced a Kit split (the WindowBaseChange/Triangle precedent):
+  Picard/DivSchemeEpsCarveKit.lean (500L) + Picard/DivSchemeEpsCarve.lean (341L).
+  Root import = HEAD blob + my two lines only (protocol §4; sibling PicEtCrossBaseGraph
+  line left uncommitted in working tree).
+
+
+  ROUTE OF RECORD (worksheet §2.0 verbatim, no deviations): (1) field level on C.left
+  — thetaSectionPair n h := linearEquiv0 (thetaTwistH0Equiv.symm h), with germ-at-eta
+  reading germ(pair) = (u^n·h, h) obtained by pushing HModule.linearEquiv0_naturality
+  through the thetaTwistDivisorSheafIso legs (map iso.inv then iso.hom collapses via
+  inv_hom_id — NO preimageIso/inv-app plumbing needed) + thetaToDivisorApp_of_nonempty;
+  multiplicativity = pow_add + ring at the generic germ (germ_injective_of_isIntegral,
+  standing IsIntegral C.left — no relCurve instance pack needed). (2) k-level — relThetaFieldSection
+  := relTwistSectionsEquiv0 of (relThetaH0FieldEquiv.trans thetaTwistH0Equiv).symm
+  (NO H1 input at exponent s, dodging the windowS ledger entirely); identified with
+  sectionsCollapse of the field pair through TwoCoverPairData.h0Equiv_val + kerCongr_apply_coe
+  + twistTriv0/1_twistCollapse0/1; multiplicative since sectionsCollapse_mul. (3)
+  S-level pure tensors — the Triangle file''s private one-tmul lemmas re-derived (congr
+  1 + resHom_relTwistH0BaseChange_one_tmul_fst/snd), now PUBLIC in the Kit as resHom_relThetaWindowEquiv_one_tmul_fst/_snd
+  (reusable). (4) keystone 1 by TensorProduct.induction_on; keystone 2 by carvePairArrow_eq_zero_iff
+  + mem_divisorWindow_iff + Ideal.mul_mem_left.
+
+
+  LEAN GOTCHAS (memory-worthy): (a) trivial does NOT elaborate against ''genericPoint
+  ∈ ?W'' while W is a metavar, even type-ascribed — use Opens.mem_top. (b) rw [LinearEquiv.apply_symm_apply]
+  at a congrArg-produced hypothesis can fail to match after a def-unfold rw polluted
+  the symm-argument; robust pattern: generalize the .symm-argument first (obtain ⟨y,
+  hy⟩ : ∃ y, e.symm h = y) then chain (LinearEquiv.symm_apply_eq _).mp — no rw at
+  all. (c) mixing the two Γ(relCurve C R, V0) spellings (relCover vs fst-preimage)
+  inside a * fails HMul synthesis at STATEMENT elaboration — pin the multiplier as
+  a def with the relCover-spelled codomain (windowShiftTheta0/1); proofs then run
+  as exact-defeq trans chains. (d) divFamEps_carve needed maxRecDepth 8000 (germ rewrites).
+
+
+  DOWNSTREAM (F4): consume divFamEps_carve verbatim for the per-piece hcarve of §2.1
+  step 3; transport along Away-maps via baseChange_carvePairArrow_eq_zero_iff as pinned
+  (G-5 file 5''s hcarve_mapAlg). windowShiftTheta0/1 + the Kit''s public pure-tensor
+  lemmas may also serve W3.'
+labels:
+- agent-ready
+status: archived
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: agent
+source_ref: null
+created_at: '2026-07-19T02:07:25.803962+00:00'
+updated_at: '2026-07-20T03:14:50.193244+00:00'
+metadata:
+  agent: ddr9-carve-lane

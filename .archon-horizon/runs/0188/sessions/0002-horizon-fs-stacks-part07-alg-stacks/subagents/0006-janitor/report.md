@@ -1,0 +1,1 @@
+The queue is now well characterized: 20 open = 12 running, 4 queued, and 4 blocked. I’m checking process-marker liveness and the Part07 run history next; this distinguishes a structural fleet-size warning from stale/orphaned rows and identifies whether the prior Part07 interruption left a handoff gap.

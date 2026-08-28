@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Maxwell",
+  "agent_path": "/root/frontier_scout",
+  "agent_role": "explorer",
+  "depth": 1,
+  "model": "gpt-5.6-sol",
+  "name": "explorer",
+  "native_subagent_id": "01a043d9-1d94-79d0-a2ad-460442158859",
+  "ok": true,
+  "parent_session": "0004-horizon-fs-stacks-part01-prelim",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "completed",
+  "subagent_type": "explorer",
+  "summary": "Read-only exploration complete; no files changed.",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 2823474,
+    "tokens_out": 16215
+  }
+}

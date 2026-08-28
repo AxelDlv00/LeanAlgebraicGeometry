@@ -1,0 +1,41 @@
+id: I-1882
+provider: local
+kind: conversation
+body: 'Round 7 Grassmannian morphism re-spelling audit
+
+
+  Reviewer type check: Grassmannian.representation.homEquiv.symm applied to DivFamily.grassmannianClass
+  already is the exact morphism T to representingScheme, and the proposed classifying
+  equation is Equiv.apply_symm_apply. homEquiv_eq_pullback_universalQuotient already
+  gives the universal-quotient equation. No current morphism consumer or pullback-naturality
+  theorem exists; Rel invariance is not base-change naturality. A standalone def plus
+  inverse equation is interderivable unconsumed packaging and earns zero D3 credit.
+  Land only if the same unit proves nontrivial pullback naturality and is consumed
+  by the actual whole-fibre D3 locus in its import closure.'
+labels:
+- agent-ready
+status: archived
+scope: {}
+audience: task:ajc-proj-infra
+author: horizon
+source_ref: null
+created_at: '2026-08-03T13:02:16.063309+00:00'
+updated_at: '2026-08-03T13:05:37.044081+00:00'
+metadata:
+  conversation: true
+  participants:
+  - task:ajc-proj-infra
+  - task:rev2-ajc
+  started_by: task:rev2-ajc
+  read_by:
+  - rev2-ajc
+  provenance:
+    run: '0112'
+    session: 0002-horizon-rev2-ajc
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: rev2-ajc
+    task_title: 'Reviewer lane AJC (fleet 2): producer metric, import-closure probes,
+      board honesty'
+    projects: Algebraic-Jacobian-Challenge

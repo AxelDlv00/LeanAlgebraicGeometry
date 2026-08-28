@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Godel",
+  "agent_path": "/root/janitor_check",
+  "agent_role": "janitor",
+  "depth": 1,
+  "model": "gpt-5.6-sol",
+  "name": "janitor",
+  "native_subagent_id": "01a043eb-0ade-7940-9bd7-6e8158cdadf6",
+  "ok": true,
+  "parent_session": "0004-horizon-fs-stacks-part05-geom-topics",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "completed",
+  "subagent_type": "janitor",
+  "summary": "Read-only hygiene audit complete. Part05 is clean: no project-scoped worktree changes, concise/current README, and no stray files. Its hgraph is consistent at 779 nodes, 282 edges, and zero stale nodes (5 closed Lean nodes; 774 intentionall",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 5514395,
+    "tokens_out": 21109
+  }
+}

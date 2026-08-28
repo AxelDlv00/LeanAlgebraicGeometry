@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Epicurus",
+  "agent_path": "/root/universal_datum_descent_map",
+  "agent_role": "explorer",
+  "depth": 1,
+  "model": "gpt-5.6-sol",
+  "name": "explorer",
+  "native_subagent_id": "01a00a47-19dd-7281-ac56-9d1aa6409baa",
+  "ok": false,
+  "parent_session": "0025-horizon-ajcr-reviewer-full",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "interrupted",
+  "subagent_type": "explorer",
+  "summary": "",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 5562336,
+    "tokens_out": 23181
+  }
+}

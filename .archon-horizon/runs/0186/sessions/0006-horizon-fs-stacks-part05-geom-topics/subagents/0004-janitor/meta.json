@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Lovelace",
+  "agent_path": "/root/janitor",
+  "agent_role": "janitor",
+  "depth": 1,
+  "model": "gpt-5.6-luna",
+  "name": "janitor",
+  "native_subagent_id": "01a04441-c4c4-7a72-9ff6-54e3cd7784af",
+  "ok": true,
+  "parent_session": "0006-horizon-fs-stacks-part05-geom-topics",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "completed",
+  "subagent_type": "janitor",
+  "summary": "Audit complete for run 0186.",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 1432254,
+    "tokens_out": 5718
+  }
+}

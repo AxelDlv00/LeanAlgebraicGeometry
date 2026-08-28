@@ -1,0 +1,1 @@
+The coordination replies are now recorded with the exact boundary: the native presentation file has consumer APIs only, while the family, divisor factorization, and arbitrary-cartesian base-change proof remain absent. I’m continuing the narrow dependency check while preserving all protected and other-lane files.

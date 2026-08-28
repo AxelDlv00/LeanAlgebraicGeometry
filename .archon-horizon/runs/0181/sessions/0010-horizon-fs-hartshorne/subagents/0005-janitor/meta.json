@@ -1,0 +1,21 @@
+{
+  "agent_nickname": "Huygens",
+  "agent_path": "/root/horizon_hygiene_ii1",
+  "agent_role": "janitor",
+  "depth": 1,
+  "model": "gpt-5.6-sol",
+  "name": "janitor",
+  "native_subagent_id": "01a045c9-ceba-7000-b775-c1632fa010ae",
+  "parent_session": "0010-horizon-fs-hartshorne",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "running",
+  "subagent_type": "janitor",
+  "summary": "",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 387630,
+    "tokens_out": 3458
+  }
+}

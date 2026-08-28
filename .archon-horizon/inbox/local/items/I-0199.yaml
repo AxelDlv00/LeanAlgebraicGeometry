@@ -1,0 +1,114 @@
+id: I-0199
+provider: local
+kind: memory
+body: 'DD-4 Task 4 residual (b), the (c2)-transport session 2026-07-17 (Fable prover
+  lane) — the semilocal-Pic transport LANDED end-to-end MODULO ONE pinned Prop input;
+  SIZING CORRECTION to I-0192 recorded. Follow-on to I-0192 item (2).
+
+
+  LANDED (green, committed a4e316f8f + 49fcbe1b4, root-wired from HEAD blob + 3 import
+  lines, keystones axiom-clean [propext, Classical.choice, Quot.sound], lake env lean
+  clean):
+
+
+  - Picard/InvertibleModuleTransfer.lean (292 L, PURE algebra, mathlib-PR-worthy):
+  Module.Projective.trans (projective over projective algebra => projective over base;
+  AddCommMonoid-level); TensorProduct.baseChangeAlgebraModule : (S x[R] A) x[A] M
+  =l[S] S x[R] M (rightAlgebra; hand-rolled liftAddHom collapse + liftBaseChange unit);
+  Module.Invertible.finite_trans / projective_trans; KEYSTONE Module.Invertible.rankAtStalk_eq_of_module_finite:
+  M invertible over a finite projective R-algebra A => rankAtStalk M p = rankAtStalk
+  A p at every prime. Proof = fibre formulation (Module.rankAtStalk_eq) + fibre algebra
+  kappa(p) x A artinian (isArtinian_of_fg_of_artinian'' + isArtinian_of_tower) =>
+  Finite (MaximalSpectrum) => Subsingleton (CommRing.Pic) [mathlib] => invertible
+  fibre free of rank one [mathlib] => finrank transport along baseChangeAlgebraModule.
+
+
+  - Picard/DivisorFamilyThetaRank.lean (367 L): DivisorAdaptation.gluedSubalgebra
+  (A_D := W(d) as R-subalgebra of chartProd; toOvl maps are AlgHoms); unitGluedSubmodule
+  u (twisted glued module for ANY overlap unit family; = gluedSubmodule at u = 1,
+  = thetaGluedSubmodule a at u = thetaOvlUnit a BY RFL; mul_mem_unitGluedSubmodule:
+  products multiply twists); thetaSpan/thetaInvSpan (W^{Th^a}, W^{Th^-a} as A_D-submodules);
+  IsThetaPaired a := thetaSpan * thetaInvSpan = 1 (<= 1 AUTOMATIC via thetaSpan_mul_thetaInvSpan_le_one;
+  iff 1 mem product; two-term witness intro isThetaPaired_of_witness); invertible_thetaGlued
+  (IsThetaPaired => Module.Invertible A_D (ThetaGlued a)); A_D-module instances ON
+  A.ThetaGlued a ITSELF (SMul componentwise mult + Function.Injective.module + tower);
+  KEYSTONES exactly matching divisorWindowGr inputs: finite_thetaGlued (hpair)(hfin),
+  projective_thetaGlued (hpair)(hproj), rankAtStalk_thetaGlued (hpair)(hc : IsCertified
+  n)(p) : rankAtStalk (A.ThetaGlued a) p = n.
+
+
+  - Picard/DivisorFamilyThetaSections.lean (327 L): relFiberCoordPow/relFiberCoordOnePow
+  (t0^a, t1^a appLE-pullbacks of fiberCoord/fiberCoord1 powers to the pinned relative
+  charts); resHom_relFiberCoordPow/OnePow (overlap restrictions ARE relThetaCocycle
+  val / inverse val); thetaSectionFst/Snd = sigma = (t0^a; 1), tau = (1; t1^a), both
+  in thetaGluedSubmodule a (thetaSectionFst_mem/thetaSectionSnd_mem), jointly unit-componented;
+  isThetaPaired_of_sectionWitness: u,v inverse-twisted with sigma*u + tau*v = 1 discharge
+  IsThetaPaired.
+
+
+  OPEN (the ONE residual, precisely walled): DISCHARGE OF IsThetaPaired. SIZING CORRECTION:
+  I-0192 called this brick self-contained M-L commutative algebra — FALSE for the
+  invertibility input; the transport is pure algebra (landed) but the pairing input
+  is genuinely cohomological. Dead ends checked: (a) W^{Th^-a} has NO manufactured
+  sections (diagonal (t0^c; t1^d) multipliers shift twist by c+d >= 0; O(-Theta) has
+  no curve sections) — no explicit witness; (b) Nakayama/fibrewise reduction of the
+  pairing ideal needs base-change surjectivity of the INVERSE-twisted module = twisted
+  (c3)/(c4) = cohomology-and-base-change — same wall; (c) Milnor patching inapplicable
+  (block restriction to overlap colengths NOT surjective: moving-point family x=t
+  over k[t] gives k[t] -> k[t]_t); (d) semilocal gauge at R_p = unit-componented inverse-twisted
+  section — same H0 problem, no completeness. EXACT residual in block components:
+  exists u_x (chart-0 block), v_y (chart-1 block) with rho(v_y) = Th^a * (1 - Th^a
+  * lambda(u_x)) — the Koszul partition subordinate to the two-set cover {sigma unit}
+  = D'' minus 0-fibre, {tau unit} = D'' minus infty-fibre of the colength scheme;
+  obstruction = two-chart Cech H1 of the D''-supported inverse twist; TRUE because
+  the colength scheme is affine (finite over base) but needs EITHER (route 1, preferred,
+  engine-free) the piece-localization/qcoh property of the equalizer presentation
+  (colength-sheaf sections over basic opens are localizations; then algebraic partition
+  of unity — honest L brick) OR (route 2) the sibling datum-engine H1 outputs (chart-level
+  lifting is affine-vanishing, twist-degree-free; only the two-chart correction carries
+  content). NOT free at fields either (artinian CRT decomposes the ring; trivializing
+  the cocycle per local factor is the same content).
+
+
+  CONSUMPTION (Task 5/DDR-2): divisorWindowGr A hH1 n hsurj hfin hproj hrank with
+  hfin := A.finite_thetaGlued a hpair hc.finite_glued, hproj := A.projective_thetaGlued
+  a hpair hc.projective_glued, hrank := fun p => A.rankAtStalk_thetaGlued a hpair
+  hc p. TWO open inputs remain for DD-4 Task 4: hsurj (sibling, engine-gated) and
+  hpair (this residual); both plausibly fall out of ONE localization/qcoh brick for
+  the colength scheme — recommend fusing.
+
+
+  HAZARDS (new, beyond I-0192): (i) NEVER state Module.Finite/Projective/rankAtStalk
+  on the subtype of an A_D-submodule: AddCommMonoid instance paths (Submodule.addCommMonoid
+  vs AddCommGroup.toAddCommMonoid) are not reducibly defeq and lemma applications
+  fail — put the A_D-structure on A.ThetaGlued a itself (SMul + Function.Injective.module)
+  and relax pure lemmas to AddCommMonoid; (ii) rw [Algebra.smul_def] under rightAlgebra
+  picks a wrong unifier — use change to the includeRight-mult form (right_algebraMap_apply
+  is rfl); (iii) elementwise appLE composition: prove via calc with one defeq step
+  to the CommRingCat composition then rw mathlib appLE_map/map_appLE — iterated rw
+  across relCurve/product spellings creates instances-transparency-ill-typed targets
+  blocking later rewrites; (iv) the mathlib unit-submodule Invertible instance (needs
+  FaithfulSMul) does not fire by search here — apply Module.Invertible.left (Submodule.tensorInvEquiv
+  I) directly; (v) in-file set_option maxSynthPendingDepth 3 AND synthInstance.maxHeartbeats
+  80000 needed.
+
+
+  MATHLIB-PR-WORTHY: Module.Projective.trans; TensorProduct.baseChangeAlgebraModule;
+  Module.Invertible.rankAtStalk_eq_of_module_finite (+ finite_trans/projective_trans,
+  finite_maximalSpectrum_fiber).
+
+
+  agent-ready'
+labels:
+- agent-ready
+status: archived
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-17T07:41:24.465907+00:00'
+updated_at: '2026-07-20T03:16:25.879396+00:00'
+metadata:
+  agent: dd4-c2-transport-fable

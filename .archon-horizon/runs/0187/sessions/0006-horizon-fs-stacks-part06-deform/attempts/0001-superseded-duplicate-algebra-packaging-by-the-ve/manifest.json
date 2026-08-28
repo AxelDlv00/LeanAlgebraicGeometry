@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "status": "rejected",
+  "reason": "Superseded duplicate algebra packaging by the verified ProductExtensionAlgebra module.",
+  "created_at": "2026-08-27T17:34:17.631611+00:00",
+  "files": [
+    {
+      "path": "FormalizedSources/StacksProject/Part06_DeformationTheory/StacksPart06Lib/AlgebraProductExtension.lean",
+      "artifact": "files/FormalizedSources/StacksProject/Part06_DeformationTheory/StacksPart06Lib/AlgebraProductExtension.lean",
+      "bytes": 3201,
+      "lines": 81
+    }
+  ],
+  "diagnostics": ""
+}

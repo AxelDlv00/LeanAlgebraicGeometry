@@ -1,0 +1,21 @@
+{
+  "agent_nickname": "Carver",
+  "agent_path": "/root/face_api_design",
+  "depth": 1,
+  "model": "gpt-5.6-sol",
+  "name": "Carver",
+  "native_subagent_id": "01a0468c-505c-7ca0-9a7c-dda6c54e2db9",
+  "ok": true,
+  "parent_session": "0002-horizon-ajcr-finite-stage-api-redesign",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "completed",
+  "subagent_type": "Carver",
+  "summary": "Exact D+T canonical face theorem probe (with a `sorry` proof body) still exceeded 120s and ~3.8 GB RSS against the available stale `GlueData` artifact. The current carrier `def` edit did not produce a new artifact: compiling even a prefix c",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 83958276,
+    "tokens_out": 172633
+  }
+}

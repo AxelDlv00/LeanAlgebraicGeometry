@@ -1,0 +1,23 @@
+{
+  "agent_nickname": "Hooke",
+  "agent_path": "/root/frontier_review",
+  "agent_role": "ground",
+  "depth": 1,
+  "model": "gpt-5.6-sol",
+  "name": "ground",
+  "native_subagent_id": "01a03b7f-7af4-7af3-9ba6-3f1c8a9d72bd",
+  "parent_session": "0008-horizon-ajcr-compile-frontier-repair",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "interrupted",
+  "subagent_type": "ground",
+  "summary": "",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 47636882,
+    "tokens_out": 98299
+  },
+  "ended_at": "2026-08-26T02:05:03+00:00",
+  "interrupt_reason": "process-marker-reaped"
+}

@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "fingerprint": "5df14df90c9d25f5",
+  "command": [
+    "lake",
+    "env",
+    "lean",
+    "/home/axel/LeanAlgebraicGeometry-Horizon/FormalizedSources/Curves/Hartshorne/HartshorneLib.lean"
+  ],
+  "cwd": ".",
+  "status": "failed",
+  "ok": false,
+  "returncode": 1,
+  "timed_out": false,
+  "reused": false,
+  "wait_seconds": 0.001,
+  "duration_seconds": 0.265,
+  "started_at": "2026-08-27T09:12:20.273740+00:00",
+  "finished_at": "2026-08-27T09:12:20.538349+00:00",
+  "finished_epoch": 1787821940.538349
+}

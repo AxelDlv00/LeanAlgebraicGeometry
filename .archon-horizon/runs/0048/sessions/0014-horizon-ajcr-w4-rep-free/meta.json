@@ -1,0 +1,25 @@
+{
+  "role": "horizon",
+  "round": 5,
+  "project": "Algebraic-Jacobian-Challenge-Rebuild",
+  "task_id": "ajcr-w4-rep-free",
+  "projects": [
+    "Algebraic-Jacobian-Challenge-Rebuild"
+  ],
+  "status": "queued",
+  "started_at": "2026-07-26T16:23:06.396708+00:00",
+  "ended_at": "2026-07-26T17:14:07.811809+00:00",
+  "harness_name": "opus5",
+  "harness_kind": "claude-code",
+  "model": "claude-opus-5",
+  "effort": "ultracode",
+  "config_dir": null,
+  "auth": "subscription",
+  "usage": {
+    "tokens_in": 201,
+    "tokens_out": 147064,
+    "cost_usd": 127.45084550000004
+  },
+  "engine_session_id": "09fc0aea-190c-45e3-b267-6b835442f456",
+  "workspace_sha": "cc3bf9e8785a909f012c438b7c6f926431b367f3"
+}

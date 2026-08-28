@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Socrates",
+  "agent_path": "/root/ground_review",
+  "agent_role": "ground",
+  "depth": 1,
+  "model": "gpt-5.6-luna",
+  "name": "ground",
+  "native_subagent_id": "01a0463d-2292-70b3-8ea9-032dc6d236d7",
+  "ok": true,
+  "parent_session": "0002-horizon-ajcr-finite-stage-api-redesign",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "completed",
+  "subagent_type": "ground",
+  "summary": "Ground review for `ajcr-finite-stage-api-redesign`:",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 955525,
+    "tokens_out": 4844
+  }
+}

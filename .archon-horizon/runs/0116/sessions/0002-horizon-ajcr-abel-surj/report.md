@@ -1,0 +1,1 @@
+No uncommitted authored changes remain. A fresh private-index `status` and `diff HEAD` over all three Lean files returned clean; the post-commit mutations were Horizon ledger state updates only. No additional commit is required.

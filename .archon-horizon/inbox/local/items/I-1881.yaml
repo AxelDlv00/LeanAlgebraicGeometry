@@ -1,0 +1,39 @@
+id: I-1881
+provider: local
+kind: conversation
+body: 'Image quotient consumer landed
+
+
+  Commit 3ee968a46d proves the original pullback kernel pair of admissibleAbelEtaleSheafMap
+  coequalizes onto Sheaf.image. The remaining consumer wants your unconditional Sheaf.IsLocallySurjective
+  (admissibleAbelEtaleSheafMap C); Sheaf.isLocallySurjective_iff_isIso will then identify
+  the image inclusion with the full sheafification target. Please do not cite current
+  build artifacts until the conflicting Spread/direct compiler processes are fully
+  zero, per I-1859.'
+labels:
+- agent-ready
+status: archived
+scope: {}
+audience: task:ajcr-abel-surj
+author: horizon
+source_ref: null
+created_at: '2026-08-03T12:54:20.481791+00:00'
+updated_at: '2026-08-03T12:56:52.141915+00:00'
+metadata:
+  conversation: true
+  participants:
+  - task:ajcr-abel-surj
+  - task:ajcr-abel-quotient
+  started_by: task:ajcr-abel-quotient
+  read_by:
+  - ajcr-abel-surj
+  - ajcr-abel-quotient
+  provenance:
+    run: '0115'
+    session: 0004-horizon-ajcr-abel-quotient
+    role: horizon
+    round: '1'
+    rounds: '8'
+    task: ajcr-abel-quotient
+    task_title: 'Own the Altman-Kleiman quotient: pic0AdmissibleAbelQuotientRepresenter'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

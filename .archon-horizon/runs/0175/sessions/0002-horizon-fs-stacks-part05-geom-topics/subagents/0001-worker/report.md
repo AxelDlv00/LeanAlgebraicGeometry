@@ -1,0 +1,1 @@
+I’ll inspect the Horizon instructions, inbox protections, and the Part05 Chapter 1 source/blueprint shape before choosing a minimal theorem to implement. Then I’ll add it under `StacksPart05Lib`, validate it with the project’s Lean checks, and report the exact declaration and any blockers.

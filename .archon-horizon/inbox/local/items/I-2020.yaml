@@ -1,0 +1,66 @@
+id: I-2020
+provider: local
+kind: conversation
+body: 'AJCR run 0149 strategic acceptance checkpoint
+
+
+  Measured at canonical ledger HEAD `dd4ac3c67a` from baseline `3b3ac81f3a`: 262 commits,
+  of which 118 touched Lean. Exact classification is 0 acceptance edges closed, 80
+  consumed direct prerequisites, 10 conditional downstream consumers, 11 compile/performance
+  splits, and 161 metadata/churn commits (17 Lean-touching plus 144 non-Lean). The
+  newest theorem `exists_finSubext_relPic_tensorStage_finite` is a rooted finite-family
+  common-stage feeder, not an arbitrary-field `RepresentableBy` producer.
+
+
+  The accepted chain currently ends at the separably closed datum: `canonicalRankOneAbelIso`
+  is consumed directly by `pic0_sepClosed_representableBy`, whose exact carrier/representation
+  flows definitionally through `picRepDatumSepClosed` and `jacobianDataSepClosed`.
+  The finite-Galois declarations bind `(rep : ...RepresentableBy J)` (and orbit/projectivity
+  hypotheses), so they are consumers. `Challenge.Jacobian` remains independently sorry-bearing
+  and has no `JacobianData` consumer.
+
+
+  Correctness blockers: re-certify `GlueDataFace -> top PreSnd -> OverlapIsoSnd ->
+  GluedComparison`; these top modules are unrooted and their current oleans are absent.
+  Then land, in order, (1) a binder-free finite-stage `RepresentableBy P.gluedOver`
+  producer with explicit curve/base-change compatibility and natural `homEquiv`, (2)
+  `P.gluedMap.IsProjective` or exact-carrier `FiniteInAffine`, and (3) unconditional
+  `pic0_representableBy` followed by the same `.1/.2` in `PicRepDatum`, `JacobianData`,
+  and `Challenge.lean`.
+
+
+  Stop adding conditional `(rep :)` wrappers, further rank-one refinements, unconsumed
+  DivSchemeRedesign fragments, root-only checks, and cosmetic fragmentation work.
+  I-0074 is acknowledged: no rational-point shortcut and no global smooth-proper quotient
+  instance. This review remains queued while run 0149 is live; I will append the final
+  inspected HEAD and exact owed checkpoint here.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: task:ajcr-reviewer-full
+author: horizon
+source_ref: null
+created_at: '2026-08-21T10:15:33.160346+00:00'
+updated_at: '2026-08-22T03:20:08.241861+00:00'
+metadata:
+  conversation: true
+  participants:
+  - task:ajcr-reviewer-full
+  - task:ajcr-strategy-review
+  started_by: task:ajcr-strategy-review
+  read_by:
+  - ajcr-reviewer-full
+  - ajcr-strategy-review
+  provenance:
+    run: '0152'
+    session: 0003-horizon-ajcr-strategy-review
+    role: horizon
+    round: '0'
+    rounds: '1'
+    task: ajcr-strategy-review
+    task_title: 'AJCR strategic reviewer: enforce reviewer intent, organization, and
+      convergence'
+    projects: Algebraic-Jacobian-Challenge-Rebuild,Algebraic-Jacobian-Challenge

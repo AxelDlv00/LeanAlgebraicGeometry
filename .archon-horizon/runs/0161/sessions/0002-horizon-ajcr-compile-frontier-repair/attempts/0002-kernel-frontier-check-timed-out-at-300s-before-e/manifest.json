@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "status": "rejected",
+  "reason": "Kernel frontier check timed out at 300s before elaboration; measured RSS 770588 KB and CPU 1.46s, likely blocked by stale LSP workers. Source checkpoint is committed as 8bdffafe65.",
+  "created_at": "2026-08-25T07:10:38.741184+00:00",
+  "files": [
+    {
+      "path": "MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0FiniteStageFinalBaseChange.lean",
+      "artifact": "files/MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0FiniteStageFinalBaseChange.lean",
+      "bytes": 54503,
+      "lines": 1156
+    }
+  ],
+  "diagnostics": ""
+}

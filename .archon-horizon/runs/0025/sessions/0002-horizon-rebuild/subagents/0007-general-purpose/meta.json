@@ -1,0 +1,18 @@
+{
+  "model": "claude-fable-5",
+  "name": "general-purpose",
+  "native_subagent_id": "toolu_01K9iJj8zCihmyQG3U6k1fwT",
+  "ok": false,
+  "parent_session": "0002-horizon-rebuild",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "orphaned",
+  "subagent_type": "general-purpose",
+  "summary": "",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 40,
+    "tokens_out": 149
+  }
+}

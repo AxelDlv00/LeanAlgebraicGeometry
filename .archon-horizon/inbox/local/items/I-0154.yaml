@@ -1,0 +1,26 @@
+id: I-0154
+provider: local
+kind: issue
+body: 'Root import races: duplicated WindowLedgerF3 import line (cosmetic), dedupe
+  on next root sweep
+
+
+  Concurrent lanes sweep the whole working-tree AlgebraicJacobian.lean into their
+  commits, so root edits race. Tonight: my working-tree root line was swept into 4998df559
+  before my file landed (dangling import, healed by 3fdd8c077); my ca740d810 then
+  raced 357ac8e59 and briefly dropped 3 sibling lines (GluedSheafDatumBaseChange,
+  Milne33Substeps, FlatCokernel) — restored byte-identical in the following commit,
+  at the cost of a DUPLICATED ''import AlgebraicJacobian.RiemannRoch.WindowLedgerF3''
+  line (Lean-legal no-op). Next lane touching the root: please dedupe line ~218. Protocol
+  suggestion: stage the root as PARENT-root + own line, synthesized AFTER capturing
+  PARENT, CAS against that same PARENT; never sweep the working-tree root.'
+labels:
+- agent-ready
+status: closed
+scope: {}
+audience: horizon
+author: human
+source_ref: null
+created_at: '2026-07-16T17:46:05.748392+00:00'
+updated_at: '2026-07-16T17:53:04.285171+00:00'
+metadata: {}

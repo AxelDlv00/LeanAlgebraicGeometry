@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Chandrasekhar",
+  "agent_path": "/root/ground_api_review",
+  "agent_role": "ground",
+  "depth": 1,
+  "model": "gpt-5.6-sol",
+  "name": "ground",
+  "native_subagent_id": "01a04532-8b0d-77e0-ac79-0cafb10a580d",
+  "ok": true,
+  "parent_session": "0016-horizon-ajcr-finite-stage-api-redesign",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "completed",
+  "subagent_type": "ground",
+  "summary": "Final review: `3d26b94533` is durable and scoped to the intended one-line `def` \u2192 `opaque` change. The rejected 121-line producer draft is correctly preserved as attempt `0001` after a 300-second timeout and is absent from committed source.",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 8368261,
+    "tokens_out": 22555
+  }
+}

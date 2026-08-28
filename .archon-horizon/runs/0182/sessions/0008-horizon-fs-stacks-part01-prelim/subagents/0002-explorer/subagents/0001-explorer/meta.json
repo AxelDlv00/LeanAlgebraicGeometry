@@ -1,0 +1,21 @@
+{
+  "agent_nickname": "Maxwell",
+  "agent_path": "/root/api_search/frontier",
+  "agent_role": "explorer",
+  "depth": 2,
+  "model": "gpt-5.6-sol",
+  "name": "explorer",
+  "native_subagent_id": "01a045c6-f5f6-7cc2-b2e4-f29698344570",
+  "parent_session": "0008-horizon-fs-stacks-part01-prelim",
+  "parent_subagent_id": "01a045c6-2917-7c41-9b18-56ef18261777",
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "running",
+  "subagent_type": "explorer",
+  "summary": "",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 1366097,
+    "tokens_out": 8828
+  }
+}

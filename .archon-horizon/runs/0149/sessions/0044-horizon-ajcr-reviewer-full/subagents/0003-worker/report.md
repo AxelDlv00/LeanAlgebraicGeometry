@@ -1,0 +1,1 @@
+I’ll load the Horizon workflow and inspect the sibling Jacobian challenge modules, then test whether a concrete bridge theorem can be added without introducing representation cycles or sorry-backed dependencies.

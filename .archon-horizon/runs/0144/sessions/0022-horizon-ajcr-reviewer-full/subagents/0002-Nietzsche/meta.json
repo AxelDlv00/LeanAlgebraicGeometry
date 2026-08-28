@@ -1,0 +1,21 @@
+{
+  "agent_nickname": "Nietzsche",
+  "agent_path": "/root/integration_audit",
+  "depth": 1,
+  "model": "gpt-5.6-sol",
+  "name": "Nietzsche",
+  "native_subagent_id": "019ffcf6-b702-70b2-b0d1-f13bbaa554c3",
+  "ok": true,
+  "parent_session": "0022-horizon-ajcr-reviewer-full",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "completed",
+  "subagent_type": "Nietzsche",
+  "summary": "Read-only integration audit complete. No source edits or commits were made.",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 23394528,
+    "tokens_out": 69541
+  }
+}

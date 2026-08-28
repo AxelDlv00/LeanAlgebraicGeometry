@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Ptolemy",
+  "agent_path": "/root/ground_review",
+  "agent_role": "ground",
+  "depth": 1,
+  "model": "gpt-5.6-sol",
+  "name": "ground",
+  "native_subagent_id": "01a04548-5c93-73b0-97db-675c8fcacd1b",
+  "ok": true,
+  "parent_session": "0008-horizon-fs-stacks-part04-alg-spaces",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "completed",
+  "subagent_type": "ground",
+  "summary": "Ground review complete.",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 5906571,
+    "tokens_out": 19875
+  }
+}

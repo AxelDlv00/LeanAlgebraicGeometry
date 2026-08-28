@@ -1,0 +1,18 @@
+{
+  "model": "claude-opus-4-8",
+  "name": "work-reviewer",
+  "native_subagent_id": "toolu_bdrk_01SMAHoeb7Xog6Vk8Nvp5gYF",
+  "ok": false,
+  "parent_session": "0006-horizon-pic-g",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "orphaned",
+  "subagent_type": "work-reviewer",
+  "summary": "",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 747217,
+    "tokens_out": 29
+  }
+}

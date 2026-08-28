@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Hooke",
+  "agent_path": "/root/janitor_final_health",
+  "agent_role": "janitor",
+  "depth": 1,
+  "model": "gpt-5.6-sol",
+  "name": "janitor",
+  "native_subagent_id": "01a009cc-c5be-7192-aca4-8bf1efd9fdef",
+  "ok": true,
+  "parent_session": "0023-horizon-ajcr-reviewer-full",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "completed",
+  "subagent_type": "janitor",
+  "summary": "Final read-only audit passes.",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 2993433,
+    "tokens_out": 18233
+  }
+}

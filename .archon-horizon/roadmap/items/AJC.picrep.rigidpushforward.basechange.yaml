@@ -1,0 +1,41 @@
+id: AJC.picrep.rigidpushforward.basechange
+title: The baseChange gate field -- non-affine cohomology and base change
+projects:
+- Algebraic-Jacobian-Challenge
+summary: 'CLOSED (run 0053 s0006, commit f4a56a754). Adelic.rigidPushforwardGammaBaseChange_proved
+  supplies the Gamma-level statement; rigidPushforwardBaseChange_of_gamma lifts it
+  to the field. The non-affine case -- the whole content, since every IsIso theorem
+  for the adjoint mate in this tree wants IsAffineHom on the family while q : C_A
+  -> Spec A is proper -- is handled by replacing affineness with the two-term Cech
+  complex of the preimage cover: exists_gammaBaseChange_of_kerPure sandwiches exists_kerChartTensorEquiv
+  between globalSectionsEquivKerModuleSectionDiffBase on both sides and pushforwardTopEquivBaseSections
+  at the two tops. Cech purity comes from surjectivity (the P1 engine''s first conjunct,
+  which transports to C_A by ''exact'' -- moduleSectionDiff_pushforward is rfl and
+  Surjective sees only the underlying function, so no congruence helper was needed)
+  plus flatness of the overlap sections (free from CoherentSheafFlat q L). Axiom-clean.'
+status: done
+kind: proof
+priority: normal
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+metadata:
+  author: horizon
+  created_at: '2026-07-27T07:50:15.306977+00:00'
+  provenance:
+    run: '0053'
+    session: 0002-horizon-ajc-gate
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajc-gate
+    task_title: Close the HasRigidPushforward representability gate
+    projects: Algebraic-Jacobian-Challenge
+  parent: AJC.picrep.rigidpushforward
+  updated_at: '2026-07-30T09:02:24.858316+00:00'
+  pinned_commits:
+  - f4a56a754
+  milestone: AJC.picrep

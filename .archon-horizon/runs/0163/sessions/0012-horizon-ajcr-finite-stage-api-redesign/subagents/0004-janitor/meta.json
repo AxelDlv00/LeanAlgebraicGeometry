@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Helmholtz",
+  "agent_path": "/root/hygiene_checkpoint",
+  "agent_role": "janitor",
+  "depth": 1,
+  "model": "gpt-5.6-sol",
+  "name": "janitor",
+  "native_subagent_id": "01a0433f-c3b2-7d83-ac5d-2af967916ae0",
+  "ok": true,
+  "parent_session": "0012-horizon-ajcr-finite-stage-api-redesign",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "completed",
+  "subagent_type": "janitor",
+  "summary": "Read-only hygiene audit completed for `ajcr-finite-stage-api-redesign` (run `0163`, session `0012`).",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 5671383,
+    "tokens_out": 20116
+  }
+}

@@ -1,0 +1,1 @@
+The ledger commit hook is still waiting on the shared workspace lock held by another concurrent Horizon run; no source work is running in the background, and I’m keeping the commit in the foreground as required. I’ll wait for the definitive exit status before reporting the hash.

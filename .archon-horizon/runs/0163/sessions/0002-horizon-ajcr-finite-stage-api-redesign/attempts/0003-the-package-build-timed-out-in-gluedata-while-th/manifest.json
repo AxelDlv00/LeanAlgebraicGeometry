@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "status": "rejected",
+  "reason": "The package build timed out in GlueData while the cocycle theorem reconstructed pic0FiniteStageTripleModelComparisonFamily twice. Next edit will bind that dependent family once; preserve the current source as a separate diagnostic attempt.",
+  "created_at": "2026-08-26T18:48:46.544691+00:00",
+  "files": [
+    {
+      "path": "MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0FiniteStageGlueData.lean",
+      "artifact": "files/MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0FiniteStageGlueData.lean",
+      "bytes": 8791,
+      "lines": 204
+    }
+  ],
+  "diagnostics": ""
+}

@@ -1,0 +1,83 @@
+id: I-0692
+provider: local
+kind: issue
+body: 'ADDENDUM 10 §10.3 CITES A PATH `.gitignore` FORBIDS TRACKING — the probe re-arms
+  as a phantom staged deletion after every foreign sweep
+
+
+  Found by the janitor pass of run 0070 s0014, lane `ajcr-cert-r2`, while clearing
+  what looked like the `I-0656` stale-index hazard over that lane''s paths. It is
+  not that hazard, and the `I-0656` repair **cannot** fix it.
+
+
+  ## Result
+
+
+  `MainProjects/Algebraic-Jacobian-Challenge-Rebuild/scripts/partition-probe.lean`
+  matches `*probe*.lean` at `.gitignore:26`. So:
+
+
+  - `git add -- <path>` refuses it ("paths are ignored by one of your .gitignore files"),
+  and the `I-0656` cross-and-clear recipe therefore leaves the deletion **armed indefinitely**.
+
+  - Every commit that landed it (`18e485c2c`, `cd23b44d7`) got past the rule only
+  by force or by a foreign sweep, which is exactly the phantom-deletion cycle `I-0611`
+  describes. It has already re-armed twice in one session: cleared at `2d735cdcf`,
+  re-armed after a foreign clobber, restored at `cd23b44d7`, armed again now.
+
+  - Meanwhile **spec ADDENDUM 10 §10.3 (BINDING) cites this path** as the evidence
+  that clause 3 is discharged on the widened route.
+
+
+  ## Impact
+
+
+  A binding addendum rests on a file the repository is configured never to track,
+  and a reader who checks out HEAD may not get it. The measurement itself is sound
+  — four widened endpoints have zero `FinCoverData` dependency, two controls fire
+  — so this is about the artefact''s placement, not its conclusion.
+
+
+  ## The fix is already prescribed
+
+
+  `.gitignore:22-24` says it: *"If a probe earns a place in the library, move it under
+  `AlgebraicJacobian/` and import it from `AlgebraicJacobian.lean` — do not rename
+  it to dodge this pattern."* This probe has earned that: a binding addendum cites
+  it and its calibration note (a structure field is not a constant a proof term mentions)
+  is reusable. Note `scripts/` itself is **not** ignored — only the `*probe*` pattern
+  — and the AJC sibling tracks nine `scripts/*.lean` files fine.
+
+
+  ## Next action
+
+
+  Owner''s call, either: (a) move it under `AlgebraicJacobian/` and root it, per the
+  `.gitignore` instruction; or (b) keep it untracked and amend §10.3 to say the artefact
+  is not in the ledger, quoting the table so the evidence survives without the file.
+  Do **not** rename it to dodge the pattern. Until one is done, expect a recurring
+  armed deletion on this path that no standard repair clears.'
+labels:
+- agent-ready
+status: closed
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-28T20:16:19.297276+00:00'
+updated_at: '2026-07-28T20:22:06.238986+00:00'
+metadata:
+  provenance:
+    run: '0070'
+    session: 0014-horizon-ajcr-cert-r2
+    role: horizon
+    round: '6'
+    rounds: '8'
+    task: ajcr-cert-r2
+    task_title: 'Execute R2: widen DivFamZar to arbitrary affine-open pieces'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  agent: janitor
+  read_by:
+  - ajcr-cert-r2

@@ -1,0 +1,8 @@
+Ground review for `ajcr-finite-stage-api-redesign`:
+
+- Mathematical/formalization work is converging at the lower API layer. Commit `f154c3df9a` adds explicit scalar-stage `CommRing`/`Algebra` witnesses and a bundled `CommRingCat` restriction map. Both `Pic0FiniteStageScalarExtendedAtlas.lean` and `Pic0FiniteStageGlueData.lean` have recorded passed checks.
+- The task is not yet complete or fully converged: `Pic0FiniteStageGlueDataFace.lean` and `Pic0FiniteStageStableAffineCover.lean` still have failed/artifactless checks. `GlueDataFace` also has an uncommitted one-line signature edit. The actual consumer migration remains open.
+- State does not fully agree. The roadmap reports finite-glue as done but the task remains running with GlueDataFace/consumer obligations unresolved. Graph lookup cannot find the newly added declarations (`pic0FiniteStageRestrictionBaseChangeRingHom`, `pic0FiniteStageAffineTripleTransition_cocycle`), indicating graph/blueprint synchronization is stale or absent.
+- Workspace hygiene is poor: the ledger worktree contains the expected in-progress GlueDataFace edit plus massive unrelated generated/untracked hgraph/reference/status changes. Inbox health warnings report 50 open non-protection items, 14 conversations, and 11 memories. I recorded issue `I-2112` documenting the closure boundary, stale graph, and consumer-check requirement.
+
+Highest-value next action: finish the `GlueDataFace` bridge and run a faithful kernel check of it plus one `StableAffineCover` consumer, then synchronize graph/blueprint statuses. Do not mark the task done based solely on the two lower-module passes.

@@ -1,0 +1,36 @@
+id: I-2014
+provider: local
+kind: conversation
+body: 'Blueprint reconciliation scope
+
+
+  I am reconciling only blueprint/roadmap/task metadata for AJCR p7/p8, with no Lean
+  source edits. I will record your current finite-stage elaboration/glued-base-change
+  blocker as an implementation risk and preserve conditional theorem status; please
+  avoid overlapping blueprint/roadmap edits until I report the commit.'
+labels:
+- agent-ready
+status: archived
+scope: {}
+audience: task:ajcr-reviewer-full
+author: horizon
+source_ref: null
+created_at: '2026-08-21T03:02:31.935948+00:00'
+updated_at: '2026-08-21T04:38:47.992968+00:00'
+metadata:
+  conversation: true
+  participants:
+  - task:ajcr-reviewer-full
+  - task:ajcr-blueprint-reconcile
+  started_by: task:ajcr-blueprint-reconcile
+  read_by:
+  - ajcr-blueprint-reconcile
+  provenance:
+    run: '0151'
+    session: 0002-horizon-ajcr-blueprint-reconcile
+    role: horizon
+    round: '0'
+    rounds: '4'
+    task: ajcr-blueprint-reconcile
+    task_title: Reconcile the AJCR blueprint with the current mathematical route
+    projects: Algebraic-Jacobian-Challenge-Rebuild,Algebraic-Jacobian-Challenge

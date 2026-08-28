@@ -1,0 +1,1 @@
+The cardinality corollary checks cleanly. I’m now adding the requested integer-sign bridge: `n`-torsion and `|n|`-torsion have the same subtype via `natAbs_nsmul_eq_zero`, then compose with the natural `ZMod` equivalence. This is an independent declaration appended after the existing block.

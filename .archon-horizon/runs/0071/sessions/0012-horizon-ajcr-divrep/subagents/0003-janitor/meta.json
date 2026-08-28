@@ -1,0 +1,18 @@
+{
+  "model": "sonnet",
+  "name": "janitor",
+  "native_subagent_id": "toolu_bdrk_01Gcx4GrecgNT619EiktW291",
+  "ok": false,
+  "parent_session": "0012-horizon-ajcr-divrep",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "orphaned",
+  "subagent_type": "janitor",
+  "summary": "",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 2191737,
+    "tokens_out": 68
+  }
+}

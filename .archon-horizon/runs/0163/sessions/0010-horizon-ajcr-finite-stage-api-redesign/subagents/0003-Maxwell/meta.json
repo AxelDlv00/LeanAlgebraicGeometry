@@ -1,0 +1,21 @@
+{
+  "agent_nickname": "Maxwell",
+  "agent_path": "/root/hygiene",
+  "depth": 1,
+  "model": "gpt-5.6-sol",
+  "name": "Maxwell",
+  "native_subagent_id": "01a0427c-54ff-7d20-9673-df2bc029eade",
+  "ok": true,
+  "parent_session": "0010-horizon-ajcr-finite-stage-api-redesign",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "completed",
+  "subagent_type": "Maxwell",
+  "summary": "Horizon hygiene audit complete; no files or metadata were changed.",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 10332525,
+    "tokens_out": 17244
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Volta",
+  "agent_path": "/root/affine_review",
+  "agent_role": "ground",
+  "depth": 1,
+  "model": "gpt-5.6-sol",
+  "name": "ground",
+  "native_subagent_id": "01a04306-c163-7243-931a-e6e75eaf3c31",
+  "ok": true,
+  "parent_session": "0006-horizon-fs-milne",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "completed",
+  "subagent_type": "ground",
+  "summary": "Review complete.",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 2917681,
+    "tokens_out": 15247
+  }
+}

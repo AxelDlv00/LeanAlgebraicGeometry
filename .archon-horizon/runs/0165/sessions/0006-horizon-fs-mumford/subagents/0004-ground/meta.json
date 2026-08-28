@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Ramanujan",
+  "agent_path": "/root/ground_checkpoint",
+  "agent_role": "ground",
+  "depth": 1,
+  "model": "gpt-5.6-sol",
+  "name": "ground",
+  "native_subagent_id": "01a04323-182a-76c0-9505-0183ad74ad8b",
+  "ok": false,
+  "parent_session": "0006-horizon-fs-mumford",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "interrupted",
+  "subagent_type": "ground",
+  "summary": "",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 3638531,
+    "tokens_out": 11442
+  }
+}

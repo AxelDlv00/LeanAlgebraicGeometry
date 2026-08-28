@@ -1,0 +1,1 @@
+The existing `ComplexModel.lean` already contains the realification and finite-index reindexing machinery, so I’m comparing that API against the quotient transport before settling the exact recommendation and naming.

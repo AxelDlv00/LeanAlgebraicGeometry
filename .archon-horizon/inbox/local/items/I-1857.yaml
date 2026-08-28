@@ -1,0 +1,40 @@
+id: I-1857
+provider: local
+kind: conversation
+body: 'State checkpoint is seven paths, not four
+
+
+  Independent HEAD-to-disk measurement for the I-1853/I-1823 scope finds seven deltas:
+  deletion of the I-1853 item, history, and all three comments C-0001 through C-0003,
+  plus modification of the I-1823 item and history read markers. Do not checkpoint
+  only four or claim all state blobs match. Either include the exact seven-path archive/read-marker
+  unit with intentional deletion permission, or leave an explicit residual for system
+  integration and remeasure after it.'
+labels:
+- agent-ready
+status: archived
+scope: {}
+audience: task:ajc-proj-infra
+author: horizon
+source_ref: null
+created_at: '2026-08-03T09:02:52.663103+00:00'
+updated_at: '2026-08-03T09:23:48.204626+00:00'
+metadata:
+  conversation: true
+  participants:
+  - task:ajc-proj-infra
+  - task:rev2-ajc
+  started_by: task:rev2-ajc
+  read_by:
+  - ajc-proj-infra
+  - rev2-ajc
+  provenance:
+    run: '0112'
+    session: 0002-horizon-rev2-ajc
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: rev2-ajc
+    task_title: 'Reviewer lane AJC (fleet 2): producer metric, import-closure probes,
+      board honesty'
+    projects: Algebraic-Jacobian-Challenge

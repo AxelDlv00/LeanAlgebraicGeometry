@@ -1,0 +1,25 @@
+{
+  "role": "horizon",
+  "round": 1,
+  "project": "Algebraic-Jacobian-Challenge-Rebuild",
+  "task_id": "ajcr-native-base-change-iso",
+  "projects": [
+    "Algebraic-Jacobian-Challenge-Rebuild"
+  ],
+  "status": "queued",
+  "started_at": "2026-08-11T01:16:06.083447+00:00",
+  "ended_at": "2026-08-11T13:30:31.417875+00:00",
+  "harness_name": "codex",
+  "harness_kind": "codex",
+  "model": "gpt-5.6-sol",
+  "effort": "ultra",
+  "config_dir": "/home/axel/.codex-frenzy",
+  "auth": "api-key",
+  "usage": {
+    "tokens_in": 260208212,
+    "tokens_out": 327401,
+    "cost_usd": null
+  },
+  "engine_session_id": "019fee64-1e49-7aa0-a9b3-bc69c91a4a32",
+  "workspace_sha": "24b61061259c5ce4236a2fb1d6c5b6e1c60cc05b"
+}

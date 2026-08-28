@@ -1,0 +1,7 @@
+The explicit carrier/instance repair removed all earlier target diagnostics.
+
+Post-edit LSP ran for 60 seconds with no diagnostics and remained elaborating.
+The dependency-fresh command
+  timeout 360s lake build +AlgebraicJacobian.Picard.Pic0FiniteStageOverlapBaseChange:olean
+exited 124 after 360 seconds. It emitted only pre-existing replay warnings and
+no target error. No olean or axiom output was produced within that bound.

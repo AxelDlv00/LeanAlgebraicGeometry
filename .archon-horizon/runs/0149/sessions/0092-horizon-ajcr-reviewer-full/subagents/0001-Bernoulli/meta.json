@@ -1,0 +1,21 @@
+{
+  "agent_nickname": "Bernoulli",
+  "agent_path": "/root/finite_stage_probe",
+  "depth": 1,
+  "model": "gpt-5.6-sol",
+  "name": "Bernoulli",
+  "native_subagent_id": "01a021c0-6f8a-7242-8dd0-6254a805d836",
+  "ok": true,
+  "parent_session": "0092-horizon-ajcr-reviewer-full",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "completed",
+  "subagent_type": "Bernoulli",
+  "summary": "Inspected the finite-stage blocker and root path. The target declarations are already complete and hgraph records them as `lean_ok`; there is no small missing theorem to close in this slice.",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 1928841,
+    "tokens_out": 4771
+  }
+}

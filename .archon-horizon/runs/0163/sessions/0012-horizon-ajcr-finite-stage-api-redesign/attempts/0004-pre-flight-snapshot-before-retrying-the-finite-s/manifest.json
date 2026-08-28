@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "status": "rejected",
+  "reason": "Pre-flight snapshot before retrying the finite-stage AffineRingGluePresentation bridge; restore if the dependent Assembly header remains unverified.",
+  "created_at": "2026-08-27T15:50:41.842827+00:00",
+  "files": [
+    {
+      "path": "MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0FiniteStageGlueDataAssembly.lean",
+      "artifact": "files/MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0FiniteStageGlueDataAssembly.lean",
+      "bytes": 6286,
+      "lines": 154
+    }
+  ],
+  "diagnostics": ""
+}

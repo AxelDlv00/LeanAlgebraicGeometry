@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "status": "rejected",
+  "reason": "Certificate assembly remains semantically well-typed but exceeds bounded LSP and 15-minute kernel elaboration windows; preserve before splitting the H0 transport boundary.",
+  "created_at": "2026-08-13T09:21:00.962200+00:00",
+  "files": [
+    {
+      "path": "MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0RankOneCanonicalDivisorStageCert.lean",
+      "artifact": "files/MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0RankOneCanonicalDivisorStageCert.lean",
+      "bytes": 5664,
+      "lines": 137
+    }
+  ],
+  "diagnostics": ""
+}

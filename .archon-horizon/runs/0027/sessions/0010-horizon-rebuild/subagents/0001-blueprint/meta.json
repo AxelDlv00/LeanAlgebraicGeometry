@@ -1,0 +1,18 @@
+{
+  "model": "claude-sonnet-5",
+  "name": "blueprint",
+  "native_subagent_id": "toolu_01NqUQxdpW1Jzxsgv3YkQAhf",
+  "ok": false,
+  "parent_session": "0010-horizon-rebuild",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "orphaned",
+  "subagent_type": "blueprint",
+  "summary": "",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 588,
+    "tokens_out": 607
+  }
+}

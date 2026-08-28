@@ -1,0 +1,17 @@
+Workspace-hygiene pass for the Archon Horizon workspace at /home/axel/LeanAlgebraicGeometry-Horizon, dispatched by task `ajc-gate` (run 0053, session 0006) before it claims completion. This run touched roadmap, task and inbox state, so the hygiene checkpoint is required.
+
+Context you need: `ajc-gate` closed the `Scheme.HasRigidPushforward` gate this session (commits d6bfd59be, f4a56a754, 99c1cfd32, 54679beed and one more — see `git log` via `git --git-dir /home/axel/LeanAlgebraicGeometry-Horizon/.archon-horizon/vcs/workspace.git --work-tree /home/axel/LeanAlgebraicGeometry-Horizon log --oneline -12`). Two other runs are live concurrently (0054 = task ajc-truth, 0055 = task ajc-rr), so expect interleaved commits and do not assume every recent change is ajc-gate's.
+
+The CLI has been printing three standing warnings this session; please act on them rather than just reporting them:
+
+1. **Inbox over its advisory limits.** The previous ajc-gate session already reported "17 memories vs cap 10", and this session added more items (I-0424, I-0425, I-0428, I-0429, I-0430, I-0431, I-0432, I-0435 at least). Review the open working set — especially `memory` and `info` kinds — and archive or complete what is genuinely consumed or superseded. Be conservative: NEVER archive an open `protection` item (I-0074 is an active one) merely to shorten the list, and do not archive a `conversation` that is still awaiting a reply from someone. Items that ARE fair game: memory notes superseded by a later note on the same subject, info items describing a state that has since changed, and issues whose fix has landed. In particular check whether I-0428 (six now-false docstring claims) and I-0429 (no object satisfies the three AJC binders) have been resolved by commits 54679beed and 99c1cfd32 respectively — if so, complete them with a one-line note pointing at the commit.
+
+2. **Roadmap consistency warning:** `AJC.jacobian.assembly: every sub-item is done — consider marking it done (or add what remains)`. Investigate and either fix it or, if leaving it open is intentional, record WHY in the item's summary so the warning is a chosen state rather than noise. Do not silently flip a parent whose children are done for bookkeeping reasons if real work remains — read the children first.
+
+3. **Roadmap has 9 active items (recommended maximum 8).** See whether any are stale (owned by a finished task, or describing work that has since landed) and downgrade to `pending` or close as appropriate. Again, read before editing.
+
+Also please check, and fix or report:
+- Whether the AJC project README / roadmap summaries still describe `HasRigidPushforward` as an open gate. It is now a proved instance (`Adelic.instHasRigidPushforwardOfCurve`) with a witness (`Adelic.hasRigidPushforward_p1Over`). Do NOT edit files under `MainProjects/Algebraic-Jacobian-Challenge/AlgebraicJacobian/Picard/RigidPushforward*.lean` — those are ajc-gate's write set and were corrected this session already. READMEs, roadmap text and the workspace roadmap are fair game.
+- Any orphaned scratch files this run may have left (e.g. /tmp/*.lean probes are fine to leave; scratch .lean files INSIDE the project tree are not — check `git status` for untracked files under MainProjects/Algebraic-Jacobian-Challenge/).
+
+Commit your changes into the ledger with a semantic message (the `project-git` skill has the recipe). Report concisely: what you changed, what you deliberately left, and any warning that survives with the reason.

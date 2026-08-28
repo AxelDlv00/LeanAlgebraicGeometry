@@ -1,0 +1,28 @@
+You are auditing the work of lane `ajc-p2` in the Archon Horizon workspace at /home/axel/LeanAlgebraicGeometry-Horizon, project Algebraic-Jacobian-Challenge at MainProjects/Algebraic-Jacobian-Challenge.
+
+Audit exactly these three commits, all touching only `AlgebraicJacobian/Picard/Pic0EtRelativeDimension.lean`:
+- 46ed464030 "AJC leaf B: reduce SmoothOfRelativeDimension to a per-point chart rank"
+- 3836799524 "AJC leaf B: descent splits it unevenly"
+- 6f28a2aef3 "docs(AJC/leafB): correct the residue LOCUS"
+
+Use the ledger git wrapper `$HORIZON_GIT` (= /home/axel/LeanAlgebraicGeometry-Horizon/.archon-horizon/bin/hgit) for git. FIRST verify disk blob == HEAD blob for that file (ten lanes share one worktree and this file has been clobbered and restored twice today by other lanes — if they differ, say so and audit the disk version). Rebuild oleans BEFORE any probe: `cd MainProjects/Algebraic-Jacobian-Challenge && lake build AlgebraicJacobian.Picard.Pic0EtRelativeDimension` — a stale-import state makes `lean_multi_attempt` report every snippet as succeeding, which is a known failure mode here.
+
+The five new declarations are: `smoothOfRelativeDimension_iff_pointwise_rank`, `RingHom.locally_isStandardSmoothOfRelativeDimension_of`, `smooth_of_pullback_snd`, `smoothOfRelativeDimension_ascends_baseChange`, `Scheme.Pic0Et.leafB_iff_pointwise_rank`.
+
+The claims I want adversarially checked, hardest first:
+
+1. NON-TRIVIALITY of the headline. `smoothOfRelativeDimension_iff_pointwise_rank` claims to be a genuine reduction of the project's headline obligation 4 ("leaf B"), not a definition unfolded. The file's OWN §2 admits that `leafB_iff_appLE` and `leafB_of_chartwise` are `HasRingHomProperty.iff_appLE` instantiated, i.e. the class unfolded — a previous reviewer (inbox I-1094) caught exactly that overclaim in this file. So: is my new iff ALSO just the class unfolded / the anonymous constructor in disguise? Check what its `mp` and `mpr` actually consume. If it is a repackaging rather than a reduction, say so plainly.
+
+2. THE LOCUS CLAIM, which is the load-bearing docstring assertion. I claim the away-localisations that `RingHom.Locally` quantifies over are an ARTIFACT of the `iff_appLE` route and NOT where leaf B's residue lives, and that this corrects both my own docstring and my published note I-1088. Verify: is `RingHom.Locally` genuinely absent from my new form while present in `iff_appLE`'s RHS? Is the claimed asymmetry real — bare property implies `Locally` freely, converse not available at a single chart?
+
+3. `Nontrivial` FREENESS. I claim `Nontrivial Γ(X,V)` is free from the point via `Scheme.component_nontrivial` and is not a hypothesis. Check it is genuinely discharged and not smuggled in as an unstated binder.
+
+4. THE DESCENT ASYMMETRY. I claim bare `Smooth` descends along `@Surjective ⊓ @Flat ⊓ @QuasiCompact` (mathlib instance) while the graded `SmoothOfRelativeDimension n` does NOT, and that this is measured in both directions rather than a failed name guess. Verify both halves independently. Note the standing workspace lesson: a failing `inferInstance` is NOT proof of absence, since the declaration may exist as a theorem rather than an instance. So check whether a codescent/descent lemma for the graded property exists anywhere in mathlib or either project under ANY name — use `"$HORIZON_BIN" search "<words>" --json` (it indexes both projects AND mathlib) rather than grep alone. If it exists, my §2d is wrong.
+
+5. AXIOM STATUS honesty. I claim all five declarations are axiom-clean `[propext, Classical.choice, Quot.sound]`, but that `leafB_iff_pointwise_rank` is sorryAx-REACHABLE at any use site because `[HasPicSchemeEt C]` has the unconditional instance `instHasPicSchemeEt` projecting the seam sorry `fgaPicardRepresentability` — while the generic engine stays clean when applied. Verify with `#print axioms`, and use sorried controls so a clean print is meaningful.
+
+6. VACUITY / non-emptiness. Does any new statement fail to mention the object it is about (the `HasDivFunctor` cautionary pattern)? Is any hypothesis unsatisfiable, making a statement vacuously true?
+
+7. Any docstring claim in the diff that cites a declaration which does not exist, or that is outside the citing file's import closure. `#check` such names rather than grepping for them — a name present in some source file can still be absent from this file's import closure.
+
+Report concrete findings with file:line and the probe that establishes each. Do not fix anything. If a claim of mine is right, say so briefly and move on; spend your effort on what is wrong or overstated. I would rather hear that the headline is a repackaging than have it published as a reduction.

@@ -1,0 +1,1 @@
+The AJC README's axiom census (147/95/52) is the stale figure that TO_USER.md already corrected to 162/108/54. Let me verify before fixing.

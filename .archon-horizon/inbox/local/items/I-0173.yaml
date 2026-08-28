@@ -1,0 +1,35 @@
+id: I-0173
+provider: local
+kind: memory
+body: "DD-4 CORRECTION to I-0172 (post dependency-audit): the relative half is MORE\
+  \ reachable than I-0172 stated.\n  • DD-F/PFib IS LANDED sorry-free: existsUnique_effective_divisor_of_carve\
+  \ (RiemannRoch/PFib.lean:241) fully proven (P-fib ⟹), baseDivisorAt_normalization\
+  \ (:127). Task 6 recovery mechanism is available NOW (not probe-gated).\n  • DD-3\
+  \ carve gift LANDED: entriesIdeal + baseChange_eq_zero_iff (Picard/EntriesIdeal.lean:166/172);\
+  \ grFunctorAff = Module.Grassmannian R (R⊗[k]H) d; Module.Grassmannian.map from\
+  \ mathlib. Task 4/5 Grassmannian side ready.\n  • KEY: the on-the-nose H⁰ base change\
+  \ for the TWIST sheaf IS LANDED: relTwistH0BaseChange (Cohomology/RigidEngine4BaseChange.lean:471)\
+  \ kerCongr-threads kernel→H⁰ through the term equiv. The 1d-ii recorded seam (DatumDescent.lean:41,545)\
+  \ is ONLY the DATUM-glued-sheaf version — NOT needed for DD-4's theta twist. So\
+  \ Task 2 (H⁰(C_R, relΘ^A) ≅ H_A⊗R) is REACHABLE via relTwistH0BaseChange, not blocked.\n\
+  \  • NEXT CONCRETE STEP (unblocks Task 2): write relThetaTwistSheaf := relTwistSheaf\
+  \ C R (fiberTwoCover π) (relUnitCocycle C R (fiberTwoCover π) (thetaUnit π ^ n))\
+  \ — the fiber-twist cocycle instantiation is UNWRITTEN (thetaUnit appears in zero\
+  \ Cohomology/relative files). Agent judged it 'a one-liner plug that type-checks'\
+  \ since (fiberTwoCover π).V₀⊓V₁ = fiberChart₀⊓fiberChart₁ where thetaUnit^n lives.\
+  \ Then compose relTwistH0BaseChange (H¹ hyp from my subsingleton_hModule_thetaTwistSheaf_one_iff\
+  \ + DAT-0a) with field-level thetaTwistH0Equiv to get H_A⊗R.\n  • Still genuinely\
+  \ partial: DD-1 divFamFieldEquiv (only forward map divFamDivisor+effectivity landed,\
+  \ Picard/DivisorFamilyField.lean:126/163; degree-n + backward map NOT landed) —\
+  \ needed to finish Task 6's DivFam↔divisor bridge, but the field recovery itself\
+  \ (PFib) is ready."
+labels:
+- agent-ready
+status: archived
+scope: {}
+audience: horizon
+author: human
+source_ref: null
+created_at: '2026-07-17T01:26:30.429736+00:00'
+updated_at: '2026-07-20T03:15:51.986007+00:00'
+metadata: {}

@@ -1,0 +1,1 @@
+I’m splitting reconnaissance into two read-only passes: one will map current peer claims and release notices, while another will inspect the actual Pic producer bottleneck and rank unclaimed Lean obligations. I’ll keep the claim and all source edits local until those reports agree on a target.

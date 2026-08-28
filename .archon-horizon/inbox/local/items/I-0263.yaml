@@ -1,0 +1,59 @@
+id: I-0263
+provider: local
+kind: info
+body: "DAT-G0 β1 probe: YES-PINNED (provable-in-tree, L; reduction LANDED, one analytic\
+  \ residual pinned). Commit c9df8d479.\n\n=== THE β1 STATEMENT (verbatim, the DAT-G0\
+  \ β·a pivot) ===\nQ: does pic0 (pic0SigmaSheaf / pic0TypeFunctor) commute with the\
+  \ filtered colimit K_s = colim_{k''} k'' of the base field — is colim_{k''} pic0(C_{k''})(T''_{k''})\
+  \ → pic0(C_{K_s})(T''_{K_s}) a bijection for every finite-stage test T''?\n\nRebased\
+  \ to the FIXED challenge base k, the honest content is (Picard/PicRepColimitCompat.lean):\n\
+  \  def Pic0PreservesFilteredBaseColimit (C : Over (Spec (.of k))) [Smooth1/Proper/GeomIrred]\
+  \ : Prop :=\n    ∀ ⦃J : Type u⦄ [SmallCategory J] [IsCofiltered J] (S : J ⥤ Over\
+  \ (Spec (.of k))),\n      (∀ ⦃i j⦄ (f : i ⟶ j), IsAffineHom (S.map f).left) →\n\
+  \      (∀ i, CompactSpace (S.obj i).left) → (∀ i, QuasiSeparatedSpace (S.obj i).left)\
+  \ →\n      ∀ [HasLimit S], PreservesColimit S.op (pic0TypeFunctor C)\n\n=== VERDICT\
+  \ + EVIDENCE ===\nYES, provable-in-tree, route-pinned; NOT obstructed, NOT the orchestrator\
+  \ Nonempty fallback. The DECISIVE find: the base-field-change functoriality of pic0\
+  \ is ALREADY a landed NATURAL ISOMORPHISM — pic0Theta/pic0ThetaType (Pic0ThetaAssembly.lean:203/238):\
+  \ pic0Functor(C_L) ≅ (Over.map σ).op ⋙ pic0Functor C for ARBITRARY k→L (no finiteness/sep/Galois).\
+  \ So every stage pic0(C_{k''}) is the FIXED functor pic0 C read on the pushed-forward\
+  \ test; the varying-field colimit collapses to a cofiltered LIMIT OF TEST SCHEMES\
+  \ over the fixed base k. The reduction (raw base-field colimit ⟸ fixed-base cofiltered-limit\
+  \ preservation) is fully mechanical: pic0ThetaType + mathlib preservesColimit_of_natIso\
+  \ / IsColimit.equivOfNatIsoOfIso.\n\nLANDED (green, 8702 jobs, keystone axioms [propext,\
+  \ Classical.choice, Quot.sound]) in Picard/PicRepColimitCompat.lean:\n - pic0TypeFunctor_baseChange_iso\
+  \ : pic0TypeFunctor(C_L) ≅ (Over.map σ).op ⋙ pic0TypeFunctor C  (the landed rebasing).\n\
+  \ - Pic0PreservesFilteredBaseColimit  (the pinned residual, above).\n - preservesColimit_pic0TypeFunctor_baseChange\
+  \ : from fixed-base preservation of the pushed functor, β1-preservation for C_L,\
+  \ via pic0ThetaType.\n\n=== THE SOLE PINNED RESIDUAL (avatar in hand, divRep-FREE)\
+  \ ===\nPic0PreservesFilteredBaseColimit C = 'pic0TypeFunctor C (FIXED base k) is\
+  \ locally of finite presentation as a functor'. On affine tests overSpec k A this\
+  \ is exactly: PicEtAff C A (the affine relative-Picard plus construction) commutes\
+  \ with filtered colimits of the test algebra A — riding finite presentation of the\
+  \ proper smooth curve C/k. NOT a one-session proof (M–L), hence YES-PINNED not YES-LANDED.\
+  \ Named avatars (mathlib v4.31.0, direct-read):\n  · CommRingCat.preservesColimit_coyoneda_of_finitePresentation\
+  \ (Ring/FinitePresentation.lean:144)\n  · RingHom.EssFiniteType.exists_eq_comp_ι_app_of_isColimit\
+  \ (:81, existence) + exists_comp_map_eq_of_isColimit (:45, uniqueness)\n  · Scheme.exists_π_app_comp_eq_of_locallyOfFinitePresentation\
+  \ (AffineTransitionLimit.lean:1177) + exists_hom_hom_comp_eq_comp_of_locallyOfFiniteType\
+  \ (:686) + exists_isAffineOpen_preimage_eq (:1058) / exists_isOpenCover_and_isAffine\
+  \ (:1078) to spread the affine opens+sections of S_{K_s}=lim S_{k''} to a finite\
+  \ stage.\n\n=== WHAT DAT-G0's β BRICK NOW CONSUMES ===\nPic0PreservesFilteredBaseColimit\
+  \ C  ⟹  β1 (colim comparison bijective)  ⟹  β2's descent of rep_{K_s} to a finite\
+  \ stage k' (with α + the LANDED AffineTransitionLimit / Ring.FinitePresentation\
+  \ spreading). The β1 pivot is settled: β does NOT need pic0 as an fpqc sheaf; the\
+  \ primary route §4.1 stands. Remaining β1 work for the implementation lane: (i)\
+  \ build the field directed system (DG-G0.δ, S) so K_s=colim k'' and S_{K_s}=lim\
+  \ S_{k''}; (ii) PROVE the pinned residual (PicEtAff finite presentation) — the one\
+  \ genuine theorem. Both divRep-free."
+labels:
+- agent-ready
+status: archived
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-19T12:46:46.112275+00:00'
+updated_at: '2026-07-20T03:15:20.561865+00:00'
+metadata: {}

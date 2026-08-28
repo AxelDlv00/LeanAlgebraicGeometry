@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "fingerprint": "2485e1be454e7d5c",
+  "command": [
+    "lake",
+    "build",
+    "HartshorneLib"
+  ],
+  "cwd": ".",
+  "status": "failed",
+  "ok": false,
+  "returncode": 1,
+  "timed_out": false,
+  "reused": false,
+  "wait_seconds": 0.0,
+  "duration_seconds": 0.114,
+  "started_at": "2026-08-28T07:45:03.491209+00:00",
+  "finished_at": "2026-08-28T07:45:03.605544+00:00",
+  "finished_epoch": 1787903103.605544
+}

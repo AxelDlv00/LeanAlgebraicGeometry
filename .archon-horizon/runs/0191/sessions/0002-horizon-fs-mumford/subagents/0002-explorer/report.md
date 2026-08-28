@@ -1,0 +1,1 @@
+The strongest reusable result is AJCR’s fully proved rigidity chain, not a complex-uniformization theorem: it already packages the geometric slice-constancy argument and the pointed-group-homomorphism corollary. I’m checking exact signatures, dependencies, and axiom status of those declarations plus the theta/rigidification bridges before sending the parent a curated inventory.

@@ -1,0 +1,9 @@
+# Orientation — rebuild, run 0027
+
+- Useful context: the Wave-3 Picard lane advanced by two verified layers. `AlgebraicJacobian/Picard/Pic.lean` (`Scheme.CechPic` = Čech `H¹` of the units presheaf on pointed covers, `CommGroup` + strict contravariant functoriality `CechPic.map_id/map_comp`), split helper `UnitsCocycle.lean`, and `RelPic.lean` (`relPicFunctor` = the `H_T`-coset relative Picard functor `Pic(C⊗T)/Pic(T)` on `(Over (Spec k))ᵒᵖ`, with `relPicMapCurve` naturality in the curve). All three keystones audit `[propext, Classical.choice, Quot.sound]`; full `lake build` green, 8590 jobs; no stray files.
+
+- Relevant files: `Picard/{Pic,UnitsCocycle,UnitsPresheaf,RelPic}.lean` and the earlier `Picard/{CechH1,UniversalSections}.lean`; design docs `informal/wave3-picard-design.md` and `informal/chi-ledger-design.md`; the descent core `Descent/{ModuleDescent,InvertibleModule}.lean`. `Challenge.lean` is unchanged and still carries its 15 protected `sorry`s — the Picard/degree/representability consumers are the open frontier.
+
+- The relative Picard functor is a definitional carrier: the substantive pieces ahead — étale sheafification (§4), the representability datum `JacobianData.rep`, and the χ-degree ledger (`Pic⁰` as the field-point degree kernel) — are not yet attempted, and each is where the real difficulty of the north star lives. `informal/old-draft-picard-recon.md` records that absolute `Pic(C⊗T)` is a certified false-axiom trap, so the coset carrier here is the honest object.
+
+- Consistency note: the Picard lane is currently blueprint-invisible (the rebuild blueprint has no Picard chapter; its 183/204 proved count reflects only earlier waves), and the rebuild carries no roadmap milestone — both are tracked through the task charter plus `informal/` docs, matching the lane's convention of authoring blueprint prose once a sheaf-level consumer lands.

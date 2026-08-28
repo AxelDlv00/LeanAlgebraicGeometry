@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Harvey",
+  "agent_path": "/root/janitor_checkpoint",
+  "agent_role": "janitor",
+  "depth": 1,
+  "model": "gpt-5.6-luna",
+  "name": "janitor",
+  "native_subagent_id": "01a01249-2fbe-7150-aee4-3624be285f23",
+  "ok": true,
+  "parent_session": "0033-horizon-ajcr-reviewer-full",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "completed",
+  "subagent_type": "janitor",
+  "summary": "Janitor audit complete; no files or inbox items were modified.",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 756779,
+    "tokens_out": 6648
+  }
+}

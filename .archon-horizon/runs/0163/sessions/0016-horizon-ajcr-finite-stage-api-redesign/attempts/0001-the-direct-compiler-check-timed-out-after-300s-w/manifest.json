@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "status": "rejected",
+  "reason": "The direct compiler check timed out after 300s with canonicalTripleData/ofCanonicalModels calling the dependent finite-subextension producer; retain this draft while testing an opaque comparison boundary.",
+  "created_at": "2026-08-27T22:11:17.006329+00:00",
+  "files": [
+    {
+      "path": "MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0FiniteStageCanonicalGlueContext.lean",
+      "artifact": "files/MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0FiniteStageCanonicalGlueContext.lean",
+      "bytes": 4288,
+      "lines": 121
+    }
+  ],
+  "diagnostics": ""
+}

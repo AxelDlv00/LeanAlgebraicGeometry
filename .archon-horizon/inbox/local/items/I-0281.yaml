@@ -1,0 +1,76 @@
+id: I-0281
+provider: local
+kind: info
+body: "SEED CLOSE — CRITICAL FINDING: the FibreInjective route (I-0279, orchestrator\
+  \ step 1 \"prove hinj\") is MATHEMATICALLY UNSOUND for the real seed. hinj = seedUniv.FibreInjective\
+  \ z is FALSE and can never be discharged. Landed the sound replacement entry point\
+  \ instead. Commit a3dfe4a3b (new file Picard/DivSchemeSeedUnivClose.lean +118, root\
+  \ +1 line; single-module build GREEN 8667 jobs 11s; axiom-clean [propext, Classical.choice,\
+  \ Quot.sound]; sibling PicEtCrossBaseGraph line NOT swept).\n\n=== WHY hinj IS FALSE\
+  \ (clean, Lean-verified) ===\nFibreInjective z := ∀ p, Injective ((kColengthMap\
+  \ z ∘ K.subtype).rTensor κ(p)).  Let f_z = kColengthMap z ∘ K.subtype : ↥K → colength\
+  \ z = Γ(D(h z))⧸(eqn z).\n- eqn z := relThetaResSide a (side z)(piece_le z)(sec\
+  \ z), and kColengthMap z ψ := mk_{span{eqn z}}(relThetaResSide a (side z)(piece_le\
+  \ z) ψ).  Hence kColengthMap z (sec z) = mk(eqn z) = 0.  LEAN-VERIFIED as ThetaGeneratorSeed.kColengthMap_sec_eq_zero\
+  \ (this commit).\n- sec z ∈ K (sec_mem).  So ⟨sec z, sec_mem⟩ ∈ ker f_z (ThetaGeneratorSeed.sec_mem_ker_kColengthMap_comp_subtype).\n\
+  - By the seedUniv construction sec z has NONZERO fibre: windowCompare(x) ≠ 0 at\
+  \ the base prime ⇒ sec z ⊗ₜ 1 ≠ 0 in ↥K ⊗ κ(p).  So f_z ⊗ κ(p) kills a NONZERO element\
+  \ ⇒ NOT injective ⇒ FibreInjective z FALSE.\nCorollary (independent 2nd proof):\
+  \ dvd_of_fibreInjective_of_field_vanishing needs hinj AND hfield jointly; hfield\
+  \ forces range(f_z⊗κ)=0 on the piece image (which contains the generic point), and\
+  \ hinj(injective)+range 0 ⇒ K⊗κ=0 ⇒ K=0.  The two hypotheses are jointly satisfiable\
+  \ only when K=0; divUniversalSeedK ≠ 0.  So the I-0279 bridge, though true as an\
+  \ implication, has UNACHIEVABLE hypotheses = dead route.\n\n=== ROOT CAUSE ===\n\
+  I-0278 FINDING 1 imagined a fibrewise-INJECTIVE lift ψ_z : P → colength with range\
+  \ ψ_z = N z; I-0279 implemented it as ψ_z = f_z itself (P = K).  But a genuine fibrewise-injective\
+  \ lift with range = N z forces N z = 0 AND P = 0 (range ψ⊗κ = 0 by hfield ⇒ ψ⊗κ\
+  \ = 0 ⇒ P⊗κ = 0).  So \"engine :192\" (Module.Flat.quotient_range_of_forall_rTensor_residueField_injective,\
+  \ needs ker(ψ⊗κ)=0) is the WRONG keystone here.  The CORRECT keystone is the strictly-weaker\
+  \ c4 :296 Module.Flat.quotient_range_of_forall_ker_rTensor_residueField_le (needs\
+  \ only ker(f⊗κ) ≤ range((ker f).subtype ⊗ κ) = hspan).  I-0278 wrongly dismissed\
+  \ hspan as \"bypassable\".\n\n=== SOUND ROUTE (already LANDED capstone + this commit)\
+  \ ===\nCorrect capstone = ThetaGeneratorSeed.dvd_of_fibrewise_ker_span_of_field_vanishing\
+  \ (DivSchemeSeedDvd.lean:180): [IsNoetherianRing R][Module.Finite R ↥K] hreg hcolFin\
+  \ hcolFlat hspan hfield → the seed dvd clause.  hspan ⟺ Flat(colength ⧸ N z) (I-0278\
+  \ FINDING 1 was right about THIS equivalence; wrong that fibre-inj bypasses it).\n\
+  New sound one-call assembly (VERBATIM, this commit):\n- theorem ThetaGeneratorSeed.isGenerator_of_fibrewise_ker_span_of_field_vanishing\
+  \ [IsNoetherianRing R][SmoothOfRelativeDimension 1 C.hom][GeometricallyIrreducible\
+  \ C.hom][Module.Finite R ↥K] (hreg)(hcolFin)(hcolFlat)(hspan)(hfield)(hfib) : D.IsGenerator\
+  \ := D.isGenerator_of_fibre_ne_zero (D.dvd_of_fibrewise_ker_span_of_field_vanishing\
+  \ hreg hcolFin hcolFlat hspan hfield) hfib\n  where hspan : ∀ z p, ker((kColengthMap\
+  \ z ∘ K.subtype).rTensor κ(p)) ≤ range((ker(kColengthMap z ∘ K.subtype)).subtype.rTensor\
+  \ κ(p)); hfib is exactly isGenerator_of_fibre_ne_zero (DivSchemeSeed:188) — provable\
+  \ NOW from seedUniv_sec_h_windowCompare + relPinnedSectionsMap_relThetaResSide_windowEquiv_ne_zero\
+  \ (SeedUnivFields:251) + the no-leak.\nThen relDivisor := (seedUniv …).localEquations\
+  \ (isGenerator_of_fibrewise_ker_span_of_field_vanishing … ) [DivSchemeFamily:349].\n\
+  \n=== REMAINING GENUINE CONTENT (unchanged difficulty, now on the SOUND route) ===\n\
+  Instantiate the 6 fibre facts at seedUniv (R = R_Z, K = divUniversalSeedK, [Module.Finite]\
+  \ = finite_divUniversalSeedK DivSchemeSeedUniv:315):\n1. hspan (XL, the real carve\
+  \ rank-g content): ker(f_z⊗κ) = base-change of ker f_z, from divUniversal_carve_residueField\
+  \ (DivSchemeFamilyUniv:135) + pieceQuotBaseChangeAlg (DivisorFamilyPullback:384,\
+  \ _one_tmul_mk:396) tied to e_p, + ker_baseChange_mkQ (DivCarveKit:91).  NOTE sec\
+  \ zs class is in ker(f_z⊗κ) and IS covered by range(ker f_z ⊗ κ) (sec z ∈ ker f_z)\
+  \ — no contradiction, hspan is achievable.\n2. hfield (L): pieceQuotBaseChangeAlg\
+  \ + achiever exists_coeffAt_eq_baseDivisorAt (BaseDivisor:143) at d_p = divUniversalSeedFibreDivisor\
+  \ (SeedUnivFields:133).\n3. hcolFlat: Module.Flat.quotient_span_singleton_of_forall_tmul_residueField\
+  \ (SlicingFlat:317) from seed fibre-regularity.  hcolFin: SupportTube (sideColengthSubmodule_finite).\
+  \  hreg: germ nonzerodivisor from fibre_regular (needs the fibre-reg discharge,\
+  \ shares hfib machinery).\n4. hfib: DONE-able now (see above).\n\n=== ACTION FOR\
+  \ NEXT LANE ===\nDo NOT chase FibreInjective/hinj — it is false.  Use isGenerator_of_fibrewise_ker_span_of_field_vanishing\
+  \ (this commit).  The divRep cascade still gates on relDivisor + isGenerator_seedUniv,\
+  \ which now require ONLY hspan+hfield+hcolFlat/Fin+hreg+hfib at seedUniv.  The I-0279\
+  \ file DivSchemeUnivFibreKerInj.lean (flat_colength_quotient / dvd_of_fibreInjective_of_field_vanishing)\
+  \ is a correct-but-inapplicable dead branch (leave it or retire it; its hyps are\
+  \ unachievable for K≠0)."
+labels:
+- agent-ready
+status: archived
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-19T17:13:50.907443+00:00'
+updated_at: '2026-07-20T03:15:43.383895+00:00'
+metadata: {}

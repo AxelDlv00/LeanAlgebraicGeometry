@@ -1,0 +1,32 @@
+Everything is committed, byte-identical at HEAD, and `RiemannRoch/` is sorry-free. The thread I opened is closed with its conclusion recorded.
+
+## Summary
+
+Landed `RiemannRoch/Ledger/DegreeVanishing.lean` — 18 theorems, 0 sorries, kernel-checked (`lake build`, 8581 jobs, exit 0, no warnings), 22/22 axiom-clean with five probes measured at a synthesis site. It carries **two** of the three cluster-P items on the χ-ledger carrier under a single base-vanishing hypothesis: single-field bounded H¹ vanishing on a **degree half-space** (not the order-cone the predecessor left), and **global generation** at every closed point.
+
+The mathematics: r2 published `exists_bound_of_cofinal_vanishing` as open, saying "nothing in AJC or AJCR produces it". Both ingredients sat in the same directory — `mulEquivDivisorSheaf` makes H¹ vanishing a linear-equivalence invariant, so the peel may consume any member of D₀'s class, and `riemann_inequality` manufactures one below D once `deg(D−D₀) + χ ≥ 1`. Generation fell to the same slice: the evaluation map *is* the dévissage quotient, and `ChiSlice.exact_map_g_delta` needs no finiteness (the adelic route needs two `Module.Finite` binders plus two ledger hypotheses).
+
+## Progress
+- `Ledger/DegreeVanishing.lean`: new, 0 sorries, 18 theorems — cofinality theorem, bounded vanishing with explicit bound `deg D₀ + 1 − χ(𝒪_X)`, exact Riemann–Roch above it, generation at one point and at all points, an `h¹ = 0` entry point, the contrapositive that non-vanishing H¹ is bounded-degree.
+- `scripts/ajcrr-degreevanishing-axioms.lean`: new, run twice — 22/22 clean, zero `sorryAx`.
+- `Ledger/SectionDrop.lean`: docstring-only, four sites; 230 code lines byte-identical.
+- `scripts/axiom-frontier.lean`, `Adelic/SectionBounds.lean`: docstring-only, closing the janitor's I-0649 finding.
+
+## Issues
+
+**Five self-corrections, the first two material.** (1) I measured my own antecedent: it is **witnessed at no proper curve in AJC** — the sole producer of `Subsingleton (H¹ 𝒪)` carries `[IsAffine X]`, and no `genus = 0` is proved anywhere. Everything in the file is conditional on something this project cannot yet supply. Satisfiable, not vacuous, but not "one lemma from a curve-level theorem". (2) **AJCR `UniformVanishing.lean:71` already had the whole argument** — my three steps are its three steps. A port with a carrier change, not a discovery; my own r1 session had read that file and filed it as "already owned" without reading the proof. Also: generation was one lemma away rather than untouched; and I invented two declaration names in a docstring.
+
+**I caused a workspace-wide mathlib outage.** An exported `GIT_DIR` leaked into `lake`, deleting `.lake-packages/mathlib` for all eight lanes. I repaired it and re-verified everything afterwards; filed I-0647. Two AJCR lanes were blocked on it, and another lane's claim that it self-recovered is wrong — they measured after my repair.
+
+**The shared-index bug is worse than documented.** I defused three stale blobs (including the AJCR root, which would have unrooted three modules), found six more armed at once, escalated as I-0652 with a three-way triage test, and warned three lanes; ajc-fbc defused their 317 lines and caught that my DM to them omitted a file my own escalation had listed.
+
+**The fresh-context review never reported.** I dispatched `ground` early and prompted it twice; nothing came back. So the sign direction through `mulEquivDivisorSheaf` rests on my own checking and the kernel. I found the satisfiability answer myself and it went against me. The `janitor` pass did report, and I closed its finding.
+
+## Why I stopped
+
+Materially advanced, not complete — status left unset. Extension-uniformity is untouched and I claim nothing about it.
+
+## Next
+1. **Port AJCR `FLVVanishing.lean:302`** — the only thing between AJC and an unconditional base vanishing at a curve.
+2. **Root the layer** — `DegreeVanishing` and `SectionDrop` are outside the root cone, so every clean axiom line above is scratch-path (I-0600).
+3. **Extension-uniformity** — the one genuinely open cluster-P item; its named inputs are flat base change for section spaces and a `WeilDivisor` pullback along `C_κ ⟶ C`.

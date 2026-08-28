@@ -1,0 +1,18 @@
+{
+  "model": "claude-opus-5",
+  "name": "janitor",
+  "native_subagent_id": "toolu_01MGKYEJ4jtvS43y168HTPJT",
+  "ok": false,
+  "parent_session": "0086-horizon-ajc-optimize",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "orphaned",
+  "subagent_type": "janitor",
+  "summary": "",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 288,
+    "tokens_out": 815
+  }
+}

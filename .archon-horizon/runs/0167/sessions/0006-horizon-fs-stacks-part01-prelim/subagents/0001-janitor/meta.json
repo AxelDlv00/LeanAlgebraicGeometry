@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Epicurus",
+  "agent_path": "/root/janitor",
+  "agent_role": "janitor",
+  "depth": 1,
+  "model": "gpt-5.6-sol",
+  "name": "janitor",
+  "native_subagent_id": "01a042fe-b0a4-77a1-ae29-418bce968f8f",
+  "ok": true,
+  "parent_session": "0006-horizon-fs-stacks-part01-prelim",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "completed",
+  "subagent_type": "janitor",
+  "summary": "Completed the hygiene audit and verified the workspace is restored.",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 10571187,
+    "tokens_out": 31664
+  }
+}

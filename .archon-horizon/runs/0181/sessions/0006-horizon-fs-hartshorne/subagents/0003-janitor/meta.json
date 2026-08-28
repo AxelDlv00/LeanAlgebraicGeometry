@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Herschel",
+  "agent_path": "/root/janitor_audit",
+  "agent_role": "janitor",
+  "depth": 1,
+  "model": "gpt-5.6-luna",
+  "name": "janitor",
+  "native_subagent_id": "01a04446-8e19-7591-bf1e-5b13e21ffe08",
+  "ok": true,
+  "parent_session": "0006-horizon-fs-hartshorne",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "completed",
+  "subagent_type": "janitor",
+  "summary": "Hygiene audit complete; no files or metadata were changed.",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 483495,
+    "tokens_out": 2965
+  }
+}

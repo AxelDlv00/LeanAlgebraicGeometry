@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Dirac",
+  "agent_path": "/root/janitor_checkpoint",
+  "agent_role": "janitor",
+  "depth": 1,
+  "model": "gpt-5.6-luna",
+  "name": "janitor",
+  "native_subagent_id": "01a0452c-2bd6-7e71-8f96-8dac35314678",
+  "ok": true,
+  "parent_session": "0006-horizon-fs-stacks-part02-schemes",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "completed",
+  "subagent_type": "janitor",
+  "summary": "Checkpoint complete.",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 470558,
+    "tokens_out": 4887
+  }
+}

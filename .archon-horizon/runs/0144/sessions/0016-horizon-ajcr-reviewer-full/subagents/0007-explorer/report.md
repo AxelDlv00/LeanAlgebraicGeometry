@@ -1,0 +1,1 @@
+The committed file is now a thin wrapper over separately built engine/rank declarations. I’m doing one bounded kernel invocation on that exact source to see whether the timeout is only LSP overhead or also affects direct Lean.

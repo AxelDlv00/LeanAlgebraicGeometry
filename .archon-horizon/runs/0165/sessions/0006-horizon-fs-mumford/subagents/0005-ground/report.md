@@ -1,0 +1,5 @@
+Mumford is clean: `horizon-git status --short --untracked-files=all -- FormalizedSources/AbelianVarieties/Mumford` is empty. HEAD is `301a63f3418e`; latest Mumford commit is `66f33874a5` (“package finite uniformized torsion”), preceded by the torsion API commits.
+
+Graph stats: 276 nodes total, 216 TeX and 60 Lean; 60 Lean nodes closed, 100 ready, 116 blocked, 0 stale, 164 edges. All 216 TeX nodes remain `lean_status=empty`; Lean declarations are still detached because the frozen blueprint has no `\lean` links. The task `fs-mumford` remains `running`, with one warning: 13 open tasks exceed the recommended queue size.
+
+The finite theorem [Uniformization.lean](/home/axel/LeanAlgebraicGeometry-Horizon/FormalizedSources/AbelianVarieties/Mumford/MumfordLib/Uniformization.lean:110) is structurally sound: it transports finiteness through the explicit additive equivalence and compiles according to the recorded 3064-job check. No finite-torsion correctness issue is visible. The highest-value next action is durable blueprint/formalization linkage, alongside advancing the actual Uniformization theorem; currently the graph does not recognize any TeX theorem as formalized.

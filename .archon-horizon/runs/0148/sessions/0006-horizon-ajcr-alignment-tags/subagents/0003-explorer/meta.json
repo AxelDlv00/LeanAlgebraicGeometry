@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Kierkegaard",
+  "agent_path": "/root/lean_hgraph_audit",
+  "agent_role": "explorer",
+  "depth": 1,
+  "model": "gpt-5.6-sol",
+  "name": "explorer",
+  "native_subagent_id": "019fff6f-e29a-7292-84fd-9a38743ad2db",
+  "ok": false,
+  "parent_session": "0006-horizon-ajcr-alignment-tags",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "interrupted",
+  "subagent_type": "explorer",
+  "summary": "",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 18045495,
+    "tokens_out": 68515
+  }
+}

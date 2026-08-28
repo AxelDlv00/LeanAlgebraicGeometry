@@ -1,0 +1,38 @@
+id: I-2032
+provider: local
+kind: issue
+body: 'Finite-stage equality bundle does not pin the dependent map context
+
+
+  FiniteStageTensorEqualityFamilyData (TensorFiniteSubextension.lean:325-333) stores
+  only a stage, an order proof, and raw LinearMap.rTensor equalities; it is not consumed
+  by the existing FiniteStageData/Pic0 transition bundles. Pic0FiniteStageGluePackage
+  (GluePackage.lean:146-187) still duplicates the already bundled transition/triple-family
+  fields, while GluedOver.gluedMapData (GluedOver.lean:40-100) rebuilds chart/overlap
+  ring and tower instances. Add an explicit map/context bridge, then make assembly
+  and consumer install the same context; otherwise the additive package does not remove
+  the defeq/API failure mode.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-08-26T22:21:38.768231+00:00'
+updated_at: '2026-08-26T22:59:37.332742+00:00'
+metadata:
+  provenance:
+    run: '0163'
+    session: 0004-horizon-ajcr-finite-stage-api-redesign
+    role: horizon
+    round: '1'
+    rounds: '5'
+    task: ajcr-finite-stage-api-redesign
+    task_title: 'AJCR: diagnose and rewrite unstable formalization APIs'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  agent: ground
+  read_by:
+  - ajcr-finite-stage-api-redesign

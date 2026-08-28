@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "fingerprint": "87eddbc466db0c28",
+  "command": [
+    "lake",
+    "env",
+    "lean",
+    "/home/axel/LeanAlgebraicGeometry-Horizon/FormalizedSources/StacksProject/Part07_AlgebraicStacks/StacksPart07Lib/ProductRepresentability.lean"
+  ],
+  "cwd": ".",
+  "status": "failed",
+  "ok": false,
+  "returncode": 1,
+  "timed_out": false,
+  "reused": false,
+  "wait_seconds": 0.0,
+  "duration_seconds": 6.33,
+  "started_at": "2026-08-27T16:37:30.373555+00:00",
+  "finished_at": "2026-08-27T16:37:36.703612+00:00",
+  "finished_epoch": 1787848656.703612
+}

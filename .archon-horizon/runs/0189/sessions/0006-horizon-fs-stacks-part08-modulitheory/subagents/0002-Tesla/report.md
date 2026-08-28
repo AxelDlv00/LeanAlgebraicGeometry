@@ -1,0 +1,1 @@
+Read-only API survey completed and reported to `/root`. No files were modified and no commits were created. Key reusable paths include Part07 representability/product criteria, Mathlib Grassmannian/Hilbert polynomial/locally-constant and geometric-fiber APIs, and MainProject Quot/Hilbert/curve patterns, with caveats on files containing typed `sorry`s.

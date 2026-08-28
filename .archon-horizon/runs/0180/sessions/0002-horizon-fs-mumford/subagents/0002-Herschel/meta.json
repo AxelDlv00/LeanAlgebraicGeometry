@@ -1,0 +1,21 @@
+{
+  "agent_nickname": "Herschel",
+  "agent_path": "/root/torsion_worker",
+  "depth": 1,
+  "model": "gpt-5.6-sol",
+  "name": "Herschel",
+  "native_subagent_id": "01a0436f-1ac0-7900-8361-05021ffe475e",
+  "ok": true,
+  "parent_session": "0002-horizon-fs-mumford",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "completed",
+  "subagent_type": "Herschel",
+  "summary": "Added and verified `mem_productTorus_zsmul_torsion_iff` in `MumfordLib/Analytic.lean`, characterizing integer torsion coordinatewise. LSP diagnostics are clean and `\"$HORIZON_BIN\" check --lean MumfordLib/Analytic.lean` passed. Parent record",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 5466302,
+    "tokens_out": 15975
+  }
+}

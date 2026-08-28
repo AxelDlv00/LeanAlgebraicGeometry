@@ -1,0 +1,11 @@
+id: 0158
+focus:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+  task: ajcr-p7-universal-yoneda
+  tasks:
+  - ajcr-p7-universal-yoneda
+rounds_requested: 1
+start_round: 0
+created_at: '2026-08-24T14:55:42.404699+00:00'
+metadata: {}

@@ -1,0 +1,25 @@
+Every authored path in the ledger is HEAD-identical — nothing is uncommitted. The post-last-commit mutations were two writes outside the ledger work tree: `memory/standardising-a-hypothesis-can-falsify-it.md` and the `MEMORY.md` index pointer, both under `/home/axel/.claude-api/...`, which is not under `/home/axel/LeanAlgebraicGeometry-Horizon`. The workspace-visible copy of that lesson is inbox item I-1662, committed in `9e4da18369`.
+
+## Progress
+
+- **AlgebraicJacobian/Picard/QuasiProjectiveFiniteInAffine.lean** (new, 683 lines, 18 declarations, 0 code sorries): built the quasi-projectivity vocabulary three files were carrying by hand. Rooted at `AlgebraicJacobian.lean` in the same commit. Every theorem axiom-clean `[propext, Classical.choice, Quot.sound]` against `fgaPicardRepresentability` firing `sorryAx` in the same probe. `lake build AlgebraicJacobian` EXIT=0, 8918 jobs, zero warnings from this file.
+
+Three files (`PicEtPointedReduction`, `Albanese/StableAffineCoverGroup`, `FiniteGaloisQuotient`) all carried the same sentence: the orbit-in-affine-open hypothesis "holds for quasi-projective `X`, but mathlib has no quasi-projectivity vocabulary at this pin, so it must be supplied by hand." Of the whole chain exactly one step had content, and it is genuinely absent from mathlib v4.31: **graded** prime avoidance. The ungraded `Ideal.subset_union_prime_finite` yields an element with no degree control, while `Proj.isAffineOpen_basicOpen` demands `f ∈ 𝒜 m` with `0 < m`.
+
+- `exists_homogeneous_pos_mem_notMem` and two family forms. The grading is consumed twice, and the second use is what an ungraded reading drops: homogeneity of `I` gives no degree control; *relevance* of `p` supplies the positive degree. False at a `p` containing the irrelevant ideal — exactly the primes `Proj` discards — so relevance is load-bearing. The general form reduces to the **maximal** members; the ungraded reflex of reducing to minimal primes would prove nothing.
+- `finiteInAffine_proj`. A point of `Proj` *is* a relevant homogeneous prime, and its `not_irrelevant_le` field does double duty. The finite generalisation of what mathlib runs one point at a time inside `Proj`'s own `local_affine`.
+- `orbitsInAffineOpen_of_isProjective` — **closes** the Galois-descent orbit gate at every projective scheme, no affineness, nothing by hand. `finiteInAffine_curve` gives the curve unconditionally.
+
+## Issues
+
+My §5 restated the seam's antecedent with `IsProjective` of the representing scheme, and I committed "entirely in standard vocabulary, no condition invented in this project." **Both halves false, and the second expensively: the restatement is a strengthening into falsity.** A fresh-context audit caught it; I reproduced it and landed the refutation as theorems (`compactSpace_of_isProjective`, `not_isProjective_of_infinite_disjoint_open_cover`) — projectivity over a field forces `CompactSpace`, and `Pic_{C/k}` is a disjoint union over `deg ∈ ℤ`. Verbatim the "trap (c)" that `Picard/AmbientPicNotProper.lean` exists to record, from which I had imported nothing. Three vacuity checks had passed, because each asks "could this hold somewhere," never "does it hold at the intended object." Filed as I-1662.
+
+Also corrected: three citations that failed `#check`; an unverified non-affineness claim replaced with what an audit could verify by elaboration; one published commit sha that was never mine.
+
+## Why I stopped
+
+Objective **partly advanced, not complete.** The seam `sorry` is untouched and `rep` still has no producer — I added no hypothesis, and nothing here produces projectivity of a Picard scheme (Kleiman §5 `th:qpp&p`, open). What changed is that a hypothesis invented in this project is now a *consequence* of a standard one, and a real gate closed for every lane. Round 8 of 8, so the row is released unowned; 11 commits, all ancestors of HEAD, touching exactly 12 paths, all mine.
+
+## Next
+
+The piecewise form (`exists_affineOpen_of_subset_isProjective_opens`) is the shape Kleiman actually gives — quasi-projectivity of the degree pieces. Running descent from it needs degree-invariance of the semilinear action and the degree-graded decomposition of `PicSchemeEt`. Neither is plumbing. The Albanese lane can take the orbit gate for free today.

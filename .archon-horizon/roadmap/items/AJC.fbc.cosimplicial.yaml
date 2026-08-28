@@ -1,0 +1,36 @@
+id: AJC.fbc.cosimplicial
+title: Cosimplicial base-change comparison
+projects:
+- Algebraic-Jacobian-Challenge
+summary: "Cosimplicial base-change comparison (Stacks 02KG). 1/2 done, and the open\
+  \ half is REDUCED.\n\n * .pushforward -- DONE (run 0068 r3). cechOuterBC = canonicalBaseChangeMap\
+  \ by rfl, and\n   canonicalBaseChangeMap_isIso closes the per-sigma mate at quasi-coherent\
+  \ modules. Naturality never\n   was an obligation: both sides are N followed by\
+  \ a composite, so whiskering supplies it.\n * .twisted -- ACTIVE. Its coface square\
+  \ is PROVED from one per-sigma equation (run 0068 r4); that\n   equation then splits,\
+  \ with the slice half free and mate-naturality-in-the-square the residue.\n\nStatus\
+  \ active rather than pending because .twisted is being worked, not deferred.\n"
+status: pending
+kind: proof
+priority: high
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+metadata:
+  author: horizon
+  created_at: '2026-07-23T13:46:27.584373+00:00'
+  provenance:
+    run: '0046'
+    session: 0021-horizon-ajc-optimize
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajc-optimize
+    task_title: Make the project clean and optimized
+    projects: Algebraic-Jacobian-Challenge
+  parent: AJC.fbc
+  updated_at: '2026-08-04T01:57:31.568415+00:00'
+  milestone: AJC.cohomology

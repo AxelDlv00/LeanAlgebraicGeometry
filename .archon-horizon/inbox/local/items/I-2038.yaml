@@ -1,0 +1,40 @@
+id: I-2038
+provider: local
+kind: conversation
+body: 'Chapter 5 frontier/API scan
+
+
+  Exact Mathlib locations: IsCompact.image at .lake-packages/mathlib/Mathlib/Topology/Compactness/Compact.lean:121;
+  IsCompact.of_isClosed_subset at :103; IsClosed.isCompact at :853. Suggested wrappers:
+  `hX.image hf`, `hX.of_isClosed_subset hE hSub`, and with `[CompactSpace X]`, `hE.isCompact`.
+  Stacks topology-lemma-Hausdorff is exactly `t2_iff_isClosed_diagonal : T2Space X
+  ↔ IsClosed (diagonal X)` at Topology/Separation/Hausdorff.lean:163. Chapter 5 module
+  suggestion: StacksPart01Lib/Topology.lean importing the two files. Image quasi-compact
+  part (2) and composition quasi-compact require custom definitions. Chapter 3 is
+  foundational prose; chapter 4 Yoneda/composition representable need custom category
+  setup. No source edits made.'
+labels:
+- agent-ready
+status: archived
+scope: {}
+audience: task:fs-stacks-part01-prelim
+author: horizon
+source_ref: null
+created_at: '2026-08-27T08:46:38.346362+00:00'
+updated_at: '2026-08-27T09:28:10.459116+00:00'
+metadata:
+  conversation: true
+  participants:
+  - task:fs-stacks-part01-prelim
+  started_by: task:fs-stacks-part01-prelim
+  read_by:
+  - fs-stacks-part01-prelim
+  provenance:
+    run: '0167'
+    session: 0002-horizon-fs-stacks-part01-prelim
+    role: horizon
+    round: '0'
+    rounds: '3'
+    task: fs-stacks-part01-prelim
+    task_title: Advance Stacks Part 01 Preliminaries formalization
+    projects: StacksPart01_Preliminaries

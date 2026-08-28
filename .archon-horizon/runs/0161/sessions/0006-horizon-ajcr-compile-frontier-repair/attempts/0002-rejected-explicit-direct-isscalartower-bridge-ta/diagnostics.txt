@@ -1,0 +1,1637 @@
+⚠ [8577/8829] Replayed AlgebraicJacobian.Picard.Pic
+warning: AlgebraicJacobian/Picard/Pic.lean:112:2: The `show` tactic should only be used to indicate intermediate goal states for readability.
+However, this tactic invocation changed the goal. Please use `change` instead for these purposes.
+
+Note: This linter can be disabled with `set_option linter.style.show false`
+warning: AlgebraicJacobian/Picard/Pic.lean:130:4: The `show` tactic should only be used to indicate intermediate goal states for readability.
+However, this tactic invocation changed the goal. Please use `change` instead for these purposes.
+
+Note: This linter can be disabled with `set_option linter.style.show false`
+warning: AlgebraicJacobian/Picard/Pic.lean:135:4: The `show` tactic should only be used to indicate intermediate goal states for readability.
+However, this tactic invocation changed the goal. Please use `change` instead for these purposes.
+
+Note: This linter can be disabled with `set_option linter.style.show false`
+warning: AlgebraicJacobian/Picard/Pic.lean:140:4: The `show` tactic should only be used to indicate intermediate goal states for readability.
+However, this tactic invocation changed the goal. Please use `change` instead for these purposes.
+
+Note: This linter can be disabled with `set_option linter.style.show false`
+warning: AlgebraicJacobian/Picard/Pic.lean:150:4: The `show` tactic should only be used to indicate intermediate goal states for readability.
+However, this tactic invocation changed the goal. Please use `change` instead for these purposes.
+
+Note: This linter can be disabled with `set_option linter.style.show false`
+warning: AlgebraicJacobian/Picard/Pic.lean:192:2: The `show` tactic should only be used to indicate intermediate goal states for readability.
+However, this tactic invocation changed the goal. Please use `change` instead for these purposes.
+
+Note: This linter can be disabled with `set_option linter.style.show false`
+warning: AlgebraicJacobian/Picard/Pic.lean:201:4: The `show` tactic should only be used to indicate intermediate goal states for readability.
+However, this tactic invocation changed the goal. Please use `change` instead for these purposes.
+
+Note: This linter can be disabled with `set_option linter.style.show false`
+warning: AlgebraicJacobian/Picard/Pic.lean:206:4: The `show` tactic should only be used to indicate intermediate goal states for readability.
+However, this tactic invocation changed the goal. Please use `change` instead for these purposes.
+
+Note: This linter can be disabled with `set_option linter.style.show false`
+warning: AlgebraicJacobian/Picard/Pic.lean:226:2: The `show` tactic should only be used to indicate intermediate goal states for readability.
+However, this tactic invocation changed the goal. Please use `change` instead for these purposes.
+
+Note: This linter can be disabled with `set_option linter.style.show false`
+warning: AlgebraicJacobian/Picard/Pic.lean:240:2: The `show` tactic should only be used to indicate intermediate goal states for readability.
+However, this tactic invocation changed the goal. Please use `change` instead for these purposes.
+
+Note: This linter can be disabled with `set_option linter.style.show false`
+⚠ [8586/8829] Replayed AlgebraicJacobian.Picard.RelPic
+warning: AlgebraicJacobian/Picard/RelPic.lean:192:6: The `show` tactic should only be used to indicate intermediate goal states for readability.
+However, this tactic invocation changed the goal. Please use `change` instead for these purposes.
+
+Note: This linter can be disabled with `set_option linter.style.show false`
+warning: AlgebraicJacobian/Picard/RelPic.lean:212:4: The `show` tactic should only be used to indicate intermediate goal states for readability.
+However, this tactic invocation changed the goal. Please use `change` instead for these purposes.
+
+Note: This linter can be disabled with `set_option linter.style.show false`
+warning: AlgebraicJacobian/Picard/RelPic.lean:224:4: The `show` tactic should only be used to indicate intermediate goal states for readability.
+However, this tactic invocation changed the goal. Please use `change` instead for these purposes.
+
+Note: This linter can be disabled with `set_option linter.style.show false`
+⚠ [8596/8829] Replayed AlgebraicJacobian.Algebra.PiLocalization
+warning: AlgebraicJacobian/Algebra/PiLocalization.lean:51:0: `AlgHom.ext_of_isLocalization_pi` does not use the following hypothesis in its type:
+  • [Fintype ι] (#4)
+
+Consider replacing this hypothesis with the corresponding instance of `Finite` and using `Fintype.ofFinite` in the proof, or removing it entirely.
+
+Note: This linter can be disabled with `set_option linter.unusedFintypeInType false`
+warning: AlgebraicJacobian/Algebra/PiLocalization.lean:131:0: `Module.Flat.pi_of_finite` does not use the following hypothesis in its type:
+  • [Fintype ι] (#4)
+
+Consider replacing this hypothesis with the corresponding instance of `Finite` and using `Fintype.ofFinite` in the proof, or removing it entirely.
+
+Note: This linter can be disabled with `set_option linter.unusedFintypeInType false`
+warning: AlgebraicJacobian/Algebra/PiLocalization.lean:138:0: `Module.FaithfullyFlat.pi_of_span_eq_top` does not use the following hypothesis in its type:
+  • [Fintype ι] (#4)
+
+Consider replacing this hypothesis with the corresponding instance of `Finite` and using `Fintype.ofFinite` in the proof, or removing it entirely.
+
+Note: This linter can be disabled with `set_option linter.unusedFintypeInType false`
+⚠ [8597/8829] Replayed AlgebraicJacobian.Algebra.LocalizationCocycle
+warning: AlgebraicJacobian/Algebra/LocalizationCocycle.lean:156:24: Variable name `k` is not explicitly referenced.
+
+The binding can be removed (if unused) or named `_` (if used implicitly).
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: AlgebraicJacobian/Algebra/LocalizationCocycle.lean:157:24: Variable name `k` is not explicitly referenced.
+
+The binding can be removed (if unused) or named `_` (if used implicitly).
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: AlgebraicJacobian/Algebra/LocalizationCocycle.lean:164:0: automatically included section variable(s) unused in theorem `IsLocalization.AwayCover.piUnit_val`:
+  [Fintype ι]
+  [DecidableEq ι]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [Fintype ι] [DecidableEq ι] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: AlgebraicJacobian/Algebra/LocalizationCocycle.lean:163:0: `piUnit_val` does not use the following hypothesis in its type:
+  • [DecidableEq ι] (#3)
+
+Consider removing this hypothesis and using `classical` in the proof instead. For terms, consider using `open scoped Classical in` at the term level (not the command level).
+
+Note: This linter can be disabled with `set_option linter.unusedDecidableInType false`
+warning: AlgebraicJacobian/Algebra/LocalizationCocycle.lean:163:0: `piUnit_val` does not use the following hypothesis in its type:
+  • [Fintype ι] (#2)
+
+Consider replacing this hypothesis with the corresponding instance of `Finite` and using `Fintype.ofFinite` in the proof, or removing it entirely.
+
+Note: This linter can be disabled with `set_option linter.unusedFintypeInType false`
+warning: AlgebraicJacobian/Algebra/LocalizationCocycle.lean:170:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: AlgebraicJacobian/Algebra/LocalizationCocycle.lean:433:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+⚠ [8600/8829] Replayed AlgebraicJacobian.Picard.PicAffineCover
+warning: AlgebraicJacobian/Picard/PicAffineCover.lean:36:0: Unscoped option maxHeartbeats is not allowed:
+Please scope this to individual declarations, as in
+```
+set_option maxHeartbeats in
+-- comment explaining why this is necessary
+example : ... := ...
+```
+
+Note: This linter can be disabled with `set_option linter.style.setOption false`
+⚠ [8602/8829] Replayed AlgebraicJacobian.Algebra.BaseChangeTrivialization
+warning: AlgebraicJacobian/Algebra/BaseChangeTrivialization.lean:87:2: The `show` tactic should only be used to indicate intermediate goal states for readability.
+However, this tactic invocation changed the goal. Please use `change` instead for these purposes.
+
+Note: This linter can be disabled with `set_option linter.style.show false`
+⚠ [8606/8829] Replayed AlgebraicJacobian.Picard.PicAffine
+warning: AlgebraicJacobian/Picard/PicAffine.lean:43:0: Unscoped option maxHeartbeats is not allowed:
+Please scope this to individual declarations, as in
+```
+set_option maxHeartbeats in
+-- comment explaining why this is necessary
+example : ... := ...
+```
+
+Note: This linter can be disabled with `set_option linter.style.setOption false`
+⚠ [8607/8829] Replayed AlgebraicJacobian.Picard.CechPicToPic
+warning: AlgebraicJacobian/Picard/CechPicToPic.lean:25:0: Unscoped option maxHeartbeats is not allowed:
+Please scope this to individual declarations, as in
+```
+set_option maxHeartbeats in
+-- comment explaining why this is necessary
+example : ... := ...
+```
+
+Note: This linter can be disabled with `set_option linter.style.setOption false`
+warning: AlgebraicJacobian/Picard/CechPicToPic.lean:68:2: The `show` tactic should only be used to indicate intermediate goal states for readability.
+However, this tactic invocation changed the goal. Please use `change` instead for these purposes.
+
+Note: This linter can be disabled with `set_option linter.style.show false`
+⚠ [8610/8829] Replayed AlgebraicJacobian.Algebra.TensorAwayPi
+warning: AlgebraicJacobian/Algebra/TensorAwayPi.lean:247:0: `pi_tower` does not use the following hypothesis in its type:
+  • [Fintype ι] (#7)
+
+Consider replacing this hypothesis with the corresponding instance of `Finite` and using `Fintype.ofFinite` in the proof, or removing it entirely.
+
+Note: This linter can be disabled with `set_option linter.unusedFintypeInType false`
+⚠ [8658/9339] Replayed AlgebraicJacobian.Cohomology.NativePushforwardBaseChangeTensor
+warning: AlgebraicJacobian/Cohomology/NativePushforwardBaseChangeTensor.lean:184:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 1600000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+⚠ [8722/9371] Replayed AlgebraicJacobian.Challenge
+warning: AlgebraicJacobian/Challenge.lean:96:18: declaration uses `sorry`
+warning: AlgebraicJacobian/Challenge.lean:107:23: declaration uses `sorry`
+warning: AlgebraicJacobian/Challenge.lean:112:9: declaration uses `sorry`
+warning: AlgebraicJacobian/Challenge.lean:119:0: declaration uses `sorry`
+warning: AlgebraicJacobian/Challenge.lean:126:0: declaration uses `sorry`
+warning: AlgebraicJacobian/Challenge.lean:131:18: declaration uses `sorry`
+warning: AlgebraicJacobian/Challenge.lean:136:8: declaration uses `sorry`
+warning: AlgebraicJacobian/Challenge.lean:152:8: declaration uses `sorry`
+warning: AlgebraicJacobian/Challenge.lean:165:18: declaration uses `sorry`
+warning: AlgebraicJacobian/Challenge.lean:256:18: declaration uses `sorry`
+warning: AlgebraicJacobian/Challenge.lean:265:8: declaration uses `sorry`
+warning: AlgebraicJacobian/Challenge.lean:274:8: declaration uses `sorry`
+warning: AlgebraicJacobian/Challenge.lean:291:8: declaration uses `sorry`
+⚠ [8734/9371] Replayed AlgebraicJacobian.Cohomology.GluedSheafTermBaseChangeEquiv
+warning: AlgebraicJacobian/Cohomology/GluedSheafTermBaseChangeEquiv.lean:321:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 1600000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+warning: AlgebraicJacobian/Cohomology/GluedSheafTermBaseChangeEquiv.lean:402:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 1600000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+⚠ [8736/9371] Replayed AlgebraicJacobian.Cohomology.GluedSheafH0BaseChange
+warning: AlgebraicJacobian/Cohomology/GluedSheafH0BaseChange.lean:176:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 4000000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+⚠ [8818/9371] Replayed AlgebraicJacobian.Picard.CechKernelGlue
+warning: AlgebraicJacobian/Picard/CechKernelGlue.lean:113:22: This simp argument is unused:
+  inv_inv
+
+Hint: Omit it from the simp argument list.
+  simp only [mul_inv,̵ ̵i̵n̵v̵_̵i̵n̵v̵]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: AlgebraicJacobian/Picard/CechKernelGlue.lean:114:13: This simp argument is unused:
+  mul_comm
+
+Hint: Omit it from the simp argument list.
+  simp only [̵m̵u̵l̵_̵c̵o̵m̵m̵,̵ ̵m̵u̵l̵_̵l̵e̵f̵t̵_̵c̵o̵m̵m̵,̵[̲m̲u̲l̲_̲l̲e̲f̲t̲_̲c̲o̲m̲m̲,̲ mul_assoc]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: AlgebraicJacobian/Picard/CechKernelGlue.lean:114:23: This simp argument is unused:
+  mul_left_comm
+
+Hint: Omit it from the simp argument list.
+  simp only [mul_comm, mul_l̵e̵f̵t̵_̵c̵o̵m̵m̵,̵ ̵m̵u̵l̵_̵assoc]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+⚠ [8823/9371] Replayed AlgebraicJacobian.Picard.DescentClassRepBuild
+warning: AlgebraicJacobian/Picard/DescentClassRepBuild.lean:72:8: automatically included section variable(s) unused in theorem `_private.AlgebraicJacobian.Picard.DescentClassRepBuild.0.AlgebraicGeometry.Over.appLE_algebraMapA`:
+  [Module.FaithfullyFlat A B]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [Module.FaithfullyFlat A B] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: AlgebraicJacobian/Picard/DescentClassRepBuild.lean:98:8: automatically included section variable(s) unused in theorem `_private.AlgebraicJacobian.Picard.DescentClassRepBuild.0.AlgebraicGeometry.Over.dEq_one_tmul`:
+  [Algebra k A]
+  [IsScalarTower k A B]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [Algebra k A] [IsScalarTower k A B] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: AlgebraicJacobian/Picard/DescentClassRepBuild.lean:103:2: The `show` tactic should only be used to indicate intermediate goal states for readability.
+However, this tactic invocation changed the goal. Please use `change` instead for these purposes.
+
+Note: This linter can be disabled with `set_option linter.style.show false`
+warning: AlgebraicJacobian/Picard/DescentClassRepBuild.lean:191:8: automatically included section variable(s) unused in theorem `_private.AlgebraicJacobian.Picard.DescentClassRepBuild.0.AlgebraicGeometry.Over.μval_res`:
+  [Module.FaithfullyFlat A B]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [Module.FaithfullyFlat A B] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: AlgebraicJacobian/Picard/DescentClassRepBuild.lean:207:8: automatically included section variable(s) unused in theorem `_private.AlgebraicJacobian.Picard.DescentClassRepBuild.0.AlgebraicGeometry.Over.inclLeft_eq_basicRes`:
+  [IsScalarTower k A B]
+  [Module.FaithfullyFlat A B]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [IsScalarTower k A B] [Module.FaithfullyFlat A B] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: AlgebraicJacobian/Picard/DescentClassRepBuild.lean:219:8: automatically included section variable(s) unused in theorem `_private.AlgebraicJacobian.Picard.DescentClassRepBuild.0.AlgebraicGeometry.Over.inclRight_eq_basicRes`:
+  [IsScalarTower k A B]
+  [Module.FaithfullyFlat A B]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [IsScalarTower k A B] [Module.FaithfullyFlat A B] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: AlgebraicJacobian/Picard/DescentClassRepBuild.lean:273:8: automatically included section variable(s) unused in theorem `_private.AlgebraicJacobian.Picard.DescentClassRepBuild.0.AlgebraicGeometry.Over.cancelN_smul`:
+  [IsScalarTower k A B]
+  [Module.FaithfullyFlat A B]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [IsScalarTower k A B] [Module.FaithfullyFlat A B] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: AlgebraicJacobian/Picard/DescentClassRepBuild.lean:370:2: The `show` tactic should only be used to indicate intermediate goal states for readability.
+However, this tactic invocation changed the goal. Please use `change` instead for these purposes.
+
+Note: This linter can be disabled with `set_option linter.style.show false`
+warning: AlgebraicJacobian/Picard/DescentClassRepBuild.lean:393:2: The `show` tactic should only be used to indicate intermediate goal states for readability.
+However, this tactic invocation changed the goal. Please use `change` instead for these purposes.
+
+Note: This linter can be disabled with `set_option linter.style.show false`
+warning: AlgebraicJacobian/Picard/DescentClassRepBuild.lean:433:8: automatically included section variable(s) unused in theorem `_private.AlgebraicJacobian.Picard.DescentClassRepBuild.0.AlgebraicGeometry.Over.transition_mid`:
+  [Module.FaithfullyFlat A B]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [Module.FaithfullyFlat A B] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+⚠ [8882/9371] Replayed AlgebraicJacobian.Picard.DivisorFamilyThetaRank
+warning: AlgebraicJacobian/Picard/DivisorFamilyThetaRank.lean:53:0: Unscoped option synthInstance.maxHeartbeats is not allowed:
+Please scope this to individual declarations, as in
+```
+set_option synthInstance.maxHeartbeats in
+-- comment explaining why this is necessary
+example : ... := ...
+```
+
+Note: This linter can be disabled with `set_option linter.style.setOption false`
+⚠ [8883/9371] Replayed AlgebraicJacobian.Picard.DivisorFamilyThetaSections
+warning: AlgebraicJacobian/Picard/DivisorFamilyThetaSections.lean:40:0: Unscoped option synthInstance.maxHeartbeats is not allowed:
+Please scope this to individual declarations, as in
+```
+set_option synthInstance.maxHeartbeats in
+-- comment explaining why this is necessary
+example : ... := ...
+```
+
+Note: This linter can be disabled with `set_option linter.style.setOption false`
+⚠ [8908/9371] Replayed AlgebraicJacobian.Picard.DivRepClassifyZarKit
+warning: AlgebraicJacobian/Picard/DivRepClassifyZarKit.lean:178:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 800000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+warning: AlgebraicJacobian/Picard/DivRepClassifyZarKit.lean:246:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 800000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+warning: AlgebraicJacobian/Picard/DivRepClassifyZarKit.lean:284:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 800000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+warning: AlgebraicJacobian/Picard/DivRepClassifyZarKit.lean:426:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 800000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+⚠ [8912/9371] Replayed AlgebraicJacobian.Picard.Pic0RankOneFamilyCertificatesH0BaseChange
+warning: AlgebraicJacobian/Picard/Pic0RankOneFamilyCertificatesH0BaseChange.lean:167:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 2000000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+warning: AlgebraicJacobian/Picard/Pic0RankOneFamilyCertificatesH0BaseChange.lean:221:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 2000000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+warning: AlgebraicJacobian/Picard/Pic0RankOneFamilyCertificatesH0BaseChange.lean:325:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 2000000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+⚠ [8926/9371] Replayed AlgebraicJacobian.Picard.Pic0AtlasFromDivRep
+warning: AlgebraicJacobian/Picard/Pic0AtlasFromDivRep.lean:125:2: The `show` tactic should only be used to indicate intermediate goal states for readability.
+However, this tactic invocation changed the goal. Please use `change` instead for these purposes.
+
+Note: This linter can be disabled with `set_option linter.style.show false`
+⚠ [8982/9371] Replayed AlgebraicJacobian.Picard.DivRepClassifyZar
+warning: AlgebraicJacobian/Picard/DivRepClassifyZar.lean:114:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 1600000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+warning: AlgebraicJacobian/Picard/DivRepClassifyZar.lean:161:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 800000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+⚠ [8987/9371] Replayed AlgebraicJacobian.Picard.DivSchemeCertZarPointwise
+warning: AlgebraicJacobian/Picard/DivSchemeCertZarPointwise.lean:70:4: The `show` tactic should only be used to indicate intermediate goal states for readability.
+However, this tactic invocation changed the goal. Please use `change` instead for these purposes.
+
+Note: This linter can be disabled with `set_option linter.style.show false`
+⚠ [8990/9371] Replayed AlgebraicJacobian.Picard.DivSchemeFamilyUniv
+warning: AlgebraicJacobian/Picard/DivSchemeFamilyUniv.lean:122:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option synthInstance.maxHeartbeats 800000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+⚠ [9001/9371] Replayed AlgebraicJacobian.Picard.DivSchemeSeedUnivAssembleKappa
+warning: AlgebraicJacobian/Picard/DivSchemeSeedUnivAssembleKappa.lean:237:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 800000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+warning: AlgebraicJacobian/Picard/DivSchemeSeedUnivAssembleKappa.lean:360:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 800000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+warning: AlgebraicJacobian/Picard/DivSchemeSeedUnivAssembleKappa.lean:526:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 800000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+⚠ [9002/9371] Replayed AlgebraicJacobian.Picard.DivSchemeSeedUnivSecondWindow
+warning: AlgebraicJacobian/Picard/DivSchemeSeedUnivSecondWindow.lean:100:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 1600000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+warning: AlgebraicJacobian/Picard/DivSchemeSeedUnivSecondWindow.lean:186:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 1600000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+warning: AlgebraicJacobian/Picard/DivSchemeSeedUnivSecondWindow.lean:213:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 1600000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+warning: AlgebraicJacobian/Picard/DivSchemeSeedUnivSecondWindow.lean:304:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 1600000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+⚠ [9004/9371] Replayed AlgebraicJacobian.Picard.DivSchemeHighWindowPersistence
+warning: AlgebraicJacobian/Picard/DivSchemeHighWindowPersistence.lean:355:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 1600000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+⚠ [9006/9371] Replayed AlgebraicJacobian.Picard.DivSchemeSeedUnivSndRes
+warning: AlgebraicJacobian/Picard/DivSchemeSeedUnivSndRes.lean:80:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 800000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+⚠ [9010/9371] Replayed AlgebraicJacobian.Picard.DivSchemeSeedUnivMulSpan
+warning: AlgebraicJacobian/Picard/DivSchemeSeedUnivMulSpan.lean:24:0: Unscoped option maxHeartbeats is not allowed:
+Please scope this to individual declarations, as in
+```
+set_option maxHeartbeats in
+-- comment explaining why this is necessary
+example : ... := ...
+```
+
+Note: This linter can be disabled with `set_option linter.style.setOption false`
+warning: AlgebraicJacobian/Picard/DivSchemeSeedUnivMulSpan.lean:25:0: Unscoped option synthInstance.maxHeartbeats is not allowed:
+Please scope this to individual declarations, as in
+```
+set_option synthInstance.maxHeartbeats in
+-- comment explaining why this is necessary
+example : ... := ...
+```
+
+Note: This linter can be disabled with `set_option linter.style.setOption false`
+warning: AlgebraicJacobian/Picard/DivSchemeSeedUnivMulSpan.lean:133:4: `simp [e₁, e₂, μ, divCarveMul, windowShiftMul, LinearMap.comp_apply]` is a flexible tactic modifying `⊢`. Try `simp?` and use the suggested `simp only [...]`. Alternatively, use `suffices` to explicitly state the simplified form.
+
+Note: This linter can be disabled with `set_option linter.flexible false`
+info: AlgebraicJacobian/Picard/DivSchemeSeedUnivMulSpan.lean:133:4: Try this:
+  [apply] simp only [LinearMap.coe_comp, LinearEquiv.coe_coe, Function.comp_apply]
+info: AlgebraicJacobian/Picard/DivSchemeSeedUnivMulSpan.lean:134:4: `apply Subtype.ext` uses `⊢`!
+⚠ [9011/9371] Replayed AlgebraicJacobian.Picard.DivSchemeSeedUnivMulSpanClose
+warning: AlgebraicJacobian/Picard/DivSchemeSeedUnivMulSpanClose.lean:23:0: Unscoped option maxHeartbeats is not allowed:
+Please scope this to individual declarations, as in
+```
+set_option maxHeartbeats in
+-- comment explaining why this is necessary
+example : ... := ...
+```
+
+Note: This linter can be disabled with `set_option linter.style.setOption false`
+warning: AlgebraicJacobian/Picard/DivSchemeSeedUnivMulSpanClose.lean:24:0: Unscoped option synthInstance.maxHeartbeats is not allowed:
+Please scope this to individual declarations, as in
+```
+set_option synthInstance.maxHeartbeats in
+-- comment explaining why this is necessary
+example : ... := ...
+```
+
+Note: This linter can be disabled with `set_option linter.style.setOption false`
+⚠ [9012/9371] Replayed AlgebraicJacobian.Picard.DivSchemeSeedUnivSecondWindowBaseChange
+warning: AlgebraicJacobian/Picard/DivSchemeSeedUnivSecondWindowBaseChange.lean:424:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 1600000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+warning: AlgebraicJacobian/Picard/DivSchemeSeedUnivSecondWindowBaseChange.lean:444:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 4000000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+warning: AlgebraicJacobian/Picard/DivSchemeSeedUnivSecondWindowBaseChange.lean:471:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 1600000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+warning: AlgebraicJacobian/Picard/DivSchemeSeedUnivSecondWindowBaseChange.lean:518:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 800000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+warning: AlgebraicJacobian/Picard/DivSchemeSeedUnivSecondWindowBaseChange.lean:539:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 800000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+warning: AlgebraicJacobian/Picard/DivSchemeSeedUnivSecondWindowBaseChange.lean:555:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 800000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+⚠ [9052/9371] Replayed AlgebraicJacobian.Picard.DivSchemeRedesignGenericFibre
+warning: AlgebraicJacobian/Picard/DivSchemeRedesignGenericFibre.lean:95:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 1000000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+warning: AlgebraicJacobian/Picard/DivSchemeRedesignGenericFibre.lean:114:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 1000000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+⚠ [9053/9371] Replayed AlgebraicJacobian.Picard.DivSchemeFibrePointRead
+warning: AlgebraicJacobian/Picard/DivSchemeFibrePointRead.lean:122:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 1000000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+warning: AlgebraicJacobian/Picard/DivSchemeFibrePointRead.lean:151:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 1000000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+⚠ [9054/9371] Replayed AlgebraicJacobian.Picard.DivSchemeRedesignGenericTotalStalk
+warning: AlgebraicJacobian/Picard/DivSchemeRedesignGenericTotalStalk.lean:140:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 1200000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+warning: AlgebraicJacobian/Picard/DivSchemeRedesignGenericTotalStalk.lean:160:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 1200000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+⚠ [9055/9371] Replayed AlgebraicJacobian.Picard.DivSchemeSeedUnivFields
+warning: AlgebraicJacobian/Picard/DivSchemeSeedUnivFields.lean:222:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option synthInstance.maxHeartbeats 800000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+warning: AlgebraicJacobian/Picard/DivSchemeSeedUnivFields.lean:245:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option synthInstance.maxHeartbeats 800000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+warning: AlgebraicJacobian/Picard/DivSchemeSeedUnivFields.lean:257:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option synthInstance.maxHeartbeats 800000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+warning: AlgebraicJacobian/Picard/DivSchemeSeedUnivFields.lean:280:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 2400000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+warning: AlgebraicJacobian/Picard/DivSchemeSeedUnivFields.lean:312:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option synthInstance.maxHeartbeats 800000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+⚠ [9058/9371] Replayed AlgebraicJacobian.Picard.DivSchemeRedesignAchiever
+warning: AlgebraicJacobian/Picard/DivSchemeRedesignAchiever.lean:321:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 2400000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+⚠ [9059/9371] Replayed AlgebraicJacobian.Picard.DivSchemeSeedUnivGen
+warning: AlgebraicJacobian/Picard/DivSchemeSeedUnivGen.lean:175:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 2400000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+warning: AlgebraicJacobian/Picard/DivSchemeSeedUnivGen.lean:229:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 2400000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+⚠ [9060/9371] Replayed AlgebraicJacobian.Picard.DivSchemeRedesignPointwiseAchiever
+warning: AlgebraicJacobian/Picard/DivSchemeRedesignPointwiseAchiever.lean:104:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 2400000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+warning: AlgebraicJacobian/Picard/DivSchemeRedesignPointwiseAchiever.lean:122:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 2400000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+warning: AlgebraicJacobian/Picard/DivSchemeRedesignPointwiseAchiever.lean:141:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 2400000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+warning: AlgebraicJacobian/Picard/DivSchemeRedesignPointwiseAchiever.lean:155:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 2400000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+⚠ [9061/9371] Replayed AlgebraicJacobian.Picard.DivSchemeRedesignPointwiseSection
+warning: AlgebraicJacobian/Picard/DivSchemeRedesignPointwiseSection.lean:103:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 2400000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+warning: AlgebraicJacobian/Picard/DivSchemeRedesignPointwiseSection.lean:120:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 2400000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+warning: AlgebraicJacobian/Picard/DivSchemeRedesignPointwiseSection.lean:137:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 2400000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+warning: AlgebraicJacobian/Picard/DivSchemeRedesignPointwiseSection.lean:165:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 2400000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+warning: AlgebraicJacobian/Picard/DivSchemeRedesignPointwiseSection.lean:182:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 2400000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+warning: AlgebraicJacobian/Picard/DivSchemeRedesignPointwiseSection.lean:197:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 2400000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+warning: AlgebraicJacobian/Picard/DivSchemeRedesignPointwiseSection.lean:213:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 2400000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+warning: AlgebraicJacobian/Picard/DivSchemeRedesignPointwiseSection.lean:232:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 2400000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+warning: AlgebraicJacobian/Picard/DivSchemeRedesignPointwiseSection.lean:262:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 2400000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+warning: AlgebraicJacobian/Picard/DivSchemeRedesignPointwiseSection.lean:281:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 2400000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+⚠ [9062/9371] Replayed AlgebraicJacobian.Picard.DivSchemeRedesignPointwiseGeneric
+warning: AlgebraicJacobian/Picard/DivSchemeRedesignPointwiseGeneric.lean:117:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 1600000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+⚠ [9066/9371] Replayed AlgebraicJacobian.Picard.DivSchemeSeedUnivPointwise
+warning: AlgebraicJacobian/Picard/DivSchemeSeedUnivPointwise.lean:348:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 2400000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+warning: AlgebraicJacobian/Picard/DivSchemeSeedUnivPointwise.lean:366:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 2400000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+warning: AlgebraicJacobian/Picard/DivSchemeSeedUnivPointwise.lean:379:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 2400000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+warning: AlgebraicJacobian/Picard/DivSchemeSeedUnivPointwise.lean:392:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 2400000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+warning: AlgebraicJacobian/Picard/DivSchemeSeedUnivPointwise.lean:409:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 2400000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+warning: AlgebraicJacobian/Picard/DivSchemeSeedUnivPointwise.lean:436:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 2400000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+warning: AlgebraicJacobian/Picard/DivSchemeSeedUnivPointwise.lean:457:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 2400000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+warning: AlgebraicJacobian/Picard/DivSchemeSeedUnivPointwise.lean:480:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 2400000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+warning: AlgebraicJacobian/Picard/DivSchemeSeedUnivPointwise.lean:511:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 2400000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+warning: AlgebraicJacobian/Picard/DivSchemeSeedUnivPointwise.lean:540:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 2400000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+warning: AlgebraicJacobian/Picard/DivSchemeSeedUnivPointwise.lean:567:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 2400000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+warning: AlgebraicJacobian/Picard/DivSchemeSeedUnivPointwise.lean:586:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 2400000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+⚠ [9068/9371] Replayed AlgebraicJacobian.Picard.DivSchemeSeedUnivFacts
+warning: AlgebraicJacobian/Picard/DivSchemeSeedUnivFacts.lean:490:8: Variable name `y` is not explicitly referenced.
+
+The binding can be removed (if unused) or named `_` (if used implicitly).
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+⚠ [9071/9371] Replayed AlgebraicJacobian.Picard.DivSchemeRedesignSeedUnivProduct
+warning: AlgebraicJacobian/Picard/DivSchemeRedesignSeedUnivProduct.lean:57:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 800000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+warning: AlgebraicJacobian/Picard/DivSchemeRedesignSeedUnivProduct.lean:119:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 2400000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+warning: AlgebraicJacobian/Picard/DivSchemeRedesignSeedUnivProduct.lean:131:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 2400000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+⚠ [9072/9371] Replayed AlgebraicJacobian.Picard.DivSchemeSeedUnivPointwiseGenerator
+warning: AlgebraicJacobian/Picard/DivSchemeSeedUnivPointwiseGenerator.lean:290:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 2400000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+warning: AlgebraicJacobian/Picard/DivSchemeSeedUnivPointwiseGenerator.lean:319:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 2400000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+warning: AlgebraicJacobian/Picard/DivSchemeSeedUnivPointwiseGenerator.lean:340:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 2400000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+warning: AlgebraicJacobian/Picard/DivSchemeSeedUnivPointwiseGenerator.lean:381:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 2400000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+warning: AlgebraicJacobian/Picard/DivSchemeSeedUnivPointwiseGenerator.lean:398:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 2400000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+⚠ [9074/9371] Replayed AlgebraicJacobian.Picard.DivSchemeHighWindowCoherence
+warning: AlgebraicJacobian/Picard/DivSchemeHighWindowCoherence.lean:70:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 1600000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+⚠ [9076/9371] Replayed AlgebraicJacobian.Picard.DivSchemeHighWindowFibreNormalization
+warning: AlgebraicJacobian/Picard/DivSchemeHighWindowFibreNormalization.lean:112:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 1200000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+warning: AlgebraicJacobian/Picard/DivSchemeHighWindowFibreNormalization.lean:119:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 1200000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+warning: AlgebraicJacobian/Picard/DivSchemeHighWindowFibreNormalization.lean:133:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 1600000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+warning: AlgebraicJacobian/Picard/DivSchemeHighWindowFibreNormalization.lean:155:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 1200000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+warning: AlgebraicJacobian/Picard/DivSchemeHighWindowFibreNormalization.lean:185:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 1600000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+warning: AlgebraicJacobian/Picard/DivSchemeHighWindowFibreNormalization.lean:196:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 1200000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+warning: AlgebraicJacobian/Picard/DivSchemeHighWindowFibreNormalization.lean:210:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 2000000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+warning: AlgebraicJacobian/Picard/DivSchemeHighWindowFibreNormalization.lean:227:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 1200000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+warning: AlgebraicJacobian/Picard/DivSchemeHighWindowFibreNormalization.lean:339:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 1600000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+warning: AlgebraicJacobian/Picard/DivSchemeHighWindowFibreNormalization.lean:372:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 1600000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+warning: AlgebraicJacobian/Picard/DivSchemeHighWindowFibreNormalization.lean:417:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 2000000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+warning: AlgebraicJacobian/Picard/DivSchemeHighWindowFibreNormalization.lean:467:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 1200000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+warning: AlgebraicJacobian/Picard/DivSchemeHighWindowFibreNormalization.lean:515:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 2000000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+warning: AlgebraicJacobian/Picard/DivSchemeHighWindowFibreNormalization.lean:527:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 1600000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+warning: AlgebraicJacobian/Picard/DivSchemeHighWindowFibreNormalization.lean:626:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 1600000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+warning: AlgebraicJacobian/Picard/DivSchemeHighWindowFibreNormalization.lean:652:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 2400000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+warning: AlgebraicJacobian/Picard/DivSchemeHighWindowFibreNormalization.lean:682:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 4000000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+⚠ [9077/9371] Replayed AlgebraicJacobian.Picard.DivSchemeHighWindowFibreWindow
+warning: AlgebraicJacobian/Picard/DivSchemeHighWindowFibreWindow.lean:140:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 1600000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+warning: AlgebraicJacobian/Picard/DivSchemeHighWindowFibreWindow.lean:166:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 1600000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+⚠ [9078/9371] Replayed AlgebraicJacobian.Picard.DivSchemeHighWindowFibreImage
+warning: AlgebraicJacobian/Picard/DivSchemeHighWindowFibreImage.lean:132:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 1600000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+⚠ [9079/9371] Replayed AlgebraicJacobian.Picard.DivSchemeHighWindowFibreModel
+warning: AlgebraicJacobian/Picard/DivSchemeHighWindowFibreModel.lean:83:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 2000000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+⚠ [9081/9371] Replayed AlgebraicJacobian.Picard.DivSchemeHighWindowFibreWindowEquiv
+warning: AlgebraicJacobian/Picard/DivSchemeHighWindowFibreWindowEquiv.lean:124:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 1600000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+⚠ [9082/9371] Replayed AlgebraicJacobian.Picard.DivSchemeHighWindowRelationFibreEquiv
+warning: AlgebraicJacobian/Picard/DivSchemeHighWindowRelationFibreEquiv.lean:172:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 2000000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+warning: AlgebraicJacobian/Picard/DivSchemeHighWindowRelationFibreEquiv.lean:198:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 2400000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+⚠ [9085/9371] Replayed AlgebraicJacobian.Picard.DivSchemeRedesignChartReadIdeal
+warning: AlgebraicJacobian/Picard/DivSchemeRedesignChartReadIdeal.lean:88:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 800000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+warning: AlgebraicJacobian/Picard/DivSchemeRedesignChartReadIdeal.lean:141:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 2400000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+⚠ [9089/9371] Replayed AlgebraicJacobian.Picard.DivSchemeSeedUnivMulIdeal
+warning: AlgebraicJacobian/Picard/DivSchemeSeedUnivMulIdeal.lean:397:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 1600000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+warning: AlgebraicJacobian/Picard/DivSchemeSeedUnivMulIdeal.lean:420:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 1600000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+warning: AlgebraicJacobian/Picard/DivSchemeSeedUnivMulIdeal.lean:456:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 1600000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+warning: AlgebraicJacobian/Picard/DivSchemeSeedUnivMulIdeal.lean:498:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 1600000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+⚠ [9094/9371] Replayed AlgebraicJacobian.Picard.DivSchemeHighWindowMulConjugacy
+warning: AlgebraicJacobian/Picard/DivSchemeHighWindowMulConjugacy.lean:283:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 2400000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+warning: AlgebraicJacobian/Picard/DivSchemeHighWindowMulConjugacy.lean:307:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 2400000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+warning: AlgebraicJacobian/Picard/DivSchemeHighWindowMulConjugacy.lean:332:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 4000000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+warning: AlgebraicJacobian/Picard/DivSchemeHighWindowMulConjugacy.lean:367:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 4000000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+warning: AlgebraicJacobian/Picard/DivSchemeHighWindowMulConjugacy.lean:409:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 4000000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+⚠ [9103/9371] Replayed AlgebraicJacobian.Picard.DivSchemeHighWindowPencilFibre
+warning: AlgebraicJacobian/Picard/DivSchemeHighWindowPencilFibre.lean:168:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 1600000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+warning: AlgebraicJacobian/Picard/DivSchemeHighWindowPencilFibre.lean:218:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 1600000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+⚠ [9114/9371] Replayed AlgebraicJacobian.Picard.DivSchemeSeedUnivPointwiseFlat
+warning: AlgebraicJacobian/Picard/DivSchemeSeedUnivPointwiseFlat.lean:234:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 2400000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+warning: AlgebraicJacobian/Picard/DivSchemeSeedUnivPointwiseFlat.lean:270:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 2400000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+⚠ [9116/9371] Replayed AlgebraicJacobian.Picard.DivSchemeSeedUnivPointwiseFibreData
+warning: AlgebraicJacobian/Picard/DivSchemeSeedUnivPointwiseFibreData.lean:186:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 2400000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+warning: AlgebraicJacobian/Picard/DivSchemeSeedUnivPointwiseFibreData.lean:203:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 4800000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+warning: AlgebraicJacobian/Picard/DivSchemeSeedUnivPointwiseFibreData.lean:240:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 4800000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+⚠ [9117/9371] Replayed AlgebraicJacobian.Picard.DivSchemeSeedUnivPointwiseFibreCore
+warning: AlgebraicJacobian/Picard/DivSchemeSeedUnivPointwiseFibreCore.lean:157:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 8000000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+⚠ [9118/9371] Replayed AlgebraicJacobian.Picard.DivSchemeSeedUnivPointwiseFibreLocal
+warning: AlgebraicJacobian/Picard/DivSchemeSeedUnivPointwiseFibreLocal.lean:174:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 2400000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+warning: AlgebraicJacobian/Picard/DivSchemeSeedUnivPointwiseFibreLocal.lean:201:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 8000000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+⚠ [9119/9371] Replayed AlgebraicJacobian.Picard.DivSchemeSeedUnivPointwiseFibre
+warning: AlgebraicJacobian/Picard/DivSchemeSeedUnivPointwiseFibre.lean:220:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 2400000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+warning: AlgebraicJacobian/Picard/DivSchemeSeedUnivPointwiseFibre.lean:242:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 8000000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+warning: AlgebraicJacobian/Picard/DivSchemeSeedUnivPointwiseFibre.lean:336:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 2400000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+⚠ [9141/9371] Replayed AlgebraicJacobian.Picard.DivisorFamilyAffAbel
+warning: AlgebraicJacobian/Picard/DivisorFamilyAffAbel.lean:356:0: automatically included section variable(s) unused in theorem `AlgebraicGeometry.abelDivAff'_toAff`:
+  [GeometricallyIrreducible C.hom]
+  [SmoothOfRelativeDimension 1 C.hom]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [GeometricallyIrreducible C.hom] [SmoothOfRelativeDimension 1 C.hom] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+⚠ [9153/9371] Replayed AlgebraicJacobian.Picard.DivisorFamilyAffThetaFinite
+warning: AlgebraicJacobian/Picard/DivisorFamilyAffThetaFinite.lean:108:0: automatically included section variable(s) unused in theorem `AlgebraicGeometry.AffAdaptation.IsCertified.finite_thetaPieceQuotient`:
+  [SmoothOfRelativeDimension 1 C.hom]
+  [IsProper C.hom]
+  [GeometricallyIrreducible C.hom]
+  [IsDominant π]
+  [IsIntegral C.left]
+  [SmoothOfRelativeDimension 1 (C.left ↘ Spec (CommRingCat.of k))]
+  [LocallyOfFiniteType (C.left ↘ Spec (CommRingCat.of k))]
+  [QuasiCompact (C.left ↘ Spec (CommRingCat.of k))]
+  [Module.Finite k ((Scheme.moduleKSheaf k C.left).HModule 0)]
+  [Module.Finite k ((Scheme.moduleKSheaf k C.left).HModule 1)]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [SmoothOfRelativeDimension 1
+  C.hom] [IsProper
+  C.hom] [GeometricallyIrreducible
+  C.hom] [IsDominant
+  π] [IsIntegral
+  C.left] [SmoothOfRelativeDimension 1
+  (C.left ↘
+    Spec
+      (CommRingCat.of
+        k))] [LocallyOfFiniteType
+  (C.left ↘
+    Spec
+      (CommRingCat.of
+        k))] [QuasiCompact
+  (C.left ↘
+    Spec
+      (CommRingCat.of
+        k))] [Module.Finite k
+  ((Scheme.moduleKSheaf k C.left).HModule
+    0)] [Module.Finite k ((Scheme.moduleKSheaf k C.left).HModule 1)] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: AlgebraicJacobian/Picard/DivisorFamilyAffThetaFinite.lean:125:0: automatically included section variable(s) unused in theorem `AlgebraicGeometry.AffAdaptation.IsCertified.projective_thetaPieceQuotient`:
+  [SmoothOfRelativeDimension 1 C.hom]
+  [IsProper C.hom]
+  [GeometricallyIrreducible C.hom]
+  [IsDominant π]
+  [IsIntegral C.left]
+  [SmoothOfRelativeDimension 1 (C.left ↘ Spec (CommRingCat.of k))]
+  [LocallyOfFiniteType (C.left ↘ Spec (CommRingCat.of k))]
+  [QuasiCompact (C.left ↘ Spec (CommRingCat.of k))]
+  [Module.Finite k ((Scheme.moduleKSheaf k C.left).HModule 0)]
+  [Module.Finite k ((Scheme.moduleKSheaf k C.left).HModule 1)]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [SmoothOfRelativeDimension 1
+  C.hom] [IsProper
+  C.hom] [GeometricallyIrreducible
+  C.hom] [IsDominant
+  π] [IsIntegral
+  C.left] [SmoothOfRelativeDimension 1
+  (C.left ↘
+    Spec
+      (CommRingCat.of
+        k))] [LocallyOfFiniteType
+  (C.left ↘
+    Spec
+      (CommRingCat.of
+        k))] [QuasiCompact
+  (C.left ↘
+    Spec
+      (CommRingCat.of
+        k))] [Module.Finite k
+  ((Scheme.moduleKSheaf k C.left).HModule
+    0)] [Module.Finite k ((Scheme.moduleKSheaf k C.left).HModule 1)] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: AlgebraicJacobian/Picard/DivisorFamilyAffThetaFinite.lean:244:0: automatically included section variable(s) unused in theorem `AlgebraicGeometry.AffAdaptation.IsCertified.finite_gluedSubalgebra`:
+  [SmoothOfRelativeDimension 1 C.hom]
+  [IsProper C.hom]
+  [GeometricallyIrreducible C.hom]
+  [IsIntegral C.left]
+  [SmoothOfRelativeDimension 1 (C.left ↘ Spec (CommRingCat.of k))]
+  [LocallyOfFiniteType (C.left ↘ Spec (CommRingCat.of k))]
+  [QuasiCompact (C.left ↘ Spec (CommRingCat.of k))]
+  [Module.Finite k ((Scheme.moduleKSheaf k C.left).HModule 0)]
+  [Module.Finite k ((Scheme.moduleKSheaf k C.left).HModule 1)]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [SmoothOfRelativeDimension 1
+  C.hom] [IsProper
+  C.hom] [GeometricallyIrreducible
+  C.hom] [IsIntegral
+  C.left] [SmoothOfRelativeDimension 1
+  (C.left ↘
+    Spec
+      (CommRingCat.of
+        k))] [LocallyOfFiniteType
+  (C.left ↘
+    Spec
+      (CommRingCat.of
+        k))] [QuasiCompact
+  (C.left ↘
+    Spec
+      (CommRingCat.of
+        k))] [Module.Finite k
+  ((Scheme.moduleKSheaf k C.left).HModule
+    0)] [Module.Finite k ((Scheme.moduleKSheaf k C.left).HModule 1)] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: AlgebraicJacobian/Picard/DivisorFamilyAffThetaFinite.lean:250:0: automatically included section variable(s) unused in theorem `AlgebraicGeometry.AffAdaptation.IsCertified.projective_gluedSubalgebra`:
+  [SmoothOfRelativeDimension 1 C.hom]
+  [IsProper C.hom]
+  [GeometricallyIrreducible C.hom]
+  [IsIntegral C.left]
+  [SmoothOfRelativeDimension 1 (C.left ↘ Spec (CommRingCat.of k))]
+  [LocallyOfFiniteType (C.left ↘ Spec (CommRingCat.of k))]
+  [QuasiCompact (C.left ↘ Spec (CommRingCat.of k))]
+  [Module.Finite k ((Scheme.moduleKSheaf k C.left).HModule 0)]
+  [Module.Finite k ((Scheme.moduleKSheaf k C.left).HModule 1)]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [SmoothOfRelativeDimension 1
+  C.hom] [IsProper
+  C.hom] [GeometricallyIrreducible
+  C.hom] [IsIntegral
+  C.left] [SmoothOfRelativeDimension 1
+  (C.left ↘
+    Spec
+      (CommRingCat.of
+        k))] [LocallyOfFiniteType
+  (C.left ↘
+    Spec
+      (CommRingCat.of
+        k))] [QuasiCompact
+  (C.left ↘
+    Spec
+      (CommRingCat.of
+        k))] [Module.Finite k
+  ((Scheme.moduleKSheaf k C.left).HModule
+    0)] [Module.Finite k ((Scheme.moduleKSheaf k C.left).HModule 1)] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: AlgebraicJacobian/Picard/DivisorFamilyAffThetaFinite.lean:256:0: automatically included section variable(s) unused in theorem `AlgebraicGeometry.AffAdaptation.IsCertified.rankAtStalk_gluedSubalgebra`:
+  [SmoothOfRelativeDimension 1 C.hom]
+  [IsProper C.hom]
+  [GeometricallyIrreducible C.hom]
+  [IsIntegral C.left]
+  [SmoothOfRelativeDimension 1 (C.left ↘ Spec (CommRingCat.of k))]
+  [LocallyOfFiniteType (C.left ↘ Spec (CommRingCat.of k))]
+  [QuasiCompact (C.left ↘ Spec (CommRingCat.of k))]
+  [Module.Finite k ((Scheme.moduleKSheaf k C.left).HModule 0)]
+  [Module.Finite k ((Scheme.moduleKSheaf k C.left).HModule 1)]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [SmoothOfRelativeDimension 1
+  C.hom] [IsProper
+  C.hom] [GeometricallyIrreducible
+  C.hom] [IsIntegral
+  C.left] [SmoothOfRelativeDimension 1
+  (C.left ↘
+    Spec
+      (CommRingCat.of
+        k))] [LocallyOfFiniteType
+  (C.left ↘
+    Spec
+      (CommRingCat.of
+        k))] [QuasiCompact
+  (C.left ↘
+    Spec
+      (CommRingCat.of
+        k))] [Module.Finite k
+  ((Scheme.moduleKSheaf k C.left).HModule
+    0)] [Module.Finite k ((Scheme.moduleKSheaf k C.left).HModule 1)] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+⚠ [9160/9371] Replayed AlgebraicJacobian.Picard.Pic0RankOneLocalDivisor
+warning: AlgebraicJacobian/Picard/Pic0RankOneLocalDivisor.lean:152:80: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+warning: AlgebraicJacobian/Picard/Pic0RankOneLocalDivisor.lean:198:8: automatically included section variable(s) unused in theorem `_private.AlgebraicJacobian.Picard.Pic0RankOneLocalDivisor.0.AlgebraicGeometry.PicRankOneLocalPresentation.baseChange_component_smul`:
+  [SmoothOfRelativeDimension 1 C.hom]
+  [IsProper C.hom]
+  [GeometricallyIrreducible C.hom]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom] [GeometricallyIrreducible C.hom] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+⚠ [9166/9371] Replayed AlgebraicJacobian.Picard.Pic0RankOneFibrePresentedProducerFiniteGlue
+warning: AlgebraicJacobian/Picard/Pic0RankOneFibrePresentedProducerFiniteGlue.lean:49:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 3200000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+⚠ [9169/9371] Replayed AlgebraicJacobian.Picard.DivisorFamilyAffSeedGate
+warning: AlgebraicJacobian/Picard/DivisorFamilyAffSeedGate.lean:28:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+⚠ [9174/9371] Replayed AlgebraicJacobian.Picard.DivisorFamilyAffFraming
+warning: AlgebraicJacobian/Picard/DivisorFamilyAffFraming.lean:98:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option synthInstance.maxHeartbeats 800000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+warning: AlgebraicJacobian/Picard/DivisorFamilyAffFraming.lean:119:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option synthInstance.maxHeartbeats 800000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+warning: AlgebraicJacobian/Picard/DivisorFamilyAffFraming.lean:140:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option synthInstance.maxHeartbeats 800000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+warning: AlgebraicJacobian/Picard/DivisorFamilyAffFraming.lean:149:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option synthInstance.maxHeartbeats 800000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+⚠ [9185/9371] Replayed AlgebraicJacobian.Picard.DivisorFamilyAffThetaProductBaseChange
+warning: AlgebraicJacobian/Picard/DivisorFamilyAffThetaProductBaseChange.lean:27:0: Unscoped option maxHeartbeats is not allowed:
+Please scope this to individual declarations, as in
+```
+set_option maxHeartbeats in
+-- comment explaining why this is necessary
+example : ... := ...
+```
+
+Note: This linter can be disabled with `set_option linter.style.setOption false`
+warning: AlgebraicJacobian/Picard/DivisorFamilyAffThetaProductBaseChange.lean:28:0: Unscoped option synthInstance.maxHeartbeats is not allowed:
+Please scope this to individual declarations, as in
+```
+set_option synthInstance.maxHeartbeats in
+-- comment explaining why this is necessary
+example : ... := ...
+```
+
+Note: This linter can be disabled with `set_option linter.style.setOption false`
+warning: AlgebraicJacobian/Picard/DivisorFamilyAffThetaProductBaseChange.lean:175:0: automatically included section variable(s) unused in theorem `AlgebraicGeometry.AffAdaptation.pieceCoordinateDistribBase_tmul_apply`:
+  [IsProper C.hom]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [IsProper C.hom] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+⚠ [9186/9371] Replayed AlgebraicJacobian.Picard.DivisorFamilyAffThetaCoaction
+warning: AlgebraicJacobian/Picard/DivisorFamilyAffThetaCoaction.lean:259:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option synthInstance.maxHeartbeats 500000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+⚠ [9209/9371] Replayed AlgebraicJacobian.Picard.DivSchemeMonoBridgeField
+warning: AlgebraicJacobian/Picard/DivSchemeMonoBridgeField.lean:453:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 800000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+⚠ [9212/9371] Replayed AlgebraicJacobian.Picard.DivisorFamilyAffFieldMono
+warning: AlgebraicJacobian/Picard/DivisorFamilyAffFieldMono.lean:192:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option synthInstance.maxHeartbeats 800000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+warning: AlgebraicJacobian/Picard/DivisorFamilyAffFieldMono.lean:192:0: Unscoped option synthInstance.maxHeartbeats is not allowed:
+Please scope this to individual declarations, as in
+```
+set_option synthInstance.maxHeartbeats in
+-- comment explaining why this is necessary
+example : ... := ...
+```
+
+Note: This linter can be disabled with `set_option linter.style.setOption false`
+warning: AlgebraicJacobian/Picard/DivisorFamilyAffFieldMono.lean:307:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option synthInstance.maxHeartbeats 800000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+warning: AlgebraicJacobian/Picard/DivisorFamilyAffFieldMono.lean:307:0: Unscoped option synthInstance.maxHeartbeats is not allowed:
+Please scope this to individual declarations, as in
+```
+set_option synthInstance.maxHeartbeats in
+-- comment explaining why this is necessary
+example : ... := ...
+```
+
+Note: This linter can be disabled with `set_option linter.style.setOption false`
+warning: AlgebraicJacobian/Picard/DivisorFamilyAffFieldMono.lean:382:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option synthInstance.maxHeartbeats 800000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+warning: AlgebraicJacobian/Picard/DivisorFamilyAffFieldMono.lean:384:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: AlgebraicJacobian/Picard/DivisorFamilyAffFieldMono.lean:407:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option synthInstance.maxHeartbeats 800000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+warning: AlgebraicJacobian/Picard/DivisorFamilyAffFieldMono.lean:420:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option synthInstance.maxHeartbeats 800000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+⚠ [9213/9371] Replayed AlgebraicJacobian.Picard.DivisorFamilyAffFieldWindowGen
+warning: AlgebraicJacobian/Picard/DivisorFamilyAffFieldWindowGen.lean:76:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option synthInstance.maxHeartbeats 800000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+⚠ [9215/9371] Replayed AlgebraicJacobian.Picard.DivisorFamilyAffWindowGen
+warning: AlgebraicJacobian/Picard/DivisorFamilyAffWindowGen.lean:284:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 1600000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+warning: AlgebraicJacobian/Picard/DivisorFamilyAffWindowGen.lean:413:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 1600000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+warning: AlgebraicJacobian/Picard/DivisorFamilyAffWindowGen.lean:450:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 800000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+⚠ [9222/9371] Replayed AlgebraicJacobian.Picard.DivRepChartClassUnivAffFstCoord
+warning: AlgebraicJacobian/Picard/DivRepChartClassUnivAffFstCoord.lean:62:0: automatically included section variable(s) unused in theorem `AlgebraicGeometry.PointwiseAchiever.map_divUniversalFstWindow_eq_map_pairTautFst`:
+  [SmoothOfRelativeDimension 1 C.hom]
+  [IsProper C.hom]
+  [GeometricallyIrreducible C.hom]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom] [GeometricallyIrreducible C.hom] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+⚠ [9223/9371] Replayed AlgebraicJacobian.Picard.DivRepChartClassUnivAffSndBasis
+warning: AlgebraicJacobian/Picard/DivRepChartClassUnivAffSndBasis.lean:67:0: automatically included section variable(s) unused in theorem `AlgebraicGeometry.PointwiseAchiever.seedWindowShiftEquiv_eq_windowShiftEquiv`:
+  [SmoothOfRelativeDimension 1 C.hom]
+  [IsProper C.hom]
+  [GeometricallyIrreducible C.hom]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom] [GeometricallyIrreducible C.hom] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+⚠ [9248/9371] Replayed AlgebraicJacobian.Picard.DivRepAffFaithfullyFlatDescent
+warning: AlgebraicJacobian/Picard/DivRepAffFaithfullyFlatDescent.lean:192:4: The `show` tactic should only be used to indicate intermediate goal states for readability.
+However, this tactic invocation changed the goal. Please use `change` instead for these purposes.
+
+Note: This linter can be disabled with `set_option linter.style.show false`
+⚠ [9256/9371] Replayed AlgebraicJacobian.Picard.Pic0AdmissibleAbelEtaleSurjectiveSpread
+warning: AlgebraicJacobian/Picard/Pic0AdmissibleAbelEtaleSurjectiveSpread.lean:314:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 8000000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+⚠ [9259/9371] Replayed AlgebraicJacobian.Cohomology.RankOneFamilyCertificatesDescent
+warning: AlgebraicJacobian/Cohomology/RankOneFamilyCertificatesDescent.lean:77:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 1000000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+⚠ [9261/9371] Replayed AlgebraicJacobian.Cohomology.RankOneFamilyCertificatesActualDatum
+warning: AlgebraicJacobian/Cohomology/RankOneFamilyCertificatesActualDatum.lean:128:0: Please, write a comment here or remove this line, but do not place empty lines within commands!
+Context:
+                                                 ↓
+  ⏎    (subsingleton_datumPair_h1_iff D).mp hpair⏎⏎  obtain ⟨B0, hB0fg, D0, hD0⟩ := D.exists_fg_subalgebra_baseChange_eq⏎
+
+Note: This linter can be disabled with `set_option linter.style.emptyLine false`
+warning: AlgebraicJacobian/Cohomology/RankOneFamilyCertificatesActualDatum.lean:138:0: Please, write a comment here or remove this line, but do not place empty lines within commands!
+Context:
+                                                    ↓
+  ⏎      (C := C) (pi := pi) B0 hB0fg D0 hpi htensor⏎⏎  letI : IsNoetherianRing A := hAnoeth⏎
+
+Note: This linter can be disabled with `set_option linter.style.emptyLine false`
+warning: AlgebraicJacobian/Cohomology/RankOneFamilyCertificatesActualDatum.lean:162:0: Please, write a comment here or remove this line, but do not place empty lines within commands!
+Context:
+                                                    ↓
+  ⏎      (relCover_sup C A (fiberTwoCover pi)) hfibA⏎⏎  have hbase : (D0.baseChange A).baseChange B = D := hAA.trans hD0⏎
+
+Note: This linter can be disabled with `set_option linter.style.emptyLine false`
+⚠ [9278/9371] Replayed AlgebraicJacobian.Picard.Pic0RigidityAffineReduction
+warning: AlgebraicJacobian/Picard/Pic0RigidityAffineReduction.lean:127:2: The `show` tactic should only be used to indicate intermediate goal states for readability.
+However, this tactic invocation changed the goal. Please use `change` instead for these purposes.
+
+Note: This linter can be disabled with `set_option linter.style.show false`
+⚠ [9294/9371] Replayed AlgebraicJacobian.Picard.Pic0RankOneNativeBaseChangePullback
+warning: AlgebraicJacobian/Picard/Pic0RankOneNativeBaseChangePullback.lean:429:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 1600000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+⚠ [9295/9371] Replayed AlgebraicJacobian.Picard.Pic0RankOneNativeBaseChangeLocalizing
+warning: AlgebraicJacobian/Picard/Pic0RankOneNativeBaseChangeLocalizing.lean:143:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 1200000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+warning: AlgebraicJacobian/Picard/Pic0RankOneNativeBaseChangeLocalizing.lean:350:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 1200000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+warning: AlgebraicJacobian/Picard/Pic0RankOneNativeBaseChangeLocalizing.lean:360:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 1200000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+warning: AlgebraicJacobian/Picard/Pic0RankOneNativeBaseChangeLocalizing.lean:367:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 1200000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+warning: AlgebraicJacobian/Picard/Pic0RankOneNativeBaseChangeLocalizing.lean:388:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 1200000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+warning: AlgebraicJacobian/Picard/Pic0RankOneNativeBaseChangeLocalizing.lean:419:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 200000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+⚠ [9297/9371] Replayed AlgebraicJacobian.Picard.Pic0RankOneNativeBaseChangeCartesian
+warning: AlgebraicJacobian/Picard/Pic0RankOneNativeBaseChangeCartesian.lean:305:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 800000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+warning: AlgebraicJacobian/Picard/Pic0RankOneNativeBaseChangeCartesian.lean:378:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 800000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+warning: AlgebraicJacobian/Picard/Pic0RankOneNativeBaseChangeCartesian.lean:442:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 800000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+warning: AlgebraicJacobian/Picard/Pic0RankOneNativeBaseChangeCartesian.lean:663:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 800000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+⚠ [9306/9371] Replayed AlgebraicJacobian.Curve.SeparablyClosedPoints
+warning: AlgebraicJacobian/Curve/SeparablyClosedPoints.lean:145:4: try 'simp' instead of 'simpa'
+
+Note: This linter can be disabled with `set_option linter.unnecessarySimpa false`
+⚠ [9370/9371] Replayed AlgebraicJacobian.Picard.Pic0FiniteStageGluePackage
+warning: AlgebraicJacobian/Picard/Pic0FiniteStageGluePackage.lean:191:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option synthInstance.maxHeartbeats 400000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+warning: AlgebraicJacobian/Picard/Pic0FiniteStageGluePackage.lean:214:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: AlgebraicJacobian/Picard/Pic0FiniteStageGluePackage.lean:218:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option synthInstance.maxHeartbeats 400000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+✖ [9371/9371] Building AlgebraicJacobian.Picard.Pic0FiniteStageGluedOver (217s)
+trace: .> LEAN_PATH=/home/axel/LeanAlgebraicGeometry-Horizon/.lake-packages/MD4Lean/.lake/build/lib/lean:/home/axel/LeanAlgebraicGeometry-Horizon/.lake-packages/BibtexQuery/.lake/build/lib/lean:/home/axel/LeanAlgebraicGeometry-Horizon/.lake-packages/UnicodeBasic/.lake/build/lib/lean:/home/axel/LeanAlgebraicGeometry-Horizon/.lake-packages/Cli/.lake/build/lib/lean:/home/axel/LeanAlgebraicGeometry-Horizon/.lake-packages/leansqlite/.lake/build/lib/lean:/home/axel/LeanAlgebraicGeometry-Horizon/.lake-packages/batteries/.lake/build/lib/lean:/home/axel/LeanAlgebraicGeometry-Horizon/.lake-packages/Qq/.lake/build/lib/lean:/home/axel/LeanAlgebraicGeometry-Horizon/.lake-packages/aesop/.lake/build/lib/lean:/home/axel/LeanAlgebraicGeometry-Horizon/.lake-packages/proofwidgets/.lake/build/lib/lean:/home/axel/LeanAlgebraicGeometry-Horizon/.lake-packages/importGraph/.lake/build/lib/lean:/home/axel/LeanAlgebraicGeometry-Horizon/.lake-packages/LeanSearchClient/.lake/build/lib/lean:/home/axel/LeanAlgebraicGeometry-Horizon/.lake-packages/plausible/.lake/build/lib/lean:/home/axel/LeanAlgebraicGeometry-Horizon/.lake-packages/checkdecls/.lake/build/lib/lean:/home/axel/LeanAlgebraicGeometry-Horizon/.lake-packages/doc-gen4/.lake/build/lib/lean:/home/axel/LeanAlgebraicGeometry-Horizon/.lake-packages/mathlib/.lake/build/lib/lean:/home/axel/LeanAlgebraicGeometry-Horizon/MainProjects/Algebraic-Jacobian-Challenge-Rebuild/.lake/build/lib/lean /home/axel/.elan/toolchains/leanprover--lean4---v4.31.0/bin/lean /home/axel/LeanAlgebraicGeometry-Horizon/MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0FiniteStageGluedOver.lean -o /home/axel/LeanAlgebraicGeometry-Horizon/MainProjects/Algebraic-Jacobian-Challenge-Rebuild/.lake/build/lib/lean/AlgebraicJacobian/Picard/Pic0FiniteStageGluedOver.olean -i /home/axel/LeanAlgebraicGeometry-Horizon/MainProjects/Algebraic-Jacobian-Challenge-Rebuild/.lake/build/lib/lean/AlgebraicJacobian/Picard/Pic0FiniteStageGluedOver.ilean -c /home/axel/LeanAlgebraicGeometry-Horizon/MainProjects/Algebraic-Jacobian-Challenge-Rebuild/.lake/build/ir/AlgebraicJacobian/Picard/Pic0FiniteStageGluedOver.c --setup /home/axel/LeanAlgebraicGeometry-Horizon/MainProjects/Algebraic-Jacobian-Challenge-Rebuild/.lake/build/ir/AlgebraicJacobian/Picard/Pic0FiniteStageGluedOver.setup.json --json
+error: AlgebraicJacobian/Picard/Pic0FiniteStageGluedOver.lean:122:10: failed to synthesize instance of type class
+  IsScalarTower (↥↑P.N) (A U) (B U V)
+
+Hint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.
+warning: AlgebraicJacobian/Picard/Pic0FiniteStageGluedOver.lean:121:47: This simp argument is unused:
+  RingHom.coe_coe
+
+Hint: Omit it from the simp argument list.
+  simp only [CommRingCat.ofHom_comp, CommRingCat.hom_comp, ConcreteCategory.hom_ofHom,
+  ̲  ̲ ̲ ̲ ̲ ̲RingHom.coe_comp, Function.comp_apply, AlgHom.toRingHom_eq_coe, C̵a̵t̵e̵g̵o̵r̵y̵.̵a̵s̵s̵o̵c̵,̵ ̵R̵i̵n̵g̵H̵o̵m̵.̵c̵o̵e̵_̵c̵o̵e̵]̵C̲a̲t̲e̲g̲o̲r̲y̲.̲a̲s̲s̲o̲c̲]̲
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+error: Lean exited with code 1
+Some required targets logged failures:
+- AlgebraicJacobian.Picard.Pic0FiniteStageGluedOver

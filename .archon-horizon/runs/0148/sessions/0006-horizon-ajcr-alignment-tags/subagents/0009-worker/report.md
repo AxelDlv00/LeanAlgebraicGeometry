@@ -1,0 +1,1 @@
+The kernel checks found one edit typo: `RigidEngine4Assembly.lean` now has `/**` instead of Lean’s `/--` doc-comment opener, causing the only syntax error. I’m correcting that opener and rerunning diagnostics/checks for the affected file.

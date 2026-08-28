@@ -1,0 +1,30 @@
+{"at": "2026-07-01T10:06:43.299126+00:00", "actor": "human", "field": "created", "from": "", "to": "active", "note": "opened"}
+{"at": "2026-07-03T01:50:58.999201+00:00", "actor": "ground", "field": "edited", "from": "", "to": "", "note": "summary updated"}
+{"at": "2026-07-03T02:46:55.543175+00:00", "actor": "ground", "field": "edited", "from": "", "to": "", "note": "summary updated"}
+{"at": "2026-07-03T07:08:23.527454+00:00", "actor": "ground", "field": "edited", "from": "", "to": "", "note": "summary updated"}
+{"at": "2026-07-06T02:42:59.901809+00:00", "actor": "human", "field": "status", "from": "active", "to": "done", "note": ""}
+{"at": "2026-07-23T13:46:26.020588+00:00", "actor": "horizon", "field": "status", "from": "done", "to": "pending", "note": ""}
+{"at": "2026-07-23T13:46:26.020868+00:00", "actor": "horizon", "field": "nested", "from": "", "to": "", "note": "parent=AJC.cohomology"}
+{"at": "2026-07-23T13:46:26.020980+00:00", "actor": "horizon", "field": "edited", "from": "", "to": "", "note": "summary, title updated"}
+{"at": "2026-07-26T16:52:54.079999+00:00", "actor": "horizon", "field": "edited", "from": "", "to": "", "note": "summary updated"}
+{"at": "2026-07-28T10:15:41.097638+00:00", "actor": "horizon", "field": "edited", "from": "", "to": "", "note": "title updated"}
+{"at": "2026-07-28T10:21:48.647358+00:00", "actor": "horizon", "field": "edited", "from": "", "to": "", "note": "summary, title updated"}
+{"at": "2026-07-28T10:23:58.595616+00:00", "actor": "horizon", "field": "edited", "from": "", "to": "", "note": "summary updated"}
+{"at": "2026-07-28T10:29:04.338574+00:00", "actor": "horizon", "field": "edited", "from": "", "to": "", "note": "pinned_commits updated"}
+{"at": "2026-07-28T10:47:51.888452+00:00", "actor": "horizon", "field": "edited", "from": "", "to": "", "note": "summary updated"}
+{"at": "2026-07-28T13:44:36.376194+00:00", "actor": "horizon", "field": "status", "from": "pending", "to": "active", "note": ""}
+{"at": "2026-07-28T13:44:36.383803+00:00", "actor": "horizon", "field": "edited", "from": "", "to": "", "note": "summary updated"}
+{"at": "2026-07-28T14:44:48.845555+00:00", "actor": "horizon", "field": "status", "from": "active", "to": "active", "note": ""}
+{"at": "2026-07-28T14:44:48.846982+00:00", "actor": "horizon", "field": "edited", "from": "", "to": "", "note": "summary updated"}
+{"at": "2026-07-28T16:53:52.854179+00:00", "actor": "horizon", "field": "edited", "from": "", "to": "", "note": "summary updated"}
+{"at": "2026-07-28T16:54:08.526696+00:00", "actor": "horizon", "field": "edited", "from": "", "to": "", "note": "title updated"}
+{"at": "2026-07-28T21:51:08.535736+00:00", "actor": "horizon", "field": "status", "from": "active", "to": "active", "note": ""}
+{"at": "2026-07-28T21:51:08.535965+00:00", "actor": "horizon", "field": "edited", "from": "", "to": "", "note": "summary, owner updated"}
+{"at": "2026-07-29T00:00:41.915407+00:00", "actor": "horizon", "field": "edited", "from": "", "to": "", "note": "summary updated"}
+{"at": "2026-07-29T02:58:12.084053+00:00", "actor": "human", "field": "edited", "from": "", "to": "", "note": "milestone updated"}
+{"at": "2026-07-29T03:02:53.411848+00:00", "actor": "horizon", "field": "edited", "from": "", "to": "", "note": "summary updated", "provenance": {"run": "0068", "session": "0014-horizon-ajc-fbc", "role": "horizon", "round": "6", "rounds": "8", "task": "ajc-fbc", "task_title": "Flat base change: close the three Cech obligations and the pullback exactness axiom leak", "projects": "Algebraic-Jacobian-Challenge"}}
+{"at": "2026-07-29T10:29:09.142211+00:00", "actor": "human", "field": "edited", "from": "", "to": "", "note": "owner updated"}
+{"at": "2026-07-31T03:41:50.201543+00:00", "actor": "horizon", "field": "status", "from": "active", "to": "pending", "note": "", "provenance": {"run": "0095", "session": "0014-horizon-pic-e", "role": "horizon", "round": "6", "rounds": "8", "task": "pic-e", "task_title": "Pic rep lane E: close Pic representability, no new hypotheses", "projects": "Algebraic-Jacobian-Challenge"}}
+{"at": "2026-08-04T01:56:48.724542+00:00", "actor": "human", "field": "status", "from": "pending", "to": "rejected", "note": "synced from task ajc-fbc"}
+{"at": "2026-08-04T01:57:29.841919+00:00", "actor": "human", "field": "status", "from": "rejected", "to": "pending", "note": ""}
+{"at": "2026-08-04T01:57:29.842119+00:00", "actor": "human", "field": "edited", "from": "", "to": "", "note": "owner updated"}

@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Schrodinger",
+  "agent_path": "/root/blueprint_frontier_scout",
+  "agent_role": "explorer",
+  "depth": 1,
+  "model": "gpt-5.6-sol",
+  "name": "explorer",
+  "native_subagent_id": "01a043f1-1dc3-7831-8590-debbfb18381c",
+  "ok": true,
+  "parent_session": "0004-horizon-fs-hartshorne",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "completed",
+  "subagent_type": "explorer",
+  "summary": "Read-only scout complete; no project files were edited.",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 10294101,
+    "tokens_out": 25186
+  }
+}

@@ -1,0 +1,80 @@
+id: I-0283
+provider: local
+kind: info
+body: '4 cheap seed facts BUILD — 3 of 4 landed (hfib, hcolFlat, hreg); hcolFin blocked.
+  New file Picard/DivSchemeSeedUnivFacts.lean (496 L), single-module build GREEN (191s),
+  keystones axiom-clean [propext, Classical.choice, Quot.sound], zero sorries, warning-free.
+  Root: HEAD blob + own line only (sibling PicEtCrossBaseGraph + DivSchemeUnivFibreKerSpan
+  NOT swept).
+
+
+  === COMMITS ===
+
+  - 774473c66  hfib + hcolFlat + hreg at seedUniv (+ helpers) + root line
+
+  - 46f8d3c03  docstring trim under 500-line budget
+
+
+  === KEYSTONES (namespace AlgebraicGeometry; section args C hπ g r₁ r₂ b₁ b₂ i j
+  hO hχ; R_Z = DivCarveChartRing k (windowS_choice π hπ g • fiberWeilDivisor π) (windowM_choice
+  π hπ g • fiberWeilDivisor π) g r₁ r₂ b₁ b₂ i j; D := seedUniv C hπ g r₁ r₂ b₁ b₂
+  i j hO hχ; a := windowM_choice π hπ g) ===
+
+  Each is EXACTLY a hypothesis of ThetaGeneratorSeed.isGenerator_of_fibrewise_ker_span_of_field_vanishing
+  (DivSchemeSeedUnivClose:84) at D=seedUniv.
+
+
+  - seedUniv_hfib …  :  ∀ (z) (p : PrimeSpectrum R_Z), ((relCurve C p.asIdeal.ResidueField).basicOpen
+  (relPinnedSectionsMap C R_Z p.asIdeal.ResidueField π (D.side z) (D.h z)) ≠ ⊥) →
+  relPinnedSectionsMap C R_Z p.asIdeal.ResidueField π (D.side z) (relThetaResSide
+  a (D.side z) le_rfl (D.sec z)) ≠ 0
+
+  - seedUniv_hcolFlat …  :  ∀ z, Module.Flat R_Z (Γ(relCurve C R_Z, D.piece z) ⧸ Ideal.span
+  {D.eqn z})
+
+  - seedUniv_hreg …  :  ∀ (z) (y) (hy : y ∈ D.piece z), ((relCurve C R_Z).presheaf.germ
+  (D.piece z) y hy).hom (D.eqn z) ∈ nonZeroDivisors ((relCurve C R_Z).presheaf.stalk
+  y)
+
+
+  === REUSABLE HELPERS ===
+
+  - seedUniv_fibre_regular …: the IsGenerator.fibre_regular predicate for seedUniv
+  from hfib WITHOUT IsGenerator.
+
+  - ThetaGeneratorSeed.germ_eqn_mem_nonZeroDivisors_of_fibre_regular / .res_eqn_mem_nonZeroDivisors_of_fibre_regular
+  (generic D): germ-regularity from the fibre_regular predicate (breaks the germ_eqn
+  ↔ IsGenerator circularity). hreg = germ_eqn…_of_fibre_regular (seedUniv_fibre_regular
+  …).
+
+  - notMem_of_basicOpen_relPinnedSectionsMap_algebraMap_ne_bot + relPinnedSectionsMap_algebraMap_eq
+  (private): the no-leak (I-0280 residual) via relSectionsMap_overAlgebraMap + Ideal.algebraMap_residueField_eq_zero.
+
+
+  === RESIDUAL: hcolFin BLOCKED (not hfib) ===
+
+  Capstone hcolFin = AMBIENT colength finiteness ∀ z, Module.Finite R_Z (Γ(relCurve
+  C R_Z, D.piece z) ⧸ Ideal.span {D.eqn z}) (NOT sideColengthSubmodule — sideColengthSubmodule_finite
+  CONSUMES this as instance). Only landed engine IsAffineOpen.finite_quotient_span_singleton_of_isClosed
+  (SupportTubeFinite:215) needs IsClosed ((D.piece z : Set) \ (D(D.eqn z) : Set))
+  in relCurve C R_Z — the support-tube closed-trace for the per-POINT seed piece —
+  NOT landed for seedUniv (SupportTubeFinite corollaries need a DivisorAdaptation
+  + fibrewise no-leak; seedUniv is a per-point ThetaGeneratorSeed). Genuine remaining
+  obligation, alongside sibling hspan/hfield.
+
+
+  Assembly: isGenerator_of_fibrewise_ker_span_of_field_vanishing D hreg hcolFin hcolFlat
+  hspan hfield hfib — hreg/hcolFlat/hfib from this file; hspan/hfield sibling; hcolFin
+  STILL OPEN.'
+labels:
+- agent-ready
+status: archived
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: human
+source_ref: null
+created_at: '2026-07-19T18:00:07.949774+00:00'
+updated_at: '2026-07-20T03:15:46.266071+00:00'
+metadata: {}

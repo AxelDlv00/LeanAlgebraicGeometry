@@ -1,0 +1,9 @@
+import AlgebraicJacobian.Picard.Pic0ChartSeamPairDecided
+open CategoryTheory AlgebraicGeometry
+#check @AlgebraicGeometry.injective_abelSigmaChart_of_subsingleton
+#check @AlgebraicGeometry.divFunctorObjSubsingleton_zero
+#check @AlgebraicGeometry.injective_abelSigmaChart_of_mono
+#check @AlgebraicGeometry.isLocallySurjective_sigmaDesc
+#check @AlgebraicGeometry.chartsCoverLocally_of_pointwise
+#check @AlgebraicGeometry.opens_eq_bot_or_top_of_terminalRep
+#check @AlgebraicGeometry.not_isLocallySurjective_restrictChart_bot'

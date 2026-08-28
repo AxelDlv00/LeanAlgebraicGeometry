@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Meitner",
+  "agent_path": "/root/milne_final_hygiene",
+  "agent_role": "janitor",
+  "depth": 1,
+  "model": "gpt-5.6-luna",
+  "name": "janitor",
+  "native_subagent_id": "01a042d0-ab57-7181-9bfc-f40f815130c0",
+  "ok": true,
+  "parent_session": "0004-horizon-fs-milne",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "completed",
+  "subagent_type": "janitor",
+  "summary": "Hygiene audit complete; no files or inbox items were modified.",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 588725,
+    "tokens_out": 4592
+  }
+}

@@ -1,0 +1,7 @@
+- Useful context: the run-0027 s0010 étale-plus Picard lane is landed and verified — `Picard/PicEtAff.lean` (repaired, now imported) + new `Picard/PicEtAffMap.lean` give `PicEtAff C A` with its `CommGroup` and full functoriality in the affine test (`PicEtAff.map`, `mapAlg`, id/comp/unit); all sorry-free, kernel-green (8595 jobs), axiom-clean. Blueprint home is `blueprint/src/chapters/PicardEtale.tex` (`sec:PicardEtale`, 55 nodes, all `\leanok`, anchors verified to resolve).
+
+- Highest-value open piece per s0010's own analysis: Layer-2 `PicEt` over all of `Over (Spec k)` is gated on "one-plus is a Zariski sheaf on affines", which routes through `Picard/Separatedness.lean` brick 3 `prPullback_injective`. That needs a not-yet-existing restriction bridge `(C⊗T)|_{pr⁻¹V} ≅ C ⊗ Spec Γ(V)` plus a fiberwise cocycle-glue (`I-0140` has the full write-up; `informal/wave3-picard-design.md` §9 is the design). This is the real deferred core, not a cosmetic gap.
+
+- Relevant status: roadmap now carries `AJCR.jacobian` (rebuild north star) and `AJCR.picard` (active, this lane) so the Rebuild project is visible; north-star target stays the `⟨sorry⟩` scaffold in `Challenge.lean` (`Jacobian`/`instGrpObj`/`ofCurve`). Rebuild blueprint DAG: 259 nodes, 238 proved, 0 dangling.
+
+- Environment note: oleans live under `.lake/build/lib/lean/...` (not `.lake/build/lib/...`); pre-existing `show`-linter warnings in `Pic.lean`/`RelPic.lean` and the all-of-`Mathlib` import in `Cohomology/AffineCech.lean` are known and untouched — hygiene only, no correctness impact.

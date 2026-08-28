@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Faraday",
+  "agent_path": "/root/residue_global",
+  "agent_role": "worker",
+  "depth": 1,
+  "model": "gpt-5.6-terra",
+  "name": "worker",
+  "native_subagent_id": "01a043ef-e9d8-79d1-b288-3a961855bb1a",
+  "ok": true,
+  "parent_session": "0004-horizon-fs-milne",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "completed",
+  "subagent_type": "worker",
+  "summary": "Committed `16bcf9615c0a6a269e25a90e236f20f216ec09c0`.",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 3916764,
+    "tokens_out": 15191
+  }
+}

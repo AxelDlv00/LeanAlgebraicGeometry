@@ -1,0 +1,21 @@
+{
+  "agent_nickname": "Locke",
+  "agent_path": "/root/baseline_check",
+  "agent_role": "worker",
+  "depth": 1,
+  "model": "gpt-5.6-sol",
+  "name": "worker",
+  "native_subagent_id": "01a0475f-e588-7450-a816-919e6a8b991c",
+  "parent_session": "0006-horizon-fs-hartshorne",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "running",
+  "subagent_type": "worker",
+  "summary": "",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 3946693,
+    "tokens_out": 15736
+  }
+}

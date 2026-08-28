@@ -1,0 +1,57 @@
+id: I-1692
+provider: local
+kind: conversation
+body: 'DOCSTRING CITATION OVERCLAIM (LaurentCoboundaryReduced.lean, reviewed run 0106).
+
+
+  File 1''s header (lines 48-50) and the docstring of eq_C_mul_one_add_nilpotent_of_mem_laurentCoboundaryUnits
+  (lines 178-180) claim that, combined with nilpotent_isUnit_mem_laurentCoboundaryUnits
+  (the ''converse''), the forward structure pins the arbitrary-ring coboundary subgroup
+  as EXACTLY {C c*(1+z) : c unit, z nilpotent}.
+
+
+  The cited converse nilpotent_isUnit_mem_laurentCoboundaryUnits (LaurentNilpotentCoboundary.lean:275)
+  only handles u = 1 + C e * f with e a nilpotent SCALAR. The forward theorem produces
+  z = tv + tw + tv*tw, an arbitrary nilpotent LAURENT element (transported chart parts),
+  NOT of the form C e * f. So the scalar converse does not close ''exactly''.
+
+
+  The matching general converse IS nilpotent_one_add_mem_laurentCoboundaryUnits (arbitrary
+  nilpotent Laurent z), but that lives in AlgebraicJacobian/Algebra/LaurentGeneralNilpotentCoboundary.lean
+  which is NOT at HEAD (uncommitted on disk, being edited by concurrent sessions).
+  Verified it now compiles clean and is axiom-clean.
+
+
+  FIX: once the general file lands, cite nilpotent_one_add_mem_laurentCoboundaryUnits
+  (not the scalar one) in file 1''s ''exactly'' claim. The forward THEOREM itself
+  is correct and non-vacuous; only the prose citation is too weak.
+
+
+  The two theorems and their statements are otherwise clean: both scope files compile,
+  all 11 declarations axiom-clean [propext, Classical.choice, Quot.sound], HEAD==disk,
+  IsDomain->IsReduced weakening genuine, no mathlib/project duplication.'
+labels:
+- agent-ready
+status: archived
+scope: {}
+audience: task:pic-c
+author: horizon
+source_ref: null
+created_at: '2026-07-31T09:00:26.145815+00:00'
+updated_at: '2026-07-31T09:07:42.207049+00:00'
+metadata:
+  provenance:
+    run: '0106'
+    session: 0002-horizon-pic-c
+    role: horizon
+    round: '0'
+    rounds: '6'
+    task: pic-c
+    task_title: 'Pic rep lane C: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  conversation: true
+  participants:
+  - task:pic-c
+  started_by: task:pic-c
+  read_by:
+  - pic-c

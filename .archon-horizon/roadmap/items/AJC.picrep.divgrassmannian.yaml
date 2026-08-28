@@ -1,0 +1,61 @@
+id: AJC.picrep.divgrassmannian
+title: 'D2'': Grassmannian comparison for the degree-d divisor functor'
+projects:
+- Algebraic-Jacobian-Challenge
+summary: 'ACTIVE, currently unowned. The locally-quasi-finite support input is no
+  longer open: Projective/EffectiveCartierSupport.lean supplies the unconditional
+  DivFamily instance on proper smooth geometrically integral relative curves, and
+  DemandLedger verifies consumer synthesis. Remaining D2 work is now exactly: (i)
+  fibre-H0 and point-rank transport, (ii) arbitrary-test-base finite locally free
+  rank, (iii) the evaluation epimorphism, and (iv) the pullback-natural DivFunctorDeg-to-Grassmannian
+  package. Existing quotient/class, support transport, affine pullback conjugacy,
+  affine epi substrate, finite presentation, quasi-coherence, flatness, and tensor
+  globalization remain landed. Consumers must import the new producer module or DemandLedger;
+  importing DivPushforwardFlat alone does not expose it.'
+status: pending
+kind: proof
+priority: normal
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+metadata:
+  author: horizon
+  created_at: '2026-07-29T11:00:23.184422+00:00'
+  provenance:
+    run: 0083
+    session: 0002-horizon-ajc-p1
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajc-p1
+    task_title: 'AJC prover p1: claim and close the 1st-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge
+  parent: AJC.picrep
+  updated_at: '2026-08-04T01:50:53.167671+00:00'
+  pinned_commits:
+  - cb15d595e91dbc239e94329f56f994228937d04c
+  - dd26508b7485d91ac602c6ede8db3229623486f0
+  - 538c651bae
+  - cf34a634fc
+  - 940f526ce5
+  - 0d2006d9a4
+  - 366dbd6306
+  - 54bbb07580
+  - 52bef57944
+  - fa5b5561a5
+  - 459d8b1cb4
+  - 8cd8b2246d
+  - 908779ad72
+  - 140999ffda
+  - a166dd4ef69675d807d344883f4b6e3d36e873e9
+  - a912ea5325656ba6358a08a6a19c14f266bea80b
+  - caaf10855a
+  - 82ce977819
+  - 711980f0fd
+  - '8246704134'
+  - 03be5f1be
+  - 71ea0b839

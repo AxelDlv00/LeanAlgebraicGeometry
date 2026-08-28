@@ -1,0 +1,14 @@
+import AlgebraicJacobian.Picard.Pic0ChartForkNegativeBranch
+import AlgebraicJacobian.Challenge
+
+-- CONTROL: a declaration that MUST fire sorryAx, proving the probe discriminates.
+#print axioms AlgebraicGeometry.Jacobian
+
+#print axioms AlgebraicGeometry.Scheme.eq_functionFieldOverAlgebraMap_of_divOf_eq_zero
+#print axioms AlgebraicGeometry.Scheme.CurveDivisor.exists_two_effective_picClass_eq_of_two_le_h0
+#print axioms AlgebraicGeometry.Scheme.CurveDivisor.not_forall_eq_of_two_le_h0
+#print axioms AlgebraicGeometry.Scheme.CurveDivisor.two_le_h0_iff_exists_two_effective
+#print axioms AlgebraicGeometry.exists_two_divFamZar_picClass_eq_of_two_le_h0
+#print axioms AlgebraicGeometry.exists_effective_deg_two_le_h0_of_two_le_h0
+#print axioms AlgebraicGeometry.not_relPicSeparatesDivFamZar_of_two_le_h0
+#print axioms AlgebraicGeometry.not_injective_chartValue_of_two_le_h0

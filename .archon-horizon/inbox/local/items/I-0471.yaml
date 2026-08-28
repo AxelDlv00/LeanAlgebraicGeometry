@@ -1,0 +1,102 @@
+id: I-0471
+provider: local
+kind: memory
+body: 'ACCEPTING A CORRECTION IS WHERE I MADE THE SAME ERROR WITH THE SIGN FLIPPED.
+
+
+  The shape, which is not specific to this lane: I claimed ¬H. A reviewer showed my
+  derivation of
+
+  ¬H ran through lemma L, so what I had really established was that L''s hypotheses
+  were
+
+  unsatisfiable -- a fact about L, not about H. That ground was CORRECT and I accepted
+  it. Then I
+
+  published ''H is not refutable'', and that was false: an ungated derivation of ¬H
+  existed the whole
+
+  time, and the reviewer''s own file contained the ingredients.
+
+
+  ''YOUR REFUTATION MEASURED THE WRONG OBJECT'' LICENSES ONE ACTION ONLY: look for
+  an ungated
+
+  derivation of the same conclusion. It does NOT license withdrawing the conclusion.
+  ''Not refutable
+
+  by route R'' is not ''not refutable'' -- that is the identical inference error I
+  was being corrected
+
+  for, run backwards. And the risk is highest exactly when accepting a correction,
+  because the
+
+  social gradient is toward conceding fully and the epistemic move is to concede the
+  STEP and
+
+  re-derive the CLAIM.
+
+
+  CONCRETE INSTANCE (run 0054, AJC, hbump / chi_eq_of_bump): I-0449 claimed hbump
+  refuted off the
+
+  cover overlap via ChiLedger.chi_add. Retracted in bd97f1e56 citing
+
+  bump_iff_chartStep_of_notMem_left, an iff making hbump equivalent off the overlap
+  to a one-chart
+
+  step being [κ(P):k]. I read the iff as making hbump merely weaker there. I never
+  tested the side
+
+  I was relying on: that right-hand side is FALSE for large n, because along the tower
+  n·P the
+
+  overlap term is frozen (sectionSub_add_pointDivisor_of_notMem) and the coboundary
+  term is trapped
+
+  beneath it, so χ is bounded while hbump forces linear growth. ajc-rr''s own audit
+  (I-0467) landed
+
+  not_bump_of_notMem_left and ledger_refuted_of_notMem_left: ¬hbump off ONE CHART,
+  unconditional,
+
+  more primes than I originally claimed, and the closed ledger falls too.
+
+
+  SECOND-ORDER LESSON ABOUT IFFS: when a correction hands you an equivalence H ↔ S
+  and you use it
+
+  to conclude H is harmless, you have assumed S is satisfiable. Test S. An iff transfers
+  the
+
+  question, it does not answer it. Here S was refutable by a two-line growth argument.
+
+
+  Related: [[I-0451]] (ask where the tree derives the negation), [[I-0468]] (re-derive
+  an audit''s
+
+  conclusion in your new framework before declaring it overturned), [[I-0469]] (the
+  gate-drop
+
+  miscount -- same session, same root cause: arithmetic available without looking).'
+labels:
+- agent-ready
+status: archived
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-27T21:21:49.638972+00:00'
+updated_at: '2026-07-27T21:30:36.854659+00:00'
+metadata:
+  provenance:
+    run: '0054'
+    session: 0012-horizon-ajc-truth
+    role: horizon
+    round: '5'
+    rounds: '8'
+    task: ajc-truth
+    task_title: Publish the true axiom frontier and align the Jacobian route
+    projects: Algebraic-Jacobian-Challenge
+  read_by:
+  - ajc-truth

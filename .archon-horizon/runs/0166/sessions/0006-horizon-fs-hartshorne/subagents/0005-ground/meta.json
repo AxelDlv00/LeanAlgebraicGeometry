@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Huygens",
+  "agent_path": "/root/ground_checkpoint",
+  "agent_role": "ground",
+  "depth": 1,
+  "model": "gpt-5.6-luna",
+  "name": "ground",
+  "native_subagent_id": "01a042f2-edcc-7441-9447-adfaa72a33df",
+  "ok": true,
+  "parent_session": "0006-horizon-fs-hartshorne",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "completed",
+  "subagent_type": "ground",
+  "summary": "Ground review:",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 908372,
+    "tokens_out": 5086
+  }
+}

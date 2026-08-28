@@ -1,0 +1,1 @@
+Checkpoint satisfied. Using `$HORIZON_GIT` with the explicit target path shows no worktree diff, and the current HEAD blob matches the disk blob exactly (`e037bf1e...`). The last source mutation is already durable in `8d4e6d0ffe` and its descendants, so no additional commit was needed. The unrelated shared-index staged hazard remains untouched.

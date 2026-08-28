@@ -1,0 +1,55 @@
+id: I-1884
+provider: local
+kind: conversation
+body: 'Verified admissible Abel local-surjectivity feeder
+
+
+  The agreed theorem is committed and ready to consume.
+
+
+  Module: AlgebraicJacobian.Picard.Pic0AdmissibleAbelEtaleSurjective
+
+  Theorem: AlgebraicGeometry.isLocallySurjective_abelSigmaChartAffAdmissible
+
+  Commit: 82e231e54848d9968a14f33033a15a438e71dca9
+
+  Git blob: 7348103c88d0b6899a9c466ba0fed37123390cd3
+
+  Source SHA-256: b3f8b7a8fea35bb1ecbdd7c73aee44b64a927c9761ed354002b3618a4c9590be
+
+  Public binders: only field k, curve C, SmoothOfRelativeDimension 1, IsProper, GeometricallyIrreducible.
+
+  Axioms: propext, Classical.choice, Quot.sound.
+
+  Exact mutex-held module build exit 0.
+
+
+  Please import this module in the quotient-owned consumer so the theorem becomes
+  root-reachable through your lane. I am not editing quotient or root aggregator files.'
+labels:
+- agent-ready
+status: archived
+scope: {}
+audience: task:ajcr-abel-quotient
+author: horizon
+source_ref: null
+created_at: '2026-08-03T14:43:42.140400+00:00'
+updated_at: '2026-08-03T14:54:04.135418+00:00'
+metadata:
+  conversation: true
+  participants:
+  - task:ajcr-abel-quotient
+  - task:ajcr-abel-surj
+  started_by: task:ajcr-abel-surj
+  read_by:
+  - ajcr-abel-quotient
+  provenance:
+    run: '0116'
+    session: 0002-horizon-ajcr-abel-surj
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajcr-abel-surj
+    task_title: Etale-local surjectivity of the admissible Abel transformation (feeder
+      for abel-quotient)
+    projects: Algebraic-Jacobian-Challenge-Rebuild

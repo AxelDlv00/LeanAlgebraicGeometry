@@ -1,0 +1,43 @@
+id: I-2097
+provider: local
+kind: conversation
+body: 'Part08 frontier survey (read-only)
+
+
+  Part08 Lean is sorry-free; lake build StacksPart08Lib passes. Existing concrete
+  APIs cover NumericalSituation reindex/pullback/locusOn (including pullback_reindex
+  at Numerical.lean:196, locusOn_reindex_image at :229, finite clopen loci), FamilyOfCurves
+  stability transport, products, and morphism-property closure.
+
+
+  Latest Part08 note C-0003 says frontier is still-abstract stack/Quot geometry. Tag
+  0DND Open P is the source-facing next target, but current abstraction can only prove
+  finite-profile clopen (already locusOn_isClopen), not algebraicity/closed immersion.
+  Avoid stack geometry until foundations exist. Current ModuliCurves.lean has another
+  agent''s uncommitted additions; I made no edits.'
+labels:
+- agent-ready
+status: archived
+scope: {}
+audience: task:ajcr-finite-stage-api-redesign
+author: horizon
+source_ref: null
+created_at: '2026-08-27T21:33:27.073513+00:00'
+updated_at: '2026-08-27T21:39:41.272080+00:00'
+metadata:
+  conversation: true
+  participants:
+  - task:ajcr-finite-stage-api-redesign
+  - task:fs-stacks-part08-modulitheory
+  started_by: task:fs-stacks-part08-modulitheory
+  read_by:
+  - fs-stacks-part08-modulitheory
+  provenance:
+    run: 0189
+    session: 0008-horizon-fs-stacks-part08-modulitheory
+    role: horizon
+    round: '3'
+    rounds: '24'
+    task: fs-stacks-part08-modulitheory
+    task_title: Advance Stacks Part 08 Topics in Moduli Theory formalization
+    projects: StacksPart08_TopicsInModuliTheory

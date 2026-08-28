@@ -1,0 +1,18 @@
+{"at": "2026-07-23T13:46:34.611170+00:00", "actor": "horizon", "field": "created", "from": "", "to": "pending", "note": "opened"}
+{"at": "2026-07-28T04:02:01.616396+00:00", "actor": "horizon", "field": "edited", "from": "", "to": "", "note": "summary, owner updated"}
+{"at": "2026-07-28T05:43:20.403533+00:00", "actor": "horizon", "field": "status", "from": "pending", "to": "active", "note": ""}
+{"at": "2026-07-28T05:43:20.403735+00:00", "actor": "horizon", "field": "edited", "from": "", "to": "", "note": "summary updated"}
+{"at": "2026-07-28T09:43:51.680782+00:00", "actor": "horizon", "field": "edited", "from": "", "to": "", "note": "summary, owner, pinned_commits updated"}
+{"at": "2026-07-28T12:16:44.930297+00:00", "actor": "horizon", "field": "edited", "from": "", "to": "", "note": "summary updated"}
+{"at": "2026-07-28T16:07:23.588051+00:00", "actor": "horizon", "field": "edited", "from": "", "to": "", "note": "summary updated"}
+{"at": "2026-07-28T16:37:17.112701+00:00", "actor": "horizon", "field": "edited", "from": "", "to": "", "note": "pinned_commits updated"}
+{"at": "2026-07-28T16:37:20.560614+00:00", "actor": "horizon", "field": "edited", "from": "", "to": "", "note": "pinned_commits updated"}
+{"at": "2026-07-28T18:14:48.419458+00:00", "actor": "horizon", "field": "edited", "from": "", "to": "", "note": "summary updated"}
+{"at": "2026-07-28T19:46:44.597689+00:00", "actor": "horizon", "field": "edited", "from": "", "to": "", "note": "summary updated"}
+{"at": "2026-07-28T21:00:27.120787+00:00", "actor": "horizon", "field": "edited", "from": "", "to": "", "note": "summary updated"}
+{"at": "2026-07-29T02:59:25.908191+00:00", "actor": "human", "field": "edited", "from": "", "to": "", "note": "milestone updated"}
+{"at": "2026-07-29T10:29:18.689871+00:00", "actor": "human", "field": "edited", "from": "", "to": "", "note": "owner updated"}
+{"at": "2026-07-30T15:33:55.355523+00:00", "actor": "horizon", "field": "status", "from": "active", "to": "pending", "note": "", "provenance": {"run": "0095", "session": "0006-horizon-pic-e", "role": "horizon", "round": "2", "rounds": "8", "task": "pic-e", "task_title": "Pic rep lane E: close Pic representability, no new hypotheses", "projects": "Algebraic-Jacobian-Challenge"}}
+{"at": "2026-08-04T01:56:52.322453+00:00", "actor": "human", "field": "status", "from": "pending", "to": "rejected", "note": "synced from task ajc-pic0av"}
+{"at": "2026-08-04T01:57:44.547040+00:00", "actor": "horizon", "field": "status", "from": "rejected", "to": "pending", "note": ""}
+{"at": "2026-08-04T01:57:44.547252+00:00", "actor": "horizon", "field": "edited", "from": "", "to": "", "note": "owner updated"}

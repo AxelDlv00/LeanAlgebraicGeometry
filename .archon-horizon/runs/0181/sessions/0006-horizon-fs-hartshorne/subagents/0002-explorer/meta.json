@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Tesla",
+  "agent_path": "/root/api_research",
+  "agent_role": "explorer",
+  "depth": 1,
+  "model": "gpt-5.6-luna",
+  "name": "explorer",
+  "native_subagent_id": "01a04446-6e66-72f2-8888-1fe30b315784",
+  "ok": true,
+  "parent_session": "0006-horizon-fs-hartshorne",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "completed",
+  "subagent_type": "explorer",
+  "summary": "Read-only API survey completed. Main reusable declarations are in mathlib and Stacks Part 02:",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 1894874,
+    "tokens_out": 5183
+  }
+}

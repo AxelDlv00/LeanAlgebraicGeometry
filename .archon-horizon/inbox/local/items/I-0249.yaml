@@ -1,0 +1,86 @@
+id: I-0249
+provider: local
+kind: info
+body: 'DAT-C C0+C3+C5 LANDED (the three ungated rows of w4-datc-worksheet, spec ec768745a)
+
+
+  Commits 841c3876742 (C0, Picard/DivisorDatumInverse.lean, 355 L), 404966c3c71 (C3,
+  RiemannRoch/EffectiveUniqueness.lean, 154 L), f2b1c4deb9c (C5, Picard/DivSchemeAbel.lean,
+  397 L), each private-index CAS with root = HEAD blob + only my line. All keystones
+  axiom-clean [propext, Classical.choice, Quot.sound]; single-module LEAN_NUM_THREADS=1
+  lake builds green under the mkdir lock (8675/8592/8773 jobs); zero sorries; zero
+  new warnings.
+
+
+  C0 KEYSTONES (GAP-1 + N2, verbatim): BasicOpenCocycleDatum.inv (same cover data,
+  units (g i j)^-1; cocycle law inverts through Units); cechPicClass_inv : D.inv.cechPicClass
+  = D.cechPicClass^-1; relThetaCocycle_zero / FinCoverData.thetaOvlUnit_zero / thetaChartUnit_zero
+  / cechPicClass_thetaChartDatum_zero : (thetaChartDatum C B pi 0).cechPicClass =
+  1 AT ARBITRARY TEST RING; DivisorAdaptation.thetaIdealUnit_zero : A.thetaIdealUnit
+  0 i j = A.eqnRatio i j; DivisorAdaptation.divisorDatum := (A.thetaIdealDatum 0).inv
+  with cechPicClass_divisorDatum : A.divisorDatum.cechPicClass = d.picClass; DivisorAdaptation.canonSection
+  : glued global section whose components are the piece-restricted A.eqn (matching
+  = eqn_mul_eqnRatio vs the inverted units); germ_component_canonSection_mem_nonZeroDivisors
+  (UNCONDITIONAL hreg - eqn_regular, no Noetherian/fibrewise input); divEq_sectionLocalEquations_canonSection
+  : the DAT-A cut-back of canonSection on ANY subordinated pointed cover is DivEq
+  to d (comparison units = the adaptation''s own relUnit).
+
+
+  C3 KEYSTONE (GAP-2): Scheme.CurveDivisor.eq_of_picClass_eq_of_h0_one (hD : 0 <=
+  D) (hD'' : 0 <= D'') (hcl : picClass K D = picClass K D'') (hone : Sheaf.h0 (X.divisorSheaf
+  K D) = 1) : D'' = D, + worker eq_of_picClass_eq_of_finrank_one at the divisorSections-top
+  spelling; S-lemmas ord_functionFieldOverAlgebraMap_eq_one, divOf_eq_zero_of_val_eq_functionFieldOverAlgebraMap,
+  one_mem_divisorSections_top. No hO needed beyond effectivity + the h0 count.
+
+
+  C5 KEYSTONES (Abel layer): DivFam.exists_toZar_eq (K field: toZar SURJECTIVE - nonzero
+  span member is a unit, IsLocalization.atUnits collapses the away chart to K); DivFamZar.classDeg_picClass
+  : classDeg K F0.picClass = n over a field (E-i + presentation_picClass + picClass_presentationDivisor
+  + deg_divFamDivisor); abelDivPlus/abelDivAff (unit(relPicMk [O(F)])) with abelDivPlus_mapAlgHom;
+  abelDiv (vehicle lift) with picEtMap_abelDiv, picEtAffineEquiv_abelDiv, abelDiv_overSpec;
+  degAt_abelDiv : degAt (abelDiv s) t = n (BaseChangeInstances pack discharged internally
+  at kappa(t)); abelDivTrans : divFunctor C pi n --> picDegLayerFunctor C n; sigmaFamily
+  Z := thetaFamily C (CurveDivisor.picClass k Z) with degAt_sigmaFamily = deg k Z
+  and sigmaFamily_natural; chartValue m Z T s = abelDiv * sigmaFamily * (theta^m)^-1
+  with picEtMap_chartValue, degAt_chartValue = n + deg Z - m*d1, chartValue_mem_pic0Subgroup
+  under hdeg : deg k Z = m*d1 - n.
+
+
+  WORKSHEET DEVIATIONS (spec of record): (1) C0 theta-block-at-0: the cited route
+  (cechPicClass_thetaChartDatum RelCurveCollapse:641 + fiberTwist_zero) only covers
+  B = k; landed instead the ring-generic direct computation cechPicClass_thetaChartDatum_zero
+  (the sect-2 consumers need arbitrary R). (2) C0 canon_matching avoids gluedInclCoc/gluedInclSnd
+  at the adaptation index - those pin J : Type u while A.index : Type 0 (a universe
+  unification whnf-blowup, new gotcha); explicit le_inf proofs instead, each ULift
+  datum-index case closes by proof irrelevance. (3) C5: no picEtTypeFunctor exists
+  in-tree; the ledgered NatTrans targets picDegLayerFunctor C n directly (the sharpened
+  dat-d Addendum row shape). (4) C5 NEW BRICK not in the worksheet row: DivFam.exists_toZar_eq
+  - sect-4.2''s ''field presentation laws'' step tacitly assumes a certified representative
+  over the field; the honest statement is toZar-surjectivity over a field. (5) C5
+  chartValue at generic (m, Z, hdeg) - the chart-index packaging is left to C9.
+
+
+  FOR C1/C2/C4 SUCCESSORS: (i) spell D_G as G.adaptation.divisorDatum (definitionally
+  (thetaIdealDatum 0).inv); its class law is cechPicClass_divisorDatum at d := G.eqns.
+  (ii) canonSection''s hreg is unconditional - sectionLocalEquations fires with NO
+  IsNoetherianRing (the Bundled wrapper''s fibrewise route is NOT needed for the canonical
+  section). (iii) The (N6) field anchor is eq_of_picClass_eq_of_h0_one; transport
+  h0 across equal classes by h0_divisorSheaf_eq_of_picClass_eq (ClassCohomology:89),
+  read the datum h0 through finrank_divisorSections_top. (iv) DivFamZar.classDeg_picClass''s
+  instance pack ([IsIntegral (relCurve C K)] [Smooth 1] [Qc] [Module.Finite h0/h1
+  moduleKSheaf]) discharges via BaseChangeInstances - copy the degAt_abelDiv haveI
+  block. (v) LEAN GOTCHA (new, memory-worthy): applying gluedInclCoc/gluedInclSnd
+  at a Type-0 index (FinCoverData/DivisorAdaptation A.index) sends unification into
+  a 200k-heartbeat whnf loop - the incl lemmas pin J : Type u; state the le''s explicitly.'
+labels:
+- agent-ready
+status: archived
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: human
+source_ref: null
+created_at: '2026-07-19T07:30:29.384078+00:00'
+updated_at: '2026-07-20T03:15:04.546374+00:00'
+metadata: {}

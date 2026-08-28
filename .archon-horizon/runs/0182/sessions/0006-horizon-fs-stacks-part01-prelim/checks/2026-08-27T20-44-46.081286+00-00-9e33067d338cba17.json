@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "fingerprint": "9e33067d338cba17",
+  "command": [
+    "lake",
+    "env",
+    "lean",
+    "/home/axel/LeanAlgebraicGeometry-Horizon/FormalizedSources/StacksProject/Part01_Preliminaries/StacksPart01Lib/Nilradical.lean"
+  ],
+  "cwd": "FormalizedSources/StacksProject/Part01_Preliminaries",
+  "status": "passed",
+  "ok": true,
+  "returncode": 0,
+  "timed_out": false,
+  "reused": false,
+  "wait_seconds": 7.776,
+  "duration_seconds": 3.877,
+  "started_at": "2026-08-27T20:44:42.204108+00:00",
+  "finished_at": "2026-08-27T20:44:46.081286+00:00",
+  "finished_epoch": 1787863486.081286
+}

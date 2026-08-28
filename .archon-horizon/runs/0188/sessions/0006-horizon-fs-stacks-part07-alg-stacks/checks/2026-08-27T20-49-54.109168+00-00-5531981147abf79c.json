@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "fingerprint": "5531981147abf79c",
+  "command": [
+    "lake",
+    "env",
+    "lean",
+    "/home/axel/LeanAlgebraicGeometry-Horizon/FormalizedSources/StacksProject/Part07_AlgebraicStacks/StacksPart07Lib/RelativeProducts.lean"
+  ],
+  "cwd": "FormalizedSources/StacksProject/Part07_AlgebraicStacks",
+  "status": "passed",
+  "ok": true,
+  "returncode": 0,
+  "timed_out": false,
+  "reused": false,
+  "wait_seconds": 0.001,
+  "duration_seconds": 9.383,
+  "started_at": "2026-08-27T20:49:44.725710+00:00",
+  "finished_at": "2026-08-27T20:49:54.109168+00:00",
+  "finished_epoch": 1787863794.109168
+}

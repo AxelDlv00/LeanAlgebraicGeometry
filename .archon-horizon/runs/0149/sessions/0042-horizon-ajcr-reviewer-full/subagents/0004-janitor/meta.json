@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Mendel",
+  "agent_path": "/root/health_checkpoint",
+  "agent_role": "janitor",
+  "depth": 1,
+  "model": "gpt-5.6-luna",
+  "name": "janitor",
+  "native_subagent_id": "01a0155a-a339-76a1-bac5-b8c09ff609e4",
+  "ok": true,
+  "parent_session": "0042-horizon-ajcr-reviewer-full",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "completed",
+  "subagent_type": "janitor",
+  "summary": "Hygiene audit complete for `ajcr-reviewer-full`.",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 454248,
+    "tokens_out": 4155
+  }
+}

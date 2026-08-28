@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Darwin",
+  "agent_path": "/root/janitor_checkpoint",
+  "agent_role": "janitor",
+  "depth": 1,
+  "model": "gpt-5.6-sol",
+  "name": "janitor",
+  "native_subagent_id": "01a04541-1d61-72e2-9812-c8b3e2e73482",
+  "ok": true,
+  "parent_session": "0008-horizon-fs-stacks-part07-alg-stacks",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "completed",
+  "subagent_type": "janitor",
+  "summary": "Read-only hygiene audit complete; no files or metadata changed.",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 1071186,
+    "tokens_out": 4990
+  }
+}

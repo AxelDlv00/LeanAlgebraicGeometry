@@ -1,0 +1,26 @@
+## Verdict: CONVERGING — the discharge is genuine. No defect found.
+
+The claim holds: `RankOneDivisorUniqueness pi` is now an unconditional theorem, kernel-clean, root-reachable, and it really closes the consumers' hypothesis. I re-verified everything independently, including a fresh kernel axiom audit.
+
+### Trap 1 (local-to-global genuine) — PASSED
+- **Localization step**: `exists_notMem_cechPicMap_eq_of_relPicMk_eq` (`AlgebraicJacobian/Picard/RelPicBaseLocalTriviality.lean:140`) extracts the actual base discrepancy class `N` via `relPicMk_eq_relPicMk_iff`/`mem_picFromBase_iff` and kills it on a basic open `Away f` with `f ∉ q.asIdeal` tied to each prime — real content (base Pic classes die only locally), not the `f=1` converse.
+- **Glue-back over the carrier**: `DivFamZarAff.eq_of_awaySpan_eq` (`DivRepAwaySpanGlueAff.lean:99`) requires `Ideal.span (Set.range f) = ⊤`, and the discharge produces that spanning family honestly from per-prime witnesses via `exists_fin_span_eq_top_of_forall_prime` (`DivSchemeCertZarPointwise.lean:57`, genuine quasi-compactness of Spec). It reduces to the Zariski-separation keystone, not to reflexivity.
+- **Descent to the test algebra**: `DivFamZarAff.mapAlgHom_injective_of_faithfullyFlat` (`DivRepAffFaithfullyFlatDescent.lean:111`) is classify-injectivity (representability) + `Spec` of a faithfully flat map being an effective epi + `cancel_epi`. The `Module.FaithfullyFlat S Carrier` instance comes from `EtaleCover.comap_surjective` (`AlgebraicJacobian/Algebra/EtaleCover.lean`) — genuine descent direction.
+
+### Trap 2 (rank-one genuine, no goal restatement) — PASSED
+- The T5 core `divFamZarAff_eq_of_picClass_eq_cechPicClass` (`Pic0RankOneDivisorUnique.lean:90`, the killed-session file — now kernel-checked) is an honest DivEq chain `d₁ ∼ cut(s₁) ∼ cut(v·s₁) = cut(s₂) ∼ d₂`: T3 cuts each family from a glued section of the datum sheaf, T4 gives fibrewise nonvanishing, and `Module.existsUnique_unit_smul_of_forall_tmul_ne_zero` (`DivisorFamilyMonoH1.lean:177`) extracts the unit. That engine is real module theory (`toSpanSingleton` bijective by localized span) and consumes `h0_finite`/`h0_projective`/`h0_rank_one` irreplaceably — consistent with off-locus non-injectivity. Neither T3 nor T4 restates uniqueness.
+- The `PicRankOneLocalPresentation` structure (`Pic0RankOnePresentation.lean:65`) contains no uniqueness field; its equality fields (`represents`, `datum_class`) are exactly what ties the datum to the input class and makes the comparison non-vacuous.
+
+### Anti-vacuity / statement sanity — PASSED
+- The interface file `Pic0RankOneCanonicalDivisorDescent.lean` is untouched by both commits; `RankOneDivisorUniqueness` (line 62) is verbatim the `hu` consumed by `existsUnique_abel_divFamZarAff_of_etale_witness` / `canonicalRankOneDivisorOfPresentation`, and the new unconditional wrappers plug `rankOneDivisorUniqueness pi` in directly.
+- The identity-test trick (`mem_picRankOneOpen_iff … S (𝟙 …)`) only *uses* a weaker consequence of `hlam` inside the proof — the interface statement itself is fixed elsewhere, so nothing is weakened. Membership is genuinely load-bearing: without it there is no presentation/datum to compare against. The `rfl` at `Pic0RankOneUniquenessDischarge.lean:193` is legitimate — `abelDivAffPlus` is definitionally `PicEtAff.unit ∘ relPicMk ∘ picClass` (`DivisorFamilyAffAbel.lean:118`).
+
+### Hygiene — PASSED
+- Independent kernel audit (fresh scratch file, `lake env lean`): all six endpoints — core, per-prime lemma, `rankOneDivisorUniqueness`, `existsUnique_abel_divFamZarAff_of_presentation`, `canonicalRankOneDivisor_abel/_unique` — at exactly `[propext, Classical.choice, Quot.sound]`. No `sorry`/`native_decide`.
+- Both files carry only the standard three options (no heartbeat/recursion-depth overrides); root-reachable: discharge → `Pic0CriticalPath` → `AlgebraicJacobian.lean:814`; working tree matches ledger HEAD; the two commits are the latest on the project.
+
+### Notes (not defects)
+- Scope is honest: the critical-path docstring correctly lists what remains (membership/existence producers over non-Noetherian carriers, `PicRankOneEvaluationDivisorData`, `AbelInverse`/`evaluationIso`, `PicRankOneOpen.IsOpen`). The theorem's practical force still routes through the membership-producer lane — pre-existing, explicitly tracked.
+- Recorded the trap-verification outcome as a comment on I-1981 (the watch-item this review answers). Inbox health warnings (12 open memories > 10, 38 open items > 30) surfaced during the comment — the Horizon agent should schedule a janitor pass.
+
+This was the crux interface flagged by I-1981; with it discharged honestly, the route is converging, not churning.

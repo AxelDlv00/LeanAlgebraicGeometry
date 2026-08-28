@@ -1,0 +1,63 @@
+id: I-0228
+provider: local
+kind: info
+body: 'G-0a + G-1 LANDED (mod one named seam): theta-ideal class law, theta-chart
+  naturality, IsCertified.fibrewise_h1
+
+
+  Commits 79636ab2c (G-0a), ce4a54d67 (G-1), + root wiring ea27fc9b5. All keystones
+  axiom-clean [propext, Classical.choice, Quot.sound], lake build green LEAN_NUM_THREADS=1,
+  zero sorries.
+
+
+  LANDED:
+
+  - Picard/DivSchemeFibreH1.lean: DivisorAdaptation.cechPicClass_thetaIdealDatum —
+  (A.thetaIdealDatum a).cechPicClass = (thetaChartDatum C R pi a).cechPicClass * d.picClass^{-1}
+  (w4-g4 worksheet §2.3 G-0a, the named residual of DivisorThetaFibre.lean:33-34''s
+  class-law half — that docstring is now half-stale). Proof: common pointed refinement
+  (pieces ⊓ d.cover); eqn_rel comparison units form the conjugating 0-cochain via
+  the master ratio identity u_{i,x}·(f_j/f_i)·(e_x/e_y) = u_{j,y}.
+
+  - Picard/ThetaChartClassNaturality.lean: cechPicClass_baseChange_thetaChartDatum
+  (theta chart class natural in the test ring) + tower corollary cechPicClass_map_thetaChartDatum
+  (joins R-level classes to windowTransportDatum at residue fields).
+
+  - Picard/DivisorThetaFibreData.lean: subsingleton_h1_windowTransportDivisor_sub
+  (hNnorm at ANY a >= M — covers M and M+s in one lemma); DivisorAdaptation.IsCertified.fibrewise_h1
+  (THE G-1 keystone, spec-w4-gates §G-1 pin) + IsCertified.thetaGluedEval_surjective
+  (hsurj corollary).
+
+
+  WHAT COLLAPSES: once hdeg (below) discharges, hsurj is derivable wherever a certificate
+  stands — the threaded hsurj of RiemannRoch/CarveDegree.lean:112,183,227, the six
+  mono lemmas of Picard/DivisorFamilyEpsMono.lean, divisorWindowGr, and the DivSchemeCertificateEngine
+  hfib slots (:306,:318,:330,:373,:387,:406) all take hc.fibrewise_h1/hc.thetaGluedEval_surjective
+  directly (at a = M and M+s via hMa : windowM_choice <= a).
+
+
+  THE ONE NAMED SEAM (not sorry — a hypothesis): hdeg : forall p, deg kappa(p) (presentationDivisor
+  of A.pulledEquations kappa(p)) = g. This is EXACTLY the general colength<->degree
+  CRT identity flagged open at DivisorFamilyField.lean:147-151 and DivisorFamilyFieldEquiv.lean:48-56:
+  the certificate gives finrank_kappa W(d_p) = g (IsCertified.finrank_glued after
+  isCertified_pullback — landed), but connecting finrank of the glued colength to
+  deg of the cut divisor for a NON-support-separated adaptation is the open general
+  Mayer-Vietoris/CRT brick (only deg_divFamDivisor_of_separated is landed). spec-w4-gates
+  §G-1 step 3''s ''SB-3 dictionary at kappa(p)'' presumed this landed; the w4-g4 worksheet
+  §3 (c2) row flags it open (''avoid it'') — worksheet wins. NEXT LANE: land the general
+  field-level identity deg K (divFamDivisor F) = n for certified F (glued-colength
+  CRT across the two-chart cover, adaptation-independence of W(d)), then hdeg discharges
+  definitionally and G-1 goes unconditional. Alternative consumer note: G-4''s certificate-FREE
+  hfib (P-fib-N route) does not need hdeg — my thetaIdealDatum_hfib_of_witness plumbing
+  + class law + normalization serve it directly (the G-0 keystone shape thetaIdealDatum_hfib_univ
+  = my fibrewise_h1 chain with deg d_p = g from P-fib-N instead of hdeg).'
+labels:
+- agent-ready
+status: archived
+scope: {}
+audience: horizon
+author: human
+source_ref: null
+created_at: '2026-07-18T11:19:59.665700+00:00'
+updated_at: '2026-07-20T03:14:35.996425+00:00'
+metadata: {}

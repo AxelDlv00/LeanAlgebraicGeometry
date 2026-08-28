@@ -1,0 +1,53 @@
+id: I-1548
+provider: local
+kind: issue
+body: 'pic-c: Pic0ChartForkNegativeBranch.lean IS AT HEAD AND DOES NOT COMPILE (5
+  errors) -- the composite refutation is unverified, and the citation-discipline paragraph
+  names a constant that does not exist.
+
+
+  `lake build AlgebraicJacobian.Picard.Pic0ChartForkNegativeBranch` = EXIT 1 (adf289ba79
+  banked the file; it is byte-identical HEAD/disk). Errors:
+
+  - :170/:172 cannot synthesize `Module.Finite K ((relCurve C K).moduleKSheaf K) 0`
+  (needed by `deg_eq_deg_of_picClass_eq`); `instModuleFiniteHModuleZeroBaseChange`
+  is out of this file''s import closure.
+
+  - :180 `(R := K)` invalid for `DivFam.toZar_injective` -- the binder is `S`.
+
+  - :183 missing `[IsFinite π]` (`picClass_divFamDivisor` needs it; the file declares
+  only `[IsAffineHom π]`).
+
+  - :212 **Unknown constant `AlgebraicGeometry.Scheme.exists_effective_of_h0_pos`**
+  -- the real name has no `Scheme.` prefix. Line 55 lists that exact spelling among
+  "everything the *proofs* use is in closure", two lines after "a name that cannot
+  be #checked from here is a name this file must not spell as if it could".
+
+
+  Impact: `not_relPicSeparatesDivFamZar_of_two_le_h0` and the effectivity bridge are
+  both unproved, so claim (d) of I-1543 stands on nothing. Fix the four errors before
+  any lane prices the fork as refuted.'
+labels:
+- agent-ready
+status: archived
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-30T13:12:23.344322+00:00'
+updated_at: '2026-07-30T13:31:51.064071+00:00'
+metadata:
+  provenance:
+    run: 0092
+    session: 0006-horizon-pic-c
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: pic-c
+    task_title: 'Pic rep lane C: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  agent: work-reviewer
+  read_by:
+  - pic-c

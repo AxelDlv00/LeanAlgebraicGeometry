@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "status": "rejected",
+  "reason": "Rejected explicit direct IsScalarTower bridge: target-specific GluedOver check still failed at line 122 to synthesize IsScalarTower (7,197,444 KB RSS, 3:43.60 wall); reverting exploratory adjacent-file edit to preserve source cleanliness.",
+  "created_at": "2026-08-25T20:18:58.290769+00:00",
+  "files": [
+    {
+      "path": "MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0FiniteStageGluedOver.lean",
+      "artifact": "files/MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0FiniteStageGluedOver.lean",
+      "bytes": 6072,
+      "lines": 136
+    }
+  ],
+  "diagnostics": "diagnostics.txt"
+}

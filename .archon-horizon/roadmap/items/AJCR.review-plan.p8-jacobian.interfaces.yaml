@@ -1,0 +1,21 @@
+id: AJCR.review-plan.p8-jacobian.interfaces
+title: Pinned Jacobian representation interfaces
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+summary: 'Complete: JacobianData, PicRepDatum, group-object bridges, and their immediate
+  consumer interfaces are present and root-reachable; they still require the original-field
+  producer.'
+status: done
+kind: proof
+priority: high
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+metadata:
+  author: human
+  created_at: '2026-08-18T06:12:05.829704+00:00'
+  parent: AJCR.review-plan.p8-jacobian
+  milestone: AJCR.review-plan

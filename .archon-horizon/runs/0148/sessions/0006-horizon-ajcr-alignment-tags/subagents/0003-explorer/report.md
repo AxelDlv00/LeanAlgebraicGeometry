@@ -1,0 +1,1 @@
+I’m refreshing the read-only inventory against the current shared snapshot, separating graph-linked public declarations from helpers and the two explicitly deferred files. I’ll report one timestamped residue count so concurrent sync activity is distinguishable from classification gaps.

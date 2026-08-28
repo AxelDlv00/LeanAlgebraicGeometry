@@ -1,0 +1,19 @@
+---
+author: sync
+content_type: theorem
+created: '2026-07-30T11:09:50'
+decl: AlgebraicGeometry.ProbeP4R6i.controlSorry
+file: scratch_p4r6/probe13.lean
+generated: lean
+lean_status: sorry
+stale: true
+title: AlgebraicGeometry.ProbeP4R6i.controlSorry
+type: lean
+updated: '2026-08-01T11:45:17'
+---
+theorem controlSorry : True := by sorry
+
+variable {k : Type u} [Field k] {C : Over (Spec (.of k))}
+variable {π : C.left ⟶ P1 k} [IsAffineHom π] {n : ℕ}
+variable [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+variable [GeometricallyIrreducible C.hom] [GeometricallyReduced C.hom]

@@ -1,0 +1,1 @@
+No uncommitted authored changes remain. `c2870a6828` and `e41df376cd` are nonempty ancestors of HEAD, and all authored source paths match HEAD and disk. Subsequent mutations were generated build artifacts; pic-e’s later `FGAPicRepresentability.lean` changes are now committed at HEAD and preserve my projectivity correction.

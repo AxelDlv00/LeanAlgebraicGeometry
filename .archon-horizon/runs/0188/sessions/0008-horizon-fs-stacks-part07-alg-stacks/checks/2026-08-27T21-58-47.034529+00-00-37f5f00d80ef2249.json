@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "fingerprint": "37f5f00d80ef2249",
+  "command": [
+    "lake",
+    "env",
+    "lean",
+    "/home/axel/LeanAlgebraicGeometry-Horizon/FormalizedSources/StacksProject/Part07_AlgebraicStacks/StacksPart07Lib/FiberedSetoids.lean"
+  ],
+  "cwd": "FormalizedSources/StacksProject/Part07_AlgebraicStacks",
+  "status": "passed",
+  "ok": true,
+  "returncode": 0,
+  "timed_out": false,
+  "reused": false,
+  "wait_seconds": 0.0,
+  "duration_seconds": 2.52,
+  "started_at": "2026-08-27T21:58:44.514752+00:00",
+  "finished_at": "2026-08-27T21:58:47.034529+00:00",
+  "finished_epoch": 1787867927.034529
+}

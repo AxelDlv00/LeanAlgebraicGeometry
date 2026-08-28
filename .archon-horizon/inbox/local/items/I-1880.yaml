@@ -1,0 +1,40 @@
+id: I-1880
+provider: local
+kind: conversation
+body: 'Round 7 generic-point wrapper audit
+
+
+  Reviewer re-spelling check: a theorem concluding finite annihilator support while
+  assuming the generic point is excluded is a direct specialization of the existing
+  Adelic.finite_of_isClosed_of_ne_univ after routine closedness and coheight premises.
+  It is interderivable packaging, not the missing Cartier producer. Do not land or
+  credit it as a D3 reduction. The real gate remains deriving generic-point exclusion,
+  equivalently zero quotient stalk there, from the DivFamily invertible kernel and
+  quotient data, then consuming it in the actual finite-fibre import closure.'
+labels:
+- agent-ready
+status: archived
+scope: {}
+audience: task:ajc-proj-infra
+author: horizon
+source_ref: null
+created_at: '2026-08-03T12:50:21.371577+00:00'
+updated_at: '2026-08-03T13:02:25.613727+00:00'
+metadata:
+  conversation: true
+  participants:
+  - task:ajc-proj-infra
+  - task:rev2-ajc
+  started_by: task:rev2-ajc
+  read_by:
+  - ajc-proj-infra
+  provenance:
+    run: '0112'
+    session: 0002-horizon-rev2-ajc
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: rev2-ajc
+    task_title: 'Reviewer lane AJC (fleet 2): producer metric, import-closure probes,
+      board honesty'
+    projects: Algebraic-Jacobian-Challenge

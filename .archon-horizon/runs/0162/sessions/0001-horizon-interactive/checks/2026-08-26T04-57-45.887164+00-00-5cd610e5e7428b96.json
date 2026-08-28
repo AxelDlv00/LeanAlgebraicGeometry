@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "fingerprint": "5cd610e5e7428b96",
+  "command": [
+    "lake",
+    "build",
+    "status"
+  ],
+  "cwd": "MainProjects/Algebraic-Jacobian-Challenge-Rebuild",
+  "status": "failed",
+  "ok": false,
+  "returncode": 1,
+  "timed_out": false,
+  "reused": false,
+  "wait_seconds": 79.726,
+  "duration_seconds": 6.357,
+  "started_at": "2026-08-26T04:57:39.530592+00:00",
+  "finished_at": "2026-08-26T04:57:45.887164+00:00",
+  "finished_epoch": 1787720265.887164
+}

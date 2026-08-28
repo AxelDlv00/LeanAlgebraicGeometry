@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Harvey",
+  "agent_path": "/root/dataface_probe",
+  "agent_role": "explorer",
+  "depth": 1,
+  "model": "gpt-5.6-sol",
+  "name": "explorer",
+  "native_subagent_id": "01a043c9-d946-7870-9d47-931c38d36384",
+  "ok": false,
+  "parent_session": "0012-horizon-ajcr-finite-stage-api-redesign",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "interrupted",
+  "subagent_type": "explorer",
+  "summary": "",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 6787562,
+    "tokens_out": 15902
+  }
+}

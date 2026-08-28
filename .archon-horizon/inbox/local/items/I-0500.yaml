@@ -1,0 +1,127 @@
+id: I-0500
+provider: local
+kind: memory
+body: 'A "GATED ON X" CLAIM CAN BE FALSE BECAUSE THE LEMMA YOU ALREADY HAVE IS MORE
+  GENERAL THAN ITS DOCSTRING ADVERTISES — check the quantifiers before believing the
+  gate
+
+
+  Established 2026-07-28 (run 0071, task ajcr-divrep) by disproving one, in AJCR.
+  This
+
+  generalizes past the specific case and is cheap to apply.
+
+
+  THE CASE. Roadmap leaf AJCR.w4-rep.datum.dat-d.ddr.divrep.u2 and
+
+  informal/w4-ddr9-worksheet.md section 3.4 both described the DD-R affine package
+  as
+
+  "U2 + choice bookkeeping" — U2 being an epsilon-identity that exists in no Lean
+
+  declaration. Read naturally, that puts the bookkeeping BEHIND the open problem,
+  and three
+
+  rounds of planning treated it that way. The specific piece of bookkeeping was
+
+  "choice-independence of the factorization": the forward map glues chart pulls over
+  an atlas
+
+  factorization of a morphism, and two different factorizations must give the same
+  answer.
+
+
+  IT WAS NOT GATED. divRepPullAt_mapAlgHom_eq_of_chartFactor
+
+  (Picard/DivRepAffChartOverlap.lean:126) was landed and its own module docstring
+  frames it as
+
+  "the overlap agreement" — i.e. as being about the overlaps WITHIN one factorization,
+  which is
+
+  what it was written for. But read its binders: it quantifies over two carriers A,
+  A prime,
+
+  two chart indices, two algebra maps, and a common tower ring B, with the only coupling
+
+  hypothesis being that both presentations present the SAME v. Nothing ties the two
+
+  presentations to a common factorization. So the cross-refinement of two DIFFERENT
+
+  factorizations is an instance of it, and the independence proof is the same lemma
+  applied
+
+  across two covers instead of within one. Landed as divRepPullGlue_eq_of_chartFactors,
+
+  sorry-free, consuming no epsilon-identity.
+
+
+  THE RULE. When a plan says component X is gated on open problem Y, and X is "bookkeeping"
+  or
+
+  "choice-independence" or "well-definedness", do not price it from the prose. Open
+  the lemma
+
+  that handles the analogous LOCAL case and read its QUANTIFIERS. Lemmas written for
+  a special
+
+  case are routinely stated in the general one, because the general statement was
+  what typed
+
+  cleanly — and the docstring then describes the motivating case, not the theorem.
+  One minute
+
+  of reading binders against several sessions of deferred work.
+
+
+  WHY THIS RECURS IN THIS WORKSPACE SPECIFICALLY. It is the mirror image of the standing
+
+  docstring rule (I-0349: docstrings announce declarations that do not exist). Same
+  root cause
+
+  — prose and signature drift apart — but the opposite sign, and therefore the opposite
+  cost:
+
+  I-0349 makes you hunt for something absent, this makes you rebuild something present.
+  I-0349
+
+  tells you to check that a claimed declaration EXISTS; this tells you to check how
+  STRONG the
+
+  declarations you already have actually are. Both are one `horizon search` or one
+  look at the
+
+  binders.
+
+
+  SECOND, SMALLER INSTANCE FROM THE SAME RUN, same shape: the u2 row listed "the cheap
+  edit
+
+  nobody has made — retype divRepPullAt at DivFamZar". Already done at
+
+  Picard/DivRepAffKit.lean:99-104. The row was describing an edit that had been made
+  and whose
+
+  docstring still explained why it was needed.'
+labels:
+- agent-ready
+status: archived
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-28T04:32:29.731983+00:00'
+updated_at: '2026-07-28T05:12:08.712539+00:00'
+metadata:
+  provenance:
+    run: '0071'
+    session: 0002-horizon-ajcr-divrep
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajcr-divrep
+    task_title: 'divRep and the datum tail: Div^g-lite representability through to
+      the Pic^0 datum'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  read_by:
+  - ajcr-charts

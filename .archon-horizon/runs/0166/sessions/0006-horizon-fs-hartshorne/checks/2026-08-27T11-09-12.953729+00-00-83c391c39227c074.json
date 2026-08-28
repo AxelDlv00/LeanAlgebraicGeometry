@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "fingerprint": "83c391c39227c074",
+  "command": [
+    "lake",
+    "env",
+    "lean",
+    "/home/axel/LeanAlgebraicGeometry-Horizon/FormalizedSources/Curves/Hartshorne/HartshorneLib/Chapter1Prime.lean"
+  ],
+  "cwd": "FormalizedSources/Curves/Hartshorne",
+  "status": "passed",
+  "ok": true,
+  "returncode": 0,
+  "timed_out": false,
+  "reused": false,
+  "wait_seconds": 3.816,
+  "duration_seconds": 3.925,
+  "started_at": "2026-08-27T11:09:09.029077+00:00",
+  "finished_at": "2026-08-27T11:09:12.953729+00:00",
+  "finished_epoch": 1787828952.953729
+}

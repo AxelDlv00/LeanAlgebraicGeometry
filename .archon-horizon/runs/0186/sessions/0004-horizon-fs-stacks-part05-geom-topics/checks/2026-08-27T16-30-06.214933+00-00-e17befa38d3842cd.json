@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "fingerprint": "e17befa38d3842cd",
+  "command": [
+    "lake",
+    "env",
+    "lean",
+    "/home/axel/LeanAlgebraicGeometry-Horizon/FormalizedSources/StacksProject/Part05_TopicsInGeometry/StacksPart05Lib/Surjectivity.lean"
+  ],
+  "cwd": "FormalizedSources/StacksProject/Part05_TopicsInGeometry",
+  "status": "passed",
+  "ok": true,
+  "returncode": 0,
+  "timed_out": false,
+  "reused": false,
+  "wait_seconds": 6.805,
+  "duration_seconds": 4.982,
+  "started_at": "2026-08-27T16:30:01.232419+00:00",
+  "finished_at": "2026-08-27T16:30:06.214933+00:00",
+  "finished_epoch": 1787848206.214933
+}

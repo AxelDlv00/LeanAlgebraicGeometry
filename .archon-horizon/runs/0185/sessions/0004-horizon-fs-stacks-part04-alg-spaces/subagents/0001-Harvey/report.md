@@ -1,0 +1,1 @@
+The kernel check has now exited cleanly (session exit code `0`, no diagnostics). I stopped only the redundant queued verification requests; the source and declarations remain unchanged. I’m doing one final source/axiom scan and then will hand the exact results to the parent.

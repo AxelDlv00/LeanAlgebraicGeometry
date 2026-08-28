@@ -1,0 +1,25 @@
+{
+  "role": "horizon",
+  "round": 4,
+  "project": "Algebraic-Jacobian-Challenge",
+  "task_id": "pic-a",
+  "projects": [
+    "Algebraic-Jacobian-Challenge"
+  ],
+  "status": "queued",
+  "started_at": "2026-07-30T11:45:26.405067+00:00",
+  "ended_at": "2026-07-30T12:03:01.002738+00:00",
+  "harness_name": "opus5",
+  "harness_kind": "claude-code",
+  "model": "claude-opus-5",
+  "effort": "ultracode",
+  "config_dir": null,
+  "auth": "api-key",
+  "usage": {
+    "tokens_in": 3121253,
+    "tokens_out": 2318,
+    "cost_usd": 15.664215000000002
+  },
+  "engine_session_id": "eb0a674c-2b0b-46c8-bd51-32226b28fb84",
+  "workspace_sha": "574db008d895fb9c8ad8f94c0d7ee8405d438595"
+}

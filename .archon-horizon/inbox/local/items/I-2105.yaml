@@ -1,0 +1,47 @@
+id: I-2105
+provider: local
+kind: conversation
+body: 'Context-face theorem still unstable
+
+
+  Stable facade: Pic0FiniteStageStableGluePackage.lean:42-45 stores context plus pinned
+  AffineRingGluePresentation; accessors 61-95 avoid repeated dependent args.
+
+
+  Remaining issue: Pic0FiniteStageGlueDataFace.lean:205-242 `pic0FiniteStageAffineTripleTransition_fac_of_context`
+  takes D plus explicit `hthetaN`, although D already stores `D.triple.thetaN` and
+  `D.triple.comparison` (GlueContext.lean:50-52; TripleTransitionModels.lean:310-315).
+  It hardcodes `D.models.comparison` (Face.lean:218-220), ignoring `D.Q`; its comment
+  admits the mismatch.
+
+
+  Recommendation: add a context-native theorem consuming `D.triple.comparison` and
+  `D.Q`, or restrict theorem to canonical contexts (`ofCanonical`) where Q is canonical.
+  Stable consumers should use stored comparison, not reconstruct `hthetaN`. Checks:
+  `lake env lean .../Pic0FiniteStageGlueDataFace.lean`; `lake env lean .../Descent/FiniteStageApi.lean`;
+  `#check` theorem types. No edits.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: task:ajcr-finite-stage-api-redesign
+author: horizon
+source_ref: null
+created_at: '2026-08-28T01:22:37.736151+00:00'
+updated_at: '2026-08-28T01:22:37.736165+00:00'
+metadata:
+  provenance:
+    run: 0190
+    session: 0002-horizon-ajcr-finite-stage-api-redesign
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajcr-finite-stage-api-redesign
+    task_title: 'AJCR: diagnose and rewrite unstable formalization APIs'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  conversation: true
+  participants:
+  - task:ajcr-finite-stage-api-redesign
+  started_by: task:ajcr-finite-stage-api-redesign
+  read_by:
+  - ajcr-finite-stage-api-redesign

@@ -1,0 +1,22 @@
+{"at": "2026-08-23T01:44:49.157866+00:00", "actor": "human", "field": "created", "from": "", "to": "queued", "note": "opened"}
+{"at": "2026-08-23T01:45:48.065578+00:00", "actor": "system", "field": "status", "from": "queued", "to": "running", "note": "started by Horizon run"}
+{"at": "2026-08-23T04:29:56.806242+00:00", "actor": "system", "field": "status", "from": "running", "to": "queued", "note": "Horizon session ended without the agent recording a terminal status; returned to queued"}
+{"at": "2026-08-23T08:46:28.231283+00:00", "actor": "system", "field": "status", "from": "queued", "to": "running", "note": "started by Horizon run"}
+{"at": "2026-08-23T12:19:17.624863+00:00", "actor": "system", "field": "status", "from": "running", "to": "queued", "note": "Horizon session ended without the agent recording a terminal status; returned to queued"}
+{"at": "2026-08-23T14:55:00.788148+00:00", "actor": "system", "field": "status", "from": "queued", "to": "running", "note": "started by Horizon run"}
+{"at": "2026-08-24T14:54:43.394189+00:00", "actor": "human", "field": "status", "from": "running", "to": "blocked", "note": ""}
+{"at": "2026-08-25T02:17:07.473432+00:00", "actor": "human", "field": "edited", "from": "", "to": "", "note": "objective updated"}
+{"at": "2026-08-25T02:29:15.308232+00:00", "actor": "human", "field": "status", "from": "blocked", "to": "queued", "note": ""}
+{"at": "2026-08-25T02:30:24.983422+00:00", "actor": "system", "field": "status", "from": "queued", "to": "running", "note": "started by Horizon run"}
+{"at": "2026-08-25T03:42:55.858422+00:00", "actor": "system", "field": "status", "from": "running", "to": "queued", "note": "Horizon session ended without the agent recording a terminal status; returned to queued"}
+{"at": "2026-08-25T05:44:59.847775+00:00", "actor": "system", "field": "status", "from": "queued", "to": "running", "note": "started by Horizon run"}
+{"at": "2026-08-25T14:24:40.135251+00:00", "actor": "horizon", "field": "status", "from": "running", "to": "blocked", "note": "", "provenance": {"run": "0161", "session": "0002-horizon-ajcr-compile-frontier-repair", "role": "horizon", "round": "0", "rounds": "5", "task": "ajcr-compile-frontier-repair", "task_title": "AJCR compile frontier: repair GluingDiagramIso artifact", "projects": "Algebraic-Jacobian-Challenge-Rebuild,Algebraic-Jacobian-Challenge"}}
+{"at": "2026-08-25T14:42:19.203617+00:00", "actor": "system", "field": "status", "from": "blocked", "to": "queued", "note": "re-queued for the next round of a focused run"}
+{"at": "2026-08-25T14:42:45.080379+00:00", "actor": "system", "field": "status", "from": "queued", "to": "running", "note": "started by Horizon run"}
+{"at": "2026-08-25T18:04:23.379202+00:00", "actor": "horizon", "field": "status", "from": "running", "to": "blocked", "note": "", "provenance": {"run": "0161", "session": "0004-horizon-ajcr-compile-frontier-repair", "role": "horizon", "round": "1", "rounds": "5", "task": "ajcr-compile-frontier-repair", "task_title": "AJCR compile frontier: repair GluingDiagramIso artifact", "projects": "Algebraic-Jacobian-Challenge-Rebuild,Algebraic-Jacobian-Challenge"}}
+{"at": "2026-08-25T18:20:50.710012+00:00", "actor": "system", "field": "status", "from": "blocked", "to": "queued", "note": "re-queued for the next round of a focused run"}
+{"at": "2026-08-25T18:21:18.635877+00:00", "actor": "system", "field": "status", "from": "queued", "to": "running", "note": "started by Horizon run"}
+{"at": "2026-08-25T20:29:22.947852+00:00", "actor": "horizon", "field": "status", "from": "running", "to": "blocked", "note": "", "provenance": {"run": "0161", "session": "0006-horizon-ajcr-compile-frontier-repair", "role": "horizon", "round": "2", "rounds": "5", "task": "ajcr-compile-frontier-repair", "task_title": "AJCR compile frontier: repair GluingDiagramIso artifact", "projects": "Algebraic-Jacobian-Challenge-Rebuild,Algebraic-Jacobian-Challenge"}}
+{"at": "2026-08-25T20:49:04.014397+00:00", "actor": "system", "field": "status", "from": "blocked", "to": "queued", "note": "re-queued for the next round of a focused run"}
+{"at": "2026-08-25T20:49:28.000688+00:00", "actor": "system", "field": "status", "from": "queued", "to": "running", "note": "started by Horizon run"}
+{"at": "2026-08-26T02:05:22.213374+00:00", "actor": "human", "field": "status", "from": "running", "to": "blocked", "note": ""}

@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Erdos",
+  "agent_path": "/root/scan",
+  "agent_role": "explorer",
+  "depth": 1,
+  "model": "gpt-5.6-sol",
+  "name": "explorer",
+  "native_subagent_id": "01a0401b-fffd-7d82-86cc-ebbfffec5cf3",
+  "ok": true,
+  "parent_session": "0004-horizon-ajcr-finite-stage-api-redesign",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "completed",
+  "subagent_type": "explorer",
+  "summary": "The minimal declaration is the `presentation` wrapper sent above, calling `pic0FiniteStageAffineRingGluePresentation` with the two algebraicity instances and the existing two-semiring `hOpen` bridge.",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 9486326,
+    "tokens_out": 52999
+  }
+}

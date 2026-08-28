@@ -1,0 +1,28 @@
+id: AJCR.review-plan.p0-audit-root
+title: 'Phase 0: pinned baseline, critical root, and route guard'
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+summary: 'Pin the four review revisions; script root-reachable module/axiom/carrier/consumer
+  and build-resource metrics at exact commits; create Picard/Pic0CriticalPath.lean
+  checking every endpoint; and root-import a negative positive-genus high-degree Abel
+  guard. Acceptance: independent reproduction, narrow/full roots green, no production
+  expansion before the ledger and guard land.'
+status: done
+kind: workspace
+priority: urgent
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+metadata:
+  author: human
+  created_at: '2026-08-04T01:52:19.179122+00:00'
+  parent: AJCR.review-plan
+  milestone: AJCR.review-plan
+  updated_at: '2026-08-04T18:02:46.671977+00:00'
+  owner: horizon
+  pinned_commits:
+  - 975242ada40cf0b548aca03cd1792ae6df9a1312
+  - e71f31f893b273bb93ac45cbe3cec8dda8ccd3db

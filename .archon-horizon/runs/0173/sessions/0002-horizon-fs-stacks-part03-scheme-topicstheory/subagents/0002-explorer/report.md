@@ -1,0 +1,1 @@
+I’m loading the Horizon workflow instructions first, then I’ll inspect this project’s blueprints, hgraph/frontier state, and current Lean declarations to identify a small, provable target. I’ll keep this read-only and report exact files and proof routes to the parent agent.

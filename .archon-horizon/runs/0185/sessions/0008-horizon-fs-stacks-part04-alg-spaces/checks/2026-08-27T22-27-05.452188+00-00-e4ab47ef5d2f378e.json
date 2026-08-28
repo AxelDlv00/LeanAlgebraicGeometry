@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "fingerprint": "e4ab47ef5d2f378e",
+  "command": [
+    "lake",
+    "env",
+    "lean",
+    "/home/axel/LeanAlgebraicGeometry-Horizon/FormalizedSources/StacksProject/Part04_AlgebraicSpaces/StacksPart04Lib/FiberedGroupoids.lean"
+  ],
+  "cwd": ".",
+  "status": "failed",
+  "ok": false,
+  "returncode": 1,
+  "timed_out": false,
+  "reused": false,
+  "wait_seconds": 3.489,
+  "duration_seconds": 0.265,
+  "started_at": "2026-08-27T22:27:05.187207+00:00",
+  "finished_at": "2026-08-27T22:27:05.452188+00:00",
+  "finished_epoch": 1787869625.452188
+}

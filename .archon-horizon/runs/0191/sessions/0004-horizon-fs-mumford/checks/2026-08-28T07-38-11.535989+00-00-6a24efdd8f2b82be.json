@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "fingerprint": "6a24efdd8f2b82be",
+  "command": [
+    "lake",
+    "env",
+    "lean",
+    "/home/axel/LeanAlgebraicGeometry-Horizon/FormalizedSources/AbelianVarieties/Mumford/MumfordLib/Theta.lean"
+  ],
+  "cwd": "FormalizedSources/AbelianVarieties/Mumford",
+  "status": "passed",
+  "ok": true,
+  "returncode": 0,
+  "timed_out": false,
+  "reused": false,
+  "wait_seconds": 0.001,
+  "duration_seconds": 5.528,
+  "started_at": "2026-08-28T07:38:06.007697+00:00",
+  "finished_at": "2026-08-28T07:38:11.535989+00:00",
+  "finished_epoch": 1787902691.535989
+}

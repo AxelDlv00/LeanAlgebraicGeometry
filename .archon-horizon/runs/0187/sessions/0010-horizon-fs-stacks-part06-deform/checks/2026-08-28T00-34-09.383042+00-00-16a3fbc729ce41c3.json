@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "fingerprint": "16a3fbc729ce41c3",
+  "command": [
+    "lake",
+    "build",
+    "StacksPart06Lib"
+  ],
+  "cwd": "FormalizedSources/StacksProject/Part06_DeformationTheory",
+  "status": "passed",
+  "ok": true,
+  "returncode": 0,
+  "timed_out": false,
+  "reused": false,
+  "wait_seconds": 0.0,
+  "duration_seconds": 6.037,
+  "started_at": "2026-08-28T00:34:03.345870+00:00",
+  "finished_at": "2026-08-28T00:34:09.383042+00:00",
+  "finished_epoch": 1787877249.383042
+}

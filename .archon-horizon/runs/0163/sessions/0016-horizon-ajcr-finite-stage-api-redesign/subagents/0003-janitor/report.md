@@ -1,0 +1,1 @@
+I’m refreshing the handoff-only state now: the two AJCR target paths, inbox attention lanes, task-owned conversation, and live Horizon process table. I’ll leave all files and metadata untouched and report the exact final counts.

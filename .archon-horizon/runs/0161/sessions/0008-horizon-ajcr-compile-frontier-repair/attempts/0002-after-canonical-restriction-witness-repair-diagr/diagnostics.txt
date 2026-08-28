@@ -1,0 +1,2004 @@
+[Elab.command] [2.696332] ✅️ private theorem glueData_f_canonical {F : Type u} [Field F] [Algebra F k]
+        [Algebra.IsAlgebraic F k] (P : Pic0FiniteStageGluePackage C F) (U V : Pic0FiniteStageChartIndex C) :
+        P.glueData.f U V = Spec.map (CommRingCat.ofHom (restrictionBaseChangeAlgHomCanonical C P U V).toRingHom) :=
+      by
+      rw [glueData_f C P U V]
+      congr 1
+  [Elab.definition.header] [2.670648] ✅️ _private.AlgebraicJacobian.Picard.Pic0FiniteStageGluingDiagramIso.0.AlgebraicGeometry.Pic0FiniteStageGluePackage.glueData_f_canonical
+    [Elab.step] [2.659794] ✅️ expected type: Sort ?u.39, term
+        P.glueData.f U V = Spec.map (CommRingCat.ofHom (restrictionBaseChangeAlgHomCanonical C P U V).toRingHom)
+      [Elab.step] [2.659739] ✅️ expected type: Sort ?u.39, term
+          binrel% Eq✝ (P.glueData.f U V)
+            (Spec.map (CommRingCat.ofHom (restrictionBaseChangeAlgHomCanonical C P U V).toRingHom))
+        [Elab.step] [2.122109] ✅️ expected type: <not-available>, term
+            Spec.map (CommRingCat.ofHom (restrictionBaseChangeAlgHomCanonical C P U V).toRingHom)
+          [Elab.app.args] [2.121912] ✅️ elabAppArgs (1 args) `@Spec.map`
+            [Elab.step] [2.121756] ✅️ expected type: CommRingCat.of
+                    (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U) ⟶
+                  CommRingCat.of (Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M P.N U V), term
+                (CommRingCat.ofHom (restrictionBaseChangeAlgHomCanonical C P U V).toRingHom)
+              [Elab.step] [2.121727] ✅️ expected type: CommRingCat.of
+                      (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U) ⟶
+                    CommRingCat.of (Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M P.N U V), term
+                  CommRingCat.ofHom (restrictionBaseChangeAlgHomCanonical C P U V).toRingHom
+                [Elab.app.args] [2.121544] ✅️ elabAppArgs (1 args) `@CommRingCat.ofHom`
+                  [Elab.step] [1.965386] ✅️ expected type: Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation
+                          P.M P.N U →+*
+                        Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M P.N U V, term
+                      (restrictionBaseChangeAlgHomCanonical C P U V).toRingHom
+                    [Elab.app.args] [1.961943] ✅️ elabAppArgs (1 namedArgs) `@AlgHom.toRingHom`
+                      [Elab.app.finalize] [1.950553] ✅️ (restrictionBaseChangeAlgHomCanonical C P U
+                              V).toRingHom : Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U →+*
+                            Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M P.N U V
+[Elab.command] [2.696636] ✅️ set_option maxHeartbeats 12800000 in
+    private theorem glueData_f_canonical {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
+        (P : Pic0FiniteStageGluePackage C F) (U V : Pic0FiniteStageChartIndex C) :
+        P.glueData.f U V = Spec.map (CommRingCat.ofHom (restrictionBaseChangeAlgHomCanonical C P U V).toRingHom) :=
+      by
+      rw [glueData_f C P U V]
+      congr 1
+[Elab.command] [2.696989] ✅️ set_option synthInstance.maxHeartbeats 3200000 in
+    -- Normalize the raw glue leg once so downstream spectrum compositions use the
+    -- same tensor-product witnesses as the affine comparison APIs.
+    
+    set_option maxHeartbeats 12800000 in
+    private theorem glueData_f_canonical {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
+        (P : Pic0FiniteStageGluePackage C F) (U V : Pic0FiniteStageChartIndex C) :
+        P.glueData.f U V = Spec.map (CommRingCat.ofHom (restrictionBaseChangeAlgHomCanonical C P U V).toRingHom) :=
+      by
+      rw [glueData_f C P U V]
+      congr 1
+[Elab.async] [1.067283] ✅️ elaborating proof of _private.AlgebraicJacobian.Picard.Pic0FiniteStageGluingDiagramIso.0.AlgebraicGeometry.Pic0FiniteStageGluePackage.glueData_f_canonical
+  [Elab.definition.value] [1.062117] ✅️ _private.AlgebraicJacobian.Picard.Pic0FiniteStageGluingDiagramIso.0.AlgebraicGeometry.Pic0FiniteStageGluePackage.glueData_f_canonical
+    [Elab.step] [1.055666] ✅️ 
+          rw [glueData_f C P U V]
+          congr 1
+      [Elab.step] [1.055634] ✅️ 
+            rw [glueData_f C P U V]
+            congr 1
+[Elab.command] [1.686724] ✅️ /-- The finite-stage overlap structure map becomes the canonical structure map
+    after scalar extension to the separably closed field. -/
+    theorem glueData_f_comp_inclusion_comp_gluedMap {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
+        (P : Pic0FiniteStageGluePackage C F) (U V : Pic0FiniteStageChartIndex C) :
+        P.glueData.f U V ≫ P.glueData.ι U ≫ P.gluedMap =
+          Spec.map
+            (CommRingCat.ofHom
+              (algebraMap P.N.1 (Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M P.N U V))) :=
+      by
+      rw [glueData_f_canonical C P U V, glueData_ι_gluedMap C P U]
+      exact specMap_algHom_comp_algebraMap (restrictionBaseChangeAlgHomCanonical C P U V)
+  [Elab.definition.header] [1.663885] ✅️ AlgebraicGeometry.Pic0FiniteStageGluePackage.glueData_f_comp_inclusion_comp_gluedMap
+    [Elab.step] [1.652342] ✅️ expected type: Sort ?u.39, term
+        P.glueData.f U V ≫ P.glueData.ι U ≫ P.gluedMap =
+          Spec.map
+            (CommRingCat.ofHom
+              (algebraMap P.N.1 (Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M P.N U V)))
+      [Elab.step] [1.652220] ✅️ expected type: Sort ?u.39, term
+          binrel% Eq✝ (P.glueData.f U V ≫ P.glueData.ι U ≫ P.gluedMap)
+            (Spec.map
+              (CommRingCat.ofHom
+                (algebraMap P.N.1 (Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M P.N U V))))
+        [Elab.step] [1.303281] ✅️ expected type: <not-available>, term
+            Spec.map
+              (CommRingCat.ofHom
+                (algebraMap P.N.1 (Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M P.N U V)))
+          [Elab.app.args] [1.303099] ✅️ elabAppArgs (1 args) `@Spec.map`
+            [Elab.step] [1.302913] ✅️ expected type: CommRingCat.of ↥↑P.N ⟶
+                  CommRingCat.of (Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M P.N U V), term
+                (CommRingCat.ofHom
+                  (algebraMap P.N.1 (Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M P.N U V)))
+              [Elab.step] [1.302853] ✅️ expected type: CommRingCat.of ↥↑P.N ⟶
+                    CommRingCat.of (Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M P.N U V), term
+                  CommRingCat.ofHom
+                    (algebraMap P.N.1 (Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M P.N U V))
+                [Elab.app.args] [1.302625] ✅️ elabAppArgs (1 args) `@CommRingCat.ofHom`
+                  [Elab.step] [1.034619] ✅️ expected type: ↥↑P.N →+*
+                        Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M P.N U V, term
+                      (algebraMap P.N.1 (Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M P.N U V))
+                    [Elab.step] [1.034556] ✅️ expected type: ↥↑P.N →+*
+                          Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M P.N U V, term
+                        algebraMap P.N.1 (Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M P.N U V)
+                      [Elab.app.args] [1.034336] ✅️ elabAppArgs (2 args) `algebraMap`
+[Elab.command] [1.687095] ✅️ set_option maxHeartbeats 12800000 in
+    /-- The finite-stage overlap structure map becomes the canonical structure map
+    after scalar extension to the separably closed field. -/
+    theorem glueData_f_comp_inclusion_comp_gluedMap {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
+        (P : Pic0FiniteStageGluePackage C F) (U V : Pic0FiniteStageChartIndex C) :
+        P.glueData.f U V ≫ P.glueData.ι U ≫ P.gluedMap =
+          Spec.map
+            (CommRingCat.ofHom
+              (algebraMap P.N.1 (Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M P.N U V))) :=
+      by
+      rw [glueData_f_canonical C P U V, glueData_ι_gluedMap C P U]
+      exact specMap_algHom_comp_algebraMap (restrictionBaseChangeAlgHomCanonical C P U V)
+[Elab.command] [1.687399] ✅️ set_option synthInstance.maxHeartbeats 3200000 in
+    -- The composite retains the package's dependent finite-subextension towers.
+    
+    set_option maxHeartbeats 12800000 in
+    /-- The finite-stage overlap structure map becomes the canonical structure map
+    after scalar extension to the separably closed field. -/
+    theorem glueData_f_comp_inclusion_comp_gluedMap {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
+        (P : Pic0FiniteStageGluePackage C F) (U V : Pic0FiniteStageChartIndex C) :
+        P.glueData.f U V ≫ P.glueData.ι U ≫ P.gluedMap =
+          Spec.map
+            (CommRingCat.ofHom
+              (algebraMap P.N.1 (Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M P.N U V))) :=
+      by
+      rw [glueData_f_canonical C P U V, glueData_ι_gluedMap C P U]
+      exact specMap_algHom_comp_algebraMap (restrictionBaseChangeAlgHomCanonical C P U V)
+[Elab.async] [7.322003] ✅️ elaborating proof of AlgebraicGeometry.Pic0FiniteStageGluePackage.glueData_f_comp_inclusion_comp_gluedMap
+  [Elab.definition.value] [7.311237] ✅️ AlgebraicGeometry.Pic0FiniteStageGluePackage.glueData_f_comp_inclusion_comp_gluedMap
+    [Elab.step] [7.289902] ✅️ 
+          rw [glueData_f_canonical C P U V, glueData_ι_gluedMap C P U]
+          exact specMap_algHom_comp_algebraMap (restrictionBaseChangeAlgHomCanonical C P U V)
+      [Elab.step] [7.289878] ✅️ 
+            rw [glueData_f_canonical C P U V, glueData_ι_gluedMap C P U]
+            exact specMap_algHom_comp_algebraMap (restrictionBaseChangeAlgHomCanonical C P U V)
+        [Elab.step] [5.243508] ✅️ rw [glueData_f_canonical C P U V, glueData_ι_gluedMap C P U]
+          [Elab.step] [5.243483] ✅️ (rewrite [glueData_f_canonical C P U V, glueData_ι_gluedMap C P U];
+                with_annotate_state"]" (try (with_reducible rfl)))
+            [Elab.step] [5.243471] ✅️ rewrite [glueData_f_canonical C P U V, glueData_ι_gluedMap C P U];
+                  with_annotate_state"]" (try (with_reducible rfl))
+              [Elab.step] [5.243453] ✅️ rewrite [glueData_f_canonical C P U V, glueData_ι_gluedMap C P U];
+                    with_annotate_state"]" (try (with_reducible rfl))
+                [Elab.step] [5.231038] ✅️ rewrite [glueData_f_canonical C P U V, glueData_ι_gluedMap C P U]
+        [Elab.step] [2.046316] ✅️ exact specMap_algHom_comp_algebraMap (restrictionBaseChangeAlgHomCanonical C P U V)
+          [Elab.step] [1.507962] ✅️ expected type: Spec.map
+                    (CommRingCat.ofHom (restrictionBaseChangeAlgHomCanonical C P U V).toRingHom) ≫
+                  Spec.map
+                    (CommRingCat.ofHom
+                      (algebraMap (↥↑P.N) (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U))) =
+                Spec.map
+                  (CommRingCat.ofHom
+                    (algebraMap (↥↑P.N)
+                      (Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M P.N U V))), term
+              specMap_algHom_comp_algebraMap (restrictionBaseChangeAlgHomCanonical C P U V)
+            [Elab.app.args] [1.507735] ✅️ elabAppArgs (1 args)
+                  @specMap_algHom_comp_algebraMap
+              [Elab.app.finalize] [1.276294] ✅️ specMap_algHom_comp_algebraMap
+                    (restrictionBaseChangeAlgHomCanonical C P U
+                      V) : Spec.map (CommRingCat.ofHom (restrictionBaseChangeAlgHomCanonical C P U V).toRingHom) ≫
+                      Spec.map
+                        (CommRingCat.ofHom
+                          (algebraMap (↥↑P.N)
+                            (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U))) =
+                    Spec.map
+                      (CommRingCat.ofHom
+                        (algebraMap (↥↑P.N)
+                          (Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M P.N U V)))
+[Elab.command] [14.810553] ✅️ @[reassoc]
+    theorem restrictionBaseChangeMap_fst {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
+        (P : Pic0FiniteStageGluePackage C F) (U V : Pic0FiniteStageChartIndex C) :
+        restrictionBaseChangeMap C P U V ≫
+            pullback.fst
+              (Spec.map
+                (CommRingCat.ofHom
+                  (algebraMap P.N.1 (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U))))
+              (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k))) =
+          pullback.fst
+              (Spec.map
+                (CommRingCat.ofHom
+                  (algebraMap P.N.1 (Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M P.N U V))))
+              (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k))) ≫
+            Spec.map (CommRingCat.ofHom (restrictionBaseChangeAlgHom C P U V).toRingHom) :=
+      by
+      exact
+        affineBaseChangeMap_fst P.N.1 k (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U)
+          (Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M P.N U V)
+          (restrictionBaseChangeAlgHom C P U V)
+  [Elab.definition.header] [4.257492] ✅️ AlgebraicGeometry.Pic0FiniteStageGluePackage.restrictionBaseChangeMap_fst
+    [Elab.step] [4.243955] ✅️ expected type: Sort ?u.39, term
+        restrictionBaseChangeMap C P U V ≫
+            pullback.fst
+              (Spec.map
+                (CommRingCat.ofHom
+                  (algebraMap P.N.1 (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U))))
+              (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k))) =
+          pullback.fst
+              (Spec.map
+                (CommRingCat.ofHom
+                  (algebraMap P.N.1 (Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M P.N U V))))
+              (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k))) ≫
+            Spec.map (CommRingCat.ofHom (restrictionBaseChangeAlgHom C P U V).toRingHom)
+      [Elab.step] [4.243750] ✅️ expected type: Sort ?u.39, term
+          binrel% Eq✝
+            (restrictionBaseChangeMap C P U V ≫
+              pullback.fst
+                (Spec.map
+                  (CommRingCat.ofHom
+                    (algebraMap P.N.1 (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U))))
+                (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k))))
+            (pullback.fst
+                (Spec.map
+                  (CommRingCat.ofHom
+                    (algebraMap P.N.1 (Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M P.N U V))))
+                (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k))) ≫
+              Spec.map (CommRingCat.ofHom (restrictionBaseChangeAlgHom C P U V).toRingHom))
+        [Elab.step] [1.720180] ✅️ expected type: <not-available>, term
+            CategoryStruct.comp✝ (restrictionBaseChangeMap C P U V)
+              (pullback.fst
+                (Spec.map
+                  (CommRingCat.ofHom
+                    (algebraMap P.N.1 (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U))))
+                (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k))))
+          [Elab.app.args] [1.719908] ✅️ elabAppArgs (2 args) `@CategoryStruct.comp`
+            [Elab.step] [1.712374] ✅️ expected type: pullback
+                    (Spec.map
+                      (CommRingCat.ofHom
+                        (algebraMap (↥↑P.N) (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U))))
+                    (Spec.map (CommRingCat.ofHom (algebraMap (↥↑P.N) k))) ⟶
+                  Spec (CommRingCat.of (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U)), term
+                pullback.fst
+                  (Spec.map
+                    (CommRingCat.ofHom
+                      (algebraMap P.N.1 (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U))))
+                  (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k)))
+              [Elab.app.args] [1.712039] ✅️ elabAppArgs (2 args) `@pullback.fst`
+                [Elab.step] [1.102248] ✅️ expected type: Spec
+                        (CommRingCat.of (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U)) ⟶
+                      Spec (CommRingCat.of ↥↑P.N), term
+                    (Spec.map
+                      (CommRingCat.ofHom
+                        (algebraMap P.N.1 (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U))))
+                  [Elab.step] [1.102199] ✅️ expected type: Spec
+                          (CommRingCat.of (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U)) ⟶
+                        Spec (CommRingCat.of ↥↑P.N), term
+                      Spec.map
+                        (CommRingCat.ofHom
+                          (algebraMap P.N.1 (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U)))
+                    [Elab.app.args] [1.102081] ✅️ elabAppArgs (1 args) `@Spec.map`
+                      [Elab.step] [1.101530] ✅️ expected type: CommRingCat.of ↥↑P.N ⟶
+                            CommRingCat.of (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U), term
+                          (CommRingCat.ofHom
+                            (algebraMap P.N.1 (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U)))
+                        [Elab.step] [1.101474] ✅️ expected type: CommRingCat.of ↥↑P.N ⟶
+                              CommRingCat.of
+                                (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U), term
+                            CommRingCat.ofHom
+                              (algebraMap P.N.1 (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U))
+                          [Elab.app.args] [1.101198] ✅️ elabAppArgs (1 args) `@CommRingCat.ofHom`
+        [Elab.step] [2.520928] ✅️ expected type: <not-available>, term
+            CategoryStruct.comp✝
+              (pullback.fst
+                (Spec.map
+                  (CommRingCat.ofHom
+                    (algebraMap P.N.1 (Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M P.N U V))))
+                (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k))))
+              (Spec.map (CommRingCat.ofHom (restrictionBaseChangeAlgHom C P U V).toRingHom))
+          [Elab.app.args] [2.519198] ✅️ elabAppArgs (2 args) `@CategoryStruct.comp`
+            [Elab.step] [1.225896] ✅️ expected type: pullback
+                    (Spec.map
+                      (CommRingCat.ofHom
+                        (algebraMap (↥↑P.N)
+                          (Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M P.N U V))))
+                    (Spec.map (CommRingCat.ofHom (algebraMap (↥↑P.N) k))) ⟶
+                  Spec
+                    (CommRingCat.of (Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M P.N U V)), term
+                pullback.fst
+                  (Spec.map
+                    (CommRingCat.ofHom
+                      (algebraMap P.N.1 (Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M P.N U V))))
+                  (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k)))
+              [Elab.app.args] [1.225639] ✅️ elabAppArgs (2 args) `@pullback.fst`
+            [Elab.step] [1.292909] ✅️ expected type: Spec
+                    (CommRingCat.of (Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M P.N U V)) ⟶
+                  Spec (CommRingCat.of (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U)), term
+                Spec.map (CommRingCat.ofHom (restrictionBaseChangeAlgHom C P U V).toRingHom)
+              [Elab.app.args] [1.291574] ✅️ elabAppArgs (1 args) `@Spec.map`
+                [Elab.step] [1.291158] ✅️ expected type: CommRingCat.of
+                        (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U) ⟶
+                      CommRingCat.of (Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M P.N U V), term
+                    (CommRingCat.ofHom (restrictionBaseChangeAlgHom C P U V).toRingHom)
+                  [Elab.step] [1.291124] ✅️ expected type: CommRingCat.of
+                          (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U) ⟶
+                        CommRingCat.of (Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M P.N U V), term
+                      CommRingCat.ofHom (restrictionBaseChangeAlgHom C P U V).toRingHom
+                    [Elab.app.args] [1.290904] ✅️ elabAppArgs (1 args) `@CommRingCat.ofHom`
+                      [Elab.step] [1.267629] ✅️ expected type: Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m
+                              P.relation P.M P.N U →+*
+                            Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M P.N U V, term
+                          (restrictionBaseChangeAlgHom C P U V).toRingHom
+                        [Elab.app.args] [1.263684] ✅️ elabAppArgs (1 namedArgs) `@AlgHom.toRingHom`
+                          [Elab.app.finalize] [1.256745] ✅️ (restrictionBaseChangeAlgHom C P U
+                                  V).toRingHom : Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N
+                                  U →+*
+                                Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M P.N U V
+  [Elab.attribute] [10.511868] ✅️ applying [reassoc]
+[Elab.command] [14.810921] ✅️ set_option maxHeartbeats 12800000 in
+    @[reassoc]
+    theorem restrictionBaseChangeMap_fst {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
+        (P : Pic0FiniteStageGluePackage C F) (U V : Pic0FiniteStageChartIndex C) :
+        restrictionBaseChangeMap C P U V ≫
+            pullback.fst
+              (Spec.map
+                (CommRingCat.ofHom
+                  (algebraMap P.N.1 (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U))))
+              (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k))) =
+          pullback.fst
+              (Spec.map
+                (CommRingCat.ofHom
+                  (algebraMap P.N.1 (Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M P.N U V))))
+              (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k))) ≫
+            Spec.map (CommRingCat.ofHom (restrictionBaseChangeAlgHom C P U V).toRingHom) :=
+      by
+      exact
+        affineBaseChangeMap_fst P.N.1 k (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U)
+          (Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M P.N U V)
+          (restrictionBaseChangeAlgHom C P U V)
+[Elab.command] [14.811311] ✅️ set_option synthInstance.maxHeartbeats 3200000 in
+    -- Explicit legs avoid unfolding the package while rewriting gluing projections.
+    
+    set_option maxHeartbeats 12800000 in
+    @[reassoc]
+    theorem restrictionBaseChangeMap_fst {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
+        (P : Pic0FiniteStageGluePackage C F) (U V : Pic0FiniteStageChartIndex C) :
+        restrictionBaseChangeMap C P U V ≫
+            pullback.fst
+              (Spec.map
+                (CommRingCat.ofHom
+                  (algebraMap P.N.1 (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U))))
+              (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k))) =
+          pullback.fst
+              (Spec.map
+                (CommRingCat.ofHom
+                  (algebraMap P.N.1 (Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M P.N U V))))
+              (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k))) ≫
+            Spec.map (CommRingCat.ofHom (restrictionBaseChangeAlgHom C P U V).toRingHom) :=
+      by
+      exact
+        affineBaseChangeMap_fst P.N.1 k (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U)
+          (Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M P.N U V)
+          (restrictionBaseChangeAlgHom C P U V)
+[Elab.async] [1.145792] ✅️ elaborating proof of AlgebraicGeometry.Pic0FiniteStageGluePackage.restrictionBaseChangeMap_fst
+  [Elab.definition.value] [1.131380] ✅️ AlgebraicGeometry.Pic0FiniteStageGluePackage.restrictionBaseChangeMap_fst
+    [Elab.step] [1.108370] ✅️ exact
+            affineBaseChangeMap_fst P.N.1 k (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U)
+              (Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M P.N U V)
+              (restrictionBaseChangeAlgHom C P U V)
+      [Elab.step] [1.108344] ✅️ exact
+              affineBaseChangeMap_fst P.N.1 k (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U)
+                (Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M P.N U V)
+                (restrictionBaseChangeAlgHom C P U V)
+        [Elab.step] [1.108311] ✅️ exact
+              affineBaseChangeMap_fst P.N.1 k (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U)
+                (Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M P.N U V)
+                (restrictionBaseChangeAlgHom C P U V)
+          [Elab.step] [1.101659] ✅️ expected type: restrictionBaseChangeMap C P U V ≫
+                  pullback.fst
+                    (Spec.map
+                      (CommRingCat.ofHom
+                        (algebraMap (↥↑P.N) (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U))))
+                    (Spec.map (CommRingCat.ofHom (algebraMap (↥↑P.N) k))) =
+                pullback.fst
+                    (Spec.map
+                      (CommRingCat.ofHom
+                        (algebraMap (↥↑P.N)
+                          (Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M P.N U V))))
+                    (Spec.map (CommRingCat.ofHom (algebraMap (↥↑P.N) k))) ≫
+                  Spec.map (CommRingCat.ofHom (restrictionBaseChangeAlgHom C P U V).toRingHom), term
+              affineBaseChangeMap_fst P.N.1 k (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U)
+                (Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M P.N U V)
+                (restrictionBaseChangeAlgHom C P U V)
+            [Elab.app.args] [1.101395] ✅️ elabAppArgs (5 args) `affineBaseChangeMap_fst`
+[Elab.command] [4.305051] ✅️ @[reassoc]
+    theorem restrictionBaseChangeMap_snd {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
+        (P : Pic0FiniteStageGluePackage C F) (U V : Pic0FiniteStageChartIndex C) :
+        restrictionBaseChangeMap C P U V ≫
+            pullback.snd
+              (Spec.map
+                (CommRingCat.ofHom
+                  (algebraMap P.N.1 (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U))))
+              (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k))) =
+          pullback.snd
+            (Spec.map
+              (CommRingCat.ofHom
+                (algebraMap P.N.1 (Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M P.N U V))))
+            (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k))) :=
+      by
+      exact
+        affineBaseChangeMap_snd P.N.1 k (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U)
+          (Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M P.N U V)
+          (restrictionBaseChangeAlgHom C P U V)
+  [Elab.definition.header] [3.042167] ✅️ AlgebraicGeometry.Pic0FiniteStageGluePackage.restrictionBaseChangeMap_snd
+    [Elab.step] [3.028797] ✅️ expected type: Sort ?u.39, term
+        restrictionBaseChangeMap C P U V ≫
+            pullback.snd
+              (Spec.map
+                (CommRingCat.ofHom
+                  (algebraMap P.N.1 (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U))))
+              (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k))) =
+          pullback.snd
+            (Spec.map
+              (CommRingCat.ofHom
+                (algebraMap P.N.1 (Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M P.N U V))))
+            (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k)))
+      [Elab.step] [3.028589] ✅️ expected type: Sort ?u.39, term
+          binrel% Eq✝
+            (restrictionBaseChangeMap C P U V ≫
+              pullback.snd
+                (Spec.map
+                  (CommRingCat.ofHom
+                    (algebraMap P.N.1 (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U))))
+                (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k))))
+            (pullback.snd
+              (Spec.map
+                (CommRingCat.ofHom
+                  (algebraMap P.N.1 (Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M P.N U V))))
+              (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k))))
+        [Elab.step] [1.759112] ✅️ expected type: <not-available>, term
+            CategoryStruct.comp✝ (restrictionBaseChangeMap C P U V)
+              (pullback.snd
+                (Spec.map
+                  (CommRingCat.ofHom
+                    (algebraMap P.N.1 (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U))))
+                (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k))))
+          [Elab.app.args] [1.758877] ✅️ elabAppArgs (2 args) `@CategoryStruct.comp`
+            [Elab.step] [1.751309] ✅️ expected type: pullback
+                    (Spec.map
+                      (CommRingCat.ofHom
+                        (algebraMap (↥↑P.N) (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U))))
+                    (Spec.map (CommRingCat.ofHom (algebraMap (↥↑P.N) k))) ⟶
+                  Spec (CommRingCat.of k), term
+                pullback.snd
+                  (Spec.map
+                    (CommRingCat.ofHom
+                      (algebraMap P.N.1 (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U))))
+                  (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k)))
+              [Elab.app.args] [1.750976] ✅️ elabAppArgs (2 args) `@pullback.snd`
+                [Elab.step] [1.110279] ✅️ expected type: Spec
+                        (CommRingCat.of (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U)) ⟶
+                      Spec (CommRingCat.of ↥↑P.N), term
+                    (Spec.map
+                      (CommRingCat.ofHom
+                        (algebraMap P.N.1 (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U))))
+                  [Elab.step] [1.110227] ✅️ expected type: Spec
+                          (CommRingCat.of (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U)) ⟶
+                        Spec (CommRingCat.of ↥↑P.N), term
+                      Spec.map
+                        (CommRingCat.ofHom
+                          (algebraMap P.N.1 (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U)))
+                    [Elab.app.args] [1.110108] ✅️ elabAppArgs (1 args) `@Spec.map`
+                      [Elab.step] [1.109511] ✅️ expected type: CommRingCat.of ↥↑P.N ⟶
+                            CommRingCat.of (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U), term
+                          (CommRingCat.ofHom
+                            (algebraMap P.N.1 (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U)))
+                        [Elab.step] [1.109446] ✅️ expected type: CommRingCat.of ↥↑P.N ⟶
+                              CommRingCat.of
+                                (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U), term
+                            CommRingCat.ofHom
+                              (algebraMap P.N.1 (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U))
+                          [Elab.app.args] [1.109164] ✅️ elabAppArgs (1 args) `@CommRingCat.ofHom`
+        [Elab.step] [1.266742] ✅️ expected type: <not-available>, term
+            pullback.snd
+              (Spec.map
+                (CommRingCat.ofHom
+                  (algebraMap P.N.1 (Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M P.N U V))))
+              (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k)))
+          [Elab.app.args] [1.265147] ✅️ elabAppArgs (2 args) `@pullback.snd`
+  [Elab.attribute] [1.224811] ✅️ applying [reassoc]
+[Elab.command] [4.305402] ✅️ set_option maxHeartbeats 12800000 in
+    @[reassoc]
+    theorem restrictionBaseChangeMap_snd {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
+        (P : Pic0FiniteStageGluePackage C F) (U V : Pic0FiniteStageChartIndex C) :
+        restrictionBaseChangeMap C P U V ≫
+            pullback.snd
+              (Spec.map
+                (CommRingCat.ofHom
+                  (algebraMap P.N.1 (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U))))
+              (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k))) =
+          pullback.snd
+            (Spec.map
+              (CommRingCat.ofHom
+                (algebraMap P.N.1 (Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M P.N U V))))
+            (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k))) :=
+      by
+      exact
+        affineBaseChangeMap_snd P.N.1 k (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U)
+          (Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M P.N U V)
+          (restrictionBaseChangeAlgHom C P U V)
+[Elab.command] [4.305692] ✅️ set_option synthInstance.maxHeartbeats 3200000 in
+    -- Explicit legs avoid unfolding the package while rewriting gluing projections.
+    
+    set_option maxHeartbeats 12800000 in
+    @[reassoc]
+    theorem restrictionBaseChangeMap_snd {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
+        (P : Pic0FiniteStageGluePackage C F) (U V : Pic0FiniteStageChartIndex C) :
+        restrictionBaseChangeMap C P U V ≫
+            pullback.snd
+              (Spec.map
+                (CommRingCat.ofHom
+                  (algebraMap P.N.1 (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U))))
+              (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k))) =
+          pullback.snd
+            (Spec.map
+              (CommRingCat.ofHom
+                (algebraMap P.N.1 (Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M P.N U V))))
+            (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k))) :=
+      by
+      exact
+        affineBaseChangeMap_snd P.N.1 k (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U)
+          (Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M P.N U V)
+          (restrictionBaseChangeAlgHom C P U V)
+[Elab.async] [1.135302] ✅️ elaborating proof of AlgebraicGeometry.Pic0FiniteStageGluePackage.restrictionBaseChangeMap_snd
+  [Elab.definition.value] [1.122002] ✅️ AlgebraicGeometry.Pic0FiniteStageGluePackage.restrictionBaseChangeMap_snd
+    [Elab.step] [1.099423] ✅️ exact
+            affineBaseChangeMap_snd P.N.1 k (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U)
+              (Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M P.N U V)
+              (restrictionBaseChangeAlgHom C P U V)
+      [Elab.step] [1.099387] ✅️ exact
+              affineBaseChangeMap_snd P.N.1 k (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U)
+                (Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M P.N U V)
+                (restrictionBaseChangeAlgHom C P U V)
+        [Elab.step] [1.099354] ✅️ exact
+              affineBaseChangeMap_snd P.N.1 k (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U)
+                (Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M P.N U V)
+                (restrictionBaseChangeAlgHom C P U V)
+          [Elab.step] [1.093062] ✅️ expected type: restrictionBaseChangeMap C P U V ≫
+                  pullback.snd
+                    (Spec.map
+                      (CommRingCat.ofHom
+                        (algebraMap (↥↑P.N) (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U))))
+                    (Spec.map (CommRingCat.ofHom (algebraMap (↥↑P.N) k))) =
+                pullback.snd
+                  (Spec.map
+                    (CommRingCat.ofHom
+                      (algebraMap (↥↑P.N) (Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M P.N U V))))
+                  (Spec.map (CommRingCat.ofHom (algebraMap (↥↑P.N) k))), term
+              affineBaseChangeMap_snd P.N.1 k (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U)
+                (Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M P.N U V)
+                (restrictionBaseChangeAlgHom C P U V)
+            [Elab.app.args] [1.092729] ✅️ elabAppArgs (5 args) `affineBaseChangeMap_snd`
+[Elab.command] [2.846584] ✅️ theorem gluingOverlapIso_pre_fst {F : Type u} [Field F] [Algebra F k]
+        [Algebra.IsAlgebraic F k] (P : Pic0FiniteStageGluePackage C F) (U V : Pic0FiniteStageChartIndex C) :
+        (Scheme.Pullback.gluing P.glueData.openCover P.gluedMap (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k)))).f U
+              V ≫
+            (pullback.congrHom (glueData_ι_gluedMap C P U) rfl).hom =
+          (gluingOverlapFlatteningIso C P U V).hom ≫
+            (pullback.congrHom (glueData_f_comp_inclusion_comp_gluedMap C P U V) rfl).hom ≫
+              restrictionBaseChangeMap C P U V :=
+      by
+      apply
+        pullback.hom_ext (f :=
+          Spec.map
+            (CommRingCat.ofHom
+              (algebraMap P.N.1 (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U))))
+          (g := Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k)))
+      · simp only [Category.assoc]
+        refine
+          Eq.trans
+            (congrArg
+              (fun q =>
+                (Scheme.Pullback.gluing P.glueData.openCover P.gluedMap
+                        (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k)))).f
+                    U V ≫
+                  q)
+              (pullback_congrHom_hom_fst (glueData_ι_gluedMap C P U) rfl))
+            ?_
+        refine
+          Eq.trans ?_
+            (congrArg
+                (fun q =>
+                  (gluingOverlapFlatteningIso C P U V).hom ≫
+                    (pullback.congrHom (glueData_f_comp_inclusion_comp_gluedMap C P U V) rfl).hom ≫ q)
+                (restrictionBaseChangeMap_fst (C := C) P U V)).symm
+        refine
+          Eq.trans ?_
+            (congrArg (fun q => (gluingOverlapFlatteningIso C P U V).hom ≫ q)
+                (pullback_congrHom_hom_fst_assoc (glueData_f_comp_inclusion_comp_gluedMap C P U V) rfl
+                  (Spec.map (CommRingCat.ofHom (restrictionBaseChangeAlgHom C P U V).toRingHom)))).symm
+        refine
+          Eq.trans ?_
+            (congrArg
+              (fun q =>
+                (gluingOverlapFlatteningIso C P U V).hom ≫
+                  pullback.fst (P.glueData.f U V ≫ P.glueData.ι U ≫ P.gluedMap)
+                      (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k))) ≫
+                    q)
+              (glueData_f C P U V))
+        exact (gluingOverlapFlatteningIso_hom_comp_fst_comp_f C P U V).symm
+      · simp only [Category.assoc]
+        refine
+          Eq.trans
+            (congrArg
+              (fun q =>
+                (Scheme.Pullback.gluing P.glueData.openCover P.gluedMap
+                        (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k)))).f
+                    U V ≫
+                  q)
+              (pullback_congrHom_hom_snd (glueData_ι_gluedMap C P U) rfl))
+            ?_
+        refine
+          Eq.trans ?_
+            (congrArg
+                (fun q =>
+                  (gluingOverlapFlatteningIso C P U V).hom ≫
+                    (pullback.congrHom (glueData_f_comp_inclusion_comp_gluedMap C P U V) rfl).hom ≫ q)
+                (restrictionBaseChangeMap_snd (C := C) P U V)).symm
+        refine
+          Eq.trans ?_
+            (congrArg (fun q => (gluingOverlapFlatteningIso C P U V).hom ≫ q)
+                (pullback_congrHom_hom_snd (glueData_f_comp_inclusion_comp_gluedMap C P U V) rfl)).symm
+        exact (gluingOverlapFlatteningIso_hom_comp_snd C P U V).symm
+  [Elab.definition.header] [2.798690] ✅️ AlgebraicGeometry.Pic0FiniteStageGluePackage.gluingOverlapIso_pre_fst
+    [Elab.step] [2.784376] ✅️ expected type: Sort ?u.39, term
+        (Scheme.Pullback.gluing P.glueData.openCover P.gluedMap (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k)))).f U
+              V ≫
+            (pullback.congrHom (glueData_ι_gluedMap C P U) rfl).hom =
+          (gluingOverlapFlatteningIso C P U V).hom ≫
+            (pullback.congrHom (glueData_f_comp_inclusion_comp_gluedMap C P U V) rfl).hom ≫
+              restrictionBaseChangeMap C P U V
+      [Elab.step] [2.784216] ✅️ expected type: Sort ?u.39, term
+          binrel% Eq✝
+            ((Scheme.Pullback.gluing P.glueData.openCover P.gluedMap
+                    (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k)))).f
+                U V ≫
+              (pullback.congrHom (glueData_ι_gluedMap C P U) rfl).hom)
+            ((gluingOverlapFlatteningIso C P U V).hom ≫
+              (pullback.congrHom (glueData_f_comp_inclusion_comp_gluedMap C P U V) rfl).hom ≫
+                restrictionBaseChangeMap C P U V)
+        [Elab.step] [1.612870] ✅️ expected type: <not-available>, term
+            CategoryStruct.comp✝
+              ((Scheme.Pullback.gluing P.glueData.openCover P.gluedMap
+                    (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k)))).f
+                U V)
+              (pullback.congrHom (glueData_ι_gluedMap C P U) rfl).hom
+          [Elab.app.args] [1.612630] ✅️ elabAppArgs (2 args) `@CategoryStruct.comp`
+[Elab.command] [2.846950] ✅️ set_option backward.isDefEq.respectTransparency false in
+    theorem gluingOverlapIso_pre_fst {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
+        (P : Pic0FiniteStageGluePackage C F) (U V : Pic0FiniteStageChartIndex C) :
+        (Scheme.Pullback.gluing P.glueData.openCover P.gluedMap (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k)))).f U
+              V ≫
+            (pullback.congrHom (glueData_ι_gluedMap C P U) rfl).hom =
+          (gluingOverlapFlatteningIso C P U V).hom ≫
+            (pullback.congrHom (glueData_f_comp_inclusion_comp_gluedMap C P U V) rfl).hom ≫
+              restrictionBaseChangeMap C P U V :=
+      by
+      apply
+        pullback.hom_ext (f :=
+          Spec.map
+            (CommRingCat.ofHom
+              (algebraMap P.N.1 (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U))))
+          (g := Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k)))
+      · simp only [Category.assoc]
+        refine
+          Eq.trans
+            (congrArg
+              (fun q =>
+                (Scheme.Pullback.gluing P.glueData.openCover P.gluedMap
+                        (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k)))).f
+                    U V ≫
+                  q)
+              (pullback_congrHom_hom_fst (glueData_ι_gluedMap C P U) rfl))
+            ?_
+        refine
+          Eq.trans ?_
+            (congrArg
+                (fun q =>
+                  (gluingOverlapFlatteningIso C P U V).hom ≫
+                    (pullback.congrHom (glueData_f_comp_inclusion_comp_gluedMap C P U V) rfl).hom ≫ q)
+                (restrictionBaseChangeMap_fst (C := C) P U V)).symm
+        refine
+          Eq.trans ?_
+            (congrArg (fun q => (gluingOverlapFlatteningIso C P U V).hom ≫ q)
+                (pullback_congrHom_hom_fst_assoc (glueData_f_comp_inclusion_comp_gluedMap C P U V) rfl
+                  (Spec.map (CommRingCat.ofHom (restrictionBaseChangeAlgHom C P U V).toRingHom)))).symm
+        refine
+          Eq.trans ?_
+            (congrArg
+              (fun q =>
+                (gluingOverlapFlatteningIso C P U V).hom ≫
+                  pullback.fst (P.glueData.f U V ≫ P.glueData.ι U ≫ P.gluedMap)
+                      (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k))) ≫
+                    q)
+              (glueData_f C P U V))
+        exact (gluingOverlapFlatteningIso_hom_comp_fst_comp_f C P U V).symm
+      · simp only [Category.assoc]
+        refine
+          Eq.trans
+            (congrArg
+              (fun q =>
+                (Scheme.Pullback.gluing P.glueData.openCover P.gluedMap
+                        (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k)))).f
+                    U V ≫
+                  q)
+              (pullback_congrHom_hom_snd (glueData_ι_gluedMap C P U) rfl))
+            ?_
+        refine
+          Eq.trans ?_
+            (congrArg
+                (fun q =>
+                  (gluingOverlapFlatteningIso C P U V).hom ≫
+                    (pullback.congrHom (glueData_f_comp_inclusion_comp_gluedMap C P U V) rfl).hom ≫ q)
+                (restrictionBaseChangeMap_snd (C := C) P U V)).symm
+        refine
+          Eq.trans ?_
+            (congrArg (fun q => (gluingOverlapFlatteningIso C P U V).hom ≫ q)
+                (pullback_congrHom_hom_snd (glueData_f_comp_inclusion_comp_gluedMap C P U V) rfl)).symm
+        exact (gluingOverlapFlatteningIso_hom_comp_snd C P U V).symm
+[Elab.command] [2.847204] ✅️ set_option maxHeartbeats 12800000 in
+    set_option backward.isDefEq.respectTransparency false in
+    theorem gluingOverlapIso_pre_fst {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
+        (P : Pic0FiniteStageGluePackage C F) (U V : Pic0FiniteStageChartIndex C) :
+        (Scheme.Pullback.gluing P.glueData.openCover P.gluedMap (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k)))).f U
+              V ≫
+            (pullback.congrHom (glueData_ι_gluedMap C P U) rfl).hom =
+          (gluingOverlapFlatteningIso C P U V).hom ≫
+            (pullback.congrHom (glueData_f_comp_inclusion_comp_gluedMap C P U V) rfl).hom ≫
+              restrictionBaseChangeMap C P U V :=
+      by
+      apply
+        pullback.hom_ext (f :=
+          Spec.map
+            (CommRingCat.ofHom
+              (algebraMap P.N.1 (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U))))
+          (g := Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k)))
+      · simp only [Category.assoc]
+        refine
+          Eq.trans
+            (congrArg
+              (fun q =>
+                (Scheme.Pullback.gluing P.glueData.openCover P.gluedMap
+                        (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k)))).f
+                    U V ≫
+                  q)
+              (pullback_congrHom_hom_fst (glueData_ι_gluedMap C P U) rfl))
+            ?_
+        refine
+          Eq.trans ?_
+            (congrArg
+                (fun q =>
+                  (gluingOverlapFlatteningIso C P U V).hom ≫
+                    (pullback.congrHom (glueData_f_comp_inclusion_comp_gluedMap C P U V) rfl).hom ≫ q)
+                (restrictionBaseChangeMap_fst (C := C) P U V)).symm
+        refine
+          Eq.trans ?_
+            (congrArg (fun q => (gluingOverlapFlatteningIso C P U V).hom ≫ q)
+                (pullback_congrHom_hom_fst_assoc (glueData_f_comp_inclusion_comp_gluedMap C P U V) rfl
+                  (Spec.map (CommRingCat.ofHom (restrictionBaseChangeAlgHom C P U V).toRingHom)))).symm
+        refine
+          Eq.trans ?_
+            (congrArg
+              (fun q =>
+                (gluingOverlapFlatteningIso C P U V).hom ≫
+                  pullback.fst (P.glueData.f U V ≫ P.glueData.ι U ≫ P.gluedMap)
+                      (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k))) ≫
+                    q)
+              (glueData_f C P U V))
+        exact (gluingOverlapFlatteningIso_hom_comp_fst_comp_f C P U V).symm
+      · simp only [Category.assoc]
+        refine
+          Eq.trans
+            (congrArg
+              (fun q =>
+                (Scheme.Pullback.gluing P.glueData.openCover P.gluedMap
+                        (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k)))).f
+                    U V ≫
+                  q)
+              (pullback_congrHom_hom_snd (glueData_ι_gluedMap C P U) rfl))
+            ?_
+        refine
+          Eq.trans ?_
+            (congrArg
+                (fun q =>
+                  (gluingOverlapFlatteningIso C P U V).hom ≫
+                    (pullback.congrHom (glueData_f_comp_inclusion_comp_gluedMap C P U V) rfl).hom ≫ q)
+                (restrictionBaseChangeMap_snd (C := C) P U V)).symm
+        refine
+          Eq.trans ?_
+            (congrArg (fun q => (gluingOverlapFlatteningIso C P U V).hom ≫ q)
+                (pullback_congrHom_hom_snd (glueData_f_comp_inclusion_comp_gluedMap C P U V) rfl)).symm
+        exact (gluingOverlapFlatteningIso_hom_comp_snd C P U V).symm
+[Elab.command] [2.847543] ✅️ set_option synthInstance.maxHeartbeats 3200000 in
+    -- The two projections reduce to the specialized flattening identities.
+    
+    set_option maxHeartbeats 12800000 in
+    set_option backward.isDefEq.respectTransparency false in
+    theorem gluingOverlapIso_pre_fst {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
+        (P : Pic0FiniteStageGluePackage C F) (U V : Pic0FiniteStageChartIndex C) :
+        (Scheme.Pullback.gluing P.glueData.openCover P.gluedMap (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k)))).f U
+              V ≫
+            (pullback.congrHom (glueData_ι_gluedMap C P U) rfl).hom =
+          (gluingOverlapFlatteningIso C P U V).hom ≫
+            (pullback.congrHom (glueData_f_comp_inclusion_comp_gluedMap C P U V) rfl).hom ≫
+              restrictionBaseChangeMap C P U V :=
+      by
+      apply
+        pullback.hom_ext (f :=
+          Spec.map
+            (CommRingCat.ofHom
+              (algebraMap P.N.1 (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U))))
+          (g := Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k)))
+      · simp only [Category.assoc]
+        refine
+          Eq.trans
+            (congrArg
+              (fun q =>
+                (Scheme.Pullback.gluing P.glueData.openCover P.gluedMap
+                        (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k)))).f
+                    U V ≫
+                  q)
+              (pullback_congrHom_hom_fst (glueData_ι_gluedMap C P U) rfl))
+            ?_
+        refine
+          Eq.trans ?_
+            (congrArg
+                (fun q =>
+                  (gluingOverlapFlatteningIso C P U V).hom ≫
+                    (pullback.congrHom (glueData_f_comp_inclusion_comp_gluedMap C P U V) rfl).hom ≫ q)
+                (restrictionBaseChangeMap_fst (C := C) P U V)).symm
+        refine
+          Eq.trans ?_
+            (congrArg (fun q => (gluingOverlapFlatteningIso C P U V).hom ≫ q)
+                (pullback_congrHom_hom_fst_assoc (glueData_f_comp_inclusion_comp_gluedMap C P U V) rfl
+                  (Spec.map (CommRingCat.ofHom (restrictionBaseChangeAlgHom C P U V).toRingHom)))).symm
+        refine
+          Eq.trans ?_
+            (congrArg
+              (fun q =>
+                (gluingOverlapFlatteningIso C P U V).hom ≫
+                  pullback.fst (P.glueData.f U V ≫ P.glueData.ι U ≫ P.gluedMap)
+                      (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k))) ≫
+                    q)
+              (glueData_f C P U V))
+        exact (gluingOverlapFlatteningIso_hom_comp_fst_comp_f C P U V).symm
+      · simp only [Category.assoc]
+        refine
+          Eq.trans
+            (congrArg
+              (fun q =>
+                (Scheme.Pullback.gluing P.glueData.openCover P.gluedMap
+                        (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k)))).f
+                    U V ≫
+                  q)
+              (pullback_congrHom_hom_snd (glueData_ι_gluedMap C P U) rfl))
+            ?_
+        refine
+          Eq.trans ?_
+            (congrArg
+                (fun q =>
+                  (gluingOverlapFlatteningIso C P U V).hom ≫
+                    (pullback.congrHom (glueData_f_comp_inclusion_comp_gluedMap C P U V) rfl).hom ≫ q)
+                (restrictionBaseChangeMap_snd (C := C) P U V)).symm
+        refine
+          Eq.trans ?_
+            (congrArg (fun q => (gluingOverlapFlatteningIso C P U V).hom ≫ q)
+                (pullback_congrHom_hom_snd (glueData_f_comp_inclusion_comp_gluedMap C P U V) rfl)).symm
+        exact (gluingOverlapFlatteningIso_hom_comp_snd C P U V).symm
+[Elab.async] [30.546859] ✅️ elaborating proof of AlgebraicGeometry.Pic0FiniteStageGluePackage.gluingOverlapIso_pre_fst
+  [Elab.definition.value] [30.434756] ✅️ AlgebraicGeometry.Pic0FiniteStageGluePackage.gluingOverlapIso_pre_fst
+    [Elab.step] [30.344513] ✅️ 
+          apply
+            pullback.hom_ext (f :=
+              Spec.map
+                (CommRingCat.ofHom
+                  (algebraMap P.N.1 (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U))))
+              (g := Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k)))
+          · simp only [Category.assoc]
+            refine
+              Eq.trans
+                (congrArg
+                  (fun q =>
+                    (Scheme.Pullback.gluing P.glueData.openCover P.gluedMap
+                            (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k)))).f
+                        U V ≫
+                      q)
+                  (pullback_congrHom_hom_fst (glueData_ι_gluedMap C P U) rfl))
+                ?_
+            refine
+              Eq.trans ?_
+                (congrArg
+                    (fun q =>
+                      (gluingOverlapFlatteningIso C P U V).hom ≫
+                        (pullback.congrHom (glueData_f_comp_inclusion_comp_gluedMap C P U V) rfl).hom ≫ q)
+                    (restrictionBaseChangeMap_fst (C := C) P U V)).symm
+            refine
+              Eq.trans ?_
+                (congrArg (fun q => (gluingOverlapFlatteningIso C P U V).hom ≫ q)
+                    (pullback_congrHom_hom_fst_assoc (glueData_f_comp_inclusion_comp_gluedMap C P U V) rfl
+                      (Spec.map (CommRingCat.ofHom (restrictionBaseChangeAlgHom C P U V).toRingHom)))).symm
+            refine
+              Eq.trans ?_
+                (congrArg
+                  (fun q =>
+                    (gluingOverlapFlatteningIso C P U V).hom ≫
+                      pullback.fst (P.glueData.f U V ≫ P.glueData.ι U ≫ P.gluedMap)
+                          (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k))) ≫
+                        q)
+                  (glueData_f C P U V))
+            exact (gluingOverlapFlatteningIso_hom_comp_fst_comp_f C P U V).symm
+          · simp only [Category.assoc]
+            refine
+              Eq.trans
+                (congrArg
+                  (fun q =>
+                    (Scheme.Pullback.gluing P.glueData.openCover P.gluedMap
+                            (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k)))).f
+                        U V ≫
+                      q)
+                  (pullback_congrHom_hom_snd (glueData_ι_gluedMap C P U) rfl))
+                ?_
+            refine
+              Eq.trans ?_
+                (congrArg
+                    (fun q =>
+                      (gluingOverlapFlatteningIso C P U V).hom ≫
+                        (pullback.congrHom (glueData_f_comp_inclusion_comp_gluedMap C P U V) rfl).hom ≫ q)
+                    (restrictionBaseChangeMap_snd (C := C) P U V)).symm
+            refine
+              Eq.trans ?_
+                (congrArg (fun q => (gluingOverlapFlatteningIso C P U V).hom ≫ q)
+                    (pullback_congrHom_hom_snd (glueData_f_comp_inclusion_comp_gluedMap C P U V) rfl)).symm
+            exact (gluingOverlapFlatteningIso_hom_comp_snd C P U V).symm
+      [Elab.step] [30.344482] ✅️ 
+            apply
+              pullback.hom_ext (f :=
+                Spec.map
+                  (CommRingCat.ofHom
+                    (algebraMap P.N.1 (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U))))
+                (g := Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k)))
+            · simp only [Category.assoc]
+              refine
+                Eq.trans
+                  (congrArg
+                    (fun q =>
+                      (Scheme.Pullback.gluing P.glueData.openCover P.gluedMap
+                              (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k)))).f
+                          U V ≫
+                        q)
+                    (pullback_congrHom_hom_fst (glueData_ι_gluedMap C P U) rfl))
+                  ?_
+              refine
+                Eq.trans ?_
+                  (congrArg
+                      (fun q =>
+                        (gluingOverlapFlatteningIso C P U V).hom ≫
+                          (pullback.congrHom (glueData_f_comp_inclusion_comp_gluedMap C P U V) rfl).hom ≫ q)
+                      (restrictionBaseChangeMap_fst (C := C) P U V)).symm
+              refine
+                Eq.trans ?_
+                  (congrArg (fun q => (gluingOverlapFlatteningIso C P U V).hom ≫ q)
+                      (pullback_congrHom_hom_fst_assoc (glueData_f_comp_inclusion_comp_gluedMap C P U V) rfl
+                        (Spec.map (CommRingCat.ofHom (restrictionBaseChangeAlgHom C P U V).toRingHom)))).symm
+              refine
+                Eq.trans ?_
+                  (congrArg
+                    (fun q =>
+                      (gluingOverlapFlatteningIso C P U V).hom ≫
+                        pullback.fst (P.glueData.f U V ≫ P.glueData.ι U ≫ P.gluedMap)
+                            (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k))) ≫
+                          q)
+                    (glueData_f C P U V))
+              exact (gluingOverlapFlatteningIso_hom_comp_fst_comp_f C P U V).symm
+            · simp only [Category.assoc]
+              refine
+                Eq.trans
+                  (congrArg
+                    (fun q =>
+                      (Scheme.Pullback.gluing P.glueData.openCover P.gluedMap
+                              (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k)))).f
+                          U V ≫
+                        q)
+                    (pullback_congrHom_hom_snd (glueData_ι_gluedMap C P U) rfl))
+                  ?_
+              refine
+                Eq.trans ?_
+                  (congrArg
+                      (fun q =>
+                        (gluingOverlapFlatteningIso C P U V).hom ≫
+                          (pullback.congrHom (glueData_f_comp_inclusion_comp_gluedMap C P U V) rfl).hom ≫ q)
+                      (restrictionBaseChangeMap_snd (C := C) P U V)).symm
+              refine
+                Eq.trans ?_
+                  (congrArg (fun q => (gluingOverlapFlatteningIso C P U V).hom ≫ q)
+                      (pullback_congrHom_hom_snd (glueData_f_comp_inclusion_comp_gluedMap C P U V) rfl)).symm
+              exact (gluingOverlapFlatteningIso_hom_comp_snd C P U V).symm
+        [Elab.step] [2.884981] ✅️ apply
+              pullback.hom_ext (f :=
+                Spec.map
+                  (CommRingCat.ofHom
+                    (algebraMap P.N.1 (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U))))
+                (g := Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k)))
+          [Elab.step] [2.797934] ✅️ expected type: <not-available>, term
+              pullback.hom_ext (f :=
+                Spec.map
+                  (CommRingCat.ofHom
+                    (algebraMap P.N.1 (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U))))
+                (g := Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k)))
+            [Elab.app.args] [2.797636] ✅️ elabAppArgs (2 namedArgs) `@pullback.hom_ext`
+              [Elab.step] [2.115587] ✅️ expected type: Spec
+                      (CommRingCat.of (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U)) ⟶
+                    Spec (CommRingCat.of ↥↑P.N), term
+                  Spec.map
+                    (CommRingCat.ofHom
+                      (algebraMap P.N.1 (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U)))
+                [Elab.app.args] [2.115409] ✅️ elabAppArgs (1 args) `@Spec.map`
+                  [Elab.step] [2.114718] ✅️ expected type: CommRingCat.of ↥↑P.N ⟶
+                        CommRingCat.of (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U), term
+                      (CommRingCat.ofHom
+                        (algebraMap P.N.1 (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U)))
+                    [Elab.step] [2.114652] ✅️ expected type: CommRingCat.of ↥↑P.N ⟶
+                          CommRingCat.of (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U), term
+                        CommRingCat.ofHom
+                          (algebraMap P.N.1 (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U))
+                      [Elab.app.args] [2.114380] ✅️ elabAppArgs (1 args) `@CommRingCat.ofHom`
+                        [Elab.step] [1.885959] ✅️ expected type: ↥↑P.N →+*
+                              Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U, term
+                            (algebraMap P.N.1 (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U))
+                          [Elab.step] [1.885894] ✅️ expected type: ↥↑P.N →+*
+                                Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U, term
+                              algebraMap P.N.1 (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U)
+                            [Elab.app.args] [1.885687] ✅️ elabAppArgs (2 args) `algebraMap`
+                              [Elab.app.finalize] [1.675475] ✅️ algebraMap (↥↑P.N)
+                                    (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N
+                                      U) : ↥↑P.N →+*
+                                    Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U
+                                [Meta.synthInstance] [1.454578] ✅️ Algebra (↥↑P.N)
+                                      (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U)
+                                  [Meta.synthInstance.apply] [1.441799] ✅️ apply @pic0FiniteStageFinalModelRingAlgebra to Algebra
+                                        (↥↑P.N) (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U)
+                                    [Meta.synthInstance.tryResolve] [1.440767] ✅️ Algebra (↥↑P.N)
+                                          (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N
+                                            U) ≟ Algebra (↥↑P.N)
+                                          (Pic0FiniteStageFinalModelRing C P.L P.n P.m P.relation P.M P.N (Sum.inl U))
+                                      [Meta.isDefEq] [1.433422] ✅️ Algebra (↥↑P.N)
+                                            (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N
+                                              U) =?= Algebra (↥↑?m.311)
+                                            (Pic0FiniteStageFinalModelRing ?m.298 ?m.306 ?m.307 ?m.308 ?m.309 ?m.310
+                                              ?m.311 ?m.312)
+                                        [Meta.synthInstance] [1.215681] ✅️ Semiring
+                                              (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U)
+        [Elab.step] [23.346915] ✅️ ·
+              simp only [Category.assoc]
+              refine
+                Eq.trans
+                  (congrArg
+                    (fun q =>
+                      (Scheme.Pullback.gluing P.glueData.openCover P.gluedMap
+                              (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k)))).f
+                          U V ≫
+                        q)
+                    (pullback_congrHom_hom_fst (glueData_ι_gluedMap C P U) rfl))
+                  ?_
+              refine
+                Eq.trans ?_
+                  (congrArg
+                      (fun q =>
+                        (gluingOverlapFlatteningIso C P U V).hom ≫
+                          (pullback.congrHom (glueData_f_comp_inclusion_comp_gluedMap C P U V) rfl).hom ≫ q)
+                      (restrictionBaseChangeMap_fst (C := C) P U V)).symm
+              refine
+                Eq.trans ?_
+                  (congrArg (fun q => (gluingOverlapFlatteningIso C P U V).hom ≫ q)
+                      (pullback_congrHom_hom_fst_assoc (glueData_f_comp_inclusion_comp_gluedMap C P U V) rfl
+                        (Spec.map (CommRingCat.ofHom (restrictionBaseChangeAlgHom C P U V).toRingHom)))).symm
+              refine
+                Eq.trans ?_
+                  (congrArg
+                    (fun q =>
+                      (gluingOverlapFlatteningIso C P U V).hom ≫
+                        pullback.fst (P.glueData.f U V ≫ P.glueData.ι U ≫ P.gluedMap)
+                            (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k))) ≫
+                          q)
+                    (glueData_f C P U V))
+              exact (gluingOverlapFlatteningIso_hom_comp_fst_comp_f C P U V).symm
+          [Elab.step] [23.326847] ✅️ 
+                simp only [Category.assoc]
+                refine
+                  Eq.trans
+                    (congrArg
+                      (fun q =>
+                        (Scheme.Pullback.gluing P.glueData.openCover P.gluedMap
+                                (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k)))).f
+                            U V ≫
+                          q)
+                      (pullback_congrHom_hom_fst (glueData_ι_gluedMap C P U) rfl))
+                    ?_
+                refine
+                  Eq.trans ?_
+                    (congrArg
+                        (fun q =>
+                          (gluingOverlapFlatteningIso C P U V).hom ≫
+                            (pullback.congrHom (glueData_f_comp_inclusion_comp_gluedMap C P U V) rfl).hom ≫ q)
+                        (restrictionBaseChangeMap_fst (C := C) P U V)).symm
+                refine
+                  Eq.trans ?_
+                    (congrArg (fun q => (gluingOverlapFlatteningIso C P U V).hom ≫ q)
+                        (pullback_congrHom_hom_fst_assoc (glueData_f_comp_inclusion_comp_gluedMap C P U V) rfl
+                          (Spec.map (CommRingCat.ofHom (restrictionBaseChangeAlgHom C P U V).toRingHom)))).symm
+                refine
+                  Eq.trans ?_
+                    (congrArg
+                      (fun q =>
+                        (gluingOverlapFlatteningIso C P U V).hom ≫
+                          pullback.fst (P.glueData.f U V ≫ P.glueData.ι U ≫ P.gluedMap)
+                              (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k))) ≫
+                            q)
+                      (glueData_f C P U V))
+                exact (gluingOverlapFlatteningIso_hom_comp_fst_comp_f C P U V).symm
+            [Elab.step] [23.326824] ✅️ 
+                  simp only [Category.assoc]
+                  refine
+                    Eq.trans
+                      (congrArg
+                        (fun q =>
+                          (Scheme.Pullback.gluing P.glueData.openCover P.gluedMap
+                                  (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k)))).f
+                              U V ≫
+                            q)
+                        (pullback_congrHom_hom_fst (glueData_ι_gluedMap C P U) rfl))
+                      ?_
+                  refine
+                    Eq.trans ?_
+                      (congrArg
+                          (fun q =>
+                            (gluingOverlapFlatteningIso C P U V).hom ≫
+                              (pullback.congrHom (glueData_f_comp_inclusion_comp_gluedMap C P U V) rfl).hom ≫ q)
+                          (restrictionBaseChangeMap_fst (C := C) P U V)).symm
+                  refine
+                    Eq.trans ?_
+                      (congrArg (fun q => (gluingOverlapFlatteningIso C P U V).hom ≫ q)
+                          (pullback_congrHom_hom_fst_assoc (glueData_f_comp_inclusion_comp_gluedMap C P U V) rfl
+                            (Spec.map (CommRingCat.ofHom (restrictionBaseChangeAlgHom C P U V).toRingHom)))).symm
+                  refine
+                    Eq.trans ?_
+                      (congrArg
+                        (fun q =>
+                          (gluingOverlapFlatteningIso C P U V).hom ≫
+                            pullback.fst (P.glueData.f U V ≫ P.glueData.ι U ≫ P.gluedMap)
+                                (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k))) ≫
+                              q)
+                        (glueData_f C P U V))
+                  exact (gluingOverlapFlatteningIso_hom_comp_fst_comp_f C P U V).symm
+              [Elab.step] [13.606634] ✅️ simp only [Category.assoc]
+              [Elab.step] [1.685826] ✅️ refine
+                    Eq.trans
+                      (congrArg
+                        (fun q =>
+                          (Scheme.Pullback.gluing P.glueData.openCover P.gluedMap
+                                  (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k)))).f
+                              U V ≫
+                            q)
+                        (pullback_congrHom_hom_fst (glueData_ι_gluedMap C P U) rfl))
+                      ?_
+                [Elab.step] [1.684996] ✅️ expected type: (Scheme.Pullback.gluing (glueData C P).openCover (gluedMap C P)
+                              (Spec.map (CommRingCat.ofHom (algebraMap (↥↑P.N) k)))).f
+                          U V ≫
+                        (pullback.congrHom ⋯ ⋯).hom ≫
+                          pullback.fst
+                            (Spec.map
+                              (CommRingCat.ofHom
+                                (algebraMap (↥↑P.N)
+                                  (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U))))
+                            (Spec.map (CommRingCat.ofHom (algebraMap (↥↑P.N) k))) =
+                      (gluingOverlapFlatteningIso C P U V).hom ≫
+                        (pullback.congrHom ⋯ ⋯).hom ≫
+                          restrictionBaseChangeMap C P U V ≫
+                            pullback.fst
+                              (Spec.map
+                                (CommRingCat.ofHom
+                                  (algebraMap (↥↑P.N)
+                                    (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U))))
+                              (Spec.map (CommRingCat.ofHom (algebraMap (↥↑P.N) k))), term
+                    Eq.trans
+                      (congrArg
+                        (fun q =>
+                          (Scheme.Pullback.gluing P.glueData.openCover P.gluedMap
+                                  (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k)))).f
+                              U V ≫
+                            q)
+                        (pullback_congrHom_hom_fst (glueData_ι_gluedMap C P U) rfl))
+                      ?_
+                  [Elab.app.args] [1.684580] ✅️ elabAppArgs (2 args) `@Eq.trans`
+                    [Elab.step] [1.682441] ✅️ expected type: (Scheme.Pullback.gluing (glueData C P).openCover
+                                  (gluedMap C P) (Spec.map (CommRingCat.ofHom (algebraMap (↥↑P.N) k)))).f
+                              U V ≫
+                            (pullback.congrHom ⋯ ⋯).hom ≫
+                              pullback.fst
+                                (Spec.map
+                                  (CommRingCat.ofHom
+                                    (algebraMap (↥↑P.N)
+                                      (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U))))
+                                (Spec.map (CommRingCat.ofHom (algebraMap (↥↑P.N) k))) =
+                          (Scheme.Pullback.gluing (glueData C P).openCover (gluedMap C P)
+                                  (Spec.map (CommRingCat.ofHom (algebraMap (↥↑P.N) k)))).f
+                              U V ≫
+                            pullback.fst ((glueData C P).ι U ≫ gluedMap C P)
+                              (Spec.map (CommRingCat.ofHom (algebraMap (↥↑P.N) k))), term
+                        (congrArg
+                          (fun q =>
+                            (Scheme.Pullback.gluing P.glueData.openCover P.gluedMap
+                                    (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k)))).f
+                                U V ≫
+                              q)
+                          (pullback_congrHom_hom_fst (glueData_ι_gluedMap C P U) rfl))
+                      [Elab.step] [1.682172] ✅️ expected type: (Scheme.Pullback.gluing (glueData C P).openCover
+                                    (gluedMap C P) (Spec.map (CommRingCat.ofHom (algebraMap (↥↑P.N) k)))).f
+                                U V ≫
+                              (pullback.congrHom ⋯ ⋯).hom ≫
+                                pullback.fst
+                                  (Spec.map
+                                    (CommRingCat.ofHom
+                                      (algebraMap (↥↑P.N)
+                                        (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U))))
+                                  (Spec.map (CommRingCat.ofHom (algebraMap (↥↑P.N) k))) =
+                            (Scheme.Pullback.gluing (glueData C P).openCover (gluedMap C P)
+                                    (Spec.map (CommRingCat.ofHom (algebraMap (↥↑P.N) k)))).f
+                                U V ≫
+                              pullback.fst ((glueData C P).ι U ≫ gluedMap C P)
+                                (Spec.map (CommRingCat.ofHom (algebraMap (↥↑P.N) k))), term
+                          congrArg
+                            (fun q =>
+                              (Scheme.Pullback.gluing P.glueData.openCover P.gluedMap
+                                      (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k)))).f
+                                  U V ≫
+                                q)
+                            (pullback_congrHom_hom_fst (glueData_ι_gluedMap C P U) rfl)
+                        [Elab.app.args] [1.681747] ✅️ elabAppArgs (2 args) `@congrArg`
+              [Elab.step] [1.097370] ✅️ refine
+                    Eq.trans ?_
+                      (congrArg
+                          (fun q =>
+                            (gluingOverlapFlatteningIso C P U V).hom ≫
+                              (pullback.congrHom (glueData_f_comp_inclusion_comp_gluedMap C P U V) rfl).hom ≫ q)
+                          (restrictionBaseChangeMap_fst (C := C) P U V)).symm
+                [Elab.step] [1.095859] ✅️ expected type: (Scheme.Pullback.gluing (glueData C P).openCover (gluedMap C P)
+                              (Spec.map (CommRingCat.ofHom (algebraMap (↥↑P.N) k)))).f
+                          U V ≫
+                        pullback.fst ((glueData C P).ι U ≫ gluedMap C P)
+                          (Spec.map (CommRingCat.ofHom (algebraMap (↥↑P.N) k))) =
+                      (gluingOverlapFlatteningIso C P U V).hom ≫
+                        (pullback.congrHom ⋯ ⋯).hom ≫
+                          restrictionBaseChangeMap C P U V ≫
+                            pullback.fst
+                              (Spec.map
+                                (CommRingCat.ofHom
+                                  (algebraMap (↥↑P.N)
+                                    (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U))))
+                              (Spec.map (CommRingCat.ofHom (algebraMap (↥↑P.N) k))), term
+                    Eq.trans ?_
+                      (congrArg
+                          (fun q =>
+                            (gluingOverlapFlatteningIso C P U V).hom ≫
+                              (pullback.congrHom (glueData_f_comp_inclusion_comp_gluedMap C P U V) rfl).hom ≫ q)
+                          (restrictionBaseChangeMap_fst (C := C) P U V)).symm
+                  [Elab.app.args] [1.095030] ✅️ elabAppArgs (2 args) `@Eq.trans`
+              [Elab.step] [5.660301] ✅️ refine
+                    Eq.trans ?_
+                      (congrArg (fun q => (gluingOverlapFlatteningIso C P U V).hom ≫ q)
+                          (pullback_congrHom_hom_fst_assoc (glueData_f_comp_inclusion_comp_gluedMap C P U V) rfl
+                            (Spec.map (CommRingCat.ofHom (restrictionBaseChangeAlgHom C P U V).toRingHom)))).symm
+                [Elab.step] [5.657583] ✅️ expected type: (Scheme.Pullback.gluing (glueData C P).openCover (gluedMap C P)
+                              (Spec.map (CommRingCat.ofHom (algebraMap (↥↑P.N) k)))).f
+                          U V ≫
+                        pullback.fst ((glueData C P).ι U ≫ gluedMap C P)
+                          (Spec.map (CommRingCat.ofHom (algebraMap (↥↑P.N) k))) =
+                      (gluingOverlapFlatteningIso C P U V).hom ≫
+                        (pullback.congrHom ⋯ ⋯).hom ≫
+                          pullback.fst
+                              (Spec.map
+                                (CommRingCat.ofHom
+                                  (algebraMap (↥↑P.N)
+                                    (Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M P.N U V))))
+                              (Spec.map (CommRingCat.ofHom (algebraMap (↥↑P.N) k))) ≫
+                            Spec.map (CommRingCat.ofHom (restrictionBaseChangeAlgHom C P U V).toRingHom), term
+                    Eq.trans ?_
+                      (congrArg (fun q => (gluingOverlapFlatteningIso C P U V).hom ≫ q)
+                          (pullback_congrHom_hom_fst_assoc (glueData_f_comp_inclusion_comp_gluedMap C P U V) rfl
+                            (Spec.map (CommRingCat.ofHom (restrictionBaseChangeAlgHom C P U V).toRingHom)))).symm
+                  [Elab.app.args] [5.657164] ✅️ elabAppArgs (2 args) `@Eq.trans`
+                    [Elab.step] [5.544719] ✅️ expected type: (gluingOverlapFlatteningIso C P U V).hom ≫
+                            pullback.fst ((glueData C P).f U V ≫ (glueData C P).ι U ≫ gluedMap C P)
+                                (Spec.map (CommRingCat.ofHom (algebraMap (↥↑P.N) k))) ≫
+                              Spec.map (CommRingCat.ofHom (restrictionBaseChangeAlgHom C P U V).toRingHom) =
+                          (gluingOverlapFlatteningIso C P U V).hom ≫
+                            (pullback.congrHom ⋯ ⋯).hom ≫
+                              pullback.fst
+                                  (Spec.map
+                                    (CommRingCat.ofHom
+                                      (algebraMap (↥↑P.N)
+                                        (Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M P.N U V))))
+                                  (Spec.map (CommRingCat.ofHom (algebraMap (↥↑P.N) k))) ≫
+                                Spec.map (CommRingCat.ofHom (restrictionBaseChangeAlgHom C P U V).toRingHom), term
+                        (congrArg (fun q => (gluingOverlapFlatteningIso C P U V).hom ≫ q)
+                            (pullback_congrHom_hom_fst_assoc (glueData_f_comp_inclusion_comp_gluedMap C P U V) rfl
+                              (Spec.map (CommRingCat.ofHom (restrictionBaseChangeAlgHom C P U V).toRingHom)))).symm
+                      [Elab.step] [5.434318] ✅️ expected type: <not-available>, term
+                          (congrArg (fun q => (gluingOverlapFlatteningIso C P U V).hom ≫ q)
+                            (pullback_congrHom_hom_fst_assoc (glueData_f_comp_inclusion_comp_gluedMap C P U V) rfl
+                              (Spec.map (CommRingCat.ofHom (restrictionBaseChangeAlgHom C P U V).toRingHom))))
+                        [Elab.step] [5.434139] ✅️ expected type: <not-available>, term
+                            congrArg (fun q => (gluingOverlapFlatteningIso C P U V).hom ≫ q)
+                              (pullback_congrHom_hom_fst_assoc (glueData_f_comp_inclusion_comp_gluedMap C P U V) rfl
+                                (Spec.map (CommRingCat.ofHom (restrictionBaseChangeAlgHom C P U V).toRingHom)))
+                          [Elab.app.args] [5.433799] ✅️ elabAppArgs (2 args) `@congrArg`
+                            [Elab.step] [5.423954] ✅️ expected type: (pullback.congrHom ⋯ ⋯).hom ≫
+                                    pullback.fst
+                                        (Spec.map
+                                          (CommRingCat.ofHom
+                                            (algebraMap (↥↑P.N)
+                                              (Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M P.N U
+                                                V))))
+                                        (Spec.map (CommRingCat.ofHom (algebraMap (↥↑P.N) k))) ≫
+                                      Spec.map (CommRingCat.ofHom (restrictionBaseChangeAlgHom C P U V).toRingHom) =
+                                  pullback.fst ((glueData C P).f U V ≫ (glueData C P).ι U ≫ gluedMap C P)
+                                      (Spec.map (CommRingCat.ofHom (algebraMap (↥↑P.N) k))) ≫
+                                    Spec.map (CommRingCat.ofHom (restrictionBaseChangeAlgHom C P U V).toRingHom), term
+                                (pullback_congrHom_hom_fst_assoc (glueData_f_comp_inclusion_comp_gluedMap C P U V) rfl
+                                  (Spec.map (CommRingCat.ofHom (restrictionBaseChangeAlgHom C P U V).toRingHom)))
+                              [Elab.step] [5.423918] ✅️ expected type: (pullback.congrHom ⋯ ⋯).hom ≫
+                                      pullback.fst
+                                          (Spec.map
+                                            (CommRingCat.ofHom
+                                              (algebraMap (↥↑P.N)
+                                                (Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M P.N U
+                                                  V))))
+                                          (Spec.map (CommRingCat.ofHom (algebraMap (↥↑P.N) k))) ≫
+                                        Spec.map (CommRingCat.ofHom (restrictionBaseChangeAlgHom C P U V).toRingHom) =
+                                    pullback.fst ((glueData C P).f U V ≫ (glueData C P).ι U ≫ gluedMap C P)
+                                        (Spec.map (CommRingCat.ofHom (algebraMap (↥↑P.N) k))) ≫
+                                      Spec.map (CommRingCat.ofHom (restrictionBaseChangeAlgHom C P U V).toRingHom), term
+                                  pullback_congrHom_hom_fst_assoc (glueData_f_comp_inclusion_comp_gluedMap C P U V) rfl
+                                    (Spec.map (CommRingCat.ofHom (restrictionBaseChangeAlgHom C P U V).toRingHom))
+                                [Elab.app.args] [5.423607] ✅️ elabAppArgs (3 args)
+                                      @pullback_congrHom_hom_fst_assoc
+                                  [Elab.step] [4.723599] ✅️ expected type: (glueData C P).V (U, V) ⟶
+                                        Spec
+                                          (CommRingCat.of
+                                            (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N
+                                              U)), term
+                                      (Spec.map (CommRingCat.ofHom (restrictionBaseChangeAlgHom C P U V).toRingHom))
+                                    [Elab.step] [4.723562] ✅️ expected type: (glueData C P).V (U, V) ⟶
+                                          Spec
+                                            (CommRingCat.of
+                                              (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N
+                                                U)), term
+                                        Spec.map (CommRingCat.ofHom (restrictionBaseChangeAlgHom C P U V).toRingHom)
+                                      [Elab.app.args] [4.723170] ✅️ elabAppArgs (1 args) `@Spec.map`
+                                        [Elab.step] [4.719672] ✅️ expected type: CommRingCat.of
+                                                (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N
+                                                  U) ⟶
+                                              CommRingCat.of
+                                                ((fun U V =>
+                                                    Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M
+                                                      P.N U V)
+                                                  (U, V).1 (U, V).2), term
+                                            (CommRingCat.ofHom (restrictionBaseChangeAlgHom C P U V).toRingHom)
+                                          [Elab.step] [4.719639] ✅️ expected type: CommRingCat.of
+                                                  (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N
+                                                    U) ⟶
+                                                CommRingCat.of
+                                                  ((fun U V =>
+                                                      Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M
+                                                        P.N U V)
+                                                    (U, V).1 (U, V).2), term
+                                              CommRingCat.ofHom (restrictionBaseChangeAlgHom C P U V).toRingHom
+                                            [Elab.app.args] [4.719413] ✅️ elabAppArgs (1 args) `@CommRingCat.ofHom`
+                                              [Elab.step] [3.746062] ✅️ expected type: Pic0FiniteStageChartBaseChangeRing
+                                                      C P.L P.n P.m P.relation P.M P.N U →+*
+                                                    (fun U V =>
+                                                        Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation
+                                                          P.M P.N U V)
+                                                      (U, V).1 (U, V).2, term
+                                                  (restrictionBaseChangeAlgHom C P U V).toRingHom
+                                                [Elab.app.args] [3.741903] ✅️ elabAppArgs (1 namedArgs) `@AlgHom.toRingHom`
+                                                  [Elab.app.finalize] [3.733344] ✅️ (restrictionBaseChangeAlgHom C P U
+                                                          V).toRingHom : Pic0FiniteStageChartBaseChangeRing C P.L P.n
+                                                          P.m P.relation P.M P.N U →+*
+                                                        Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation
+                                                          P.M P.N U V
+                                                    [Meta.synthInstance] [1.480541] ✅️ Semiring
+                                                          (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation
+                                                            P.M P.N U)
+                                                      [Meta.synthInstance.apply] [1.094189] ✅️ apply @Algebra.TensorProduct.instSemiring to Semiring
+                                                            (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation
+                                                              P.M P.N U)
+                                                        [Meta.synthInstance.tryResolve] [1.093210] ✅️ Semiring
+                                                              (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m
+                                                                P.relation P.M P.N
+                                                                U) ≟ Semiring
+                                                              (↥↑P.N ⊗[↥↑P.M]
+                                                                Pic0FiniteStageChartModelRing C P.L P.n P.m P.relation
+                                                                  P.M U)
+                                                    [Meta.synthInstance] [1.220429] ✅️ Semiring
+                                                          (Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation
+                                                            P.M P.N U V)
+              [Elab.step] [1.099985] ✅️ refine
+                    Eq.trans ?_
+                      (congrArg
+                        (fun q =>
+                          (gluingOverlapFlatteningIso C P U V).hom ≫
+                            pullback.fst (P.glueData.f U V ≫ P.glueData.ι U ≫ P.gluedMap)
+                                (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k))) ≫
+                              q)
+                        (glueData_f C P U V))
+                [Elab.step] [1.097527] ✅️ expected type: (Scheme.Pullback.gluing (glueData C P).openCover (gluedMap C P)
+                              (Spec.map (CommRingCat.ofHom (algebraMap (↥↑P.N) k)))).f
+                          U V ≫
+                        pullback.fst ((glueData C P).ι U ≫ gluedMap C P)
+                          (Spec.map (CommRingCat.ofHom (algebraMap (↥↑P.N) k))) =
+                      (gluingOverlapFlatteningIso C P U V).hom ≫
+                        pullback.fst ((glueData C P).f U V ≫ (glueData C P).ι U ≫ gluedMap C P)
+                            (Spec.map (CommRingCat.ofHom (algebraMap (↥↑P.N) k))) ≫
+                          Spec.map (CommRingCat.ofHom (restrictionBaseChangeAlgHom C P U V).toRingHom), term
+                    Eq.trans ?_
+                      (congrArg
+                        (fun q =>
+                          (gluingOverlapFlatteningIso C P U V).hom ≫
+                            pullback.fst (P.glueData.f U V ≫ P.glueData.ι U ≫ P.gluedMap)
+                                (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k))) ≫
+                              q)
+                        (glueData_f C P U V))
+                  [Elab.app.args] [1.096899] ✅️ elabAppArgs (2 args) `@Eq.trans`
+                    [Elab.step] [1.091018] ✅️ expected type: (gluingOverlapFlatteningIso C P U V).hom ≫
+                            pullback.fst ((glueData C P).f U V ≫ (glueData C P).ι U ≫ gluedMap C P)
+                                (Spec.map (CommRingCat.ofHom (algebraMap (↥↑P.N) k))) ≫
+                              (glueData C P).f U V =
+                          (gluingOverlapFlatteningIso C P U V).hom ≫
+                            pullback.fst ((glueData C P).f U V ≫ (glueData C P).ι U ≫ gluedMap C P)
+                                (Spec.map (CommRingCat.ofHom (algebraMap (↥↑P.N) k))) ≫
+                              Spec.map (CommRingCat.ofHom (restrictionBaseChangeAlgHom C P U V).toRingHom), term
+                        (congrArg
+                          (fun q =>
+                            (gluingOverlapFlatteningIso C P U V).hom ≫
+                              pullback.fst (P.glueData.f U V ≫ P.glueData.ι U ≫ P.gluedMap)
+                                  (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k))) ≫
+                                q)
+                          (glueData_f C P U V))
+                      [Elab.step] [1.090557] ✅️ expected type: (gluingOverlapFlatteningIso C P U V).hom ≫
+                              pullback.fst ((glueData C P).f U V ≫ (glueData C P).ι U ≫ gluedMap C P)
+                                  (Spec.map (CommRingCat.ofHom (algebraMap (↥↑P.N) k))) ≫
+                                (glueData C P).f U V =
+                            (gluingOverlapFlatteningIso C P U V).hom ≫
+                              pullback.fst ((glueData C P).f U V ≫ (glueData C P).ι U ≫ gluedMap C P)
+                                  (Spec.map (CommRingCat.ofHom (algebraMap (↥↑P.N) k))) ≫
+                                Spec.map (CommRingCat.ofHom (restrictionBaseChangeAlgHom C P U V).toRingHom), term
+                          congrArg
+                            (fun q =>
+                              (gluingOverlapFlatteningIso C P U V).hom ≫
+                                pullback.fst (P.glueData.f U V ≫ P.glueData.ι U ≫ P.gluedMap)
+                                    (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k))) ≫
+                                  q)
+                            (glueData_f C P U V)
+                        [Elab.app.args] [1.089869] ✅️ elabAppArgs (2 args) `@congrArg`
+        [Elab.step] [4.112438] ✅️ ·
+              simp only [Category.assoc]
+              refine
+                Eq.trans
+                  (congrArg
+                    (fun q =>
+                      (Scheme.Pullback.gluing P.glueData.openCover P.gluedMap
+                              (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k)))).f
+                          U V ≫
+                        q)
+                    (pullback_congrHom_hom_snd (glueData_ι_gluedMap C P U) rfl))
+                  ?_
+              refine
+                Eq.trans ?_
+                  (congrArg
+                      (fun q =>
+                        (gluingOverlapFlatteningIso C P U V).hom ≫
+                          (pullback.congrHom (glueData_f_comp_inclusion_comp_gluedMap C P U V) rfl).hom ≫ q)
+                      (restrictionBaseChangeMap_snd (C := C) P U V)).symm
+              refine
+                Eq.trans ?_
+                  (congrArg (fun q => (gluingOverlapFlatteningIso C P U V).hom ≫ q)
+                      (pullback_congrHom_hom_snd (glueData_f_comp_inclusion_comp_gluedMap C P U V) rfl)).symm
+              exact (gluingOverlapFlatteningIso_hom_comp_snd C P U V).symm
+          [Elab.step] [4.048631] ✅️ 
+                simp only [Category.assoc]
+                refine
+                  Eq.trans
+                    (congrArg
+                      (fun q =>
+                        (Scheme.Pullback.gluing P.glueData.openCover P.gluedMap
+                                (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k)))).f
+                            U V ≫
+                          q)
+                      (pullback_congrHom_hom_snd (glueData_ι_gluedMap C P U) rfl))
+                    ?_
+                refine
+                  Eq.trans ?_
+                    (congrArg
+                        (fun q =>
+                          (gluingOverlapFlatteningIso C P U V).hom ≫
+                            (pullback.congrHom (glueData_f_comp_inclusion_comp_gluedMap C P U V) rfl).hom ≫ q)
+                        (restrictionBaseChangeMap_snd (C := C) P U V)).symm
+                refine
+                  Eq.trans ?_
+                    (congrArg (fun q => (gluingOverlapFlatteningIso C P U V).hom ≫ q)
+                        (pullback_congrHom_hom_snd (glueData_f_comp_inclusion_comp_gluedMap C P U V) rfl)).symm
+                exact (gluingOverlapFlatteningIso_hom_comp_snd C P U V).symm
+            [Elab.step] [4.048607] ✅️ 
+                  simp only [Category.assoc]
+                  refine
+                    Eq.trans
+                      (congrArg
+                        (fun q =>
+                          (Scheme.Pullback.gluing P.glueData.openCover P.gluedMap
+                                  (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k)))).f
+                              U V ≫
+                            q)
+                        (pullback_congrHom_hom_snd (glueData_ι_gluedMap C P U) rfl))
+                      ?_
+                  refine
+                    Eq.trans ?_
+                      (congrArg
+                          (fun q =>
+                            (gluingOverlapFlatteningIso C P U V).hom ≫
+                              (pullback.congrHom (glueData_f_comp_inclusion_comp_gluedMap C P U V) rfl).hom ≫ q)
+                          (restrictionBaseChangeMap_snd (C := C) P U V)).symm
+                  refine
+                    Eq.trans ?_
+                      (congrArg (fun q => (gluingOverlapFlatteningIso C P U V).hom ≫ q)
+                          (pullback_congrHom_hom_snd (glueData_f_comp_inclusion_comp_gluedMap C P U V) rfl)).symm
+                  exact (gluingOverlapFlatteningIso_hom_comp_snd C P U V).symm
+              [Elab.step] [1.754455] ✅️ refine
+                    Eq.trans
+                      (congrArg
+                        (fun q =>
+                          (Scheme.Pullback.gluing P.glueData.openCover P.gluedMap
+                                  (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k)))).f
+                              U V ≫
+                            q)
+                        (pullback_congrHom_hom_snd (glueData_ι_gluedMap C P U) rfl))
+                      ?_
+                [Elab.step] [1.753555] ✅️ expected type: (Scheme.Pullback.gluing (glueData C P).openCover (gluedMap C P)
+                              (Spec.map (CommRingCat.ofHom (algebraMap (↥↑P.N) k)))).f
+                          U V ≫
+                        (pullback.congrHom ⋯ ⋯).hom ≫
+                          pullback.snd
+                            (Spec.map
+                              (CommRingCat.ofHom
+                                (algebraMap (↥↑P.N)
+                                  (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U))))
+                            (Spec.map (CommRingCat.ofHom (algebraMap (↥↑P.N) k))) =
+                      (gluingOverlapFlatteningIso C P U V).hom ≫
+                        (pullback.congrHom ⋯ ⋯).hom ≫
+                          restrictionBaseChangeMap C P U V ≫
+                            pullback.snd
+                              (Spec.map
+                                (CommRingCat.ofHom
+                                  (algebraMap (↥↑P.N)
+                                    (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U))))
+                              (Spec.map (CommRingCat.ofHom (algebraMap (↥↑P.N) k))), term
+                    Eq.trans
+                      (congrArg
+                        (fun q =>
+                          (Scheme.Pullback.gluing P.glueData.openCover P.gluedMap
+                                  (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k)))).f
+                              U V ≫
+                            q)
+                        (pullback_congrHom_hom_snd (glueData_ι_gluedMap C P U) rfl))
+                      ?_
+                  [Elab.app.args] [1.753156] ✅️ elabAppArgs (2 args) `@Eq.trans`
+                    [Elab.step] [1.750913] ✅️ expected type: (Scheme.Pullback.gluing (glueData C P).openCover
+                                  (gluedMap C P) (Spec.map (CommRingCat.ofHom (algebraMap (↥↑P.N) k)))).f
+                              U V ≫
+                            (pullback.congrHom ⋯ ⋯).hom ≫
+                              pullback.snd
+                                (Spec.map
+                                  (CommRingCat.ofHom
+                                    (algebraMap (↥↑P.N)
+                                      (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U))))
+                                (Spec.map (CommRingCat.ofHom (algebraMap (↥↑P.N) k))) =
+                          (Scheme.Pullback.gluing (glueData C P).openCover (gluedMap C P)
+                                  (Spec.map (CommRingCat.ofHom (algebraMap (↥↑P.N) k)))).f
+                              U V ≫
+                            pullback.snd ((glueData C P).ι U ≫ gluedMap C P)
+                              (Spec.map (CommRingCat.ofHom (algebraMap (↥↑P.N) k))), term
+                        (congrArg
+                          (fun q =>
+                            (Scheme.Pullback.gluing P.glueData.openCover P.gluedMap
+                                    (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k)))).f
+                                U V ≫
+                              q)
+                          (pullback_congrHom_hom_snd (glueData_ι_gluedMap C P U) rfl))
+                      [Elab.step] [1.750654] ✅️ expected type: (Scheme.Pullback.gluing (glueData C P).openCover
+                                    (gluedMap C P) (Spec.map (CommRingCat.ofHom (algebraMap (↥↑P.N) k)))).f
+                                U V ≫
+                              (pullback.congrHom ⋯ ⋯).hom ≫
+                                pullback.snd
+                                  (Spec.map
+                                    (CommRingCat.ofHom
+                                      (algebraMap (↥↑P.N)
+                                        (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U))))
+                                  (Spec.map (CommRingCat.ofHom (algebraMap (↥↑P.N) k))) =
+                            (Scheme.Pullback.gluing (glueData C P).openCover (gluedMap C P)
+                                    (Spec.map (CommRingCat.ofHom (algebraMap (↥↑P.N) k)))).f
+                                U V ≫
+                              pullback.snd ((glueData C P).ι U ≫ gluedMap C P)
+                                (Spec.map (CommRingCat.ofHom (algebraMap (↥↑P.N) k))), term
+                          congrArg
+                            (fun q =>
+                              (Scheme.Pullback.gluing P.glueData.openCover P.gluedMap
+                                      (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k)))).f
+                                  U V ≫
+                                q)
+                            (pullback_congrHom_hom_snd (glueData_ι_gluedMap C P U) rfl)
+                        [Elab.app.args] [1.750234] ✅️ elabAppArgs (2 args) `@congrArg`
+              [Elab.step] [1.145803] ✅️ refine
+                    Eq.trans ?_
+                      (congrArg
+                          (fun q =>
+                            (gluingOverlapFlatteningIso C P U V).hom ≫
+                              (pullback.congrHom (glueData_f_comp_inclusion_comp_gluedMap C P U V) rfl).hom ≫ q)
+                          (restrictionBaseChangeMap_snd (C := C) P U V)).symm
+                [Elab.step] [1.144160] ✅️ expected type: (Scheme.Pullback.gluing (glueData C P).openCover (gluedMap C P)
+                              (Spec.map (CommRingCat.ofHom (algebraMap (↥↑P.N) k)))).f
+                          U V ≫
+                        pullback.snd ((glueData C P).ι U ≫ gluedMap C P)
+                          (Spec.map (CommRingCat.ofHom (algebraMap (↥↑P.N) k))) =
+                      (gluingOverlapFlatteningIso C P U V).hom ≫
+                        (pullback.congrHom ⋯ ⋯).hom ≫
+                          restrictionBaseChangeMap C P U V ≫
+                            pullback.snd
+                              (Spec.map
+                                (CommRingCat.ofHom
+                                  (algebraMap (↥↑P.N)
+                                    (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U))))
+                              (Spec.map (CommRingCat.ofHom (algebraMap (↥↑P.N) k))), term
+                    Eq.trans ?_
+                      (congrArg
+                          (fun q =>
+                            (gluingOverlapFlatteningIso C P U V).hom ≫
+                              (pullback.congrHom (glueData_f_comp_inclusion_comp_gluedMap C P U V) rfl).hom ≫ q)
+                          (restrictionBaseChangeMap_snd (C := C) P U V)).symm
+                  [Elab.app.args] [1.143219] ✅️ elabAppArgs (2 args) `@Eq.trans`
+                    [Elab.step] [1.035957] ✅️ expected type: (gluingOverlapFlatteningIso C P U V).hom ≫
+                            (pullback.congrHom ⋯ ⋯).hom ≫
+                              pullback.snd
+                                (Spec.map
+                                  (CommRingCat.ofHom
+                                    (algebraMap (↥↑P.N)
+                                      (Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M P.N U V))))
+                                (Spec.map (CommRingCat.ofHom (algebraMap (↥↑P.N) k))) =
+                          (gluingOverlapFlatteningIso C P U V).hom ≫
+                            (pullback.congrHom ⋯ ⋯).hom ≫
+                              restrictionBaseChangeMap C P U V ≫
+                                pullback.snd
+                                  (Spec.map
+                                    (CommRingCat.ofHom
+                                      (algebraMap (↥↑P.N)
+                                        (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U))))
+                                  (Spec.map (CommRingCat.ofHom (algebraMap (↥↑P.N) k))), term
+                        (congrArg
+                            (fun q =>
+                              (gluingOverlapFlatteningIso C P U V).hom ≫
+                                (pullback.congrHom (glueData_f_comp_inclusion_comp_gluedMap C P U V) rfl).hom ≫ q)
+                            (restrictionBaseChangeMap_snd (C := C) P U V)).symm
+[Elab.command] [2.230031] ✅️ /-- An overlap in the base-changed finite-stage gluing is the corresponding
+    overlap in the canonical gluing diagram of the exact Picard atlas. -/
+    noncomputable def gluingOverlapIso {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
+        (P : Pic0FiniteStageGluePackage C F) (U V : Pic0FiniteStageChartIndex C) :
+        (Scheme.Pullback.gluing P.glueData.openCover P.gluedMap (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k)))).V
+            (U, V) ≅
+          (pic0SepClosedAtlasGlueData C).V (U, V) :=
+      by
+      exact
+        gluingOverlapFlatteningIso C P U V ≪≫
+          pullback.congrHom (glueData_f_comp_inclusion_comp_gluedMap C P U V) rfl ≪≫
+            overlapBaseChangeIso C P U V ≪≫ pic0SepClosedAtlasOverlapIso C U V
+  [Elab.definition.header] [1.026233] ✅️ AlgebraicGeometry.Pic0FiniteStageGluePackage.gluingOverlapIso
+    [Elab.step] [1.014083] ✅️ expected type: Type u, term
+        (Scheme.Pullback.gluing P.glueData.openCover P.gluedMap (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k)))).V
+            (U, V) ≅
+          (pic0SepClosedAtlasGlueData C).V (U, V)
+      [Elab.step] [1.013677] ✅️ expected type: Type u, term
+          Iso✝
+            ((Scheme.Pullback.gluing P.glueData.openCover P.gluedMap
+                  (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k)))).V
+              (U, V))
+            ((pic0SepClosedAtlasGlueData C).V (U, V))
+        [Elab.app.args] [1.013512] ✅️ elabAppArgs (2 args) `@Iso`
+          [Elab.step] [1.008749] ✅️ expected type: Scheme, term
+              (Scheme.Pullback.gluing P.glueData.openCover P.gluedMap
+                    (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k)))).V
+                (U, V)
+  [Elab.definition.value] [1.142267] ✅️ AlgebraicGeometry.Pic0FiniteStageGluePackage.gluingOverlapIso
+    [Elab.step] [1.119941] ✅️ exact
+            gluingOverlapFlatteningIso C P U V ≪≫
+              pullback.congrHom (glueData_f_comp_inclusion_comp_gluedMap C P U V) rfl ≪≫
+                overlapBaseChangeIso C P U V ≪≫ pic0SepClosedAtlasOverlapIso C U V
+      [Elab.step] [1.119904] ✅️ exact
+              gluingOverlapFlatteningIso C P U V ≪≫
+                pullback.congrHom (glueData_f_comp_inclusion_comp_gluedMap C P U V) rfl ≪≫
+                  overlapBaseChangeIso C P U V ≪≫ pic0SepClosedAtlasOverlapIso C U V
+        [Elab.step] [1.119871] ✅️ exact
+              gluingOverlapFlatteningIso C P U V ≪≫
+                pullback.congrHom (glueData_f_comp_inclusion_comp_gluedMap C P U V) rfl ≪≫
+                  overlapBaseChangeIso C P U V ≪≫ pic0SepClosedAtlasOverlapIso C U V
+          [Elab.step] [1.117882] ✅️ expected type: (Scheme.Pullback.gluing (glueData C P).openCover (gluedMap C P)
+                      (Spec.map (CommRingCat.ofHom (algebraMap (↥↑P.N) k)))).V
+                  (U, V) ≅
+                (pic0SepClosedAtlasGlueData C).V (U, V), term
+              gluingOverlapFlatteningIso C P U V ≪≫
+                pullback.congrHom (glueData_f_comp_inclusion_comp_gluedMap C P U V) rfl ≪≫
+                  overlapBaseChangeIso C P U V ≪≫ pic0SepClosedAtlasOverlapIso C U V
+            [Elab.step] [1.117694] ✅️ expected type: (Scheme.Pullback.gluing (glueData C P).openCover (gluedMap C P)
+                        (Spec.map (CommRingCat.ofHom (algebraMap (↥↑P.N) k)))).V
+                    (U, V) ≅
+                  (pic0SepClosedAtlasGlueData C).V (U, V), term
+                Iso.trans✝ (gluingOverlapFlatteningIso C P U V)
+                  (pullback.congrHom (glueData_f_comp_inclusion_comp_gluedMap C P U V) rfl ≪≫
+                    overlapBaseChangeIso C P U V ≪≫ pic0SepClosedAtlasOverlapIso C U V)
+              [Elab.app.args] [1.117460] ✅️ elabAppArgs (2 args) `@Iso.trans`
+                [Elab.step] [1.109124] ✅️ expected type: pullback
+                        ((glueData C P).f U V ≫ (glueData C P).ι U ≫ gluedMap C P)
+                        (Spec.map (CommRingCat.ofHom (algebraMap (↥↑P.N) k))) ≅
+                      (pic0SepClosedAtlasGlueData C).V (U, V), term
+                    pullback.congrHom (glueData_f_comp_inclusion_comp_gluedMap C P U V) rfl ≪≫
+                      overlapBaseChangeIso C P U V ≪≫ pic0SepClosedAtlasOverlapIso C U V
+                  [Elab.step] [1.108973] ✅️ expected type: pullback
+                          ((glueData C P).f U V ≫ (glueData C P).ι U ≫ gluedMap C P)
+                          (Spec.map (CommRingCat.ofHom (algebraMap (↥↑P.N) k))) ≅
+                        (pic0SepClosedAtlasGlueData C).V (U, V), term
+                      Iso.trans✝ (pullback.congrHom (glueData_f_comp_inclusion_comp_gluedMap C P U V) rfl)
+                        (overlapBaseChangeIso C P U V ≪≫ pic0SepClosedAtlasOverlapIso C U V)
+                    [Elab.app.args] [1.108592] ✅️ elabAppArgs (2 args) `@Iso.trans`
+[Elab.command] [2.230376] ✅️ set_option maxHeartbeats 12800000 in
+    /-- An overlap in the base-changed finite-stage gluing is the corresponding
+    overlap in the canonical gluing diagram of the exact Picard atlas. -/
+    noncomputable def gluingOverlapIso {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
+        (P : Pic0FiniteStageGluePackage C F) (U V : Pic0FiniteStageChartIndex C) :
+        (Scheme.Pullback.gluing P.glueData.openCover P.gluedMap (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k)))).V
+            (U, V) ≅
+          (pic0SepClosedAtlasGlueData C).V (U, V) :=
+      by
+      exact
+        gluingOverlapFlatteningIso C P U V ≪≫
+          pullback.congrHom (glueData_f_comp_inclusion_comp_gluedMap C P U V) rfl ≪≫
+            overlapBaseChangeIso C P U V ≪≫ pic0SepClosedAtlasOverlapIso C U V
+[Elab.command] [2.230674] ✅️ set_option synthInstance.maxHeartbeats 3200000 in
+    -- Raw tensor carriers keep the dependent finite-subextension instances visible.
+    
+    set_option maxHeartbeats 12800000 in
+    /-- An overlap in the base-changed finite-stage gluing is the corresponding
+    overlap in the canonical gluing diagram of the exact Picard atlas. -/
+    noncomputable def gluingOverlapIso {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
+        (P : Pic0FiniteStageGluePackage C F) (U V : Pic0FiniteStageChartIndex C) :
+        (Scheme.Pullback.gluing P.glueData.openCover P.gluedMap (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k)))).V
+            (U, V) ≅
+          (pic0SepClosedAtlasGlueData C).V (U, V) :=
+      by
+      exact
+        gluingOverlapFlatteningIso C P U V ≪≫
+          pullback.congrHom (glueData_f_comp_inclusion_comp_gluedMap C P U V) rfl ≪≫
+            overlapBaseChangeIso C P U V ≪≫ pic0SepClosedAtlasOverlapIso C U V
+[Elab.async] [8.653665] ✅️ elaborating proof of _private.AlgebraicJacobian.Picard.Pic0FiniteStageGluingDiagramIso.0.AlgebraicGeometry.Pic0FiniteStageGluePackage.chartBaseChangeIso_hom_ι
+  [Elab.definition.value] [8.643538] ✅️ _private.AlgebraicJacobian.Picard.Pic0FiniteStageGluingDiagramIso.0.AlgebraicGeometry.Pic0FiniteStageGluePackage.chartBaseChangeIso_hom_ι
+    [Elab.step] [8.638097] ✅️ calc
+            _ = (chartRingBaseChangeIso C P U).hom ≫ (U.1.2.isoSpec.inv ≫ U.1.1.ι) := by
+              simp only [chartBaseChangeIso, chartRingBaseChangeIso, chartFinalBaseChangeEquiv, affineBaseChangeIso,
+                Iso.trans_hom, Iso.symm_hom, Category.assoc]
+            _ = _ := congrArg (fun q => (chartRingBaseChangeIso C P U).hom ≫ q) U.1.2.isoSpec_inv_ι
+      [Elab.step] [8.638072] ✅️ calc
+              _ = (chartRingBaseChangeIso C P U).hom ≫ (U.1.2.isoSpec.inv ≫ U.1.1.ι) := by
+                simp only [chartBaseChangeIso, chartRingBaseChangeIso, chartFinalBaseChangeEquiv, affineBaseChangeIso,
+                  Iso.trans_hom, Iso.symm_hom, Category.assoc]
+              _ = _ := congrArg (fun q => (chartRingBaseChangeIso C P U).hom ≫ q) U.1.2.isoSpec_inv_ι
+        [Elab.step] [8.638036] ✅️ calc
+              _ = (chartRingBaseChangeIso C P U).hom ≫ (U.1.2.isoSpec.inv ≫ U.1.1.ι) := by
+                simp only [chartBaseChangeIso, chartRingBaseChangeIso, chartFinalBaseChangeEquiv, affineBaseChangeIso,
+                  Iso.trans_hom, Iso.symm_hom, Category.assoc]
+              _ = _ := congrArg (fun q => (chartRingBaseChangeIso C P U).hom ≫ q) U.1.2.isoSpec_inv_ι
+          [Elab.step] [8.234327] ✅️ simp only [chartBaseChangeIso, chartRingBaseChangeIso, chartFinalBaseChangeEquiv,
+                  affineBaseChangeIso, Iso.trans_hom, Iso.symm_hom, Category.assoc]
+            [Elab.step] [8.234295] ✅️ simp only [chartBaseChangeIso, chartRingBaseChangeIso, chartFinalBaseChangeEquiv,
+                    affineBaseChangeIso, Iso.trans_hom, Iso.symm_hom, Category.assoc]
+              [Elab.step] [8.234262] ✅️ simp only [chartBaseChangeIso, chartRingBaseChangeIso,
+                    chartFinalBaseChangeEquiv, affineBaseChangeIso, Iso.trans_hom, Iso.symm_hom, Category.assoc]
+[Elab.async] [1.156015] ✅️ Lean.addDecl
+  [Kernel] [1.155893] ✅️ typechecking declarations [_private.AlgebraicJacobian.Picard.Pic0FiniteStageGluingDiagramIso.0.AlgebraicGeometry.Pic0FiniteStageGluePackage.chartBaseChangeIso_hom_ι]
+[Elab.async] [13.783423] ✅️ elaborating proof of _private.AlgebraicJacobian.Picard.Pic0FiniteStageGluingDiagramIso.0.AlgebraicGeometry.Pic0FiniteStageGluePackage.overlapBaseChangeIso_hom_comp_isoSpec_inv
+  [Elab.definition.value] [13.769339] ✅️ _private.AlgebraicJacobian.Picard.Pic0FiniteStageGluingDiagramIso.0.AlgebraicGeometry.Pic0FiniteStageGluePackage.overlapBaseChangeIso_hom_comp_isoSpec_inv
+    [Elab.step] [13.761037] ✅️ simp only [overlapBaseChangeIso, overlapRingBaseChangeIso, overlapFinalBaseChangeEquiv,
+            affineBaseChangeIso, Iso.trans_hom, Iso.symm_hom, Category.assoc]
+      [Elab.step] [13.761010] ✅️ simp only [overlapBaseChangeIso, overlapRingBaseChangeIso, overlapFinalBaseChangeEquiv,
+              affineBaseChangeIso, Iso.trans_hom, Iso.symm_hom, Category.assoc]
+        [Elab.step] [13.760979] ✅️ simp only [overlapBaseChangeIso, overlapRingBaseChangeIso,
+              overlapFinalBaseChangeEquiv, affineBaseChangeIso, Iso.trans_hom, Iso.symm_hom, Category.assoc]
+          [Meta.isDefEq] [3.539687] ✅️ ?a =
+                ?a =?= (pullbackSymmetry
+                      (Spec.map
+                        (CommRingCat.ofHom
+                          (algebraMap (↥↑P.N)
+                            (Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M P.N U V))))
+                      (Spec.map (CommRingCat.ofHom (algebraMap (↥↑P.N) k)))).hom ≫
+                  (pullbackSpecIso (↥↑P.N) k
+                        (Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M P.N U V)).hom ≫
+                    (Scheme.Spec.mapIso
+                          (pic0FiniteStageFinalBaseChangeEquiv C P.L P.n P.m P.relation P.e P.M P.N
+                                    (Sum.inr (U, V))).symm.toRingEquiv.toCommRingCatIso.op).hom ≫
+                      (IsAffineOpen.isoSpec ⋯).inv ≫ (↑(pic0FiniteStageAffineOverlap C U V)).ι =
+                (pullbackSymmetry
+                      (Spec.map
+                        (CommRingCat.ofHom
+                          (algebraMap (↥↑P.N)
+                            (Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M P.N U V))))
+                      (Spec.map (CommRingCat.ofHom (algebraMap (↥↑P.N) k)))).hom ≫
+                  (pullbackSpecIso (↥↑P.N) k
+                        (Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M P.N U V)).hom ≫
+                    (Scheme.Spec.mapIso
+                          (pic0FiniteStageFinalBaseChangeEquiv C P.L P.n P.m P.relation P.e P.M P.N
+                                    (Sum.inr (U, V))).symm.toRingEquiv.toCommRingCatIso.op).hom ≫
+                      (IsAffineOpen.isoSpec ⋯).inv ≫ (↑(pic0FiniteStageAffineOverlap C U V)).ι
+            [Meta.isDefEq] [3.538758] ✅️ (pullbackSymmetry
+                      (Spec.map
+                        (CommRingCat.ofHom
+                          (algebraMap (↥↑P.N)
+                            (Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M P.N U V))))
+                      (Spec.map (CommRingCat.ofHom (algebraMap (↥↑P.N) k)))).hom ≫
+                  (pullbackSpecIso (↥↑P.N) k
+                        (Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M P.N U V)).hom ≫
+                    (Scheme.Spec.mapIso
+                          (pic0FiniteStageFinalBaseChangeEquiv C P.L P.n P.m P.relation P.e P.M P.N
+                                    (Sum.inr (U, V))).symm.toRingEquiv.toCommRingCatIso.op).hom ≫
+                      (IsAffineOpen.isoSpec ⋯).inv ≫
+                        (↑(pic0FiniteStageAffineOverlap C U
+                              V)).ι =?= (pullbackSymmetry
+                      (Spec.map
+                        (CommRingCat.ofHom
+                          (algebraMap (↥↑P.N)
+                            (Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M P.N U V))))
+                      (Spec.map (CommRingCat.ofHom (algebraMap (↥↑P.N) k)))).hom ≫
+                  (pullbackSpecIso (↥↑P.N) k
+                        (Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M P.N U V)).hom ≫
+                    (Scheme.Spec.mapIso
+                          (pic0FiniteStageFinalBaseChangeEquiv C P.L P.n P.m P.relation P.e P.M P.N
+                                    (Sum.inr (U, V))).symm.toRingEquiv.toCommRingCatIso.op).hom ≫
+                      (IsAffineOpen.isoSpec ⋯).inv ≫ (↑(pic0FiniteStageAffineOverlap C U V)).ι
+              [Meta.isDefEq] [3.538744] ✅️ (pullbackSymmetry
+                        (Spec.map
+                          (CommRingCat.ofHom
+                            (algebraMap (↥↑P.N)
+                              (Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M P.N U V))))
+                        (Spec.map (CommRingCat.ofHom (algebraMap (↥↑P.N) k)))).hom ≫
+                    (pullbackSpecIso (↥↑P.N) k
+                          (Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M P.N U V)).hom ≫
+                      (Scheme.Spec.mapIso
+                            (pic0FiniteStageFinalBaseChangeEquiv C P.L P.n P.m P.relation P.e P.M P.N
+                                      (Sum.inr (U, V))).symm.toRingEquiv.toCommRingCatIso.op).hom ≫
+                        (IsAffineOpen.isoSpec ⋯).inv ≫
+                          (↑(pic0FiniteStageAffineOverlap C U
+                                V)).ι =?= (pullbackSymmetry
+                        (Spec.map
+                          (CommRingCat.ofHom
+                            (algebraMap (↥↑P.N)
+                              (Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M P.N U V))))
+                        (Spec.map (CommRingCat.ofHom (algebraMap (↥↑P.N) k)))).hom ≫
+                    (pullbackSpecIso (↥↑P.N) k
+                          (Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M P.N U V)).hom ≫
+                      (Scheme.Spec.mapIso
+                            (pic0FiniteStageFinalBaseChangeEquiv C P.L P.n P.m P.relation P.e P.M P.N
+                                      (Sum.inr (U, V))).symm.toRingEquiv.toCommRingCatIso.op).hom ≫
+                        (IsAffineOpen.isoSpec ⋯).inv ≫ (↑(pic0FiniteStageAffineOverlap C U V)).ι
+                [Meta.isDefEq] [3.017775] ✅️ (pullbackSpecIso (↥↑P.N) k
+                          (Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M P.N U V)).hom ≫
+                      (Scheme.Spec.mapIso
+                            (pic0FiniteStageFinalBaseChangeEquiv C P.L P.n P.m P.relation P.e P.M P.N
+                                      (Sum.inr (U, V))).symm.toRingEquiv.toCommRingCatIso.op).hom ≫
+                        (IsAffineOpen.isoSpec ⋯).inv ≫
+                          (↑(pic0FiniteStageAffineOverlap C U
+                                V)).ι =?= (pullbackSpecIso (↥↑P.N) k
+                          (Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M P.N U V)).hom ≫
+                      (Scheme.Spec.mapIso
+                            (pic0FiniteStageFinalBaseChangeEquiv C P.L P.n P.m P.relation P.e P.M P.N
+                                      (Sum.inr (U, V))).symm.toRingEquiv.toCommRingCatIso.op).hom ≫
+                        (IsAffineOpen.isoSpec ⋯).inv ≫ (↑(pic0FiniteStageAffineOverlap C U V)).ι
+                  [Meta.isDefEq] [2.147041] ✅️ (Scheme.Spec.mapIso
+                            (pic0FiniteStageFinalBaseChangeEquiv C P.L P.n P.m P.relation P.e P.M P.N
+                                      (Sum.inr (U, V))).symm.toRingEquiv.toCommRingCatIso.op).hom ≫
+                        (IsAffineOpen.isoSpec ⋯).inv ≫
+                          (↑(pic0FiniteStageAffineOverlap C U
+                                V)).ι =?= (Scheme.Spec.mapIso
+                            (pic0FiniteStageFinalBaseChangeEquiv C P.L P.n P.m P.relation P.e P.M P.N
+                                      (Sum.inr (U, V))).symm.toRingEquiv.toCommRingCatIso.op).hom ≫
+                        (IsAffineOpen.isoSpec ⋯).inv ≫ (↑(pic0FiniteStageAffineOverlap C U V)).ι
+                    [Meta.isDefEq] [2.146047] ✅️ (Scheme.Spec.mapIso
+                            (pic0FiniteStageFinalBaseChangeEquiv C P.L P.n P.m P.relation P.e P.M P.N
+                                      (Sum.inr
+                                        (U,
+                                          V))).symm.toRingEquiv.toCommRingCatIso.op).hom =?= (Scheme.Spec.mapIso
+                            (pic0FiniteStageFinalBaseChangeEquiv C P.L P.n P.m P.relation P.e P.M P.N
+                                      (Sum.inr (U, V))).symm.toRingEquiv.toCommRingCatIso.op).hom
+                      [Meta.isDefEq] [2.146021] ✅️ (Scheme.Spec.mapIso
+                              (pic0FiniteStageFinalBaseChangeEquiv C P.L P.n P.m P.relation P.e P.M P.N
+                                        (Sum.inr
+                                          (U,
+                                            V))).symm.toRingEquiv.toCommRingCatIso.op).1 =?= (Scheme.Spec.mapIso
+                              (pic0FiniteStageFinalBaseChangeEquiv C P.L P.n P.m P.relation P.e P.M P.N
+                                        (Sum.inr (U, V))).symm.toRingEquiv.toCommRingCatIso.op).1
+                        [Meta.isDefEq] [2.145965] ✅️ Scheme.Spec.mapIso
+                              (pic0FiniteStageFinalBaseChangeEquiv C P.L P.n P.m P.relation P.e P.M P.N
+                                        (Sum.inr
+                                          (U,
+                                            V))).symm.toRingEquiv.toCommRingCatIso.op =?= Scheme.Spec.mapIso
+                              (pic0FiniteStageFinalBaseChangeEquiv C P.L P.n P.m P.relation P.e P.M P.N
+                                        (Sum.inr (U, V))).symm.toRingEquiv.toCommRingCatIso.op
+                          [Meta.isDefEq] [1.574379] ✅️ (pic0FiniteStageFinalBaseChangeEquiv C P.L P.n P.m P.relation P.e
+                                        P.M P.N
+                                        (Sum.inr
+                                          (U,
+                                            V))).symm.toRingEquiv.toCommRingCatIso.op =?= (pic0FiniteStageFinalBaseChangeEquiv
+                                        C P.L P.n P.m P.relation P.e P.M P.N
+                                        (Sum.inr (U, V))).symm.toRingEquiv.toCommRingCatIso.op
+[Elab.async] [2.117986] ✅️ Lean.addDecl
+  [Kernel] [2.117872] ✅️ typechecking declarations [_private.AlgebraicJacobian.Picard.Pic0FiniteStageGluingDiagramIso.0.AlgebraicGeometry.Pic0FiniteStageGluePackage.overlapBaseChangeIso_hom_comp_isoSpec_inv]
+[Elab.async] [1.228327] ✅️ Lean.addDecl
+  [Kernel] [1.228200] ✅️ typechecking declarations [_private.AlgebraicJacobian.Picard.Pic0FiniteStageGluingDiagramIso.0.AlgebraicGeometry.Pic0FiniteStageGluePackage.overlapBaseChangeIso_hom_ι]
+[Elab.async] [1.453103] ✅️ elaborating proof of _private.AlgebraicJacobian.Picard.Pic0FiniteStageGluingDiagramIso.0.AlgebraicGeometry.Pic0FiniteStageGluePackage.overlapBaseChangeIso_hom_atlas_f_ι
+  [Elab.definition.value] [1.443026] ✅️ _private.AlgebraicJacobian.Picard.Pic0FiniteStageGluingDiagramIso.0.AlgebraicGeometry.Pic0FiniteStageGluePackage.overlapBaseChangeIso_hom_atlas_f_ι
+    [Elab.step] [1.435844] ✅️ calc
+            _ = (overlapBaseChangeIso C P U V).hom ≫ (pic0FiniteStageAffineOverlap C U V).1.ι :=
+              congrArg (fun q => (overlapBaseChangeIso C P U V).hom ≫ q) (overlapAtlasProjection_left C U V)
+            _ = _ := overlapBaseChangeIso_hom_ι C P U V
+      [Elab.step] [1.435815] ✅️ calc
+              _ = (overlapBaseChangeIso C P U V).hom ≫ (pic0FiniteStageAffineOverlap C U V).1.ι :=
+                congrArg (fun q => (overlapBaseChangeIso C P U V).hom ≫ q) (overlapAtlasProjection_left C U V)
+              _ = _ := overlapBaseChangeIso_hom_ι C P U V
+        [Elab.step] [1.435772] ✅️ calc
+              _ = (overlapBaseChangeIso C P U V).hom ≫ (pic0FiniteStageAffineOverlap C U V).1.ι :=
+                congrArg (fun q => (overlapBaseChangeIso C P U V).hom ≫ q) (overlapAtlasProjection_left C U V)
+              _ = _ := overlapBaseChangeIso_hom_ι C P U V
+          [Meta.synthInstance] [1.237810] ✅️ Trans Eq Eq Eq
+[Elab.command] [1.049366] ✅️ theorem gluingOverlapIso_fst {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
+        (P : Pic0FiniteStageGluePackage C F) (U V : Pic0FiniteStageChartIndex C) :
+        (Scheme.Pullback.gluing P.glueData.openCover P.gluedMap (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k)))).f U
+              V ≫
+            (gluingChartIso C P U).hom =
+          (gluingOverlapIso C P U V).hom ≫ (pic0SepClosedAtlasGlueData C).f U V :=
+      by
+      apply (cancel_mono U.1.1.ι).1
+      simp only [gluingChartIso, Iso.trans_hom, Category.assoc]
+      rw [chartBaseChangeIso_hom_ι C P U]
+      rw [reassoc_of% gluingOverlapIso_pre_fst C P U V]
+      simp only [gluingOverlapIso, Iso.trans_hom, Category.assoc]
+      rw [restrictionBaseChangeMap_fromSpec C P U V]
+      exact
+        congrArg
+          (fun q =>
+            (gluingOverlapFlatteningIso C P U V).hom ≫
+              (pullback.congrHom (glueData_f_comp_inclusion_comp_gluedMap C P U V) rfl).hom ≫ q)
+          (overlapBaseChangeIso_hom_atlas_f_ι C P U V).symm
+  [Elab.definition.header] [1.025193] ✅️ AlgebraicGeometry.Pic0FiniteStageGluePackage.gluingOverlapIso_fst
+    [Elab.step] [1.011975] ✅️ expected type: Sort ?u.39, term
+        (Scheme.Pullback.gluing P.glueData.openCover P.gluedMap (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k)))).f U
+              V ≫
+            (gluingChartIso C P U).hom =
+          (gluingOverlapIso C P U V).hom ≫ (pic0SepClosedAtlasGlueData C).f U V
+      [Elab.step] [1.011872] ✅️ expected type: Sort ?u.39, term
+          binrel% Eq✝
+            ((Scheme.Pullback.gluing P.glueData.openCover P.gluedMap
+                    (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k)))).f
+                U V ≫
+              (gluingChartIso C P U).hom)
+            ((gluingOverlapIso C P U V).hom ≫ (pic0SepClosedAtlasGlueData C).f U V)
+[Elab.command] [1.049707] ✅️ set_option backward.isDefEq.respectTransparency false in
+    theorem gluingOverlapIso_fst {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
+        (P : Pic0FiniteStageGluePackage C F) (U V : Pic0FiniteStageChartIndex C) :
+        (Scheme.Pullback.gluing P.glueData.openCover P.gluedMap (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k)))).f U
+              V ≫
+            (gluingChartIso C PCommand exited with non-zero status 124
+	Command being timed: "timeout -k 10 180s lake env lean -j 4 -Dtrace.profiler=true -Dtrace.profiler.threshold=1000 AlgebraicJacobian/Picard/Pic0FiniteStageGluingDiagramIso.lean -o /tmp/ajcr-checks/diagramiso-current-profile.olean"
+	User time (seconds): 0.51
+	System time (seconds): 0.48
+	Percent of CPU this job got: 0%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 3:00.17
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 819392
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 2
+	Minor (reclaiming a frame) page faults: 34739
+	Voluntary context switches: 1894
+	Involuntary context switches: 15
+	Swaps: 0
+	File system inputs: 13344
+	File system outputs: 0
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 124

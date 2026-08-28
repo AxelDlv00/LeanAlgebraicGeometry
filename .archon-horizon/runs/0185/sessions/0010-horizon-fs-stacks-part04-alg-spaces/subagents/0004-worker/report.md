@@ -1,0 +1,1 @@
+I’ll first load the Horizon workflow instructions and inspect the Part04 product/representability APIs plus the bounded Part07 theorem, then I’ll add only `RelativeProducts.lean` and verify it with Lean.

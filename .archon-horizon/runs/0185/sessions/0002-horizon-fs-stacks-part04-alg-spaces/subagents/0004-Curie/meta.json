@@ -1,0 +1,21 @@
+{
+  "agent_nickname": "Curie",
+  "agent_path": "/root/groupoid_worker",
+  "depth": 1,
+  "model": "gpt-5.6-sol",
+  "name": "Curie",
+  "native_subagent_id": "01a04381-1df0-7390-8c17-94fd30fda632",
+  "ok": true,
+  "parent_session": "0002-horizon-fs-stacks-part04-alg-spaces",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "completed",
+  "subagent_type": "Curie",
+  "summary": "Prototype complete in `StacksPart04Lib/Groupoids.lean` (currently uncommitted because the shared ledger index was locked by another run).",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 22055205,
+    "tokens_out": 37871
+  }
+}

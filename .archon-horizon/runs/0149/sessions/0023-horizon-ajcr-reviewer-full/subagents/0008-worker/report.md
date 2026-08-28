@@ -1,0 +1,1 @@
+The explicit source algebra must be introduced before constructing `ι`; otherwise `TensorProduct.map` captures an unresolved algebra metavariable in the dependent proposition. I’m reordering those two lets, which is the minimal elaboration fix.

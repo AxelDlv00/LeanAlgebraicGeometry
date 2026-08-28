@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Banach",
+  "agent_path": "/root/janitor_start",
+  "agent_role": "janitor",
+  "depth": 1,
+  "model": "gpt-5.6-luna",
+  "name": "janitor",
+  "native_subagent_id": "01a0438b-64e9-7360-824b-ecfc0e2a14bc",
+  "ok": true,
+  "parent_session": "0002-horizon-fs-stacks-part02-schemes",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "completed",
+  "subagent_type": "janitor",
+  "summary": "Read-only hygiene audit completed; no files, inbox items, task statuses, or locks were modified.",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 1194684,
+    "tokens_out": 5602
+  }
+}

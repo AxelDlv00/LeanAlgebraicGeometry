@@ -1,0 +1,9 @@
+# Orientation — after run-0020 T15 (Ground reconcile)
+
+- Useful context: `instHasPicScheme` (`Picard/FGAPicRepresentability.lean:317`) is still `⟨sorry⟩` — the single FGA representability leaf, endpoint of the ~30-milestone D3 Milne–Kollár campaign in `informal/pic-representability-campaign.md` (nothing else in the campaign has landed). The corrected wave plan is Part III of that doc; its highest-leverage root is affine Serre vanishing `IsAffineHModuleVanishing` (`Cohomology/StructureSheafModuleK/Carriers.lean:222`), which also gates the T16 `finrank_eq_genus`/`tangentSpaceIso` north star.
+
+- Relevant files: new `Picard/SectionRingUniversal.lean` (milestone B0, axiom-clean, wired into the root at `AlgebraicJacobian.lean:50`) proves `Γ(C,𝒪_C)` is a field and a finite extension of `k`, and `≃ₐ[k] k` under the honest gate `HasTrivialConstants` (discharged unconditionally over algebraically closed `k`). The one input that would discharge the gate for general `k` is degree-0 H⁰ flat base change `Γ(C_{k̄},𝒪) ≅ k̄ ⊗_k Γ(C,𝒪)` — a much smaller brick than the `Rⁱf_*` FBC engine, reused across B2/B4/B5, absent in Mathlib v4.31.
+
+- Blueprint note: `SectionRingUniversal.lean`'s unconditional results (`isField_globalSections`, `finiteDimensional_globalSections`) carry no blueprint node yet — genuinely new mathematics available for nodes once the campaign's blueprint scaffolding exists; nothing depends on the file in Lean yet, so no invisible-dependency risk today. Its `constMap`/`globalSectionsAlgebra` re-derive the `k`-algebra structure already blueprinted as `def:Scheme_kToSection`/`Scheme.kToSection` (`Cohomology_StructureSheafModuleK.tex`) — a candidate unification.
+
+- Environment: the T15 diff is clean (3 files, no strays); the new file's headline decls re-verify axiom-clean via LSP against built oleans, consistent with the reported green build (8689 jobs). The B0 advance and corrected critical path are logged on roadmap item `AJC.picrep`.

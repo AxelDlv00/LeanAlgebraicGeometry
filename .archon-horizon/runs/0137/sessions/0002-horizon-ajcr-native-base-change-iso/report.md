@@ -1,0 +1,1 @@
+The coordination comment is now recorded on I-1927. Before closing this as blocked, I’m checking whether the existing affine-chart and Cech APIs can actually be lifted to the mate at the required quantifier; this is the last implementation avenue worth testing, and it will stay within the owned cohomology/native-base-change files.

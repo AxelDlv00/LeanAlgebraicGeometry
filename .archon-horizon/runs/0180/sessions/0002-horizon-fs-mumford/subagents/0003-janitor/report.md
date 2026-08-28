@@ -1,0 +1,1 @@
+The duplicate is now soft-archived, and the pre-existing `I-2049` remains the canonical tracker. I’m doing the mandated post-cleanup health pass now; no further mutations are planned. Concurrent agents may still change counts, so I’ll report the measured snapshot with that caveat.

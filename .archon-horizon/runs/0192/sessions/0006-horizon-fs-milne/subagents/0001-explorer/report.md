@@ -1,0 +1,1 @@
+The affine stalk-map identity is now verified end to end. I’m checking one remaining possibility: whether Mathlib already bundles a stalk morphism as a linear map over the stalk ring, which would let the existing residue-tensor/Nakayama theorem close the affine I.5.11 case without introducing a custom wrapper.

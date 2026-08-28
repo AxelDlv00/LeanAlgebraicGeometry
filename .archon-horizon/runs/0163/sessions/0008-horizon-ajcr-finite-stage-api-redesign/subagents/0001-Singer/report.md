@@ -1,0 +1,1 @@
+I’m cross-checking the run artifacts against the current declarations so the redesign recommendations are tied to the exact failing boundaries, not just structural impressions. I’ll also flag any APIs whose apparent “fix” still leaves instance inference or choice-sensitive parameters exposed.

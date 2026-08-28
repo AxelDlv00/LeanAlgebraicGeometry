@@ -1,0 +1,80 @@
+id: I-0223
+provider: local
+kind: info
+body: 'W7-B5/B6 partial (lane w7-b56, Opus 4.8): datum-level base change of the Jacobian
+  — 3 axiom-clean bricks landed, B-6a/B-6b remain. File Picard/JacobianDataBaseChange.lean,
+  wired into root (commit 63c139589).
+
+
+  LANDED (all [propext,Classical.choice,Quot.sound]):
+
+  1. B-5, commit 2671178e1: JacobianData.baseChange (d : JacobianData C) (L) [Field
+  L][Algebra k L] : JacobianData ((baseChange k L).obj C). J := (baseChange k L).obj
+  d.J; rep := ((Over.mapPullbackAdj σ).representableBy d.J).ofIso (isoWhiskerLeft
+  (Over.map σ).op d.rep.toIso ≪≫ (pic0ThetaType k L C).symm); certificates by MorphismProperty.baseChange_obj
+  (probe D verbatim). NOTE self-reference gotcha: inside ''def JacobianData.baseChange''
+  the short name baseChange resolves to the def itself — qualify the functor as AlgebraicGeometry.baseChange.
+
+  2. B-6 infra, commit 2fb784954: isMonHom_hom_of_representableBy (F : Dᵒᵖ ⥤ MonCat)
+  (α α'' reps of F ⋙ forget) (e : X ≅ X'') (h intertwining homEquivs) : IsMonHom e.hom
+  between the two MonObj.ofRepresentableBy structures. Proved elementwise (one_hom
+  apply_symm_apply; mul_hom componentwise via homEquiv''_comp+tensorHom_fst/snd+map_mul).
+  STATED AT MonCat LEVEL deliberately so homEquiv''/homEquiv share one functor — the
+  GrpCat/MonCat instance-transparency seam otherwise kills every rw.
+
+  3. B-6a CORE, commit 0231230d8: monObjObj_eq_ofRepresentableBy (adj : F ⊣ G)[G.Monoidal](Y)[MonObj
+  Y] : Functor.monObjObj (F:=G)(X:=Y) = MonObj.ofRepresentableBy (G.obj Y) (F.op ⋙
+  yonedaMonObj Y) (adj.representableBy Y). The mathlib-gift-free heart (recon 2.8#4):
+  monoidal-transport = adjunction-representation. MonObj.ext needs ONLY mul (one is
+  derived); mul closed by hom_ext + Functor.Monoidal.mu_fst/mu_snd + adj.counit_naturality.
+  The MonCat-packaging seam crossed ONCE by a defeq ''change'' into the plain-yoneda
+  view.
+
+
+  REMAINING for the next lane (B-6a grpObjObj_baseChange_eq + B-6b baseChangeIsoOfData):
+
+  - B-6a: grpObjObj (baseChange k L) d.J = (d.baseChange L).grpObj. grpObjObj.toMonObj
+  = monObjObj (rfl), so by the bridge lemma = ofRep(ρ, F_hom) with ρ = (mapPullbackAdj
+  σ).representableBy d.J, F_hom = (Over.map σ).op ⋙ yonedaMonObj d.J. Need: ofRep(ρ,F_hom)
+  = ofRep(ρ_θ,pic0) where ρ_θ = (d.baseChange L).rep = ρ.ofIso e'', e'' = isoWhiskerLeft
+  (Over.map σ).op d.rep.toIso ≪≫ (pic0ThetaType).symm. TWO sub-pieces: (2a) general
+  lemma ''ofRep invariant under monoid-presheaf-iso transport of the rep'' (α.ofIso
+  (isoWhiskerRight Φ (forget)) gives same MonObj when Φ : F≅F'' in Cᵒᵖ⥤MonCat); (2b)
+  build the monoid iso Φ : F_hom ≅ (pic0Functor C_L ⋙ forget₂ CommGrpCat GrpCat ⋙
+  forget₂ GrpCat MonCat) with forget Φ = e'', as isoWhiskerLeft (Over.map σ).op (yonedaMonObjIsoOfRepresentableBy
+  d.J _ d.rep) ≪≫ (isoWhiskerRight pic0Theta (forget₂⋙forget₂)).symm. The needed component-multiplicativity:
+  pic0ThetaType.inv.app IS (pic0CrossBaseEquiv).symm (a bundled MulEquiv — clean);
+  d.rep.toIso.hom.app = d.rep.homEquiv needs the yonedaMonObjIsoOfRepresentableBy
+  multiplicativity. WATCH: every seam-crossing step must be term-mode/change, never
+  rw (I-0206/I-0216 lesson, hit repeatedly).
+
+  - B-6b: baseChangeIsoOfData d L dL := eqToIso (congrArg (Grp.mk ..) B6a) ≪≫ Grp.mkIso
+  ((d.baseChange L).uniqueUpToIso dL) one_f mul_f, where one_f/mul_f come from isMonHom_hom_of_representableBy
+  (F := pic0 MonCat presheaf) (α := (d.baseChange L).rep) (α'' := dL.rep) (e := uniqueUpToIso)
+  (h := homEquiv_uniqueUpToIso_hom (d.baseChange L) dL) — this ALREADY gives IsMonHom
+  w.r.t. ((d.baseChange L).grpObj, dL.grpObj); B-6a converts the LHS to grpObjObj.
+
+
+  FROZEN DAT-J closure (Fleet A, NOT ours) consumes: baseChangeIso k L C := baseChangeIsoOfData
+  (jacobianData C) (jacobianData C_L) — definitional against the frozen Jacobian/instGrpObj
+  (since Jacobian C := (jacobianData C).J and instGrpObj = (jacobianData C).grpObj).
+  Requires jacobianData base-field-generic (the D1 watch item — confirm with DAT-G).
+
+
+  K-1 (θ-cocycle) consumes: pic0Theta/pic0ThetaType are legal at every tower field
+  (no finiteness/Galois); the transported datum d.baseChange L and grpObjObj_baseChange_eq
+  (once landed) give the mapGrp side. A-1 (baseChange_ofCurve): after B-cluster, θ
+  maps the Abel class via graphLocalEquations_base_change; ofCurve := rep.homEquiv.symm
+  (abelElement P).'
+labels:
+- agent-ready
+status: archived
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: w7-b56
+source_ref: null
+created_at: '2026-07-17T15:56:17.315824+00:00'
+updated_at: '2026-07-20T03:14:33.145932+00:00'
+metadata: {}

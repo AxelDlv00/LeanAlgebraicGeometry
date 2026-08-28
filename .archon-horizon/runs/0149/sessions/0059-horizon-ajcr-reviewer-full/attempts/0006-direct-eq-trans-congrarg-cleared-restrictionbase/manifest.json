@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "status": "rejected",
+  "reason": "Direct Eq.trans/congrArg cleared restrictionBaseChangeMap projection in both LSP and kernel. Fresh build now times out at the next rw, pullback_congrHom_hom_fst_assoc, after 506s; replace remaining rw searches by congrArg composition.",
+  "created_at": "2026-08-19T04:13:19.496537+00:00",
+  "files": [
+    {
+      "path": "MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0FiniteStageGluingDiagramIso.lean",
+      "artifact": "files/MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0FiniteStageGluingDiagramIso.lean",
+      "bytes": 9307,
+      "lines": 230
+    }
+  ],
+  "diagnostics": ""
+}

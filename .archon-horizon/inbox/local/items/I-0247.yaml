@@ -1,0 +1,122 @@
+id: I-0247
+provider: local
+kind: info
+body: 'G-4 SeedUniv kappa(q) assembly LANDED (fibre divisor d_q keystone + hOK/hchiK;
+  seed fields REMAIN)
+
+
+  I-0241 gaps 1+2 CLOSED, gap 3 (seed fields + seedUniv + isGenerator_seedUniv) NOT
+  started — precise walls below. Commits 055751146ae (Picard/DivSchemeSeedUnivAssemble.lean,
+  451 L) + 43515e385 (Picard/DivSchemeSeedUnivAssembleKappa.lean, 500 L), each root-wired
+  (HEAD blob + only my line; sibling PicEtCrossBaseGraph line left uncommitted as
+  before). All keystones axiom-clean [propext, Classical.choice, Quot.sound]; single-module
+  LEAN_NUM_THREADS=1 lake builds green under the mkdir lock (8728/8745 jobs, modules
+  58s/98s); zero sorries; zero warnings in my files.
+
+
+  BIG SIMPLIFICATION FOUND (supersedes I-0241 "up to K*-scalars"): the base-index
+  elem at eta of EVERY ofCocycle presentation is 1 (Scheme.MeromorphicPresentation.ofCocycle_elem_genericPoint,
+  via unitsEvInf_self), so thetaFieldRead IS the germ at eta of the chart component
+  containing eta (thetaFieldRead_eq_germ_fst/_snd) and the read multiplicativity holds
+  ON THE NOSE — no scalar at all: thetaFieldRead_relThetaWindowEquiv_windowShiftMul
+  : read_{M+s}(W_{M+s}(baseChange(windowShiftMul hpi g a) x)) = read_s(W_s(1 (x) a))
+  * read_M(W_M(x)) (proof: F1 relThetaWindowEquiv_sectionMul_fst/snd at R := K + germ
+  at eta + windowShiftTheta0/1_eq matching the Kit pure-tensor lemma at exponent s).
+  The whole Phi-defect is then ONE fixed unit: msCoherenceUnit := u_s * u_M * u_{M+s}^{-1}
+  (the three thetaFieldShiftUnits), whose divisor is computed EXACTLY: divOf_msCoherenceUnit
+  : T(M+s) - (windowN + windowS) = div(msCoherenceUnit) — the N0-terms cancel by exponent
+  additivity of the theta divisor (thetaFieldDivisor_add, from relThetaCocycle_add
+  + thetaChartUnit_mul = pow_add of thetaUnit through the multiplicative pullback
+  + ordZ monoid map). So windowMSShiftUnit (SeedUniv) is NOT needed for the assembly;
+  msCoherenceUnit does its job with a computed divisor: map_mulLinear_msCoherenceUnit(_top)
+  : w * H0(O(T(M+s) - D)) = H0(O(N + S - D)).
+
+
+  LANDED KEYSTONES (verbatim):
+
+  - divFamPhi_one_tmul_mul (Assemble): Phi_s(1 (x) a) * Phi_M(x) = msCoherenceUnit
+  * Phi_{M+s}(baseChange(windowShiftMul hpi g a) x) — the hcarve bridge.
+
+  - h0_relCurve_baseField / chi_relCurve_baseField (AssembleKappa, PUBLIC): hOK/hchiK
+  at EVERY field extension K/k (h0/chi_moduleKSheaf at baseChangeBundle + genus_baseField
+  + the instSndLeft haveI pattern) — I-0241 item (ii) done; the DivSchemeMonoBridgeRel/DivisorThetaFibreData
+  privates need no longer be re-derived.
+
+  - divUniversalFibreKM C hpi g r1 r2 b1 i j K := map Phi_M (map (LinearEquiv.baseChange
+  k K _ _ b1.equivFun.symm).toLinearMap (ker (baseChangeMkQ K (pairTautFst k g r1
+  r2 i j).toSubmodule))); divUniversalFibreK'' C hpi g r1 r2 b2 i j K := map (mulLinear
+  msCoherenceUnit) (map Phi_{M+s} (map (baseChange of b2.equivFun.symm.trans (seedWindowShiftEquiv
+  C pi hpi g)) (ker (baseChangeMkQ K pairTautSnd...)))). NOTE the ASYMMETRIC signatures
+  (KM takes b1, K'' takes b2 — defs include only used section vars; include-in does
+  NOT work on defs, memory-worthy).
+
+  - divUniversalFibreKM_le / K''_le (pole bounds N, N+S), finrank_divUniversalFibreKM_add
+  / K''_add (corank-g: finrank + g = h0(O(N)) resp. h0(O(N+S)); via finrank_ker_baseChangeMkQ_add_of_field
+  at pairTautFst/Snd, LinearEquiv.finrank_map_eq, finrank_map_divFamPhi, equivMapOfInjective
+  at mulLinear, h0_windowN, RR at both fields with window_embedding_shift + the add_nsmul
+  regluing).
+
+  - divUniversalFibre_carve : K kills I_diamond => forall h in H0(O(S)), forall f
+  in KM, h*f in K'' (exists_divFamPhi_eq at exponent s + TensorProduct.induction_on
+  + the Phi product law + carveIdeal_le_ker_iff_carve_map + windowShiftMul_comp_divCarveMul,
+  the b1/b2 boundary seam closed by LinearEquiv.symm_apply_apply + ofEq proof irrelevance).
+
+  - KEYSTONE existsUnique_effective_divisor_divUniversalFibre (generic K over the
+  pair chart ring killing I_diamond, section hypotheses hO hchi hker) and _residueField
+  (q : PrimeSpectrum (PairChartRing), hq : divCarveIdeal <= q.asIdeal — the divUniversal_carve_residueField
+  spelling, synthInstance 800000 + maxSynthPendingDepth 8 hatch): EXISTS UNIQUE D
+  >= 0, deg K D = g, KM = H0(O(windowN - D)), K'' = H0(O(windowN + windowS - D)).
+  Extraction: divUniversalFibreDivisor (def) + _spec + _unique.
+
+
+  WHAT THIS UNBLOCKS: G-0b directly (the fibre divisor of the seed-built system IS
+  d_q = divUniversalFibreDivisor — nameable, unique, with both window equalities);
+  CertUniv fibre inputs (the corank laws + window equalities at every kappa(q) are
+  the P-fib-N artinian shadow).
+
+
+  REMAINING (I-0241 gap 3, untouched — the next seed lane): per z : relCurve C R_Z:
+  (a) fibre achiever exists_coeffAt_eq_baseDivisorAt at the image point of z applied
+  to d_q; (b) lift through K_univ ->> K_univ (x) kappa(p) (projective_divUniversalSeedK
+  landed; mkQ-composition surjectivity is cheap; the REAL seam is identifying K_univ
+  (x) kappa(q) with the Phi-fibre picture — divUniversalSeedK (x) kappa vs divUniversalFibreKM:
+  needs the base-change naturality of relThetaWindowEquiv (G-2 crux triangle / resHom_relThetaWindowEquiv_cancelBaseChange)
+  + ker_baseChangeMkQ_eq_map_baseChange at the two-step tower R_IJ -> R_Z -> kappa(q);
+  NOT done); (c) side/h z from the pinned chart + Module.exists_forall_tmul_residueField_ne_zero
+  (DivSchemeSeed:264); (d) hdvd via SlicingFlat:356/:79 regular-element cancellation
+  (NEVER fibrewise->relative, I-0231 binding); (e) seedUniv := ThetaGeneratorSeed
+  at K := divUniversalSeedK + isGenerator_seedUniv via isGenerator_of_fibre_ne_zero
+  (hdvd + hfib through relPinnedSectionsMap + relPinned_tmul_one_mem_nonZeroDivisors).
+
+  I-0244 COORDINATION (binding for the seed lane): the seed piece choices MUST satisfy
+  the no-leak criterion — choose h z so that D(h z) contains, in each fibre over the
+  base, the WHOLE fibre support of the branch of d_q it cuts (d_q is effective of
+  degree g, hence finite support of pairwise-incomparable closed points; pick the
+  chart side per support point and clear the other support points out of the basic
+  open). State the pieces so finite_colength_of_forall_fibre_closure_subset (SupportTubeFinite)
+  is dischargeable; nothing in TODAY''s two files constrains that choice — the fibre
+  divisor and its window equalities are piece-free.
+
+
+  LEAN GOTCHAS (memory-worthy): (a) include ... in works for theorems but NOT defs
+  — a def in a big variable block gets an asymmetric signature (only used vars); plan
+  call sites accordingly. (b) Section hypothesis variables used only in a PROOF are
+  not auto-included — Unknown identifier inside the term; include hO hchi hker in
+  per theorem. (c) rw of germ_thetaFieldGluedEquiv_fst against the gluedVal expansion
+  fails (P.cover vs thetaFieldPointedCover spelling, instance-transparency motive)
+  — rewrite gluedVal + elem first, then close with exact (defeq bridges). (d) smul_mul_assoc
+  on functionField needs IsScalarTower K F F which the over-module pack lacks — route
+  through functionFieldOverModule_smul_def + mul_assoc. (e) The three-fold set_option
+  style linter wants the -- reason directly after the FIRST set_option ... in.'
+labels:
+- agent-ready
+status: archived
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: agent
+source_ref: null
+created_at: '2026-07-19T06:46:37.132626+00:00'
+updated_at: '2026-07-20T03:15:01.624659+00:00'
+metadata: {}

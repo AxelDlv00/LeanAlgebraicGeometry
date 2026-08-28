@@ -1,0 +1,97 @@
+id: I-0253
+provider: local
+kind: info
+body: 'DAT-C C2 LANDED — Σ-RANK1 rank-1 H⁰ export + generator kit (GAP-3 / N1 / N3)
+
+
+  Commit c63bbeb741316ef124c73dc96e49f96118a0a0ae. AlgebraicJacobian/Picard/DivisorDatumRankOne.lean,
+  278 L. Private-index CAS; root = HEAD blob + only my import line (sibling PicEtCrossBaseGraph
+  line NOT swept). Single-module LEAN_NUM_THREADS=1 lake build GREEN under the mkdir
+  lock (8865 jobs, 71s). Zero sorries, zero new warnings.
+
+
+  KEYSTONES (verbatim, all axiom-clean [propext, Classical.choice, Quot.sound]):
+
+  - chi_relCurve (hχ : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (n:ℤ)) (L) [Field L]
+  [Algebra k L] : Sheaf.chi ((relCurve C L).moduleKSheaf L) = 1 - (n:ℤ)  — χ transport
+  to every fibre (inline copy of DivSchemeMonoBridgeRel private chi_relCurve).
+
+  - BasicOpenCocycleDatum.h0_sheaf_baseChange_eq_one (D) (hχ) (L) [Field/Algebra L]
+  [FIBRE INSTANCE PACK] (hg : classDeg L (D.baseChange L).cechPicClass = (n:ℤ)) (hsub
+  : Subsingleton (HModule (D.baseChange L).sheaf 1)) : Sheaf.h0 (D.baseChange L).sheaf
+  = 1  — via presentationSheafIso + h0_gluedSheaf_eq_classDeg_add_chi at n+(1−n).
+
+  - BasicOpenCocycleDatum.rankAtStalk_hModule_zero_eq_one (D) [IsNoetherianRing S]
+  (hπ : π ≫ P1.structureMap k = C.hom) (hχ) (hfib : ∀ q, Subsingleton ((datumPair
+  D).H1 ⊗[S] q.asIdeal.ResidueField)) (p) [FIBRE INSTANCE PACK at κ(p)] (hg : classDeg
+  κ(p) (D.baseChange κ(p)).cechPicClass = (n:ℤ)) : Module.rankAtStalk (Sheaf.HModule
+  D.sheaf 0) p = 1  — Σ-RANK1 datum-level (rankAtStalk_eq + datumH0BaseChange + fibre
+  h0=1).
+
+  - CertifiedDivisorFamily.rankAtStalk_divisorDatum_eq_one (G) [IsNoetherianRing S]
+  (hπ) (hχ) (hvan : ∀ p, (DivFam.mk G).toZar.IsH1VanishingAt p) (p) : Module.rankAtStalk
+  (Sheaf.HModule G.adaptation.divisorDatum.sheaf 0) p = 1  — N1, invertible H⁰.
+
+  - CertifiedDivisorFamily.exists_fibrewise_generator_divisorDatum (G) [IsNoetherianRing
+  S] (hπ) (hχ) (hvan) (p) : ∃ f ∉ p, ∃ q : H⁰, ∀ q'' with f ∉ q'', q ⊗ₜ 1 ≠ 0 in H⁰
+  ⊗ κ(q'')  — N3 generator kit (rank1 ⟹ nontrivial fibre ⟹ Module.exists_fibrewise_tmul_ne_zero_of_projective).
+
+
+  DEVIATIONS (spec of record):
+
+  (1) FIBRE INSTANCE THREAD (structural, smallest correct deviation): the fibre geometric
+  pack — [IsIntegral (relCurve C L)] [SmoothOfRelativeDimension 1 (relCurve C L ↘
+  Spec L)] [QuasiCompact] [Module.Finite L (HModule (moduleKSheaf L) 0)] and 1 — is
+  passed as INSTANCE ARGUMENTS on the two datum-level exports, NOT haveI-d inside.
+  Reason: classDeg appears in a HYPOTHESIS (hg) so it must elaborate at statement
+  time, but the base-change instances cannot synthesize through the relCurve def barrier
+  (the degAt_abelDiv/C1 haveI trick only works in PROOF bodies). Certified consumers
+  install them via haveI := instIsIntegralBaseChange C κ(p) etc. before calling (rankAtStalk_divisorDatum_eq_one
+  does this).
+
+  (2) χ transport re-derived INLINE (chi_relCurve, copy of DivSchemeMonoBridgeRel
+  private lemma) rather than importing G-4 file DivSchemeSeedUnivAssembleKappa''s
+  chi_relCurve_baseField — keeps C2''s cone free of G-4. Added imports: RiemannRoch.ChiCurve,
+  Cohomology.H1BaseFieldInvariance (foundational).
+
+  (3) index n not g: χ hypothesis is χ(𝒪_C)=1−n; h0 = deg+χ = n+(1−n)=1. Standing
+  n=g.
+
+  (4) N3 = PRODUCTION direction only (a fibrewise-nonzero global section EXISTS Zariski-locally).
+  The GAP-3 companion Nakayama S-lemma ''a GIVEN fibrewise-nonzero element is a Zariski-local
+  BASIS'' and canonSection-fibrewise-nonzeroness are NOT built — DEFERRED to C4.
+
+  (5) removed variable [IsAffineHom π] (implied by [IsFinite π]).
+
+
+  FOR C4 (mono, N4/N5): consume rankAtStalk_divisorDatum_eq_one for ''H⁰ invertible''.
+  N5''s ''σ''=a·σ locally'' STILL needs (a) Nakayama local-basis companion (fibrewise-nonzero
+  elt of rank-1 projective ⟹ local basis) and (b) canonSection fibrewise-nonzeroness
+  — build in C4. exists_fibrewise_generator_divisorDatum gives a fibrewise-nonzero
+  GLOBAL section on a basic open. Instance thread: haveI the 5 base-change instances
+  at κ(p) before any classDeg/χ fibre computation; classDeg fibre=n is private classDeg_baseChange_divisorDatum
+  (cechPicClass_baseChange + cechPicClass_divisorDatum + picClass_toZar/mk + picClass_mapAlg
+  + DivFamZar.classDeg_picClass).
+
+
+  FOR C6 (§1 V/VOver): C2''s rank export = H⁰-on-V invertibility; hvan shape ∀ p,
+  (DivFam.mk G).toZar.IsH1VanishingAt p (C1 predicate).
+
+
+  MEMORY-WORTHY GOTCHA: classDeg (and any degree/χ lemma) in a THEOREM HYPOTHESIS
+  forces the fibre geometric instances into statement elaboration — they do NOT synthesize
+  through the relCurve def; thread as [...] instance args on such statements, or keep
+  classDeg in proof bodies (use deg/picClass, instance-light in binders, as C1 exists_effective_witness
+  does).'
+labels:
+- agent-ready
+status: archived
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: human
+source_ref: null
+created_at: '2026-07-19T11:37:21.287809+00:00'
+updated_at: '2026-07-20T03:15:09.014918+00:00'
+metadata: {}

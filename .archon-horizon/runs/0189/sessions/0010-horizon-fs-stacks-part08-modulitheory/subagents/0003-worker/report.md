@@ -1,0 +1,1 @@
+The baseline project file is diagnostics-clean, and prior Part 08 work already exposes set-valued presheaf/diagonal abstractions. I’m now checking the exact `CategoryTheory.Grpd` universe and functor APIs plus sibling groupoid conventions so the new interface composes cleanly with existing imports.

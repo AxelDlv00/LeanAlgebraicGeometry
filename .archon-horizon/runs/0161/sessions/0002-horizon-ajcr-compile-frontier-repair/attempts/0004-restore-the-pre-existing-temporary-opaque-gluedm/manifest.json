@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "status": "rejected",
+  "reason": "Restore the pre-existing temporary opaque gluedMap isolation probe now that FinalBaseChange carriers are explicit; preserve its commented faithful Multicoequalizer.desc body before reinstating it.",
+  "created_at": "2026-08-25T07:38:40.064276+00:00",
+  "files": [
+    {
+      "path": "MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0FiniteStageGluedOver.lean",
+      "artifact": "files/MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0FiniteStageGluedOver.lean",
+      "bytes": 5982,
+      "lines": 136
+    }
+  ],
+  "diagnostics": ""
+}

@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Carver",
+  "agent_path": "/root/hygiene_audit",
+  "agent_role": "janitor",
+  "depth": 1,
+  "model": "gpt-5.6-luna",
+  "name": "janitor",
+  "native_subagent_id": "01a0450f-be3d-7c51-bd54-4325fc60b943",
+  "ok": true,
+  "parent_session": "0006-horizon-fs-stacks-part01-prelim",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "completed",
+  "subagent_type": "janitor",
+  "summary": "Read-only hygiene audit for `fs-stacks-part01-prelim`:",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 1170394,
+    "tokens_out": 6593
+  }
+}

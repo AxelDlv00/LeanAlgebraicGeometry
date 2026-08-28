@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Schrodinger",
+  "agent_path": "/root/frontier_scan",
+  "agent_role": "explorer",
+  "depth": 1,
+  "model": "gpt-5.6-sol",
+  "name": "explorer",
+  "native_subagent_id": "01a0436b-ba9c-7cf2-9484-ce2c4e2332c9",
+  "ok": true,
+  "parent_session": "0002-horizon-fs-hartshorne",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "completed",
+  "subagent_type": "explorer",
+  "summary": "Reconnaissance complete; no files were modified.",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 6668404,
+    "tokens_out": 17978
+  }
+}

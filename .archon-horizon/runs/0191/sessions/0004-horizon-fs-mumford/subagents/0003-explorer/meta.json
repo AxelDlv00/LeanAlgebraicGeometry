@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Bacon",
+  "agent_path": "/root/frontier_explorer",
+  "agent_role": "explorer",
+  "depth": 1,
+  "model": "gpt-5.6-sol",
+  "name": "explorer",
+  "native_subagent_id": "01a04732-02bf-7df1-b5c2-621fa886a03b",
+  "ok": true,
+  "parent_session": "0004-horizon-fs-mumford",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "completed",
+  "subagent_type": "explorer",
+  "summary": "Highest-value bounded target was `mumford-prop-theta-commutator`, from [ch04-source-part3.tex](/home/axel/LeanAlgebraicGeometry-Horizon/FormalizedSources/AbelianVarieties/Mumford/blueprint/src/ch04-source-part3.tex:258). It unlocks four sou",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 6668421,
+    "tokens_out": 13449
+  }
+}

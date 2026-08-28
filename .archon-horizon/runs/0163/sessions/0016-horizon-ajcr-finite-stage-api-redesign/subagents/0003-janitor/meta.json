@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Pauli",
+  "agent_path": "/root/janitor_hygiene",
+  "agent_role": "janitor",
+  "depth": 1,
+  "model": "gpt-5.6-sol",
+  "name": "janitor",
+  "native_subagent_id": "01a04528-af5f-7b01-ae01-38ffd7e2824b",
+  "ok": false,
+  "parent_session": "0016-horizon-ajcr-finite-stage-api-redesign",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "interrupted",
+  "subagent_type": "janitor",
+  "summary": "",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 31518846,
+    "tokens_out": 61569
+  }
+}

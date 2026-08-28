@@ -1,0 +1,1 @@
+I’ll scan the Mumford frontier and nearby formalizations for existing lattice, complex-analytic, torsion, and finite-group APIs, then report concrete declarations and import/adaptation notes without editing files.

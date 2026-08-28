@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "fingerprint": "80e73e3defddb8ea",
+  "command": [
+    "lake",
+    "env",
+    "lean",
+    "/home/axel/LeanAlgebraicGeometry-Horizon/FormalizedSources/StacksProject/Part02_Schemes/StacksPart02Lib/FiberProducts.lean"
+  ],
+  "cwd": "FormalizedSources/StacksProject/Part02_Schemes",
+  "status": "passed",
+  "ok": true,
+  "returncode": 0,
+  "timed_out": false,
+  "reused": false,
+  "wait_seconds": 0.0,
+  "duration_seconds": 7.367,
+  "started_at": "2026-08-28T00:19:37.611312+00:00",
+  "finished_at": "2026-08-28T00:19:44.978629+00:00",
+  "finished_epoch": 1787876384.978629
+}

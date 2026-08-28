@@ -1,0 +1,61 @@
+id: ajcr-alignment-tags
+project: Algebraic-Jacobian-Challenge-Rebuild
+objective: 'CLASSIFICATION ONLY. Read the complete AJCR mathematical blueprint, its
+  cited references, every AJCR roadmap item that makes a mathematical claim, and the
+  corresponding blueprint-linked or root-critical public Lean declarations. Assign
+  exactly one visible provenance tag to each mathematical element: REFERENCE when
+  it closely follows a precise reference statement and argument; ADAPTED when it is
+  reference-based but reformulated, combined, strengthened, or substantially adapted;
+  CUSTOM when no close reference theorem supports the project-specific construction.
+  Add the optional visible modifier TO CHECK only when a concrete possible source-blueprint,
+  blueprint-Lean, roadmap-statement, quantifier, hypothesis, or conclusion mismatch
+  is noticed. TO CHECK is an attention marker, never a verdict that the mathematics
+  is false. Make the tags directly visible to humans in rendered blueprint TeX and
+  in concise Lean declaration docstrings, and preserve or mirror them in hgraph so
+  graph queries can expose them. A TO CHECK marker may carry one short factual reason
+  and an evidence pointer. Mathematical roadmap entries may receive TO CHECK where
+  relevant; do not relabel purely operational entries. Minimal tag-rendering and hgraph-discoverability
+  plumbing, including one concise Horizon-skill instruction telling future lanes to
+  inspect TO CHECK before working on a node, is in scope. NOTHING ELSE IS IN SCOPE:
+  do not fix statements, change proofs, add lemmas, judge correctness, assign verdicts
+  or severities, restructure the roadmap, change roadmap status or priority, create
+  follow-up issues/tasks, or rewrite mathematical exposition beyond inserting the
+  markers. Do not tag internal implementation-only Lean helpers. Work in bounded chapter
+  slices, commit each completed slice, and report coverage counts and unclassified
+  residue only. Because another AJCR lane is active, do not run a full lake build;
+  validate only the blueprint rendering, hgraph sync, and checks strictly required
+  for comment-only Lean changes.'
+title: 'AJCR alignment tagging: REFERENCE / ADAPTED / CUSTOM / TO CHECK'
+explanation: ''
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+priority: normal
+status: queued
+write_set:
+  files:
+  - MainProjects/Algebraic-Jacobian-Challenge-Rebuild/blueprint/**
+  - MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/**
+  - MainProjects/Algebraic-Jacobian-Challenge-Rebuild/hgraph/**
+  - .archon-horizon/roadmap/**
+  - .claude/skills/horizon/SKILL.md
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+  declarations: []
+  blueprint_nodes: []
+  workspace: false
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+  files:
+  - MainProjects/Algebraic-Jacobian-Challenge-Rebuild/blueprint/**
+  - MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/**
+  - MainProjects/Algebraic-Jacobian-Challenge-Rebuild/hgraph/**
+  - .archon-horizon/roadmap/**
+  - .claude/skills/horizon/SKILL.md
+roadmap_refs: []
+inbox_refs: []
+artifact_refs: []
+created_at: '2026-08-14T06:16:14.106683+00:00'
+updated_at: '2026-08-14T12:50:42.259987+00:00'
+metadata:
+  author: human

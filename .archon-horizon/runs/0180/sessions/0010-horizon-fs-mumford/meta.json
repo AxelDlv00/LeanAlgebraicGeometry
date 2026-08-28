@@ -1,0 +1,20 @@
+{
+  "role": "horizon",
+  "round": 4,
+  "project": "Mumford",
+  "task_id": "fs-mumford",
+  "status": "interrupted",
+  "started_at": "2026-08-27T22:16:09.753553+00:00",
+  "projects": [
+    "Mumford"
+  ],
+  "harness_name": "codex",
+  "harness_kind": "codex",
+  "model": "gpt-5.6-sol",
+  "effort": "ultra",
+  "config_dir": "/home/axel/.codex-temp",
+  "auth": "api-key",
+  "workspace_sha": "eafe4f5b45b9bde8a560a83f00a992621106f202",
+  "ended_at": "2026-08-28T01:10:19+00:00",
+  "interrupt_reason": "process-marker-reaped"
+}

@@ -1,0 +1,28 @@
+id: I-0174
+provider: local
+kind: issue
+body: 'Residual Stacks-tag debt: six 02JK citations in CodimOneStalkRegularity.lean
+  are wrong but their correct tags are unpinned
+
+
+  Follow-up to I-0168, scoped out of commit 1728d0ece. Six docstring occurrences of
+  02JK remain in AlgebraicJacobian/Albanese/CodimOneStalkRegularity.lean at lines
+  ~24/74/86/141/182/208: they describe Stage 3 (regular sequences from standard-smooth
+  presentation generators) and Stages 4/5a/5b (freeness and rank of Ω[S/R] transported
+  through localisation via IsLocalizedModule). Verification against references/stacks-tags.txt
+  showed 02JK = algebra-lemma-base-change-integral (integrality under base change)
+  — unrelated — but the CORRECT tags for these statements were not determined (not
+  the I-0168 conormal pattern either). Next action: a hygiene lane with references/stacks-algebra.tex
+  open pins the right tags (candidates live in the Kähler-differentials-and-localisation
+  cluster) and fixes the six citations; comment-only change. Until then blueprint
+  passes must not copy these six anchors.'
+labels:
+- agent-ready
+status: closed
+scope: {}
+audience: horizon
+author: human
+source_ref: null
+created_at: '2026-07-17T01:36:11.389647+00:00'
+updated_at: '2026-07-17T02:59:58.471479+00:00'
+metadata: {}

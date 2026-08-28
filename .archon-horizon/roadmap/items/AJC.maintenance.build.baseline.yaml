@@ -1,0 +1,43 @@
+id: AJC.maintenance.build.baseline
+title: From-scratch build baseline (43:15)
+projects:
+- Algebraic-Jacobian-Challenge
+summary: 'Measured 2026-07-27 on a 16-core / 62 GB host, contended with a second workspace
+  run (load average 13-27 throughout). Wiping .lake/build and rebuilding the package
+  with Mathlib served from the shared package cache: ALL 8,723 jobs green in 43:15.98
+  wall at 9,721,288 KiB peak RSS. Shape of the run: 68 of the 165 modules finish inside
+  5 minutes and 113 inside 10, but the last 34 take 33 minutes because the tail is
+  a nearly serial chain (GlueDescent gates SerreTwist, GrassmannianQuot, QuotFunctorDef
+  and RigidPushforward, which gate the rest); for most of that stretch exactly one
+  project job was running. Largest single-module costs, bounded by completion minus
+  the last dependency completion: QuotScheme 804s, TensorObjSubstrate 538s, GlueDescent
+  504s, Adelic/NonconstantToP1 453s, GrassmannianZariskiSheaf 385s, TensorObjInverse
+  360s, GrassmannianQuot 353s, CechHigherDirectImage 337s. This supersedes the earlier
+  39:56.95 observation, which predated the header and import work and was taken at
+  a different commit.'
+status: done
+kind: workspace
+priority: normal
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+metadata:
+  author: horizon
+  created_at: '2026-07-24T13:48:55.088594+00:00'
+  provenance:
+    run: '0046'
+    session: 0038-horizon-ajc-optimize
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajc-optimize
+    task_title: Make the project clean and optimized
+    projects: Algebraic-Jacobian-Challenge
+  parent: AJC.maintenance.build
+  updated_at: '2026-07-29T02:59:05.534105+00:00'
+  pinned_commits:
+  - 2e6d3c83e
+  milestone: AJC.maintenance

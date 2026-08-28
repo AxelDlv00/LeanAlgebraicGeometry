@@ -1,0 +1,47 @@
+Status check answered. Continuing with the original task — I have the full report ready, updated with the final re-measurement (758 total / 740 reachable / 18 unrooted, since two files landed mid-review).
+
+## Final Report: AJCR Build Reachability, measured at HEAD
+
+**Method.** `/tmp/build_reach.py` parses every `import AlgebraicJacobian.*` line under `AlgebraicJacobian/` + the root `AlgebraicJacobian.lean`, BFS's from module `AlgebraicJacobian`. Verified no malformed import lines, no bare self-import, no symlinks/duplicates/empty files. Did **not** run `lake build` (build mutex contended, per instructions).
+
+**Note on timing:** the tree changed mid-review — two files landed while I was working (`Pic0ChartLocusFibreGuard.lean` ROOTED, `Pic0ChartRestrictedFibre.lean` UNROOTED). All numbers below are the final re-measurement.
+
+### Headline: today vs. 2026-07-26 triage
+
+| | 07-26 triage | Today |
+|---|---|---|
+| total modules | 620 | **758** |
+| reachable | 526 | **740** |
+| unrooted | 93 | **18** |
+| dangling imports | 0 | 0 |
+| cycles | 0 | 0 |
+
+138 new modules landed net; unrooted dropped from 93 to 18 — real rooting progress, not just growth. (No git history exists in this workspace — `git log` reports "does not have any commits yet" — so this is source-state-today vs. roadmap-recorded triage, not a git diff.)
+
+### Diff against the named 07-26 unrooted set
+
+**Rooted since 07-26 (18 of the 22 named-bucket-1 modules):** `DivSchemeSeedUnivPointwiseGenerator`, `DivSchemeSeedUnivPulledDegree`, `DivSchemeSeedUnivPointwise`, `DivSchemeHighWindowTransitionSaturation`, `DivSchemeHighWindowQuotientBridge`, `DivSchemeRedesignChartReadIdeal`, `DivSchemeHighWindowRelationKoszulConjugacy`, `DivSchemeHighWindowFibreModelInduction`, `DivSchemeHighWindowFibreModelBase`, `DivSchemeHighWindowFibreWindow`, `DivSchemeHighWindowSecondContainment`, `DivSchemeHighWindowPointwiseGenerator`, `DivSchemeHighWindowPencilDivisor`, `DivSchemeHighWindowFibreNormalization`, `DivSchemeRedesignRDNChart`, `DivSchemeRedesignSeedUniv`, `DivSchemeRedesignFibreCut`, `DivRepKit` — this is the entire RD-N keystone and high-window tower the triage flagged as the biggest risk.
+
+**Still unrooted (17 previously-named + 1 new):** the 11 bucket-2 "superseded kappa(z)/RankOne" modules, `ScratchChartLocal`, `Pic0ThetaCocycle`, `EntryIdeal`, `DivSchemeFlatteningBridge`, `DivSchemeRedesignRDN`, `DivSchemeRedesignSeedFinish`, plus **new**: `Pic0ChartRestrictedFibre` (just-created, not yet wired to root).
+
+No unrooted module is unexplained — every one was either already named 07-26 or is brand-new and not yet integrated.
+
+### Representability-seam files: 15 of 16 ROOTED
+
+All of Pic0SigmaSheaf, Pic0ChartAtlasParamFree, Pic0ChartPair, Pic0ChartUnivReduce, Pic0ChartOpenImmersionCriterion, Pic0ChartLocusIsOpen, Pic0ChartLocusPlusFibre, Pic0AtlasFromDivRep, JacobianDataCharts, DivRepKit, DivRepAffPullClause, DivisorFamilyAffTheta, DivisorFamilyAffSeedGate, DivisorFamilyAffGlue, Challenge.lean are ROOTED (`AlgebraicJacobian.lean:156` imports Challenge, `:241` imports Pic0SigmaSheaf directly). Only **Pic0ThetaCocycle.lean is UNROOTED** — self-consistently, its own header (lines 39/43/68) forbids rooting until its 2 sorries close.
+
+### Sorry census: 17 confirmed (matches roadmap's "17 sorries")
+
+Raw grep: 72 hits. Manually inspected all 55 filtered prose hits (self-referential "sorry-free"/"zero-sorry"/"sorry census" discussion, no hidden gaps). Real proof-term sorries:
+- `Challenge.lean` — 15, at lines 99,108,113,117,121,126,134,147,156,157,158,248,259,272,283. **ROOTED.**
+- `Picard/Pic0ThetaCocycle.lean` — 2, at lines 246,320. **UNROOTED.**
+
+### hgraph contamination at HEAD
+
+7906 hgraph nodes carry a `file:` field. **89 point at one of the 18 currently-unrooted modules; 87 of those are wrongly marked `lean_status: lean_ok`** (only 2, both in Pic0ThetaCocycle.lean, are honestly marked `sorry`). Worst offenders: `EntryIdeal.lean` (23 nodes), `DivSchemeRedesignRangeFlatBridge.lean` (16), `Pic0ThetaCocycle.lean` (15), `DivSchemeRedesignRankOneFibre.lean` (7), `DivSchemeFlatteningBridge.lean` (5). This is down sharply from the 07-26 triage's 626 false `lean_ok` nodes, tracking the drop in unrooted module count, but is not zero and not proportional (node density per file varies 1x to 23x).
+
+### Verdict on Pic0SigmaSheaf.lean / Pic0ChartAtlasParamFree.lean
+
+Unrootedness does **not** invalidate their sorry-free/kernel-confirmed status. Both are directly ROOTED, zero proof-term sorries, and reachable from the configured default build target. The one live risk one hop away is `Pic0ThetaCocycle.lean` — UNROOTED, holds the only non-Challenge sorries, self-flagged as not-yet-rootable. The hgraph contamination is real but concentrated in files everyone already knows are unrooted (EntryIdeal, the kappa(z)/RankOne superseded branch, the scratch file) — it does not touch the seam files under review.
+
+**Files/paths referenced:** `/home/axel/LeanAlgebraicGeometry-Horizon/MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian.lean`, `.../AlgebraicJacobian/Challenge.lean`, `.../AlgebraicJacobian/Picard/Pic0ThetaCocycle.lean`, `.../hgraph/nodes/*.md`. Scripts: `/tmp/build_reach.py`, `/tmp/build_reach_data.json`.

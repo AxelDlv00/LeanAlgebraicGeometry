@@ -1,0 +1,1 @@
+The durability issue is recorded as I-2066. I’m doing one final independent pass over the declaration signatures, blueprint anchors, and commit tree to distinguish real API defects from the graph bookkeeping problem.

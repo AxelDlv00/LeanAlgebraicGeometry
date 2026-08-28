@@ -1,0 +1,34 @@
+id: I-2043
+provider: local
+kind: issue
+body: 'Global affine topology instance shadows Pi topology
+
+
+  `affineZariskiTopology_inst` is an unscoped global instance at Chapter1Topology.lean:65.
+  Since `AffinePoint` abbreviates `Fin n -> k`, `#synth TopologicalSpace (Fin 2 ->
+  ℚ)` chooses Hartshorne’s Zariski instance after importing Hartshorne, but Mathlib
+  alone chooses `Pi.topologicalSpace`. This silently changes downstream topology;
+  use an explicit or scoped topology before expanding consumers. The Hartshorne module
+  check is clean.'
+labels:
+- agent-ready
+status: archived
+scope:
+  projects:
+  - Hartshorne
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-08-27T09:20:26.798068+00:00'
+updated_at: '2026-08-27T09:21:22.822647+00:00'
+metadata:
+  provenance:
+    run: '0166'
+    session: 0002-horizon-fs-hartshorne
+    role: horizon
+    round: '0'
+    rounds: '3'
+    task: fs-hartshorne
+    task_title: Advance Hartshorne Algebraic Geometry formalization
+    projects: Hartshorne
+  agent: ground

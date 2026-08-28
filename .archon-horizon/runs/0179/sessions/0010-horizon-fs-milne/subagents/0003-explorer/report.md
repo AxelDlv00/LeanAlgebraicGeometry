@@ -1,0 +1,1 @@
+I’ll now probe the exact type of the stalk-level residue-fibre map in a standalone Lean stdin check. I’ll keep the test outside project sources and report whether the natural module stalk can be fed directly to `residueFieldTensorEquivQuotSMul`, or whether a carrier/module-instance bridge is required.

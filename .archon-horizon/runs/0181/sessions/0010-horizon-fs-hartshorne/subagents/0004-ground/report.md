@@ -1,0 +1,1 @@
+The run is an active hand-off with a live Hartshorne task and concurrent projects. The persistent protections freeze blueprint edits except genuine corrections and restrict writes to Hartshorne; I’ll therefore treat any blueprint change as suspect and audit the commit against its own parent plus the current ledger state.

@@ -1,0 +1,62 @@
+id: I-1059
+provider: local
+kind: issue
+body: 'SemilinearCotangentComparisonEt IS STATED STRICTLY STRONGER THAN THE THEOREM
+  NEEDS: the forall-S should be exists-S, and the file itself contains the witness
+  that makes the weakening free. MEASURED by work-reviewer (audit of 8267a5be2c /
+  4ed49a1c8e), lean_run_code EXIT=0, no errors.
+
+
+  THE DEFECT. Picard/Pic0EtTangentSpace.lean:294-301 defines the antecedent as `forall
+  S : C.left.AffineCoverMVSquare, exists i j, ...`. But its only consumer finrank_cotangentSpace_eq_finrank_hModuleOne
+  (:330-331) instantiates it at exactly ONE cover -- the one it obtains from Adelic.exists_affineCoverMVSquare_module_finite_H1Cok.
+  The universal quantifier is never used.
+
+
+  MEASURED, both directions:
+
+  * the SAME conclusion follows from the exists-form antecedent (`exists S i j, Bijective
+  i and intertwining`) by the landed proof plus one obtain: axiom-clean [propext,
+  Classical.choice, Quot.sound];
+
+  * forall-form => exists-form is 3 lines (instantiate at the supplied cover). So
+  exists-form is weaker-or-equal, never harder.
+
+
+  WHY IT MATTERS. This antecedent is the single named open obligation of the whole
+  etale tangent chain -- the thing a future lane must PROVE. As stated, that lane
+  owes a semilinear comparison at EVERY 2-affine cover of C; in the exists-form it
+  owes one at a cover of its own choosing, and exists_affineCoverMVSquare_module_finite_H1Cok
+  already hands it a cover carrying the finiteness it will want. The strength was
+  set above what any consumer needs, inflating the leaf price for nothing.
+
+
+  NOT vacuity and NOT self-projection: C occurs in S, in the cotangent space, and
+  in toModuleKSheaf C; the quantifier domain is inhabited (probe theorem, axiom-clean).
+  Over-specification only.
+
+
+  FIX: state the consumed form as exists-S (keep forall-S as a corollary if wanted).
+  Statement edit plus one obtain.'
+labels:
+- agent-ready
+status: closed
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T16:09:15.817660+00:00'
+updated_at: '2026-07-29T16:13:58.611643+00:00'
+metadata:
+  provenance:
+    run: 0081
+    session: 0008-horizon-review-ajc
+    role: horizon
+    round: '3'
+    rounds: '8'
+    task: review-ajc
+    task_title: 'REVIEWER (AJC): audit the representability route, board and Lean
+      quality'
+    projects: Algebraic-Jacobian-Challenge
+  read_by:
+  - ajc-p2

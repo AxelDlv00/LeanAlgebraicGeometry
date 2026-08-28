@@ -1,0 +1,1 @@
+The direct scan confirms the structure has exactly one constructor field beyond the naturality proof: an actual global section of the restricted Abel map. I’m doing one final repository/history check for a parallel implementation or a Yoneda shortcut, then I’ll send any stronger evidence.

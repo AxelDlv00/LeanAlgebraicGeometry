@@ -1,0 +1,38 @@
+`roadmap.md` and all project READMEs verify clean against the source. Cleanup done.
+
+## Summary
+
+Both fired warnings are cleared: **open `memory` 11 → 10** (advisory silent) and the roadmap/task subtree checks out consistent. Total open inbox went 26 → 28 (one issue filed by me, one by your own session mid-pass).
+
+## Warning 1 — memory overflow
+
+Archived exactly one, **`I-0190`** (concurrent lanes coining identical declaration names). Two independent reasons, both verified:
+
+- **Repaired on disk.** Each collided name now has one declaration site, all in `AlgebraicJacobian/RiemannRoch/DegreeIsoTransport.lean` (`pointPullbackEquations:288`, `pointPullbackUnit:297`, `coe_pointPullbackUnit:304`); `DegreePullback.lean` and `ClassDegMapIso.lean` only consume them.
+- **Workflow gone.** The memory is written against the multi-lane fleet model (same-wave lanes mirroring one model file, worksheet-assigned vocabulary, root build under a mutex). Runs 0043-0047 run one horizon session per task per round, and the two live runs sit on different projects and root modules — two lanes can no longer collide in one environment. Its transferable half (per-file `lake env lean` cannot see a duplicate declaration) is now carried by the live `I-0324`.
+
+Archival rationale is recorded as a comment on the item.
+
+**Left alone, with reasons** — the remaining 10 are all load-bearing, so the list is at its advisory size honestly rather than by trimming:
+
+- `I-0209`, `I-0320`, `I-0323` — per your instruction, untouched.
+- `I-0321` was already archived earlier today, absorbed as the scope-amendment comment on `I-0209`. That is the DD-R-lane consolidation you were pointing at; the "blocked on a global `IsCertified`" reading no longer exists as a standalone memory. **No other memory asserts it** — I checked each one.
+- `I-0227` (OOM/RSS ceiling), `I-0161` (`lake env lean` drops lakefile `leanOptions`), `I-0157` (never `git add` the disk root file) — live machine/tooling constraints. `I-0161` verified still true: all seven lakefiles set `maxSynthPendingDepth = 3` and ten files carry the in-file `set_option`. `I-0157` kept deliberately even though the same fleet model produced it — that failure is silent cross-team data loss, not a loud build error.
+- `I-0074`, `I-0106`, `I-0076`, `I-0065` — each has a false-statement or dependency-trap caveat I re-verified: `HasSmoothProperQuotient` still has no global instance; `Genus0BaseObjects/` is imported only by Albanese's `WeilDivisor.lean`, so the carve still orphans the tree; `pullback_preservesFiniteLimits` is still `sorry` at `CechHigherDirectImageUnconditional.lean:186`; `extend_of_codimOneFree_of_smooth` is still absent (only prose warnings against re-adding it).
+
+## Warning 2 — roadmap subtree
+
+**No parent/child inconsistency anywhere**, in the AJCR.w4-rep subtree or across all 206 roadmap items (I scripted the full check rather than trusting the CLI's silence): no open parent with all children closed, no done parent with open children, no orphaned parents, no competing active milestones. Nothing to reconcile, nothing restructured.
+
+The `ddr.certificate` subtree now shows 5 children (`sep-nogo` landed done, `leak-image` added) — your session's updates, and your four named leaves were not touched. Task/run state is also clean: both `running` tasks map to live pids (0046, 0047), no orphaned process markers, no `paused.json`, every session directory has a `report.md`.
+
+## Fixed directly
+
+- **`SubProjects/GR-Quot-Closure/` docs** — committed `dd9a56b90`. The project is complete and merged (0 sorries confirmed), but its docs still read as an in-flight leg with per-node target tables and pending χ nodes. Deleted `PROGRESS.md`, rewrote README/TO_USER to the archive state, and removed dangling pointers to `.archon/USER_HINTS.md`, a nonexistent `references/summary.md`, the retired `Quot-Foundations` parent, and the `FBC-B_SNAP-chain` sibling. Removed an empty `task_results/` directory. These edits were mostly sitting uncommitted in the worktree from an earlier pass; I finished and landed them. Docs only, no Lean/blueprint/hgraph paths.
+- **`I-0220`** (752-line `RelCurveCollapse.lean`) — commented rather than closed: it is a **twelve-file** pattern, not one violation (721/634/602/597/558/544/529/515 and three at ~502). Noted that `I-0227`'s one-heavy-decl-per-unit rule makes these the same work.
+
+## Filed, not fixed
+
+**`I-0326`** — uncommitted hgraph churn is back (`I-0311` was archived 2026-07-24 as fixed; the symptom recurred). 1,426 modified tracked nodes plus ~8,900 untracked across six subproject trees. Nearly all noise: of ~2,800 changed lines, 2,876 are `updated:` timestamps and 2,642 are off-by-one `order:` bumps from a global renumber. Only 17 files exceed 2 changed lines, and **four are net content loss** — notably `hgraph/nodes/a779f7b7a74d.md` (`rmk:rigidity_lemma_decomposition`) drops 43 lines for 6, losing the iter-161 bridge-1/bridge-2 decomposition record and the reasoning for carrying both `[IsAlgClosed k̄]` and `[LocallyOfFiniteType]`. I ran no sync, staged nothing, reverted nothing — the quarantine holds. Likely the same job as `I-0318`.
+
+Also left alone: the three `SubProjects/Albanese/RationalCurveIso.{body,new,skeletal}` drafts, already correctly tracked by `I-0322` as a T13 decision; and three byte-identical legacy `archon/task_results/blueprint-clean-bc255.md` copies, which are still cross-referenced from `analogies/` and blueprint `.tex` comments, so removing them would break live pointers.

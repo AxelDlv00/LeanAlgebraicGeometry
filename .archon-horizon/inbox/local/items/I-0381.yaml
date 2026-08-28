@@ -1,0 +1,82 @@
+id: I-0381
+provider: local
+kind: memory
+body: 'AJC B3 gate: the reusable ℙ¹ template and three tooling gotchas from the rigid-pushforward
+  campaign
+
+
+  **TRIMMED 2026-07-27 (janitor hygiene pass, run 0054 s0010).** This item was written
+  as a frontier record and was WRONG TWICE IN THE SAME DIRECTION within one day —
+  "the gate needs FOUR statements", then "there is deliberately no `instance : HasRigidPushforward`".
+  Both false. Per this item''s own meta-lesson and `I-0439`''s corollary, the state
+  half is now deleted rather than corrected a third time: **the gate''s status lives
+  in roadmap row `AJC.picrep.rigidpushforward`** (done, pinned `02ae27824`/`744a74bf2`),
+  which is the artifact designed to be re-set. What is kept below is the mathematics
+  and the tooling, which do not go stale.
+
+
+  **HOW ℙ¹ INTEGRALITY FELL — the durable template.** Not by cohomology. Identify
+  the chart section rings as polynomial rings, $\Gamma(\mathbb{P}^1_k, D_+(X_i)) \simeq_{alg[k]}
+  k[T]$: the tree already had the *spanning* half (`span_pow_p1XSection_scaffold`,
+  `RiemannRoch/Adelic/P1ChartData.lean`), and the missing half was **injectivity**,
+  obtained from the section-ring pushout — $V_0$ is the fibre product of the affine
+  $D_+(X_0)\subseteq\operatorname{Proj}\mathbb{Z}[X_0,X_1]$ with $\operatorname{Spec}
+  k$, so mathlib''s `isIso_pushoutSection_of_isAffineOpen` presents $\Gamma(V_0)$
+  as a `CommRingCat` pushout and `IsPushout.desc` yields a retraction. Then "both
+  chart rings are domains" gives integrality by `IsReduced.of_openCover` plus density
+  of the overlap. Reusable wherever a hand-built projective object needs a ring-level
+  identification.
+
+
+  **WHY THE DISCHARGE WAS BELIEVABLE, and this is the part to copy.** Measure at the
+  **SYNTHESIS SITE**, not at the theorem: restate the consumers *without* the `[HasRigidPushforward
+  C]` binder, so Lean must synthesize the gate to elaborate them, and read `#print
+  axioms` there. The same measurement applied to `HasPicScheme` is what exposes `instHasPicScheme`
+  as poisoned. Non-vacuity is a separate question again, and needs a witness object
+  (`Picard/RigidPushforwardP1Witness.lean` exhibits ℙ¹ satisfying all three binders).
+  Catalogue of what each check does and does not see: `I-0442`.
+
+
+  **THREE TOOLING GOTCHAS, in descending order of reuse:**
+
+
+  1. `lake env lean <file>` does **not** run this project''s style linters (`linter.style.maxHeartbeats`,
+  `linter.style.setOption`). A file can be silent under `lake env lean` and still
+  warn under `lake build <module>`. Always finish a new module with a single-module
+  `lake build` (~20-35 s warm) before calling it warning-free. Never run a bare `lake
+  build` (43 min — see `I-0319`).
+
+  2. The direct route to the chart identification through `HomogeneousLocalization.val_injective`
+  **`isDefEq`-times-out** at the concrete grading — write it `Away.mk`-first.
+
+  3. Mathlib v4.31 still has **no** integrality/irreducibility/reducedness API for
+  `Proj` at all, while it has all three for affine space (`AlgebraicGeometry/AffineSpace.lean:392/402/419`).
+  Do not go looking; the pushout route above is why this was closable anyway.
+
+
+  **AND THE META-LESSON, earned by this item''s own two corrections.** A memory that
+  records "the frontier is N statements" against a lane being actively worked goes
+  stale within hours, and a stale frontier count is then quoted as authority. Record
+  the *technique* and the *tooling*; point at the roadmap row for the count.'
+labels:
+- agent-ready
+status: archived
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-27T07:51:54.083289+00:00'
+updated_at: '2026-07-30T04:36:50.114984+00:00'
+metadata:
+  provenance:
+    run: '0053'
+    session: 0002-horizon-ajc-gate
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajc-gate
+    task_title: Close the HasRigidPushforward representability gate
+    projects: Algebraic-Jacobian-Challenge
+  read_by:
+  - ajc-gate
+  - ajc-albanese

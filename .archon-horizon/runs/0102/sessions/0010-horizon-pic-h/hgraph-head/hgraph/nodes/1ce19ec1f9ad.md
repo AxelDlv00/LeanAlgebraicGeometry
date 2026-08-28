@@ -1,0 +1,17 @@
+---
+author: sync
+content_type: lemma
+created: '2026-07-16T21:33:28'
+decl: AlgebraicGeometry.Scheme.PointedCover.BasicRefinement._root_.AlgebraicGeometry.Scheme.basicOpen_le_of_dvd
+file: AlgebraicJacobian/Picard/PicAffineCover.lean
+generated: lean
+lean_status: lean_ok
+stale: true
+title: AlgebraicGeometry.Scheme.PointedCover.BasicRefinement._root_.AlgebraicGeometry.Scheme.basicOpen_le_of_dvd
+type: lean
+updated: '2026-07-24T17:02:50'
+---
+lemma _root_.AlgebraicGeometry.Scheme.basicOpen_le_of_dvd {f g : Γ(X, ⊤)} (h : f ∣ g) :
+    X.basicOpen g ≤ X.basicOpen f := by
+  obtain ⟨c, rfl⟩ := h
+  exact (X.basicOpen_mul f c).trans_le inf_le_left

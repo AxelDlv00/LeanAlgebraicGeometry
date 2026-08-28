@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Ramanujan",
+  "agent_path": "/root/queue_janitor",
+  "agent_role": "janitor",
+  "depth": 1,
+  "model": "gpt-5.6-sol",
+  "name": "janitor",
+  "native_subagent_id": "01a04548-47a8-7dd0-b3f9-a08a30a92e27",
+  "ok": true,
+  "parent_session": "0008-horizon-fs-stacks-part04-alg-spaces",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "completed",
+  "subagent_type": "janitor",
+  "summary": "Janitor checkpoint completed.",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 2927887,
+    "tokens_out": 14683
+  }
+}

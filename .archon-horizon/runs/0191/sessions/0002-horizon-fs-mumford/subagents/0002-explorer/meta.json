@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Beauvoir",
+  "agent_path": "/root/api_search",
+  "agent_role": "explorer",
+  "depth": 1,
+  "model": "gpt-5.6-sol",
+  "name": "explorer",
+  "native_subagent_id": "01a04682-aa64-72f0-8da4-467d770d73f6",
+  "ok": false,
+  "parent_session": "0002-horizon-fs-mumford",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "interrupted",
+  "subagent_type": "explorer",
+  "summary": "",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 2549607,
+    "tokens_out": 8265
+  }
+}

@@ -1,0 +1,56 @@
+id: I-1201
+provider: local
+kind: conversation
+body: "Section 3 collapses by the SAME identity witness Section 2's converse uses,\
+  \ so 'the explicit argument is what keeps them from collapsing' is false -- and\
+  \ Section 2's forward lemma is a special case of Section 3's\n\nSITE: Picard/Pic0EtProperImage.lean:66-79\
+  \ (Section 3 prose), :210-222, :164-170.\n\nMEASURED (lake env lean EXIT=0, three\
+  \ probes):\n\n(1) universallyClosed_of_proper_cover = universallyClosed_of_surjective_source\
+  \ + 'rw [hover]; infer_instance'. One line. Section 2's forward half is a corollary\
+  \ of Section 3's.\n\n(2) Section 3 has the same existential collapse. Probe closes\n\
+  \  (h : UniversallyClosed (Pic0SchemeEt C).hom) -> exists W a, Surjective a AND\
+  \ UniversallyClosed (a >> (Pic0SchemeEt C).hom)\nby <_, id, inferInstance, Category.id_comp>,\
+  \ the identical witness to exists_proper_cover_of_universallyClosed. What stops\
+  \ Section 3 collapsing is not the explicit argument (Section 2's cover is explicit\
+  \ too, same position) -- only that Section 3 is stated non-existentially, a presentation\
+  \ choice.\n\n(3) So Sections 2+3 are ONE lemma in four spellings, all downstream\
+  \ of mathlib UniversallyClosed.of_comp_surjective, and the file's own 'must not\
+  \ be reported as progress' applies to all four.\n\nDOCSTRING/STATEMENT MISMATCH:\
+  \ proper_of_surjective_source:224-236 says 'the cover only has to supply universal\
+  \ closedness', but hsurj : Surjective a is a second hypothesis the cover must supply.\
+  \ Same at :210-222.\n\nCONFIRMED but MISROUTED: abelMapWitness IS a natural transformation\
+  \ divFunctor C -> picSharp C (FGAPicRepresentability.lean:950; the docstring cites\
+  \ :932, 18 lines off, inside relPresheafNeg), and :855 says Div representability\
+  \ is not claimed. But 'the Quot input the board marks rejected' is wrong: :371-390\
+  \ corrected exactly that -- Div^d comes via the GRASSMANNIAN (AJC.picrep.divgrassmannian\
+  \ active, .divlocallyclosed pending), not Quot. Section 3 waits on an ACTIVE row,\
+  \ so it is better priced than the file says.\n\nNEXT ACTION: merge Sections 2 and\
+  \ 3 into one 'four spellings of of_comp_surjective' paragraph; name hsurj in both\
+  \ docstrings; repoint the Div^d blocker at divgrassmannian/divlocallyclosed and\
+  \ drop the Quot-rejected sentence; fix :932 -> :950."
+labels:
+- agent-ready
+status: archived
+scope: {}
+audience: task:ajc-p4
+author: horizon
+source_ref: null
+created_at: '2026-07-29T20:22:48.525837+00:00'
+updated_at: '2026-07-29T20:36:08.177930+00:00'
+metadata:
+  provenance:
+    run: 0086
+    session: 0008-horizon-ajc-p4
+    role: horizon
+    round: '3'
+    rounds: '8'
+    task: ajc-p4
+    task_title: 'AJC prover p4: claim and close the 4th-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge
+  conversation: true
+  participants:
+  - task:ajc-p4
+  started_by: task:ajc-p4
+  read_by:
+  - ajc-p4

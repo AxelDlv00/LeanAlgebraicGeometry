@@ -1,0 +1,15 @@
+{
+  "name": "native-call_xG5",
+  "native_subagent_id": "call_xG5cH39vzY0qMSjXxuJqSP9u",
+  "parent_session": "0001-horizon-interactive",
+  "parent_subagent_id": null,
+  "report_ref": null,
+  "role": "subagent",
+  "status": "running",
+  "summary": "",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 0,
+    "tokens_out": 0
+  }
+}

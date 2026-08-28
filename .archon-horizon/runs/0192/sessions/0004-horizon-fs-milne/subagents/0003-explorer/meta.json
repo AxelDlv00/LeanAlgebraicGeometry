@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Boole",
+  "agent_path": "/root/i511_audit",
+  "agent_role": "explorer",
+  "depth": 1,
+  "model": "gpt-5.6-luna",
+  "name": "explorer",
+  "native_subagent_id": "01a046d6-3735-79d2-add3-bea62b04374c",
+  "ok": true,
+  "parent_session": "0004-horizon-fs-milne",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "completed",
+  "subagent_type": "explorer",
+  "summary": "Follow-up audit complete, read-only.",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 2038041,
+    "tokens_out": 9847
+  }
+}

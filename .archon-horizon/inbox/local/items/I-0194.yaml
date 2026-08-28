@@ -1,0 +1,109 @@
+id: I-0194
+provider: local
+kind: memory
+body: 'DD-1 (dat-d.dd1) stage (c) COMPLETE through mapAlg-with-seam (2026-07-17, Fable
+  prover). 6 commits, all green (lake build per-module + lake env lean per-file),
+  keystones axiom-clean [propext, Classical.choice, Quot.sound], root-wired (HEAD-blob
+  + own line only).
+
+
+  LANDED (in queue order of I-0183):
+
+  (i) 85f4f798f pieceTermBaseChangeAlg_one_tmul (Picard/DivisorFamilyPullback.lean):
+  THE LINCHPIN NATURALITY — pieceTermBaseChangeAlg(1⊗s) = pieceSectionsMap s (appLE
+  of relCurveMap between the pieces). IsLocalization.ringHom_ext (powers h); LHS by
+  tensorProductEquivTMulRight_tmul + AlgEquiv.commutes; RHS by Scheme.Hom.appLE_resHom
+  (pieceSectionsMap_algebraMap). REQUIRED REFACTOR: the letI algebra hoisted to @[reducible]
+  pieceTensorChartAlgebra so the rule re-enters the def''s instance context (the h1-rfl
+  unfold works). In-file maxSynthPendingDepth 3 (I-0161 — the file was lake-env-lean-RED
+  before this despite green LSP/build).
+
+  (ii) same commit: pieceQuotBaseChangeAlg(+_one_tmul_mk): R''⊗(Γ(D(h))⧸(E)) ≃ₐ[R'']
+  Γ(D(h''))⧸span(pieceSectionsMap''''E) for ANY equation set E — Algebra.TensorProduct.tensorQuotientEquiv
+  (mathlib right-exactness) .trans Ideal.quotientEquivAlg along the linchpin (spans
+  carried by (i) via pieceSpan_map_eq). Rule 1⊗[s] ↦ [s''] is rfl+one rw.
+
+  (iii) 1b3158bff Picard/DivisorFamilyPullbackOverlap.lean: FinCoverData.chart/gen
+  (casewise, defeq per constructor), ovlGen i j = res(gen i)·res(gen j) with basicOpen_ovlGen
+  (D(h_i)⊓D(h_j) = D(ovlGen) — basicOpen_mul + Scheme.basicOpen_resHom + lattice)
+  and ovlGen_baseChange; indexed comparisons piecesMap/ovlMap (appLE at baseChange_pieces/inf_le_preimage)
+  + ovlMap_resHom_left/right (appLE_resHom, the δ-naturality inputs); pieceQuotBaseChange
+  (indexed, casewise) and ovlQuotBaseChange (the OVERLAP LINCHPIN: generic transport
+  at ovlGen conjugated by relResCongrAlg along the opens equalities; key lemma ovlMap_eq_conj
+  via the subst-collapse Scheme.Hom.appLE_resHom_of_eq). Rules 1⊗[s]↦[compared s].
+
+  (iv)(v)(vi) 2de2f76ef + split 58c38a0d6: Picard/DivisorFamilyPullbackCert.lean (403
+  l) + Picard/DivisorFamilyPullbackGlued.lean (265 l). Raw R''-side apparatus DivisorAdaptation.pulledEqn/pulledColength/pulledOvlIdeal/pulledOvlColength/pulledToOvl*/pulledDelta*/pulledGluedSubmodule
+  (definitionally the ofWitness adaptation''s apparatus). colengthBaseChange/ovlColengthBaseChange
+  (≃ₐ[R''], with _one_tmul_mk). (c1) finite_/projective_pulledColength (Module.Finite.base_change,
+  Projective.tensorProduct, transported by .equiv/of_equiv). δ-NATURALITY delta_baseChange_comm:
+  (pulledδL−pulledδR)∘chartProdBaseChange = ovlProdBaseChange∘(id⊗δ) — chartProd/ovlProdBaseChange
+  := TensorProduct.piRight ∘ piCongrRight(colength isos); componentwise via toOvl-mk
+  rfl-lemmas + ovlMap_resHom_*; needs scoped synthInstance.maxHeartbeats 400000/maxHeartbeats
+  1000000 (style linter demands SCOPED with trailing comment). (c2) gluedBaseChange:
+  R''⊗W(d) ≃ₗ[R''] pulledGlued := FlatCokernel.tensorKerEquivOfFlatCoker (under c3/c4;
+  NOTE ker-vs-gluedSubmodule needs a term-level haveI defeq coercion — instance search
+  does NOT see through the non-reducible def) .trans submoduleMap .trans ofEq(map_ker
+  via generic LinearEquiv.map_ker_of_comp_eq); finite_/projective_/rankAtStalk_pulledGlued
+  (rankAtStalk_baseChange needs [Finite][Flat] — fed from c2-finite + c2-projective
+  via Flat.of_projective). (c3)/(c4) flat_pulledCokerIncl/Diff: Submodule.Quotient.equiv
+  along the inverted square + range_baseChange_gluedSubtype (the purity keystone ker_lTensor_eq_of_flat_coker,
+  R''-linear form via mem-defeq ext) + LinearMap.quotRangeBaseChangeEquiv (RelativeH1BaseChange)
+  + Flat.baseChange.
+
+  (vii-hreg) 7fcdf898d Picard/DivisorFamilyPullbackMap.lean: THE DD-1a DISCHARGE germ_pullbackEqn_mem_nonZeroDivisors
+  — germs of pullbackEqn regular at EVERY point, NO hypothesis on R'': exists_mem_pieces
+  + isAffineOpen_pieces; eqn_mem_nonZeroDivisors (from d.eqn_restrict_mem_nonZeroDivisors);
+  pulledEqn_mem_nonZeroDivisors (includeRight_mem_nonZeroDivisors_of_flat_coker from
+  c1-projective, transported along indexed pieceTermBaseChange); germ seam IsAffineOpen.germ_mem_nonZeroDivisors
+  (import Picard.SectionsToDivisors); stalk-unit bookkeeping via Scheme.Hom.germ_stalkMap_apply
+  + d.eqn_restrict_eq. DivisorAdaptation.pulledEquations := d.pullback (relCurveMap
+  C R R'') _ with picClass_pulledEquations = CechPic.map.
+
+  (viii) f69a51cae Picard/DivisorFamilyMapAlg.lean: Scheme.LocalEquations.divEq_pullback
+  (DivEq stable under pullback — setoid descent); DivisorAdaptation.BaseChangeWitness
+  (pt : index → relCurve C R'', base_pt : f.base∘pt = A.pt) + ofSurjective; ofWitness
+  : DivisorAdaptation C R'' π (pulledEquations) (eqn_eq via pullbackEqn_res + proof-irrelevant
+  point swap appLE_eqn_congr); isCertified_ofWitness (ALL clauses, definitional against
+  pulled apparatus); CertifiedDivisorFamily.baseChangeOfSurjective; DivFam.mapAlgOfSurjective
+  : DivFam C R π n → DivFam C R'' π n + picClass_mapAlgOfSurjective (Abel hook O(f*D)=f*O(D)).
+
+
+  THE PT-TRANSPORT WALL (why mapAlg is conditional on Function.Surjective (relCurveMap
+  C R R'').base): DivisorAdaptation.pt/piece_le demand each base-changed piece INSIDE
+  ONE member of the pulled cover, and members of ANY PointedCover on C_{R''} are indexed
+  by points of C_{R''}. Pigeonhole obstruction is REAL: on a finite-discrete C (C.left
+  = Spec k^4 is legal — only IsAffineHom π is pinned), 6 pairwise-incomparable 2-point
+  pieces vs 4 points defeat every reindexing/DivEq-rep trick I probed (adaptation-cover
+  route, reindexed-d* route, member-enlargement — all reduce to serving >|points|
+  incomparable pieces with one member per point). ESCAPES: (a) surjective base map
+  (LANDED — covers faithfully flat test maps: Spec R'' → Spec R surjective ⟹ base
+  change surjective; DD-2''s fppf covers qualify — DD-2 should derive surjectivity
+  from faithful flatness, one lemma); (b) weaken DivisorAdaptation.piece_le/pt to
+  a pointwise-local compat field (∀ z ∈ piece, ∃ member locally agreeing up to unit)
+  — base-changes cleanly, needs CARRIER change in DivisorFamily.lean = coordinate
+  with the field lane which consumes pt/piece_le; (c) W-refinement invariance (colength
+  sheaf H⁰) — M-L brick, would let extraction re-adapt. The VEHICLE (stage e) compat
+  maps are resAlgHom (Γ(V)→Γ(U), U ≤ V affine opens) whose relCurveMap is an OPEN
+  IMMERSION — NOT surjective ⟹ vehicle is STILL BLOCKED on resolving the seam ((b)
+  looks cheapest). DD-4 Task 7 naturality along general R→R'' likewise.
+
+
+  STILL OPEN: unconditional DivFam.mapAlg + id/comp laws (needs the seam + relCurveMap
+  functoriality); stage (e) vehicle Picard/DivisorFamilyVehicle.lean (gated on unconditional
+  mapAlg for resAlgHom); DD-1b named corollary (localization case).
+
+  HAZARDS for consumers: house local instances header mandatory; files carry in-file
+  maxSynthPendingDepth 3; pulled* apparatus is DEFEQ to (ofWitness w)-fields — state
+  against pulled*, instantiate at ofWitness by exact-defeq; rw across (pulledEquations).eqn/.cover
+  spellings fails syntactically — bridge with rfl-haves (I-0163 pattern).'
+labels:
+- agent-ready
+status: archived
+scope: {}
+audience: horizon
+author: human
+source_ref: null
+created_at: '2026-07-17T05:59:03.163795+00:00'
+updated_at: '2026-07-20T03:16:21.241912+00:00'
+metadata: {}

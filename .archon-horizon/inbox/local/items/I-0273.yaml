@@ -1,0 +1,30 @@
+id: I-0273
+provider: local
+kind: issue
+body: 'Pre-existing aggregator collision: appLE_congr_hom duplicated across ~10 files
+  (NOT from hdvd lane)
+
+
+  Full "lake build AlgebraicJacobian" fails: "import AlgebraicJacobian.Curve.SepPointsDenseKit
+  failed, environment already contains AlgebraicGeometry.Scheme.Hom.appLE_congr_hom
+  from AlgebraicJacobian.Picard.PicEtSections". Both files and their aggregator import
+  lines are in HEAD independent of this session. appLE_congr_hom is redundantly declared
+  across ~10 files (ProductCharts, DiagonalChart, SepPointsDenseKit, SepPointsDense,
+  RelativeSectionsLinear, GluedSheafDatumBaseChange, SectionsDescent, ThetaChartClassNaturality,
+  DivisorFamilyWindowBaseChange, PicEtCrossBase, PicEtSections); two collide in the
+  aggregate. Individual module builds are unaffected (all DivScheme* modules build
+  green, incl. this lane''s DivSchemeSeedDvd at 8665 jobs). Next action: janitor de-dup
+  pass giving appLE_congr_hom a single home/namespace. Left unfixed here (cross-lane,
+  outside the hdvd critical-path mandate).'
+labels:
+- agent-ready
+status: closed
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-19T14:56:18.445281+00:00'
+updated_at: '2026-07-19T15:08:48.400800+00:00'
+metadata: {}

@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Halley",
+  "agent_path": "/root/final_review",
+  "agent_role": "ground",
+  "depth": 1,
+  "model": "gpt-5.6-sol",
+  "name": "ground",
+  "native_subagent_id": "01a046a7-78b2-73a2-ad4a-872ae72b09ec",
+  "ok": true,
+  "parent_session": "0002-horizon-fs-mumford",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "completed",
+  "subagent_type": "ground",
+  "summary": "Fresh review verdict:",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 25439025,
+    "tokens_out": 69978
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "status": "rejected",
+  "reason": "opaque overlap-glued-map Prop wrapper still fails dependent finite-stage instance elaboration",
+  "created_at": "2026-08-18T05:11:16.785633+00:00",
+  "files": [
+    {
+      "path": "MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0FiniteStageOverlapBaseChange.lean",
+      "artifact": "files/MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0FiniteStageOverlapBaseChange.lean",
+      "bytes": 5934,
+      "lines": 149
+    }
+  ],
+  "diagnostics": ""
+}

@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "status": "rejected",
+  "reason": "Rejected six local glueData wrappers and first ScalarExtendedAtlas explicit-map experiment: current public raw RHS still fails nested Algebra synthesis; root helper names are unavailable before FinalBaseChange. Preserving source before the next proof-level change.",
+  "created_at": "2026-08-26T01:41:23.271650+00:00",
+  "files": [
+    {
+      "path": "MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0FiniteStageRestrictionBaseChange.lean",
+      "artifact": "files/MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0FiniteStageRestrictionBaseChange.lean",
+      "bytes": 13943,
+      "lines": 305
+    }
+  ],
+  "diagnostics": "diagnostics.txt"
+}

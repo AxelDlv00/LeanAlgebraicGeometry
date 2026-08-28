@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Kierkegaard",
+  "agent_path": "/root/global_glue_design",
+  "agent_role": "explorer",
+  "depth": 1,
+  "model": "gpt-5.6-terra",
+  "name": "explorer",
+  "native_subagent_id": "01a012f5-62f6-7ee2-922c-5f3ba1b9cb94",
+  "ok": true,
+  "parent_session": "0035-horizon-ajcr-reviewer-full",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "completed",
+  "subagent_type": "explorer",
+  "summary": "Read-only design result:",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 9021634,
+    "tokens_out": 30854
+  }
+}

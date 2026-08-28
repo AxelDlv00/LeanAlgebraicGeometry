@@ -1,0 +1,1 @@
+The proof layer is mathematically honest so far: the new producer is explicitly conditional on both a finite-level representative and `OrbitsInAffineOpen`. I found no existing theorem that supplies either for the glued Picard carrier; I’m now checking the new modules directly and then I’ll distinguish proof quality from the ledger/provenance failure.

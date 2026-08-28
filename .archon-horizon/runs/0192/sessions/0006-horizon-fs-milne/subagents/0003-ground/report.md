@@ -1,0 +1,8 @@
+Current review verdict:
+
+- **Convergence:** The verified local algebra/stalk/tensor infrastructure is progressing. The latest atomic commits `5844e4dc1e` and `bfcae31c5b` add point-translation evaluation and `Isogeny.id`; both carry proper Archon trailers and introduce no regressions. Generic I.5.11 is still genuinely blocked by `I-2118` (no arbitrary coherent `X.Modules` stalk-finiteness API).
+- **Build/axioms:** At `bfcae31c5b`, `horizon check MilneLib` passes all 3143 jobs in 38.8s. The two new declarations depend only on `[propext, Classical.choice, Quot.sound]`. Milne’s source-only ledger status is clean at `HEAD bfcae31c5b53`.
+- **Graph/bookkeeping:** Sync is healthy (`stale=0`, 265 TeX nodes, 69 Lean declarations, 235 edges). The unlinked warning rose to 32 because the two new helper APIs are not referenced by blueprint `\lean{...}` entries. This is not graph corruption, but should be documented or linked eventually. I.5.11 remains `empty`; its blueprint has neither `\lean{}` nor `\notready`. `fs-milne` has no roadmap references or Milne roadmap subtree.
+- **Workspace/integration:** No Milne ledger clobber or deletion issue is present. The recurring polluted-staging baseline/integration problem remains tracked in `I-2039`; I added current run evidence there. Ordinary root-repo dirt is separate from the Horizon ledger.
+
+Highest-confidence next verified unit: specialize I.5.11 to affine `Spec R`/tilde finite-target modules, chaining `moduleFinite_tilde_stalk`, the residue-field tensor-surjectivity theorem, and `schemeModule_epi_of_surjective_on_stalks`. Keep the generic coherent-sheaf claim unmarked until a finite-stalk interface is available.

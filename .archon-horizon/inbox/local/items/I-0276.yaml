@@ -1,0 +1,71 @@
+id: I-0276
+provider: local
+kind: info
+body: "hdvd close -> seedUniv/relDivisor: PROBE-FIRST DONE, no new commits (wall precisely\
+  \ re-mapped; hfield's base-change iso DE-RISKED, hflat routing + seedUniv are the\
+  \ real wall).\n\nVERDICT: hdvd NOT closed. seedUniv, hflat, hfield all NOT built.\
+  \ Crisp keystone dvd_of_flat_quotient_of_field_vanishing (DivSchemeSeedDvd.lean:127)\
+  \ stands as landed; it needs hflat + hfield supplied for the (unbuilt) universal\
+  \ seed. No architecture change; no sorries; nothing landed this lane (a dangling\
+  \ base-change lemma would not advance the critical path and I would not risk an\
+  \ unverifiable lock/CAS build behind the active JANITOR worker on Curve/SepPointsDenseKit.lean).\n\
+  \nKEY FINDING (corrects I-0274 risk call): hfield's base-change identification \"\
+  colength z (x) kappa(p) = fibre colength\" — flagged as THE HARDEST, PROBE-FIRST\
+  \ — ALREADY EXISTS as a reusable engine and applies to the per-point seed piece\
+  \ VERBATIM. It is pieceQuotBaseChangeAlg (DivisorFamilyPullback.lean:384): for chart\
+  \ V, section h, equation set E, [IsAffineHom pi],\n  R' (x)[R] (Gamma(D(h)) / span\
+  \ E) ~=a[R'] Gamma(relCurve C R', basicOpen(relSectionsMap C R R' V h)) / span(pieceSectionsMap\
+  \ R' V h '' E),\nwith pieceQuotBaseChangeAlg_one_tmul_mk : 1 (x) [s] |-> [pieceSectionsMap\
+  \ s] (:396). Instantiate R' := kappa(p), V := fiberChart0/1 pi CASEWISE on D.side\
+  \ z, h := D.h z, E := {D.eqn z} — the SAME chart/affineness/compactness inputs already\
+  \ compiling at DivSchemeSeed.lean:92-109 (isAffineOpen_relPinnedChart, isAffineOpen_preimage_chartOpen\
+  \ pi 0/1 .isCompact/.isQuasiSeparated; relPinnedChart is defeq (fst..).left ^-1\
+  \ fiberChart_b under backward.isDefEq.respectTransparency false). So hfield reduces\
+  \ (via this equiv + TensorProduct.comm for the kappa(x)_ vs _(x)kappa orientation)\
+  \ to a FIBRE-CURVE divisibility: pieceSectionsMap(relThetaResSide(side z) psi) in\
+  \ span{e_p}, e_p := pieceSectionsMap(D.eqn z), in Gamma(relCurve C kappa(p), fibre\
+  \ D(h z)). That is a Scheme.mem_span_singleton_of_forall_germ statement AT THE FIBRE,\
+  \ fed by the achiever exists_coeffAt_eq_baseDivisorAt (BaseDivisor:143): e_p has\
+  \ exact order d_p (= divUniversalSeedFibreDivisor, SeedUnivFields:133), K vanishes\
+  \ along d_p (le_divisorSections_sub_baseDivisor). NOT walled.\n\nhflat IS THE HARDER-TO-ROUTE\
+  \ FACT (opposite of I-0274's call). The crisp keystone wants PER-POINT Module.Flat\
+  \ R (colength z / N z). SlicingFlatKernel keystone 3 (:284) produces flatness only\
+  \ of the GLUED cokernel chartProd/gluedSubmodule on the FINITE adaptation (product\
+  \ over A.index) — NOT isomorphic to a single per-point colength z / N z. Bridging\
+  \ glued<->per-point is UNBUILT. hflat CANNOT be derived from hfield (circular: N\
+  \ z (x) kappa=0 for all p + N z finite over Noetherian ==> N z = 0 by Nakayama ==\
+  \ hdvd itself, DivSchemeRelDivisor exists_notMem...). So hflat must come from the\
+  \ carve's independent flat rank-g structure through a glued<->per-point bridge that\
+  \ does not exist. THIS is the standing structural wall (plus seedUniv).\n\nseedUniv\
+  \ NOT built (confirmed: no ThetaGeneratorSeed value in-tree). Fields needed at each\
+  \ z: side (two-cover chart containing z); sec := windowCompare-selected section\
+  \ from the LANDED seed-prime bridge exists_relThetaWindowEquiv_mem_divUniversalSeedK_windowCompare_ne_zero_seedPrime\
+  \ (DivSchemeSeedUnivBridge.lean:250) at basePrime(germ z); h := the Nakayama shrink\
+  \ f notin p (exists_notMem_forall_pow_mul_mem_span_of_subsingleton_tmul_residueField,\
+  \ I-0272). hfib route (Bricks 2/3: exists_forall_windowCompare_ne_zero SeedUnivFields:202,\
+  \ relPinnedSectionsMap_relThetaResSide_windowEquiv_ne_zero :251) is landed and ready.\n\
+  \nINFRA MAP (all landed, reuse): base-change engine pieceQuotBaseChangeAlg (Pullback:384)\
+  \ + adaptation colengthBaseChange (PullbackCert:93); achiever BaseDivisor:143; d_p\
+  \ SeedUnivFields:133; hfib bridge SeedUnivBridge:250; SlicingFlatKernel 3/4/7 (:284/:448)\
+  \ fed by divUniversal_carve_residueField (FamilyUniv:135); flat-cokernel half subsingleton_tmul_residueField_of_flat_quotient\
+  \ (RelDivisor, e9c146a8); link1 sideColengthSubmodule_finite; germ closer mem_span_singleton_of_forall_germ\
+  \ (DivisorStalkIdeal:79).\n\nNEXT LANE ORDER: (1) build seedUniv (unblocks all;\
+  \ sec/h from the two landed selectors above). (2) hfield via the de-risked pieceQuotBaseChangeAlg\
+  \ base-change + fibre germ-divisibility from the achiever (route above; NOT a wall).\
+  \ (3) hflat: build the glued<->per-point flat bridge (SlicingFlatKernel glued flatness\
+  \ transported to per-point colength z / N z) — the genuine remaining structural\
+  \ wall. Then assemble hdvd := dvd_of_flat_quotient_of_field_vanishing; isGenerator_seedUniv\
+  \ := isGenerator_of_fibre_ne_zero hdvd hfib; relDivisor := seedUniv.localEquations.\
+  \ RD3 for CertUniv reads SlicingFlatKernel rankAtStalk=g on deltaLeft-deltaRight."
+labels:
+- agent-ready
+status: archived
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: human
+source_ref: null
+created_at: '2026-07-19T15:14:09.871473+00:00'
+updated_at: '2026-07-20T03:15:36.186053+00:00'
+metadata: {}

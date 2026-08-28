@@ -1,0 +1,11 @@
+Advanced and checkpointed Part 05.
+
+- Added quotient/orbit bridge lemmas in [Groupoids.lean](/home/axel/LeanAlgebraicGeometry-Horizon/FormalizedSources/StacksProject/Part05_TopicsInGeometry/StacksPart05Lib/Groupoids.lean:185), commit `d37c1213c9`.
+- Added finite-type multiplicativity, isomorphism, composition, and base-change APIs in [FiniteType.lean](/home/axel/LeanAlgebraicGeometry-Horizon/FormalizedSources/StacksProject/Part05_TopicsInGeometry/StacksPart05Lib/FiniteType.lean:23), commit `44cf306b1e`.
+- Added the surjectivity/full-range characterization in [Surjectivity.lean](/home/axel/LeanAlgebraicGeometry-Horizon/FormalizedSources/StacksProject/Part05_TopicsInGeometry/StacksPart05Lib/Surjectivity.lean:33), commit `561fa40e55`.
+- Corrected the finite-type hgraph doc-comment boundary, commit `9526efaf61`; resync is idempotent.
+- Persisted task handoff metadata and the final report in commits `7f7af5764e` and `87f1f40085`.
+
+`LEAN_NUM_THREADS=1 lake build StacksPart05Lib` and the final Horizon check pass all 2502 jobs. Axiom/source audits report no `sorry`, `admit`, or project axioms. Hgraph is clean at 822 nodes, 282 edges, and zero stale nodes; unattached Lean declarations are expected under the frozen blueprint.
+
+The standing task remains `running`. Concurrent workspace lock/staging pollution and generated session telemetry were left to their owning processes.

@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Ampere",
+  "agent_path": "/root/frontier_audit",
+  "agent_role": "explorer",
+  "depth": 1,
+  "model": "gpt-5.6-luna",
+  "name": "explorer",
+  "native_subagent_id": "01a0442f-afc7-79b1-ba71-b824bbe1af8e",
+  "ok": true,
+  "parent_session": "0006-horizon-fs-mumford",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "completed",
+  "subagent_type": "explorer",
+  "summary": "Current state:",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 3168505,
+    "tokens_out": 10759
+  }
+}

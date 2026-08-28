@@ -1,0 +1,1 @@
+The Yoneda wrapper check is clean in the pinned environment. I’m also checking the exact category-level type (the wrapper must target `yonedaGrp : Grp C ⥤ (Cᵒᵖ ⥤ GrpCat)`, not the single-object `yonedaGrpObj`) so the parent can attach the right declaration to the graph node.

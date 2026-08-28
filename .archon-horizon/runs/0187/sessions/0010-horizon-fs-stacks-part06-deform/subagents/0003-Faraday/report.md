@@ -1,0 +1,1 @@
+The graph confirms 06I9’s ring-level product equivalence and explicit `S`-scalar compatibility already landed; the remaining gap is only categorical `S-Alg/Under` packaging. I’m now checking nearby declarations and hgraph dependencies for a small theorem that adds real API value without pretending to close either frozen statement.

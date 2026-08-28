@@ -1,0 +1,1 @@
+I’m loading the Horizon workflow instructions, then I’ll inspect the Milne dependency graph and recent ledger entries for proof-ready abelian-variety nodes. I’ll keep this read-only and report exact declarations and routes back to `/root`.

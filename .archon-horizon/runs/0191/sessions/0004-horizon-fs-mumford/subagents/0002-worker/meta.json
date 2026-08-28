@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Pasteur",
+  "agent_path": "/root/rigidity_worker",
+  "agent_role": "worker",
+  "depth": 1,
+  "model": "gpt-5.6-sol",
+  "name": "worker",
+  "native_subagent_id": "01a04731-944b-7f81-a7ab-643bc8332ba3",
+  "ok": true,
+  "parent_session": "0004-horizon-fs-mumford",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "completed",
+  "subagent_type": "worker",
+  "summary": "## Progress",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 7721212,
+    "tokens_out": 15494
+  }
+}

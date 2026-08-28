@@ -1,0 +1,30 @@
+AlgebraicJacobian/Picard/Pic0FiniteStageRestrictionBaseChange.lean:137:8: error(lean.synthInstanceFailed): failed to synthesize instance of type class
+  Algebra (↥↑P.N)
+    (↥↑P.N ⊗[↥↑P.M]
+      Pic0FiniteStageModelRing C P.L P.n P.m P.relation P.M (Pic0FiniteStageMapSource C (Sum.inl (Sum.inl (U, V)))))
+
+Hint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.
+Command exited with non-zero status 1
+	Command being timed: "timeout -k 10 260s lake env lean -j 4 AlgebraicJacobian/Picard/Pic0FiniteStageRestrictionBaseChange.lean -o /tmp/ajcr-checks/restriction-base-public-rhs4.olean"
+	User time (seconds): 145.18
+	System time (seconds): 3.24
+	Percent of CPU this job got: 131%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 1:53.11
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 7242256
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 269254
+	Voluntary context switches: 3294
+	Involuntary context switches: 1075
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 0
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 1

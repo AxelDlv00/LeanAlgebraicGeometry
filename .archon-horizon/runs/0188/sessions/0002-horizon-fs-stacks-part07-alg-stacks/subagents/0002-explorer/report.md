@@ -1,0 +1,1 @@
+I’m extending the survey around the Chapter 2 example-stack nodes and checking the current Part07 frontier against the exact mathlib APIs, so the handoff can distinguish reusable foundations from areas with no existing implementation.

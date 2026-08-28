@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "fingerprint": "d3646df4db6cbd54",
+  "command": [
+    "lake",
+    "env",
+    "lean",
+    "/home/axel/LeanAlgebraicGeometry-Horizon/MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Descent/FiniteStageApi.lean"
+  ],
+  "cwd": "MainProjects/Algebraic-Jacobian-Challenge-Rebuild",
+  "status": "passed",
+  "ok": true,
+  "returncode": 0,
+  "timed_out": false,
+  "reused": false,
+  "wait_seconds": 211.576,
+  "duration_seconds": 6.43,
+  "started_at": "2026-08-28T01:23:49.023344+00:00",
+  "finished_at": "2026-08-28T01:23:55.453634+00:00",
+  "finished_epoch": 1787880235.453634
+}

@@ -1,0 +1,1 @@
+The upstream build is still the sole blocker to checking this draft; both source files are present but neither artifact exists. I’m holding the prepared file unchanged and staying available for the verification signal.

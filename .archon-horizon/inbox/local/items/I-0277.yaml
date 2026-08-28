@@ -1,0 +1,115 @@
+id: I-0277
+provider: local
+kind: info
+body: 'SEED CLOSE lane: hdvd NOT closed, but SHARPENED to a single obligation; the
+  direct-form "primitive avoids hflat" premise is UNSOUND (verified).
+
+
+  **Verdict**: `seedUniv`, `hdvd`, `isGenerator_seedUniv`, `relDivisor` all still
+  NOT built. What landed is a capstone that reduces `hdvd` to one precise fibrewise
+  obligation. Commit `f03d855fb` (extends `Picard/DivSchemeSeedDvd.lean`, +66 L, single-module
+  build green 8666 jobs 14s, axioms exactly `[propext, Classical.choice, Quot.sound]`,
+  zero new warnings; no root change).
+
+
+  ## CORRECTS the orchestrator / I-0276: the primitive does NOT avoid hflat
+
+  The instruction was to use the PRIMITIVE `dvd_of_forall_subsingleton_tmul_residueField`
+  (`DivSchemeSeedDvd.lean:94`) and "supply hfib := Subsingleton(N z ⊗ κ(p)) directly
+  via pieceQuotBaseChangeAlg + achiever, skipping hflat." **This is mathematically
+  unfounded.**
+
+
+  - The base-change engine `pieceQuotBaseChangeAlg` (`DivisorFamilyPullback.lean:384`)
+  gives `κ(p) ⊗ colength ≃ fibreColength` for the WHOLE colength. It identifies the
+  ambient class of each K-side component; combined with the achiever it proves exactly
+  **hfield** = for all x in N z, (x:colength) ⊗ₜ 1 = 0 in colength ⊗ κ(p). It does
+  NOT identify the SUBMODULE tensor N z ⊗ κ(p) with the fibre image — that submodule-level
+  iso itself requires flatness.
+
+  - Going from hfield to hfib = Subsingleton(N z ⊗ κ(p)) needs N z ⊗ κ(p) ↪ colength
+  ⊗ κ(p) injective, i.e. `Module.Flat R (colength ⧸ N z)`. The ONLY landed Subsingleton-from-vanishing
+  producer is `subsingleton_tmul_of_flat_quotient` (`DivSchemeRelDivisor.lean:279`),
+  which REQUIRES `[Module.Flat R (M ⧸ P)]`; `SlicingFlat.lean:315` even records "the
+  conclusion genuinely fails for non-flat B" (the k[ε] trap). Elementary reason: hfield
+  says N z ⊆ p·colength; hfib says N z ⊆ p·N z (Nakayama); the gap is exactly Tor₁(colength⧸N
+  z, κ(p)) = 0 = flatness.
+
+  - Therefore primitive vs wrapper makes ZERO difference to the flatness requirement.
+  hfib ⟺ hfield ∧ hflat via the flat-cokernel lemma; hfield alone (base-change + achiever)
+  can never yield hfib.
+
+
+  ## The SHARPENED route (better than both I-0276 and the primitive plan)
+
+  Do NOT build a glued↔per-point flatness bridge, and do NOT use the primitive. Use
+  the WRAPPER `dvd_of_flat_quotient_of_field_vanishing` and get per-point flatness
+  DIRECTLY from the c4 keystone. Landed capstone:
+
+
+  `ThetaGeneratorSeed.dvd_of_fibrewise_ker_span_of_field_vanishing` — from hreg, hcolFin,
+  hcolFlat, hspan, hfield produces the seed dvd clause. Internally: hspan + colength
+  finite/flat + [Module.Finite R ↥K] feed c4 `Module.Flat.quotient_range_of_forall_ker_rTensor_residueField_le`
+  (`SlicingFlatKernel.lean:296`) to get `Module.Flat R (colength ⧸ N z)` per-point
+  (N z = range of kColengthMap ∘ K.subtype); then the wrapper.
+
+
+  Inputs status:
+
+  - hcolFlat (per-point Module.Flat R (colength z)) — LANDED-cheap: `Module.Flat.quotient_span_singleton_of_forall_tmul_residueField`
+  (`SlicingFlat.lean:317`) from the seed fibre-regularity (`flat_sections_piece` +
+  fibrewise nonzerodivisor). Just needs wiring at the seed types.
+
+  - [Module.Finite R ↥K] for K = divUniversalSeedK — LANDED: `finite_divUniversalSeedK`
+  (`DivSchemeSeedUniv.lean:315`).
+
+  - hcolFin — LANDED: SupportTube finiteness.
+
+  - hfield — de-risked: pieceQuotBaseChangeAlg at R''=κ(p), V=fiberChart₀/₁, E={eqn
+  z}, then the d_p achiever `exists_coeffAt_eq_baseDivisorAt` (`BaseDivisor.lean:143`)
+  at d_p = `divUniversalSeedFibreDivisor` (`SeedUnivFields.lean:133`). Unbuilt wiring,
+  but pure fibre-curve divisibility — the honest content.
+
+  - **hspan — THE SINGLE GENUINE REMAINING CONTENT**: for all z p, ker((kColengthMap
+  z ∘ K.subtype).rTensor κ(p)) ≤ range((ker …).subtype.rTensor κ(p)) = the fibre kernel
+  of K → colength is spanned by the base change of the global kernel. Its content
+  is `divUniversal_carve_residueField` (`DivSchemeFamilyUniv.lean:135`) / the fibre-kernel-pair
+  machinery (`DivSchemeSeedUnivFibre.lean`). This is where the carve flat rank-g structure
+  actually enters, per-point — NOT via the glued adaptation cokernel.
+
+
+  ## Also still unbuilt
+
+  `seedUniv` (the ThetaGeneratorSeed value): side/sec from the seed-prime bridge `exists_relThetaWindowEquiv_mem_divUniversalSeedK_windowCompare_ne_zero_seedPrime`
+  (`DivSchemeSeedUnivBridge.lean:250`); h z / mem_basicOpen need the base→curve shrink
+  threading (choose D(h z) over D(f) ⊂ Spec R_Z) — unbuilt, size-L. hfib_ne / fibre_regular
+  from Bricks 2/3 (`SeedUnivFields.lean:202/:251`) are landed. Then isGenerator_seedUniv
+  := isGenerator_of_fibre_ne_zero seedUniv (dvd_of_fibrewise_ker_span_of_field_vanishing
+  …) hfib_ne; relDivisor := seedUniv.localEquations ….
+
+
+  ## RD3 for CertUniv unchanged
+
+  Still SlicingFlatKernel keystones 3/4/7 (:284/:296/:448) on deltaLeft−deltaRight
+  of the adaptation (`DivisorFamily.lean` IsCertified c3/c4), fed by `divUniversal_carve_residueField`.
+  Note the same hspan-shaped fibre-kernel content underlies both RD3 and the per-point
+  hflat — worth factoring once.
+
+
+  **Residual / next lane**: build hspan (per-point fibre-kernel-spanning from divUniversal_carve_residueField)
+  + hfield wiring (base-change + achiever) + seedUniv (shrink threading). No sorries
+  introduced; full-root build stays green.
+
+  '
+labels:
+- agent-ready
+status: archived
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: human
+source_ref: null
+created_at: '2026-07-19T15:39:51.256689+00:00'
+updated_at: '2026-07-20T03:15:37.653993+00:00'
+metadata: {}

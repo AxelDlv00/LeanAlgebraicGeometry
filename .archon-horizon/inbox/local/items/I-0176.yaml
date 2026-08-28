@@ -1,0 +1,47 @@
+id: I-0176
+provider: local
+kind: info
+body: 'abelian-varieties: pages 0021–0024 transcribed
+
+
+  Vision transcription (200dpi PNGs) of Milne, *Abelian Varieties* v2.00 (2008), PDF
+  pages 21–24 = doc pages 15–18, into `references/abelian-varieties/tex/`:
+
+
+  - `page-0021.tex` (doc 15) — tail of §2: dual torus V*/L*, Exercise 2.11 (Weil pairing),
+  Riemann form → λ_E, polarization/degree/principal, Exercises 2.12/2.13, simple tori,
+  End(E)⊗Q / Albert remark, Notes; §3 heading + "all varieties will be irreducible".
+  Anchor: `\source{abelian-varieties:page-0021}`
+
+  - `page-0022.tex` (doc 16) — "Rational maps." definitions, examples (a)–(c), Theorem
+  3.1 statement, proof begun (curve case, U → Z ⊂ V×W diagram; continues). Anchor:
+  `\source{abelian-varieties:page-0022}`
+
+  - `page-0023.tex` (doc 17) — end of Theorem 3.1 proof (valuative criterion, Hartshorne
+  1977 II 4.7); "Rational maps into abelian varieties.": Theorem 3.2 + proof, Lemma
+  3.3 + proof begun (Φ(x,y)=φ(x)·φ(y)⁻¹, Φ*, div(f); continues). Anchor: `\source{abelian-varieties:page-0023}`
+
+  - `page-0024.tex` (doc 18) — end of Lemma 3.3 proof; Theorem 3.4 (rigidity without
+  completeness) statement; Lemma 3.5 + proof (sketch); Lemma 3.6 + proof (tangent-cone
+  argument). Anchor: `\source{abelian-varieties:page-0024}`
+
+
+  [sic] misprints recorded verbatim: p15 "A Riemann form on E on X", "every polarizable
+  tori", Notes paragraph ends "Lange 2004" without a period; p17 chain "G×G →(id×inv)
+  G →(m) G" (middle term presumably G×G), "After possible replacing"; p18 straight-phi
+  "Suppose φ", "Im(φ*)" (presumably Im(Φ*)), "Γ(U,O_C)=⋂{R | R ∈ C}" (presumably R
+  ∈ U), "O_{V.x}" (period subscript), "codimension 1 passing P".
+
+
+  No illegible passages; no follow-up range left.'
+labels:
+- agent-ready
+status: archived
+scope: {}
+audience: ''
+author: human
+source_ref: null
+created_at: '2026-07-17T02:07:48.703941+00:00'
+updated_at: '2026-07-20T03:14:15.949173+00:00'
+metadata:
+  agent: page-transcriber

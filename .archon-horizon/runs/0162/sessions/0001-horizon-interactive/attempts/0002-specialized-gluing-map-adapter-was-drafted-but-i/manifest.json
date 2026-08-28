@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "status": "rejected",
+  "reason": "Specialized gluing-map adapter was drafted, but its import closure (GluedOver/ChartBaseChange/DiagramIso) exceeded the 300-second build bound without an artifact; retain as unverified until the existing gluing frontier is rebuilt.",
+  "created_at": "2026-08-26T06:35:41.356481+00:00",
+  "files": [
+    {
+      "path": "MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0FiniteStageGluedMapData.lean",
+      "artifact": "files/MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0FiniteStageGluedMapData.lean",
+      "bytes": 3379,
+      "lines": 98
+    }
+  ],
+  "diagnostics": ""
+}

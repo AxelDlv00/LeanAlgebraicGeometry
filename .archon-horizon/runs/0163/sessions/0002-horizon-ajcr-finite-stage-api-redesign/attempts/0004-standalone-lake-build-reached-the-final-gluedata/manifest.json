@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "status": "rejected",
+  "reason": "Standalone lake build reached the final GlueDataFace job after the parent GluePackage twice timed out there. This draft pins eSource/eTarget once across both face squares and final conjugation; native verification is still running under a 30-minute bound.",
+  "created_at": "2026-08-26T20:29:50.845505+00:00",
+  "files": [
+    {
+      "path": "MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0FiniteStageGlueDataFace.lean",
+      "artifact": "files/MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0FiniteStageGlueDataFace.lean",
+      "bytes": 8976,
+      "lines": 206
+    }
+  ],
+  "diagnostics": ""
+}

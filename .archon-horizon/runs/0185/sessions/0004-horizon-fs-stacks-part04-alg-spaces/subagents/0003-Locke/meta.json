@@ -1,0 +1,21 @@
+{
+  "agent_nickname": "Locke",
+  "agent_path": "/root/descent_groupoid",
+  "depth": 1,
+  "model": "gpt-5.6-sol",
+  "name": "Locke",
+  "native_subagent_id": "01a04418-e1f2-7aa0-8ebe-be12b77ec652",
+  "ok": false,
+  "parent_session": "0004-horizon-fs-stacks-part04-alg-spaces",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "interrupted",
+  "subagent_type": "Locke",
+  "summary": "",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 13372127,
+    "tokens_out": 37065
+  }
+}

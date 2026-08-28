@@ -1,0 +1,10 @@
+id: '0161'
+focus:
+  projects: []
+  task: null
+  tasks:
+  - ajcr-compile-frontier-repair
+rounds_requested: 5
+start_round: 0
+created_at: '2026-08-25T05:43:22.564986+00:00'
+metadata: {}

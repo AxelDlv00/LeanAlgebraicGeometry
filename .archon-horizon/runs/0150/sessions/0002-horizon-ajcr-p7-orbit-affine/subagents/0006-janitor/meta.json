@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Copernicus",
+  "agent_path": "/root/posthook_health_audit",
+  "agent_role": "janitor",
+  "depth": 1,
+  "model": "gpt-5.6-sol",
+  "name": "janitor",
+  "native_subagent_id": "01a014ba-9bd0-7c80-991f-8d36973e8de7",
+  "ok": true,
+  "parent_session": "0002-horizon-ajcr-p7-orbit-affine",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "completed",
+  "subagent_type": "janitor",
+  "summary": "Audit passed at HEAD `241a0580e9d1d6dba149c987238036da06600481`.",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 356177,
+    "tokens_out": 8285
+  }
+}

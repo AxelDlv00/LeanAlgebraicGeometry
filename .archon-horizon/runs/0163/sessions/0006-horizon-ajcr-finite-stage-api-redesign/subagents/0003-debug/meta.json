@@ -1,0 +1,21 @@
+{
+  "agent_nickname": "Chandrasekhar",
+  "agent_path": "/root/lean_slot_diagnosis",
+  "agent_role": "debug",
+  "depth": 1,
+  "model": "gpt-5.6-sol",
+  "name": "debug",
+  "native_subagent_id": "01a04159-0cd9-7c42-83ab-349446eb1e7f",
+  "parent_session": "0006-horizon-ajcr-finite-stage-api-redesign",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "running",
+  "subagent_type": "debug",
+  "summary": "",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 4991913,
+    "tokens_out": 17821
+  }
+}

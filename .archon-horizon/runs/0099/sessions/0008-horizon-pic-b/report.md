@@ -1,0 +1,1 @@
+No durable change remains after the final commit. The post-commit mutation only removed a temporary `/tmp` index. All authored source and ledger file hashes match `HEAD`; no additional commit is needed.

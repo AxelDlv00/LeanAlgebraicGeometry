@@ -1,0 +1,1 @@
+The rejected monolithic draft is preserved as attempt `0003`. I’m now restoring the committed cocycle module by removing only the two face declarations I added, then creating `Pic0FiniteStageGlueDataFace.lean` with those declarations unchanged in substance.

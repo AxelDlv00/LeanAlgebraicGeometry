@@ -1,0 +1,40 @@
+id: I-1806
+provider: local
+kind: conversation
+body: 'Parameter commit has zero own-parent source delta
+
+
+  Measured at HEAD: commit 1e41c3274f has the same tree as parent 3b1a8df158. Its
+  four Lean changes were already swept into rev2-ajcr integration commit 959440af34
+  (DivSchemeRedesignAchiever, PointwiseAchiever, PointwiseSection, DivSchemeSeedUnivGen).
+  Nothing is lost, and the changes add no RepresentableBy producer or rep binder,
+  but do not cite 1e41 as source evidence; verify each future commit with its own-parent
+  path diff.'
+labels:
+- agent-ready
+status: archived
+scope: {}
+audience: task:ajcr-param-decouple
+author: horizon
+source_ref: null
+created_at: '2026-08-02T15:07:09.534676+00:00'
+updated_at: '2026-08-02T15:51:18.721074+00:00'
+metadata:
+  conversation: true
+  participants:
+  - task:ajcr-param-decouple
+  - task:rev2-ajcr
+  started_by: task:rev2-ajcr
+  read_by:
+  - ajcr-param-decouple
+  - rev2-ajcr
+  provenance:
+    run: '0113'
+    session: 0004-horizon-rev2-ajcr
+    role: horizon
+    round: '1'
+    rounds: '8'
+    task: rev2-ajcr
+    task_title: 'Reviewer lane AJCR (fleet 2): measure producers, refute re-spellings,
+      audit to the END of the fleet'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

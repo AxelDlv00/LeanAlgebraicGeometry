@@ -1,0 +1,72 @@
+id: AJC.picrep.etale-rep.pic-finite-in-affine
+title: 'Picard degree pieces: FiniteInAffine and very-ample substrate'
+projects:
+- Algebraic-Jacobian-Challenge
+summary: 'Part 1 is closed: CurveProjectivity is explicitly imported and term-used
+  at the FGA/Pic0 Kleiman boundaries, with import-only probes. The reusable FiniteInAffine,
+  H-quasi-projective, carried-O(1), open-image, component, Cech, and scheme-fibre
+  Euler substrate remains landed. Round 7 instantiates the campaign two-term finite
+  replacement for every finite-type affine family line bundle after finite pushforward
+  to P^1_A (a81f6efaec), and H0 semicontinuity now consumes that exported producer
+  (80e43977a6). One global replacement also gives local constancy of the intrinsic
+  finite-pushforward fibre Euler index; run0111 authored and verified that +55-line
+  theorem, while automatic run0114 commit 3c20d01ba5 is only its durable carrier.
+  The pointwise Euler wrapper is interface composition and earns zero Euler or Riemann--Roch
+  movement. The 8708-job narrow build and import-only axiom probe pass with only propext,
+  Classical.choice, and Quot.sound. Classification remains arbitrary-field PicEt producers
+  +0, strict rep consumers +0, PicEt seam +0; fgaPicardRepresentability is untouched.
+  Still open: compare finite-pushforward H1 and Euler back to the original curve family,
+  prove Riemann--Roch degree, quotient and etale descent with pullback naturality,
+  arbitrary-test Abel pin, intrinsic Pic^d carriers, and actual very-ample/FiniteInAffine
+  Picard-piece assembly.'
+status: pending
+kind: proof
+priority: high
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+metadata:
+  author: horizon
+  created_at: '2026-08-02T12:14:30.179164+00:00'
+  provenance:
+    run: '0111'
+    session: 0002-horizon-ajc-kleiman-rewire
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajc-kleiman-rewire
+    task_title: 'AJC: consume the projectivity theorem and build the FiniteInAffine/very-ample
+      substrate'
+    projects: Algebraic-Jacobian-Challenge
+  parent: AJC.picrep.etale-rep
+  milestone: AJC.picrep
+  updated_at: '2026-08-04T01:57:52.581438+00:00'
+  pinned_commits:
+  - 24b82fecb1da5811c5c616634d2e3567c8b8771c
+  - 9ea06d04ffad609a7603226edc8553ac6378e4b6
+  - 3c20d01ba50830f45d40b2d1872af937eb162962
+  - 80e43977a60c458b66cd9371c436a69a90b86e04
+  - a81f6efaecb58332c9638d9e654c003a4aaaa128
+  - 045d179a756b6e6805da3156706f6edf72368add
+  - 38686217d33de4a66225ef5b0fa9f40e0381ef1e
+  - 3d902798c7
+  - 38863e8c3d
+  - 820538b96d
+  - 9c17cf054d
+  - 7482b93e54
+  - c451fb927e
+  - f2316ebe80
+  - 265ceb40c
+  - ed9f08339c
+  - 668f93de3c
+  - 9ebdbf9dc5
+  - c165008973deeee8b845b1d983a51a5c053b44c9
+  - ec949eb9ac322ceb1d78f6dafd23886c5c23d60c
+  - 8c0f0550e65645feea997eecd4122db477c80302
+  - 5edfb3ad09fcc6d74e86f0aa067ed15ae6aba1fe
+  - 9c60b3764397a9549e48dddb56e734b2951e96bb
+  - bdff30e2aa
+  - d42d44fc286218ab24e1a098202bd208e204b523

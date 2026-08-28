@@ -1,0 +1,1 @@
+No durable authored file change remains after the last commit. `ScratchPicD.lean` was a temporary uncommitted probe and was deleted; the production module matches `HEAD` byte-for-byte. The remaining `AlgebraicJacobian.lean` delta belongs to another lane.

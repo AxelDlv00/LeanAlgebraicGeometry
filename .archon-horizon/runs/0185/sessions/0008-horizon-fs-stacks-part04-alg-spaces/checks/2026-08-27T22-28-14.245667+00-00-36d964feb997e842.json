@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "fingerprint": "36d964feb997e842",
+  "command": [
+    "lake",
+    "env",
+    "lean",
+    "/home/axel/LeanAlgebraicGeometry-Horizon/FormalizedSources/StacksProject/Part04_AlgebraicSpaces/StacksPart04Lib/QuotientFoundations.lean"
+  ],
+  "cwd": "FormalizedSources/StacksProject/Part04_AlgebraicSpaces",
+  "status": "passed",
+  "ok": true,
+  "returncode": 0,
+  "timed_out": false,
+  "reused": false,
+  "wait_seconds": 5.688,
+  "duration_seconds": 2.72,
+  "started_at": "2026-08-27T22:28:11.525232+00:00",
+  "finished_at": "2026-08-27T22:28:14.245667+00:00",
+  "finished_epoch": 1787869694.245667
+}

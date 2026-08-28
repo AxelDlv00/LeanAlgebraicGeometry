@@ -1,0 +1,1 @@
+Mumford’s task is live with a matching process, has no roadmap or inbox references, and has one open Mumford-scoped issue (`I-2048`). I’m doing the last evidence pass now: graph/cache counts and ledger path ownership, then I’ll send the parent a concise verdict with the queue warning and any actionable anomalies.

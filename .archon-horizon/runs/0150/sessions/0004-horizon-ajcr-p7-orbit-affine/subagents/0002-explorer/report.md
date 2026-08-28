@@ -1,0 +1,45 @@
+No hidden producer exists. Horizon search plus exact `rg` inspection found no declaration proving `P.gluedMap.IsProjective`, `FiniteInAffine P.glueData.glued`, or `RepresentableBy P.gluedOver`; the only `P.gluedMap.IsProjective` occurrences are the two conditional consumers added by `5ee5a7f`.
+
+**Exact Rebuild map**
+
+- `Scheme.FiniteInAffine`, `finiteInAffine_of_isAffine`, `finiteInAffine_of_iso`, `finiteInAffine_of_isAffineHom`, `finiteInAffine_left_of_isAffineHom`, and `orbitsInAffineOpen_of_finiteInAffine` are in [FiniteInAffine.lean](/home/axel/LeanAlgebraicGeometry-Horizon/MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Descent/FiniteInAffine.lean:32).
+- `finiteInAffine_of_isOpenImmersion`, `finiteInAffine_of_isImmersion`, `finiteInAffine_projectiveSpace`, and `finiteInAffine_of_isProjective` are in [QuasiProjectiveFiniteInAffine.lean](/home/axel/LeanAlgebraicGeometry-Horizon/MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Descent/QuasiProjectiveFiniteInAffine.lean:26).
+- The projectivity definition is a finite projective-space closed immersion plus factorization. Its useful methods are `isProper`, `locallyOfFiniteType`, `comp_isClosedImmersion`, `baseChange`, and `of_isProper_of_immersion` in [ProjectiveMorphism.lean](/home/axel/LeanAlgebraicGeometry-Horizon/MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Projective/ProjectiveMorphism.lean:27). Base change preserves projectivity but does not reflect it.
+- `Pic0FiniteStageGluePackage` contains only finite-stage rings, maps, open-immersion data, and cocycles; it has no global ambient map, ample bundle, properness, or group structure: [Pic0FiniteStageGluePackage.lean](/home/axel/LeanAlgebraicGeometry-Horizon/MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0FiniteStageGluePackage.lean:39).
+- `P.gluedMap` is constructed solely by `Multicoequalizer.desc`, and `P.gluedOver := Over.mk P.gluedMap`: [Pic0FiniteStageGluedOver.lean](/home/axel/LeanAlgebraicGeometry-Horizon/MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0FiniteStageGluedOver.lean:39).
+- `glueData_ι_gluedMap` identifies each chart composite with its affine structure map: [Pic0FiniteStageChartBaseChange.lean](/home/axel/LeanAlgebraicGeometry-Horizon/MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0FiniteStageChartBaseChange.lean:39).
+- `baseChangeGluingIso`, `gluingChartIso`, and `overlapBaseChangeIso` provide only the base-changed gluing and chart/overlap comparisons: [Pic0FiniteStageGluingBaseChange.lean](/home/axel/LeanAlgebraicGeometry-Horizon/MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0FiniteStageGluingBaseChange.lean:37). There is no global gluing-diagram iso to the exact separably closed representer, hence no resulting `rep`.
+- `pic0FiniteStageOrbitsInAffineOpen_of_isProjective` is exactly `finiteInAffine_of_isProjective` followed by `orbitsInAffineOpen_of_finiteInAffine`: [Pic0FiniteStageOrbitAffine.lean](/home/axel/LeanAlgebraicGeometry-Horizon/MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0FiniteStageOrbitAffine.lean:45).
+- `pic0FiniteStageHasStableAffineCover_of_isProjective` and `pic0RepresentableBy_finiteStageGaloisDescent_of_isProjective` are the downstream consumers: [Pic0FiniteStageStableAffineCover.lean](/home/axel/LeanAlgebraicGeometry-Horizon/MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0FiniteStageStableAffineCover.lean:42).
+- The generic orbit consumers are `exists_stable_affineOpen_of_orbitsInAffineOpen` and `hasStableAffineCover_of_orbitsInAffineOpen` in `Descent/StableAffineCover.lean:200,287`, then `StableAffineOpen.hasGaloisQuotient_of_orbitsInAffineOpen` in `Descent/GaloisQuotientOverlap.lean:1635`.
+- The affine and literal-pullback action instances in `Descent/GaloisQuotientNonVacuity.lean:95,135` do not apply: the glued carrier is non-affine, and identifying its canonical Picard action with a pullback action would already require the descended model.
+
+**Shortest existing axiom-clean tail**
+
+Full projectivity is stronger than needed. A single finite-dimensional projective-space immersion is enough:
+
+```lean
+haveI : IsImmersion i := hi
+have hfa : Scheme.FiniteInAffine P.glueData.glued :=
+  Scheme.finiteInAffine_of_isImmersion i
+    (Scheme.finiteInAffine_projectiveSpace n (Spec (.of P.N.1)))
+exact Scheme.orbitsInAffineOpen_of_finiteInAffine
+  (pic0SemilinearGalActionOfRepresentableBy C rep) hfa
+```
+
+This needs neither properness nor the equation `i ≫ projection = P.gluedMap`. If the desired public certificate remains `P.gluedMap.IsProjective`, add that factorization and either prove `IsClosedImmersion i` directly or combine `IsProper P.gluedMap` with `Scheme.Hom.IsProjective.of_isProper_of_immersion`.
+
+**Alternative group route**
+
+`GroupAffineOpen.lean:162` proves `FiniteInAffine` only for an irreducible locally finite type group over an algebraically closed field, and explicitly excludes arbitrary-field and reducible-component descent. Given the missing exact `rep`, a `GrpObj P.gluedOver` would be cheap via the pattern `PicRepDatum.grpObj` in `PicRepDatum.lean:113`; a P-specific locally-finite-type proof should also be chart-local, following `locallyOfFiniteType_gluedHom` in `JacobianDataCharts.lean:154`. Extending the group theorem to arbitrary fields/components would then yield direct `FiniteInAffine` without constructing projective coordinates. This is likely the shorter mathematical development, but it is not currently landed and still depends on producing `rep`.
+
+**Sibling project**
+
+`Algebraic-Jacobian-Challenge` adds `IsHQuasiProjective` and its `finiteInAffine_of_isHQuasiProjective`, plus piecewise/coproduct adapters in `Picard/QuasiProjectiveFiniteInAffine.lean:484,728,803,903`. None identifies the exact finite-stage carrier or produces its immersion. Its finite-map projective immersion (`Picard/FiniteMapProjectiveImmersion.lean:553,592,607`) requires a finite map to a two-chart/P¹ target, unavailable for Pic0. Grassmannian Plücker immersions apply to the divisor parameter space, not its surjective Abel image. The object-specific quasi-projective Picard producer remains `sorry` in `Projective/DemandLedger.lean:158`.
+
+Thus the two independent missing producers are:
+
+1. The global finite-stage representation `rep`.
+2. Either a global immersion of `P.glueData.glued` into finite projective space, or the arbitrary-field group-scheme `FiniteInAffine` theorem.
+
+No files, ledger state, or build artifacts were changed.

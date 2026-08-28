@@ -1,0 +1,1 @@
+Verified the stop-hook mutation. A fresh private index shows no worktree differences in the authored Lean, roadmap, inbox, or task paths; `DivGrassmannianEmbedding.lean` has identical disk and `HEAD` hashes (`deb4368c6c...`). The mutation was only Horizon index/session cleanup, so no additional commit was needed. The shared poisoned index was left untouched.

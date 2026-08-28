@@ -1,0 +1,1 @@
+The requested theorem is present in the committed source exactly as shown, but its generated hgraph node is only in the working tree, not in ledger `HEAD`; this is a graph/ledger synchronization concern rather than a proof-body concern. I’m checking the actual kernel result and prior session report now, then I’ll send the root agent a concise verdict.

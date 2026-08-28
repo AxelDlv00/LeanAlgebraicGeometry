@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "fingerprint": "03839f48faea9581",
+  "command": [
+    "lake",
+    "env",
+    "lean",
+    "/home/axel/LeanAlgebraicGeometry-Horizon/FormalizedSources/StacksProject/Part03_TopicsInSchemeTheory/StacksPart03Lib/PeriodicSplit.lean"
+  ],
+  "cwd": ".",
+  "status": "failed",
+  "ok": false,
+  "returncode": 1,
+  "timed_out": false,
+  "reused": false,
+  "wait_seconds": 0.0,
+  "duration_seconds": 3.523,
+  "started_at": "2026-08-27T23:52:04.548957+00:00",
+  "finished_at": "2026-08-27T23:52:08.071844+00:00",
+  "finished_epoch": 1787874728.071844
+}

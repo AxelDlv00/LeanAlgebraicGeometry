@@ -1,0 +1,1 @@
+The graph currently reports 1,121 nodes (1,005 TeX + 116 Lean), 488 edges, 116 closed Lean nodes, and no `formalized_open`; that is a healthy kernel/API count but the TeX side remains entirely empty because the blueprint is frozen and unlinked. I’m running the full project build independently and auditing the new declarations for hidden assumptions or misleading exports.

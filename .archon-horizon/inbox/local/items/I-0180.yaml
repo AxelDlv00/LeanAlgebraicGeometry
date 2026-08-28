@@ -1,0 +1,49 @@
+id: I-0180
+provider: local
+kind: info
+body: 'W7-F1 (lane w7-f1) LANDED + one naming deviation for orchestrator awareness.
+
+
+  (1) RECON CORRECTION (EW-2 evidence): the ''zero curve-crossing maps in Picard/''
+  grep was stale — Picard/RelPic.lean has carried the curve-direction transport since
+  07-11 (commit 6033ff185, blueprint node lem:relPicMapCurve leanok): picFromBase_le_comap_whiskerRight,
+  relPicMapCurveApp (g : D ⟶ E) (T) : relPic E T →* relPic D T on CechPic.map ((g
+  ▷ T).left), bundled relPicMapCurve g : relPicFunctor E ⟶ relPicFunctor D, strict
+  laws relPicMapCurve_id/_comp. The recon''s grep pattern ''{C C'' : Over'' missed
+  the file''s ''variable {C} {C'''' C'''''' : Over …}'' spelling. EW-2''s F-2/F-3
+  legs (PicEtAff/picEt) remain genuinely greenfield.
+
+
+  (2) NAMING DEVIATION: the ratified worksheet''s F-1 row names ''relPicCurveMap'';
+  the tree keeps the LANDED spellings relPicMapCurveApp/relPicMapCurve (renaming a
+  landed, blueprinted, 6-day-old API to match a name coined in ignorance of it would
+  fork the spelling mid-campaign). F-2..F-6 lanes must consume the landed names.
+
+
+  (3) F-1 completed by Picard/RelPicCurveMap.lean (commit d58fbc407, 129 lines, wired,
+  all lean_verify axiom-clean): relPicMapCurveApp_id/_comp (pointwise functor laws),
+  relPicMap_relPicMapCurveApp (test-restriction square), relPicAlgMap_relPicMapCurveApp
+  ((C1)-licensed algebra face at Over.overSpecMap f — the shape F-2''s descentMap/doubleInl/doubleInr
+  squares instantiate), cechPicMap_toUnit_whiskerRight_mem_picFromBase + relPicMapCurveApp_toUnit_comp
+  (morphism through the monoidal unit induces the trivial relPic map — EV-1d''s constant-leg
+  picFromBase compat).
+
+
+  (4) D2-ii CORE SEAM NOTE for the F-2 lane: the only relPic-level input needed to
+  descend a CechPic.map to the quotients is the second-projection square — picFromBase_le_comap
+  (test direction, v-leg = g.left) and picFromBase_le_comap_whiskerRight (curve direction,
+  v-leg = identity) are the two landed instances. relPic''s carrier mentions only
+  (C ⊗ T).left and (snd C T).left, so the cross-field B-2 instantiation works at raw-scheme
+  level with the same recipe: given w : (D ⊗ T'').left ⟶ (C ⊗ T).left and v : T''.left
+  ⟶ T.left with w ≫ (snd C T).left = (snd D T'').left ≫ v, QuotientGroup.map descends
+  CechPic.map w.'
+labels:
+- agent-ready
+status: archived
+scope: {}
+audience: horizon
+author: human
+source_ref: null
+created_at: '2026-07-17T02:30:37.736764+00:00'
+updated_at: '2026-07-20T03:14:18.816430+00:00'
+metadata: {}

@@ -1,0 +1,10 @@
+Preserved-exit leaf check: exit 1 after 12.48 seconds.
+
+The local `TensorProduct.instCommRing` declarations leave metavariables for
+the tensor factors. Lean therefore cannot elaborate them to the dependent
+`Pic0FiniteStageChartBaseChangeRing` and
+`Pic0FiniteStageOverlapBaseChangeRing` aliases, and cannot synthesize the
+outer `Semiring (k ⊗[P.N.1] ...)` needed by the theorem statement.
+
+Earlier LSP attempts remained at `still_elaborating`; no declaration was
+kernel-checked and no axiom audit was possible.

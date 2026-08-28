@@ -1,0 +1,25 @@
+Fresh-context review of ONE session's work in /home/axel/LeanAlgebraicGeometry-Horizon/MainProjects/Algebraic-Jacobian-Challenge (task ajc-albanese, run 0069 round 6). Be adversarial. You are read-only on source: report findings, do not edit Lean files.
+
+THE TWO COMMITS TO AUDIT (workspace ledger; use
+  git --git-dir /home/axel/LeanAlgebraicGeometry-Horizon/.archon-horizon/vcs/workspace.git --work-tree /home/axel/LeanAlgebraicGeometry-Horizon show <sha>
+):
+ * 80dc38917b7fcbc26f183704288f97d109ab5bdb
+ * 1c096bcb9cb49b499a43f8a1eb56ce506d0efa35
+
+WHAT I CLAIM, and what I want you to try to break:
+
+CLAIM 1. `MonObj.permAut` (AlgebraicJacobian/Albanese/GrpObjFoldSum.lean) IS an isomorphism, and `MonObj.permAutHom : Equiv.Perm (Fin n) →* Aut (∏ᶜ fun _ : Fin n => C)` exists. Two files previously stated this was NOT free (StableAffineCoverGroup.lean's scope note, since corrected). Check: is `permAut_comp` stated in the right composition order? Is `permAutHom` really a MonoidHom, i.e. does the σ⁻¹ convention actually make `map_mul'` true rather than being fudged? Verify against mathlib's `Aut` multiplication convention by reading Mathlib/CategoryTheory/Endomorphism.lean.
+
+CLAIM 2. `AlgebraicGeometry.exists_stable_affineOpen_perm` (StableAffineCoverGroup.lean) instantiates the G-stable affine cover theorem at S_n acting on C^n. I ALSO generalized that file's `variable` line from `{G : Type u}` to `{G : Type w}`. Check: (a) did that generalization silently weaken or break `exists_stable_affineOpen_of_orbits`? (b) Is `exists_stable_affineOpen_perm` VACUOUS or trivially satisfiable? Specifically: its hypothesis is `StableGroupAction.OrbitsInAffineOpen (MonObj.permAutHom C n)`. Is that hypothesis satisfiable at all, and is it satisfiable for a PROPER CURVE? If it is unsatisfiable the theorem is vacuous and I should be told. If it is trivially TRUE (e.g. at n = 0 or n = 1, or for affine C) say so and say whether the interesting case is covered.
+
+CLAIM 3. AlgebraicJacobian/Albanese/TensorPowerCoproduct.lean proves the n-ary coproduct universal property of the tensor power, and its equivariance `coprodLift_permAlgHom`. Two things to attack hardest:
+ (a) I claim `existsUnique_coprodLift` is a genuine universal property. Is it? Or is the uniqueness clause weaker than it looks (note it quantifies `∀ i, u.comp (singleAlgHom i) = f i`)? Does it actually characterize the tensor power as the coproduct in the category of COMMUTATIVE R-algebras, and did I state the commutativity dependence correctly in the docstring?
+ (b) The equivariance variance. I first wrote it with the family `fun i => f (e i)` and the kernel refuted it (residual goal `f (e.symm i) a = f (e i) a`); I now state `fun i => f (e.symm i)`. Verify the CORRECTED statement is the mathematically right one and not merely the one that compiles — derive it independently on `tprod` generators from `permAlgHom_tprod` and say whether you get `e` or `e.symm`.
+
+CLAIM 4. Honesty of scope. I claim: (i) `AlbaneseUP.lean` still has 6 sorries, unchanged, and `Pic0.albanese_universal_property` still reports sorryAx; (ii) the glue-data bill for Sym^n C is now "2 of 4 supplied" — BUT NOTE my roadmap summary says items 1,2,3 DONE and item 4 open, which is 3 of 4, while my team-thread comment says "2 of 4". THAT IS AN INCONSISTENCY IN MY OWN REPORTING. Tell me which count is right by reading the four-item list in StableAffineCoverGroup.lean's header and checking which items actually have landed declarations. (iii) Nothing I added is consumed by anything yet — verify whether `permAutHom`, `exists_stable_affineOpen_perm`, `coprodLift*` have ANY consumer outside their own files (grep). Previous rounds of this lane repeatedly shipped layers with zero consumers; if that is true again, say so plainly.
+
+CLAIM 5. Docstring/claim accuracy. I edited docstrings in GrpObjFoldSum.lean and StableAffineCoverGroup.lean that RETRACT earlier claims. Check that (a) the retractions are accurate, (b) I did not leave a contradictory version of the old claim elsewhere in the tree — grep for other files asserting that no S_n → Aut action exists, or that the n-ary comparison is missing (candidates: SymPowColimit.lean §5/§6, SymPowInterface.lean, SymPowInvariantsUnder.lean, SymPowTensorAction.lean, AlbaneseUP.lean header, and any file under analogies/ or informal/).
+
+METHOD. Use `lake env lean` or the lean LSP MCP tools on scratch files in /tmp to test claims (do NOT edit project files). `lake build AlgebraicJacobian` was run this session: 8820 jobs, exit 0. An axiom probe seeded at the root gave 11 clean readings for the new declarations with 3 controls (SymmetricPower, abelJacobi, albanese_universal_property) firing sorryAx — re-run it if you want, the probe is at /tmp/albanese-r6-probe.lean.
+
+Report concrete findings with file:line. Rank by severity. If a claim is fine, say so in one line; spend your effort on what is wrong. I specifically want to know about vacuity, mis-stated variance, over-claimed scope, and the 2-vs-3 count inconsistency.

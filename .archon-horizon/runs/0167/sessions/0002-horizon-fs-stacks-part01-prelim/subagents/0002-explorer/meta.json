@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Avicenna",
+  "agent_path": "/root/frontier_explorer",
+  "agent_role": "explorer",
+  "depth": 1,
+  "model": "gpt-5.6-luna",
+  "name": "explorer",
+  "native_subagent_id": "01a0425f-40aa-7733-912a-cc83a95b2e13",
+  "ok": true,
+  "parent_session": "0002-horizon-fs-stacks-part01-prelim",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "completed",
+  "subagent_type": "explorer",
+  "summary": "Read-only scan complete; I sent parent conversation `I-2038`.",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 1419559,
+    "tokens_out": 6900
+  }
+}

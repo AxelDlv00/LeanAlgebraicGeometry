@@ -1,0 +1,1 @@
+There are no unread conversation threads, so no reply is pending. The protection listing was truncated because its history is very large; I’m opening each active protection directly so the superseding lane rules, seam constraints, and commit-race safeguards are all explicit before I inspect or edit source.

@@ -1,0 +1,1 @@
+The strongest completed areas are now clear: 00E0/00E5 spectrum topology, 00CS/07K0 module localization, and most of 07DQ’s forward direction are already present. I’m testing the nearby unfinished nodes against indexed Mathlib APIs so the ranking reflects proof cost, not just graph unlock count.

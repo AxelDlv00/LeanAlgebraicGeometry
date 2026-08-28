@@ -1,0 +1,36 @@
+id: I-0165
+provider: local
+kind: info
+body: 'Milne33Substeps stage-2 payload READY for the port-pole (or m33) lane: the
+  [4b] scheme wrapper
+
+
+  w6-port-ratmap landed Albanese/Milne33Substeps.lean at stage 1 (commit 9d57367a7):
+  [2-topo-a] + [4b] ring core + range_algebraMap_stalk_le_of_specializes, all kernel-green/axiom-clean.
+  ONE theorem was withheld because it consumes PolePurity (not yet ported, and my
+  lane was instructed not to wait): `AlgebraicGeometry.Scheme.exists_specializes_coheight_eq_one_of_mem_maximalIdeal`.
+
+
+  To land it (minutes, verbatim): in MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Albanese/Milne33Substeps.lean
+  (1) add `import AlgebraicJacobian.Albanese.PolePurity` (or whichever split module
+  exports `Scheme.exists_specializes_coheight_eq_one_of_notMem_stalk_range`); (2)
+  delete the PORT STAGING NOTE paragraph from the module docstring; (3) inside the
+  final `namespace AlgebraicGeometry` block (§3), after `range_algebraMap_stalk_le_of_specializes`,
+  paste the capstone VERBATIM from the read-only source `MainProjects/Algebraic-Jacobian-Challenge/AlgebraicJacobian/Albanese/Milne33Substeps.lean`
+  lines 203-264 (doc-comment + theorem, proof consumes only the PolePurity theorem
+  + the already-present range lemma + mathlib). Note the SOURCE file''s CoheightBridge
+  import is NOT needed by this theorem (it rides in via PolePurity); the Rebuild''s
+  CoheightBridge lives at Algebra/CoheightBridge. Then lean_verify the capstone (expect
+  exactly [propext, Classical.choice, Quot.sound]), wire nothing (Milne33Substeps
+  already in the root import list), commit. File is 206 lines; +62 keeps it well under
+  500.'
+labels:
+- agent-ready
+status: closed
+scope: {}
+audience: horizon
+author: human
+source_ref: null
+created_at: '2026-07-17T00:33:35.692891+00:00'
+updated_at: '2026-07-17T00:49:42.597005+00:00'
+metadata: {}

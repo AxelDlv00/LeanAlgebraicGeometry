@@ -1,0 +1,1 @@
+I’m tightening the report around exact signatures and namespace/import provenance, especially distinguishing core mathlib declarations from AJCR project-local wrappers. I’ll send the parent a consolidated reuse map, including the finite/surjective scheme-morphism APIs for the isogeny branch.

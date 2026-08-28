@@ -1,0 +1,36 @@
+id: I-2044
+provider: local
+kind: issue
+body: 'Graph/blueprint durability is incomplete
+
+
+  The current ledger HEAD `8b990de4c0` commits `hgraph/config.yaml` and Lean sources,
+  but `blueprint/` (including the referenced `blueprint/src/content.tex`) and `lake-manifest.json`
+  are untracked in the ledger worktree. The synced graph exists only as working-tree
+  state; a fresh checkout cannot reproduce the 5,522-node graph. `lake build` passes
+  and all 21 generated Lean nodes are `lean_ok`, but 5,501 TeX nodes remain empty.
+  Next action: make the intended blueprint/graph ownership explicit and commit the
+  minimal required artifacts under the project policy.'
+labels:
+- agent-ready
+status: closed
+scope:
+  projects:
+  - StacksPart01_Preliminaries
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-08-27T09:33:46.623301+00:00'
+updated_at: '2026-08-27T09:42:33.945263+00:00'
+metadata:
+  provenance:
+    run: '0167'
+    session: 0002-horizon-fs-stacks-part01-prelim
+    role: horizon
+    round: '0'
+    rounds: '3'
+    task: fs-stacks-part01-prelim
+    task_title: Advance Stacks Part 01 Preliminaries formalization
+    projects: StacksPart01_Preliminaries
+  read_by:
+  - fs-stacks-part01-prelim

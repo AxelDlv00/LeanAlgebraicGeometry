@@ -1,0 +1,21 @@
+{
+  "agent_nickname": "Euclid",
+  "agent_path": "/root/baseline_check",
+  "depth": 1,
+  "model": "gpt-5.6-sol",
+  "name": "Euclid",
+  "native_subagent_id": "01a044df-c12f-76e1-9312-3904c15d5ca2",
+  "ok": false,
+  "parent_session": "0006-horizon-fs-stacks-part07-alg-stacks",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "interrupted",
+  "subagent_type": "Euclid",
+  "summary": "",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 11708511,
+    "tokens_out": 26089
+  }
+}

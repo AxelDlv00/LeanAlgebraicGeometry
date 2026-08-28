@@ -1,0 +1,1 @@
+The audit is complete. No concrete family-level producer exists: `PicRankOneEvaluationDivisorData` is only declared and consumed, while the global divisor representability route remains conditional on `DivRepAffinePullback`/`IsChartClause`.

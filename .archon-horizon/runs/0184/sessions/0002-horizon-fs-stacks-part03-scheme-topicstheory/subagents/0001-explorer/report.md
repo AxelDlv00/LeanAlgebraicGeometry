@@ -1,0 +1,1 @@
+The required Horizon skill is at the workspace root (`/home/axel/LeanAlgebraicGeometry-Horizon/.claude/skills/horizon/SKILL.md`), and I’ve loaded it. The project is running as task `fs-stacks-part03-scheme-topicstheory` in run `0184`; I’m now collecting the graph, roadmap, task, and source-state snapshots in parallel.

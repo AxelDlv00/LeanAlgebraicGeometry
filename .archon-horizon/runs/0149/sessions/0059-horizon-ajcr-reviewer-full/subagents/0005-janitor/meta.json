@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "McClintock",
+  "agent_path": "/root/health_audit",
+  "agent_role": "janitor",
+  "depth": 1,
+  "model": "gpt-5.6-sol",
+  "name": "janitor",
+  "native_subagent_id": "01a01873-f4e7-7643-8e05-0c03e14cf952",
+  "ok": true,
+  "parent_session": "0059-horizon-ajcr-reviewer-full",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "completed",
+  "subagent_type": "janitor",
+  "summary": "",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 74602048,
+    "tokens_out": 82218
+  }
+}

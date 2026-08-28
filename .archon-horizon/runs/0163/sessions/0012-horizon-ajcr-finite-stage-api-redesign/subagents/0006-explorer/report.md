@@ -1,0 +1,1 @@
+The workspace is under heavy concurrent Lean/LSP load; a stdin probe is still stuck behind that shared resource slot. I’m stopping only the probe I started and will rely on source/artifact evidence for the bounded recommendation.

@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "status": "rejected",
+  "reason": "Fresh kernel build rejected the swept-in gluingOverlapIso_pre_fst: pullback.hom_ext instantiated the gluing index as Prod.mk U and produced a dependent index mismatch, then timed out deterministically at line 118 with maxHeartbeats 12800000.",
+  "created_at": "2026-08-19T02:44:34.642548+00:00",
+  "files": [
+    {
+      "path": "MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0FiniteStageGluingDiagramIso.lean",
+      "artifact": "files/MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0FiniteStageGluingDiagramIso.lean",
+      "bytes": 6145,
+      "lines": 154
+    }
+  ],
+  "diagnostics": ""
+}

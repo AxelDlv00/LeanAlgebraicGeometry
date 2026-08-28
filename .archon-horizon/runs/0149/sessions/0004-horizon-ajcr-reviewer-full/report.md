@@ -1,0 +1,1 @@
+The ledger’s shared index lock is intentionally protected, so the normal pathspec commit correctly refused to touch it. I’m switching to Horizon’s isolated-index protocol for the three exact paths; the shared index and its lock will remain unchanged.

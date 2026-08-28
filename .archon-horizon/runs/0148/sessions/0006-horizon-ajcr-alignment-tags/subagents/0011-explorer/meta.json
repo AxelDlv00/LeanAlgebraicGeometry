@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Meitner",
+  "agent_path": "/root/audit_bulk_mapping",
+  "agent_role": "explorer",
+  "depth": 1,
+  "model": "gpt-5.6-sol",
+  "name": "explorer",
+  "native_subagent_id": "01a00005-f74f-7cb1-b42e-2b5a35dd732b",
+  "ok": false,
+  "parent_session": "0006-horizon-ajcr-alignment-tags",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "interrupted",
+  "subagent_type": "explorer",
+  "summary": "",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 65963658,
+    "tokens_out": 176766
+  }
+}

@@ -1,0 +1,65 @@
+id: I-2037
+provider: local
+kind: conversation
+body: 'Sibling reconnaissance (read-only): FormalizedSources sibling libraries are
+  placeholders only: `FormalizedSources/AbelianVarieties/Mumford/MumfordLib/Basic.lean`,
+  `FormalizedSources/Curves/Hartshorne/HartshorneLib/Basic.lean`, and Stacks Part01
+  Basic contain only module docstrings; wrappers import `.Basic`.
+
+
+  Useful concrete conventions are in `MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian`:
+  files generally `import Mathlib` for generic helpers, then `set_option autoImplicit
+  false`, universes, `open`, namespace, documented theorem/lemma names. `Algebra/TwoLattice.lean`
+  (imports `Mathlib.Algebra.Polynomial.Laurent`, `Mathlib.Data.Int.Interval`, `Mathlib.LinearAlgebra.Finsupp.LinearCombination`,
+  `Mathlib.LinearAlgebra.Quotient.Basic`, `Mathlib.RingTheory.Finiteness.Defs`) has
+  reusable finite-window patterns: private `pow_smul_mem` induction; public `T_natCast_smul_mem`,
+  `T_neg_natCast_smul_mem`; `Finset.sup`, `Finset.exists_le`, `Finset.mem_image`,
+  `Finset.mem_product`, `Set.ncard` and `Module.finite_def`.
+
+
+  `Algebra/GeneratorUnit.lean` (TensorProduct imports) demonstrates generic algebra
+  lemmas as namespace `Module`, with explicit typeclass binders and `Function.Surjective`;
+  e.g. `trivialization_smul_symm_one`, `rTensor_smul_of_ringHom`. `Algebra/FlatDirectLimit.lean`
+  imports `Mathlib.Algebra.Colimit.Module`, `Mathlib.Data.Finset.Order`, `Mathlib.RingTheory.Flat.EquationalCriterion`;
+  uses `Finset.exists_le (Finset.univ.image stage)` to synchronize finite stages.
+  `Tangent/DualNumberFstKernel.lean` imports `...DualNumberCarrierReduction` + `Mathlib.RingTheory.QuotSMulTop`;
+  concise set singleton/ideal patterns (`Ideal.span_le`, `Set.singleton_subset_iff`,
+  `Ideal.mem_span_singleton`) and explicit `rw` preferred over fragile simp.
+
+
+  For set/cardinality over geometric points, `Curve/P1Aut.lean` has `badScalars_biUnion_ncard_le
+  (S : Set (P1 k)) (hS : S.Finite)` and finite-subset chart lemmas around lines 383-460.
+  `Curve/P1Points.lean` shows `Set (P1 k)`, `IsOpen`, `Set.Nonempty`, `Dense.inter_open_nonempty`,
+  `Set.mem_preimage`; imports `AlgebraicJacobian.Curve.P1Charts`, `...StalksDVR`.
+  `Algebra/ABDepthSES.lean` uses `Fintype`, `DecidableEq`, `Nonempty`, `Finset.univ_sum_single`,
+  `Submodule.pi`, `Submodule.spanFinrank`.
+
+
+  Recommended Milne imports: start `import Mathlib`; use local generic namespace and
+  explicit universe/typeclass binders; if finite-set/cardinality, add only `Mathlib.Data.Finset.Order`
+  / `Mathlib.Data.Set.Finite.Basic` as needed.'
+labels:
+- agent-ready
+status: archived
+scope: {}
+audience: task:fs-milne
+author: horizon
+source_ref: null
+created_at: '2026-08-27T08:41:47.477042+00:00'
+updated_at: '2026-08-27T09:02:48.218340+00:00'
+metadata:
+  provenance:
+    run: '0164'
+    session: 0002-horizon-fs-milne
+    role: horizon
+    round: '0'
+    rounds: '3'
+    task: fs-milne
+    task_title: Advance Milne Abelian Varieties formalization
+    projects: Milne
+  conversation: true
+  participants:
+  - task:fs-milne
+  started_by: task:fs-milne
+  read_by:
+  - fs-milne

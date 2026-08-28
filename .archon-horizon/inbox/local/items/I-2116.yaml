@@ -1,0 +1,46 @@
+id: I-2116
+provider: local
+kind: conversation
+body: 'Sibling API reconnaissance
+
+
+  - MilneLib/Affine.lean:59 `moduleFinite_tilde_stalk` uses `Module.Finite.of_isLocalizedModule`;
+  Tensor.lean:88 `residueFieldTensorEquivQuotSMul`, :130 `schemeModuleStalkResidueTensorEquiv`
+  identify residue tensor fibres with maximalIdeal quotients. Nakayama.lean:20/:33
+  and LocalProperties.lean:25/:61 provide local residue-surjectivity, maximal-residue
+  exactness/surjectivity; Sheaf.lean:25/:42/:56 gives stalk epi/iso criteria.
+
+  - AJC rebuild ChartColength.lean:181 `moduleFinite_quotient_primeIdealOf` via `Ideal.Quotient.field`,
+  `Algebra.FiniteType.of_surjective`, `finite_of_finite_type_of_isJacobsonRing`; :199
+  `finrank_quotient_primeIdealOf` via `IsLocalization.AtPrime.equivQuotMaximalIdeal`
+  and explicit `LinearEquiv map_smul`; :377 `moduleFinite_quotient_span_section`.
+  StalkColength.lean :177/:197 gives stalk quotient finiteness/finrank.
+
+  - AJC Adelic/ResidueField.lean :291/:306/:397 gives residue bijection, constants
+  modulo maximal ideal, finite quotient via `Submodule.Quotient.mk_surjective` and
+  `Module.Finite.of_fg_top`. No files edited; Horizon skill file absent.'
+labels:
+- agent-ready
+status: archived
+scope: {}
+audience: task:fs-milne
+author: horizon
+source_ref: null
+created_at: '2026-08-28T05:31:20.635577+00:00'
+updated_at: '2026-08-28T06:57:08.606735+00:00'
+metadata:
+  conversation: true
+  participants:
+  - task:fs-milne
+  started_by: task:fs-milne
+  read_by:
+  - fs-milne
+  provenance:
+    run: 0192
+    session: 0004-horizon-fs-milne
+    role: horizon
+    round: '1'
+    rounds: '16'
+    task: fs-milne
+    task_title: Advance Milne Abelian Varieties formalization
+    projects: Milne

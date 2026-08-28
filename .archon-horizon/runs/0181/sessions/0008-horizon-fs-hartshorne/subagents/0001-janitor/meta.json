@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Lovelace",
+  "agent_path": "/root/janitor_queue_review",
+  "agent_role": "janitor",
+  "depth": 1,
+  "model": "gpt-5.6-sol",
+  "name": "janitor",
+  "native_subagent_id": "01a0450c-a599-7873-90e6-48ca9e66d80c",
+  "ok": true,
+  "parent_session": "0008-horizon-fs-hartshorne",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "completed",
+  "subagent_type": "janitor",
+  "summary": "Hartshorne\u2019s metadata is consistent:",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 8010117,
+    "tokens_out": 27343
+  }
+}

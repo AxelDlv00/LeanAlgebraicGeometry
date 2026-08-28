@@ -1,0 +1,1 @@
+The write-set files are clean relative to the ledger HEAD; the broader ledger worktree is noisy with pre-existing Horizon state, generated references, and untracked metadata. I’m checking the latest commit/report and top-level roadmap/task warnings now to distinguish task-local cleanliness from workspace-wide hygiene.

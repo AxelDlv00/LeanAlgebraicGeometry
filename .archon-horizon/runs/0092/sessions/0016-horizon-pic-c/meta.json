@@ -1,0 +1,17 @@
+{
+  "role": "horizon",
+  "round": 7,
+  "project": "Algebraic-Jacobian-Challenge-Rebuild",
+  "task_id": "pic-c",
+  "status": "running",
+  "started_at": "2026-07-31T05:39:32.711195+00:00",
+  "projects": [
+    "Algebraic-Jacobian-Challenge-Rebuild"
+  ],
+  "harness_name": "opus5",
+  "harness_kind": "claude-code",
+  "model": "claude-opus-5",
+  "effort": "ultracode",
+  "auth": "api-key",
+  "workspace_sha": "f2464df73a319aa72e84ff379ba88faa1cd82940"
+}

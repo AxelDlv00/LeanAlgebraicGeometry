@@ -1,0 +1,12 @@
+Read-only comparison complete. Key reusable patterns:
+
+- In rebuild, [Pic0FiniteStageGluingDiagramIso.lean:69](/home/axel/LeanAlgebraicGeometry-Horizon/MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0FiniteStageGluingDiagramIso.lean:69) has the exact tensor-instance normalization pattern:
+  `restrictionBaseChangeAlgHomCanonical` uses an explicit `@AlgHom` whose source/target semirings are fixed as the relevant `CommRing.toSemiring` witnesses. It then closes with `scalarExtensionMapOfAlgHom`.
+- The corresponding reusable affine base-change declarations are in [Pic0FiniteStageAffineBaseChange.lean:59](/home/axel/LeanAlgebraicGeometry-Horizon/MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0FiniteStageAffineBaseChange.lean:59):
+  `affineBaseChangeMap`, `affineBaseChangeMap_fst`, `affineBaseChangeMap_snd`, and `affineBaseChangeIso_naturality`.
+- The gluing proof’s practical wrappers are [GluingDiagramIso.lean:129](/home/axel/LeanAlgebraicGeometry-Horizon/MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0FiniteStageGluingDiagramIso.lean:129) `restrictionBaseChangeMap_fst/snd`; these avoid unfolding dependent package data and directly apply `affineBaseChangeMap_fst/snd`.
+- For tensor tower normalization, [TensorProductFieldTowerMap.lean:29](/home/axel/LeanAlgebraicGeometry-Horizon/MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Descent/TensorProductFieldTowerMap.lean:29) provides `scalarExtensionMapOfAlgHom`, with `scalarExtensionMapOfAlgHom_tmul`, `_tower`, `_comp`, and `_id`. These are the preferred named APIs instead of rebuilding nested `TensorProduct.map` terms.
+- The sibling `Algebraic-Jacobian-Challenge` project does not contain the newer `Pic0FiniteStage*` gluing files. Its analogous guidance is in `analogies/pullbackspeciso-bypass.md` and `analogies/ma-legb262.md`: keep `CommRingCat` carriers until the final forgetful step, use `CommRingCat.ofHom_comp`/`Spec.map_comp`, and avoid trying to recover `CommRing` instances on `forget₂ CommRingCat RingCat` carriers.
+- Sibling older gluing/base-change examples include `AlgebraicJacobian/Descent/AffineRingGlueData.lean`, `Descent/FiniteGaloisQuotientAffine.lean`, and `Cohomology/FlatBaseChange.lean`; recurring proof shape is `pullback.hom_ext`, explicit projection lemmas, then `← Spec.map_comp` and `← CommRingCat.ofHom_comp`.
+
+No files were edited and no heavy builds were run.

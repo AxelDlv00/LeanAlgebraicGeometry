@@ -1,0 +1,124 @@
+id: I-0201
+provider: local
+kind: memory
+body: 'DD-4 Task 4 / W6-full FIBRE-RESTRICTION SEAM session 2026-07-17 (Fable prover
+  lane) — I-0158''s ONE OPEN SEAM CLOSED; hfib of thetaGluedEval_surjective reduced
+  to per-fibre witness divisors. Commit 27942edf2 (3 new files, root-wired HEAD-blob
+  + own lines, per-target lake build green, keystones lean_verify axiom-clean [propext,
+  Classical.choice, Quot.sound]).
+
+
+  LANDED:
+
+  - Cohomology/GluedSheafSubord.lean (397 L, the new geometry): SUBORDINATION INVARIANCE
+  of the m-chart glued sheaf. For pieces U with gluing cocycle g and ANY covering
+  family V subordinated along sigma (V i <= U (sigma i)), gluedSheaf k U g ~ gluedSheaf
+  k V g'' (g'' abstract, pinned by hg'' to the restricted units — so it instantiates
+  on the nose at unit-cocycle spellings). Forward = componentwise restriction (gluedSubordFwd);
+  inverse = candidate assembly g j (sigma i) * t_i glued over {W meet U j meet V i}
+  via existsUnique_gluing'' on moduleKSheaf (compatibility: cocycle law at (j, sigma
+  i, sigma i'') vs matching of t; membership: law at (j, j'', sigma i); roundtrips:
+  gluing uniqueness + separation). gluedSubordEquiv (LinearEquiv.ofBijective), natural
+  in W; gluedSheafSubord; subsingleton_hModule_gluedSheaf_subord (any degree n).
+
+  - Cohomology/GluedSheafDatumFibre.lean (194 L): (a2, THE SEAM) BasicOpenCocycleDatum.subsingleton_h1_tensor_of_baseChange:
+  Subsingleton (datumPair (D.baseChange B'')).H1 -> Subsingleton ((datumPair D).H1
+  tensor[B] B'') for EVERY k-algebra B'' over the test ring — fibre diff surjective
+  (Submodule.Quotient.subsingleton_iff + range_diff_eq), transported BACKWARD across
+  the landed delta-square datumDiffBaseChange by RigidEngine.surjective_congr on the
+  INVERSE equivalences, coker read by TwoLatticePair.subsingleton_h1_rTensor_iff.
+  Sheaf form _of_baseChange_sheaf via subsingleton_datumPair_h1_iff. (c) presentationSheafIso:
+  over a field the datum sheaf IS (ofCocycle pointedCover subordCocycle).gluedSheaf
+  — File-1 iso at the pointed cover by pieces; presented class = cechPicClass DEFINITIONALLY
+  (rfl). subsingleton_sheaf_h1_of_picClass_eq fires W6-full''s subsingleton_hModule_gluedSheaf_one_of_picClass_eq
+  through it: any witness divisor W of the datum class with H1(O(W)) = 0 kills H1(datum
+  sheaf). COMPOSITE subsingleton_h1_residueField_tensor_of_witness: at any prime p,
+  witness on the fibre curve => engine''s complex-form hfib p. Fibre-curve package
+  fired from Curve/BaseChangeInstances (G-D5a); witness spelled on the product (C
+  tensorObj overSpec k kappa(p)).left those instances key on (relCurve defeq); kappa(p)
+  tower instances (Algebra k, IsScalarTower k R) are CANONICAL in mathlib — no letI
+  needed.
+
+  - Picard/DivisorThetaFibre.lean (101 L): thetaIdealDatum_hfib_of_witness (hfib in
+  thetaGluedEval_surjective''s EXACT spelling from per-fibre witnesses) + KEYSTONE
+  thetaGluedEval_surjective_of_fibre_witness. DD-4/DDR-2 now have UNCONDITIONALLY:
+  right exactness of 0 -> H0(O(Theta^a - d)) -> R tensor H_a -> W(d)^{Theta^a} ->
+  0 given, per prime p, ANY Weil divisor of the fibre datum class with vanishing H1
+  (exists_picClass_eq always provides a witness of the class; only its H1-vanishing
+  is the numeric content). Also: I-0197''s deferred #print axioms on DivisorThetaSurjectivity''s
+  exports re-run CLEAN post-DD-2 surgery.
+
+
+  OPEN (the numeric residue = witness production; three bricks, ORDERED):
+
+  (E, fibre-uniform DAT-0a — NOW UNBLOCKED BY THIS LANDING, do FIRST): route: (i)
+  extraction exists_cechPicClass_eq at k for c := theta-class^{n1}; (ii) at K := k
+  my presentationSheafIso + gluedDivisorSheafIso + ledger DAT-0a give Subsingleton
+  H1(datum sheaf) hence H1(pair)=0 (subsingleton_datumPair_h1_iff); (iii) landed datum_subsingleton_h1_baseChange
+  (GluedSheafH0BaseChange) pushes H1=0 of the datum SHEAF to EVERY kappa(p); (iv)
+  presentationSheafIso AT THE FIBRE + subsingleton_hModule_gluedSheaf_one_iff.mp turns
+  that into H1(O(W_p)) = 0 for W_p := presentationDivisor of the fibre presentation,
+  of class CechPic.map c (cechPicClass_baseChange) and degree n1*delta (E-iv-alg classDeg_cechPicMap_baseFieldTransition,
+  k->kappa(p) IS a base-FIELD transition since c comes from k... CAUTION: the transition
+  square is for k-algebra maps of FIELDS K1->K2; here K1 = k ✓); then rerun UniformVanishing''s
+  peeling at kappa(p) (exists_effective_of_picClass + peel_effective + subsingleton_hModule_one_of_picClass_eq
+  are pi-FREE) with chi invariant (genus_baseField): ONE b works at every fibre.
+
+  (D1, theta-ideal class law): cechPicClass (A.thetaIdealDatum a) = theta-class^a
+  * (d-class)^{-1} — via cechPicClass_eq_of_anchor/cechPicClass_eq_mk + coboundary
+  congruence (gluedSubordCocycle_isCohomologous_of_coboundary): thetaIdealUnit = eqnRatio
+  * thetaOvlUnit; eqnRatio is cohomologous to d.unitsCocycle''s restriction through
+  the unit 0-cochain relating adaptation eqns to d''s eqns (post-DD-2: route through
+  eqn_rel-derived lemmas, NOT the removed anchor fields); thetaOvlUnit restricts from
+  relThetaCocycle. Sign convention to pin: matching s_i = (f_j/f_i) theta^{pm a} s_j
+  presents O(Theta^a - d).
+
+  (D2, fibre degree of d): deg_p(pulled d) = deg d (= the certificate rank) — DD-1/DD-2
+  fibre-degree + degAt seam territory.
+
+  Then hwit follows from a*delta - deg d >= b and hfib/hsurj are numeric-only.
+
+
+  HPAIR ASSESSMENT (scope extension, I-0199 route-2 question — VERDICT: NOT a bounded
+  extension of this kit; distinct brick): IsThetaPaired''s obstruction is the two-chart
+  Cech H1 of the D''-SUPPORTED inverse twist (D'' = the colength/divisor scheme, FINITE
+  over Spec R, hence affine) — DEGREE-FREE content. It does NOT reduce to curve-level
+  H1: the LES of 0 -> O(-Theta^a - d) -> O(-Theta^a) -> i_*(O(-Theta^a)|_D'') -> 0
+  computes H1(D''-supported) = coker(H1(O(-Theta^a-d)) -> H1(O(-Theta^a))) — both
+  NONVANISHING for a > 0 and no degree hypothesis helps; my engine''s pair (curve
+  sections over V0/V1/overlap) does not carry the overlap-COLENGTH lattice the pairing
+  needs. The honest brick is I-0199''s route 1: piece-localization/qcoh of the equalizer/colength
+  presentation over Spec A_D (colength sections over basic opens of A_D are localizations)
+  + algebraic partition of unity subordinate to the sigma/tau joint-unit loci; the
+  same localization statement is ALSO what the fibrewise/Nakayama dead end (b) needs
+  — spec THAT as the fused brick, NOT a fusion with hfib (hfib''s content is degree-gated
+  curve H1, now closed). Shared with my lane is only the assembly PATTERN (chart lifting
+  via affine vanishing + two-chart correction).
+
+
+  HAZARDS (new): (a) gluedSubordCand-style defs whose RESULT TYPE does not mention
+  the cocycle g need g EXPLICIT (statement-position inference fails with ''don''t
+  know how to synthesize implicit g''). (b) hc.mul_res_of_le already yields SINGLE
+  resHoms — ''simp only [Scheme.resHom_resHom] at hcoc'' fails with ''no progress''
+  + a spurious instances-transparency type-mismatch note; don''t collapse what is
+  already collapsed. (c) MeromorphicPresentation.ofCocycle projections (.cover/.cocycle)
+  block rw patterns — bridge by exact/congrArg Units.val against gluedSubordCocycle_evInf
+  (defeq closes both the projection and the unitsRestrict coe). (d) bare ''C ⊗ overSpec
+  k K'' REQUIRES open MonoidalCategory (with open scoped TensorProduct alone it elaborates
+  as TensorProduct and fails). (e) LinearEquiv.ofBijective + Function.bijective_iff_has_inverse
+  with NAMED left/right-inverse lemmas avoids the with-structure .toFun/beta-redex
+  unification failures in left_inv/right_inv goals. (f) DISK ROOT had a sibling''s
+  stale sweep (14 import lines missing vs HEAD, incl. the whole DivisorTheta* chain)
+  — restored to HEAD + my lines at commit; sibling root builds were red meanwhile
+  from an in-flight PullbackCert edit (duplicate toOvlLeft_mk vs DivisorFamilyTheta),
+  NOT ours.'
+labels:
+- agent-ready
+status: archived
+scope: {}
+audience: horizon
+author: human
+source_ref: null
+created_at: '2026-07-17T07:55:38.263115+00:00'
+updated_at: '2026-07-20T03:16:27.301602+00:00'
+metadata: {}

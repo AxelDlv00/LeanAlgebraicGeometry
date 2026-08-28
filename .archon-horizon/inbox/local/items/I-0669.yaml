@@ -1,0 +1,79 @@
+id: I-0669
+provider: local
+kind: conversation
+body: 'ajc-fbc r3 REVIEW (eed54636d): all five headline claims VERIFIED; two docstring
+  defects, one of them a PHANTOM DECLARATION NAME.
+
+
+  DEFECT 1 (phantom name). CechHigherDirectImageUnconditional.lean:1985 says the input
+  is "what isQuasicoherent_pushPullObj_coverInter and isQuasicoherent_cechNerve_obj
+  below do". isQuasicoherent_cechNerve_obj DOES NOT EXIST anywhere in the project
+  (that line is its only occurrence). Exactly the "docstring declaration lists are
+  unchecked" shape, inside the note whose subject is an unchecked absence claim that
+  cost three sessions.
+
+
+  DEFECT 2 (stale, one sentence). Same file :2962-2965: cechComplex_baseChange_iso
+  "still carries a cosimplicial naturality sorry - as of run 0068 r3 exactly one".
+  MEASURED FALSE: cechComplex_baseChange_iso still reaches BOTH cech_pushforward_baseChange_natIso
+  and twisted_cech_nerve_iso in its proof term. Only cechComplex_baseChange_iso_flat
+  has one.
+
+
+  WHAT I CONFIRMED (all machine-measured on HEAD oleans that postdate their sources):
+
+  1. cechOuterBC f g f2 g2 h = canonicalBaseChangeMap h by rfl - elaborates.
+
+  2. canonicalBaseChangeMap_isIso axioms [propext, Classical.choice, Quot.sound];
+  its whole 6-module cone = 840 decls, ZERO sorry-tainted.
+
+  3. isIso_cechOuterBC_coverInter is one application of it; no mateEquiv_vcomp anywhere.
+
+  4. @cech_flatBaseChange = @cech_flatBaseChange_oneLeaf typechecks by rfl -> types
+  IDENTICAL. No QuasiSeparated binder (mathlib Separated.lean:67 instance supplies
+  it; probe omitting it elaborates). Closure of the endpoint contains twisted_cech_nerve_iso
+  and NOT natIso / preservesMonomorphisms / preservesFiniteLimits / preservesHomology
+  / mapHC_homologyIso.
+
+  5. No cycle; whole QuotScheme cone sorry-free; both new blueprint labels resolve
+  to real \label sites and both targets are sorry-free, so the retargeted \leanok
+  is honest.
+
+
+  DECISIVE ONE-LEAF TEST: the endpoint restated with the twisted-nerve iso as an explicit
+  hypothesis is AXIOM-CLEAN. The twisted square is provably the only remaining leaf
+  - the strongest form of the claim, and it holds.
+
+
+  MINOR: isIso_app_of_iso_obj duplicates CategoryTheory.NatTrans.isIso_app_iff_of_iso
+  (mathlib MorphismProperty/Basic.lean:761) - it is literally its .mpr. Fine to keep,
+  but the docstring framing it as a needed bridge overstates it.'
+labels:
+- agent-ready
+status: closed
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+audience: task:ajc-fbc
+author: horizon
+source_ref: null
+created_at: '2026-07-28T17:50:43.892721+00:00'
+updated_at: '2026-07-28T17:59:05.342977+00:00'
+metadata:
+  provenance:
+    run: 0068
+    session: 0008-horizon-ajc-fbc
+    role: horizon
+    round: '3'
+    rounds: '8'
+    task: ajc-fbc
+    task_title: 'Flat base change: close the three Cech obligations and the pullback
+      exactness axiom leak'
+    projects: Algebraic-Jacobian-Challenge
+  conversation: true
+  participants:
+  - task:ajc-fbc
+  started_by: task:ajc-fbc
+  read_by:
+  - ajc-fbc
+  agent: work-reviewer

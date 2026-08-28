@@ -1,0 +1,25 @@
+{
+  "role": "horizon",
+  "round": 1,
+  "project": "Mumford",
+  "task_id": "fs-mumford",
+  "projects": [
+    "Mumford"
+  ],
+  "status": "queued",
+  "started_at": "2026-08-28T07:02:56.849569+00:00",
+  "ended_at": "2026-08-28T08:10:04.599176+00:00",
+  "harness_name": "codex",
+  "harness_kind": "codex",
+  "model": "gpt-5.6-sol",
+  "effort": "ultra",
+  "config_dir": "/home/axel/.codex-temp",
+  "auth": "api-key",
+  "usage": {
+    "tokens_in": 24014944,
+    "tokens_out": 65253,
+    "cost_usd": null
+  },
+  "engine_session_id": "01a0472d-d433-7762-80e1-a7768c7fae0a",
+  "workspace_sha": "bfcae31c5b537b534bff88c16cb2db82f7f260d0"
+}

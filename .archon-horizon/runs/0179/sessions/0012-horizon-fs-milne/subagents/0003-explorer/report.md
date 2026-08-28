@@ -1,0 +1,1 @@
+I’m loading the Horizon workflow and then I’ll inspect the Milne frontier/dependency graph plus nearby APIs to identify a few provable next declarations. I’ll keep this pass read-only and report exact file/statement candidates back to the parent.

@@ -1,0 +1,3 @@
+{"at": "2026-08-22T14:43:10.037746+00:00", "actor": "human", "field": "created", "from": "", "to": "queued", "note": "opened"}
+{"at": "2026-08-22T14:44:45.616917+00:00", "actor": "system", "field": "status", "from": "queued", "to": "running", "note": "started by Horizon run"}
+{"at": "2026-08-22T15:35:30.772786+00:00", "actor": "horizon", "field": "status", "from": "running", "to": "done", "note": "", "provenance": {"run": "0153", "session": "0002-horizon-ajcr-compile-isolation", "role": "horizon", "round": "0", "rounds": "1", "task": "ajcr-compile-isolation", "task_title": "AJCR compile isolation: locate the PreSnd bottleneck", "projects": "Algebraic-Jacobian-Challenge-Rebuild,Algebraic-Jacobian-Challenge"}}

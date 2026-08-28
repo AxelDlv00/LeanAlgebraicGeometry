@@ -1,0 +1,20 @@
+{
+  "role": "horizon",
+  "round": 4,
+  "project": "StacksPart05_TopicsInGeometry",
+  "task_id": "fs-stacks-part05-geom-topics",
+  "status": "interrupted",
+  "started_at": "2026-08-27T22:14:18.436432+00:00",
+  "projects": [
+    "StacksPart05_TopicsInGeometry"
+  ],
+  "harness_name": "codex",
+  "harness_kind": "codex",
+  "model": "gpt-5.6-sol",
+  "effort": "ultra",
+  "config_dir": "/home/axel/.codex-temp",
+  "auth": "api-key",
+  "workspace_sha": "b459420b73fdbac8d082383021d718f119b92b83",
+  "ended_at": "2026-08-28T01:10:19+00:00",
+  "interrupt_reason": "process-marker-reaped"
+}

@@ -1,0 +1,21 @@
+Fresh-context adversarial audit of ONE commit's worth of work in the Lean 4 project at /home/axel/LeanAlgebraicGeometry-Horizon/MainProjects/Algebraic-Jacobian-Challenge-Rebuild (module root `AlgebraicJacobian`).
+
+THE WORK: `AlgebraicJacobian/Picard/Pic0ChartHonestAff.lean` (new this session, 4 declarations, rooted at `AlgebraicJacobian.lean`). Author: lane ajcr-p3.
+
+THE CLAIMS I MADE, each of which you should try to REFUTE:
+
+1. "isOpen_chartLocus_chartValueAff proves the chart locus of a WIDENED chart value is open, unconditionally in the widened section." — Check the actual statement. Is there a hidden hypothesis on the section? Is `hπ` producible (I claimed `exists_isFinite_toP1` in `AlgebraicJacobian/Curve/MapToP1.lean:108` produces it)? Are the instance binders inhabitable, or is some instance combination empty?
+
+2. "abelDivAff'_isPlusHonest is unconditional in the section — no chart-typed preimage assumed." — Verify this is NOT secretly the weaker `degAt_abelDivAff'_toAff`-style statement restricted to the image of a chart-typed class (that weaker form is at `Picard/DivisorFamilyAffAbel.lean:327`). Confirm the section variable is a general `divFamZarAff C n T`.
+
+3. "The four new declarations are axiom-clean and the port is non-vacuous." — Most important: **is any of this VACUOUS?** Specifically: (a) does `IsPlusHonest` mention the objects it claims to be about, or is it a `HasDivFunctor`-style vacuity? (b) is `divFamZarAff C n T` INHABITED — does any producer exist, or is the whole theorem about an empty type? (c) does `chartValueAff` actually depend on the widened carrier, or does it collapse to something chart-typed?
+
+4. "This discharges NO antecedent of `pic0RepresentableByOfCharts`." — I want this checked in the OTHER direction than usual: am I UNDERSTATING? Does the new openness in fact discharge, or partially discharge, something a consumer needs — e.g. anything in `Picard/Pic0ChartUnivReduce.lean` (`chartLocusOpens`, which takes an `haff` argument), or `Pic0ChartAtlasCoupling.lean`, which says at :53 and :142 that its instantiation "still owes the chartLocusOpens bridge (cost: haff)"? If my openness closes that bridge for the widened carrier I want to know.
+
+5. My docstring claims the widened affine collapse "already existed as an anonymous `have hcollapse` inside `degAt_abelDivAff'`" at `Picard/DivisorFamilyAffClassDegree.lean:363-366`, and that my `picEtAffineEquiv_abelDivAffPlus` is that same term. Verify the two terms really are the same, and that I did not silently prove something different (or weaker).
+
+6. Check every declaration name and file:line my new file's docstrings cite. Do they exist, are they in this file's import closure (`#check`, not grep), and do the line numbers point at what I say? Report every miss.
+
+METHOD NOTES: oleans are current (I ran `lake build AlgebraicJacobian`, EXIT=0, 9319 jobs) — but VERIFY that before trusting any `lean_multi_attempt` or probe, since a stale-import probe reports every snippet as succeeding. Use `lake env lean` on a scratch file in /tmp for probes, and use a control that MUST fire `sorryAx` (e.g. `AlgebraicGeometry.Jacobian`) to prove your probe discriminates. Do NOT edit any file in the project and do NOT run `lake build` (nine other lanes want the build lock). Do not commit anything.
+
+Report refutations first, then confirmations. Be specific and adversarial; a finding that one of my claims is overstated is the most valuable thing you can return.

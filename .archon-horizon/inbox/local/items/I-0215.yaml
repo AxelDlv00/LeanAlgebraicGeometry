@@ -1,0 +1,108 @@
+id: I-0215
+provider: local
+kind: memory
+body: 'DDR-4 (c1) SLICING + SUPPORT TUBE lane LANDED (Fable prover, I-0203 OPEN item
+  (i) infrastructure halves) — commits 24a162c07 (Picard/SlicingFlat.lean, 368 L,
+  pure algebra, mathlib-PR-candidate) + 02fabdc1d (Picard/SupportTube.lean, 348 L),
+  both root-wired own-line, root lake build green (8935 jobs), keystones lean_verify
+  axiom-clean [propext, Classical.choice, Quot.sound], no sorries, warning-free.
+
+
+  LANDED, SlicingFlat (the flat-QUOTIENT form of the slicing criterion, completing
+  the FibrewiseRegular/FlatCokernel Tor-home pair; Kleiman lm:ctn tex 1786-1815, no
+  Tor/local-criterion):
+
+  - Module.Flat.mem_smul_top_of_apply_mem_smul_top — ideal-division engine ([IsNoetherianRing
+  R][Flat R M], endo phi fibrewise-injective at every kappa(p) => forall I, phi x
+  in I•top -> x in I•top). The PUBLIC form of the `key` induction inside FibrewiseRegular
+  (re-proved on the public colon + prime-fibre lemmas; keep in sync on refactor).
+
+  - Module.Flat.of_surjective_exact_of_forall_mem_smul_top — Noetherian-FREE cokernel
+  flatness: [Flat R M] + pi : M -> Q surjective + Function.Exact phi pi + ideal division
+  (FG ideals) => Flat R Q. Proof = mathlib iff_lift_lsmul_comp_subtype_injective (I
+  tensor M -> M form; avoids R tensor M/lid entirely) + hand connecting-map chase.
+
+  - Module.Flat.of_surjective_exact_of_forall_rTensor_residueField_injective — module
+  keystone.
+
+  - Module.Flat.quotient_span_singleton_of_forall_tmul_residueField — RING KEYSTONE:
+  [IsNoetherianRing R][Module.Flat R B], hfib : forall p, f tmul 1 in nonZeroDivisors
+  (B tensor[R] kappa(p)) => Module.Flat R (B / span {f}).
+
+  - Module.Projective.quotient_span_singleton_of_forall_tmul_residueField — + [Module.Finite
+  R (B/span f)] => Projective (finitePresentation_of_finite + projective_of_finitePresentation).
+
+  - Algebra.TensorProduct.includeRight_mem_nonZeroDivisors_of_forall_tmul_residueField
+  — fibrewise-regular + flat B + Noetherian R => includeRight f regular in R'' tensor[R]
+  B for EVERY R''-algebra (chains into FlatCokernel; no hypothesis on R'').
+
+
+  LANDED, SupportTube (spec-dd-r par.3 item 4 geometric input):
+
+  - IsClosedMap.exists_isOpen_preimage_inter_subset — topological tube core via Set.kernImage
+  (mathlib-PR-candidate).
+
+  - Scheme.LocalEquations.unitLocus (iSup of basicOpen(eqn x)) / supportLocus (closed
+  complement) / mem_unitLocus_iff_isUnit_germ (reads on ANY covering member through
+  ratio_isUnit) / supportLocus_inter_opens (member trace).
+
+  - isClosed_image_supportLocus + exists_supportTube (f : X -> S [UniversallyClosed
+  f]: support fibre over s inside open U => exists V : S.Opens, s in V and f.base
+  preimage V inter supportLocus subset U) — piece isolation Zariski-locally on the
+  base.
+
+  - instIsProperRelSndLeft / instIsProperRelCurveHom — IsProper C.hom base-changes
+  to relCurve C R over an ARBITRARY test ring R (general-R form of the field-keyed
+  Curve/BaseChangeInstances; UniversallyClosed fires by TC — smoke-tested).
+
+  - DivisorAdaptation.isUnit_germ_eqn_iff / mem_basicOpen_eqn_iff_mem_unitLocus /
+  iSup_basicOpen_eqn_eq_unitLocus (the adaptation computes the SAME support through
+  eqn_rel) / supportLocus_inter_pieces (d.supportLocus inter pieces j = pieces j minus
+  basicOpen (A.eqn j) — the colength underlying set).
+
+  - FinCoverData.flat_sections_pieces [IsFinite pi].
+
+  - (c1) JUNCTION: DivisorAdaptation.flat_colength_of_forall_tmul_residueField / projective_colength_of_forall_tmul_residueField
+  ([IsNoetherianRing R][IsFinite pi]; hfib at the PIECE ring Gamma(pieces j) tensor
+  kappa(p); + [Module.Finite R (A.colength j)] for projective) — IsCertified (c1)
+  both clauses at piece j, modulo the two remaining inputs.
+
+
+  PER-CONSUMER SPELLINGS: (1) DDR-4 (c1) remainder consumes the junction pair verbatim;
+  remaining inputs per piece: (i) hfib transport seed fibre_regular -> adaptation
+  eqns through eqn_rel (I-0198 item (iv) kit — NOT landed here), (ii) Module.Finite
+  R (A.colength j) — the finiteness leg from the tube (supportLocus_inter_pieces +
+  exists_supportTube + the I-0209 Z-clopen packet machinery; the tube gives the closed-over-base
+  support and Zariski-local isolation, the packet/clopen split is the hcert design''s).
+  (2) Seed dvd (I-0210 route correction): the Tor input "I tensor kappa -> B tensor
+  kappa injective because B/(f) is R-flat" is licensed by the ring keystone; ready-made
+  relative form = includeRight_mem_nonZeroDivisors_of_forall_tmul_residueField (any
+  R'', e.g. kappa(q), chart localizations); FlatCokernel.tensorKer_bijective_of_flat_coker
+  now fires with the produced flatness. (3) hcert (I-0209): per-piece (c1) = the junction;
+  NO W-as-algebra vocabulary coined here (GlueClass/awayGluedEquations/gluedSubalgebra
+  untouched); unitLocus_eq + supportLocus_inter_pieces are the topological halves
+  of clopen traces.
+
+
+  HAZARDS (new): (a) linter.overlappingInstances fires adding [IsFinite pi] over an
+  ambient [IsAffineHom pi] variable — put IsFinite-needing decls in their own section
+  with [IsFinite pi] only. (b) FibrewiseRegular''s induction `key` is an internal
+  have, not reusable — the public re-derivation duplicates it; sync on refactor. (c)
+  NO synthInstance/heartbeat raises needed in either file under lakefile defaults
+  (contrast I-0198#3/DivSchemeSeed) — the junction tensors over section rings pass
+  as-is. (d) Scheme.Hom.isClosedMap applies directly to f.base-spelled image/preimage
+  goals (coercion defeq). (e) IsUnit.mul_iff + and_iff_right close germ-unit transport
+  across eqn_rel/ratio_isUnit without unit inverses. (f) mem kernImage is definitional
+  ({y | forall x, f x = y -> x in s}) — no API needed beyond isClosedMap_iff_kernImage.'
+labels:
+- agent-ready
+status: archived
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: human
+source_ref: null
+created_at: '2026-07-17T13:31:36.101139+00:00'
+updated_at: '2026-07-20T03:16:37.555915+00:00'
+metadata: {}

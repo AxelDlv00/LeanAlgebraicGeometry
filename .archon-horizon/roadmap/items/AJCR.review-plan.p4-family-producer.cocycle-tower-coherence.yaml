@@ -1,0 +1,38 @@
+id: AJCR.review-plan.p4-family-producer.cocycle-tower-coherence
+title: Cocycle and sections tower coherence
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+summary: Prove arbitrary coefficient-tower coherence for relative sections, basic-open
+  cover pieces and overlaps, cocycle base change, sectionsMap and sectionsMapTop;
+  root the datumSectionBaseChange_tower evaluation consumer and its SectionDivEq feeder;
+  verify the standard Lean axiom footprint.
+status: done
+kind: proof
+priority: urgent
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+metadata:
+  author: horizon
+  created_at: '2026-08-11T17:30:44.524076+00:00'
+  provenance:
+    run: 0138
+    session: 0018-horizon-ajcr-cocycle-tower-coherence
+    role: horizon
+    round: '1'
+    rounds: '5'
+    task: ajcr-cocycle-tower-coherence
+    task_title: 'AJCR review sublane: cocycle and sections tower coherence'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  parent: AJCR.review-plan.p4-family-producer
+  owner: ajcr-cocycle-tower-coherence
+  milestone: AJCR.review-plan
+  updated_at: '2026-08-18T06:26:32.360994+00:00'
+  pinned_commits:
+  - 64fd92e988
+  - ed441053ef
+  - d98fd4db2a
+  - 310e310068

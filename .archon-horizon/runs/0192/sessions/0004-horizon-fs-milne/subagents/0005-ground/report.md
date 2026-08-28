@@ -1,0 +1,1 @@
+The corrected audit is internally consistent now: source commits are reachable and clean in the Horizon ledger, while only the authored I.5.11 progress comment is staged for persistence. I’m checking that final metadata commit and report state land without sweeping unrelated shared-state changes.

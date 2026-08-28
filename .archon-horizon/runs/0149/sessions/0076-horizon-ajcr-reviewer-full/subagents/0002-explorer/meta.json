@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Socrates",
+  "agent_path": "/root/endpoint_cone_audit",
+  "agent_role": "explorer",
+  "depth": 1,
+  "model": "gpt-5.6-sol",
+  "name": "explorer",
+  "native_subagent_id": "01a01909-8c76-7a03-b53b-0ff6022f8fb0",
+  "ok": true,
+  "parent_session": "0076-horizon-ajcr-reviewer-full",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "completed",
+  "subagent_type": "explorer",
+  "summary": "Read-only endpoint audit delivered to the parent. No files were changed and no Lean or Lake build was started.",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 8116995,
+    "tokens_out": 29111
+  }
+}

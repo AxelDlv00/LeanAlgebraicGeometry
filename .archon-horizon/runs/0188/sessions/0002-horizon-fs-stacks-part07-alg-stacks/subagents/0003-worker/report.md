@@ -1,0 +1,1 @@
+The Mathlib sources expose the needed primitives directly: `yonedaLemma`/`largeCurriedYonedaLemma`, `Functor.RepresentableBy.ofIso`/`uniqueUpToIso`, and the relative morphism property’s multiplicative/base-change instances. I’m creating a narrow module that wraps these APIs with stable Part07 names, then I’ll iterate against diagnostics.

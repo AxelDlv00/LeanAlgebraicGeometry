@@ -1,0 +1,18 @@
+Index clean at close. All findings are filed as I-0765 through I-0777.
+
+## Janitor pass complete — run 0071 / session 0014
+
+The most important result was not one of the three dispatch warnings. **I found and disarmed two live staged-revert hazards** in the shared ledger index, both of which a bare `git commit` by any lane would have published:
+
+- `AlgebraicJacobian/Picard/DivisorFamilyAffTheta.lean` — index held a stale pre-edit blob, armed to revert **156 net lines** (7/163) of the ajcr-divrep lane's own just-landed work. Disk was byte-identical to HEAD, so `add --` was safe; verified both directions after.
+- `MainProjects/Algebraic-Jacobian-Challenge-Rebuild/informal/w4-rep-critical-path.md` — same signature, armed to delete 27 worksheet lines. Disarmed the same way.
+
+Both appeared *after* my start-of-pass check read clean. Three snapshots over ~50 minutes: 0 armed, 1 armed, 1 armed. The hazard re-arms on roughly every CAS commit while a lane is live, so a once-per-session check is worthless — and `grep '^D'` read 0 all three times, because a stale blob on a file that still exists is invisible to it. Only `diff --cached --numstat HEAD` sees it. Index is 0 armed at close (HEAD 32a73bb3b).
+
+**Roadmap mismatches: all three are expected; zero need action.** `AJC.jacobian.assembly` and `AJC.picrep` both carry explicit do-not-retriage records (the latter escalated to the human as I-0605/I-0640, with `.tensor` the one genuinely open question). I initially filed `AJC.rr` as a real wrong status and **retracted it** — I-0736 is the ajc-rr lane's own deliberate record, filed as an inbox `info` item rather than in the row summary, which is why my roadmap-store-only search missed it. Separately: only 4 of the 21 active rows belong to a live lane now that the fleet is 2 wide, so I-0509's standing justification ("these are in flight") no longer holds arithmetically even though its conclusion does. `AJCR.jacobian` is active with no owner and no task reference at all — the one real bookkeeping gap.
+
+**Task queue is healthy:** 2 running rows, 2 live pids, one-to-one, zero orphans. Six lanes handed back cleanly to `queued` since the last measurement.
+
+**Inbox: 6 archived**, each verified consumed at HEAD rather than on age — I-0755, I-0763, I-0738, I-0739 (all with the claimed fix or commit confirmed present), plus I-0538 (its premise false: two of three children now `rejected`) and I-0730 (all three stale caveats confirmed gone). I left I-0708 open on purpose despite it looking archivable; it is the standing record that prevents a sixth re-derivation. No protections, no human-authored items, and none of I-0493/0494/0495 touched. The count cannot be cleared by cleaning — I-0551 is the standing measured answer.
+
+**Unrooted sorry census:** 745 `.lean` files, 728 rooted, 17 unrooted, and exactly **one** unrooted file carries a `sorry` as a term — `AlgebraicJacobian/Picard/Pic0ThetaCocycle.lean`, deliberately unimported. Its own STATUS block is stale by half: it advertises two sorries, but `pic0Theta_id` is fully proved and only `pic0Theta_comp` is open, so the next session would price double. I was read-only on Lean, so that paragraph needs the W7/K-1 owner. Project-wide there are 16 sorry terms in 2 files; the other 15 are in `Challenge.lean`, which is the by-design statement file.

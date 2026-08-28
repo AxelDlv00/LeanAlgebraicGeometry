@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Tesla",
+  "agent_path": "/root/sibling_api",
+  "agent_role": "explorer",
+  "depth": 1,
+  "model": "gpt-5.6-sol",
+  "name": "explorer",
+  "native_subagent_id": "01a0436b-0741-7d20-b2b4-f7ce768ee356",
+  "ok": false,
+  "parent_session": "0002-horizon-fs-stacks-part07-alg-stacks",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "interrupted",
+  "subagent_type": "explorer",
+  "summary": "",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 15271240,
+    "tokens_out": 32751
+  }
+}

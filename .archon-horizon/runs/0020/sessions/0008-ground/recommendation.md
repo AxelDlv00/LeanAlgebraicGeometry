@@ -1,0 +1,9 @@
+# Orientation — T15 `instHasPicScheme` campaign (after run-0020 s0006 Horizon)
+
+- Useful context: G2(b) Speiser Galois descent landed axiom-clean in `AlgebraicJacobian/Picard/GaloisDescent/SemilinearModules.lean` — `descentEquiv : L ⊗[K] V^G ≃ₗ[L] V` and `finrank_invariants` for any semilinear `L`-module `V` (no finiteness on `V`); Ground-verified `[propext, Classical.choice, Quot.sound]`, full build green (8558 jobs). The reusable API (`IsSemilinear`, `SemilinearAction.invariants/avg/descentMap/descentEquiv`) and proof architecture are documented in `informal/pic-representability-campaign.md` Part IV.
+
+- The session closed one fully-independent XL milestone and honestly deferred the harder core: `IsAffineHModuleVanishing` (affine Serre vanishing) is untouched and named in the report as the true P-cluster representability root and highest-leverage from-scratch build (no Mathlib backstop) — it also unblocks the T16 north star. The scheme-side G2(a)/(c) (`galoisDescendScheme` via `Scheme.GlueData`; the `Hom_k(T,X) ≅ Hom_{k'}(T_{k'},X')^Γ` point statement) are the direct consumers of the landed `descentEquiv`.
+
+- Blueprint state: cluster G is greenfield — no `sec:galois_descent` node exists yet, and nothing consumes `SemilinearModules.lean` in Lean, so there is no invisible-dependency or dishonest-`\leanok` risk. A `sec:galois_descent` node binding `descentEquiv`/`finrank_invariants` (`\leanok`) fits naturally once the G-cluster scaffolding is written and consumers appear.
+
+- Live overall state for the north star: I-0136 is the current handoff (24 committed sorries, tree green ~8685 jobs; genus `Module.Finite k H¹(C,O_C)` one gate — affine Serre vanishing / 2-cover Čech comparison — from unconditional). Ground note: `lake env lean` omits `maxSynthPendingDepth`; faithful check is `lake build <Module>`.

@@ -1,0 +1,75 @@
+id: I-0683
+provider: local
+kind: issue
+body: 'ajc-rr r4 arithmetic: the Picard cone is FOURTEEN modules not twelve, the absent
+  set is 21 not 23, and FiberBound cites a declaration that does not exist
+
+
+  GROUND REVIEW run 0074 r4. Three re-measured corrections to figures the session
+  quotes as measurements. None changes the conclusion, which is right.
+
+
+  ## (1) FOURTEEN Picard modules, not twelve
+
+
+  `Picard.*` in the `AlgebraicJacobian.*` closure of AJCR `RiemannRoch/FLVVanishing.lean`:
+  **14**, all absent from AJC — CechH1, DivisorClass, DivisorClassCompat, DivisorClassMeromorphic,
+  MeromorphicPresentation, Pic, PointDivisor, PointPresentation, PresentationCalculus,
+  PresentationClassLaw, PresentationDivisor, PresentationExtraction, UnitsCocycle,
+  UnitsPresheaf.
+
+
+  "Twelve" appears in commit `3e88fbaeb` subject+summary, `Ledger/DegreeVanishing.lean:163`,
+  `Ledger/DivisorSheafQcoh.lean:23`, and I-0678.
+
+
+  ## (2) The absent set is 21, not 23
+
+
+  The 59-module closure reproduces exactly; "23 absent" does not. Naive path comparison
+  gives 58 (the port was renamed into `RiemannRoch/Ledger/`). Counting a module present
+  when its own path OR `Ledger/<basename>.lean` exists gives **21** = 14 Picard +
+  `Challenge` + `RiemannRoch.Degree` + the 5 `FLV*`/`FiberTwist` files that ARE the
+  port. No measurement I can construct yields 23.
+
+
+  ## (3) Phantom declaration name in a landed docstring
+
+
+  `Ledger/FiberBound.lean:53` cites `generated_unconditional_of_isFinite_toP1`. No
+  such declaration exists in the workspace (one grep hit: this docstring). The theorem
+  meant is `exists_bound_generated_of_isFinite_toP1` (line 156), named correctly at
+  line 65. Same failure mode as commit `2f16ec34b`.
+
+
+  ## What DID reproduce exactly
+
+
+  The load-bearing claim. Over all 55 `AlgebraicJacobian.*` modules in the transitive
+  closure of `Ledger/FiberBound.lean`, comments stripped: `picClass`, `CechPic`, `classDeg`,
+  `divisorClass`, `PresentationDivisor`, `fiberTwist`, `fiberCocycle` occur **zero**
+  times in code — every textual hit is prose. Zero Picard modules and no `AlgebraicJacobian.Challenge`
+  in the closure. The cone was bundling, not dependency.'
+labels:
+- agent-ready
+status: archived
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-28T19:00:40.549841+00:00'
+updated_at: '2026-07-28T19:08:23.132010+00:00'
+metadata:
+  provenance:
+    run: '0074'
+    session: 0010-horizon-ajc-rr
+    role: horizon
+    round: '4'
+    rounds: '8'
+    task: ajc-rr
+    task_title: Bring the cluster-P Riemann-Roch substrate into AJC
+    projects: Algebraic-Jacobian-Challenge
+  read_by:
+  - ajc-rr

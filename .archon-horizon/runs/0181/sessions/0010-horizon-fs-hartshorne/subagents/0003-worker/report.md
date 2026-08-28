@@ -1,0 +1,1 @@
+The pre-edit checker reached the Horizon resource gate (baseline module has no reported Lean diagnostics; the shared checker is occupied by another run). I’m applying the validated wrapper surface now, including germ/restriction lemmas and both sheafification condition/stalk-isomorphism names for source-facing compatibility.

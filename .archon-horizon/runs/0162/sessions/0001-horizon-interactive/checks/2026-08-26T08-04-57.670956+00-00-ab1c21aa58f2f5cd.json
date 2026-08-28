@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "fingerprint": "ab1c21aa58f2f5cd",
+  "command": [
+    "lake",
+    "env",
+    "lean",
+    "/home/axel/LeanAlgebraicGeometry-Horizon/MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0FiniteSeparablePoint.lean"
+  ],
+  "cwd": "MainProjects/Algebraic-Jacobian-Challenge-Rebuild",
+  "status": "passed",
+  "ok": true,
+  "returncode": 0,
+  "timed_out": false,
+  "reused": false,
+  "wait_seconds": 0.001,
+  "duration_seconds": 27.518,
+  "started_at": "2026-08-26T08:04:30.153326+00:00",
+  "finished_at": "2026-08-26T08:04:57.670956+00:00",
+  "finished_epoch": 1787731497.670956
+}

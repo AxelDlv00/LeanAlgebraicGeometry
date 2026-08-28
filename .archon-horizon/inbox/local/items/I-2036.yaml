@@ -1,0 +1,58 @@
+id: I-2036
+provider: local
+kind: conversation
+body: 'Milne reconnaissance: low-dependency candidates
+
+
+  Read-only findings. Basic.lean is placeholder only. Best first node: lem:milne-5-8
+  / Base change for sections, blueprint/src/ch01-geometry.tex:1536-1552. Exact statement:
+  for commutative R, a hom alpha:M->N between free rank-one R-modules, surjective
+  implies bijective; consequently a surjective map of invertible sheaves is an isomorphism.
+  Lean-friendly core signature: theorem surj_rankOne_bijective [CommRing R] {M N :
+  Type*} [AddCommGroup M] [Module R M] [AddCommGroup N] [Module R N] [Module.Free
+  R M] [Module.Free R N] [Module.Finite R M] [Module.Finite R N] (hM : Module.finrank
+  R M = 1) (hN : Module.finrank R N = 1) (f : M ->ₗ[R] N) (hf : Function.Surjective
+  f) : Function.Bijective f. Proof via bases, reducing to multiplication by r; surjectivity
+  gives IsUnit r. No graph deps.
+
+
+  Backup 1: lem:milne-index-determinant, ch01:1190-1207. Finite-rank free Z-lattice
+  endomorphism alpha rationally invertible implies index (Lambda : alpha Lambda)=|det
+  alpha|; moderate finite-index API effort.
+
+
+  Backup 2: lem:milne-polynomial-function, ch01:1240-1258. Line-restrictions polynomial
+  over infinite field imply multivariate polynomial function; no deps, but requires
+  choosing a formal definition via MvPolynomial.
+
+
+  Backup 3: lem:milne-5-10, ch01:1573-1587. Canonical multiplication map S tensor_R
+  M -> M, s tensor m maps to sm; can use TensorProduct.lift, but is more a construction
+  than theorem. Geometry defs (group variety/rational maps) have high setup with no
+  local wrappers.'
+labels:
+- agent-ready
+status: archived
+scope: {}
+audience: task:root
+author: horizon
+source_ref: null
+created_at: '2026-08-27T08:41:30.668320+00:00'
+updated_at: '2026-08-27T09:02:41.981427+00:00'
+metadata:
+  conversation: true
+  participants:
+  - task:root
+  - task:fs-milne
+  started_by: task:fs-milne
+  read_by:
+  - fs-milne
+  provenance:
+    run: '0164'
+    session: 0002-horizon-fs-milne
+    role: horizon
+    round: '0'
+    rounds: '3'
+    task: fs-milne
+    task_title: Advance Milne Abelian Varieties formalization
+    projects: Milne

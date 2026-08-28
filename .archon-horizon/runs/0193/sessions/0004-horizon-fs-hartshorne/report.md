@@ -1,0 +1,3 @@
+Checkpoint resolved: `$HORIZON_GIT` is clean for Hartshorne, with no staged or unstaged changes. `ecf04b5dc0` is an ancestor of current HEAD; the later `c40c3f1c4b` is concurrent Mumford work and was left untouched.
+
+The task/inbox comment files are intentionally excluded from the ledger via `.archon-horizon/` and were not force-added. No additional commit was needed.

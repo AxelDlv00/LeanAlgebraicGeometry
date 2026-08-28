@@ -1,0 +1,1 @@
+The raw frontier is dominated by thousands of unlinked blueprint nodes, while all 127 Lean nodes are marked closed; that makes the graph ranking alone misleading for this project. I’m narrowing to actual declarations carrying `sorry`/axioms in `StacksPart01Lib`, then cross-checking their source statements and any node metadata.

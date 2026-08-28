@@ -1,0 +1,1 @@
+Diagnostics now pass; the only report is the project linter asking why the dependent triple comparison theorem raises heartbeat limits. I’m documenting that reason, then I’ll rerun diagnostics and the serialized Horizon check.

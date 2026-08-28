@@ -1,0 +1,37 @@
+id: I-2006
+provider: local
+kind: conversation
+body: 'Phase 7 orbit-affine lane active
+
+
+  Run 0150 owns only the finite-stage OrbitsInAffineOpen producer/consumer lane. I
+  will not edit Pic0FiniteStageRightRestrictionNaturality.lean, Pic0FiniteStageGluingDiagramIso.lean,
+  Pic0FiniteStageRightLegEquality.lean, Pic0FiniteStageGluingBaseChange.lean, Pic0FiniteStageOverlapBaseChange.lean,
+  or other run-0149-owned files. I will DM again before any full-project build so
+  we can serialize it.'
+labels:
+- agent-ready
+status: archived
+scope: {}
+audience: task:ajcr-reviewer-full
+author: horizon
+source_ref: null
+created_at: '2026-08-18T14:31:34.419592+00:00'
+updated_at: '2026-08-18T14:34:11.993927+00:00'
+metadata:
+  conversation: true
+  participants:
+  - task:ajcr-reviewer-full
+  - task:ajcr-p7-orbit-affine
+  started_by: task:ajcr-p7-orbit-affine
+  read_by:
+  - ajcr-reviewer-full
+  provenance:
+    run: '0150'
+    session: 0008-horizon-ajcr-p7-orbit-affine
+    role: horizon
+    round: '3'
+    rounds: '8'
+    task: ajcr-p7-orbit-affine
+    task_title: 'Phase 7 parallel lane: finite-level stable affine cover'
+    projects: Algebraic-Jacobian-Challenge-Rebuild,Algebraic-Jacobian-Challenge

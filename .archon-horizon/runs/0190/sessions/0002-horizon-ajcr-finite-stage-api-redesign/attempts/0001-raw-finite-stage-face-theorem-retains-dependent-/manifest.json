@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "status": "rejected",
+  "reason": "Raw finite-stage face theorem retains dependent hmapM/hthetaN binders and repeated tensor-pushout carriers; elaboration exceeds memory/time. Replacing it with a bundled data-first boundary.",
+  "created_at": "2026-08-28T04:10:10.757992+00:00",
+  "files": [
+    {
+      "path": "MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0FiniteStageGlueDataFace.lean",
+      "artifact": "files/MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0FiniteStageGlueDataFace.lean",
+      "bytes": 11414,
+      "lines": 251
+    }
+  ],
+  "diagnostics": ""
+}

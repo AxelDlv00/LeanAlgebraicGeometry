@@ -1,0 +1,1 @@
+A new Mumford commit landed during the audit (`66f33874a5`, “package finite uniformized torsion”); the previously observed `Uniformization.lean` edit is now committed, and the Mumford path is clean again. I’m doing one final boundary check so the report distinguishes this clean project state from the still-dirty shared workspace.

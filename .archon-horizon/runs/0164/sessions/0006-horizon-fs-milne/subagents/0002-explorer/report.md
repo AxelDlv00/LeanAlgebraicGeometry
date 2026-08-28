@@ -1,0 +1,1 @@
+The affine unit is now fully green, so I’m tracing the descent APIs and their actual limits. This will let me distinguish a realistic next declaration from a misleading “equivalence” wrapper that merely restates an unproved theorem.

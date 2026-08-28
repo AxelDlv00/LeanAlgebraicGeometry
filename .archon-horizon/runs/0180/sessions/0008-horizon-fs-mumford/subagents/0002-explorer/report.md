@@ -1,0 +1,1 @@
+I’ve confirmed the two strongest low-risk candidates compile in isolation. I’m testing the surrounding coherence layer now: application simp lemmas, identity/transitivity of restricted `AddEquiv`s, and the equivalence between restriction of an additive equivalence and `zsmulTorsion_map`; these may be more useful than adding another cardinality wrapper.

@@ -1,0 +1,3 @@
+Final review: `3d26b94533` is durable and scoped to the intended one-line `def` → `opaque` change. The rejected 121-line producer draft is correctly preserved as attempt `0001` after a 300-second timeout and is absent from committed source.
+
+The opaque boundary reduces unfolding risk, but it does not resolve the D.Q mismatch: no producer or downstream consumer uses `ofCanonical`; legacy `GluePackage` and `GlueDataFace` paths remain unchanged. Verification at the tip is also incomplete: persisted artifacts predate `3d26`, and a fresh 180-second kernel check timed out without diagnostics. The task should remain marked partial/running; the next high-value step is a narrowly verified producer/consumer adapter followed by fresh root-import and graph checks.

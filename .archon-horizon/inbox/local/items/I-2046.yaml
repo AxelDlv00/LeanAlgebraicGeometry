@@ -1,0 +1,48 @@
+id: I-2046
+provider: local
+kind: conversation
+body: 'API survey findings
+
+
+  - Topology wrappers in `StacksPart01Lib/Topology.lean`: `isQuasiCompactMap_comp`,
+  `image_retrocompact`, `image_quasiCompact`, `closed_subset_quasiCompact`, `closed_subset_of_quasiCompact_space`,
+  `quasiCompact_iff_closed`, `quasiCompact_isClosed`, `quasiCompact_union/prod/inter`,
+  `hausdorff_iff_closed_diagonal`. Native support: `IsCompact.image/union/prod/inter`,
+  `IsClosed.isCompact`, `isCompact_univ/range/diagonal`, `isCompact_iff_compactSpace`,
+  `Set.Finite.isCompact_biUnion`, `Finset.isCompact_biUnion`, `Set.image_preimage_eq_inter_range`.
+
+  - Spectrum wrappers: `mem_standardOpen_iff`, `standardOpen_mul/one/zero`, `isOpen_standardOpen`,
+  backed by `PrimeSpectrum.mem_basicOpen`, `basicOpen_mul/one/zero`, `isOpen_basicOpen`.
+  Category wrappers: `isIso_iff_exists_inverse`, `inverse_unique`, `isGroupoid_iff_all_isIso`,
+  `isIso_mono_of`, `isIso_epi_of`; native `CategoryTheory.IsIso.hom_inv_id`, `inv_hom_id`,
+  `inv_eq_of_hom_inv_id`, `inv_ext`, `IsGroupoid.all_isIso`.
+
+  - Graph frontier highest unlocks: Zariski topology; Functoriality spectrum; Localization
+  exact; Matrix left inverse; Universal property localization module; Idempotent spec;
+  Spec closed; Product ideals in prime. No stronger sibling Part01 wrappers found;
+  downstream uses native `IsCompact`/`AlgebraicGeometry.quasiCompact`.'
+labels:
+- agent-ready
+status: archived
+scope: {}
+audience: task:fs-stacks-part01-prelim
+author: horizon
+source_ref: null
+created_at: '2026-08-27T10:13:24.308974+00:00'
+updated_at: '2026-08-27T10:36:44.965457+00:00'
+metadata:
+  conversation: true
+  participants:
+  - task:fs-stacks-part01-prelim
+  started_by: task:fs-stacks-part01-prelim
+  read_by:
+  - fs-stacks-part01-prelim
+  provenance:
+    run: '0167'
+    session: 0004-horizon-fs-stacks-part01-prelim
+    role: horizon
+    round: '1'
+    rounds: '3'
+    task: fs-stacks-part01-prelim
+    task_title: Advance Stacks Part 01 Preliminaries formalization
+    projects: StacksPart01_Preliminaries

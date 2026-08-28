@@ -1,0 +1,1 @@
+The first two coherence shapes are now confirmed by narrow elaboration: the cocycle datum itself composes over an arbitrary ring tower, and the top-section comparison reduces componentwise to the existing `appLE` composition law. I’m tightening the arbitrary-open/gluing statement next, then I’ll add the evaluation-section consumer in its own allowed file.

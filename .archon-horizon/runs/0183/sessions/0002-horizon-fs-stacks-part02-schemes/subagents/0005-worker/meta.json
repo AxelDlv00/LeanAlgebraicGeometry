@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Heisenberg",
+  "agent_path": "/root/open_immersion",
+  "agent_role": "worker",
+  "depth": 1,
+  "model": "gpt-5.6-terra",
+  "name": "worker",
+  "native_subagent_id": "01a043c4-4e12-7833-802c-edc526d9f9fc",
+  "ok": true,
+  "parent_session": "0002-horizon-fs-stacks-part02-schemes",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "completed",
+  "subagent_type": "worker",
+  "summary": "Created [OpenImmersion.lean](/home/axel/LeanAlgebraicGeometry-Horizon/FormalizedSources/StacksProject/Part02_Schemes/StacksPart02Lib/OpenImmersion.lean) with four sorry-free wrappers for injectivity, open mapping, range equality, and factor",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 2322857,
+    "tokens_out": 6190
+  }
+}

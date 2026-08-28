@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Zeno",
+  "agent_path": "/root/frontier_scan",
+  "agent_role": "explorer",
+  "depth": 1,
+  "model": "gpt-5.6-sol",
+  "name": "explorer",
+  "native_subagent_id": "01a04445-bf79-7240-9fa6-74a943491581",
+  "ok": false,
+  "parent_session": "0008-horizon-fs-stacks-part03-scheme-topicstheory",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "interrupted",
+  "subagent_type": "explorer",
+  "summary": "",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 21695765,
+    "tokens_out": 38024
+  }
+}

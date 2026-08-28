@@ -1,0 +1,21 @@
+{
+  "agent_nickname": "Mill",
+  "agent_path": "/root/frontier_scan",
+  "agent_role": "explorer",
+  "depth": 1,
+  "model": "gpt-5.6-sol",
+  "name": "explorer",
+  "native_subagent_id": "01a0475f-a441-7812-aae5-0d8460f609bc",
+  "parent_session": "0006-horizon-fs-hartshorne",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "running",
+  "subagent_type": "explorer",
+  "summary": "",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 7180418,
+    "tokens_out": 12964
+  }
+}

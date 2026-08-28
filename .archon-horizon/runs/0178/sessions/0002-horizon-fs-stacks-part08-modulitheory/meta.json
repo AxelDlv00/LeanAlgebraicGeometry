@@ -1,0 +1,20 @@
+{
+  "role": "horizon",
+  "round": 0,
+  "project": "StacksPart08_TopicsInModuliTheory",
+  "task_id": "fs-stacks-part08-modulitheory",
+  "status": "interrupted",
+  "started_at": "2026-08-27T13:21:38.673501+00:00",
+  "projects": [
+    "StacksPart08_TopicsInModuliTheory"
+  ],
+  "harness_name": "codex",
+  "harness_kind": "codex",
+  "model": "gpt-5.6-sol",
+  "effort": "ultra",
+  "config_dir": "/home/axel/.codex-temp",
+  "auth": "api-key",
+  "workspace_sha": "a295e585c2e004fe184f106f9abf5a395dc1d1ea",
+  "ended_at": "2026-08-27T13:25:35+00:00",
+  "interrupt_reason": "process-marker-reaped"
+}

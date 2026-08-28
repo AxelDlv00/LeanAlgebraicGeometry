@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "fingerprint": "649680c9fc003b42",
+  "command": [
+    "lake",
+    "env",
+    "lean",
+    "/home/axel/LeanAlgebraicGeometry-Horizon/FormalizedSources/StacksProject/Part04_AlgebraicSpaces/StacksPart04Lib/ActionGroupoid.lean"
+  ],
+  "cwd": "FormalizedSources/StacksProject/Part04_AlgebraicSpaces",
+  "status": "passed",
+  "ok": true,
+  "returncode": 0,
+  "timed_out": false,
+  "reused": false,
+  "wait_seconds": 2.67,
+  "duration_seconds": 3.021,
+  "started_at": "2026-08-27T22:28:08.502585+00:00",
+  "finished_at": "2026-08-27T22:28:11.523582+00:00",
+  "finished_epoch": 1787869691.523582
+}

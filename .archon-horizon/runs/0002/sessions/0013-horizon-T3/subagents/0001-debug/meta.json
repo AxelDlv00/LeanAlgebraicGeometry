@@ -1,0 +1,18 @@
+{
+  "model": "claude-fable-5",
+  "name": "debug",
+  "native_subagent_id": "toolu_01PU2YhHCcmqo6BRUP2N8xvY",
+  "ok": false,
+  "parent_session": "0013-horizon-T3",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "orphaned",
+  "subagent_type": "debug",
+  "summary": "",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 19770,
+    "tokens_out": 180
+  }
+}

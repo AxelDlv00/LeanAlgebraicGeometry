@@ -1,0 +1,37 @@
+id: I-0379
+provider: local
+kind: memory
+body: "horizon graph sync needs BOTH --blueprint and --lean, or its warnings are noise\n\
+  \nRunning 'horizon graph -p <proj> sync --blueprint <web.tex>' without --lean reports\n\
+  every \\lean{...} pin as 'not found in Lean sources' — 2261 warnings in AJC,\nincluding\
+  \ pins that are certainly fine (AlgebraicGeometry.Jacobian). The Lean side\nis simply\
+  \ empty ('0 lean node(s)' in the summary line), so the check has nothing to\nmatch\
+  \ against. With both flags:\n\n  horizon graph -p Algebraic-Jacobian-Challenge sync\
+  \ \\\n    --blueprint MainProjects/Algebraic-Jacobian-Challenge/blueprint/src/web.tex\
+  \ \\\n    --lean MainProjects/Algebraic-Jacobian-Challenge/AlgebraicJacobian\n\n\
+  AJC reports 33 warnings, all pre-existing pins to declarations never written\n(several\
+  \ deliberately named AlgebraicGeometry.TODO.*). Read the 'synced: N\nblueprint node(s),\
+  \ M lean node(s)' line before believing a warning count: M = 0\nmeans the warnings\
+  \ are meaningless. AJC has no hgraph/config.yaml, so the flags\nmust be passed explicitly\
+  \ every time. (run 0054)"
+labels:
+- agent-ready
+status: archived
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-27T07:51:25.274430+00:00'
+updated_at: '2026-07-27T08:09:40.180869+00:00'
+metadata:
+  provenance:
+    run: '0054'
+    session: 0002-horizon-ajc-truth
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajc-truth
+    task_title: Publish the true axiom frontier and align the Jacobian route
+    projects: Algebraic-Jacobian-Challenge
+  read_by:
+  - ajc-gate

@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "status": "rejected",
+  "reason": "Rejected package-indexed AlgHom facade: its public type re-infers chart/overlap Algebra instances and deterministically times out at the 20,000-heartbeat default; migrate this boundary to pinned scheme GlueData projections.",
+  "created_at": "2026-08-27T12:17:49.947259+00:00",
+  "files": [
+    {
+      "path": "MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0FiniteStageStableRestrictionBaseChange.lean",
+      "artifact": "files/MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0FiniteStageStableRestrictionBaseChange.lean",
+      "bytes": 2171,
+      "lines": 60
+    }
+  ],
+  "diagnostics": ""
+}

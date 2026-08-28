@@ -1,0 +1,1 @@
+I’m narrowing the instance issue now: the categorical wrappers are straightforward, but a functor over raw `ModuleCat R` cannot elaborate until the opposite-module/central-scalar assumptions are supplied. I’m testing the least invasive way to provide those instances locally, with exact Lean signatures to hand back to the parent.

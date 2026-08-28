@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "status": "rejected",
+  "reason": "Paused instance-coercion isolation: fresh foreground checks and the tracked Lake rebuild showed the apparent CommRingCat mismatch was a transient/concurrent-build symptom; scratch_modelring intentionally contains a sorry and must not remain in source.",
+  "created_at": "2026-08-22T03:10:08.468200+00:00",
+  "files": [
+    {
+      "path": "MainProjects/Algebraic-Jacobian-Challenge-Rebuild/scratch_instances.lean",
+      "artifact": "files/MainProjects/Algebraic-Jacobian-Challenge-Rebuild/scratch_instances.lean",
+      "bytes": 396,
+      "lines": 11
+    },
+    {
+      "path": "MainProjects/Algebraic-Jacobian-Challenge-Rebuild/scratch_ringhom.lean",
+      "artifact": "files/MainProjects/Algebraic-Jacobian-Challenge-Rebuild/scratch_ringhom.lean",
+      "bytes": 1393,
+      "lines": 31
+    },
+    {
+      "path": "MainProjects/Algebraic-Jacobian-Challenge-Rebuild/scratch_modelring.lean",
+      "artifact": "files/MainProjects/Algebraic-Jacobian-Challenge-Rebuild/scratch_modelring.lean",
+      "bytes": 2454,
+      "lines": 63
+    }
+  ],
+  "diagnostics": ""
+}

@@ -1,0 +1,29 @@
+Everything is intact at HEAD: both pins present, owner clear, title and summary mine, all eight Lean files and my three inbox writes byte-identical to HEAD. Nothing of mine is uncommitted.
+
+## Progress
+
+- **`Picard/GaloisQuotientAffineGeneral.lean`** (new, rooted, 2 theorems + 1 global instance, **zero sorries**, all three axiom-clean `[propext, Classical.choice, Quot.sound]` against a control still reporting `sorryAx` on `fgaPicardRepresentability`): claimed `AJC.picrep.etale-rep.galois` and discharged the **affine case** of the campaign-`G2` gate `HasGaloisQuotient`.
+  - `isGaloisQuotient_congr` — `IsGaloisQuotient` transports along an equivariant iso over `Spec L`. No geometry: a triangle, an equivariance square, a universal property. Control: drop the equivariance hypothesis and clause 2 is unprovable.
+  - `hasGaloisQuotient_of_isAffine` — the gate for **every** semilinear action on an affine scheme. `⊤` is Γ-stable, so `GaloisQuotientGlue`'s layer-1 section action at `U = ⊤` gives the affine model's input format; `X.isoSpec` is equivariant over `Spec L` by mathlib's `isoSpec_hom_naturality`, and `isGaloisQuotient_spec` transports across it.
+- **Six files** requalified where they called the gate "instance-free" — false the moment my instance landed.
+- `AJC.picrep.etale-rep.galois`: claimed, worked, released and retitled to name which half is closed; owner clear, two pins, verified at HEAD after another lane's revert/restore cycle.
+
+## Issues
+
+**Which item and why.** The seam sorry carries the whole Jacobian tower; its descent repair has four inputs, and three were closed or claimed when I chose. Input **(2)**, the Galois quotient, was the last unowned and the deepest — upstream of the tail rather than beside it.
+
+**State: advanced, not closed, and the split is the point.** The affine half is sorry-free with every antecedent discharged (the orbit binder genuinely free, not assumed). The half the route needs is untouched: `J'_r` is **glued**, hence non-affine, and `inferInstance` fails there even with `HasStableAffineCover` in scope. The seam sorry is unchanged and **no antecedent is witnessed for any curve**.
+
+**The reusable finding.** Three sites size `G2(c)` as four layers with "only layer 1 built". Layer 1 already closed the gate on the affine locus — at `U = ⊤`, the degenerate value of the open its own API quantifies over. Three lanes had re-read that plan; nobody substituted `⊤`. Filed I-1269.
+
+**Two of my own claims refuted, both reproduced before accepting.** A docstring called the orbit binder free while citing a declaration **outside my import closure** — my own I-1173 trap, one file from a commit fixing another instance of it. And "closes `hasGaloisQuotient_specF4` by `inferInstance`" is true downstream but **false at that witness's own site**, unfixably, by import cycle. Four sites requalified; the F4 proof relabelled *generalised, not superseded*.
+
+**What most changes another lane's plan:** the gate has **zero binder sites**. This removes a future obstacle and unblocks nothing today — the assembly step that would consume it is not yet a declaration. ajc-p2 claimed that step this round; it is the consumer this gate waits for.
+
+## Why I stopped
+
+Partly advanced, not complete — by design. The non-affine gluing is a genuine multi-session construction and a stated residue is worth more than a half-built `GlueData`. `lake build AlgebraicJacobian` EXIT=0, 8871 jobs; the sole warning is a pre-existing comment line on an unrelated declaration. Six commits, all ancestors of HEAD, each touching only my own paths.
+
+## Next
+
+Take the non-affine `G2(c)` **with a consumer**, or the gate gains a second producer with still nothing binding it — coordinate with ajc-p2's descent-assembly row. Layer 3 can now quote `hasGaloisQuotient_of_isAffine` per chart; layer 2's ring half may already exist as `Albanese/SymPowInvariantsAwayEquiv.mem_fixedAway_iff_exists_invariant_num`, which proves `(A_b)^G = (A^G)_b` for an arbitrary finite group on an arbitrary ring and is never cited by the Picard leg. I did not need it, so that transfer is unverified.

@@ -1,0 +1,34 @@
+id: AJCR.review-plan.p4-family-producer
+title: 'Phase 4A: arbitrary-affine rank-one presentation/base-change producer'
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+summary: 'Complete: the tied actual-family certificates, native pushforward base-change
+  isomorphisms, arbitrary-affine native presentations, FibrePresented producer, and
+  canonical evaluation divisor are integrated through PicRankOneOpen, DivRankOneOpen,
+  and canonicalRankOneAbelIso. Fieldwise substitutes and hypothesis-shifted wrappers
+  are not used.'
+status: done
+kind: proof
+priority: urgent
+depends_on: []
+inbox_refs: []
+task_refs:
+- ajcr-review-family-producer
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+metadata:
+  author: human
+  created_at: '2026-08-08T02:03:26.875211+00:00'
+  parent: AJCR.review-plan.p4-rank-one-iso
+  owner: ajcr-reviewer-full
+  milestone: AJCR.review-plan
+  updated_at: '2026-08-18T06:26:30.712576+00:00'
+  pinned_commits:
+  - 42654b14c6
+  - a04e410147
+  - ea93364818
+  - 5f19fa76cc0b4ebcf881e319022097857bd505c8
+  - cf1cf94155
+  - abd1d776d5
+  - fd1df6a07c

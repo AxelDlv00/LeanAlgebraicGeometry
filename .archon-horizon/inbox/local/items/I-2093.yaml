@@ -1,0 +1,56 @@
+id: I-2093
+provider: local
+kind: conversation
+body: 'Audit report from finite-stage API review
+
+
+  Concrete blocker: `AlgebraicGeometry.pic0FiniteStageFinalBaseChangeEquiv_naturality`
+  at AlgebraicJacobian/Picard/Pic0FiniteStageFinalBaseChange.lean:1121-1157 is the
+  only `sorry` in the finite-stage API family. It is consumed directly by `Pic0FiniteStageRestrictionNaturality.restrictionBaseChangeMap_naturality`
+  (lines 39-64) and `Pic0FiniteStageRightRestrictionNaturality.rightRestrictionFinalBaseChangeEquiv_naturality`
+  (46-58), so any proof repair has broad left/right restriction impact. Statement
+  is an AlgHom equality; likely implementation must explicitly pin the source/target
+  `Semiring`, `Algebra`, and `IsScalarTower` arguments already named in `pic0FiniteStageModelScalarExtensionMap`/`pic0FiniteStageFinalBaseChangeEquiv`,
+  then ext on elements and use `hmapM`; check with `"$HORIZON_BIN" check --lean AlgebraicJacobian/Picard/Pic0FiniteStageFinalBaseChange.lean`.
+
+
+  Bounded API refactor candidate: `Pic0FiniteStageStableRestrictionBaseChange.lean`
+  only exposes scheme-level `restriction`/`transition` (lines 36-48) and laws. Stable
+  package indices are arbitrary `P.presentation.glueData.J`, while legacy restriction
+  adapters use canonical `Pic0FiniteStageChartIndex C`; there is intentionally no
+  AlgHom adapter. Add a stable `restriction_factor`/base-change facade at the selected
+  presentation boundary, keeping all ring carriers opaque, rather than reintroducing
+  legacy dependent `AlgHom`s. Downstream scope: stable glued-over consumers only (`Pic0FiniteStageStableGluedOver.lean`),
+  no legacy call-site breakage.
+
+
+  Legacy giant public block: `Pic0FiniteStageGluePackage` structure lines 152-193
+  stores L,n,m,relation,e,M,mapM,hmapM,hOpen,N,thetaN with nested dependent carriers;
+  public overlap/chart instances lines 197-319 and `glueData` lines 321-345 reconstruct
+  local instances. This is precisely what `Pic0FiniteStageStableGluePackage` (lines
+  42-45) was introduced to avoid; do not expand this block. No source edits made.'
+labels:
+- agent-ready
+status: archived
+scope: {}
+audience: task:ajcr-finite-stage-api-redesign
+author: horizon
+source_ref: null
+created_at: '2026-08-27T20:57:02.242100+00:00'
+updated_at: '2026-08-27T21:53:04.085341+00:00'
+metadata:
+  conversation: true
+  participants:
+  - task:ajcr-finite-stage-api-redesign
+  started_by: task:ajcr-finite-stage-api-redesign
+  read_by:
+  - ajcr-finite-stage-api-redesign
+  provenance:
+    run: '0163'
+    session: 0016-horizon-ajcr-finite-stage-api-redesign
+    role: horizon
+    round: '6'
+    rounds: '7'
+    task: ajcr-finite-stage-api-redesign
+    task_title: 'AJCR: diagnose and rewrite unstable formalization APIs'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

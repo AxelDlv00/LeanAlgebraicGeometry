@@ -1,0 +1,114 @@
+id: I-0265
+provider: local
+kind: info
+body: 'B-4 gap-2 core (fibre-field invariance) LANDED
+
+
+  FILE: MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0ChartLocusFibreField.lean
+  (187 L). Commit 72ac8c5ba4dec691b516a13725d256783ee1cb03 (private-index CAS; root
+  = HEAD blob + only my line, protocol s4 — sibling PicEtCrossBaseGraph line NOT swept).
+  Zero sorries; all keystones axiom-clean [propext, Classical.choice, Quot.sound];
+  single-module LEAN_NUM_THREADS=1 lake green under mkdir lock (8864 jobs); zero warnings
+  in my file.
+
+
+  The chartLocus-FREE heart of I-0252 gap-2 ("(comap f)^-1(chartLocus over A) = chartLocus
+  over B"). I-0252 phrased it through the undefined chartLocus (C9/divRep-gated);
+  its MATHEMATICAL content — a separable residue extension preserves h1-vanishing
+  of the witness — is chartLocus-free and complete. KEY FINDING: separability is NOT
+  needed for the transfer; every field extension is faithfully flat, so the subsingleton
+  transfers. I therefore landed the GENERAL field-extension case (strictly stronger)
+  plus the named separable specialisation the CHART-U consumer wants.
+
+
+  MODULE CORE (verbatim, reusable, pure algebra):
+
+
+  theorem subsingleton_tensorProduct_field_ext_iff {S L L'' H : Type u} [CommRing
+  S] [Field L] [Field L''] [Algebra S L] [Algebra S L''] [Algebra L L''] [IsScalarTower
+  S L L''] [AddCommGroup H] [Module S H] : Subsingleton (H ⊗[S] L) ↔ Subsingleton
+  (H ⊗[S] L'')
+
+
+  Proof: comm to A-on-left form, TensorProduct.AlgebraTensorModule.cancelBaseChange
+  for base-change-in-stages, up = 0⊗=0 (instance), down = Module.FaithfullyFlat.lTensor_reflects_triviality
+  (the field extension L→L'' is faithfully flat, instance).
+
+
+  WITNESS PREDICATE + BRIDGE (verbatim). Context: {k}[Field k]{C : Over (Spec (.of
+  k))}{B}[CommRing B][Algebra k B]{pi : C.left -> P1 k}[IsFinite pi][SmoothOfRelativeDimension
+  1 C.hom][IsProper C.hom][GeometricallyIrreducible C.hom]:
+
+
+  def BasicOpenCocycleDatum.HasWitnessH1Vanishing (D : BasicOpenCocycleDatum C B pi)
+  (L : Type u) [Field L] [Algebra k L] [Algebra B L] [IsScalarTower k B L] : Prop
+  := exists W : ((C ⊗ overSpec k L).left).CurveDivisor, Scheme.CurveDivisor.picClass
+  L W = Scheme.CechPic.map (relCurveMap C B L) D.cechPicClass  AND  Subsingleton (Sheaf.HModule
+  ((C ⊗ overSpec k L).left.divisorSheaf L W) 1)
+
+  -- for L = q.asIdeal.ResidueField this is DEFINITIONALLY membership of q in the
+  keystone-1 witness locus of Pic0ChartLocusOpen.isOpen_setOf_exists_witness_h1_vanishing.
+
+
+  theorem BasicOpenCocycleDatum.hasWitnessH1Vanishing_iff_subsingleton (D : BasicOpenCocycleDatum
+  C B pi) (L : Type u) [Field L] [Algebra k L] [Algebra B L] [IsScalarTower k B L]
+  : D.HasWitnessH1Vanishing L <-> Subsingleton ((datumPair D).H1 ⊗[B] L)
+
+  -- = (subsingleton_h1_tensor_iff_exists_witness L).symm (C1''s GAP-6 two-way dictionary).
+
+
+  THE GAP-2 CORE (verbatim):
+
+
+  theorem BasicOpenCocycleDatum.hasWitnessH1Vanishing_iff_of_fieldExtension (D : BasicOpenCocycleDatum
+  C B pi) (L L'' : Type u) [Field L] [Field L''] [Algebra k L] [Algebra k L''] [Algebra
+  B L] [Algebra B L''] [IsScalarTower k B L] [IsScalarTower k B L''] [Algebra L L'']
+  [IsScalarTower B L L''] : D.HasWitnessH1Vanishing L <-> D.HasWitnessH1Vanishing
+  L''
+
+
+  theorem BasicOpenCocycleDatum.hasWitnessH1Vanishing_iff_of_separable (... same binders
+  ...) [Algebra.IsSeparable L L''] : D.HasWitnessH1Vanishing L <-> D.HasWitnessH1Vanishing
+  L''  -- := hasWitnessH1Vanishing_iff_of_fieldExtension L L'' (separability unused;
+  names the étale-carrier consumer).
+
+
+  FIXED-FIELD CLASS-INTRINSICITY (verbatim, V1a — the OTHER half of the comap identity):
+
+
+  theorem BasicOpenCocycleDatum.hasWitnessH1Vanishing_congr_of_cechPicClass_eq {B''
+  : Type u} [CommRing B''] [Algebra k B''] (D : BasicOpenCocycleDatum C B pi) (D''
+  : BasicOpenCocycleDatum C B'' pi) (L : Type u) [Field L] [Algebra k L] [Algebra
+  B L] [Algebra B'' L] [IsScalarTower k B L] [IsScalarTower k B'' L] (hcl : Scheme.CechPic.map
+  (relCurveMap C B L) D.cechPicClass = Scheme.CechPic.map (relCurveMap C B'' L) D''.cechPicClass)
+  : D.HasWitnessH1Vanishing L <-> D''.HasWitnessH1Vanishing L
+
+
+  WHAT C9''s CHART-U(b) ASSEMBLY NOW CONSUMES: keystone 3 (isOpen_of_isOpen_comap_preimage,
+  f = A->B) needs comap f ^-1(chartLocus_A) = locus_B. Pointwise (q over p, kappa(q)/kappa(p)
+  separable, tower A->kappa(p)->kappa(q)) this is the composite: hasWitnessH1Vanishing_iff_of_fieldExtension
+  (kappa(p)->kappa(q) transfer of the A-side class, landed) THEN hasWitnessH1Vanishing_congr_of_cechPicClass_eq
+  at fixed field kappa(q) (A-side class vs D_B''s class, landed). Both landed here.
+  The witness set of keystone 1 is defeq {q | HasWitnessH1Vanishing D kappa(q)}, so
+  the two files chain directly.
+
+
+  RESIDUAL (unchanged, pre-existing, NOT a wall on the invariance — divRep/C9-gated):
+  (1) the hcl input to the class-intrinsicity — the shifted-datum class identity map(relCurveMap
+  C A kappa(q)) D_A.cechPicClass = map(relCurveMap C B kappa(q)) D_B.cechPicClass
+  (I-0252 gap 1, the Sigma/theta naturality), and the existence of the A-side datum
+  D_A realizing the pic0 class over A. (2) chartLocus itself is still UNDEFINED (DAT-C
+  C9). Neither touches the fibre-field invariance, which is complete. Etale ==> IsOpenMap(comap)+surjective
+  supplies keystone 3''s hopen/hsurj (I-0252 note).'
+labels:
+- agent-ready
+status: archived
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: human
+source_ref: null
+created_at: '2026-07-19T13:07:02.360027+00:00'
+updated_at: '2026-07-20T03:15:23.411089+00:00'
+metadata: {}

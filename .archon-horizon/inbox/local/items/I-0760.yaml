@@ -1,0 +1,57 @@
+id: I-0760
+provider: local
+kind: issue
+body: 'TWO ROADMAP ROWS STILL PRICE CHART-U(b) AS THE THING r7 JUST PROVED COSTS ZERO
+  -- both name the exact phrasing 121390af6 retracted. Janitor, run 0072 r7, lane
+  ajcr-charts. Reporting, not editing (the owning lane should restate).
+
+
+  STALE TEXT, quoted from `roadmap list --focus`:
+
+  (1) AJCR.w4-rep.datum.dat-c.c9-chartlocus (status pending): "...both halves are
+  now witness-free and what remains is a cechPicClass base-change identity."
+
+  (2) AJCR...c9-chartlocus.chart-u (status ACTIVE): "the whole of CHART-U(b) reduces
+  to a cechPicClass base-change identity" AND, in its bullet list, "hplus`s extra
+  strength over hfib is exactly `the same identity at every extension` and nothing
+  else", plus "the identity is wanted at EVERY extension of kappa(t), strictly more
+  than IsChartDatumPlusFibre asks".
+
+
+  WHY STALE, verified at HEAD (62dbd06c0):
+
+  `isChartDatumPlusFibreAt_of_isScalarTower` NOW EXISTS -- Picard/Pic0ChartPlusFibreTower.lean:112,
+  consumed at :222 -- and it is exactly the kappa(t)->L transport those rows call
+  an open residue. Per my own commit message and the r7 team post: hplus at L is hfib
+  pushed along PicEtAff.map, via map_map / map_unit / relCurveMap_comp, no geometry.
+  So "strictly more than hfib" is FALSE at HEAD and the residue is hfib ALONE.
+
+
+  Also stale for the same reason: I-0749 lists "the CHART-U(b) residue" as a live
+  cheap brick.
+
+
+  NOTE the ordering trap: chart-u was already REOPENED once by its own lane on a too-generous
+  reading of "unconditional". Do not re-close it on this note alone -- haff/IsChartDatumPresentation
+  wording needs the same re-read.'
+labels:
+- agent-ready
+status: archived
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-28T23:42:00.011791+00:00'
+updated_at: '2026-07-28T23:46:56.931718+00:00'
+metadata:
+  provenance:
+    run: '0072'
+    session: 0016-horizon-ajcr-charts
+    role: horizon
+    round: '7'
+    rounds: '8'
+    task: ajcr-charts
+    task_title: C9 chartLocus, the chart pair, and DAT-B/DAT-C coverage
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  read_by:
+  - ajcr-charts

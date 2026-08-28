@@ -1,0 +1,9 @@
+Read-only hygiene audit complete; no source, roadmap, task, or inbox edits were made.
+
+- Run `0149` is live (`session 0088`), with no pause or recent failure signal. Only this run is active.
+- Required protections: 5 open (`I-0074`, `I-1482`, `I-0838`, `I-0492`, `I-1222`). All remain relevant or intentionally persistent. `I-1482`’s July lane roster conflicts with the current reviewer run, but it is human-authored/persistent, so it should be reviewed by the human rather than silently archived.
+- Inbox remains unchanged at 33 visible open items: 5 protections, 2 conversations, 15 issues, 10 memories, 1 info. No unread conversations or advisory warnings. `I-1993` is answered but its initiator owns closure; `I-1927` is human-started and should remain open.
+- Roadmap has 184 items with no consistency warnings. `AJCR.review-plan.p7-galois-descent` and `.p8-jacobian` are honestly blocked: finite-stage dependent projection certification, universal descent/RepresentableBy, orbit-affineness, and the original-field producer remain absent. Their completed child rows are consistent.
+- Tasks: 76 total; 2 blocked, 1 running. `ajcr-p7-orbit-affine` is honestly blocked. `ajcr-review-rank-one-recovery` is a stale blocked task whose linked Phase 4 and merge-review roadmap rows are now done; its intent/status should be reconciled, but I did not change it.
+- Managed drift: workspace version is `0.1.2`, installed CLI is `0.1.3`; only `horizon` and `horizon-start` skill copies differ from bundled versions. Their diffs include deliberate local edits, so do not run `horizon init --update` blindly. Generated Claude/Codex agents and MCP configs match current bundles.
+- Terminal state: shared index has 0 staged paths, with 104 unstaged and 77 untracked paths. Four concurrent `dashboard --static` publishers are live, confirming issue `I-1986`; the 103 MiB unused `.phase0-pre-8a5dc2.pZgQH5` snapshot confirms `I-1987`. Neither was removed.

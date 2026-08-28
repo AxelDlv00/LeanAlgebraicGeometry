@@ -1,0 +1,62 @@
+id: ajc-proj-infra
+project: Algebraic-Jacobian-Challenge
+objective: 'You are the SINGLE OWNER of the projective-morphism infrastructure cluster
+  in Algebraic-Jacobian-Challenge: (1) a relative Proj / Proj-for-morphisms carrier,
+  (2) ampleness, (3) very-ampleness. mathlib v4.31 provides none of this. These three
+  are one interdependent program, not three tasks - very-ampleness needs the Proj
+  embedding, ampleness is characterized through very-ample twists - which is why one
+  lane owns all three. PHASE 0 (first round, before proving anything): build the DEMAND
+  LEDGER. Reduce top-down from the central seam fgaPicardRepresentability (FGAPicRepresentability.lean)
+  and from what PointedPicSharpRep requires (Picard degree-piece FiniteInAffine, very-ample
+  output; see I-1697): write the exactly-stated missing lemmas as Lean statements
+  that elaborate against the real definitions (sorried statements are fine in a ledger
+  file), and inventory what already exists - CurveProjectivity (Adelic.isProjective_of_smoothProperGeometricallyIntegral,
+  already consumed at the Kleiman boundaries), and ajc-kleiman-rewire fleet-2 substrate:
+  IsHQuasiProjective, carried-O(1), FiniteInAffine transport/aggregation, Over-coproduct
+  assembly. Record the ledger as an inbox info item and matching roadmap rows under
+  AJC.picrep before phase 1. PHASE 1+: build ONLY what the ledger demands, layered:
+  freeze the core definitions first and announce them (inbox info) so consumers can
+  build against them; then the theorems. Do NOT build mathlib-general theory beyond
+  listed demand; do NOT restate existing facts in new vocabularies (re-spelling is
+  the documented failure mode: I-1622, I-1722). OWNERSHIP: ajc-kleiman-rewire (run
+  0111) is live and owns its existing files - DM it via horizon inbox --to task:ajc-kleiman-rewire
+  to agree the boundary; put your new modules in a dedicated directory (e.g. AlgebraicJacobian/Projective/).
+  No (rep :) binder consumers. VERIFY: #print axioms on every declaration (expect
+  propext, Classical.choice, Quot.sound), narrow per-module lake build during the
+  session (the AJC umbrella costs ~43 min - run it at most once at session end). Success
+  metric: ledger items closed AND consumed by the seam side, not raw line count.'
+title: 'AJC: own and build the projective-morphism infrastructure (Proj / ample /
+  very-ample), demand-first'
+explanation: ''
+projects:
+- Algebraic-Jacobian-Challenge
+priority: high
+status: cancelled
+write_set:
+  files: []
+  projects:
+  - Algebraic-Jacobian-Challenge
+  declarations: []
+  blueprint_nodes: []
+  workspace: false
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+roadmap_refs:
+- AJC.picrep.projective-infra
+- AJC.picrep.projective-infra.ledger
+- AJC.picrep.projective-infra.relative-proj
+- AJC.picrep.projective-infra.ample
+- AJC.picrep.projective-infra.very-ample
+- AJC.picrep.projective-infra.grassmannian
+inbox_refs:
+- I-1697
+- I-1822
+- I-1825
+- I-1826
+- I-1832
+artifact_refs: []
+created_at: '2026-08-03T01:45:09.146369+00:00'
+updated_at: '2026-08-04T01:56:46.764030+00:00'
+metadata:
+  author: human

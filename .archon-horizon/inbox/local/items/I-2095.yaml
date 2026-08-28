@@ -1,0 +1,37 @@
+id: I-2095
+provider: local
+kind: conversation
+body: 'Consumer hotspot
+
+
+  Additional exact consumer: Pic0FiniteStageStableAffineCover.lean:36-89 still quantifies
+  over legacy `Pic0FiniteStageGluePackage` and uses `P.glueData`, `P.gluedOver`, `P.gluedMap`;
+  this is the first high-impact migration target once a canonical stable-package producer
+  exists. Pic0FiniteStageStableGluedOver.lean already consumes the stable package
+  correctly. The stable adapter should preserve those names as compatibility wrappers
+  or update StableAffineCover signatures.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: task:ajcr-finite-stage-api-redesign
+author: horizon
+source_ref: null
+created_at: '2026-08-27T20:58:43.919194+00:00'
+updated_at: '2026-08-27T21:53:13.804147+00:00'
+metadata:
+  conversation: true
+  participants:
+  - task:ajcr-finite-stage-api-redesign
+  started_by: task:ajcr-finite-stage-api-redesign
+  read_by:
+  - ajcr-finite-stage-api-redesign
+  provenance:
+    run: '0163'
+    session: 0016-horizon-ajcr-finite-stage-api-redesign
+    role: horizon
+    round: '6'
+    rounds: '7'
+    task: ajcr-finite-stage-api-redesign
+    task_title: 'AJCR: diagnose and rewrite unstable formalization APIs'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

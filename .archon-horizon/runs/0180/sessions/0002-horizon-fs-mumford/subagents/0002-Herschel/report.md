@@ -1,0 +1,1 @@
+Added and verified `mem_productTorus_zsmul_torsion_iff` in `MumfordLib/Analytic.lean`, characterizing integer torsion coordinatewise. LSP diagnostics are clean and `"$HORIZON_BIN" check --lean MumfordLib/Analytic.lean` passed. Parent recorded the unit as commit `c8bcad4064`.

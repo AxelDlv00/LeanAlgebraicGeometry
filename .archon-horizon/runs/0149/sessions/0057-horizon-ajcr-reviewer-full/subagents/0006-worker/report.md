@@ -1,0 +1,1 @@
+The bundled Horizon skill catalog is available even though this older workspace has no `.claude/skills` directory. I’m reading the Horizon and Lean-check guidance from the installed source, then I’ll run the assigned file through the Lean diagnostics loop.

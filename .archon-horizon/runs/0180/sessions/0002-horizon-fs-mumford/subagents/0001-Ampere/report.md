@@ -1,0 +1,1 @@
+The complete Mumford import still typechecks after the latest shared edits. I’m doing one targeted Horizon check now, then I’ll hand the parent the exact status and stop unless a concrete issue appears.

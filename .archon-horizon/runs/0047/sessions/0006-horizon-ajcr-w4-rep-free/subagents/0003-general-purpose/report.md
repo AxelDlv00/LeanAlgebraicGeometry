@@ -1,0 +1,14 @@
+Workspace: /home/axel/LeanAlgebraicGeometry-Horizon. There is a sibling Lean project `MainProjects/Algebraic-Jacobian-Challenge` (the older sibling of `MainProjects/Algebraic-Jacobian-Challenge-Rebuild`), plus possibly others under `SubProjects/`. Do NOT edit anything anywhere. Report findings only.
+
+TASK. In the Rebuild project, the representability-of-Pic^0 lane is blocked on producing a *certified divisor family* over a small base: concretely, for a relative effective divisor of degree g on a relative curve over a ring R, one needs a finite chart adaptation (basic-open pieces of two pinned affine charts, one equation per piece) whose chart colength modules `Γ(piece)/(f)` are finite projective over R and whose glued (Čech-equalizer) colength module is finite projective of constant rank g, with flat cokernels.
+
+Question: **has the sibling project (or any other project in this workspace) already carried out an equivalent construction, and how?** Specifically look for:
+
+1. Any place where a relative effective divisor / divisor family over an affine base is shown to have finite flat (or finite projective) colength — search names like `colength`, `IsCertified`, `DivisorAdaptation`, `finite_flat`, `relative divisor`, `Div`, `HilbertScheme`, `divFunctor`, `representab`.
+2. Any place where "the support of a relative divisor can be enclosed in a single affine chart after shrinking the base" is proved, or a "support tube" / "clopen packet" / idempotent-splitting argument is carried out.
+3. Any place where representability of Pic^0 or of the divisor functor is actually completed, even under hypotheses — read its strategy, and note whether it avoids the chart-adaptation route entirely (e.g. via Quot/Hilbert scheme, via symmetric powers Sym^g C, via Proj of a graded algebra, via Grassmannian/Fitting-ideal presentation, via `RepresentableBy` of a colimit).
+4. Also check `references/` at the workspace root and the two projects' `blueprint/` and `informal/` directories for a written strategy for this exact step (files mentioning divisor functor representability, `spec-dd-r`, `spec-dd-2`, Sym^g, effective divisors as a projective bundle, or "the divisor scheme is Sym^g of the curve").
+
+Use `/home/axel/.archon-env/bin/horizon search "<query>" --json` (it indexes all workspace projects and mathlib) plus grep/Read. Also check whether mathlib itself has any relevant `Sym`/`Hilbert`/`Quot`-scheme or "effective Cartier divisor" relative theory that could shortcut the whole route (search mathlib for `EffectiveCartierDivisor`, `Divisors`, `Sym`, `HilbertScheme`).
+
+Return a compact technical report: what exists where (project + file:line), which strategies were tried/abandoned and why, and any concrete lead that could shortcut the Rebuild project's chart-adaptation route. Your final message IS the report.

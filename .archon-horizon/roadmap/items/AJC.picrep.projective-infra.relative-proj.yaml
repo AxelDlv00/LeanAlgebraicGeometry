@@ -1,0 +1,36 @@
+id: AJC.picrep.projective-infra.relative-proj
+title: Relative Proj only after a concrete Picard component
+projects:
+- Algebraic-Jacobian-Challenge
+summary: PENDING with no current Lean demand. Kernel probing confirms that the two
+  former absolute section-Proj structure assemblies are elementary, but no source
+  imports the ledger, calls Proj.fromOfGlobalSections, provides picSharpDeg, represents
+  a component, or supplies a Picard-piece line bundle. They were removed from the
+  seam ledger rather than counted as infrastructure progress. Activate this row only
+  after intrinsic degree plus a real component representation exposes an exact Proj
+  signature; do not build general sheaf-relative-Proj gluing.
+status: pending
+kind: proof
+priority: normal
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+metadata:
+  author: horizon
+  created_at: '2026-08-03T02:55:04.009146+00:00'
+  provenance:
+    run: '0114'
+    session: 0002-horizon-ajc-proj-infra
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajc-proj-infra
+    task_title: 'AJC: own and build the projective-morphism infrastructure (Proj /
+      ample / very-ample), demand-first'
+    projects: Algebraic-Jacobian-Challenge
+  parent: AJC.picrep.projective-infra
+  milestone: AJC.picrep
+  updated_at: '2026-08-04T01:58:00.582722+00:00'

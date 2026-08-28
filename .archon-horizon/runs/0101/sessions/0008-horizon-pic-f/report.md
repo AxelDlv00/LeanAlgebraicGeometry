@@ -1,0 +1,1 @@
+The mutation only restored committed Horizon exports after state refresh removed them. Direct `hash-object` versus `HEAD:path` checks matched for all 18 authored paths, so it produced no new durable Git change and no additional commit is warranted. The remaining staged delta is the pre-existing contaminated shared index.

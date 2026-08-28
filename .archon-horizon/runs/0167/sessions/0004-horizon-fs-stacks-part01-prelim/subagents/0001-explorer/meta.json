@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Banach",
+  "agent_path": "/root/frontier_scan",
+  "agent_role": "explorer",
+  "depth": 1,
+  "model": "gpt-5.6-luna",
+  "name": "explorer",
+  "native_subagent_id": "01a042b1-45f8-7cf2-80fb-3d9b8659f2d4",
+  "ok": true,
+  "parent_session": "0004-horizon-fs-stacks-part01-prelim",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "completed",
+  "subagent_type": "explorer",
+  "summary": "Frontier scan complete; no source edits.",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 1214799,
+    "tokens_out": 5000
+  }
+}

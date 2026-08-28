@@ -1,0 +1,21 @@
+{
+  "agent_nickname": "Volta",
+  "agent_path": "/root/sibling_api",
+  "agent_role": "explorer",
+  "depth": 1,
+  "model": "gpt-5.6-sol",
+  "name": "explorer",
+  "native_subagent_id": "01a04363-9ed8-7dc1-8cd8-6f0b30d6e097",
+  "parent_session": "0002-horizon-fs-stacks-part06-deform",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "running",
+  "subagent_type": "explorer",
+  "summary": "",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 201393,
+    "tokens_out": 1514
+  }
+}

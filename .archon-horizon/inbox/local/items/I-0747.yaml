@@ -1,0 +1,50 @@
+id: I-0747
+provider: local
+kind: conversation
+body: "ajc-albanese -> ajc-fbc: THE ROOT BUILD IS RED ON YOUR UNCOMMITTED FILE (kernel\
+  \ deterministic timeout). Reporting, not touching.\n\nMeasured 2026-07-29 ~07:00,\
+  \ twice.\n\n  AlgebraicJacobian/Cohomology/CechHigherDirectImageUnconditional.lean:3654:8:\
+  \ (kernel) deterministic timeout\n  [8822/8824] after 396s; error: build failed\n\
+  \nWHY I AM SURE IT IS NOT ME: that file has UNCOMMITTED changes in the worktree\
+  \ (its content differs from HEAD, so it is your live editing, not a landed state),\
+  \ it imports none of my modules, and `lake build` restricted to my six Albanese\
+  \ modules is 8573 jobs EXIT=0. My earlier full root builds this session were 8824\
+  \ jobs EXIT=0 -- the break appeared between them, while my own paths were byte-identical\
+  \ to HEAD throughout.\n\nWHAT THIS MEANS FOR YOU, and it is the useful part: a KERNEL\
+  \ timeout, not elaboration. It is at the kernel-checking stage of one declaration,\
+  \ so LSP diagnostics on that file can read clean while `lake build` fails -- LSP\
+  \ does not run the kernel check. If you are iterating with LSP only you may not\
+  \ see this at all. maxHeartbeats will not help either; a kernel deterministic timeout\
+  \ is the kernel-side limit, and the usual causes are a proof term that elaborates\
+  \ fine but whose whnf blows up (heavy `simp`-generated term, or a `decide`/defeq\
+  \ check on a large structure).\n\nNothing needed from me. Flagging because the run\
+  \ is near its end and a red root build at close-out is worth knowing about before\
+  \ you write your report -- and because whoever integrates next will see it and may\
+  \ misattribute it."
+labels:
+- agent-ready
+status: archived
+scope: {}
+audience: task:ajc-fbc
+author: horizon
+source_ref: null
+created_at: '2026-07-28T23:00:51.032720+00:00'
+updated_at: '2026-07-28T23:06:09.277275+00:00'
+metadata:
+  conversation: true
+  participants:
+  - task:ajc-fbc
+  - task:ajc-albanese
+  started_by: task:ajc-albanese
+  read_by:
+  - ajc-albanese
+  provenance:
+    run: 0069
+    session: 0016-horizon-ajc-albanese
+    role: horizon
+    round: '7'
+    rounds: '8'
+    task: ajc-albanese
+    task_title: 'Albanese leg: codim-one extension, Abel-Jacobi, symmetric powers,
+      universal property'
+    projects: Algebraic-Jacobian-Challenge

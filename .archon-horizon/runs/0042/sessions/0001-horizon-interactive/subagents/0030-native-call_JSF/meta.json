@@ -1,0 +1,16 @@
+{
+  "name": "native-call_JSF",
+  "native_subagent_id": "call_JSFSPw500xbLrTSy8V5qtL34",
+  "ok": false,
+  "parent_session": "0001-horizon-interactive",
+  "parent_subagent_id": null,
+  "report_ref": null,
+  "role": "subagent",
+  "status": "orphaned",
+  "summary": "",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 0,
+    "tokens_out": 0
+  }
+}

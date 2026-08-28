@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Jason",
+  "agent_path": "/root/hygiene_audit",
+  "agent_role": "janitor",
+  "depth": 1,
+  "model": "gpt-5.6-sol",
+  "name": "janitor",
+  "native_subagent_id": "01a04731-33bd-7773-b1f0-0e1336133cbf",
+  "ok": false,
+  "parent_session": "0004-horizon-fs-mumford",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "interrupted",
+  "subagent_type": "janitor",
+  "summary": "",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 8050519,
+    "tokens_out": 26649
+  }
+}

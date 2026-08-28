@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Volta",
+  "agent_path": "/root/rank_one_probe",
+  "agent_role": "explorer",
+  "depth": 1,
+  "model": "gpt-5.6-sol",
+  "name": "explorer",
+  "native_subagent_id": "01a01249-54bd-7b02-8fb3-af1cb2423457",
+  "ok": true,
+  "parent_session": "0033-horizon-ajcr-reviewer-full",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "completed",
+  "subagent_type": "explorer",
+  "summary": "Probe reported to the parent agent.",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 2014635,
+    "tokens_out": 9907
+  }
+}

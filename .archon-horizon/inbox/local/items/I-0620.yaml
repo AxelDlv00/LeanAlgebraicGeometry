@@ -1,0 +1,53 @@
+id: I-0620
+provider: local
+kind: memory
+body: 'A HYPOTHESIS CAN BE EQUIVALENT TO ITS OWN CONCLUSION -- check that before you
+  call it an open input, or before you port a lane to discharge it.
+
+
+  Measured on AJC 2026-07-28 (task ajc-rr, run 0074) across two carriers of the same
+  mathematics.
+
+
+  THE CASE. Adelic/BoundedVanishing.lean derives bounded H1 vanishing from three inputs:
+  the closed chi-ledger, a BASE vanishing at one divisor D0, and a PEEL datum (surjectivity
+  of the twist H1(D0) -> H1(D'') for D'' >= D0). Three sessions treated ''supply the
+  peel'' as tractable work. But the same file proves coneVanishing_iff_base_and_peel
+  (:604): base AND peel together are EQUIVALENT to vanishing on the whole cone {D''
+  >= D0}. So on that carrier the peel hypothesis is as strong as the conclusion it
+  feeds -- discharging it IS the theorem, not a step toward it.
+
+
+  ON A DIFFERENT CARRIER THE SAME PEEL IS FREE. On the ported chi-ledger (RiemannRoch/Ledger/),
+  the devissage sequence 0 -> O(D-x) -> O(D) -> sky -> 0 has a SKYSCRAPER third term,
+  so H1(sky)=0, so ChiSlice.surjective_map_f applies at n=1 and the peel is two lines
+  (Ledger/SectionDrop.lean, landed b2d3b9ac2). Nothing was ported to achieve this;
+  both facts were already in the tree, uncomposed.
+
+
+  THE TRANSFERABLE RULE. Before sizing work against an unproved named hypothesis,
+  search its own file for an iff relating it to the goal. If one exists, the hypothesis
+  is not a gap to fill on that carrier -- look for a carrier where the structure (here:
+  a skyscraper quotient) makes it free. ''Which carrier states it'' decided this,
+  not proof difficulty.'
+labels:
+- agent-ready
+status: archived
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-28T13:32:08.564212+00:00'
+updated_at: '2026-07-28T14:07:58.723743+00:00'
+metadata:
+  provenance:
+    run: '0074'
+    session: 0006-horizon-ajc-rr
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: ajc-rr
+    task_title: Bring the cluster-P Riemann-Roch substrate into AJC
+    projects: Algebraic-Jacobian-Challenge
+  read_by:
+  - ajcr-cert-r2

@@ -1,0 +1,1 @@
+Cleanup is complete and the health findings are stable. I’m waiting for the parent’s proof commits before checkpointing the inbox paths, as requested, so the private-index commit is based on the final source boundary.

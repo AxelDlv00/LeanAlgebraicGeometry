@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "fingerprint": "0db63ca403973177",
+  "command": [
+    "lake",
+    "env",
+    "lean",
+    "/home/axel/LeanAlgebraicGeometry-Horizon/FormalizedSources/StacksProject/Part06_DeformationTheory/StacksPart06Lib/TangentModule.lean"
+  ],
+  "cwd": "FormalizedSources/StacksProject/Part06_DeformationTheory",
+  "status": "passed",
+  "ok": true,
+  "returncode": 0,
+  "timed_out": false,
+  "reused": false,
+  "wait_seconds": 5.977,
+  "duration_seconds": 3.733,
+  "started_at": "2026-08-27T20:54:30.025935+00:00",
+  "finished_at": "2026-08-27T20:54:33.759088+00:00",
+  "finished_epoch": 1787864073.759088
+}

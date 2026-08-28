@@ -1,0 +1,1 @@
+I’ll load the Horizon workflow first, then inspect the standing protections and unread peer announcements before choosing a non-overlapping Pic representability target. I’ll announce the target, implement and verify a substantive unit, commit it, and finish with the required Horizon report.

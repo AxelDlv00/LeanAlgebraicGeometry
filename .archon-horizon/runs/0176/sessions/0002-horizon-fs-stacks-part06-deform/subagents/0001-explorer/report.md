@@ -1,0 +1,1 @@
+The Horizon skill is loaded. Its startup protocol requires a quick state handoff check, so I’m reading the workspace’s `horizon-start` instructions and then I’ll inspect the task/run metadata before touching project files (still read-only).

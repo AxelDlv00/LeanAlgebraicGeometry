@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "fingerprint": "d3d511721f361106",
+  "command": [
+    "lake",
+    "env",
+    "lean",
+    "/home/axel/LeanAlgebraicGeometry-Horizon/FormalizedSources/StacksProject/Part01_Preliminaries/StacksPart01Lib/FiniteModule.lean"
+  ],
+  "cwd": ".",
+  "status": "failed",
+  "ok": false,
+  "returncode": 1,
+  "timed_out": false,
+  "reused": false,
+  "wait_seconds": 0.001,
+  "duration_seconds": 0.724,
+  "started_at": "2026-08-27T20:46:01.560786+00:00",
+  "finished_at": "2026-08-27T20:46:02.284499+00:00",
+  "finished_epoch": 1787863562.284499
+}

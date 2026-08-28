@@ -1,0 +1,1 @@
+The post-edit LSP pass is now clean with no warnings or errors. I’m doing the requested foreground kernel check on the new module, then I’ll report the exact API and leave the file uncommitted for the parent’s shared commit.

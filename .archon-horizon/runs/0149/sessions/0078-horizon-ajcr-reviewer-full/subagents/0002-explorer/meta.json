@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Linnaeus",
+  "agent_path": "/root/endpoint_audit",
+  "agent_role": "explorer",
+  "depth": 1,
+  "model": "gpt-5.6-sol",
+  "name": "explorer",
+  "native_subagent_id": "01a01a43-3b99-7fa3-b4c7-084342731aed",
+  "ok": true,
+  "parent_session": "0078-horizon-ajcr-reviewer-full",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "completed",
+  "subagent_type": "explorer",
+  "summary": "Audit complete, source-only.",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 9084199,
+    "tokens_out": 28943
+  }
+}

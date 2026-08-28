@@ -1,0 +1,1 @@
+I’ll re-check the current inbox with exact counts and isolate items scoped to Mumford or owned by `fs-mumford`. I’ll inspect candidate conversations/memories without marking them read, then compare against recent janitor history to determine whether the three cap warnings are workspace-wide backlog or a Mumford-specific hygiene problem.

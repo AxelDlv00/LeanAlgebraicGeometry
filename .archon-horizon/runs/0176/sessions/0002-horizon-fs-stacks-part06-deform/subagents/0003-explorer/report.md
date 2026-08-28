@@ -1,0 +1,1 @@
+I’ll first load the Horizon workflow instructions, then inspect the Part06 project’s build state, graph-sync metadata, and remaining placeholders. I’ll keep this read-only and report concrete diagnostics plus a small, verifiable target to the parent agent.

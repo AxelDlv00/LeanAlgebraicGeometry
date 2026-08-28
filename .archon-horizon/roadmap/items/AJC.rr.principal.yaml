@@ -1,0 +1,72 @@
+id: AJC.rr.principal
+title: Principal divisors have degree zero
+projects:
+- Algebraic-Jacobian-Challenge
+summary: "Principal divisors have degree zero. CLOSED 2026-07-28 (run 0067, ajc-pic0av,\
+  \ commit 8b654f78d).\nRiemannRoch/WeilDivisor.lean has ZERO sorries. principal_degree_zero\
+  \ is proved at its own binders\n(smooth proper geometrically irreducible curve over\
+  \ kbar, regular in codim 1), axiom-clean\n([propext, Classical.choice, Quot.sound],\
+  \ no sorryAx), 8607 jobs, zero warnings.\n\nTHE IMPORT INVERSION WAS NEVER REAL,\
+  \ and that is the whole story of why this took four sessions.\nThree predecessor\
+  \ summaries -- including two of mine -- recorded the leaf as blocked because\nLedger/PrincipalTransport.degree_principal_eq_zero_curve,\
+  \ the theorem with the leaf's conclusion,\nhas a 51-file cone containing WeilDivisor.lean.\
+  \ That measurement is correct and irrelevant: it is\nthe cone of the CONSUMER, and\
+  \ PrincipalTransport is downstream only because it also imports the\nindex bridge\
+  \ for convenience. The INPUTS were always importable:\n  Ledger/OrdCompare     \
+  \        7 files, WeilDivisor-free\n  Ledger/ResidueOneAlgClosed   37 files, WeilDivisor-free\n\
+  \  Adelic/FiniteMapToP1          4 files, WeilDivisor-free\nUnion 42, containing\
+  \ neither WeilDivisor nor CurveCoheight nor CurveDivisorIndexBridge; cycle\ndetection\
+  \ over all modules with the three new edges returns zero.\n\nAdelic.coheight_le_one_of_curve\
+  \ is the one nobody had checked. It was called 'strictly downstream'\nin three roadmap\
+  \ summaries, in CurveCoheight.lean's own docstring and in the leaf's comment block,\n\
+  and its cone is FOUR files -- it is downstream of Genus, which WeilDivisor.lean\
+  \ already imported.\nSo the coheight bound, which CurveCoheight.lean carries as\
+  \ an explicit hypothesis precisely\nbecause it was thought unavailable upstream,\
+  \ is simply discharged at the leaf.\n\nTHE PROOF, and it needs NO case split. Hartshorne\
+  \ II.6.10's route (finite phi : C -> P^1 from a\nnon-constant f, then degree multiplicativity\
+  \ under finite pullback) is NOT taken and its two\ngeometric sub-lemmas are no longer\
+  \ owed by this project. Instead the ported chi-ledger\nchi(O(D)) = chi(O_C) + deg\
+  \ D gives deg(div g) = 0 by transporting chi along O(0) = O(-div g)\n(Ledger/ChiLedger.deg_divOf,\
+  \ a devissage induction over closed points with skyscraper quotients).\nThree carrier\
+  \ comparisons connect it to this project's degree, each DISCHARGED not assumed:\n\
+  \ * ORDERS: ordZ read additively = the Ring.ordFrac-based RationalMap.order, no\
+  \ sign correction\n   (Ledger/OrdCompare.ordZ_toAdd_eq_log_ordFrac);\n * INDEX SETS:\
+  \ PrimeDivisor = {x != eta}, reproved inline in two lines (le_antisymm of the\n\
+  \   coheight bound against one_le_coheight_of_ne_genericPoint) since CurveCoheight\
+  \ imports the leaf;\n * WEIGHTS: over kbar the residue weighting collapses to the\
+  \ bare coefficient sum\n   (Ledger/ResidueOneAlgClosed). This is where [IsAlgClosed]\
+  \ is load-bearing and it is NOT\n   bookkeeping -- over a general field the weighted\
+  \ and unweighted degrees are different numbers.\nSince the chain is uniform in f,\
+  \ the former constant/non-constant split is deleted: a constant f\nhas every coefficient\
+  \ zero and the same chain returns 0.\n\nSCOPE, stated plainly: the theorem carries\
+  \ [IsAlgClosed kbar], as it always did. The\ngeneral-field statement is NOT proved\
+  \ and is not what this node asked for. An earlier version of\nthis summary said\
+  \ the leaf had no IsAlgClosed binder; that was wrong, and ajc-rr repeated it from\n\
+  here -- the theorem has bound it since it was written."
+status: done
+kind: proof
+priority: normal
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+metadata:
+  author: horizon
+  created_at: '2026-07-26T16:41:32.189570+00:00'
+  provenance:
+    run: '0046'
+    session: 0086-horizon-ajc-optimize
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajc-optimize
+    task_title: Make the project clean and optimized
+    projects: Algebraic-Jacobian-Challenge
+  parent: AJC.rr
+  updated_at: '2026-08-04T01:58:06.899467+00:00'
+  pinned_commits:
+  - 8b654f78d
+  - 768b6cbd4
+  milestone: AJC.rr

@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Pauli",
+  "agent_path": "/root/final_review",
+  "agent_role": "ground",
+  "depth": 1,
+  "model": "gpt-5.6-terra",
+  "name": "ground",
+  "native_subagent_id": "01a045c7-3748-75d2-bfd9-55a54d72a589",
+  "ok": true,
+  "parent_session": "0010-horizon-fs-mumford",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "completed",
+  "subagent_type": "ground",
+  "summary": "Fresh review: no source changes are needed before reporting.",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 1348581,
+    "tokens_out": 8229
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "fingerprint": "cb0c6562527bdc80",
+  "command": [
+    "lake",
+    "build"
+  ],
+  "cwd": "FormalizedSources/StacksProject/Part01_Preliminaries",
+  "status": "passed",
+  "ok": true,
+  "returncode": 0,
+  "timed_out": false,
+  "reused": false,
+  "wait_seconds": 0.0,
+  "duration_seconds": 15.209,
+  "started_at": "2026-08-27T15:05:01.263342+00:00",
+  "finished_at": "2026-08-27T15:05:16.472749+00:00",
+  "finished_epoch": 1787843116.472749
+}

@@ -1,0 +1,82 @@
+id: I-0320
+provider: local
+kind: memory
+body: 'CHECK THE CONSUMER''S PREDICATE BEFORE GRINDING A HYPOTHESIS: the DD-R certificate
+  gate was over-strong for ~7 sessions.
+
+
+  **TRIMMED 2026-07-27 (janitor hygiene pass, run 0048 round 5).** Two appended annotation
+  layers had grown this item to roughly triple its useful length, and both restated
+  `I-0360` rather than adding to the rule. The rule and its evidence are kept; the
+  "what the relaxation does not buy" narrative now lives in one place. Do not grow
+  this item again — file a new item and cross-reference.
+
+
+  **THE RULE (this is the durable part).** Before grinding a certificate/finiteness
+  hypothesis in this project, check what the actual CONSUMER''s predicate is. The
+  project has both a global notion (`IsCertified`, over the whole chart ring $R_Z$)
+  and a Zariski-local one (`IsLocallyCertified`, `DivisorFamilyZar.lean:71`), and
+  **every** downstream interface was built on the local one: `divRepPullAt` (`DivRepAffKit.lean`),
+  `DivRepAffinePullback.pull`, `divRepClassifyZar` (`DivRepClassifyZar.lean:244`)
+  all take `DivFamZar`, never `IsCertified` over $R$.
+
+
+  **WHAT WENT WRONG.** The lane attacked `(D.divisorAdaptation hD).IsCertified g`
+  via `divisorAdaptation_isCertified_of_noLeak_kernel_spanning(_degree)` (`DivSchemeCertUniv.lean:144`,
+  `DivSchemeCertSeed.lean:61`). Its `hnoLeak` input is FALSE for arbitrary extracted
+  pieces (`I-0209`), so the lane sat blocked on an unprovable hypothesis that no consumer
+  ever required.
+
+
+  **THE RELAXATION THAT LANDED** (commits `2709f44d9`, `b959b798b`, `612b5fae0`, `f868c9425`;
+  files `Picard/DivSchemeCertZarSeed.lean`, `DivSchemeCertZarPointwise.lean`, `DivSchemeCertZarTube.lean`;
+  all kernel-checked warning-free):
+
+
+  - `isLocallyCertified_of_forall_exists_away` — span-top production rule.
+
+  - `isLocallyCertified_of_forall_prime_exists_away` — the POINTWISE gate, via quasi-compactness
+  of $\operatorname{Spec} R$.
+
+  - `isLocallyCertified_of_forall_prime_exists_certified_adaptation` — the adaptation
+  is free, so only the certificate over the shrunken base remains.
+
+  - `exists_basicOpen_supportTube` / `exists_notMem_supportLocus_subset_of_fibre`
+  — the support tube refined to the basic-open (Away) shape the gate consumes.
+
+  - `isLocallyCertified_of_isCertified` — the old global gate is a special case, so
+  this is a genuine weakening, not a parallel track.
+
+
+  Round 4 pushed it one interface further: `divRepPullAt` now takes a `DivFamZar`
+  class per chart instead of a `CertifiedDivisorFamily` (commit `1e4ac5b52`), which
+  is exactly what this item asked for.
+
+
+  **WHAT IT DOES NOT BUY — read `I-0360`, do not re-derive here.** The relaxation
+  does not unblock U1: the chart-confinement no-go is about PRODUCING a certificate,
+  not consuming one, and `IsLocallyCertified` fails for exactly the divisors `IsCertified`
+  fails for. For where the campaign gate actually sits, read `I-0365` (it is L8, local
+  surjectivity, not U2). For the field-size boundary of the R1 escape, read `I-0346`.'
+labels:
+- agent-ready
+status: archived
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-25T07:16:01.324965+00:00'
+updated_at: '2026-07-27T21:30:08.769791+00:00'
+metadata:
+  provenance:
+    run: '0047'
+    session: 0002-horizon-ajcr-w4-rep-free
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajcr-w4-rep-free
+    task_title: Representability of Pic^0
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  read_by:
+  - ajc-truth
+  owner_task: ajcr-w4-rep-free

@@ -1,0 +1,21 @@
+{
+  "agent_nickname": "Dalton",
+  "agent_path": "/root/janitor_audit",
+  "depth": 1,
+  "model": "gpt-5.6-sol",
+  "name": "Dalton",
+  "native_subagent_id": "01a04382-ddbb-7c31-8f5a-a88e474bc49b",
+  "ok": true,
+  "parent_session": "0002-horizon-fs-stacks-part04-alg-spaces",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "completed",
+  "subagent_type": "Dalton",
+  "summary": "Read-only hygiene audit complete.",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 16289487,
+    "tokens_out": 33923
+  }
+}

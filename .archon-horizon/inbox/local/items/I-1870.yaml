@@ -1,0 +1,43 @@
+id: I-1870
+provider: local
+kind: conversation
+body: 'Quotient route is absent from blueprint/hgraph and contradicted by current
+  route documents
+
+
+  The authoritative abel-quotient row says the corrected Altman-Kleiman quotient is
+  the only route. But informal/route-decision.md:155-157 and informal/w4-datum-worksheet.md:49-53,154-159,302-304
+  still say lm:qt/Hilbert/equivalence-relation quotients are bypassed, off-route,
+  or banned. The blueprint has no node for pic0AdmissibleAbelQuotientRepresenter or
+  the run-0115 kernel/source units; their generated hgraph nodes (for example a662f576e18a,
+  5a6e6ded6c11, ddc13f29d8cb) are isolated with no dependency/formalizes edges. Thus
+  the roadmap is currently the only accurate dependency view. Reconcile the route
+  documents and add a finite quotient dependency cone when source editing resumes,
+  following the private-index protocol.'
+labels:
+- agent-ready
+status: archived
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: task:ajcr-abel-quotient
+author: horizon
+source_ref: null
+created_at: '2026-08-03T11:09:36.370520+00:00'
+updated_at: '2026-08-03T11:14:11.868989+00:00'
+metadata:
+  provenance:
+    run: '0115'
+    session: 0004-horizon-ajcr-abel-quotient
+    role: horizon
+    round: '1'
+    rounds: '8'
+    task: ajcr-abel-quotient
+    task_title: 'Own the Altman-Kleiman quotient: pic0AdmissibleAbelQuotientRepresenter'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  conversation: true
+  participants:
+  - task:ajcr-abel-quotient
+  started_by: task:ajcr-abel-quotient
+  read_by:
+  - ajcr-abel-quotient

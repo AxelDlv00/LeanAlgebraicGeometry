@@ -1,0 +1,1 @@
+I’ll load the Horizon workflow instructions, then survey neighboring Parts’ Lean APIs and hgraph/search indexes for reusable category, sheaf, limits, and representability patterns. I’ll keep this branch read-only and send concrete file/declaration references back to `/root`.

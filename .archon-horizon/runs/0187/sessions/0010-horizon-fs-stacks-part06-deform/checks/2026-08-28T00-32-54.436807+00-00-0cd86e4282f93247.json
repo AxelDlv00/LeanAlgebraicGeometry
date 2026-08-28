@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "fingerprint": "0cd86e4282f93247",
+  "command": [
+    "lake",
+    "env",
+    "lean",
+    "/home/axel/LeanAlgebraicGeometry-Horizon/FormalizedSources/StacksProject/Part06_DeformationTheory/StacksPart06Lib/SAlgebraOverFunctor.lean"
+  ],
+  "cwd": "FormalizedSources/StacksProject/Part06_DeformationTheory",
+  "status": "passed",
+  "ok": true,
+  "returncode": 0,
+  "timed_out": false,
+  "reused": false,
+  "wait_seconds": 0.001,
+  "duration_seconds": 5.678,
+  "started_at": "2026-08-28T00:32:48.758948+00:00",
+  "finished_at": "2026-08-28T00:32:54.436807+00:00",
+  "finished_epoch": 1787877174.436807
+}

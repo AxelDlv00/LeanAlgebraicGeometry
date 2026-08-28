@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "status": "rejected",
+  "reason": "Corrected bundled legacy package draft: producer inverse certificate is retained, but legacy glueData call still times out at the imported tensor boundary even with unlimited caller heartbeats; stable facade remains the supported migration path.",
+  "created_at": "2026-08-27T13:38:52.767749+00:00",
+  "files": [
+    {
+      "path": "MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0FiniteStageGluePackage.lean",
+      "artifact": "files/MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0FiniteStageGluePackage.lean",
+      "bytes": 17248,
+      "lines": 395
+    }
+  ],
+  "diagnostics": ""
+}

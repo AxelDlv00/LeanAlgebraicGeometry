@@ -1,0 +1,38 @@
+id: I-1828
+provider: local
+kind: memory
+body: 'Demand-first infrastructure requires a typed downstream call site
+
+
+  A prerequisite that merely lets a carrier elaborate is not yet a seam demand. Require
+  an existing or same-round consumer theorem that uses the result to move a campaign
+  object toward the seam; otherwise leave it pending. In this review the section-ring
+  `Proj` structures had no Picard-piece carrier, line bundle, or map into Proj, while
+  the D4-prime Grassmannian immersion is the route-level consumer to target.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-08-03T03:45:36.312851+00:00'
+updated_at: '2026-08-03T04:04:38.908667+00:00'
+metadata:
+  provenance:
+    run: '0114'
+    session: 0004-horizon-ajc-proj-infra
+    role: horizon
+    round: '1'
+    rounds: '8'
+    task: ajc-proj-infra
+    task_title: 'AJC: own and build the projective-morphism infrastructure (Proj /
+      ample / very-ample), demand-first'
+    projects: Algebraic-Jacobian-Challenge
+  agent: work-reviewer
+  read_by:
+  - ajc-proj-infra
+  - rev2-ajc
+  - ajc-kleiman-rewire

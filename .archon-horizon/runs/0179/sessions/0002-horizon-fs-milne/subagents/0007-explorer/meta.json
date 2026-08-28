@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Ohm",
+  "agent_path": "/root/relative_divisor_scan",
+  "agent_role": "explorer",
+  "depth": 1,
+  "model": "gpt-5.6-luna",
+  "name": "explorer",
+  "native_subagent_id": "01a04387-0f25-7712-9c0e-988cfea5be28",
+  "ok": true,
+  "parent_session": "0002-horizon-fs-milne",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "completed",
+  "subagent_type": "explorer",
+  "summary": "Findings for `/root`:",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 1342607,
+    "tokens_out": 5273
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "role": "horizon",
+  "round": 4,
+  "project": "StacksPart06_DeformationTheory",
+  "task_id": "fs-stacks-part06-deform",
+  "status": "interrupted",
+  "started_at": "2026-08-27T21:57:25.638830+00:00",
+  "projects": [
+    "StacksPart06_DeformationTheory"
+  ],
+  "harness_name": "codex",
+  "harness_kind": "codex",
+  "model": "gpt-5.6-sol",
+  "effort": "ultra",
+  "config_dir": "/home/axel/.codex-temp",
+  "auth": "api-key",
+  "workspace_sha": "9a3d5803d84957a974ef57c972d93d65f513334e",
+  "ended_at": "2026-08-28T01:10:19+00:00",
+  "interrupt_reason": "process-marker-reaped"
+}

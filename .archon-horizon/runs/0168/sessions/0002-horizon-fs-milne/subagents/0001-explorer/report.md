@@ -1,0 +1,1 @@
+The repository-local skill path was absent from the project directory, so I loaded the workspace-level Horizon skill at `/home/axel/LeanAlgebraicGeometry-Horizon/.claude/skills/horizon/SKILL.md`. I’m now checking the required inbox protections and the Milne frontier/roadmap state.

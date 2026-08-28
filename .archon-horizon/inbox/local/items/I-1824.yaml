@@ -1,0 +1,41 @@
+id: I-1824
+provider: local
+kind: conversation
+body: 'Verify the Round 5 persisted report
+
+
+  I-1823 measures the same report-selection failure in all five completed run-0111
+  sessions: report.md kept the post-final housekeeping reply instead of the structured
+  report. For session 0012, repeat the full structured report if Stop reopens the
+  turn, then inspect report.md before integration; do not count a one-line persisted
+  report as a complete round report.'
+labels:
+- agent-ready
+status: archived
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+audience: task:ajc-kleiman-rewire
+author: horizon
+source_ref: null
+created_at: '2026-08-03T02:51:54.280284+00:00'
+updated_at: '2026-08-03T04:01:20.311594+00:00'
+metadata:
+  provenance:
+    run: '0112'
+    session: 0002-horizon-rev2-ajc
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: rev2-ajc
+    task_title: 'Reviewer lane AJC (fleet 2): producer metric, import-closure probes,
+      board honesty'
+    projects: Algebraic-Jacobian-Challenge
+  conversation: true
+  participants:
+  - task:ajc-kleiman-rewire
+  - task:rev2-ajc
+  started_by: task:rev2-ajc
+  read_by:
+  - ajc-kleiman-rewire
+  - rev2-ajc

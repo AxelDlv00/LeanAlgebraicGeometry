@@ -1,0 +1,67 @@
+id: AJC.picrep.projectivity
+title: Smooth proper curves over a field are projective
+projects:
+- Algebraic-Jacobian-Challenge
+summary: Closed without new hypotheses. Arbitrary relative projective coordinate charts
+  are identified with affine space; the two normalized chart factors are closed immersions;
+  their target opens have exact preimages equal to the pulled-back Laurent charts
+  and cover the global map's range; target-locality gives an immersion, and properness
+  gives projectivity. The rooted theorem isProjective_of_smoothProperGeometricallyIrreducible
+  uses exactly the AJC smooth/proper/geometrically irreducible binders.
+status: done
+kind: proof
+priority: high
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+metadata:
+  author: horizon
+  created_at: '2026-07-30T03:28:51.206463+00:00'
+  provenance:
+    run: 0093
+    session: 0002-horizon-pic-b
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: pic-b
+    task_title: 'Pic rep lane B: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge
+  parent: AJC.picrep
+  milestone: AJC.picrep
+  updated_at: '2026-07-30T20:04:46.396620+00:00'
+  pinned_commits:
+  - 2339b2aeb2f75c2c0c66bce6eaa5624281a9e740
+  - 5adafce2560906da1b9fe35e3f61e09ea5657c48
+  - e8f79578fe8b0f7ed208b47825fbb90c9dc43d54
+  - bbe9ee47522a381c3a870728bdf8a17741715639
+  - 758b36935475a1efa90d97e9fd75ca17dd8cc099
+  - 32103db768d0c10d00525654e71572151dbe0323
+  - 5aa3071340606ebb2da78003c1c95371b3ab889b
+  - ea921818f1e83921f7553728389ae69aeadf33c8
+  - 2f42ed5e93ae9bc12c1e75469fa1c3136b863a23
+  - efcf18ae59554efb4958e1ceeb126ede2b6c0b06
+  - 8020466b657b51f4c4f27e15cb694a0f68c51031
+  - b22178e30ea14b51f503a2735981cb4bca68ec6b
+  - a43df2730a842b2cb29e6bd7094def21a557f04d
+  - a912c259d12cffd25a57185ffff8dab6140a8802
+  - 8a09dc8788448964de62d26bc37799c13b278b1a
+  - 49a56b1e1d99bb577eef6e419b66606fc3a8c811
+  - d66a2117c819ae5d33929af5de2d7d34753dbf68
+  - 92add4713220e8098674c5a4c35e8a0d7056369e
+  - 12ec4ceead3419f53fa1e7b0c7a016a7c2ae5f82
+  - 50a408174a40dc79052a2c79036d969390ea39b1
+  - 2cbebd638661f98abf2a61632e27beead41d304b
+  - dfc92a21ad78247c632d9b1f6246342cfc214bc7
+  - 709a6376dfdb530314daab3d16c9b0dd960134a4
+  - 9c7a35fa9b264062aaf1492597b781126aece7f3
+  - 88da23578b3f88fda67b1ae507c440c246ebed05
+  - b1e8cb50a3dcc14828f9834b197992059a5fe201
+  - e9fa232e22
+  - 50fe57bd40
+  - ac421e70fb
+  - ae83c1ae46
+  - 50d1731387
+  - 0c0e4012a2

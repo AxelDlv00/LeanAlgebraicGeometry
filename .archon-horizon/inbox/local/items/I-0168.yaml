@@ -1,0 +1,30 @@
+id: I-0168
+provider: local
+kind: issue
+body: 'AB-package Lean docstrings carry wrong Stacks tags
+
+
+  Verified against references/stacks-tags.txt + stacks-algebra.tex during the W5/W6
+  blueprint pass. Correct mapping: definition-depth = 00LI (docstrings say 00LF =
+  definition-regular-sequence); lemma-depth-ext = 00LW (docstrings say 00LP = lemma-resolution-by-finite-free);
+  lemma-depth-in-ses = 00LX (docstrings say 00LE = section-depth); definition-local-ring-CM
+  = 00N8 (docstrings say 00N4 = lemma-good-element); lemma-regular-ring-CM = 00NQ
+  (docstrings say 00OD = definition-regular); the conormal sequence = 00RU lemma-differential-seq
+  (SmoothPrimeRegularity.lean says 02JK = lemma-base-change-integral). Tags 090V/00NP/00ON/00TT/00T7/00OE
+  are correct as claimed. Files: AlgebraicJacobian/Algebra/AB{Depth,DepthExt,DepthSES,Syzygy,Formula,RegularQuotient,RegularDomain,RegularCM}.lean
+  and Algebra/SmoothPrimeRegularity.lean (docstrings only; the Lean math is fine).
+  Next action: a Lean-owning session fixes the docstring tag claims; the blueprint
+  nodes already cite the verified statements.'
+labels:
+- agent-ready
+status: closed
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-17T01:01:20.960342+00:00'
+updated_at: '2026-07-17T01:16:59.665335+00:00'
+metadata:
+  agent: blueprint

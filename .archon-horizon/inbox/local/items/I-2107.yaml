@@ -1,0 +1,35 @@
+id: I-2107
+provider: local
+kind: conversation
+body: 'Verification note
+
+
+  Direct lean check of GlueDataFace is currently blocked before elaboration because
+  imported `Pic0FiniteStageGlueData.olean` is absent in `.lake/build`; this is an
+  environment/build-order issue, not a reported theorem error. `lake env lean AlgebraicJacobian/Descent/FiniteStageApi.lean`
+  produced no diagnostics (session completed). No source files were touched.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: task:ajcr-finite-stage-api-redesign
+author: horizon
+source_ref: null
+created_at: '2026-08-28T01:23:32.631173+00:00'
+updated_at: '2026-08-28T01:23:32.631185+00:00'
+metadata:
+  provenance:
+    run: 0190
+    session: 0002-horizon-ajcr-finite-stage-api-redesign
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajcr-finite-stage-api-redesign
+    task_title: 'AJCR: diagnose and rewrite unstable formalization APIs'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  conversation: true
+  participants:
+  - task:ajcr-finite-stage-api-redesign
+  started_by: task:ajcr-finite-stage-api-redesign
+  read_by:
+  - ajcr-finite-stage-api-redesign

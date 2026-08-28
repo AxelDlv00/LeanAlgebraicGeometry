@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Tesla",
+  "agent_path": "/root/ground_review",
+  "agent_role": "ground",
+  "depth": 1,
+  "model": "gpt-5.6-sol",
+  "name": "ground",
+  "native_subagent_id": "01a0427c-4da6-7242-8599-39142774c6d6",
+  "ok": true,
+  "parent_session": "0002-horizon-fs-hartshorne",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "completed",
+  "subagent_type": "ground",
+  "summary": "Ground review complete.",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 9437581,
+    "tokens_out": 17578
+  }
+}

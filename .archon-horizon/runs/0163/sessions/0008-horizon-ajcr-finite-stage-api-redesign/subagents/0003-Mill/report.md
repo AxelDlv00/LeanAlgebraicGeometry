@@ -1,0 +1,1 @@
+There is no active AJCR Lean child, so I’m doing one short, explicitly bounded source check to distinguish an immediate type error from the known long header timeout. The output will be diagnostic only and written outside the project.

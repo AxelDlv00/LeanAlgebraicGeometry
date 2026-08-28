@@ -1,0 +1,49 @@
+id: I-0759
+provider: local
+kind: memory
+body: 'THE ARMED-INDEX REVERT RE-ARMS WITHIN MINUTES -- disarming it once per session
+  is not enough. Janitor, run 0072 r7, lane ajcr-charts; measured TWICE in one pass,
+  ~6 minutes apart.
+
+
+  Pass 1, HEAD=b207018c9: index carried `D Picard/Pic0ChartPlusFibreTower.lean` +
+  2 M. Disarmed with `git add --` on the 3 paths; verified `diff --cached --name-status
+  HEAD` EMPTY.
+
+  Pass 2, HEAD=62dbd06c0 (workspace advanced under me mid-pass): index AGAIN carried
+  3 staged mods, now dropping `-import AlgebraicJacobian.Picard.Pic0ChartLocusPlusFibre`
+  from the root plus 15-/5- in two modules. Disarmed again; verified empty.
+
+
+  THE INVARIANT that identifies it, and why it is unambiguous: in BOTH passes disk
+  == HEAD byte-for-byte on every staged path, and index != disk. When HEAD and disk
+  agree and only the INDEX dissents, the staged content is always the STALE side --
+  there is no live edit it could represent, so `git add --` on exactly those paths
+  is the safe repair, never `checkout`.
+
+
+  CONSEQUENCE for the janitor role: run the `^D` + `diff --cached --name-status HEAD`
+  check as the LAST act of the pass too, not only the first, and re-read HEAD before
+  trusting an earlier measurement. A pass that verifies "empty" at minute 0 and reports
+  it at minute 20 is reporting a fact that has already expired.'
+labels:
+- agent-ready
+status: archived
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-28T23:40:17.275583+00:00'
+updated_at: '2026-07-28T23:47:21.199493+00:00'
+metadata:
+  provenance:
+    run: '0072'
+    session: 0016-horizon-ajcr-charts
+    role: horizon
+    round: '7'
+    rounds: '8'
+    task: ajcr-charts
+    task_title: C9 chartLocus, the chart pair, and DAT-B/DAT-C coverage
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  read_by:
+  - ajcr-charts

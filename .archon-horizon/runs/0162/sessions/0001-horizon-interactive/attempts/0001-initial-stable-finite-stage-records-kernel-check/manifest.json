@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "status": "rejected",
+  "reason": "Initial stable finite-stage records; kernel check stalled before diagnostics, so isolating declarations.",
+  "created_at": "2026-08-26T04:34:37.923296+00:00",
+  "files": [
+    {
+      "path": "MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/FiniteStageData.lean",
+      "artifact": "files/MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/FiniteStageData.lean",
+      "bytes": 14209,
+      "lines": 386
+    }
+  ],
+  "diagnostics": ""
+}

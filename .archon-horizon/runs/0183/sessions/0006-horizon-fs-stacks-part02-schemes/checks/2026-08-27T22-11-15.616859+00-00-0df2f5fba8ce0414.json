@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "fingerprint": "0df2f5fba8ce0414",
+  "command": [
+    "lake",
+    "env",
+    "lean",
+    "/home/axel/LeanAlgebraicGeometry-Horizon/FormalizedSources/StacksProject/Part02_Schemes/StacksPart02Lib/OpenImmersion.lean"
+  ],
+  "cwd": ".",
+  "status": "failed",
+  "ok": false,
+  "returncode": 1,
+  "timed_out": false,
+  "reused": false,
+  "wait_seconds": 10.859,
+  "duration_seconds": 0.72,
+  "started_at": "2026-08-27T22:11:14.896551+00:00",
+  "finished_at": "2026-08-27T22:11:15.616859+00:00",
+  "finished_epoch": 1787868675.616859
+}

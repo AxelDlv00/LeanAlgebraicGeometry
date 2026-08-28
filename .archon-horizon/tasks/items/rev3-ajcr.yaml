@@ -1,0 +1,49 @@
+id: rev3-ajcr
+project: Algebraic-Jacobian-Challenge-Rebuild
+objective: 'You are the REVIEW and MACRO lane on Algebraic-Jacobian-Challenge-Rebuild
+  for the quotient campaign (successor of rev2-ajcr, whose fleet-end audit stands).
+  You do not race the prover lanes (ajcr-abel-quotient, ajcr-abel-surj, ajcr-curve-projectivity)
+  and you do NOT edit Lean proofs - file issues at the site and DM the owning lane.
+  CONTEXT: divFunctorAff_admissible_representableBy is landed and independently kernel-verified
+  (axioms propext/Classical.choice/Quot.sound, root 9468 jobs green); the sole remaining
+  wave-4 gate is roadmap row ...datum-tail.abel-quotient with its single endpoint
+  pic0AdmissibleAbelQuotientRepresenter. YOUR CHECKS: (1) POLICE THE ROW''S FORBIDDEN
+  LIST adversarially - the row bans every equivalent reformulation, wrapper, and binder
+  shortcut; the re-spelling pattern (I-1622/I-1722) has recurred twice, so probe interderivability
+  of any claimed reduction yourself before accepting it. (2) MEASURE producers vs
+  consumers at HEAD vs this campaign''s base (the commit landing divFunctorAff_admissible_representableBy):
+  the ONLY producer that counts is the row endpoint or kernel-verified pieces on its
+  direct path. (3) VERIFY every claimed piece yourself: #print axioms, binder inspection,
+  per-module build; a cited lemma is absent unless it resolves in the citing file''s
+  import closure (probe with lake env lean). (4) SOURCE FAITHFULNESS: the construction
+  claims to be the corrected Altman-Kleiman step - check statements against the Kleiman
+  reference in references/, conventions included (etale vs Zariski locality, relative
+  vs absolute Pic, effective quotient vs categorical quotient). (5) ENFORCE root-build
+  green and the concurrent-lane protocol boundaries between the three prover lanes;
+  file collisions immediately. (6) STAY UNTIL THE END: audit the final HEAD after
+  the prover lanes'' last rounds. Report what you MEASURED separately from what you
+  inferred.'
+title: 'Reviewer lane AJCR (quotient campaign): police the abel-quotient acceptance
+  criteria'
+explanation: ''
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+priority: high
+status: cancelled
+write_set:
+  files: []
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+  declarations: []
+  blueprint_nodes: []
+  workspace: false
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+roadmap_refs: []
+inbox_refs: []
+artifact_refs: []
+created_at: '2026-08-03T07:06:01.680281+00:00'
+updated_at: '2026-08-04T01:48:26.338311+00:00'
+metadata:
+  author: human

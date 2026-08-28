@@ -1,0 +1,83 @@
+id: I-0240
+provider: local
+kind: info
+body: "G-4 SlicingFlatKernel LANDED (c3/c4 brick)\n\nG-4 SlicingFlatKernel LANDED\
+  \ (the (c3)/(c4) flattening brick) — commit caa3b64e858. Picard/SlicingFlatKernel.lean,\
+  \ 462 L, mathlib-only imports (no AlgebraicJacobian import, not even SlicingFlat),\
+  \ zero sorries, all keystones axiom-clean [propext, Classical.choice, Quot.sound],\
+  \ LEAN_NUM_THREADS=1 lake build green (2312 jobs, 8.1s elaboration).\n\nTHE PIN\
+  \ CORRECTION LANDED AS DESIGNED: constant fibre-kernel dimension alone is FALSE\
+  \ (k[eps] guard); the extra hypothesis is FIBREWISE SPANNING by a submodule L <=\
+  \ ker f of relative elements. Setup shared by all keystones (VERBATIM):\n\n  {R\
+  \ : Type u} [CommRing R] [IsNoetherianRing R] {M : Type v} {N : Type w}\n  [AddCommGroup\
+  \ M] [Module R M] [AddCommGroup N] [Module R N]\n  [Module.Finite R M] [Module.Finite\
+  \ R N] [Module.Flat R N]\n  (f : M ->l[R] N) (L : Submodule R M)\n  (hle : L <=\
+  \ LinearMap.ker f)\n  (hspan : forall p : PrimeSpectrum R,\n    LinearMap.ker (f.rTensor\
+  \ p.asIdeal.ResidueField) <=\n      LinearMap.range ((L.subtype).rTensor p.asIdeal.ResidueField))\n\
+  \nCertUniv instantiates f := deltaLeft - deltaRight : chartProd -> ovlProd, L :=\
+  \ the f.g. span of the P-fib-N relative kernel elements (any L works; L = ker f\
+  \ itself is allowed if you have its spanning clause). All keystones take (f L hle\
+  \ hspan) explicitly in that order. KEYSTONES (all in Picard/SlicingFlatKernel.lean):\n\
+  \n1. Module.Projective.quotient_of_forall_ker_rTensor_residueField_le : Module.Projective\
+  \ R (M / L)\n2. Submodule.eq_ker_of_forall_ker_rTensor_residueField_le : L = LinearMap.ker\
+  \ f   [no Noetherian needed]\n3. (c3) Module.Flat.quotient_ker_of_forall_ker_rTensor_residueField_le\
+  \ : Module.Flat R (M / LinearMap.ker f)\n4. (c4) Module.Flat.quotient_range_of_forall_ker_rTensor_residueField_le\
+  \ : Module.Flat R (N / LinearMap.range f)   [no Noetherian needed]\n5. (c2-proj)\
+  \ Module.Projective.ker_of_forall_ker_rTensor_residueField_le [Module.Flat R M]\
+  \ : Module.Projective R (LinearMap.ker f)\n   (c2-finite is AUTOMATIC: Module.Finite\
+  \ R (LinearMap.ker f) by instances isNoetherian_of_isNoetherianRing_of_finite +\
+  \ isNoetherian_submodule' + IsNoetherian.finite — inferInstance)\n6. base change\
+  \ of ker at residue fields:\n   LinearMap.rTensor_subtype_injective_of_forall_ker_rTensor_residueField_le\
+  \ [Module.Flat R M] (p) : Function.Injective ((L.subtype).rTensor p.asIdeal.ResidueField)\n\
+  \   LinearMap.range_rTensor_subtype_eq_ker_of_forall_ker_rTensor_residueField_le\
+  \ (p) : LinearMap.range ((L.subtype).rTensor p.asIdeal.ResidueField) = LinearMap.ker\
+  \ (f.rTensor p.asIdeal.ResidueField)   [pure, no finiteness at all]\n7. (c2-rank)\
+  \ Module.rankAtStalk_ker_eq_finrank_ker_baseChange [Module.Flat R M] (p) : Module.rankAtStalk\
+  \ (LinearMap.ker f) p = Module.finrank p.asIdeal.ResidueField (LinearMap.ker (f.baseChange\
+  \ p.asIdeal.ResidueField))\n   Module.rankAtStalk_ker_eq_of_forall_finrank_eq [Module.Flat\
+  \ R M] (g : Nat) (hdim : forall p, Module.finrank p.asIdeal.ResidueField (LinearMap.ker\
+  \ (f.baseChange p.asIdeal.ResidueField)) = g) (p) : Module.rankAtStalk (LinearMap.ker\
+  \ f) p = g\n   NOTE the fibre-dimension input is spelled with the KAPPA-LINEAR f.baseChange\
+  \ kappa(p) (kernel is a kappa-submodule, finrank honest); hspan stays in the project\
+  \ rTensor spelling.\n\nENGINE LAYER (mathlib-general, NO Noetherian hypothesis —\
+  \ reusable beyond G-4), for psi : P ->l[R] N with hfib : forall p, Function.Injective\
+  \ (psi.rTensor p.asIdeal.ResidueField):\n- Module.Projective.of_forall_rTensor_residueField_injective\
+  \ [Module.FinitePresentation R P] [Module.Finite R N] [Module.Flat R N] : Module.Projective\
+  \ R P\n- LinearMap.injective_of_forall_rTensor_residueField_injective [Module.Finite\
+  \ R P] [Module.Finite R N] [Module.Flat R N] : Function.Injective psi\n- Module.Flat.quotient_range_of_forall_rTensor_residueField_injective\
+  \ [Module.Finite R P] [Module.Finite R N] [Module.Flat R N] : Module.Flat R (N /\
+  \ LinearMap.range psi)\n\nBIG FINDING (worksheet risk-2 dissolved): the feared size-L\
+  \ generalization of the SlicingFlat Noetherian induction to delta' : M -> N was\
+  \ NOT needed. Mathlib 2025 already has the local heart: IsLocalRing.split_injective_iff_lTensor_residueField_injective\
+  \ (finite into finite free over local: split iff residue-fibre injective), Module.free_of_lTensor_residueField_injective\
+  \ (Matsumura 22.5-style free cokernel), Module.free_of_flat_of_isLocalRing, Module.projective_of_localization_maximal,\
+  \ Module.flat_of_localized_maximal, injective_of_localized_maximal, LocalizedModule.map_exact.\
+  \ Route: hspan <=> the induced map M/L -> N is fibrewise INJECTIVE (right-exactness\
+  \ of tensor); localize at maximal ideals where it splits; globalize. The only new\
+  \ plumbing was the fibre identification kappa(q) tensor_{R_q} X_q ~= kappa(q) tensor_R\
+  \ X (private residueFieldLocEquiv via LocalizedModule.equivTensorProduct + AlgebraTensorModule.cancelBaseChange\
+  \ + a pure-tensor naturality square).\n\nGOTCHAS: (a) AlgebraTensorModule lives\
+  \ in namespace TensorProduct (FreeLocus-style usage needs open TensorProduct or\
+  \ full name). (b) LinearMap.baseChange_eq_ltensor takes f EXPLICITLY; as a coe-level\
+  \ equation it rewrites goals like Function.Injective (baseChange ...). (c) omit\
+  \ [...] in must precede the docstring, not follow it. (d) LinearMap.lTensor_comm/rTensor_comm\
+  \ + TensorProduct.comm_symm (rfl) do all lTensor<->rTensor fibre transport; no hand\
+  \ ext needed. (e) rankAtStalk dictionary: Module.rankAtStalk_eq (FreeLocus) needs\
+  \ [Module.Finite]+[Module.Flat] on the submodule — supplied here by keystones 5\
+  \ + instances.\n\nConsumer note for DivSchemeCertUniv: (c2)/(c3)/(c4) discharge\
+  \ order is: produce hle+hspan (+hdim g) from P-fib-N at every prime, then clauses\
+  \ read off as keystones 3, 4, 5(+auto finite), 7. gluedSubmodule = ker delta' via\
+  \ keystone 2 if you build L first."
+labels:
+- agent-ready
+status: archived
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-19T02:34:15.323229+00:00'
+updated_at: '2026-07-20T03:14:51.620279+00:00'
+metadata:
+  agent: slicingflatkernel-lane

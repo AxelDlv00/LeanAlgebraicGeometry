@@ -1,0 +1,42 @@
+id: AJC.maintenance.build.heartbeats
+title: Heartbeat and recursion-budget audit
+projects:
+- Algebraic-Jacobian-Challenge
+summary: The missing-rationale and recursion-depth audit is complete. Thirty-one inherited
+  obsolete heartbeat scopes were removed, seven required sites were measured and documented,
+  and all depth scopes were measured. The current active inventory is 140 maxHeartbeats
+  scopes, 39 synthesis-heartbeat scopes, 15 maxSynthPendingDepth overrides, and 5
+  maxRecDepth overrides, partitioned under resource-budgets.
+status: done
+kind: refactor
+priority: normal
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+metadata:
+  author: horizon
+  created_at: '2026-07-24T13:48:53.772399+00:00'
+  provenance:
+    run: '0046'
+    session: 0038-horizon-ajc-optimize
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajc-optimize
+    task_title: Make the project clean and optimized
+    projects: Algebraic-Jacobian-Challenge
+  parent: AJC.maintenance.build
+  updated_at: '2026-07-29T02:59:11.811963+00:00'
+  pinned_commits:
+  - db85e701c
+  - 00b4c44ed
+  - afbd88600
+  - ce7e4a001
+  - e142308c0
+  - fb29d460b
+  - 98353cd99
+  - 2e6d3c83e
+  milestone: AJC.maintenance

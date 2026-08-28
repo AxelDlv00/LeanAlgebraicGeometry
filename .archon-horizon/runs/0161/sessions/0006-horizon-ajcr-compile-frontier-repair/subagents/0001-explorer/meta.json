@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Bacon",
+  "agent_path": "/root/frontier_scan",
+  "agent_role": "explorer",
+  "depth": 1,
+  "model": "gpt-5.6-sol",
+  "name": "explorer",
+  "native_subagent_id": "01a03a29-e382-76f3-ac88-ca9fafe09a02",
+  "ok": false,
+  "parent_session": "0006-horizon-ajcr-compile-frontier-repair",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "interrupted",
+  "subagent_type": "explorer",
+  "summary": "",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 41707996,
+    "tokens_out": 70635
+  }
+}

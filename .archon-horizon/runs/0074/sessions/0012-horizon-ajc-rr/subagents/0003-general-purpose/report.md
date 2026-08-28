@@ -1,0 +1,57 @@
+All checks complete. Findings below.
+
+## 1. "GeometricallyIrreducible was the ONLY instance missing, and synthesis does not recover it from GeometricallyIntegral" — **REFUTED**
+
+This is the major finding. Mathlib `AlgebraicGeometry/Geometrically/Integral.lean:58` is exactly:
+
+```lean
+instance (priority := low) [GeometricallyIntegral f] : GeometricallyIrreducible f :=
+```
+
+I compiled a file importing only `CurveBaseChange` (no `ExtensionUniformity`) and `infer_instance` closed `GeometricallyIrreducible (baseChangeField C κ).hom` — resolving to `instGeometricallyIrreducibleOfGeometricallyIntegral`. Negative control: dropping `[GeometricallyIrreducible C.hom]` from the binders makes the same synthesis fail, so the probe is real.
+
+Worse, I reproduced `vanishing_baseChangeField` **verbatim** at HEAD without importing `ExtensionUniformity` at all; it compiled clean (`[propext, Classical.choice, Quot.sound]`). So the new `instance` at line 174 is **redundant**, and the docstring's central causal claim — "every curve-level statement applies to `C_κ` by synthesis alone… and the reason nothing has to be redone is §1" — is false. §1 is not why. The pre-existing `geometricallyIntegral_hom_baseChangeField` plus the low-priority mathlib instance already sufficed. The file's headline framing ("**One missing instance**", "the free half is WITNESSED, not asserted") survives only as *the object was not previously exhibited*; the instance-gap story does not.
+
+## 2. "vanishing/riemannRoch_baseChangeField proved by a single term each, no new mathematics" — **CONFIRMED**
+
+Both are one application of the `FiberBound` curve theorem to `baseChangeField C κ` (lines 208, 225). Nothing smuggled; the `letI`/`haveI` prologue only re-spells the structure morphism, matching the standing `ChiCurve` idiom. `chi_moduleKSheaf_baseChangeField` is two `rw`s against real lemmas (`ChiCurve.lean:165`, `GenusBridge.lean:103`).
+
+## 3. The retraction — **CONFIRMED, and the retraction is correct**
+
+No Serre duality, dualizing sheaf, or canonical divisor anywhere. ripgrep across AJC/AJCR returns only "Serre" as in *Serre affine vanishing* (H¹=0 on affines), *Serre twist*, *Serre-finiteness*, *Serre's homological regularity* — none of which give duality. Mathlib: zero hits for `SerreDuality`/`serreDuality`, no `canonicalDivisor`/`canonicalSheaf`; `horizon search` across both projects plus mathlib for "Serre duality for curves", "dualizing sheaf", "canonical divisor of a curve", "H1 vanishes when degree at least 2g-1", "sheaf of differentials omega curve" returned nothing relevant (top hits were `Sensitivity.duality`, `serreDerivative` for modular forms, `CurveDivisor.deg_sub'`). The original 2g-1 claim was genuinely unjustified, and retracting it was right.
+
+## 4. "b(κ) = deg D₀(κ) + genus C_κ, two κ-dependencies" — **CONFIRMED**
+
+`DegreeVanishing.exists_bound_subsingleton_hModule_one` (line 388) supplies exactly `deg K D₀ + 1 - Sheaf.chi (X.moduleKSheaf K)`. With `chi = 1 - g` the arithmetic `d₀ + 1 - (1 - g) = d₀ + g` checks (verified by `ring`). The claim that input (2) is not a corollary of (1) is defensible: `n₀(κ)` comes from a per-field Noetherian stabilization (`FiberBound.exists_base_subsingleton_of_isFinite_toP1`, line 92), structurally independent of the genus scalar.
+
+## 5. The reduction — **CONFIRMED, non-vacuous, both hypotheses load-bearing**
+
+Proved, no sorry, no cheat (probe reads clean; the proof is `subsingleton_hModule_one_of_deg_ge` + `omega`). Quantifier orders are as the docstrings say: `UniformVanishing` is `∃ b, ∀ κ, ∀ D` (b before κ, line 267–276); `vanishing_baseChangeField` is `∀ κ, ∃ b`. Load-bearing test: dropping `hbase` leaves `exact?` unable to close the goal, and `UniformVanishing C` is **not** provable outright — so not trivially satisfiable. `UniformBaseDivisor` is satisfiable in shape (it is the per-field existential `FiberBound` already witnesses, with a uniform bound added), not accidentally unsatisfiable.
+
+One caveat the lane fixed *after* the reviewed commits: the "huge b makes it vacuous" hazard was real and unaddressed at `b0fbfa1bf`. The live working tree (uncommitted, 380 lines vs 348 committed) adds `exists_deg_ge` proving degrees are unbounded above given one closed point of positive residue degree. So at the reviewed commits, non-vacuity was asserted nowhere; it is now proved, but conditional on a `residueDeg` positivity hypothesis that AJC is not shown to witness at the challenge curve — which the new docstring states honestly.
+
+## 6. The axiom probe — **CONFIRMED as a measurement, but its "synthesis site" claim is PARTIAL**
+
+Ran it myself, twice (once after a concurrent lane invalidated the oleans; rebuilt 8691 jobs, exit 0). Both controls fire `sorryAx` (`Scheme.fgaPicardRepresentability`, `Scheme.Modules.pullbackTensorMap_isIso`); the other 11 read `[propext, Classical.choice, Quot.sound]`; exit 0. The namespace-nesting note is accurate (`end PicScheme` at :227, theorem at :339).
+
+But the "measured at a synthesis site, not at the declaration" claim overstates. `#check @probe_vanishing_curve` shows the three curve binders `[IsProper C.hom] [SmoothOfRelativeDimension 1 C.hom] [GeometricallyIrreducible C.hom]` remain **instance-implicit arguments of the probe theorem** — caller-supplied, not synthesized. What the probes do close is the *derived* layer (the `GeometricallyIrreducible` on `C_κ`, the cohomology finiteness binders). The three base binders still travel as hypotheses, exactly the pattern the standing workspace warning describes. The docstring's "nothing is left for a caller to instantiate" is false as written. AJC appears to have no concrete curve carrying all three instances, so a fully closed synthesis site may not be constructible — but that limitation should be stated, not papered over.
+
+## 7. Bricks and line numbers — **CONFIRMED, no phantoms**
+
+`Adelic.LaurentChartData.pullbackSquare` at `FinitenessP1.lean:439` — exact. `Scheme.AffineCoverMVSquare.baseChangeField` at `CurveBaseChange.lean:340` — exact. `AffineCoverMVSquare.h1_unit_baseChangeField_eq_genus` at `CohomologyKit.lean:582` — exact, and it does read `h¹` as `genus (baseChangeField C κ)`. Also verified: `h0_unit_baseChangeField_eq_one` (:573), `exists_isFinite_isDominant_toP1` (`MapToP1.lean:125`), `exists_bound_generated_of_isFinite_toP1` (`FiberBound.lean:156`), `exists_base_subsingleton_of_isFinite_toP1` (`FiberBound.lean:92`), AJCR `finrank_h1_baseField`/`genus_baseField` (`H1BaseFieldInvariance.lean`), `relSectionsBaseChange`, `curveCover` (:292, and it is indeed an `AffineTwoCover`), `Curve/BaseChangeInstances.lean`, `WindowLedger.lean` (`Nat.find` at :153, :186), `WindowFieldTransport.lean`. The claim "`AffineTwoCover` does not occur anywhere in AJC" is true — the only AJC hits are the docstring's own mentions.
+
+## 8. The repair — **CONFIRMED**
+
+All three AJCR blobs are byte-identical (same git hashes) between pre-clobber `d2213eb83^` (= `e51a58ed3`) and post-repair `3b16b4e87`: `AlgebraicJacobian.lean` `9b1ed038a`, `DivRepGlobalAffLift.lean` `d2391464e`, `spec-dd-r.md` `a72ce27b1`. `diff --name-only b5aaad26e 3b16b4e87` returns exactly those three paths, so the intervening commit's work (`DivisorFamilyAffStrict.lean`, +20 lines) was not reverted.
+
+## 9. File scope — **CONFIRMED**
+
+`--name-status` across all five commits touches only: `Ledger/ExtensionUniformity.lean` (A then M×3), `scripts/ajcrr-extuniformity-axioms.lean` (A), and the three AJCR repair paths. No `WeilDivisor.lean`, no `Picard/**` in AJC, no `Jacobian.lean`, `AbelJacobi.lean`, `Cohomology/**`, no AJC root roll-up, no blueprint files. (The AJCR root roll-up and one AJCR Picard file were touched — but only as the clobber and its byte-exact undo, net zero.)
+
+## Other overstatements
+
+- "One missing instance" as the commit-message headline for `658681c9e` is the load-bearing false claim. The commit's actual contribution is exhibiting the object and stating the free half at it — real but smaller than advertised.
+- The docstring line "`geometricallyIrreducible_hom_baseChangeField` below adds it… With it, every curve-level statement applies by instance synthesis alone" inverts cause and effect; those statements already applied.
+- "the reason nothing has to be redone is §1, not a stability claim about morphism classes" (line 183) — false. The reason is mathlib's `IsStableUnderBaseChange @GeometricallyIntegral` plus the *pre-existing* AJC instance, i.e. very nearly the stability claim the file dismisses.
+- The `omit [IsProper C.hom]` narrative ("confirms the two statements differ *only* in quantifier order, with no geometry in between") over-reads a linter hint. Properness is still in `UniformVanishing`'s own binders; the omission only says the weakening step doesn't re-use it.
+- "Probe calibrated only on the third attempt… all 12 declarations read clean" — the probe prints 13 lines, 11 clean plus 2 controls. Minor, but the count is cited repeatedly as 12.

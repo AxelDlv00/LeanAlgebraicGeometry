@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Dewey",
+  "agent_path": "/root/final_ground_review",
+  "agent_role": "ground",
+  "depth": 1,
+  "model": "gpt-5.6-sol",
+  "name": "ground",
+  "native_subagent_id": "01a01575-1876-7dc3-89af-94e72d580bc0",
+  "ok": true,
+  "parent_session": "0008-horizon-ajcr-p7-orbit-affine",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "completed",
+  "subagent_type": "ground",
+  "summary": "## Findings",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 6427964,
+    "tokens_out": 23720
+  }
+}

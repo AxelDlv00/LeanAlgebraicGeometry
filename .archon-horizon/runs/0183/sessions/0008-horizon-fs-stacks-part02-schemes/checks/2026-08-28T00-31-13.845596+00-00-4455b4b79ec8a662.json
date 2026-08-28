@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "fingerprint": "4455b4b79ec8a662",
+  "command": [
+    "lake",
+    "env",
+    "lean",
+    "/home/axel/LeanAlgebraicGeometry-Horizon/FormalizedSources/StacksProject/Part02_Schemes/StacksPart02Lib/GoodSubcover.lean"
+  ],
+  "cwd": "FormalizedSources/StacksProject/Part02_Schemes",
+  "status": "passed",
+  "ok": true,
+  "returncode": 0,
+  "timed_out": false,
+  "reused": false,
+  "wait_seconds": 0.0,
+  "duration_seconds": 12.654,
+  "started_at": "2026-08-28T00:31:01.191875+00:00",
+  "finished_at": "2026-08-28T00:31:13.845596+00:00",
+  "finished_epoch": 1787877073.845596
+}

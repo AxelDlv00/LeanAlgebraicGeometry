@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Newton",
+  "agent_path": "/root/ajcr_route_audit",
+  "agent_role": "explorer",
+  "depth": 1,
+  "model": "gpt-5.6-sol",
+  "name": "explorer",
+  "native_subagent_id": "01a0154b-4076-7061-a445-5e5c882a72ac",
+  "ok": true,
+  "parent_session": "0008-horizon-ajcr-p7-orbit-affine",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "completed",
+  "subagent_type": "explorer",
+  "summary": "## Current lane",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 2946432,
+    "tokens_out": 13181
+  }
+}

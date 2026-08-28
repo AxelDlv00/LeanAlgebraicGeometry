@@ -1,0 +1,21 @@
+{
+  "agent_nickname": "Volta",
+  "agent_path": "/root/coherent_stalk_api",
+  "agent_role": "explorer",
+  "depth": 1,
+  "model": "gpt-5.6-sol",
+  "name": "explorer",
+  "native_subagent_id": "01a045c2-4628-7e73-955f-8f48e5125810",
+  "parent_session": "0012-horizon-fs-milne",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "running",
+  "subagent_type": "explorer",
+  "summary": "",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 10358045,
+    "tokens_out": 25442
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Peirce",
+  "agent_path": "/root/ground_checkpoint",
+  "agent_role": "ground",
+  "depth": 1,
+  "model": "gpt-5.6-sol",
+  "name": "ground",
+  "native_subagent_id": "01a044fb-20b4-7651-a70a-7ad2790279b8",
+  "ok": false,
+  "parent_session": "0006-horizon-fs-hartshorne",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "interrupted",
+  "subagent_type": "ground",
+  "summary": "",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 1841934,
+    "tokens_out": 11229
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Hilbert",
+  "agent_path": "/root/mirror_scope_checks",
+  "agent_role": "worker",
+  "depth": 1,
+  "model": "gpt-5.6-terra",
+  "name": "worker",
+  "native_subagent_id": "019fffeb-132b-7b32-aab2-1d099daca558",
+  "ok": false,
+  "parent_session": "0006-horizon-ajcr-alignment-tags",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "interrupted",
+  "subagent_type": "worker",
+  "summary": "",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 2586123,
+    "tokens_out": 8260
+  }
+}

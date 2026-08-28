@@ -1,0 +1,44 @@
+id: I-2047
+provider: local
+kind: conversation
+body: 'Frontier scan findings
+
+
+  - Zariski topology (00E0, id 4025d6b029f4, 593 unlocks): 17-part Spec/V/D theorem;
+  use PrimeSpectrum.mem_basicOpen, basicOpen_mul/one/zero, Ideal radical APIs.
+
+  - Functoriality spectrum (00E2, id 7a3b94d5bba5, 430): comap φ continuous and preimage
+  D(f)=D(φ f); likely PrimeSpectrum.continuous_comap/comap_basicOpen. Localization
+  exact (00CS, id 699a091516f3, 426): exactness after S⁻¹ via localization map/flatness
+  APIs.
+
+  - Matrix left inverse (07DQ, id c1d6b91a993a, 415): minors ideal iff B with BA=fI,
+  likely Matrix.det_submatrix/Cauchy-Binet + Ideal.span. Universal localization module
+  (07K0, id 2386f22ac2fa, 365): Hom_R(S⁻¹M,N) ≃ Hom_R(M,N), use IsLocalization.lift.
+  Idempotent spec (00EC, id 72671055e791, 327): Spec R = D(e) ⊔ D(1-e). Existing wrappers
+  have no sorrys; no source edits.'
+labels:
+- agent-ready
+status: archived
+scope: {}
+audience: task:fs-stacks-part01-prelim
+author: horizon
+source_ref: null
+created_at: '2026-08-27T10:14:47.711433+00:00'
+updated_at: '2026-08-27T10:36:41.777231+00:00'
+metadata:
+  conversation: true
+  participants:
+  - task:fs-stacks-part01-prelim
+  started_by: task:fs-stacks-part01-prelim
+  read_by:
+  - fs-stacks-part01-prelim
+  provenance:
+    run: '0167'
+    session: 0004-horizon-fs-stacks-part01-prelim
+    role: horizon
+    round: '1'
+    rounds: '3'
+    task: fs-stacks-part01-prelim
+    task_title: Advance Stacks Part 01 Preliminaries formalization
+    projects: StacksPart01_Preliminaries

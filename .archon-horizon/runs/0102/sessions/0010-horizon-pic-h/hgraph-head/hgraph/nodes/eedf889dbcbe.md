@@ -1,0 +1,56 @@
+---
+author: sync
+content_type: structure
+created: '2026-07-28T13:42:16'
+decl: maps,
+file: AlgebraicJacobian/Albanese/Milne33.lean
+generated: lean
+lean_status: lean_ok
+stale: true
+title: maps,
+type: lean
+updated: '2026-07-29T11:07:22'
+---
+  structure maps, the disjunction `Milne33Indeterminacy f` holds: the
+  indeterminacy locus `Z(f)` is empty, or every `x ∈ Z(f)` lies in the closure
+  of a point `z ∈ Z(f)` of coheight one.
+
+This discharges the D2 hypothesis of `informal/w6-port-worksheet.md`: the
+Theorem-3.2 extension chain (`Albanese/Thm32RationalMapExtension.lean`)
+threads `Milne33Indeterminacy f` as an explicit hypothesis, and this theorem
+supplies it.
+
+## Route (D6 component reduction)
+
+Fix `x ∈ Z(f)`. Choose an affine (hence topologically Noetherian) open window
+`W ∋ x` and let `Z₀ := Z(f) ∩ W`, a closed subset of `W` with finitely many
+irreducible components. Let `C` be the component of `x` and pick — by Jacobson
+density of ambient-closed points in nonempty locally closed subsets
+(`exists_isClosed_singleton_mem_of_isLocallyClosed`) — a point `x₀ ∈ C` closed
+in `X` and avoiding all other components. The 4b-transport
+(`exists_notMem_domain_specializes_coheight_eq_one`, spec D5) yields
+`z ∈ Z(f)` with `z ⤳ x₀` and `coheight z = 1`. The closure of `z` in `W` is
+an irreducible subset of `Z₀` through `x₀`, so it lies in a component — which
+must be `C`, as `x₀` avoids the others. Hence the generic point `ζ` of `C`
+generises `z`; since `ζ ∈ Z(f)` is not the generic point of `X` (which is in
+`dom f`), `coheight ζ ≥ 1`, and coheight strictness along `ζ ⤳ z` forces
+`ζ = z`. Therefore `x ∈ C ⊆ closure {z}`, as required.
+
+Blueprint reference: `lem:milne_codim1_indeterminacy` (Milne, *Abelian
+Varieties*, §I.3 Lemma 3.3, pp. 17–18; `abelian-varieties:page-0023/0024`).
+-/
+
+set_option autoImplicit false
+set_option maxSynthPendingDepth 3
+
+universe u
+
+open CategoryTheory Limits TopologicalSpace IsLocalRing
+
+namespace AlgebraicGeometry
+
+namespace Scheme.RationalMap
+
+variable {kbar : Type u} [Field kbar] [IsAlgClosed kbar]
+variable {X G : Over (Spec (.of kbar))}
+  [Smooth X.hom] [GrpObj G] [LocallyOfFiniteType G.hom] [LocallyOfFiniteType X.hom]

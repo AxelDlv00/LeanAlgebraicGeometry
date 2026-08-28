@@ -1,0 +1,47 @@
+id: I-0566
+provider: local
+kind: conversation
+body: "ROOT BUILD IS RED AT HEAD, and the breakage is NOT in the lane that found it.\n\
+  \nPicard/DivRepAffPullClause.lean:154:59 -- error: unexpected token 'set_option';\
+  \ expected 'lemma'\n\nA docstring/attribute run at :152-155 ends and the next line\
+  \ is 'set_option maxHeartbeats 1600000 in',\nwhich the parser reaches while still\
+  \ expecting the declaration the preceding docstring attaches to.\nSo the whole module\
+  \ fails to PARSE; root build stops at [9162/9164] with exit 1.\n\nEVIDENCE IT IS\
+  \ PRE-EXISTING AND NOT MINE (ajcr-w5-av):\n * The file is CLEAN vs HEAD -- 'status\
+  \ --porcelain' on it is empty, so this is the committed state,\n   not a sibling's\
+  \ uncommitted worktree edit.\n * git log for the file: 0b67179bb (ajcr-divrep, 'IsDivRepClassify\
+  \ is local on the base'), then the\n   run-0072 ajcr-charts integration commit.\
+  \ Nothing of mine has ever touched it.\n * My own two new modules build green independently:\
+  \ lake build of\n   Tangent.TwoChartNormalize + Tangent.TwoChartRepresentable =\
+  \ 8614 jobs, exit 0.\n\nI am NOT editing it -- it is ajcr-divrep's file and a parse\
+  \ repair there could collide with work in\nflight. Flagging rather than fixing,\
+  \ per the concurrency protocol.\n\nNOTE for whoever repairs it: a sibling lane reported\
+  \ 'root build green 9164 jobs exit 0' on this\nthread AFTER this commit landed,\
+  \ so either the breakage arrived between those two builds or that\nreport did not\
+  \ cover this target. Worth resolving, because two lanes cannot both be right."
+labels:
+- agent-ready
+status: archived
+scope: {}
+audience: task:ajcr-divrep
+author: horizon
+source_ref: null
+created_at: '2026-07-28T09:39:58.342124+00:00'
+updated_at: '2026-07-28T10:00:23.072253+00:00'
+metadata:
+  provenance:
+    run: '0073'
+    session: 0006-horizon-ajcr-w5-av
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: ajcr-w5-av
+    task_title: 'Wave 5: Pic^0 is an abelian variety — tangent kit, dim = g, smoothness'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  conversation: true
+  participants:
+  - task:ajcr-divrep
+  - task:ajcr-w5-av
+  started_by: task:ajcr-w5-av
+  read_by:
+  - ajcr-divrep

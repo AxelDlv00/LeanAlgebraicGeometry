@@ -1,0 +1,105 @@
+id: I-0264
+provider: local
+kind: info
+body: 'hdvd relative-achiever seam: VERDICT = GENUINELY-HARD (size L, NOT a bounded
+  adaptation of DDR-8; sub-bricks pinned). No Lean written (design-first; no clean
+  sorry-free core lemma landable now without the two unbuilt bricks below).
+
+
+  STRONG LEAD RESOLVED — DDR-8 relative window-generation is NOT certificate-free
+  (route is CIRCULAR for hdvd). CertifiedDivisorFamily.windowGen / exists_smul_eqn_mem_window_sup
+  / stalkIdeal_le_span_windowGerm (DivSchemeMonoBridgeRel.lean:154,:334) all take
+  a CertifiedDivisorFamily (bundles certified : adaptation.IsCertified, DivisorFamily.lean:452-458).
+  Internally they consume G.adaptation.stalkIdeal_eq_span_germ_eqn (DivSchemeMonoBridge.lean:273,
+  a consequence of IsCertified.projective_colength) + stalkIdeal_le_span_windowGerm_of_field.
+  They prove the REVERSE direction I_d <= span(windowGerms) ⊔ s (reading generation
+  OFF an already-established certified divisor), not the certificate-free forward
+  dvd. hdvd is an INPUT to producing the certificate (anti-circular order, DivSchemeCertificateEngine.lean:34-36),
+  so windowGen cannot supply it. Confirmed: the non-field / non-certified stalkIdeal_le_span_windowGerm
+  has ZERO occurrences in-tree — the ONLY relative window-generation is the certified
+  one.
+
+
+  ROUTE 1 (achiever-lift) ALONE FAILS I-0231. The counterexample (t vs t+eps over
+  k[eps]) is itself about fibre ACHIEVERS: both t and t+eps cut EXACTLY the fibre
+  point t=0 minimally (no residual), yet cut different relative divisors ((t) != (t+eps)
+  in k[eps][t]). So knowing sec z reduces to the fibre achiever f_p does NOT pin the
+  relative divisor. Achiever-lift by itself cannot force relative generation.
+
+
+  SLICINGFLAT DVD-ENGINE IS MIS-SCOPED (I-0260 correct). includeRight_mem_nonZeroDivisors_of_forall_tmul_residueField
+  (SlicingFlat:356) + mem_smul_top_of_apply_mem_smul_top (:79) are REGULARITY / ideal-division
+  (phi x in I.M => x in I.M) => discharge fibre_regular/hfib, NOT dvd. The forward
+  fibrewise->relative DIVISIBILITY that dvd needs is exactly the false k[eps] statement
+  ''vanishes in all fibres => 0'' (spec-dd-r §7 risk 5). worksheet w4-g4 §1.5''s claim
+  that SlicingFlat discharges dvd is the design error I-0260 caught.
+
+
+  WHAT dvd FUNDAMENTALLY NEEDS: sec z must be a RELATIVE base-point-free generator
+  — its side component must generate the relative fixed-part ideal J=<K-components>
+  on the piece over R_Z = sec z fibre-achiever at EVERY fibre p'' meeting the piece
+  (not just the seed point). Fibre data cannot supply this (I-0231). Certificate-free
+  relative structure comes ONLY from the universal carve (divUniversal_carve, DivSchemeFamilyUniv.lean:106,
+  holds at every fibre via _residueField:135). Turning it into a relative divisor
+  + relative generator is the honest DD-4 base-field-transport seam (DivSchemeFamily.lean:44).
+  ALL divisor/BPF/achiever infra in-tree is FIELD-level (functionField, coeffAt/valuations,
+  DVR: exists_coeffAt_eq_baseDivisorAt BaseDivisor:143, mulSpan_eq_divisorSections_of_basepointFree
+  BpfSpan:70, existsUnique_effective_divisor_of_carve PFib:241). No relative version
+  exists.
+
+
+  PINNED ROUTE (certificate-FREE, risk-5-safe, NOT via DDR-8): dvd <=> Q := J/(eqn
+  z) = 0, Q ⊆ colength B/(eqn z). If (S1) colength finite/projective over R_Z, and
+  (S3) Q ⊗ κ(p'')=0 for all p'' [carve fibre-exactness K_M-fibre=H0(N-d_p'') at every
+  p'' => K-components ⊆ (eqn z fibre) fibrewise], then Nakayama (finite + all fibres
+  zero => zero) gives dvd. GATED on TWO unbuilt certificate-FREE sub-bricks (both
+  non-circular w.r.t. dvd):
+
+  - S1: (c1)-finiteness of colength Gamma(D(h_j))/(f_j) over R_Z — the §3 OPEN production
+  brick (support-tube algebraic half: proper support + fibre colengths artinian dim
+  g from hfib+P-fib-N). Needs hfib, NOT dvd. Size M->L. Kit landed: exists_supportTube
+  (SupportTube:166), finite_colength_of_forall_fibre_closure_subset (SupportTubeFinite).
+
+  - S2: no-leak/relative-Cartier: choose h z so deg(d ∩ D(h z)) is CONSTANT (flat)
+  across fibres, so colength rank r = fibre-achiever degree everywhere (this is what
+  makes S3''s exactness force Q-fibre=0). Wall B (I-0244) + the (c3)/(c4)-style constant-fibre-rank
+  flattening (§3 flags ''honest new mathematics, size L'', generalize SlicingFlat
+  Noetherian induction phi:M->M to delta'':M->N). Size L.
+
+  Assembly to hdvd: L. P-fib-N (RiemannRoch/PFibPack) landed-scoped supplies S3''s
+  fibre exactness.
+
+
+  ARCHITECTURE-CHANGE ALTERNATIVE (Route 2, orchestrator lever): a section source
+  relatively BPF BY CONSTRUCTION (e.g. from the relative Cartier divisor built first,
+  or a distinguished window generator) would give S2/the achiever-everywhere for free.
+  The current fibre-read bridge (I-0258) source structurally cannot (only nonvanishing).
+  If S2 proves too heavy, switch section source — orchestrator decision.
+
+
+  SEED-FINALE CONSUMES: the exact hdvd term of shape (DivSchemeSeed.lean:189-190)
+  forall z, forall psi in K, relThetaResSide a (side z)(piece_le z) psi in Ideal.span
+  {eqn z}, fed to isGenerator_of_fibre_ne_zero (DivSchemeSeed:188) alongside the LANDED
+  hfib bridge (DivSchemeSeedUnivBridge 3 keystones). Then seedUniv := ThetaGeneratorSeed.mk{...};
+  isGenerator_seedUniv := isGenerator_of_fibre_ne_zero hdvd hfib; divFamEps_certifiedFamily
+  (DivSchemeEps:309). hdvd is consumed downstream at DivSchemeFamily.lean:228,229
+  (exists_ratioUnit) and :390 (le_vanishingSubmodule).
+
+
+  NET: hdvd is NOT a quick bounded win and NOT shortcuttable through the DDR-8 kit.
+  It is the honest relative-generation brick, size L, gated on S1 (open) + S2 (L).
+  Recommend: build S1 (support-tube (c1)-finiteness) first (independently useful for
+  CertUniv (c1)), then S2/relative-Cartier, then the Nakayama assembly for hdvd; OR
+  take the Route-2 architecture change.'
+labels:
+- agent-ready
+status: archived
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: agent
+source_ref: null
+created_at: '2026-07-19T12:49:49.692523+00:00'
+updated_at: '2026-07-20T03:15:21.956008+00:00'
+metadata: {}

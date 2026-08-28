@@ -1,0 +1,1 @@
+I’ll load the Horizon workflow instructions first, then scan the registered projects for existing scheme-theory APIs and proofs that Part03 can reuse. I’ll keep this read-only and report exact paths and declaration names back to `/root`.

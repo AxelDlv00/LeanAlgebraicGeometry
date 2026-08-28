@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "status": "rejected",
+  "reason": "Fresh kernel retry after clearing stale workers reached active elaboration but timed out at 240s; child RSS about 7.27 GB, no artifact. Need isolate slow declaration before any longer run.",
+  "created_at": "2026-08-25T07:16:06.279882+00:00",
+  "files": [
+    {
+      "path": "MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0FiniteStageFinalBaseChange.lean",
+      "artifact": "files/MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0FiniteStageFinalBaseChange.lean",
+      "bytes": 54503,
+      "lines": 1156
+    }
+  ],
+  "diagnostics": ""
+}

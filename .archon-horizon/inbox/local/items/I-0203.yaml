@@ -1,0 +1,88 @@
+id: I-0203
+provider: local
+kind: memory
+body: 'DDR-4 first slice LANDED: the window-engine junction + certificate transport
+  (commit 0935998fe)
+
+
+  DDR-4 lane report (certificate transport, spec-dd-r §3 item 4; follow-on to probe
+  verdict I-0202). LANDED (2 new files, both ≤ 420 L, root-wired at HEAD, lake-env-lean
+  green, all 11 keystones kernel-checked axiom-clean [propext, Classical.choice, Quot.sound],
+  no sorries):
+
+
+  1. Picard/DivSchemeCertificate.lean (417 L) — THE JUNCTION, stated for ARBITRARY
+  (d, A, a) over arbitrary R (serves both the DDR-3 universal family and DD-4''s Task-4
+  residual): vanishingSide (side reading of a vanishing pair on ⊤⊓D(h_p), simp lemmas
+  _inl/_inr) + vanishingSide_germ_mem + vanishingSide_matching (4 cases: 1/θ/θ⁻¹/1;
+  inverse case via Units.inv_mul restricted + linear_combination); vanishingDiv (noncomputable
+  ABBREV — reducible so ring/linear_combination see the eqnDiv atom through it) +
+  vanishingDiv_matching (ONE generic proof for all index pairs: eqn_res_cancel + linear_combination
+  certificate hL + hside − Ovl·hR − Ovl·B_q·hratio − E_p·B_q·hunit); vanishingToGlued
+  (global datum section = matched family, NO sheaf gluing) + val rfl-lemmas; gluedVanishingFst/Snd
+  + gluedVanishing_mem_twist (from gluedToIdeal₀_eq_theta_mul_gluedToIdeal₁ + _secRes
+  + secRes_secRes) + gluedToVanishing.
+
+  2. Picard/DivSchemeCertificateEngine.lean (420 L) — gluedToIdeal₀/₁_add/_smul (uniqueness
+  pattern; smul via overModule_smul_def + ring); gluedToVanishingₗ (LinearMap; change-to-explicit-spelling
+  in component goals); roundtrips gluedToVanishing_vanishingToGlued / vanishingToGlued_gluedToVanishing
+  (uniqueness of assemblies resp. cofactors; the datum-component exposure hcomp :=
+  rfl + Scheme.resHom_self on the composite le closes the retype); KEYSTONES: gluedEquivVanishing
+  (ThetaIdealSections a ⊤ ≃ₗ[R] K_a(d)), datumH0EquivVanishing (engine H⁰ form via
+  Sheaf.HModule.linearEquiv₀ + isTerminalTop); ENGINE TRANSPORT [IsNoetherianRing
+  R] given hπ + hfib (complex-form fibrewise H¹-data of datumPair (A.thetaIdealDatum
+  a) — SAME boundary as thetaGluedEval_surjective): subsingleton_hModule_thetaIdealDatum_one
+  (H¹(O(Θᵃ−d)) = 0), finite/projective_vanishingSubmodule (K_a(d) fin proj — datumRigidEngine
+  transported), divisorWindowEquivVanishing (LinearEquiv.ofSubmodules on relThetaWindowEquiv
+  + Submodule.map_comap_eq_of_surjective) + finite/projective_divisorWindow (K_a(d)
+  ⊆ R⊗[k]H_a fin proj — the grFunctorAff-ambient carrier for DDR-5/9), finite_thetaGlued
+  (W(d)^{Θᵃ} finite via windowCarve_surjective ∘ thetaGluedEval_surjective — Noetherian-free
+  except hfib route).
+
+
+  OPEN (the rest of IsCertified g, in dependency order): (i) (c1) per-piece colength
+  fin proj — needs the SLICING CRITERION as a new pure-algebra brick (fibrewise-regular
+  f + flat B over Noetherian R ⟹ B/(f) R-flat; NOT in FibrewiseRegular yet — only
+  the regularity form landed) + fibrewise regularity of the ADAPTATION equations transported
+  from the seed''s fibre_regular through eqn_rel (needs the fibre-sections identification
+  Γ(D(h))⊗κ(p) ≅ fibre sections — the I-0198 open item (iv) kit) + finiteness via
+  the SUPPORT TUBE (IsProper C.hom + closed-in-proper piece isolation — untouched,
+  L-brick). (ii) (c2) projectivity+rank g of untwisted W(d): flatness of W^Θᵃ does
+  NOT follow from K fin proj alone (0→K→R⊗H→W^Θ→0 with K,P fin proj does not split;
+  k[ε] trap rechecked); honest routes: Tor₁(W^Θ,κ)=0 ∀p via engine h0TensorEquiv at
+  κ(p) + fibre-injectivity of K⊗κ→H⊗κ (needs the fibre-restriction seam / P-fib fibre
+  h⁰-dimension), or the ambient identification after DDR-5''s K_a(d) = K''_taut (which
+  itself wants W^Θ fin proj — ORDER CAREFULLY); twisted→untwisted rank = I-0192''s
+  invertible-A_D-module semilocal brick. (iii) (c3)/(c4) from the ambient splitting
+  — after (ii).
+
+
+  HAZARDS (new, confirmed): (a) type-ASCRIBING datum-unit coes at A.pieces types FAILS
+  (unifier will not unfold thetaIdealDatum under Γ) — the key-have-in-A-spelling +
+  exact-defeq bridge is MANDATORY (probe-verified; also vanishingToGlued''s membership
+  rcases + exact per case). (b) vanishingDiv MUST be abbrev (reducible) or ring/linear_combination
+  treat it as a distinct atom from eqnDiv (I-0197 hazard (c) instance). (c) x : ↥vanishingSubmodule
+  is a DOUBLE subtype — components are x.1.1.1/x.1.1.2, twist membership x.1.2, vanishing
+  clauses x.2.1/x.2.2 (x.val.1 misparses). (d) le_inf shapes: target ⊤⊓piece needs
+  le_inf le_top inf_le_right (not nested composites). (e) linter.style.show fires
+  on goal-changing show — use change. (f) Scheme.resHom_self applies across defeq-different
+  opens (⊤⊓A.pieces vs ⊤⊓datum-pieces) — closes the retype composites.
+
+
+  CONSUMERS: DDR-4-remainder takes finite/projective_vanishingSubmodule + windowQuotEquiv
+  for (c2)Θ; DDR-5 takes projective_divisorWindow + le_vanishingSubmodule (DDR-3)
+  for the rank-g-surjection argument once W^Θ projectivity lands; DDR-8/9 take gluedEquivVanishing
+  for base-change of K_a(d) via datumH0BaseChangeEquiv (NOT yet threaded — thread
+  it as the next S-brick: κ(p)⊗K_a(d) ≅ ker(diff.baseChange κ(p)) by composing datumH0EquivVanishing
+  with the engine clause); DD-4 Task 4''s residual hfib discharge (W6-full fibre-restriction
+  seam, I-0158/I-0197) remains THE gate for unconditional statements.'
+labels:
+- agent-ready
+status: archived
+scope: {}
+audience: horizon
+author: human
+source_ref: null
+created_at: '2026-07-17T08:31:33.658572+00:00'
+updated_at: '2026-07-20T03:16:30.144585+00:00'
+metadata: {}

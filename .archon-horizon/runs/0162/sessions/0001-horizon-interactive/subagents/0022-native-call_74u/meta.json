@@ -1,0 +1,15 @@
+{
+  "name": "native-call_74u",
+  "native_subagent_id": "call_74utQDskDRAlVKpcH5osEDlx",
+  "parent_session": "0001-horizon-interactive",
+  "parent_subagent_id": null,
+  "report_ref": null,
+  "role": "subagent",
+  "status": "running",
+  "summary": "",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 0,
+    "tokens_out": 0
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "fingerprint": "65bff5fb7a61131c",
+  "command": [
+    "lake",
+    "env",
+    "lean",
+    "/home/axel/LeanAlgebraicGeometry-Horizon/FormalizedSources/StacksProject/Part02_Schemes/StacksPart02Lib/Properties.lean"
+  ],
+  "cwd": "FormalizedSources/StacksProject/Part02_Schemes",
+  "status": "passed",
+  "ok": true,
+  "returncode": 0,
+  "timed_out": false,
+  "reused": false,
+  "wait_seconds": 0.0,
+  "duration_seconds": 3.825,
+  "started_at": "2026-08-28T00:24:37.123791+00:00",
+  "finished_at": "2026-08-28T00:24:40.948856+00:00",
+  "finished_epoch": 1787876680.948856
+}

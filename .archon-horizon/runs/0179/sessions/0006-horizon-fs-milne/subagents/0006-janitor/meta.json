@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Singer",
+  "agent_path": "/root/milne_final_janitor",
+  "agent_role": "janitor",
+  "depth": 1,
+  "model": "gpt-5.6-sol",
+  "name": "janitor",
+  "native_subagent_id": "01a0443c-a0f7-7a52-8d19-46bbe982743c",
+  "ok": false,
+  "parent_session": "0006-horizon-fs-milne",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "interrupted",
+  "subagent_type": "janitor",
+  "summary": "",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 2805402,
+    "tokens_out": 16448
+  }
+}

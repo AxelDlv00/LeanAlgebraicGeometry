@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Heisenberg",
+  "agent_path": "/root/final_review",
+  "agent_role": "ground",
+  "depth": 1,
+  "model": "gpt-5.6-luna",
+  "name": "ground",
+  "native_subagent_id": "01a0428a-f58d-7eb1-9c6d-37f12f337142",
+  "ok": true,
+  "parent_session": "0002-horizon-fs-stacks-part01-prelim",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "completed",
+  "subagent_type": "ground",
+  "summary": "Review findings for `/root`:",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 1206221,
+    "tokens_out": 7601
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Pasteur",
+  "agent_path": "/root/torsion_api",
+  "agent_role": "explorer",
+  "depth": 1,
+  "model": "gpt-5.6-sol",
+  "name": "explorer",
+  "native_subagent_id": "01a042b8-aa6d-7081-a6e2-b8216d545e2b",
+  "ok": false,
+  "parent_session": "0004-horizon-fs-mumford",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "interrupted",
+  "subagent_type": "explorer",
+  "summary": "",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 5344114,
+    "tokens_out": 13208
+  }
+}

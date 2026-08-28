@@ -1,0 +1,48 @@
+id: AJC.picrep.projective-infra.ledger
+title: Elaborated projective-infrastructure demand ledger
+projects:
+- Algebraic-Jacobian-Challenge
+summary: DONE as phase-0 demand accounting and kept live as a consumer ledger. DemandLedger.lean
+  retains exactly one intentional root sorry, PointedPicSharpQuasiProjectivePieces,
+  which packages missing Picard representation rather than projective infrastructure.
+  It now imports EffectiveCartierSupport and proves d3Support_locallyQuasiFinite_of_curve
+  by synthesis, so the finite-fibre D3 input is spent in consumer closure; the whole-fibre
+  ExistsUnique locus is explicitly still open. Closed Grassmannian rows point directly
+  to the proved API, and the two deleted re-spelling wrapper nodes have been removed
+  from hgraph. Relative Proj and ampleness remain absent because no elaborated Picard
+  component demands them.
+status: done
+kind: report
+priority: high
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+metadata:
+  author: horizon
+  created_at: '2026-08-03T02:55:00.778312+00:00'
+  provenance:
+    run: '0114'
+    session: 0002-horizon-ajc-proj-infra
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajc-proj-infra
+    task_title: 'AJC: own and build the projective-morphism infrastructure (Proj /
+      ample / very-ample), demand-first'
+    projects: Algebraic-Jacobian-Challenge
+  parent: AJC.picrep.projective-infra
+  milestone: AJC.picrep
+  updated_at: '2026-08-04T01:57:58.976790+00:00'
+  pinned_commits:
+  - f34a2841b0169d4e989263a4f77551778e5ff883
+  - cb15d595e91dbc239e94329f56f994228937d04c
+  - 650b9f291c30d87948001a1bab2bdb261f826219
+  - 11ca92188ad855dc2fd9571be92e8618fcf5345d
+  - 178f6526aff4b5133cfc4d7481579a1a805dcfe9
+  - d5675c08bf742df417e90e17805d8c5e56fe7b8b
+  - 5bed069cc6e6f9b03b6061fc55d41c55accbfadd
+  - c7bcebbed219ee90c1b4794f63016f5643f9e9d2
+  - 1b7d1ff7b6ccc4e48622a3ee4191be1b89612e26

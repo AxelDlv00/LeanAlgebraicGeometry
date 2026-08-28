@@ -1,0 +1,34 @@
+I have completed the verification. Here is my verdict.
+
+## VERDICT
+
+### (a) Proof honest — YES
+
+Both theorems in `AlgebraicJacobian/Picard/Pic0ChartAffineLocalUniv.lean` are honest:
+- No `sorry`, no `admit`, no `axiom` in the file (grep clean).
+- LSP diagnostics: fully elaborated, zero errors/warnings.
+- `lean_verify` on both `chartLocusAffineLocal_admissible` and `chartLocusOpens_admissible_eq_top` reports axioms exactly `[propext, Classical.choice, Quot.sound]` — nothing else in the transitive closure. So the entire dependency chain (including `exists_uniform_admissibleCoverageChart_eq_univ`, `pic0Map_coe`, coverage) is sorry-free and gate-free.
+
+The proof mechanism is exactly as described: `intro U`; rewrite `picEtMap C (fromSpecAffine T U) lam.1` backward through `pic0Map_coe` (a genuine `rfl`-lemma, `Pic0Functor.lean:140`) into the carrier of `pic0Map C (fromSpecAffine T U) lam`; apply `_eq_univ`'s `choose_spec.choose_spec.2` to rewrite `chartLocus = Set.univ`; close with `isOpen_univ`. It typechecks.
+
+### (b) Vacuous/degenerate — NO
+
+- `pic0Subgroup C T` is a `Subgroup` (`Pic0Functor.lean:107`), so it always contains `1` (`one_mem'`). The theorem quantifies over a provably nonempty carrier — not vacuous.
+- The predicate genuinely matches the consumer. `ChartLocusAffineLocal C m Z T lam` (`Pic0ChartCoverageAbel.lean:132`) unfolds to `∀ U : T.left.affineOpens, IsOpen (chartLocus C m Z (picEtMap C (Over.fromSpecAffine T U) lam))`. The `haff` argument of `chartLocusOpens` (`Pic0ChartUnivReduce.lean:115-118`) is the *character-for-character identical* Prop, with the same carrier `picEtMap C (Over.fromSpecAffine T U) lam`. This is confirmed operationally: `chartLocusOpens_admissible_eq_top` actually feeds `chartLocusAffineLocal_admissible` in as the `haff` argument to `chartLocusOpens` and elaborates cleanly. It is the SAME predicate the chart-u/c9b clause (i) needs, not a look-alike with a different carrier.
+- The content is a short corollary (openness of `univ`), but the strength is legitimately imported from `exists_uniform_admissibleCoverageChart_eq_univ`, a real coverage theorem asserting `chartLocus = Set.univ` for every deg-0 class over every test. That is a strong statement, and it is axiom-clean. So this is a genuine consequence, not a trick.
+
+### (c) Duplicate — NO (incomparable, not strictly-less)
+
+The new theorem is NOT a duplicate of `isOpen_chartLocus_of_isPlusHonest` (`Pic0ChartPlusFibreProducer.lean:316`, needs `IsPlusHonest`) or `chartLocusAffineLocal_of_plusFibre` (`Pic0ChartLocusPlusFibre.lean:120`, needs per-piece `IsChartDatumPlusFibre`). The strength comparison is a genuine tradeoff, not strict dominance:
+
+- New theorem drops ALL of those hypotheses (no `IsPlusHonest`, no plus-fibre, no presentation).
+- But it PAYS by pinning `(m,Z)` to the specific `_eq_univ.choose`/`choose_spec.choose` admissible parameter (the others take arbitrary `m,Z`), and by restricting `lam` to `pic0Subgroup` (degree-zero classes) rather than an arbitrary `picEt` class.
+
+So the theorems are incomparable: unconditional-but-pinned-and-deg-0 vs conditional-but-arbitrary. It does NOT secretly assume an equivalent of `IsPlusHonest` — it carries no such hypothesis; the reason it is unconditional is that at the admissible parameter the locus is literally `Set.univ`, so openness is content-free there, and the real content lives upstream in the coverage result. That is a legitimately different route, not a re-proof.
+
+### (d) Docstring overclaim — mostly honest, one minor imprecise aside
+
+- The negative claims are honest. The file contains exactly two theorems, neither of which mentions or discharges any antecedent of `pic0RepresentableByOfCharts`, clause (ii) `exists_factor`, spreading-out, or `rep`. The "discharges only the test-side `haff` residue" framing is accurate, and matches the `Pic0ChartAtlasCoupling` caveat it cites (test-side locus vs divisor-side `V` are not conflated).
+- One imprecise aside (lines 84–85): "the same `(m, Z)` witnesses the degree calibration `hdeg` (`hmZ.1`) that a chart datum also wants." Here `hmZ.1` is `deg k Z = m·classDeg(thetaCechClass) − admissibleCoverageParameter`, and `admissibleCoverageParameter` (via `admissibleCoverageParameter_cast`, `Pic0ChartCoverageThreshold.lean:268`) equals `(M·δ+g)·classDeg(thetaCechClass)` — i.e. the subtracted term carries a factor of `d₁ = classDeg(thetaCechClass)`. The chart-datum calibration used elsewhere (`mem_chartLocus_of_ledgerIndex`, `hZ`) subtracts `(M·δ+g)` without that `d₁` factor. So `hmZ.1` is not literally the same equation a chart datum's `hdeg` wants unless `d₁ = 1`. This is a soft, unproved aside in the docstring, not something either theorem depends on, so it does not affect (a)–(c) — but it is a mild imprecision worth flagging.
+
+Files inspected: `Pic0ChartAffineLocalUniv.lean` (target), `Pic0ChartCoverageAbel.lean:132` (predicate def + `chartLocusAffineLocal_of_presentation`), `Pic0ChartCoverageThreshold.lean:262,381` (`admissibleCoverageParameter`, `_eq_univ`), `Pic0Functor.lean:107,140` (`pic0Subgroup`, `pic0Map_coe`), `Pic0ChartUnivReduce.lean:115` (consumer `chartLocusOpens`), `Pic0ChartPlusFibreProducer.lean:316` and `Pic0ChartLocusPlusFibre.lean:120` (duplicate candidates).

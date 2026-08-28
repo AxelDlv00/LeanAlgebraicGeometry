@@ -1,0 +1,82 @@
+id: I-0238
+provider: local
+kind: info
+body: 'DDR-9.F0 KeyChart LANDED (F2). Commit 27371b39cdd (private-index CAS; committed
+  root = HEAD blob + only my import line; sibling PicEtCrossBaseGraph line left uncommitted
+  in working tree). New file Picard/DivSchemeKeyChart.lean, exactly 500 lines; zero
+  sorries; all keystones axiom-clean [propext, Classical.choice, Quot.sound]; single-module
+  lake build green (8612 jobs, LEAN_NUM_THREADS=1 under the mkdir lock).
+
+
+  LANDED (w4-ddr9 SS3.2, all three deliverables):
+
+  (1) KeyChart: carveIdealSheaf_ideal_pairChartOpen -- (carveIdealSheaf mu).ideal
+  (pairChartOpen i j) = (carveIdeal mu i j).comap (pairChartGamma i j).hom; campaign
+  form ker_divSchemeIota_ideal_pairChartOpen at divCarveIdeal. Route: le half = self-term
+  ker computation (Scheme.Hom.ker_apply + the chart-sections workhorse at phi := ofHom
+  (Quotient.mk)); ge half = IdealSheafData.ideal_iInf (POINTWISE for the finite pair
+  atlas -- mathlib gives this, no localization-commutes argument needed) + per-locus
+  section kill via TopCat.Presheaf.section_ext germs + fromSpecStalk stalk test rings
+  + IsOpenImmersion.lift + Spec.preimage + the landed carveIdeal_le_ker_of_specMap_pairChartMap_eq.
+  NO basic-open cover needed (I-0193''s D(t) route replaced by the stalk route: range_fromSpecStalk
+  = generizations, which stay in opens).
+
+  (2) pairChartMap_grPairStructMap: pairChartMap i j >> grPairStructMap = Spec.map
+  (algebraMap k R_IJ) (from pairChartMap_fst + iota_grStructMap + AlgHom.comp_algebraMap
+  includeLeft).
+
+  (3) Over packaging SS1.2: carveSchemeOver_triangle_of_chartCover + carveSchemeOverHomMk
+  / campaign divSchemeOverHomMk (+ simp divSchemeOverHomMk_left): v : Spec S -> Z(diamond)
+  with per-piece Spec.map(algebraMap S (Away (f t))) >> v >> carveSchemeIota = Spec.map
+  w_t >> pairChartMap over span(range f)=top is a hom overSpec k S -> carveSchemeOver/divSchemeOver.
+  Cover = mathlib Scheme.affineOpenCoverOfSpanRangeEqTop + Scheme.Cover.hom_ext; tower
+  step IsScalarTower.algebraMap_eq k S (Localization.Away x) resolves by instance.
+
+
+  NEW REUSABLE API for F3 (atlas factorization, gates on this file): pairChartOpen
+  (affineOpens of grPair), pairChartGamma (sections identification, IsIso instance
+  isIso_pairChartGamma), top_le_preimage_pairChartOpen(_of_factor), the chart-sections
+  workhorse GammaSpecIso_hom_appLE_of_eq_specMap_pairChartMap (element form: reading
+  any chart-presented u on a section = phi of the chart value; takes hu : u = Spec.map
+  phi >> pairChartMap so consumers subst -- no appLE-congr juggling), carveIdeal_le_ker_of_presentations
+  (two chart presentations of one test transport the carve kill; k-structure DERIVED
+  from the structure triangles; takes CommRingCat morphisms, no AlgHom packaging at
+  call sites), and two generic mathlib-grade lemmas: Scheme.fromSpecStalk_appLE (appLE
+  V top of fromSpecStalk = germ >> GammaSpecIso.inv) and Scheme.germ_app_eq_zero_of_fromSpecStalk
+  (kill form: vanishing on Spec O_z implies vanishing germ).
+
+
+  LEAN GOTCHAS (confirming + extending the recorded hazard lists): (a) rw / rw-at
+  on goals containing glueData-ULift-typed subterms (glueData.J indices, pairChartMap,
+  cover I0 indices) fails with instance-transparency motive errors exactly as I-0193
+  warned -- EVERY such spot went through as term-mode congrArg/.trans/calc; the reliable
+  pattern for morphism-equality transport into appLE is a hypothesis hu : u = Spec.map
+  phi >> chart, then subst. (b) Scheme.Cover.hom_ext pieces have I0-typed indices
+  only defeq to Fin m: do NOT rw inside the per-piece goal; factor a private per-piece
+  lemma over (x : S) and close with exact (unification handles the defeq, motives
+  never form). (c) Functor.map_id inside namespace AlgebraicGeometry resolves to _root_.Functor.map_id
+  (the functorial-map one) despite open CategoryTheory -- qualify CategoryTheory.Functor.map_id.
+  (d) element-level chasing via DFunLike.congr_fun (congrArg CommRingCat.Hom.hom h)
+  s avoids all ConcreteCategory-vs-Hom.hom coercion fights. (e) mathlib IdealSheafData.ideal_iInf
+  IS pointwise for finite index families. (f) Algebra.TensorProduct.includeLeftRingHom_comp_algebraMap
+  is NOT algebraMap-of-the-tensor (it equates the two inclusions); use AlgHom.comp_algebraMap
+  includeLeft. (g) lean_verify MCP rejects unicode names (iota/Gamma) -- check those
+  via lake env lean + print axioms.
+
+
+  REMAINS (not this file''s scope): F3 = Picard/DivSchemeAtlasFactor.lean (divCarveChartToDivScheme
+  + divScheme_exists_chartFactor, w4-ddr9 SS3.3) now UNBLOCKED -- consumes pairChartGamma
+  + KeyChart + carveIdealSheaf_le_ker_of_factors + grPairCover refinement; suggest
+  extracting the Gamma-level w_t through the workhorse + isIso_pairChartGamma.'
+labels:
+- agent-ready
+status: archived
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: human
+source_ref: null
+created_at: '2026-07-19T01:59:32.954518+00:00'
+updated_at: '2026-07-20T03:14:48.783549+00:00'
+metadata: {}

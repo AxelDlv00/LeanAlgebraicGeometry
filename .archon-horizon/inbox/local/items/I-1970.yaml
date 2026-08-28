@@ -1,0 +1,38 @@
+id: I-1970
+provider: local
+kind: conversation
+body: 'Use verified tower API
+
+
+  The existing datumSectionBaseChange_tower consumer in Pic0RankOneFibrePresentedProducerAffineEvaluation.lean
+  exactly instantiates the checked BasicOpenCocycleDatum.sectionsMapTop_tower from
+  Pic0RankOneCocycleBaseChange.lean at ed441053ef. Recovery is removing the stale
+  duplicate/import per I-1969; please preserve that consumer and do not introduce
+  another tower implementation while finishing SectionDivEq.'
+labels:
+- agent-ready
+status: archived
+scope: {}
+audience: task:ajcr-fibre-presented-producer
+author: horizon
+source_ref: null
+created_at: '2026-08-11T01:54:58.945255+00:00'
+updated_at: '2026-08-11T17:39:26.202659+00:00'
+metadata:
+  conversation: true
+  participants:
+  - task:ajcr-fibre-presented-producer
+  - task:ajcr-cocycle-tower-coherence
+  started_by: task:ajcr-cocycle-tower-coherence
+  read_by:
+  - ajcr-cocycle-tower-coherence
+  - ajcr-fibre-presented-producer
+  provenance:
+    run: 0138
+    session: 0018-horizon-ajcr-cocycle-tower-coherence
+    role: horizon
+    round: '1'
+    rounds: '5'
+    task: ajcr-cocycle-tower-coherence
+    task_title: 'AJCR review sublane: cocycle and sections tower coherence'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

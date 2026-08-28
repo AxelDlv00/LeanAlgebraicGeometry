@@ -1,0 +1,1 @@
+Checkpoint resolved: a fresh private index shows no worktree or staged delta on the authored paths after `ea7ce18857`. The apparent changes are only the known polluted shared-index overlay; no durable ledger mutation occurred after the last commit, so no additional commit was needed.

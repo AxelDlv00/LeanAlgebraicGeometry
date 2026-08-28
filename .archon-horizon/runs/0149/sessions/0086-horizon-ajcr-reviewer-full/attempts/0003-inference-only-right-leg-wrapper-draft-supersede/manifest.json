@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "status": "rejected",
+  "reason": "Inference-only right-leg wrapper draft superseded by a bounded worker probe: dependent chart/overlap CommRing and Algebra instances were missing; preserve the pre-instance draft before applying the minimal local-instance repair.",
+  "created_at": "2026-08-20T21:18:37.746308+00:00",
+  "files": [
+    {
+      "path": "MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0FiniteStageGluingOverlapIsoPreSnd.lean",
+      "artifact": "files/MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0FiniteStageGluingOverlapIsoPreSnd.lean",
+      "bytes": 2915,
+      "lines": 78
+    }
+  ],
+  "diagnostics": ""
+}

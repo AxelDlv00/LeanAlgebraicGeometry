@@ -1,0 +1,1 @@
+I’m about to add `Picard/DivGrassmannianEmbedding.lean` with the unconditional divisor twist, quotient map, and canonical base-change/evaluation morphism, then verify it in isolation before touching any aggregate import. In parallel I’ll place the affine finite-presentation extraction in the existing quotient substrate, where its private tilde comparison is actually available.

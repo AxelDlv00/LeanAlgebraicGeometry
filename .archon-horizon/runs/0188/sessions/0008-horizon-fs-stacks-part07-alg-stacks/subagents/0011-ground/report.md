@@ -1,0 +1,1 @@
+The run is still live with many concurrent Horizon runs, so I’m treating the ledger as shared and checking each Part07 commit against its own parent. I’m now pulling the prior session handoffs, task/roadmap metadata, inbox protections, graph state, and current worktree hashes.

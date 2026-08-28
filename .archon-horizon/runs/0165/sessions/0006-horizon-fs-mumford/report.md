@@ -1,0 +1,1 @@
+Finalization check complete. The authoritative Horizon ledger has no staged, modified, or untracked Mumford paths; both working-tree and cached diffs are empty. No additional commit was needed. Plain Git’s differing status is the known stale separate index, not an authored delta.

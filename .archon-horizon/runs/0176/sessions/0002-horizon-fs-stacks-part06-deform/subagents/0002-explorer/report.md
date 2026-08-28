@@ -1,0 +1,1 @@
+The protections confirm cross-project reads are allowed and edits are restricted to Part06; I’ll stay read-only. I’m first mapping Part06’s current declarations/sorries, then I’ll query the Horizon index and sibling source files for matching APIs and proof patterns.

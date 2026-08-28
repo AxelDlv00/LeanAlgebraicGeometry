@@ -1,0 +1,1 @@
+The review confirms the factorization field is equivalent to `FibrePresented.exists_factor` once the divisor map is fixed. I’m splitting it out of the data structure into a named predicate and proving that equivalence explicitly; the constructor and openness theorem will then take the factorization as a visible hypothesis instead of hiding it inside a “family” object.

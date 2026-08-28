@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "fingerprint": "9484b2f442870d12",
+  "command": [
+    "lake",
+    "build",
+    "MilneLib.LocalProperties",
+    "MilneLib.Sheaf"
+  ],
+  "cwd": "FormalizedSources/AbelianVarieties/Milne",
+  "status": "passed",
+  "ok": true,
+  "returncode": 0,
+  "timed_out": false,
+  "reused": false,
+  "wait_seconds": 0.0,
+  "duration_seconds": 3.222,
+  "started_at": "2026-08-27T15:53:31.527142+00:00",
+  "finished_at": "2026-08-27T15:53:34.749314+00:00",
+  "finished_epoch": 1787846014.749314
+}

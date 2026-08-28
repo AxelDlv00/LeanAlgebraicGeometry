@@ -1,0 +1,1 @@
+The native bridge and its coefficient-ring sheaf isomorphism are landed and verified. I’m checking the remaining line-bundle feasibility probe and the current coordination/inbox state, then I’ll either close one more bounded proof unit or record the protected producer fields that still block completion.

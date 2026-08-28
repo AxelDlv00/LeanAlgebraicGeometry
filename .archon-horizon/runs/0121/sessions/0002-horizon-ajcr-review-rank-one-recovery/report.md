@@ -1,0 +1,1 @@
+I’m loading the Horizon session rules first, then I’ll audit the standing protections and unread handoffs before touching Lean. I’ll also read the execution-plan PDF in full and use its Phase 0 gates to choose the first admissible implementation slice.

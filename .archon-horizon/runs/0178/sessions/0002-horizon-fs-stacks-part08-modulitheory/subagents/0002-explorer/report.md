@@ -1,0 +1,1 @@
+I’m loading the Horizon workflow instructions first, then I’ll inspect the Part08 blueprint graph and nearby projects for low-dependency formalization candidates. I’ll keep this read-only and report exact node labels, statements, and likely Lean APIs back to the parent agent.

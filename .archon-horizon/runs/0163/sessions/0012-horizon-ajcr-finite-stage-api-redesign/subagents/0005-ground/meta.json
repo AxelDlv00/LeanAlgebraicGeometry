@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Carson",
+  "agent_path": "/root/ground_package_decision",
+  "agent_role": "ground",
+  "depth": 1,
+  "model": "gpt-5.6-sol",
+  "name": "ground",
+  "native_subagent_id": "01a04368-438c-71b1-96ea-96799f6de04c",
+  "ok": true,
+  "parent_session": "0012-horizon-ajcr-finite-stage-api-redesign",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "completed",
+  "subagent_type": "ground",
+  "summary": "The legacy context refactor is not coherent with the restored assembly. The committed `ed15662`/`71fb415d05` package computes `presentation` via `pic0FiniteStageAffineRingGluePresentation`, but the restored [Pic0FiniteStageGlueDataAssembly.",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 9587628,
+    "tokens_out": 27628
+  }
+}

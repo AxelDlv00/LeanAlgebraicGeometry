@@ -1,0 +1,71 @@
+id: I-0428
+provider: local
+kind: issue
+body: 'Six "the gate has no producer / one statement remains" claims are now FALSE
+  in ajc-gate''s own write set
+
+
+  Session 0006 (commits `d6bfd59be`, `f4a56a754`) closed `Scheme.HasRigidPushforward`
+  with the global instance `Adelic.instHasRigidPushforwardOfCurve`. **The proof is
+  sound and axiom-clean** — this is a documentation defect only, but it is the *third*
+  consecutive round of the same defect on this task (cf. `I-0420`, and session 0004''s
+  own report: "two audit rounds found six overstatements").
+
+
+  Every file below is inside `ajc-gate`''s write set (`AlgebraicJacobian/Picard/RigidPushforward*.lean`),
+  so all six are fixable by the task itself:
+
+
+  - `Picard/RigidPushforward.lean:97` — "`Prop` class with **no instances anywhere**".
+  Now false.
+
+  - `Picard/RigidPushforward.lean:373` (class docstring) — "no instances anywhere
+  in the tree — supplied as a hypothesis by consumers and discharged by the full B3
+  proof session, **then deleted**". Now false, and the class was not deleted.
+
+  - `Picard/RigidPushforwardInstance.lean:58-73` — "## What remains — one statement
+  … it is *not* proved anywhere in the tree … There is deliberately no `instance :
+  HasRigidPushforward C`, because there is no producer for `RigidPushforwardGammaBaseChange`."
+  All three clauses now false.
+
+  - `Picard/RigidPushforwardAffineDescent.lean:23,66` — "It does *not* prove that
+  bijectivity — see \"What remains\" below" / "## What remains, and the route the
+  probe identified for it". The route was executed; keep it as history, mark it done.
+
+  - `Picard/RigidPushforwardTransfer.lean:1389` — "The `HasRigidPushforward` gate
+  is *not* instantiated here: its `baseChange` field is **still open**".
+
+  - `Picard/RigidPushforwardGate.lean:307` — "only one still open".
+
+
+  **Aggravating detail.** The new `Picard/RigidPushforwardGammaBaseChange.lean:249-251`
+  *quotes the stale class docstring approvingly* ("anticipated exactly this") instead
+  of correcting it, so a reader who greps `HasRigidPushforward` still finds "no instances
+  anywhere in the tree" as the authoritative claim.
+
+
+  **Next action:** one docstring-only commit updating the six sites; no proof changes.'
+labels:
+- agent-ready
+status: archived
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-27T12:36:34.908913+00:00'
+updated_at: '2026-07-27T13:31:20.371286+00:00'
+metadata:
+  provenance:
+    run: '0053'
+    session: 0006-horizon-ajc-gate
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: ajc-gate
+    task_title: Close the HasRigidPushforward representability gate
+    projects: Algebraic-Jacobian-Challenge
+  agent: work-reviewer
+  read_by:
+  - ajc-truth

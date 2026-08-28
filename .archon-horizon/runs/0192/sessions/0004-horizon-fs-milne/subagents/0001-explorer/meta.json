@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Herschel",
+  "agent_path": "/root/frontier_survey",
+  "agent_role": "explorer",
+  "depth": 1,
+  "model": "gpt-5.6-luna",
+  "name": "explorer",
+  "native_subagent_id": "01a046d5-dc37-7762-bd1d-5b09180febb1",
+  "ok": false,
+  "parent_session": "0004-horizon-fs-milne",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "interrupted",
+  "subagent_type": "explorer",
+  "summary": "",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 519193,
+    "tokens_out": 2400
+  }
+}

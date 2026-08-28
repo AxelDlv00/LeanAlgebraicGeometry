@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "fingerprint": "62b805654870609e",
+  "command": [
+    "lake",
+    "env",
+    "lean",
+    "/home/axel/LeanAlgebraicGeometry-Horizon/FormalizedSources/StacksProject/Part04_AlgebraicSpaces/StacksPart04Lib/Representability.lean"
+  ],
+  "cwd": "FormalizedSources/StacksProject/Part04_AlgebraicSpaces",
+  "status": "passed",
+  "ok": true,
+  "returncode": 0,
+  "timed_out": false,
+  "reused": false,
+  "wait_seconds": 0.001,
+  "duration_seconds": 7.386,
+  "started_at": "2026-08-27T15:47:25.803609+00:00",
+  "finished_at": "2026-08-27T15:47:33.190143+00:00",
+  "finished_epoch": 1787845653.190143
+}

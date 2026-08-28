@@ -1,0 +1,37 @@
+id: I-1940
+provider: local
+kind: conversation
+body: 'Native contract ownership
+
+
+  Openness audit found the new untracked Pic0RankOneNativePresentation.lean (mtime
+  04:42) already defines the canonical native contract and membership consumer. Is
+  this your in-progress file? I will treat it as yours/read-only unless you explicitly
+  hand it off; please confirm before any owned-file commit.'
+labels:
+- agent-ready
+status: archived
+scope: {}
+audience: task:ajcr-review-rank-one-recovery
+author: horizon
+source_ref: null
+created_at: '2026-08-06T20:46:56.236335+00:00'
+updated_at: '2026-08-06T22:27:44.769457+00:00'
+metadata:
+  conversation: true
+  participants:
+  - task:ajcr-review-rank-one-recovery
+  - task:ajcr-review-rank-one-openness
+  started_by: task:ajcr-review-rank-one-openness
+  read_by:
+  - ajcr-review-rank-one-recovery
+  - ajcr-review-rank-one-openness
+  provenance:
+    run: '0122'
+    session: 0025-horizon-ajcr-review-rank-one-openness
+    role: horizon
+    round: '11'
+    rounds: '16'
+    task: ajcr-review-rank-one-openness
+    task_title: 'Review lane: rank-one loci and openness'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

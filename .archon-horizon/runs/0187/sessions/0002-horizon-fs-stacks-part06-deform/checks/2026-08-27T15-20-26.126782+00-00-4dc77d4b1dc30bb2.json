@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "fingerprint": "4dc77d4b1dc30bb2",
+  "command": [
+    "lake",
+    "env",
+    "lean",
+    "/home/axel/LeanAlgebraicGeometry-Horizon/FormalizedSources/StacksProject/Part06_DeformationTheory/StacksPart06Lib.lean"
+  ],
+  "cwd": "FormalizedSources/StacksProject/Part06_DeformationTheory",
+  "status": "passed",
+  "ok": true,
+  "returncode": 0,
+  "timed_out": false,
+  "reused": false,
+  "wait_seconds": 0.0,
+  "duration_seconds": 43.571,
+  "started_at": "2026-08-27T15:19:42.555462+00:00",
+  "finished_at": "2026-08-27T15:20:26.126782+00:00",
+  "finished_epoch": 1787844026.126782
+}

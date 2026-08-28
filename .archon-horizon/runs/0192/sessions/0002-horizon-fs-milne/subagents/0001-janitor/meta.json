@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Boole",
+  "agent_path": "/root/janitor",
+  "agent_role": "janitor",
+  "depth": 1,
+  "model": "gpt-5.6-sol",
+  "name": "janitor",
+  "native_subagent_id": "01a04683-5207-77b2-b65c-87a6a2980790",
+  "ok": true,
+  "parent_session": "0002-horizon-fs-milne",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "completed",
+  "subagent_type": "janitor",
+  "summary": "Hygiene audit complete; source remained read-only.",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 5110052,
+    "tokens_out": 25313
+  }
+}

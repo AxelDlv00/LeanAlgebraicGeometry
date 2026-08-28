@@ -1,0 +1,21 @@
+{
+  "agent_nickname": "Bohr",
+  "agent_path": "/root/frontier_scan",
+  "agent_role": "explorer",
+  "depth": 1,
+  "model": "gpt-5.6-sol",
+  "name": "explorer",
+  "native_subagent_id": "01a04364-be28-78d1-a21a-1b7ba925644c",
+  "parent_session": "0002-horizon-fs-stacks-part03-scheme-topicstheory",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "running",
+  "subagent_type": "explorer",
+  "summary": "",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 76988,
+    "tokens_out": 775
+  }
+}

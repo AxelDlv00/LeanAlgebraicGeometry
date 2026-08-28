@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Sagan",
+  "agent_path": "/root/integrate_models",
+  "agent_role": "worker",
+  "depth": 1,
+  "model": "gpt-5.6-sol",
+  "name": "worker",
+  "native_subagent_id": "01a0402f-fa1e-72e0-aa51-a060b131b5b9",
+  "ok": true,
+  "parent_session": "0004-horizon-ajcr-finite-stage-api-redesign",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "completed",
+  "subagent_type": "worker",
+  "summary": "Committed `cbe44398a614f0a7c587080e391188b83af7d0ba`.",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 20803947,
+    "tokens_out": 60123
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "role": "horizon",
+  "round": 3,
+  "project": "StacksPart01_Preliminaries",
+  "task_id": "fs-stacks-part01-prelim",
+  "status": "interrupted",
+  "started_at": "2026-08-28T00:25:50.531115+00:00",
+  "projects": [
+    "StacksPart01_Preliminaries"
+  ],
+  "harness_name": "codex",
+  "harness_kind": "codex",
+  "model": "gpt-5.6-sol",
+  "effort": "ultra",
+  "config_dir": "/home/axel/.codex-temp",
+  "auth": "api-key",
+  "workspace_sha": "7816c79608cfc25567654f6032dc5fde2cc04a6e",
+  "ended_at": "2026-08-28T01:10:19+00:00",
+  "interrupt_reason": "process-marker-reaped"
+}

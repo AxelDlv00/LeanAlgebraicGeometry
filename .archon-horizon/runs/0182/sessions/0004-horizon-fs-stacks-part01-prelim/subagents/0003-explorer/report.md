@@ -1,0 +1,1 @@
+The current frontier confirms the main gap is still the algebra/spectrum cluster. I’m narrowing the reusable signatures now, including the exact quotient-spectrum and localization APIs, and checking which candidate can be proved as a direct wrapper in this project’s existing imports.

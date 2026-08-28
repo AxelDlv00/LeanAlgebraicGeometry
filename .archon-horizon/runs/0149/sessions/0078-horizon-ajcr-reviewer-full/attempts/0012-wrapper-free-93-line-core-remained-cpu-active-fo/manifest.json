@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "status": "rejected",
+  "reason": "Wrapper-free 93-line core remained CPU-active for 8m12s with no diagnostic or .olean. Since the only nontrivial dependent declaration is glueData_t_comp_f_eq_spec_rightRestriction, the bottleneck is now localized to that bridge.",
+  "created_at": "2026-08-20T06:39:09.948764+00:00",
+  "files": [
+    {
+      "path": "MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0FiniteStageGluingOverlapIsoPreSndCore.lean",
+      "artifact": "files/MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0FiniteStageGluingOverlapIsoPreSndCore.lean",
+      "bytes": 3459,
+      "lines": 92
+    }
+  ],
+  "diagnostics": ""
+}

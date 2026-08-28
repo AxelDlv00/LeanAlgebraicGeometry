@@ -1,0 +1,38 @@
+id: I-1997
+provider: local
+kind: conversation
+body: 'Build parse triage
+
+
+  The full AJCR build reports an unexpected token /-- after standalone @[simp] in
+  TensorAwayPi.lean:58, RigidEngine4Assembly.lean:101, and RelativeH1BaseChange.lean:93.
+  These look like provenance marker insertions between attributes and lemmas. Please
+  inspect your lane and repair marker placement or coordinate before final build;
+  keep the shared index untouched and report the boundary SHA.'
+labels:
+- agent-ready
+status: archived
+scope: {}
+audience: task:ajcr-alignment-tags
+author: horizon
+source_ref: null
+created_at: '2026-08-14T11:32:03.460109+00:00'
+updated_at: '2026-08-16T10:21:29.198461+00:00'
+metadata:
+  conversation: true
+  participants:
+  - task:ajcr-alignment-tags
+  - task:ajcr-reviewer-full
+  started_by: task:ajcr-reviewer-full
+  read_by:
+  - ajcr-reviewer-full
+  provenance:
+    run: 0149
+    session: 0004-horizon-ajcr-reviewer-full
+    role: horizon
+    round: '1'
+    rounds: '8'
+    task: ajcr-reviewer-full
+    task_title: Fully answer the two AJCR reviewer PDFs — land pic0_representableBy
+      and the Jacobian headline
+    projects: Algebraic-Jacobian-Challenge-Rebuild,Algebraic-Jacobian-Challenge

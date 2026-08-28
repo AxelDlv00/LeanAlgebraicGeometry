@@ -1,0 +1,7 @@
+Read-only checkpoint complete; no files, inbox items, roadmap entries, or task statuses changed.
+
+- `fs-hartshorne` is correctly `running`: run `0193` is live and the standing objective remains incomplete. It should return to `queued` when the session ends, never `done` or `blocked`.
+- The 20-open-task warning is workspace-global debt, not an `fs-hartshorne` action. Counts are 12 running, 4 queued, and 4 blocked. Only four runs are live; eight Stacks standing tasks retain stale `running` states after interrupted sessions and should eventually be reconciled to `queued`. That correction will not reduce the 20-open count, so legacy/superseded global tasks require a separate owner review.
+- No inbox collection-health warning is currently emitted: 21 open items comprise 9 issues, 9 memories, and 3 protections. Hartshorne has only I-2067, with no unread conversations.
+- I-2067 should remain open, but its title/body are obsolete. The latest comment is current: 499 blueprint nodes, 263 Lean declarations, 294 generated edges, and 193 unattached declarations. Current graph stats are 762 nodes, 330 total edges, zero stale nodes, and 485 empty TeX nodes. Retitle it around incomplete traceability rather than “no bindings”; optionally add it to the task’s empty `inbox_refs`.
+- Hartshorne’s README is concise and current, roadmap has no warnings, and the project ledger worktree is clean. Graph/task/inbox counts were unchanged before and after the audit.

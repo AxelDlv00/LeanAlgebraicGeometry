@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "fingerprint": "f32233532e09d8d0",
+  "command": [
+    "lake",
+    "env",
+    "lean",
+    "/home/axel/LeanAlgebraicGeometry-Horizon/FormalizedSources/StacksProject/Part06_DeformationTheory/StacksPart06Lib/TangentAlgebraFunctor.lean"
+  ],
+  "cwd": "FormalizedSources/StacksProject/Part06_DeformationTheory",
+  "status": "passed",
+  "ok": true,
+  "returncode": 0,
+  "timed_out": false,
+  "reused": false,
+  "wait_seconds": 0.0,
+  "duration_seconds": 3.974,
+  "started_at": "2026-08-28T00:15:11.396048+00:00",
+  "finished_at": "2026-08-28T00:15:15.370154+00:00",
+  "finished_epoch": 1787876115.370154
+}

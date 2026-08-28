@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Russell",
+  "agent_path": "/root/composite_overlap_iso",
+  "agent_role": "worker",
+  "depth": 1,
+  "model": "gpt-5.6-sol",
+  "name": "worker",
+  "native_subagent_id": "01a0135d-57bc-73d1-9441-47e14188e338",
+  "ok": true,
+  "parent_session": "0035-horizon-ajcr-reviewer-full",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "completed",
+  "subagent_type": "worker",
+  "summary": "Composite overlap route rejected and saved as Horizon attempt `0004-composite-source-overlap-package-is-lsp-clean-bu`.",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 58077487,
+    "tokens_out": 80843
+  }
+}

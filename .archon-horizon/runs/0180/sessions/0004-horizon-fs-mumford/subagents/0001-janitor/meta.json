@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Schrodinger",
+  "agent_path": "/root/janitor",
+  "agent_role": "janitor",
+  "depth": 1,
+  "model": "gpt-5.6-terra",
+  "name": "janitor",
+  "native_subagent_id": "01a043df-dbd9-7e22-aa96-b624bd411aa7",
+  "ok": true,
+  "parent_session": "0004-horizon-fs-mumford",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "completed",
+  "subagent_type": "janitor",
+  "summary": "Mumford hygiene audit complete and reported to `/root`.",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 687971,
+    "tokens_out": 3908
+  }
+}

@@ -1,0 +1,1 @@
+The run is active alongside eleven other runs, so shared-state churn is expected. The synchronizer reports three protections, 18 unread items, and an open-task advisory; I’m now collecting the exact JSON records and CLI-supported filters before judging which entries are genuinely stale.

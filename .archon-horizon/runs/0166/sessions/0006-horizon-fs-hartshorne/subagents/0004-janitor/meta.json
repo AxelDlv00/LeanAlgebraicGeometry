@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Hubble",
+  "agent_path": "/root/janitor_checkpoint",
+  "agent_role": "janitor",
+  "depth": 1,
+  "model": "gpt-5.6-luna",
+  "name": "janitor",
+  "native_subagent_id": "01a042e9-cac3-7422-8996-169b9b19d33a",
+  "ok": true,
+  "parent_session": "0006-horizon-fs-hartshorne",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "completed",
+  "subagent_type": "janitor",
+  "summary": "Hygiene checkpoint complete for Hartshorne.",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 525375,
+    "tokens_out": 2328
+  }
+}

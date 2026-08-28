@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "status": "rejected",
+  "reason": "Dependent pullback hom_ext wrapper remains non-elaborating after bounded explicit-leg and inference-only probes; preserve as rejected draft before changing scope.",
+  "created_at": "2026-08-20T20:28:04.079538+00:00",
+  "files": [
+    {
+      "path": "MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0FiniteStageGluingOverlapIsoPreSnd.lean",
+      "artifact": "files/MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0FiniteStageGluingOverlapIsoPreSnd.lean",
+      "bytes": 2915,
+      "lines": 78
+    }
+  ],
+  "diagnostics": ""
+}

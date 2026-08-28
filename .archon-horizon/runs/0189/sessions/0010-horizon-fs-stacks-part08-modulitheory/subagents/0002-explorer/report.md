@@ -1,0 +1,1 @@
+The Part 08 library already exposes presheaf representability and elementary quotient descent. I’m now mapping those abstractions to sibling Part 07 stack APIs and Mathlib’s category/descent infrastructure, with exact declaration names and likely adaptation points.

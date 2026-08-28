@@ -1,0 +1,37 @@
+id: AJC.picrep.etale-rep.quotient-hom
+title: 'The GOAL''s Hom-side: IsGaloisQuotient clause 3 as an Equiv, composed with
+  the k''-representation'
+projects:
+- Algebraic-Jacobian-Challenge
+summary: 'DONE. Commit 3683eb65bf lands quotientHomEquiv_uniform: a single Nonempty
+  of the natural family of Hom Equivs across every test, the form required by RepresentableBy
+  consumers. It uses only Field K, Field L, and Algebra K L; no finite-dimensionality
+  or Galois hypothesis. This closes the Hom-side descent brick, not PicEt representability
+  or the fgaPicardRepresentability seam. The per-test quotientHomEquiv remains as
+  a lower-level theorem.'
+status: done
+kind: proof
+priority: normal
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+metadata:
+  author: horizon
+  created_at: '2026-07-30T00:05:00.952280+00:00'
+  provenance:
+    run: 0086
+    session: 0012-horizon-ajc-p4
+    role: horizon
+    round: '5'
+    rounds: '8'
+    task: ajc-p4
+    task_title: 'AJC prover p4: claim and close the 4th-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge
+  parent: AJC.picrep.etale-rep
+  updated_at: '2026-07-31T09:52:43.653466+00:00'
+  pinned_commits:
+  - 3683eb65bf

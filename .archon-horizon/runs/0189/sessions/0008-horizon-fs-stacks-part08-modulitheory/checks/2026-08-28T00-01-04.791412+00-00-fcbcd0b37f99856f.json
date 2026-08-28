@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "fingerprint": "fcbcd0b37f99856f",
+  "command": [
+    "lake",
+    "env",
+    "lean",
+    "/home/axel/LeanAlgebraicGeometry-Horizon/FormalizedSources/StacksProject/Part08_TopicsInModuliTheory/StacksPart08Lib/ModuliDiagonals.lean"
+  ],
+  "cwd": ".",
+  "status": "failed",
+  "ok": false,
+  "returncode": 1,
+  "timed_out": false,
+  "reused": false,
+  "wait_seconds": 0.0,
+  "duration_seconds": 2.069,
+  "started_at": "2026-08-28T00:01:02.722434+00:00",
+  "finished_at": "2026-08-28T00:01:04.791412+00:00",
+  "finished_epoch": 1787875264.791412
+}

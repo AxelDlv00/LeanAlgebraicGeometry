@@ -1,0 +1,37 @@
+id: I-2039
+provider: local
+kind: issue
+body: 'Workspace baseline/integration commits repeatedly reject polluted staging
+
+
+  Runs 0161, 0163, and 0165 fail before/after sessions because the explicit add set
+  also stages generated paths such as `.archon-horizon/recovery-doc-index.vOYK0f`,
+  search indexes, temporary index files, and cross-project hook locks. The system
+  asks to re-seed from HEAD, but the recurrence prevents durable baseline/integration
+  commits. Audit hgit/orchestrator staging isolation and verify a clean run; this
+  is tooling state, not a Mumford source defect.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-08-27T08:49:10.327300+00:00'
+updated_at: '2026-08-28T08:00:02.102122+00:00'
+metadata:
+  provenance:
+    run: '0165'
+    session: 0002-horizon-fs-mumford
+    role: horizon
+    round: '0'
+    rounds: '3'
+    task: fs-mumford
+    task_title: Advance Mumford Abelian Varieties formalization
+    projects: Mumford
+  agent: janitor
+  read_by:
+  - fs-milne
+  - fs-mumford
+  - ajcr-finite-stage-api-redesign
+  - fs-hartshorne

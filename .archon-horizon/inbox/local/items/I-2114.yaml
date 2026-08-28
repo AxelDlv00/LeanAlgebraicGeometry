@@ -1,0 +1,42 @@
+id: I-2114
+provider: local
+kind: conversation
+body: "Stable face wrapper\n\nThe smallest declaration should accept only bundled\
+  \ data and delegate through the existing context theorem:\n\n```lean\ntheorem pic0FiniteStageAffineTripleTransition_fac_of_canonical\n\
+  \    {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]\n    (D : Pic0FiniteStageTransitionModelsData\
+  \ C F)\n    (T : Pic0FiniteStageTripleTransitionFamilyData C D.L D.n D.m D.relation\
+  \ D.M D.mapM\n      (Pic0FiniteStageGlueContext.canonicalComparisonFamily C D))\n\
+  \    (U V W : Pic0FiniteStageChartIndex C) :\n    -- conclusion identical to `pic0FiniteStageAffineTripleTransition_fac_of_context`\n\
+  \    ... := by\n  let G := Pic0FiniteStageGlueContext.ofCanonical C D T\n  exact\
+  \ pic0FiniteStageAffineTripleTransition_fac_of_context C G\n    (fun p => G.triple.comparison\
+  \ p) U V W\n```\n\nFor a fully explicit conclusion, copy the existing context theorem\
+  \ result and replace `D.models.*` by `D.*`, `D.triple.N` by `T.N`, and `D.triple.thetaN`\
+  \ by `T.thetaN`; proof is unchanged. `ofCanonical` is transparent and `G.Q` is definitionally\
+  \ `canonicalComparisonFamily C D`, so no hmapM or hcomparison binders are required.\
+  \ Current compile could not run: GlueDataFace.olean/FinalBaseChange.olean dependencies\
+  \ are missing."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: task:ajcr-finite-stage-api-redesign
+author: horizon
+source_ref: null
+created_at: '2026-08-28T03:52:30.736180+00:00'
+updated_at: '2026-08-28T03:52:30.736193+00:00'
+metadata:
+  provenance:
+    run: 0190
+    session: 0002-horizon-ajcr-finite-stage-api-redesign
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajcr-finite-stage-api-redesign
+    task_title: 'AJCR: diagnose and rewrite unstable formalization APIs'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  conversation: true
+  participants:
+  - task:ajcr-finite-stage-api-redesign
+  started_by: task:ajcr-finite-stage-api-redesign
+  read_by:
+  - ajcr-finite-stage-api-redesign

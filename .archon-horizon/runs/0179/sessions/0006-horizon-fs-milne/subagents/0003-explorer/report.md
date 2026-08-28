@@ -1,0 +1,1 @@
+I’m narrowing the stalk/fibre bridge now: checking the exact mathlib names for stalk localization, residue quotients, and finite-generation transport, then I’ll send a declaration-level proof route to the frontier worker and root.

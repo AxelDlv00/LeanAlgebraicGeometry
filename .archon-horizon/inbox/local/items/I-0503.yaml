@@ -1,0 +1,53 @@
+id: I-0503
+provider: local
+kind: memory
+body: "CONCURRENT LANES: a MINUS line in the root-file diff is never yours. The protocol-4\
+  \ check works; the failure mode is misreading it.\n\nEstablished the hard way in\
+  \ run 0072 (lane ajcr-charts) by causing the incident, not by reading about it.\n\
+  \nTHE MECHANISM, which is subtler than \"commit only your own lines\". protocol-concurrent-lanes.md\n\
+  section 4 tells you to run\n    git --git-dir=$GD --work-tree=. diff HEAD -- <project>/AlgebraicJacobian.lean\n\
+  before committing the root file. I ran it. It printed\n    -import AlgebraicJacobian.Picard.DivRepAffPullIndep\n\
+  \    +import AlgebraicJacobian.Picard.DivisorFamilyAffZar\n    +import AlgebraicJacobian.Picard.Pic0ChartPair\n\
+  and I committed anyway, reading the first two lines as background noise from a sibling\
+  \ lane. They\nwere: another lane had REPLACED an import in the worktree, uncommitted,\
+  \ and my commit published\ntheir replacement. The dropped file stayed in HEAD and\
+  \ still compiled, but became reachable from\nnothing -- UN-ROOTED, the I-0153 failure\
+  \ mode.\n\nTHE RULE THAT ACTUALLY PREVENTS IT, stated so it needs no judgement:\n\
+  \    A MINUS LINE IN THAT DIFF IS NEVER YOURS.\n    The only clean result is \"\
+  +import <your file>\" and nothing else.\n    Any \"-import\" means you are about\
+  \ to delete somebody elses root entry. Stop and explain it\n    before committing.\n\
+  This is stronger than \"commit only your own lines\", because you can obey that\
+  \ and still sweep --\nstaging the whole file is what commits their edit, and the\
+  \ diff is your only warning.\n\nWHY THE PLUS LINES ARE ALSO A SIGNAL: an unexpected\
+  \ \"+import\" you did not write means a sibling\nlanes uncommitted edit is in your\
+  \ worktree copy, so a MINUS line probably accompanies it. Treat any\nunexplained\
+  \ line -- either sign -- as a stop condition.\n\nTHE REPAIR IS ADDITIVE, NOT A REVERT.\
+  \ Restore the dropped import while KEEPING the other lanes new\none, then verify\
+  \ with a full root build (mine: lake build AlgebraicJacobian, 9139 jobs, exit 0,\
+  \ with\nthe un-rooted file rebuilt). Reverting to your own earlier root blob would\
+  \ discard their work and\nturn one incident into two.\n\nAlso worth knowing: the\
+  \ shared index goes stale after EVERY CAS commit by ANY lane (section 1b), so\n\
+  `status --porcelain | grep ^D` showing a staged deletion of YOUR OWN just-committed\
+  \ file is normal\nand expected, not evidence of damage. Verify the worktree copy\
+  \ matches HEAD, then repair with the\nnarrowest `reset -q -- <project>/`."
+labels:
+- agent-ready
+status: archived
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-28T05:06:12.029675+00:00'
+updated_at: '2026-07-28T05:11:12.181836+00:00'
+metadata:
+  provenance:
+    run: '0072'
+    session: 0002-horizon-ajcr-charts
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajcr-charts
+    task_title: C9 chartLocus, the chart pair, and DAT-B/DAT-C coverage
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  read_by:
+  - ajcr-charts

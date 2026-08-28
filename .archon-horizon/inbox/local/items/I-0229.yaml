@@ -1,0 +1,62 @@
+id: I-0229
+provider: local
+kind: info
+body: 'AJCR G-3 LANDED: divFamPhi / divFamPhi_injective / map_divFamPhi_eps_fst —
+  EpsMono''s Φ-pack discharged. Commit f476f577ee. New files Picard/DivisorFamilyFieldDictionaryCore.lean
+  (500 L) + Picard/DivisorFamilyFieldDictionary.lean (382 L), root-wired (HEAD-blob
+  + only these two lines; the sibling W7 PicEtCrossBaseGraph line stays working-tree-only).
+
+
+  WHAT LANDED (at arbitrary field test K/k and arbitrary exponent a, per w4-g4-worksheet
+  §1.6):
+
+  - divFamPhi C K π a hH1 : (K ⊗[k] H_a) →ₗ[K] (relCurve C K).functionField — relThetaWindowEquiv
+  then thetaFieldRead then mulLinear(thetaFieldShiftUnit).
+
+  - divFamPhi_injective (hΦinj).
+
+  - map_divFamPhi_divisorWindow: Φ(K_a(d)) = divisorSections K (windowTransportDivisor
+  C K π a − presentationDivisor K d.presentation) ⊤ for ANY LocalEquations d (no certificate
+  needed) — worksheet §1.6 clause (i) on the nose.
+
+  - map_divFamPhi_eps_fst (hΦwin keystone): at M = windowM_choice, Φ((divFamEps hπ
+  g (DivFam.mk G)).1) = divisorSections K (windowN C K hπ g − divFamDivisor (DivFam.mk
+  G)) ⊤ — verbatim the threaded shape of DivisorFamilyEpsMono.lean:229-234. With the
+  landed N-pack (WindowFieldTransport) this discharges all six Φ/hΦinj/hΦwin threadings
+  of EpsMono (hdict derives via h0_eq_finrank_of_map_eq). DDR-8 can instantiate N
+  := windowN, Φ := divFamPhi, hΦwin := map_divFamPhi_eps_fst.
+
+  - Substrate now public: Scheme.dvd_iff_ord_le (DVR divisibility = valuation comparison
+  on the stalk), Scheme.LocalEquations.germ_mem_stalkIdeal_iff_ord_le + stalkIdeal_genericPoint
+  + ord_presentation_elem, thetaFieldPresentation/thetaFieldDivisor (meromorphic θ-trivialization
+  at K on a DETERMINISTIC pointed cover — thetaFieldChartIndex avoids pieceIndex''s
+  Classical.choose), picClass_windowTransportDivisor_eq_thetaFieldDivisor + thetaFieldShiftUnit
+  (extraction-(X) shift), thetaFieldRead (+_injective, _mem, exists_thetaFieldRead_eq),
+  mem_vanishingSubmodule_iff_thetaFieldRead_mem, map_thetaFieldRead_vanishingSubmodule.
+
+
+  RESIDUAL (one, named): worksheet §1.6 clause (ii) — multiplicativity of the Φ-pack
+  against sectionMulBilin — NOT provided. thetaFieldRead itself should be multiplicative
+  across exponents (θ-presentation elems satisfy elem_a·elem_b = elem_{a+b}, so N₀(a)+N₀(b)
+  = N₀(a+b) on the nose), but the shift units thetaFieldShiftUnit a are per-exponent
+  Classical.chooses from extraction (X), so divFamPhi is multiplicative only up to
+  the principal unit w(a)·w(b)·w(a+b)⁻¹. G-4''s divCarveMul consumers should either
+  state carves against the unshifted thetaFieldRead (add a read-mul lemma) or thread
+  the coherence unit.
+
+
+  VERIFY: keystones axiom-clean [propext, Classical.choice, Quot.sound]; lake build
+  of both modules and root green; no sorry.'
+labels:
+- agent-ready
+status: archived
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: human
+source_ref: null
+created_at: '2026-07-18T12:19:12.369166+00:00'
+updated_at: '2026-07-20T03:14:37.423016+00:00'
+metadata:
+  agent: g3-phi-lane

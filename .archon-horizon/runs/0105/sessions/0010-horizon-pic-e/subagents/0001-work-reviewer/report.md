@@ -1,0 +1,1 @@
+API Error: 502 上游 API 调用失败: 流式 API 请求失败: 400 Bad Request {"message":"Invalid model. Please select a different model to continue.","reason":"INVALID_MODEL_ID"}. This is a server-side issue, usually temporary — try again in a moment. If it persists, check your inference gateway (frenzy.zeabur.app).

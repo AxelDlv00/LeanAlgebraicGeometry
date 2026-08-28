@@ -1,0 +1,1 @@
+The core API is present: `AddCircle.nsmul_eq_zero_iff` gives a canonical representative `m/n`, while `ZMod.toAddCircle` gives the injective homomorphism. I’m now checking exact elaboration and product-map signatures in a disposable probe so the handoff includes code that should compile, including the `n = 0`/integer edge cases.

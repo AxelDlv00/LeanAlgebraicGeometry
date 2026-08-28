@@ -1,0 +1,53 @@
+id: I-0158
+provider: local
+kind: info
+body: 'DAT-3 (W6-full) CLOSED: consumer spellings + one open seam
+
+
+  DAT-3 landed (a)-(d), roadmap dat3 done, root 8816 green, all keystones axiom-clean
+  [propext, Classical.choice, Quot.sound]. Files: Cohomology/GluedSheafCongr.lean,
+  Cohomology/GluedSheafFibre.lean, RiemannRoch/GluedDivisorSheaf.lean, RiemannRoch/W6Full.lean.
+
+
+  CONSUMER SPELLINGS (DAT-C/DAT-B, verbatim):
+
+  - hfib sheaf form: AlgebraicGeometry.subsingleton_hModule_gluedSheaf_one_of_picClass_eq
+  (K P h hsub) : Subsingleton (Sheaf.HModule (P.gluedSheaf K) 1), from any witness
+  D with CurveDivisor.picClass K D = P.picClass and Subsingleton (Sheaf.HModule (X.divisorSheaf
+  K D) 1).
+
+  - FLV-fired: AlgebraicGeometry.exists_subsingleton_hModule_gluedSheaf_one_of_one_le_classDeg_of_isFinite_toP1
+  : ∃ n₀, ∀ n ≥ n₀, ∀ P, P.picClass = l * θ^n → Subsingleton (Sheaf.HModule (P.gluedSheaf
+  K) 1).
+
+  - rank: AlgebraicGeometry.h0_gluedSheaf_eq_classDeg_add_chi : (Sheaf.h0 (P.gluedSheaf
+  K) : ℤ) = classDeg K P.picClass + Sheaf.chi (X.moduleKSheaf K).
+
+  - core iso: Scheme.MeromorphicPresentation.gluedDivisorSheafIso K P : P.gluedSheaf
+  K ≅ X.divisorSheaf K (presentationDivisor K P).
+
+  - cohomologous transport: AlgebraicGeometry.gluedSheafCongr k g g'' c hc (+ subsingleton_hModule_gluedSheaf_congr);
+  Scheme.IsGluingCoboundary is the landed IsCohomologous convention in resHom spelling.
+
+  - (b): AlgebraicGeometry.datumH1Equiv D : Sheaf.HModule D.sheaf 1 ≃ₗ[B] (datumPair
+  D).H1 — any test B, so it instantiates on the fibre datum (D.baseChange, landed
+  1671218d2).
+
+  - (a) complex-form hfib criterion: AlgebraicGeometry.datum_subsingleton_h1_residueField_tensor_iff;
+  abstract: TwoLatticePair.h1BaseChangeEquiv / subsingleton_h1_rTensor_iff.
+
+
+  OPEN SEAM (DAT-1 finisher): (a)''s second half — identify coker((datumPair D).diff.baseChange
+  κ(p)) with (datumPair (D.baseChange φ)).H1 via the B''⊗F(V) ≃ F''(V'') term identifications
+  (1d-ii second half; the landed sectionsMap intertwiners are the inputs). Once landed,
+  the full hfib pipe closes by composition — nothing on the DAT-3 side needs restating.'
+labels:
+- agent-ready
+status: archived
+scope: {}
+audience: horizon
+author: human
+source_ref: null
+created_at: '2026-07-16T18:04:00.079669+00:00'
+updated_at: '2026-07-20T03:14:10.190151+00:00'
+metadata: {}

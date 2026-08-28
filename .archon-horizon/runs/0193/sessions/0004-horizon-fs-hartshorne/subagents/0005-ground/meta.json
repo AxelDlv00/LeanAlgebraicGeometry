@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Galileo",
+  "agent_path": "/root/hartshorne_ground",
+  "agent_role": "ground",
+  "depth": 1,
+  "model": "gpt-5.6-sol",
+  "name": "ground",
+  "native_subagent_id": "01a0474b-5ee0-7910-933e-c9c9487287c4",
+  "ok": true,
+  "parent_session": "0004-horizon-fs-hartshorne",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "completed",
+  "subagent_type": "ground",
+  "summary": "No source-fix blocker found in the six-commit slice.",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 2148020,
+    "tokens_out": 14072
+  }
+}

@@ -1,0 +1,1 @@
+The baseline shows `fs-hartshorne` is correctly `running`; the CLI’s only queue warning is workspace-wide (20 open tasks). I’m narrowing that warning to stale/orphaned tasks and checking whether any roadmap or inbox entries actually belong to Hartshorne before touching anything.

@@ -1,0 +1,44 @@
+id: ajcr-build-optimization
+project: Algebraic-Jacobian-Challenge-Rebuild
+objective: Make real, measurable improvements to AJCR build behavior without competing
+  with run 0154. Inspect Lake configuration, import fan-out, target granularity, and
+  the expensive-module organization. You may edit the rebuild lakefile.toml, add a
+  bounded build-profile/helper script, and introduce a small helper-module boundary
+  outside the protected finite-stage gluing cone if that is the smallest safe improvement.
+  Preserve public declarations and theorem statements. Do not edit Pic0FiniteStageGluingDiagramIso.lean,
+  Pic0FiniteStageGluePackage.lean, Pic0FiniteStageGluingBaseChange.lean, Pic0FiniteStageOverlapBaseChange.lean,
+  any Pic0FiniteStageGluingOverlapIso/PreSnd/Snd/GluedComparison file, or generated
+  .olean files. Do not run a full project build while run 0154 is active. Measure
+  a baseline and an after-state with narrow faithful targets, commit only a tested
+  improvement, and report exact timing/resource changes; if a source split is unsafe,
+  land the build-profile/tooling improvement instead of a speculative refactor.
+title: AJCR build optimization and module organization
+explanation: ''
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+priority: high
+status: done
+write_set:
+  files:
+  - MainProjects/Algebraic-Jacobian-Challenge-Rebuild/lakefile.toml
+  - scripts/ajcr-build-profile.sh
+  - MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Build/**
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+  declarations: []
+  blueprint_nodes: []
+  workspace: false
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+  files:
+  - MainProjects/Algebraic-Jacobian-Challenge-Rebuild/lakefile.toml
+  - scripts/ajcr-build-profile.sh
+  - MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Build/**
+roadmap_refs: []
+inbox_refs: []
+artifact_refs: []
+created_at: '2026-08-23T02:02:00.135857+00:00'
+updated_at: '2026-08-23T02:42:01.722288+00:00'
+metadata:
+  author: human

@@ -1,0 +1,1 @@
+The live project has moved while I’m scanning: `Properties.lean` now covers T0/quasi-sober/prespectral and `FiberProducts.lean` now covers finite limits plus open-restriction pullbacks. I’m removing those from the suggested frontier and narrowing the handoff to declarations still genuinely absent.

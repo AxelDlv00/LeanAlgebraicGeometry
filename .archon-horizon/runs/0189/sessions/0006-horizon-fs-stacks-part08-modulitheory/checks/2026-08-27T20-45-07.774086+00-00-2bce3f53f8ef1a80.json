@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "fingerprint": "2bce3f53f8ef1a80",
+  "command": [
+    "lake",
+    "env",
+    "lean",
+    "/home/axel/LeanAlgebraicGeometry-Horizon/FormalizedSources/StacksProject/Part08_TopicsInModuliTheory/StacksPart08Lib/MorphismProperties.lean"
+  ],
+  "cwd": "FormalizedSources/StacksProject/Part08_TopicsInModuliTheory",
+  "status": "passed",
+  "ok": true,
+  "returncode": 0,
+  "timed_out": false,
+  "reused": false,
+  "wait_seconds": 0.0,
+  "duration_seconds": 5.075,
+  "started_at": "2026-08-27T20:45:02.698722+00:00",
+  "finished_at": "2026-08-27T20:45:07.774086+00:00",
+  "finished_epoch": 1787863507.774086
+}

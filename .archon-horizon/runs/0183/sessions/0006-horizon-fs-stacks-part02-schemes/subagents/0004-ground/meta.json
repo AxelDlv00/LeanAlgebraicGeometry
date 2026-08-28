@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Sartre",
+  "agent_path": "/root/final_review",
+  "agent_role": "ground",
+  "depth": 1,
+  "model": "gpt-5.6-terra",
+  "name": "ground",
+  "native_subagent_id": "01a0453f-5fa9-7f60-ac62-39aeb75e287a",
+  "ok": true,
+  "parent_session": "0006-horizon-fs-stacks-part02-schemes",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "completed",
+  "subagent_type": "ground",
+  "summary": "Independent review complete.",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 4647517,
+    "tokens_out": 14011
+  }
+}

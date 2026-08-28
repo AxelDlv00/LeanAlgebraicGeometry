@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Anscombe",
+  "agent_path": "/root/pdf_execution_map",
+  "agent_role": "explorer",
+  "depth": 1,
+  "model": "gpt-5.6-terra",
+  "name": "explorer",
+  "native_subagent_id": "01a012de-b587-76b0-9ef8-5c31cb414d67",
+  "ok": true,
+  "parent_session": "0035-horizon-ajcr-reviewer-full",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "completed",
+  "subagent_type": "explorer",
+  "summary": "Read both PDFs and reconciled them with the current P7 handoff. Sent the execution map to the parent.",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 1154049,
+    "tokens_out": 8051
+  }
+}

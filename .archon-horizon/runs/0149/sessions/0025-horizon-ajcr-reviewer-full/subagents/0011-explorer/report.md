@@ -1,0 +1,1 @@
+I’ve completed the read-only API pass and am tightening the handoff around one transport theorem and the precise missing hypotheses. I’m checking the final line references now; no workspace edits are being made.

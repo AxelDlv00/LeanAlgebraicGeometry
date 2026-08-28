@@ -1,0 +1,89 @@
+id: I-0231
+provider: local
+kind: info
+body: 'DDR-8 hbridge lane LANDED: the window->stalk-ideal bridge + the pinned divFam_divEq_of_eps_eq''
+  (ONE named seam hwin) + hwin DISCHARGED OVER FIELDS. Commits 47678048a (Picard/DivSchemeMonoBridge.lean,
+  454 L), 827a7c95e + trim 59d5b2de2 (Picard/DivSchemeMonoBridgeField.lean, 489 L),
+  both root-wired (HEAD-blob + only my lines). All keystones axiom-clean [propext,
+  Classical.choice, Quot.sound]; FULL ROOT lake build GREEN 8970 jobs; zero sorries.
+
+
+  ROUTE CORRECTION (BINDING — invalidates the DivSchemeMono.lean:50-73 header route
+  as literally written; doc pass should update it): fibrewise stalk-ideal equality
+  does NOT imply relative stalk-ideal equality, so hbridge canNOT be closed by "field
+  mono at every kappa(p) + colon-Tor upgrade" alone. Witness: over R = k[eps], the
+  divisors cut by t and t+eps on an affine chart agree in the ONLY residue-field fibre
+  (both cut (t) over k) and have free rank-1 colengths (certificate clauses hold),
+  yet (t) != (t+eps) in k[eps][t]_(t,eps) — eps is not in t·(local ring). The separating
+  datum is exactly the eps-window over R (their vanishing submodules in R (x) H_M
+  differ). Any honest discharge must consume heps at the R-level. CAUTION-5 of the
+  lane brief was pointing at precisely this.
+
+
+  THE ROUTE THAT WORKS (landed): per-family WINDOW RECOVERY — the stalk ideal is the
+  span of the eps-window germs, so equal windows => equal stalk ideals with NO fibre
+  mono at all. Landed unconditionally (any CommRing R, NO Noetherian hypothesis!):
+  (1) mul_mem_smul_top_of_flat_coker_of_mem_smul_top — f regular with R-flat colength
+  B/(f) cancels from s-multiples (includeRight_mem_nonZeroDivisors_of_flat_coker at
+  R''=R/s); (2) span_singleton_algebraMap_eq_of_le_sup_map — THE UNIT TRICK at a localization:
+  (f) <= E + s·L with E <= (f), s |-> m_L forces (f) = E (f = e + c·f, clear denominators,
+  cancel f through the flat colength, c in s·L <= m_L, 1-c unit); (3) DivisorAdaptation.stalkIdeal_eq_span_germ_eqn
+  (R-generic piece-equation generation) + stalkIdeal_eq_of_le_sup_map — certificate
+  clause (c1) projective_colength IS the flat-colength input; stalk = localization
+  of the piece ring (isLocalization_stalk); (4) Scheme.twistGermSet / divFamEpsWindowGermSet
+  + easy inclusion; (5) CertifiedDivisorFamily.stalkIdeal_eq_span_windowGerm, divFam_stalkIdeal_eq_of_eps_eq
+  (the discharged hbridge shape), divFam_divEq_of_eps_eq'' (the pin, gated on hwin
+  only).
+
+
+  THE ONE SEAM hwin (per family): forall z, exists s : Ideal R with algebraMap-image
+  of s in m_z and I_d(z) <= span(windowGermSet) + s·O_z. DISCHARGED OVER FIELDS (s
+  = bot): DivSchemeMonoBridgeField — the generation dictionary stalkIdeal_le_span_germ_iff_le_ord
+  (>=-mirror of ord_thetaFieldRead_le_iff), span_germ_thetaFieldGluedEquiv_eq_stalkIdeal
+  (exact order => generator), stalkIdeal_le_span_windowGerm_of_field (achiever exists_coeffAt_eq_baseDivisorAt
+  + baseDivisorAt_window_normalization + I-0230 deg_divFamDivisor, unwound through
+  divOf_thetaFieldShiftUnit; generic point: any nonzero window element), windowGen_of_field,
+  and divFam_divEq_of_eps_eq_of_field — an UNCONDITIONAL field-level relative mono,
+  a second proof of DD-4 Task 6 consuming neither hcarve nor divFamPhi_injective nor
+  hsurj (only the N-pack + G-3 Phi image + hO/hchi at both fields).
+
+
+  NEXT LANE (the hwin closer, now fully unblocked on the input side): at z with s
+  := comap of m_z, hwin composes from (i) windowGen_of_field at K := kappa(s) (hO/hchi
+  at kappa(s) via the chi_relCurve_of_chi pattern, DivisorThetaFibreData.lean:75 —
+  private, re-derive or publicize — and h0_moduleKSheaf at the base-changed bundle
+  as in that file); (ii) fibre-window surjectivity = THE JUST-LANDED G-2 divFamEps_mapAlg
+  / windowBaseChange (Picard/DivisorFamilyEpsNaturality.lean:411, commit ac728f40f)
+  at R -> kappa(s); (iii) THE ONLY MISSING LEG: the fibre-stalk transfer — identify
+  O_z/s·O_z with the stalk of relCurve C kappa(s) at the fibre point over z and transport
+  window germs. Recommended route: NO new scheme theory — section-level: pieceTermBaseChange
+  (DivisorFamilyPullbackMap) gives kappa(s) (x)_R Gamma(piece) ~ Gamma(fibre piece);
+  combine isLocalization_stalk on BOTH curves + pure localization algebra ((B/sB)_q
+  = B_q/sB_q; primes of B over s with q cap R = s => R\s already units). Then Nakayama
+  is NOT needed — my unit-trick lemma consumes the mod-s generation directly.
+
+
+  LEAN GOTCHAS (memory-worthy): (a) rw [thetaFieldPresentation_cover] is a DEPENDENT-MOTIVE
+  FAILURE (the cover occurs inside unitsEvInf whose type depends on it) — instead
+  state the germ-eta equations at the P.cover spelling and cross the P.cover ~ pointedCover
+  defeq with exact (cheap, as the landed ord_thetaFieldRead_le_iff already does);
+  (b) x in (divFamEps ...).1 coerces DIRECTLY to vanishingSubmodule membership by
+  defeq (divisorWindow = comap equiv vanishing) — going through mem_divisorWindow_iff.mp
+  hits maxRecDepth; (c) the big field theorem needs the I-0198 escape hatch (maxRecDepth
+  8000 + maxHeartbeats 800000 + synthInstance 800000) but builds in 88s.
+
+
+  DDR-9 consumes: divFam_divEq_of_eps_eq'' (Picard/DivSchemeMonoBridge.lean) with
+  hwin threaded per family; over fields divFam_divEq_of_eps_eq_of_field unconditionally.
+  The old DivSchemeMono.divFam_divEq_of_eps_eq (hbridge threaded) remains and is derivable
+  from the new pin.'
+labels:
+- agent-ready
+status: archived
+scope: {}
+audience: horizon
+author: human
+source_ref: null
+created_at: '2026-07-18T13:45:45.233863+00:00'
+updated_at: '2026-07-20T03:14:40.252001+00:00'
+metadata: {}

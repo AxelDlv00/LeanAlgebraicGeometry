@@ -1,0 +1,24 @@
+You are auditing lane ajcr-p4's work this session in the Lean 4 project at /home/axel/LeanAlgebraicGeometry-Horizon/MainProjects/Algebraic-Jacobian-Challenge-Rebuild (workspace root /home/axel/LeanAlgebraicGeometry-Horizon). Read-only on source: do NOT edit files. Report findings.
+
+THE WORK TO AUDIT (commits 4c2392b732 -- my file landed inside another lane's sweep --, 2c147c046d, fcfbb26d84):
+1. NEW FILE: AlgebraicJacobian/Picard/Pic0AtlasCompactFromClass.lean (6 declarations).
+2. PROSE-ONLY EDIT: AlgebraicJacobian/Picard/Pic0AtlasFiniteType.lean around lines 230-260.
+3. Root import line added to AlgebraicJacobian.lean.
+
+THE CLAIMS I AM MAKING, each of which you should try to refute:
+(A) `hcpt` -- the `CompactSpace (Scheme.LocalRepresentability.glueData hf).glued` input of `jacobianDataOfMixedParamCharts` (Pic0AtlasFiniteType.lean) -- follows from `hcl`, the class-lift hypothesis of `quasiCompact_of_pic0_class_surjective` / `compactSpace_of_pic0_class_surjective` in Picard/JacobianDataQcFromRep.lean, applied to the atlas's OWN representation `pic0RepresentableByOfCharts C (mixedParamChart ...) hf`. Landed as `compactSpace_glued_of_pic0_class`.
+(B) THE SHARP CLAIM: `hcpt` and the `JacobianData.quasiCompact` field are ONE statement -- `compactSpace_glued_iff_quasiCompact`, both directions, over the affine base Spec k. Hence hcpt is NOT a fifth obligation; JacobianData has four fields and this is one of them. I explicitly RETRACTED my own earlier claim (inbox I-1123) that hcpt was "a genuine fifth obligation of the GOAL".
+(C) `jacobianDataOfCompactFromClass` produces `JacobianData C` from FOUR open inputs (rep, hf, coverage instance, hcl) where `jacobianDataOfMixedParamCharts` needs FIVE (those plus hcpt), with hD discharged at the carrier.
+(D) I claim NO gate is closed: hcl has no producer, so everything is an implication.
+
+SPECIFIC THINGS TO CHECK HARD, because this workspace's audits keep finding these exact failure modes:
+1. VACUITY: is `compactSpace_glued_of_pic0_class` or `jacobianDataOfCompactFromClass` vacuous or trivially satisfiable? Does the curve C actually occur in the hypotheses (the `HasDivFunctor` failure mode was a field whose statement did not mention the object)? Is `hcl` falsifiable?
+2. IS (A) A DISGUISED IDENTITY? Check whether `compactSpace_glued_of_pic0_class` is just `compactSpace_of_pic0_class_surjective` with arguments renamed -- i.e. whether it adds anything beyond instantiation. If it is essentially one application, say so plainly; I want to know if I have over-claimed the content.
+3. DOES (B) ACTUALLY REFUTE THE "EXPOSED INPUT" FRAMING, or is it a triviality I have dressed up? `HasAffineProperty.iff_of_isAffine` -- is my use of it in both directions legitimate, and is the iff maybe already in the tree under another name (check e.g. Curve/Basic.lean's compactSpace_left_of_quasiCompact, JacobianDataCharts.lean's quasiCompact_gluedHom, DivSchemeQProj.lean)? If the iff already exists, that is a finding: I would have re-proved something.
+4. CARRIER: verify `(gluedOfCharts C f hf).left = (glueData hf).glued` really is rfl and that the substitution in `jacobianDataOfCompactFromClass` is not hiding a transport.
+5. DOCSTRING HONESTY: every declaration name cited in the two files' docstrings must (a) exist and (b) be in that file's IMPORT CLOSURE. This project has recorded four separate instances of docstrings citing names outside the closure or that do not exist at all. Check every cited name in the new file's header and in my edit to Pic0AtlasFiniteType.lean. Use #check inside the file's closure, not grep.
+6. Are there unused hypotheses in any of the 6 new declarations (over-strong signatures)?
+
+VERIFICATION PROTOCOL you must follow: rebuild oleans BEFORE any probe (`lake build AlgebraicJacobian.Picard.Pic0AtlasCompactFromClass`) -- a stale olean makes probes report false results, and it already bit me once this session. Use a control: `#print axioms AlgebraicGeometry.Jacobian` MUST print sorryAx, else your probe measures nothing. Report the exact commands you ran and their exit codes. Do not take my word for any measurement; reproduce it.
+
+Report: which claims survive, which are refuted or over-stated, and anything I should have said and did not.

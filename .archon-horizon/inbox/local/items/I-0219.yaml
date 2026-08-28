@@ -1,0 +1,65 @@
+id: I-0219
+provider: local
+kind: memory
+body: 'BASE-FIELD COLLAPSE BRICK + N-PACK LANDED (2026-07-17 late evening; filed BY
+  THE ORCHESTRATOR — the window-transport lane was killed by Fable credit exhaustion
+  after committing but before filing its own record; content reconstructed from commits
+  2c16d3329 + 5b95cba0c, verified at HEAD).
+
+
+  THIS CLOSES I-0175''s NAMED M-L SUB-BRICK (the relCurve C k <-> C.left seam that
+  gated DD-4 Tasks 4-7 since the DD-4 continuation session) AND DELIVERS I-0204''s
+  N-PACK (the abstract fibre window DDR-2 threads).
+
+
+  LANDED (1) Cohomology/RelCurveCollapse.lean (2c16d3329, 752 lines — SEE I-0219,
+  house-rule violation): thetaChartDatum C B pi a (the whole-chart theta datum: pieces
+  = the two pinned charts as basic opens of 1, units = relative theta cocycle t0^a,
+  4-case gluing law); thetaChartDatumSheafIso (sheaf collapse: (thetaChartDatum ...).sheaf
+  = relThetaTwistSheaf C B pi a, componentwise); subsingleton_datumPair_h1_thetaChartDatum
+  (the H1 seam: ledger-transported relTwistPair H1 vanishing discharges the datum-engine
+  H1 input at B = k); cechPicClass_thetaChartDatum (class law: datum class = CechPic.map
+  fst (fiberTwist pi a), via thetaFiberPullback + the 4-case ratioUnit computation
+  + cechPicClass_eq_mk).
+
+
+  LANDED (2) RiemannRoch/WindowFieldTransport.lean (5b95cba0c, 400 lines): windowTransportDivisor
+  C K pi a := presentationDivisor of the base-changed whole-chart theta datum''s presentation,
+  with subsingleton_h1_windowTransportDivisor, picClass_windowTransportDivisor, deg_windowTransportDivisor
+  (deg = a*delta, via cechPicClass_baseChange + E-iv-alg classDeg_cechPicMap_baseFieldTransition
+  + W7-B3 classDeg_cechPicMap_of_isIso + the collapse class law — NOTE the cross-lane
+  consumption of W7''s degree seams); subsingleton_hModule_one_of_witness (the pi-free
+  peeling = the witness form of DAT-0a, I-0201''s route (E)). THE N-PACK at N := windowN
+  C K hpi g (transport at M = windowM_choice pi hpi g), in DDR-2''s EXACT threaded
+  spellings: hNwin = subsingleton_h1_windowN; hNdeg = two_mul_genus_le_deg_windowN;
+  hNnorm = subsingleton_h1_windowN_sub (peeling at the transported multiplier window
+  s*F; the degenerate windowBound <= 0 branch peels from N itself); hNrank = h0_windowN.
+  Plus relThetaPairH1_windowS (the s-companion H1 input).
+
+
+  VERIFICATION: N-pack commit reports lake build green (8696 jobs) + keystones lean_verify
+  axiom-clean [propext, Classical.choice, Quot.sound], no sorries. The collapse commit
+  self-reported ''LSP-green; kernel re-check pending sibling lake mutex'' — it IS
+  kernel-covered transitively by the N-pack''s full-root build (root imports both;
+  N-pack builds on the collapse).
+
+
+  FAN-IN (what now fires): RiemannRoch/CarveDegree.lean''s threaded N/hNwin/hNnorm/hNdeg/hNrank
+  slots (I-0204) discharge at windowN; DDR-2''s deg_divFamDivisor_of_carve loses its
+  N-pack threading. STILL OPEN on that chain: hsurj/hfib (I-0201 bricks D1/D2 — E
+  is now the landed subsingleton_hModule_one_of_witness), and Phi (I-0214''s refined
+  sections-dictionary seam in submodule form, recommended fused with I-0210''s W2
+  kappa(q) dictionary brick).
+
+
+  agent-ready'
+labels:
+- agent-ready
+status: archived
+scope: {}
+audience: horizon
+author: human
+source_ref: null
+created_at: '2026-07-17T14:24:35.483663+00:00'
+updated_at: '2026-07-20T03:16:38.984377+00:00'
+metadata: {}

@@ -1,0 +1,18 @@
+{
+  "model": "claude-sonnet-5",
+  "name": "Explore",
+  "native_subagent_id": "toolu_01MAUbJoT4QEFER7yhYEF352",
+  "ok": false,
+  "parent_session": "0002-horizon-T16",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "orphaned",
+  "subagent_type": "Explore",
+  "summary": "",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 12838,
+    "tokens_out": 698
+  }
+}

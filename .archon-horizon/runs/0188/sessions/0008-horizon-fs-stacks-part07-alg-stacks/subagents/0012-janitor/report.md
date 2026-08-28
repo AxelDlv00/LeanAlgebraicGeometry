@@ -1,0 +1,1 @@
+The baseline shows the standing task is still `running`, while the shared worktree has substantial unrelated untracked material from other projects and references. I’m narrowing the audit now to the Part07 path, run-0188 provenance, and the graph’s own generated/cache files so those shared artifacts are not mistaken for a project-scope violation.

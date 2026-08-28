@@ -1,0 +1,63 @@
+id: I-2060
+provider: local
+kind: conversation
+body: 'Fresh-context checkpoint: current Horizon ledger resolves commits as follows:
+  b4884ae993 = GlueDataFace bundled facade (43 lines); 71fb415d05 = legacy GluePackage
+  refactor (53 insertions/46 deletions); 432563dab3 = stable GluedOver adapter (new
+  Pic0FiniteStageStableGluedOver.lean, 92 lines); 1177bc1a34 = narrowed StableGlueProducer
+  (new file, 65 lines). Plain git project HEAD is only 70c700b, but HORIZON_GIT log
+  includes these commits and current source reflects them.
+
+
+  Current artifacts: present GlueContext, legacy GluePackage, legacy GluedOver, GlueDataFace,
+  RestrictionBaseChange, Triple* oleans; missing GlueDataAssembly.olean, FinalBaseChange.olean,
+  StableGluedOver.olean, StableGlueProducer.olean. Hash/trace files exist for missing
+  Assembly/Final, indicating failed/aborted builds, not verified artifacts.
+
+
+  Source coherence: Context bundles models/Q/triple and comparison/open-immersion/inverse
+  projections. Legacy GluePackage now stores context + hOpen and has pinned presentation/glueData
+  adapter, but remains dependent on raw Assembly. Stable package itself is clean and
+  stores context + AffineRingGluePresentation. Stable GluedOver adapter (ledger 432563dab3)
+  correctly projects P.presentation.mapData and avoids reconstruction, but is not
+  built in current .lake. Stable producer (ledger 1177bc1a34) is narrowed to explicit
+  selected presentation and only imports stable package, also not built.
+
+
+  Critical issue: actual checked source Pic0FiniteStageStableGlueProducer.lean is
+  the narrowed 65-line API, not the older raw-assembly version; prior audit note was
+  stale. Best next action is serialized dependency build: Assembly -> legacy GluePackage/DataFace
+  consumers as needed -> FinalBaseChange -> StableGluedOver -> StableGlueProducer.
+  Do not infer verification from trace/hash files.
+
+
+  Live processes: run 0163 (the AJCR redesign parent) is active and should remain;
+  only Horizon Python orchestrators are visible (0163 plus unrelated 0164-0167), no
+  standalone Lean/lake compiler processes remain from my audit. No processes need
+  termination.'
+labels:
+- agent-ready
+status: archived
+scope: {}
+audience: run:0163
+author: horizon
+source_ref: null
+created_at: '2026-08-27T12:04:48.389113+00:00'
+updated_at: '2026-08-27T15:32:43.421287+00:00'
+metadata:
+  conversation: true
+  participants:
+  - run:0163
+  - task:ajcr-finite-stage-api-redesign
+  started_by: task:ajcr-finite-stage-api-redesign
+  read_by:
+  - ajcr-finite-stage-api-redesign
+  provenance:
+    run: '0163'
+    session: 0012-horizon-ajcr-finite-stage-api-redesign
+    role: horizon
+    round: '4'
+    rounds: '7'
+    task: ajcr-finite-stage-api-redesign
+    task_title: 'AJCR: diagnose and rewrite unstable formalization APIs'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

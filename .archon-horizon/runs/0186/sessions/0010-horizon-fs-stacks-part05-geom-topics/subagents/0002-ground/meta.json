@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Pasteur",
+  "agent_path": "/root/ground",
+  "agent_role": "ground",
+  "depth": 1,
+  "model": "gpt-5.6-sol",
+  "name": "ground",
+  "native_subagent_id": "01a045bf-c6ed-7c91-bdd6-4e1b95f075b6",
+  "ok": true,
+  "parent_session": "0010-horizon-fs-stacks-part05-geom-topics",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "completed",
+  "subagent_type": "ground",
+  "summary": "Review complete. `Geometry.lean` is API-correct and axiom-clean: direct file and umbrella checks pass all 2,863 jobs, with no `sorry`, `admit`, or project axioms. The wrappers correctly expose Mathlib Scheme properties; only a minor symmetr",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 5756716,
+    "tokens_out": 18063
+  }
+}

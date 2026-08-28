@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Euler",
+  "agent_path": "/root/frontier_scout",
+  "agent_role": "explorer",
+  "depth": 1,
+  "model": "gpt-5.6-luna",
+  "name": "explorer",
+  "native_subagent_id": "01a0452c-5662-7340-b647-3f82a7dde0f7",
+  "ok": true,
+  "parent_session": "0006-horizon-fs-stacks-part02-schemes",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "completed",
+  "subagent_type": "explorer",
+  "summary": "Read-only scout complete; no source edits.",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 4834398,
+    "tokens_out": 8528
+  }
+}

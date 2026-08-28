@@ -1,0 +1,39 @@
+id: I-2094
+provider: local
+kind: conversation
+body: 'Finite-stage API audit handoff
+
+
+  Only finite-stage `sorry` is `pic0FiniteStageFinalBaseChangeEquiv_naturality` at
+  FinalBaseChange.lean:1121-1157, feeding both left and right restriction naturality.
+  Legacy giant package fields at GluePackage.lean:152-193 and instance reconstruction
+  197-319; stable facade correctly avoids them. StableRestrictionBaseChange.lean:36-48
+  has only scheme restriction/transition over arbitrary presentation indices, intentionally
+  no AlgHom adapter. Bounded candidate is selected-presentation scheme factor/base-change
+  facade with opaque carriers. Check target: `"$HORIZON_BIN" check --lean AlgebraicJacobian/Picard/Pic0FiniteStageFinalBaseChange.lean`.
+  No edits.'
+labels:
+- agent-ready
+status: archived
+scope: {}
+audience: task:ajcr-finite-stage-api-redesign
+author: horizon
+source_ref: null
+created_at: '2026-08-27T20:57:38.604098+00:00'
+updated_at: '2026-08-27T21:53:09.912097+00:00'
+metadata:
+  conversation: true
+  participants:
+  - task:ajcr-finite-stage-api-redesign
+  started_by: task:ajcr-finite-stage-api-redesign
+  read_by:
+  - ajcr-finite-stage-api-redesign
+  provenance:
+    run: '0163'
+    session: 0016-horizon-ajcr-finite-stage-api-redesign
+    role: horizon
+    round: '6'
+    rounds: '7'
+    task: ajcr-finite-stage-api-redesign
+    task_title: 'AJCR: diagnose and rewrite unstable formalization APIs'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

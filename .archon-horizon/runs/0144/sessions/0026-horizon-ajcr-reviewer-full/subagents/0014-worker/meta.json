@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Poincare",
+  "agent_path": "/root/pic0_predicate_match",
+  "agent_role": "worker",
+  "depth": 1,
+  "model": "gpt-5.6-sol",
+  "name": "worker",
+  "native_subagent_id": "019fff09-237b-75c1-a9d2-4af78c6b4b33",
+  "ok": true,
+  "parent_session": "0026-horizon-ajcr-reviewer-full",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "completed",
+  "subagent_type": "worker",
+  "summary": "",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 1723860,
+    "tokens_out": 8241
+  }
+}

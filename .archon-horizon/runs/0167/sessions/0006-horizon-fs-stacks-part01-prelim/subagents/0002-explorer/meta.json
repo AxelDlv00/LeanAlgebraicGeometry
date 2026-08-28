@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Hooke",
+  "agent_path": "/root/frontier_recon",
+  "agent_role": "explorer",
+  "depth": 1,
+  "model": "gpt-5.6-sol",
+  "name": "explorer",
+  "native_subagent_id": "01a042fe-cfb6-7921-a726-91b16540e228",
+  "ok": true,
+  "parent_session": "0006-horizon-fs-stacks-part01-prelim",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "completed",
+  "subagent_type": "explorer",
+  "summary": "Reconnaissance report:",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 10879254,
+    "tokens_out": 23267
+  }
+}

@@ -1,0 +1,1 @@
+I’m following up on the sheaf-stalk bridge: I’ll verify the exact module-valued stalk declarations and the project-local linear-map wrappers, then send compile-ready names and imports to both parent agents. This remains a read-only pass.

@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "fingerprint": "2710bf9e334cf2f9",
+  "command": [
+    "lake",
+    "env",
+    "lean",
+    "/home/axel/LeanAlgebraicGeometry-Horizon/MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0FiniteStageGlueContext.lean"
+  ],
+  "cwd": "MainProjects/Algebraic-Jacobian-Challenge-Rebuild",
+  "status": "reused",
+  "ok": true,
+  "returncode": 0,
+  "timed_out": false,
+  "reused": true,
+  "wait_seconds": 10.387,
+  "duration_seconds": 62.807,
+  "started_at": "2026-08-27T08:05:37.099421+00:00",
+  "finished_at": "2026-08-27T08:06:39.906145+00:00",
+  "finished_epoch": 1787817999.906145
+}

@@ -1,0 +1,19 @@
+Fresh-context audit of lane pic-g's work this session in /home/axel/LeanAlgebraicGeometry-Horizon (workspace root; project at MainProjects/Algebraic-Jacobian-Challenge-Rebuild). Ledger git: use `"$HORIZON_GIT" ...`.
+
+MY COMMITS THIS SESSION (find them with `"$HORIZON_GIT" log --oneline -25` — mine are the ones NOT prefixed `workspace[...]`, with messages starting "AJCR:"): the Laurent units file, the P1 degree-zero triviality file, a root-build repair + rooting commit, a caveat-sharpening commit, and the Laurent unit group commit. Also one deletion of a duplicate.
+
+FILES: AlgebraicJacobian/Algebra/LaurentUnits.lean, AlgebraicJacobian/Curve/P1DegreeZeroTrivial.lean, and a one-line repair in AlgebraicJacobian/Picard/DivisorFamilyAffThetaCokernelGlobal.lean:220.
+
+AUDIT THESE CLAIMS ADVERSARIALLY — I care most about finding my own overclaims:
+
+1. VACUITY / TRIVIALITY. Are the theorems in P1DegreeZeroTrivial.lean non-vacuous? In particular `chi_baseChange_eq_one`, `eq_one_of_classDeg_eq_zero_baseChange`, `eq_of_classDeg_eq_baseChange`. Do their instance binders actually resolve at P1 (they compiled, so yes) — but is the CONCLUSION saying what the docstring claims? Check specifically: does `eq_of_classDeg_eq_baseChange` really say the degree determines the class, or did I get a coercion/spelling wrong that makes it weaker?
+
+2. DUPLICATION. pic-c landed AlgebraicJacobian/Picard/Pic0VanishingFieldGenusZero.lean and Picard/Pic0VanishingFieldTest.lean this session covering overlapping ground. Is my surviving P1DegreeZeroTrivial.lean ALSO a duplicate of something at HEAD that I failed to notice? Search hard for other proofs of chi=1 at a base-changed curve, or of degree-zero-implies-trivial. If it duplicates, say so plainly.
+
+3. DOCSTRING CLAIMS vs REALITY in both my files. My P1DegreeZeroTrivial.lean header makes a "what this does NOT do" claim about seminormality/Traverso and a claim that the surviving obligation is `forall k-algebra A, Subsingleton (pic0Subgroup ...)`. Are those accurate at HEAD? Also LaurentUnits.lean claims mathlib has no Laurent unit classification and that `IsDomain` is "not removable" with a counterexample 1+eT over k[e]/e^2 — is the counterexample claim right? (I did NOT formally verify it.)
+
+4. THE REPAIR. Is my one-line `congrArg` fix at DivisorFamilyAffThetaCokernelGlobal.lean:220 correct, or did I make the statement weaker/different? It's in a file I don't own.
+
+5. Anything I claimed in a commit message that the code does not support.
+
+Report concrete findings with file:line. If a claim of mine is wrong or overstated, say so directly — that is the most useful output. Read the actual files and the actual HEAD state; do not rely on my descriptions.

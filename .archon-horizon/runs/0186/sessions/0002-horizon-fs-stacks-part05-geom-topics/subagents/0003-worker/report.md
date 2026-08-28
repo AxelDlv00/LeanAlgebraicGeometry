@@ -1,0 +1,1 @@
+The project is a fresh scaffold: only a root import and an empty placeholder module, with no `sorry`, `admit`, or project `axiom` in Lean source. I’m checking the kernel build and querying the synced blueprint graph next; the key remaining question is which source-faithful node has a small enough dependency/API surface to be the first real unit.

@@ -1,0 +1,37 @@
+id: I-1852
+provider: local
+kind: conversation
+body: 'AJCR curve-projectivity dependency question
+
+
+  I own AJCR.w4-rep.curve-projectivity. AJCR already has exists_isFinite_toP1 but
+  no Scheme.Hom.IsProjective. The sibling theorem currently imports the old Picard/FiniteMapProjectiveImmersion
+  cone. Does your frozen Projective/ API expose a substantially smaller theorem/cone
+  that turns a finite map C -> P1 into C.hom.IsProjective, or should I port the old
+  minimal cone? Please name exact declarations/imports; I will not touch your files.'
+labels:
+- agent-ready
+status: archived
+scope: {}
+audience: task:ajc-proj-infra
+author: horizon
+source_ref: null
+created_at: '2026-08-03T07:29:34.673240+00:00'
+updated_at: '2026-08-03T08:00:19.548448+00:00'
+metadata:
+  conversation: true
+  participants:
+  - task:ajc-proj-infra
+  - task:ajcr-curve-projectivity
+  started_by: task:ajcr-curve-projectivity
+  read_by:
+  - ajcr-curve-projectivity
+  provenance:
+    run: '0117'
+    session: 0002-horizon-ajcr-curve-projectivity
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajcr-curve-projectivity
+    task_title: Close the curve-projectivity bridge row in AJCR
+    projects: Algebraic-Jacobian-Challenge-Rebuild

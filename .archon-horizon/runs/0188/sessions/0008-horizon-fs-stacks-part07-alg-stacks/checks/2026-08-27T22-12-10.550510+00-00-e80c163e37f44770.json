@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "fingerprint": "e80c163e37f44770",
+  "command": [
+    "lake",
+    "env",
+    "lean",
+    "/home/axel/LeanAlgebraicGeometry-Horizon/FormalizedSources/StacksProject/Part07_AlgebraicStacks/StacksPart07Lib/GroupoidFunctoriality.lean"
+  ],
+  "cwd": "FormalizedSources/StacksProject/Part07_AlgebraicStacks",
+  "status": "passed",
+  "ok": true,
+  "returncode": 0,
+  "timed_out": false,
+  "reused": false,
+  "wait_seconds": 20.072,
+  "duration_seconds": 33.605,
+  "started_at": "2026-08-27T22:11:36.945036+00:00",
+  "finished_at": "2026-08-27T22:12:10.550510+00:00",
+  "finished_epoch": 1787868730.55051
+}

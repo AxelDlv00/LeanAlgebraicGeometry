@@ -1,0 +1,1 @@
+The run is active alongside many other Horizon runs, and the CLI confirms the two target warnings: an oversized queue and cross-run activity. I’m now reading the required protections and exact task/roadmap state so any reconciliation is evidence-based rather than inferred.

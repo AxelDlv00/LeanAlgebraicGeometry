@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Pauli",
+  "agent_path": "/root/janitor_queue",
+  "agent_role": "janitor",
+  "depth": 1,
+  "model": "gpt-5.6-luna",
+  "name": "janitor",
+  "native_subagent_id": "01a046d8-5b9c-7e41-8866-54c91b741f4b",
+  "ok": true,
+  "parent_session": "0004-horizon-fs-milne",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "completed",
+  "subagent_type": "janitor",
+  "summary": "Read-only hygiene audit completed for `/home/axel/LeanAlgebraicGeometry-Horizon`:",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 1285598,
+    "tokens_out": 5307
+  }
+}

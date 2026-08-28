@@ -1,0 +1,21 @@
+{
+  "agent_nickname": "Darwin",
+  "agent_path": "/root/janitor_check",
+  "agent_role": "janitor",
+  "depth": 1,
+  "model": "gpt-5.6-sol",
+  "name": "janitor",
+  "native_subagent_id": "01a04364-86dd-74a1-ae57-801a49b73ae7",
+  "parent_session": "0002-horizon-fs-stacks-part08-modulitheory",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "running",
+  "subagent_type": "janitor",
+  "summary": "",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 79662,
+    "tokens_out": 1342
+  }
+}

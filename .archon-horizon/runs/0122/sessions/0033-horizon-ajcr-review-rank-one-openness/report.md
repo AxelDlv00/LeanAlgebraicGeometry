@@ -1,0 +1,1 @@
+The producer audit confirms the gap is structural: the owned locus files already consume the exact arbitrary-affine native-presentation contract, but no lawful producer exists in the writable boundary. I’m checking the remaining owned-file audit and current inbox state now, then I’ll record the blocker with narrow verification rather than introduce a vacuous wrapper.

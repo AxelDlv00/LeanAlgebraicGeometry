@@ -1,0 +1,16 @@
+## Progress
+
+The finalization checkpoint is clean for the task scope. I committed the task’s inbox read acknowledgments in `c42ace64e1`; prior diagnostic records remain in `64545dc65b`, `222234b27f`, `e4e2e805a1`, and `6a90543f6d`.
+
+The diagnosis is unchanged:
+
+- [GluePackage.lean:72](/home/axel/LeanAlgebraicGeometry-Horizon/MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0FiniteStageGluePackage.lean:72) fails before proof bodies under the current source/cache state: 71.98 s, 7,125,576 KB RSS. The `glueData` and `exists` stubs reproduce the same pre-proof failure.
+- [PreSnd.lean:37](/home/axel/LeanAlgebraicGeometry-Horizon/MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0FiniteStageGluingOverlapIsoPreSnd.lean:37), [OverlapIsoSnd.lean:38](/home/axel/LeanAlgebraicGeometry-Horizon/MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0FiniteStageGluingOverlapIsoSnd.lean:38), and [GluedComparison.lean:42](/home/axel/LeanAlgebraicGeometry-Horizon/MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0FiniteStageGluedComparison.lean:42) are unreachable because their upstream `.olean` files are absent.
+- The first expensive declaration in the coherent dependency cone is `overlapBaseChangeIso_hom_ι` at [GluingDiagramIso.lean:276](/home/axel/LeanAlgebraicGeometry-Horizon/MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0FiniteStageGluingDiagramIso.lean:276), historically timing out around line 286 after about 610 s at 12.8M heartbeats.
+- All temporary proof-body edits were restored byte-for-byte; final narrow checks were rerun on all four targets. No full project build was run.
+
+## Issues
+
+The exact artifact frontier remains `GluingDiagramIso.olean` -> top `PreSnd.olean` -> `OverlapIsoSnd.olean` -> `GluedComparison.olean`. LSP diagnostics before and after edits timed out with partial whole-file elaboration, so the narrow kernel checks are the authoritative evidence.
+
+The finalization hook still reports about 23,480 unrelated shared ledger paths, including `events.jsonl`, hgraph/search updates, run metadata, locks, and phase0 scratch data. They are concurrent or orchestrator-owned and were intentionally not staged. Scoped source/task paths are clean; the task is `done`.

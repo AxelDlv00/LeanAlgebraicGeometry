@@ -1,0 +1,1 @@
+The prior Hartshorne task hand-off confirms the same state: graph sync had 499 frozen blueprint nodes, 263 Lean declarations, and 193 unattached declarations, with the open I-2067 issue documenting missing `\lean` bindings. I’m doing one final umbrella `lake env lean` check and a scoped diff check, then I’ll hand the exact baseline back to the parent.

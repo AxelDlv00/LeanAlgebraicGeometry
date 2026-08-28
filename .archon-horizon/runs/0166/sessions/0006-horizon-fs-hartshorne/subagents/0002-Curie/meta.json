@@ -1,0 +1,21 @@
+{
+  "agent_nickname": "Curie",
+  "agent_path": "/root/prime_bridge",
+  "depth": 1,
+  "model": "gpt-5.6-sol",
+  "name": "Curie",
+  "native_subagent_id": "01a042e2-7069-7e02-bca1-766918f5ed75",
+  "ok": true,
+  "parent_session": "0006-horizon-fs-hartshorne",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "completed",
+  "subagent_type": "Curie",
+  "summary": "Implemented and committed `HartshorneLib/Chapter1Prime.lean` in ledger commit `9d26035fd7c4e3812e589dd97e06c0cbea9e2a0f`.",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 8446794,
+    "tokens_out": 24766
+  }
+}

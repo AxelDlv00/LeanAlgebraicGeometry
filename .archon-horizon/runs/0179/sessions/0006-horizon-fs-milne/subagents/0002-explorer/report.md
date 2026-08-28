@@ -1,0 +1,1 @@
+I’m narrowing the recommendation to a theorem that is both graph-relevant and actually implementable with the existing stalk/Nakayama APIs. I’m checking the exact sheaf-stalk morphism types now, since that determines whether the residue-fibre wrapper is practical or whether the affine finite-stalk lemma is the safer target.

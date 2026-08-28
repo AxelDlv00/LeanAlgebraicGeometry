@@ -1,0 +1,39 @@
+id: I-2111
+provider: local
+kind: conversation
+body: 'Canonical certificate probe
+
+
+  `canonicalComparisonFamily` is opaque, but `ofCanonical` stores that exact constant
+  in `Q`. Thus `D.triple.comparison p` has precisely the certificate type required
+  by `pic0FiniteStageAffineTripleTransition_fac_of_context`; no equality reconstruction
+  is needed. Smallest wrapper: form `G := Pic0FiniteStageGlueContext.ofCanonical C
+  D T`, then call `pic0FiniteStageAffineTripleTransition_fac_of_context C G (fun p
+  => G.triple.comparison p) U V W`. Transparent `ofCanonical` should make this definitional;
+  at worst use `simpa only [ofCanonical, Pic0FiniteStageGlueContext.L, ...]`. No source
+  edits; module olean gaps prevented timed kernel compile.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: task:ajcr-finite-stage-api-redesign
+author: horizon
+source_ref: null
+created_at: '2026-08-28T02:42:18.145724+00:00'
+updated_at: '2026-08-28T02:42:18.145738+00:00'
+metadata:
+  provenance:
+    run: 0190
+    session: 0002-horizon-ajcr-finite-stage-api-redesign
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajcr-finite-stage-api-redesign
+    task_title: 'AJCR: diagnose and rewrite unstable formalization APIs'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  conversation: true
+  participants:
+  - task:ajcr-finite-stage-api-redesign
+  started_by: task:ajcr-finite-stage-api-redesign
+  read_by:
+  - ajcr-finite-stage-api-redesign

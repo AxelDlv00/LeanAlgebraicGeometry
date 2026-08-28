@@ -1,0 +1,1 @@
+I’m also consulting the local `project-git` and `hgraph` skill notes because the requested history/frontier inspection has specific ledger and graph conventions. This only changes how I read and report state; I will keep the workspace read-only.

@@ -1,0 +1,1 @@
+I’ll first load the Horizon workflow instructions, then inspect the project graph and recent Lean/blueprint state without editing files. I’ll report a short list of concrete, currently provable frontier nodes with file/line references and proof sketches to the parent agent.

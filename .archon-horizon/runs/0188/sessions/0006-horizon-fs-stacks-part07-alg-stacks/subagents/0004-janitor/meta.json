@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Locke",
+  "agent_path": "/root/janitor_checkpoint",
+  "agent_role": "janitor",
+  "depth": 1,
+  "model": "gpt-5.6-sol",
+  "name": "janitor",
+  "native_subagent_id": "01a044fb-79d9-78b0-baff-daed9f65b205",
+  "ok": false,
+  "parent_session": "0006-horizon-fs-stacks-part07-alg-stacks",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "interrupted",
+  "subagent_type": "janitor",
+  "summary": "",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 7161979,
+    "tokens_out": 20104
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "agent_nickname": "Singer",
+  "agent_path": "/root/log_diagnosis",
+  "depth": 1,
+  "model": "gpt-5.6-sol",
+  "name": "Singer",
+  "native_subagent_id": "01a041e2-55fe-7e32-9d03-062f78ac2fd2",
+  "ok": false,
+  "parent_session": "0008-horizon-ajcr-finite-stage-api-redesign",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "interrupted",
+  "subagent_type": "Singer",
+  "summary": "",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 13866850,
+    "tokens_out": 28608
+  }
+}

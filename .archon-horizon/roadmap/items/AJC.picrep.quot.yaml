@@ -1,0 +1,39 @@
+id: AJC.picrep.quot
+title: Nitsure Quot representability
+projects:
+- Algebraic-Jacobian-Challenge
+summary: 'OFF-PATH, retained not revived. Under projectivity, relative very ampleness
+  and coherence, representability of the Quot functor from boundedness, the Grassmannian
+  embedding, flattening stratification and closedness (Nitsure section 5). One open
+  leaf: QuotRepresentability.lean:79.
+
+
+  This is the engine of the abandoned quotient endgame, not of the committed Milne-Kollar
+  route (AJC.picrep). It is kept because the surrounding Grassmannian, graded-algebra
+  and flattening substrate is sorry-free, genuinely reusable, and imported by the
+  committed route; only this node''s own leaf and AJC.picrep.serre are exclusive to
+  the endgame. Do not build new consumers against HasSmoothProperQuotient.'
+status: rejected
+kind: proof
+priority: low
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+metadata:
+  author: horizon
+  created_at: '2026-07-23T13:46:32.129534+00:00'
+  provenance:
+    run: '0046'
+    session: 0021-horizon-ajc-optimize
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajc-optimize
+    task_title: Make the project clean and optimized
+    projects: Algebraic-Jacobian-Challenge
+  parent: AJC.picrep
+  updated_at: '2026-07-29T02:59:32.289095+00:00'
+  milestone: AJC.picrep

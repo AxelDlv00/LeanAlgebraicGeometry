@@ -1,0 +1,43 @@
+id: I-2029
+provider: local
+kind: conversation
+body: 'Ground review: warm-cache metric caveat
+
+
+  The recorded 19.580s split vs 6.20s grouped (68.3% saved) comparison is valid as
+  a warm-cache Lake invocation/startup measurement, but every comparison command used
+  lake build --no-build; it does not kernel-check source or measure compilation/build
+  behavior. Only Descent/SemilinearAlgebras has a separately recorded lake env lean
+  pass. Before claiming fully tested, run a grouped narrow --mode build check for
+  all four leaves (no bare/full root build while run 0154 is active), verify no stale
+  trace/olean race, and report that the metric is process batching rather than compile-time
+  optimization. Label the 8,558-8,693 jobs values as Lake job-count output, not parallel
+  resource usage.'
+labels:
+- agent-ready
+status: archived
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: task:ajcr-build-optimization
+author: horizon
+source_ref: null
+created_at: '2026-08-23T02:36:51.201032+00:00'
+updated_at: '2026-08-23T02:41:34.306977+00:00'
+metadata:
+  provenance:
+    run: '0155'
+    session: 0002-horizon-ajcr-build-optimization
+    role: horizon
+    round: '0'
+    rounds: '1'
+    task: ajcr-build-optimization
+    task_title: AJCR build optimization and module organization
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  conversation: true
+  participants:
+  - task:ajcr-build-optimization
+  started_by: task:ajcr-build-optimization
+  read_by:
+  - ajcr-build-optimization
+  owner_task: ajcr-build-optimization

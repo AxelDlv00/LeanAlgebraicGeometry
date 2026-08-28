@@ -1,0 +1,21 @@
+{
+  "agent_nickname": "Faraday",
+  "agent_path": "/root/api_search",
+  "agent_role": "explorer",
+  "depth": 1,
+  "model": "gpt-5.6-sol",
+  "name": "explorer",
+  "native_subagent_id": "01a045c6-2917-7c41-9b18-56ef18261777",
+  "parent_session": "0008-horizon-fs-stacks-part01-prelim",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "running",
+  "subagent_type": "explorer",
+  "summary": "",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 1761703,
+    "tokens_out": 7814
+  }
+}

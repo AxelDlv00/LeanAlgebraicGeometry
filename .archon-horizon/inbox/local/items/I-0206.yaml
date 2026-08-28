@@ -1,0 +1,52 @@
+id: I-0206
+provider: local
+kind: info
+body: 'W7-B4a consumer notes for the B-5/B-6 lanes (JacobianDataBaseChange) and B-2
+  (w7-b4 lane, commit 4d716896f, Picard/Pic0Theta.lean).
+
+
+  FOR B-5/B-6a/B-6b: (a) theta''s degree-0 restriction will arrive as the iff mem_pic0Subgroup_iff_of_degAt_pushFieldPoint_eq
+  — when you transport d.rep by RepresentableBy.ofIso along theta''s Type form, the
+  pic0Subgroup memberships on the two sides correspond through EXACTLY this lemma;
+  do not re-derive field-point bookkeeping. (b) The R5 kit''s round trips are deliberately
+  HEq-free: pushFieldPoint/liftFieldPoint quantify over BOTH algebra structures plus
+  [IsScalarTower k L K]; when you need an Algebra k K from an L-point, use the DegreeZero
+  tower pattern letI : Algebra k K := ((algebraMap L K).comp (algebraMap k L)).toAlgebra
+  with IsScalarTower ... := .of_algebraMap_eq fun _ => rfl (this is what the engine''s
+  forward branch does internally). (c) fieldPointAlgebra is @[reducible] (mathlib
+  linter requirement for class-valued defs) — its algebraMap is DEFINITIONALLY (Spec.preimage
+  (t.left ≫ T.hom)).hom (anchor lemma fieldPointAlgebra_algebraMap); ascribed letI
+  seams stay owned by JacobianDataBaseChange per R-W7-4.
+
+
+  FOR B-2: instantiate the landed relPic layer (relPicCrossBase/relPicCrossBaseEquiv
+  + relPicCrossBase_relPicAlgMap over the literally shared EtaleCover A index) instead
+  of re-deriving CechPic squares; the naturality square is stated for f : A →ₐ[L]
+  B with the k-face at f.restrictScalars k, which is exactly the descentMap/doubleInl/doubleInr
+  shape after restriction.
+
+
+  ELABORATION LESSON (all W7 lanes, R4/R5 flavor): equations that erase mapOverSpecIso
+  legs or cross the (overSpec k A).left vs Spec A vs ((Over.map σ).obj T).left spellings
+  are heterogeneous-up-to-defeq; rw over them produces instances-transparency-broken
+  targets. Pic0Theta.lean''s pattern: keep rw chains homogeneous (never rewrite a
+  lemma whose two sides have syntactically different (defeq) types), do all seam-crossing
+  steps as term-mode exact/congrArg/Eq.trans, and pin composite spellings with type
+  ascriptions when an expected type (e.g. Spec.preimage''s argument) re-elaborates
+  them.
+
+
+  RECORD: my B-4a commit raced the DDR-2 lane''s disk-root edit and swept their two
+  import lines (CarveDegreePinch/CarveDegree) into 4d716896f — benign (both files
+  were already in HEAD at parent 63ce0820c; their own wiring commit 28d2c0cd2 became
+  an empty diff). Full root lake build after the join: GREEN, 8917 jobs.'
+labels:
+- agent-ready
+status: archived
+scope: {}
+audience: horizon
+author: human
+source_ref: null
+created_at: '2026-07-17T08:39:18.154376+00:00'
+updated_at: '2026-07-20T03:14:24.571159+00:00'
+metadata: {}

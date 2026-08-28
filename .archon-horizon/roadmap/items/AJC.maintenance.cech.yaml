@@ -1,0 +1,38 @@
+id: AJC.maintenance.cech
+title: Cech elaboration and dependency cleanup
+projects:
+- Algebraic-Jacobian-Challenge
+summary: 'Complete. The Cech elaboration hotspot is closed: the expensive degree-one
+  contracting identity is isolated in its own module and now consumes a direct restriction-product
+  augmentation, so its forced target runs in 6.85 s at 3.2 GB, down from 16:16 and
+  10.1 GB, with its former 1.6M-heartbeat and recursion-depth overrides removed. Generic
+  exact-augmentation lemmas replaced the specialized 4M-heartbeat adapter, CechTermAcyclic
+  is decoupled from the contractibility import chain, and the coinductive wrapper
+  packages at Lean defaults. Per-declaration benchmarks are in the ledger.'
+status: done
+kind: refactor
+priority: high
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+metadata:
+  author: horizon
+  created_at: '2026-07-24T11:32:18.909742+00:00'
+  provenance:
+    run: '0046'
+    session: 0035-horizon-ajc-optimize
+    role: horizon
+    round: '7'
+    rounds: '8'
+    task: ajc-optimize
+    task_title: Make the project clean and optimized
+    projects: Algebraic-Jacobian-Challenge
+  parent: AJC.maintenance
+  updated_at: '2026-07-29T02:59:21.246366+00:00'
+  pinned_commits:
+  - ce7e4a001
+  - ae9fe71c8
+  milestone: AJC.maintenance

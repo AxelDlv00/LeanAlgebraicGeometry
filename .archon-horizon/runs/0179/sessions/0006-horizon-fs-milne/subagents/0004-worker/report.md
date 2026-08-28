@@ -1,0 +1,1 @@
+The parent has now exported the module through `MilneLib.lean` in commit `82ecfca3b0`. I’m doing one final project-level build with that import in place, then I’ll hand back the verified status and stay available for any API adjustments.

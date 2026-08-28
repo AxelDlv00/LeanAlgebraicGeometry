@@ -1,0 +1,58 @@
+id: AJC.picrep.rational-point
+title: 'DECIDED: etale-sheafify — no rational-point binder on the headline'
+projects:
+- Algebraic-Jacobian-Challenge
+summary: "DECIDED BY THE HUMAN 2026-07-28: BRANCH (2), ETALE-SHEAFIFY. This node is\
+  \ no longer a decision; it is execution work. Binding form: protection I-0491. Full\
+  \ reasoning: I-0372 (human comment, same date).\n\nTHE CLAIM THE PROJECT NOW MAKES:\
+  \ the Jacobian headline is stated over an ARBITRARY base field with NO rational-point\
+  \ binder, exactly as Challenge.lean declares it. The relative Picard functor is\
+  \ ETALE-sheafified and that is what gets represented — Kleimans own formulation,\
+  \ full challenge strength.\n\nWHY, and it is a specification argument. Challenge.lean\
+  \ binds Jacobian C with no rational point, and binds a point explicitly only where\
+  \ Abel-Jacobi needs one (ofCurve (P : 1 -> C)). A headline carrying [HasRationalPoint\
+  \ C] therefore answers a different question than the one posed. Moreover hasRationalPoint_of_curve\
+  \ is FALSE rather than unproved, so everything under the general-field witness rested\
+  \ on an inconsistent hypothesis. The build-cost asymmetry between branches, reported\
+  \ honestly by ajc-truth over four sessions, was explicitly NOT the deciding factor.\n\
+  \nTHE FOUR EXECUTION CLAUSES (protection I-0491 carries the binding text):\n 1.\
+  \ DELETE hasRationalPoint_of_curve. Never prove it; no new consumer.\n 2. Restate\
+  \ the representability obligation for the etale-sheafified functor, without [HasRationalPoint\
+  \ C]. One named sorry, docstring saying it is expected to stay open.\n 3. Port from\
+  \ the sibling Rebuild project, which already has the functor SORRY-FREE: Picard/PicEtAff.lean\
+  \ (394 lines), Picard/Pic0Functor.lean (182), Picard/RelPicCoverInjective.lean (89),\
+  \ re-verified zero sorries 2026-07-28. AJC is the outlier, not the standard.\n 4.\
+  \ KEEP picardJacobianWitnessOfHasRationalPoint as an explicitly labelled CONDITIONAL\
+  \ milestone and picardJacobianWitnessOfIsAlgClosed as a genuine k-bar theorem. Neither\
+  \ is the headline, anywhere.\n\nDOCUMENTS TO RE-AIM: blueprint FGA chapter (sec:fga_pic_setup\
+  \ should name the etale formulation as the one realised; lem:curve_hypothesis_gap\
+  \ and rem:rational_point_scope now record a decision rather than an open branch),\
+  \ README.md, TO_USER.md.\n\nORTHOGONAL AND UNCHANGED: the Milne-Kollar route stays\
+  \ committed, Quot stays retained-not-revived. Both routes carried the rational point\
+  \ identically, so the route choice never depended on this. Over k-bar the point\
+  \ remains a THEOREM (hasRationalPoint_of_curve_of_isAlgClosed, axiom-clean) and\
+  \ that lane is untouched."
+status: done
+kind: proof
+priority: high
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+metadata:
+  author: horizon
+  created_at: '2026-07-27T02:45:35.321724+00:00'
+  provenance:
+    run: '0046'
+    session: 0088-horizon-interactive
+    role: horizon
+    round: '0'
+    rounds: '1'
+    task: ajc-optimize
+    task_title: Make the project clean and optimized
+    projects: Algebraic-Jacobian-Challenge
+  parent: AJC.picrep
+  updated_at: '2026-08-04T01:58:03.743355+00:00'
+  milestone: AJC.picrep

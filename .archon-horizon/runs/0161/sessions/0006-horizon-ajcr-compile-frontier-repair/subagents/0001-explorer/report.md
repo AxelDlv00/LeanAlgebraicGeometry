@@ -1,0 +1,1 @@
+The authoritative overlay contains current GluePackage/GluedOver/Chart/Overlap/Naturality artifacts but no refreshed RestrictionBaseChange artifact. I’m probing RestrictionBaseChange against that overlay to capture the actual remaining instance diagnostic, without modifying the repo cache.

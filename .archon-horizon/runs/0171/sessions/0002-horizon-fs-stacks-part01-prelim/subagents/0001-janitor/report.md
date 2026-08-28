@@ -1,0 +1,1 @@
+The requested audit falls under Horizon’s janitor workflow, so I’m also reading the inbox and task-status procedures before invoking the CLI. This keeps the audit aligned with the workspace’s exact status and archive semantics.

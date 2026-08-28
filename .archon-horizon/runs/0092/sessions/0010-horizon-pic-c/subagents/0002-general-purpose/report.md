@@ -1,0 +1,68 @@
+SendMessage cannot reach `work-reviewer` (not a spawned agent of this session), so relaying via my final report — the caller should forward this.
+
+Prefixes: project = `/home/axel/LeanAlgebraicGeometry-Horizon/MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/`, mathlib = `/home/axel/LeanAlgebraicGeometry-Horizon/.lake-packages/mathlib/Mathlib/`. Closure = 372 modules from the target's two imports.
+
+## Project declarations cited by the target
+
+| Cited name | Status | Fully-qualified | file:line | In closure | Attribution correct |
+|---|---|---|---|---|---|
+| `abelSigmaChartZero` | EXISTS | `AlgebraicGeometry.abelSigmaChartZero` | `Picard/DivisorFamilyDegreeZeroUseSite.lean:86` | yes | yes |
+| `divFunctorZeroRepresentableBy` | EXISTS | `AlgebraicGeometry.divFunctorZeroRepresentableBy` | `Picard/DivisorFamilyDegreeZeroRep.lean:227` | yes | yes |
+| `chartIso_of_seam` | EXISTS | `AlgebraicGeometry.chartIso_of_seam` | `Picard/Pic0ChartSeamCollapse.lean:201` | yes | yes |
+| `chartSheafHom` | EXISTS | `AlgebraicGeometry.chartSheafHom` | `Picard/Pic0ChartSeamCollapse.lean:151` | yes | n/a |
+| `injective_of_isOpenImmersion_presheaf` | EXISTS | `AlgebraicGeometry.injective_of_isOpenImmersion_presheaf` | `Picard/Pic0ChartOpenImmersionCriterion.lean:103` | yes | yes |
+| `ChartFibrePresented` | EXISTS | `AlgebraicGeometry.ChartFibrePresented` | `Picard/Pic0ChartOpenImmersionCriterion.lean:129` | yes | yes |
+| `abelSigmaChart` | EXISTS | `AlgebraicGeometry.abelSigmaChart` | `Picard/Pic0AtlasFromDivRep.lean:205` | yes | yes |
+| `toSigmaExtension_app_fst` | EXISTS | `CategoryTheory.Functor.RepresentableBy.toSigmaExtension_app_fst` | `Picard/Pic0AtlasFromDivRep.lean:146` | yes | n/a |
+| `isChartUniv_bot` | EXISTS | `AlgebraicGeometry.isChartUniv_bot` | `Picard/Pic0ChartRestrictedFibreSat.lean:232` | yes | yes |
+| `instSubsingletonDivFamZarSectionZero` | EXISTS | `AlgebraicGeometry.instSubsingletonDivFamZarSectionZero` | `Picard/DivisorFamilyDegreeZeroRep.lean:164` | yes | **NO — defect 1** |
+| `chartIndex_iff_isDegree` | EXISTS | `AlgebraicGeometry.chartIndex_iff_isDegree` | `Picard/Pic0ChartIndexAdmissible.lean:152` | yes | n/a |
+| `isDegree_zero` | EXISTS | `AlgebraicGeometry.isDegree_zero` | `Picard/Pic0ChartIndexAdmissible.lean:216` | yes | n/a |
+| `Over.sigmaExtension_ext` | EXISTS | `CategoryTheory.Over.sigmaExtension_ext` | `Picard/OverSigmaExtension.lean:91` | yes | n/a |
+| `pic0RepresentableByOfCharts` | EXISTS | `AlgebraicGeometry.pic0RepresentableByOfCharts` | `Picard/Pic0SigmaSheaf.lean:161` | yes | n/a |
+| `pic0SigmaSheaf` | EXISTS | `AlgebraicGeometry.pic0SigmaSheaf` | `Picard/Pic0SigmaSheaf.lean:147` | yes | n/a |
+| `pic0TypeFunctor` | EXISTS | `AlgebraicGeometry.pic0TypeFunctor` (abbrev) | `Picard/Pic0SigmaSheaf.lean:58` | yes | n/a |
+| `pic0Subgroup` | EXISTS | `AlgebraicGeometry.pic0Subgroup` | `Picard/Pic0Functor.lean:107` | yes | n/a |
+| `Sheaf.h0` | EXISTS | `CategoryTheory.Sheaf.h0` | `RiemannRoch/Chi.lean:81` | yes | n/a |
+| `genus` | EXISTS | `AlgebraicGeometry.genus` | `Challenge.lean:89` | yes | n/a |
+
+## Target's own declarations (all `Picard/Pic0ChartSeamPairDecided.lean`, namespace `AlgebraicGeometry`)
+
+`chartIso_of_injective` :134 · `isOpenImmersion_presheaf_of_injective` :163 · `sigmaComponent_abelSigmaChartZero` :194 · `injective_abelSigmaChartZero` :220 (defect 2) · `surjective_app_abelSigmaChartZero_of_subsingleton` :247 · `subsingleton_pic0Subgroup_of_surjective_app` :273 · `isIso_abelSigmaChartZero_of_subsingleton` :307 · `seamPair_abelSigmaChartZero_of_subsingleton` :333 · `seamPair_abelSigmaChartZero_iff` :359 · `not_seamPair_abelSigmaChartZero_of_two_pic0` :387 — all EXISTS, all match the "Main declarations" list.
+
+## Mathlib (all `#check`-verified, toolchain v4.31.0 / mathlib `fabf563a`)
+
+| Cited name | Status | Fully-qualified | file:line |
+|---|---|---|---|
+| `NatIso.isIso_of_isIso_app` | EXISTS | `CategoryTheory.NatIso.isIso_of_isIso_app` | `CategoryTheory/NatIso.lean:208` |
+| `MorphismProperty.of_isIso` | EXISTS | `CategoryTheory.MorphismProperty.of_isIso` | `CategoryTheory/MorphismProperty/Composition.lean:87` |
+| `IsOpenImmersion.le_monomorphisms` | EXISTS | `AlgebraicGeometry.IsOpenImmersion.le_monomorphisms` | `AlgebraicGeometry/OpenImmersion.lean:490` |
+| `Presheaf.isLocallyInjective_of_injective` | EXISTS | `CategoryTheory.Presheaf.isLocallyInjective_of_injective` | `CategoryTheory/Sites/LocallyInjective.lean:80` |
+| `Sheaf.isLocallyBijective_iff_isIso` | EXISTS | `CategoryTheory.Sheaf.isLocallyBijective_iff_isIso` | `CategoryTheory/Sites/LocallyBijective.lean:84` |
+| `isIso_iff_bijective` | EXISTS | `CategoryTheory.isIso_iff_bijective` | `CategoryTheory/Types/Basic.lean:467` |
+| `MorphismProperty.relative` / `IsOpenImmersion.presheaf` | EXISTS | `…relative` / `.presheaf` (abbrev = `relative yoneda`) | `CategoryTheory/MorphismProperty/Representable.lean:315, 328` |
+| `Subsingleton.allEq` | EXISTS | `Subsingleton.allEq` (core field) | `~/.elan/toolchains/leanprover--lean4---v4.31.0/src/lean/Init/Core.lean:1253` |
+
+## Modules cited by file only
+
+OUT of closure, legitimate under the house rule: `Picard/Pic0ChartForkNegativeBranch.lean` (its four theorems at :169, :216, :251, :278 — no bare name spelled), `Picard/Pic0VanishingRoute.lean`, `Albanese/Genus0Terminal.lean`, `Picard/Pic0ChartBotRefute.lean`. In closure and correctly attributed: `Pic0ChartVMonotone`, `Pic0ChartRestrictedFibreSat`, `Pic0ChartSeamCollapse`, `Pic0ChartOpenImmersionCriterion`, `DivisorFamilyDegreeZeroUseSite.lean`.
+
+## On the reviewer's list but not cited by the target
+
+`restrictedChartFibre_bot` (`Picard/Pic0ChartRestrictedFibreSat.lean:190`), `not_restrictedChartFibre_top_of_not_injective` (same file :405), `isChartUniv_antitone` (`Picard/Pic0ChartVMonotone.lean:152`) — all EXISTS, all in closure, none appears in the target file, so there is no attribution to check.
+
+**ABSENT: none.** Every backticked identifier in the header and docstrings resolves.
+
+## Defects
+
+1. **`instSubsingletonDivFamZarSectionZero` names the wrong object.** Elaborated: `Subsingleton (divFamZar C pi 0 T)`, hypotheses `[Field k] [IsAffineHom pi]` only. The docstring (line 217) calls it "at parameter `0` the functor value is a singleton" inside a sentence contrasting against `2 ≤ h⁰`, i.e. sections of a divisor class. `divFamZar` is the divisor-family vehicle; the file's own `pic⁰` is `pic0Subgroup C T : Subgroup (picEt C T)` — a different object. The functor-level fact wanted is `divFunctorObjSubsingleton_zero` (`Picard/DivisorFamilyDegreeZeroUseSite.lean:70`), in closure. Not `instSubsingletonDivFamZarZeroGeneral` (:144, ring-level) and not `DivFunctorObjSubsingleton` (`Picard/Pic0ChartSubsingletonCollapse.lean:211`, a `Prop`, not a proof).
+
+2. **Name collision.** `AlgebraicGeometry.injective_abelSigmaChartZero` is declared twice: target line 220 and `Picard/Pic0ChartMonoUnconditional.lean:82`, near-identical statements (differ only in the `hdeg` coercion). `AlgebraicJacobian.lean` imports both at lines 585 and 711; neither file imports the other, which is why each compiles alone.
+
+3. **Undisclosed duplicate result.** `Picard/Pic0ChartMonoUnconditional.lean:73-90` already proves the same unconditional parameter-0 injectivity by a different route. Out of closure so no naming rule is broken, but the "What is reused rather than rebuilt" section claims to account for reuse.
+
+4. **Indirect attribution (minor).** Lines 55-56 credit `chartIso_of_seam`'s injectivity extraction to `IsOpenImmersion.le_monomorphisms`; that lemma is one hop down, in `mono_of_isOpenImmersion_presheaf` (`Picard/Pic0ChartOpenImmersionCriterion.lean:93`).
+
+5. **Context, not a citation defect.** The target and every project file it cites are untracked in `/home/axel/LeanAlgebraicGeometry-Horizon/.archon-horizon/vcs/workspace.git`. None of it is verifiable at HEAD.
+
+Verification scope: elaborated `#check` covers the eight mathlib names plus `instSubsingletonDivFamZarSectionZero`, `instSubsingletonDivFamZarZeroGeneral`, `divFunctorZeroRepresentableBy`. The rest are source-level regex censuses over the project tree and mathlib source, four cross-checked via `horizon search`. A concurrent build rewrote the olean tree throughout, so I could not elaborate the root module to capture defect 2's error text; the collision is established from source.

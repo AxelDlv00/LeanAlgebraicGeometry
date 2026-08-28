@@ -1,0 +1,1 @@
+The Part04 library is still a placeholder (`Basic.lean` only), while the graph has hundreds of empty nodes. I’m narrowing the search to the bootstrap chapter and sibling Stacks APIs, then checking which statements can be expressed with existing mathlib structures without new axioms.

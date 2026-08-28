@@ -1,0 +1,6 @@
+Final verdict (review of pic-c run 0106, both scoped files):
+
+1. **False/vacuous statements: none.** All 11 declarations say what their names claim. The IsDomain→IsReduced weakening is genuine (real binder swap, strictly larger class); `eq_C_mul_one_add_nilpotent...` produces a genuinely nilpotent Laurent `z`, not trivially 0.
+2. **Axiom leaks: none.** All 11 are axiom-clean `[propext, Classical.choice, Quot.sound]`, no sorryAx. Both files compile EXIT=0, HEAD==disk.
+3. **Duplicates: none.** Confirmed against full Mathlib — no `IsReduced (LaurentPolynomial A)` instance/theorem, no Laurent coeff-nilpotent iff; no project-internal duplicate.
+4. **Docstring overclaim: one (filed I-1692).** File 1 (header lines 48-50, docstring 178-180) claims the forward theorem + `nilpotent_isUnit_mem_laurentCoboundaryUnits` pins the subgroup "exactly," but that cited converse only covers scalar-nilpotent `C e·f`, not the arbitrary nilpotent Laurent `z` the forward theorem produces. The truly matching converse (`nilpotent_one_add_mem_laurentCoboundaryUnits`) lives in an uncommitted, not-at-HEAD file. Theorem statements are correct; only the prose citation is too weak.

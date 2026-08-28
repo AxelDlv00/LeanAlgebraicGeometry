@@ -1,0 +1,1 @@
+I’m narrowing this to the actual reusable declarations: finite free/sheaf stalk APIs, stalk maps from local generators, and the residue-field quotient equivalences. I’ll send the parent exact signatures plus the point where the generic coherent-stalk route still needs a bridge.

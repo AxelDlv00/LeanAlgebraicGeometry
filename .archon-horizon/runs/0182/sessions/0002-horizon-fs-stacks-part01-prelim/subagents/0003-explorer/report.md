@@ -1,0 +1,1 @@
+The project is already fairly mature (63 indexed declarations, no `sorry`/`admit` markers). I’m now reading each library module and the graph/frontier metadata to distinguish genuinely missing APIs from work already landed, then I’ll validate candidate names against the workspace-wide declaration index.

@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "fingerprint": "a661326e959df2ea",
+  "command": [
+    "lake",
+    "build",
+    "StacksPart07Lib"
+  ],
+  "cwd": "FormalizedSources/StacksProject/Part07_AlgebraicStacks",
+  "status": "passed",
+  "ok": true,
+  "returncode": 0,
+  "timed_out": false,
+  "reused": false,
+  "wait_seconds": 3.17,
+  "duration_seconds": 2.47,
+  "started_at": "2026-08-28T00:24:20.388295+00:00",
+  "finished_at": "2026-08-28T00:24:22.858484+00:00",
+  "finished_epoch": 1787876662.858484
+}

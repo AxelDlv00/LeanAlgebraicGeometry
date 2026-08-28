@@ -1,0 +1,20 @@
+{
+  "role": "horizon",
+  "round": 0,
+  "project": "StacksPart03_TopicsInSchemeTheory",
+  "task_id": "fs-stacks-part03-scheme-topicstheory",
+  "status": "interrupted",
+  "started_at": "2026-08-27T13:21:44.337937+00:00",
+  "projects": [
+    "StacksPart03_TopicsInSchemeTheory"
+  ],
+  "harness_name": "codex",
+  "harness_kind": "codex",
+  "model": "gpt-5.6-sol",
+  "effort": "ultra",
+  "config_dir": "/home/axel/.codex-temp",
+  "auth": "api-key",
+  "workspace_sha": "a295e585c2e004fe184f106f9abf5a395dc1d1ea",
+  "ended_at": "2026-08-27T13:25:28+00:00",
+  "interrupt_reason": "process-marker-reaped"
+}

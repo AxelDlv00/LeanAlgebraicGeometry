@@ -1,0 +1,1 @@
+The frontier ranking is dominated by formal-space algebraization nodes (high unlock counts but requiring substantial topological-ring infrastructure). I’m screening the zero-dependency nodes for generic categorical/set-theoretic statements that can be formalized cleanly in a first Part05 module, and recording their exact blueprint locations and graph IDs.

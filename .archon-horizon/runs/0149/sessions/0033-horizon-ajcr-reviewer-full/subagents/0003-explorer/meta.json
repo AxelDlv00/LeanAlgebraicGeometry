@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Faraday",
+  "agent_path": "/root/challenge_probe",
+  "agent_role": "explorer",
+  "depth": 1,
+  "model": "gpt-5.6-terra",
+  "name": "explorer",
+  "native_subagent_id": "01a01249-7091-7891-bf0e-e95cb72242f0",
+  "ok": true,
+  "parent_session": "0033-horizon-ajcr-reviewer-full",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "completed",
+  "subagent_type": "explorer",
+  "summary": "Read-only probe complete. No files or Horizon state changed.",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 2836086,
+    "tokens_out": 15298
+  }
+}

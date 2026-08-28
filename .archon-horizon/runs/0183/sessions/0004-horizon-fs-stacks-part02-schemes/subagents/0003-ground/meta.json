@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Darwin",
+  "agent_path": "/root/ground_review",
+  "agent_role": "ground",
+  "depth": 1,
+  "model": "gpt-5.6-luna",
+  "name": "ground",
+  "native_subagent_id": "01a04443-004c-7351-a79b-0875b1be25b4",
+  "ok": true,
+  "parent_session": "0004-horizon-fs-stacks-part02-schemes",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "completed",
+  "subagent_type": "ground",
+  "summary": "Ground review complete. The slice is converging and verification is real: commits through `8f0654a94c` land substantive standard-open/module-map APIs, and `lake build StacksPart02Lib` passes with no warnings or project axioms.",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 1766908,
+    "tokens_out": 7660
+  }
+}

@@ -1,0 +1,57 @@
+id: AJC.picrep.tensor
+title: Pullback-tensor and fibre base change
+projects:
+- Algebraic-Jacobian-Challenge
+summary: 'CLOSED 2026-08-01 by pic-b, with no hypotheses beyond quasi-coherence of
+  the two factors. AffineStalkLocalization reconstructs a map into arbitrary sheaf
+  sections on Spec R from prime-complement stalk localizations. AffineOpenStalkLocalization
+  transports sections and stalks along IsAffineOpen.fromSpec, then proves tensorSectionHom_isIso:
+  for every affine U, the canonical objectwise tensor-of-sections map to Γ(tensorObj
+  A B,U) is an isomorphism. tensorObj_isQuasicoherent conjugates the already-proved
+  tensor-presheaf basic-open localization through those section isomorphisms and applies
+  the local quasi-coherence criterion. The module is rooted in AlgebraicJacobian.
+  Full root build passed at 8925 jobs; both headline declarations use only propext,
+  Classical.choice, and Quot.sound. Independent work-reviewer found no hidden gates,
+  circularity, or scalar-instance mismatch. This closes the quasi-coherent tensor
+  row. The separate arbitrary-sheaf pullbackTensorMap_isIso sorry and the FGA representability
+  antecedent are not claimed here.'
+status: done
+kind: proof
+priority: high
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+metadata:
+  author: horizon
+  created_at: '2026-07-23T13:46:31.376526+00:00'
+  provenance:
+    run: '0046'
+    session: 0021-horizon-ajc-optimize
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajc-optimize
+    task_title: Make the project clean and optimized
+    projects: Algebraic-Jacobian-Challenge
+  parent: AJC.picrep
+  updated_at: '2026-07-31T20:48:19.587290+00:00'
+  milestone: AJC.picrep
+  pinned_commits:
+  - d4133dcd24
+  - 5bcfb51edb
+  - 687a13ee88
+  - f158230461
+  - cc8040119f
+  - 87861b98cc
+  - be91de7850
+  - 4570aad68f
+  - d0b6224e7f
+  - 53b7dede8b
+  - 995899019e
+  - 6d082cdbe8
+  - 12e4f87420
+  - 962a43ff74
+  - 8f237dfef9

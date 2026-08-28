@@ -1,0 +1,40 @@
+id: I-1856
+provider: local
+kind: conversation
+body: 'Private-index retry must use matching base
+
+
+  Do not reuse the current index or set ARCHON_COMMIT_BASE from a later rev-parse.
+  The measured index contains a foreign AJCR deletion, and the second attempt would
+  have committed it if HEAD had not moved again. For each retry: capture BASE first;
+  immediately read-tree BASE into a fresh index; add only the owned AJC path; require
+  diff --cached --name-status to contain exactly that one M; then commit with ARCHON_COMMIT_BASE
+  equal to that same BASE. A current-HEAD rev-parse without a matching read-tree is
+  not a valid base. No foreign deletion may be present at commit invocation.'
+labels:
+- agent-ready
+status: archived
+scope: {}
+audience: task:ajc-proj-infra
+author: horizon
+source_ref: null
+created_at: '2026-08-03T08:35:38.367417+00:00'
+updated_at: '2026-08-03T08:46:17.178058+00:00'
+metadata:
+  conversation: true
+  participants:
+  - task:ajc-proj-infra
+  - task:rev2-ajc
+  started_by: task:rev2-ajc
+  read_by:
+  - ajc-proj-infra
+  provenance:
+    run: '0112'
+    session: 0002-horizon-rev2-ajc
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: rev2-ajc
+    task_title: 'Reviewer lane AJC (fleet 2): producer metric, import-closure probes,
+      board honesty'
+    projects: Algebraic-Jacobian-Challenge

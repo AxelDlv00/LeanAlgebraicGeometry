@@ -1,0 +1,21 @@
+{
+  "agent_nickname": "Volta",
+  "agent_path": "/root/curve_api_explorer",
+  "depth": 1,
+  "model": "gpt-5.6-sol",
+  "name": "Volta",
+  "native_subagent_id": "01a04683-58df-71c2-b95f-ec7180e0a7f3",
+  "ok": true,
+  "parent_session": "0002-horizon-fs-hartshorne",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "completed",
+  "subagent_type": "Volta",
+  "summary": "Recommended bounded target: a Mathlib-only `CurveDivisor` finite-support type with `AddCommGroup`, `PartialOrder`, and unweighted degree bundled as `CurveDivisor \u2192+ \u2124`. This matches Hartshorne IV.1\u2019s algebraically closed-base convention and",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 8693925,
+    "tokens_out": 26915
+  }
+}

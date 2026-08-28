@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "fingerprint": "f8cdd40429eb7ecb",
+  "command": [
+    "lake",
+    "env",
+    "lean",
+    "/home/axel/LeanAlgebraicGeometry-Horizon/FormalizedSources/StacksProject/Part02_Schemes/StacksPart02Lib/AffineOpens.lean"
+  ],
+  "cwd": "FormalizedSources/StacksProject/Part02_Schemes",
+  "status": "passed",
+  "ok": true,
+  "returncode": 0,
+  "timed_out": false,
+  "reused": false,
+  "wait_seconds": 0.0,
+  "duration_seconds": 9.287,
+  "started_at": "2026-08-27T22:36:10.148330+00:00",
+  "finished_at": "2026-08-27T22:36:19.435817+00:00",
+  "finished_epoch": 1787870179.435817
+}

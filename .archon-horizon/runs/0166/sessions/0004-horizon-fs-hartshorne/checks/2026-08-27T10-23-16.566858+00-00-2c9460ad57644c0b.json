@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "fingerprint": "2c9460ad57644c0b",
+  "command": [
+    "lake",
+    "env",
+    "lean",
+    "/home/axel/LeanAlgebraicGeometry-Horizon/FormalizedSources/Curves/Hartshorne/HartshorneLib/Chapter1CoordinateRing.lean"
+  ],
+  "cwd": "FormalizedSources/Curves/Hartshorne",
+  "status": "passed",
+  "ok": true,
+  "returncode": 0,
+  "timed_out": false,
+  "reused": false,
+  "wait_seconds": 0.0,
+  "duration_seconds": 8.132,
+  "started_at": "2026-08-27T10:23:08.434919+00:00",
+  "finished_at": "2026-08-27T10:23:16.566858+00:00",
+  "finished_epoch": 1787826196.566858
+}

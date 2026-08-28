@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Averroes",
+  "agent_path": "/root/audit_next_pic0_edge",
+  "agent_role": "explorer",
+  "depth": 1,
+  "model": "gpt-5.6-terra",
+  "name": "explorer",
+  "native_subagent_id": "01a00a83-f888-7172-8c1f-61b0f136c916",
+  "ok": true,
+  "parent_session": "0027-horizon-ajcr-reviewer-full",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "completed",
+  "subagent_type": "explorer",
+  "summary": "## Progress",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 2444136,
+    "tokens_out": 16157
+  }
+}

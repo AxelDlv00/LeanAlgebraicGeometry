@@ -1,0 +1,1 @@
+The workspace has a live run/session and the Horizon CLI is currently taking an unusually long time even for metadata commands. I’m checking whether that is a lock/contention issue versus a normal synchronizer delay, then I’ll use direct ledger/state reads where appropriate.

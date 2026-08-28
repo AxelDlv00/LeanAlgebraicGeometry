@@ -1,0 +1,1 @@
+The cached build evidence has a timestamp mismatch: all three recorded `lake build` checks predate the four commits and even predate the scaffold commit. I’m tracing artifact mtimes and commit chronology to determine whether the final committed root was actually checked.

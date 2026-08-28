@@ -1,0 +1,44 @@
+---
+author: sync
+content_type: theorem
+created: '2026-07-22T07:31:54'
+decl: AlgebraicGeometry.relationReadMultipleWitness_add
+file: AlgebraicJacobian/Picard/DivSchemeHighWindowTransitionSaturation.lean
+generated: lean
+lean_status: lean_ok
+private: true
+title: AlgebraicGeometry.relationReadMultipleWitness_add
+type: lean
+updated: '2026-08-01T09:44:12'
+---
+private theorem relationReadMultipleWitness_add (n : Nat) (x : G(n + 1))
+    {c d : B}
+    (hc : RelationReadMultipleWitness (C := C) (pi := pi)
+      hpi g r1 r2 b1 b2 i j side n x c)
+    (hd : RelationReadMultipleWitness (C := C) (pi := pi)
+      hpi g r1 r2 b1 b2 i j side n x d) :
+    RelationReadMultipleWitness (C := C) (pi := pi)
+      hpi g r1 r2 b1 b2 i j side n x (c + d) := by
+  obtain ⟨m, hnm, y, hy, hry⟩ := hc
+  obtain ⟨r, hnr, z, hz, hrz⟩ := hd
+  let l := max m r
+  let hml : m ≤ l := le_max_left m r
+  let hrl : r ≤ l := le_max_right m r
+  let y' := divUniversalHighWindowShiftedRelationTransitionOfLE
+    (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j side m l hml y
+  let z' := divUniversalHighWindowShiftedRelationTransitionOfLE
+    (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j side r l hrl z
+  have hy' : y' ∈ (K(l + 1)) :=
+    map_divUniversalHighWindowShiftedRelationTransitionOfLE_relation_le
+      (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j side m l hml ⟨y, hy, rfl⟩
+  have hz' : z' ∈ (K(l + 1)) :=
+    map_divUniversalHighWindowShiftedRelationTransitionOfLE_relation_le
+      (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j side r l hrl ⟨z, hz, rfl⟩
+  refine ⟨l, hnm.trans hml, y' + z', Submodule.add_mem _ hy' hz', ?_⟩
+  rw [map_add, divUniversalHighWindowShiftedRelationTransitionOfLE_chartRead,
+    divUniversalHighWindowShiftedRelationTransitionOfLE_chartRead, hry, hrz]
+  ring
+
+set_option maxHeartbeats 2400000 in
+-- Scalar closure unfolds the carve-chart action on the dependent ambient.
+set_option synthInstance.maxHeartbeats 1200000 in

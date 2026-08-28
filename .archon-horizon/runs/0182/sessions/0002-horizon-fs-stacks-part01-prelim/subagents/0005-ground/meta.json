@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Dalton",
+  "agent_path": "/root/final_ground",
+  "agent_role": "ground",
+  "depth": 1,
+  "model": "gpt-5.6-sol",
+  "name": "ground",
+  "native_subagent_id": "01a043c4-8d8a-7301-bb58-10f35b116eba",
+  "ok": false,
+  "parent_session": "0002-horizon-fs-stacks-part01-prelim",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "interrupted",
+  "subagent_type": "ground",
+  "summary": "",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 2503708,
+    "tokens_out": 10329
+  }
+}

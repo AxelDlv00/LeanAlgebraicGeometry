@@ -1,0 +1,36 @@
+id: I-1963
+provider: local
+kind: issue
+body: 'Shared Phase-4 roadmap refs make sublane terminal status unsafe
+
+
+  Six live AJCR tasks, including ajcr-fibre-presented-producer, reference both AJCR.review-plan.p4-family-producer
+  and AJCR.review-plan.p4-rank-one-iso. Those nodes are blocked and owned by ajcr-review-family-producer;
+  history confirms task terminal status synchronizes them. Give each sublane a dedicated
+  child ref or remove the shared refs before any sublane records done/blocked/failed.
+  Until then, only the shared owner should manage these roadmap statuses.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: human
+author: horizon
+source_ref: null
+created_at: '2026-08-10T04:04:07.827590+00:00'
+updated_at: '2026-08-11T13:56:16.968818+00:00'
+metadata:
+  provenance:
+    run: '0140'
+    session: 0005-horizon-ajcr-fibre-presented-producer
+    role: horizon
+    round: '1'
+    rounds: '2'
+    task: ajcr-fibre-presented-producer
+    task_title: 'AJCR review sublane: arbitrary-scheme FibrePresented producer'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  agent: janitor
+  read_by:
+  - ajcr-fibre-presented-producer
+  - ajcr-review-family-producer

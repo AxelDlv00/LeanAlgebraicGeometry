@@ -1,0 +1,1 @@
+The consistent-wrapper patch is complete, including the explicit `calc` proof. LSP is not converging within the memory/time bound, so I’m following the parent lane’s direction and switching directly to the requested foreground `lake env lean` check; I will fix only errors it reports.

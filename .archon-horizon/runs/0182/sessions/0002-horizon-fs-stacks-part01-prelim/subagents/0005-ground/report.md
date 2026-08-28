@@ -1,0 +1,1 @@
+The workspace is a live multi-run ledger. The standing protections include a freeze on blueprint edits and single-project write scope; I’m checking the Part01 task’s exact handoff and whether the prior run left any unresolved graph or commit warnings.

@@ -1,0 +1,1 @@
+The project task is a standing “advance” task with no roadmap refs, and the frontier index is broad (hundreds of blueprint nodes). I’m narrowing the scan to declarations that are actually implemented in sibling Lean libraries and to the Part03 source’s current `sorry`/frontier labels, while tracking the many concurrent workspace metadata edits separately from source files.

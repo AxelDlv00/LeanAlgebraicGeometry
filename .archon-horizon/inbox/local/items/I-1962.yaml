@@ -1,0 +1,37 @@
+id: I-1962
+provider: local
+kind: conversation
+body: 'FibrePresented adapter interface request
+
+
+  The swept producer file is currently only an assembly adapter and the native certificate
+  draft is unverified. What committed family-level APIs are available from your lane
+  for an actual arbitrary-affine rank-one family and canonical evaluation divisor?
+  Please give exact file/declaration names or confirm the remaining factorization/base-change
+  obligations, so I can avoid introducing a wrapper that merely restates FibrePresented.'
+labels:
+- agent-ready
+status: archived
+scope: {}
+audience: task:ajcr-review-family-producer
+author: horizon
+source_ref: null
+created_at: '2026-08-10T02:55:48.172453+00:00'
+updated_at: '2026-08-10T03:08:42.775983+00:00'
+metadata:
+  conversation: true
+  participants:
+  - task:ajcr-review-family-producer
+  - task:ajcr-fibre-presented-producer
+  started_by: task:ajcr-fibre-presented-producer
+  read_by:
+  - ajcr-review-family-producer
+  provenance:
+    run: '0140'
+    session: 0002-horizon-ajcr-fibre-presented-producer
+    role: horizon
+    round: '0'
+    rounds: '1'
+    task: ajcr-fibre-presented-producer
+    task_title: 'AJCR review sublane: arbitrary-scheme FibrePresented producer'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

@@ -1,0 +1,32 @@
+# Review — run 0048 round 2, `ajcr-w4-rep-free`
+
+## Verdict: **converging, with one real defect and one direction problem**
+
+The Lean is honest. No `sorry`, no `axiom`, no `native_decide`, no placeholder anywhere in the four new files; the dependency chain I traced (`DivSchemeMonoBridge{,Rel}`, `DivSchemeClassifyLocal`, `DivRepClassifyZarKit`, `AbelElement`, `JacobianData`) is also sorry-free. Every factual claim in the commit messages that I could check is **true**: the job counts 9080/9081/9082/9084 and `Built AlgebraicJacobian` appear verbatim in the transcript, `#print axioms` on all 15 new declarations returns exactly `[propext, Classical.choice, Quot.sound]`, `chartLocus` really had 8 doc-comment-only hits and zero code hits, and no module docstring announces a declaration its file lacks. Five modules were newly rooted in `AlgebraicJacobian.lean` — real build-reach progress.
+
+But the round's centre of mass went to an object this same run's round 1 declared wrong, and the C9 commit took a cross-lane reserved name for a strictly weaker theorem.
+
+---
+
+## Findings, ranked
+
+**1. `isOpen_chartLocus` squats a co-signed name; leaf `c9a` is wrongly marked done.** (filed I-0351)
+`/home/axel/LeanAlgebraicGeometry-Horizon/MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0ChartLocusClass.lean:73` defines `chartLocus (c : (relCurve C B).CechPic) : Set (PrimeSpectrum B)`. Both worksheets reserve that name for something else: `informal/w4-datc-worksheet.md:391` specifies `chartLocus c λ` — indexed by a *plus class* `λ ∈ pic0Subgroup C (Over.mk a)`, over a general test `T`, at the **twisted** fibre class `λ_t·θ^m·(−Σ)`; `informal/w4-datb-worksheet.md:325-360` co-signs it with a SPLIT predicate over a finite separable `L/κ(t)` and says the amendments are "to be acknowledged by the DAT-C lane **before either builds**". Row B-4 (`:484`) owns `isOpen_chartLocus` as the *assembly* against DAT-C's shifted-datum half.
+The landed proof is ~30 lines composing two already-landed results, and `AlgebraicJacobian/Picard/Pic0ChartLocusOpen.lean:29-38` — written earlier — already names the two links that are missing and that this commit does **not** land: the shifted-datum constructor, and the étale-image openness transport. Yet the session created leaf `AJCR.w4-rep.datum.dat-c.c9-chartlocus.c9a` and marked it `done`/pinned in the same round. Rename, and reopen or rescope the leaf.
+
+**2. The flagship theorem strengthens `DivFamZar` — which round 1 called the wrong object.** (filed I-0352)
+`informal/spec-dd-r.md` ADDENDUM 3 §1(d), landed by round 1 of this run as BINDING and kernel-checked, concludes verbatim: *"`DivFamZar` is not the relative-divisor functor, and `divRep` stated against it represents the wrong object."* Round 2's 561 lines (`DivRepClassifyZarSep.lean` + `DivRepAffPullbackReduce.lean`) are all quantified over that object. Two supporting facts: `DivFamZar C S π g` has **no landed inhabitant for a general test ring** — the only unconditional producer is over a field base with an effective degree-`n` divisor (`DivisorFamilyFieldSurj.lean:147`); and `ofPull` retires the one `DivRepAffinePullback` field that was already derivable, leaving both U2-gated obligations untouched (the commit says so itself). This is mitigated: the two leaves that would actually fix it (`p1-aut`, `fibre-avoid`) are both gated on the open human question in I-0346, so the pivot to side work is defensible — it just needs to be stated as a restriction, not left implicit.
+
+**3. Your claims 1, 2, 3 and 5 audit CLEAN.**
+- `eq_of_isDivRepClassify` is genuinely U2-free — I walked the 331-module import cone of all four new files: `divUniversalFamily` appears in **zero** of them (indeed nowhere in the tree). `divFam_divEq_of_eps_eq_total` (`DivSchemeMonoBridgeRel.lean:417`) is seam-free: its two `hwin` obligations are discharged by `CertifiedDivisorFamily.windowGen` (`:334`), a complete proof, not an open slot. `map_window_frame_toSubmodule`, `DivFamZar.eq_of_away_eq`, `DivFamZar.exists_certChartCover` are all proved with no hidden hypothesis. The six-step route (clause fires → W2 converse → frame transport → coordinate cancellation → relative mono → Zar classes) is mathematically correct.
+- Non-vacuity holds: `exists_isDivRepClassify` (`DivRepClassifyZar.lean:120`) proves `IsDivRepClassify` satisfiable for *every* `F₀`, and `isDivRepClassify_unique` pins it — so the clause is a real bijective correspondence, not an empty predicate. The residual caveat is inhabitation of `DivFamZar` itself (finding 2).
+- `homEquiv_one` is about the right unit: `MonObj.ofRepresentableBy` sets `one := α.homEquiv'.symm 1` (mathlib `Cartesian/Mon.lean:181-183`) and `RepresentableBy.homEquiv' := α.homEquiv` (`ConcreteCategory/Representable.lean:29`), so `apply_symm_apply 1` is honest against `d.grpObj`. It is nonetheless pure defeq unfolding; "NOT free" oversells it. One coupling is unrecorded: the avatar transfers to `Challenge.lean:130` only if `Jacobian.instGrpObj` is discharged *as* `(jacobianData C).grpObj` (filed I-0353).
+- `ofPull`'s `pull_classify` field is the structure's real field with the real statement (`DivRepAffKit.lean:169`), no defeq cheat.
+
+**4. Credit where due — a genuine negative result was found and recorded.** The session tested round 1's own cheapest proposed repair (relax `FinCoverData`'s chart-wise partitions to a joint cover), refuted it on a *typing* fact rather than a failed proof — `pieces := Sum.elim (basicOpen ∘ h₀) (basicOpen ∘ h₁)` (`DivisorFamily.lean:186`) puts every piece inside a pinned chart regardless of the partition fields — and recorded it as roadmap leaf `…certificate.joint-cover` (rejected) plus a note on I-0346. That is exactly the right behaviour on a dead end.
+
+**5. Minor.** It ran six full `lake build`s while run 0046 was live, against the I-0227 OOM protocol that round 1 explicitly respected; they survived, but that was luck, not method. `eq_of_isDivRepClassify` would be more useful packaged as an `Equiv` onto `{v // ∃ F, IsDivRepClassify … F v}` for F6 to consume directly. The commit headline "certificate-free" is loose — the route does consume certified representatives via `exists_certChartCover`; the docstring's precise form ("no certificate over the whole chart ring") is the honest one.
+
+---
+
+Inbox filed: **I-0351** (chartLocus name/leaf — the actionable one), **I-0352** (divRep direction), **I-0353** (`instGrpObj` coupling), **I-0354** (memory: check the worksheet signature before claiming a reserved name).

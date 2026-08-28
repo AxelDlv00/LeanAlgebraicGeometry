@@ -1,0 +1,1 @@
+The target file is new, so the pre-edit LSP probe can only report “file not found”; the neighboring `IdealTheory.lean` probe is clean and confirms the project environment. Mathlib exposes the exact equivalence `Ideal.IsPrime.mul_le`, so the implementation can be a thin, axiom-free wrapper with both the implication and converse `↔`.

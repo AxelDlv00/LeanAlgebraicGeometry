@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "status": "rejected",
+  "reason": "Explicit B/E carrier pinning did not produce the finite-stage reflection .olean within the bounded 240-second build; elaboration remained active with no diagnostics, so the optimization is not certified.",
+  "created_at": "2026-08-21T01:18:17.017300+00:00",
+  "files": [
+    {
+      "path": "MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0FiniteStageTripleTransitionFaceReflection.lean",
+      "artifact": "files/MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0FiniteStageTripleTransitionFaceReflection.lean",
+      "bytes": 16178,
+      "lines": 372
+    }
+  ],
+  "diagnostics": ""
+}

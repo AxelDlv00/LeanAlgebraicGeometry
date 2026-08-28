@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Wegener",
+  "agent_path": "/root/janitor",
+  "agent_role": "janitor",
+  "depth": 1,
+  "model": "gpt-5.6-sol",
+  "name": "janitor",
+  "native_subagent_id": "01a042de-6d7a-73e2-b1d9-3abb69e2f438",
+  "ok": true,
+  "parent_session": "0006-horizon-fs-milne",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "completed",
+  "subagent_type": "janitor",
+  "summary": "Janitor audit complete. I made no Lean, blueprint, or project-source edits.",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 7947432,
+    "tokens_out": 24183
+  }
+}

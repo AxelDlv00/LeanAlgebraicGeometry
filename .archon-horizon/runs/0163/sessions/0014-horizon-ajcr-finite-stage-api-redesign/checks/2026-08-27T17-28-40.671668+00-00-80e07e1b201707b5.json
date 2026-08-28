@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "fingerprint": "80e07e1b201707b5",
+  "command": [
+    "lake",
+    "env",
+    "lean",
+    "/home/axel/LeanAlgebraicGeometry-Horizon/MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Descent/AffineRingGlueData.lean"
+  ],
+  "cwd": "MainProjects/Algebraic-Jacobian-Challenge-Rebuild",
+  "status": "passed",
+  "ok": true,
+  "returncode": 0,
+  "timed_out": false,
+  "reused": false,
+  "wait_seconds": 303.787,
+  "duration_seconds": 11.096,
+  "started_at": "2026-08-27T17:28:29.576026+00:00",
+  "finished_at": "2026-08-27T17:28:40.671668+00:00",
+  "finished_epoch": 1787851720.671668
+}

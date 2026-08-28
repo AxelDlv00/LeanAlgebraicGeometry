@@ -1,0 +1,21 @@
+{
+  "agent_nickname": "Boole",
+  "agent_path": "/root/hygiene_review",
+  "agent_role": "janitor",
+  "depth": 1,
+  "model": "gpt-5.6-luna",
+  "name": "janitor",
+  "native_subagent_id": "01a045c9-f188-7402-a832-be7ea1654077",
+  "parent_session": "0010-horizon-fs-mumford",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "running",
+  "subagent_type": "janitor",
+  "summary": "",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 397500,
+    "tokens_out": 3657
+  }
+}

@@ -1,0 +1,41 @@
+id: AJC.maintenance.blueprint.print
+title: Printable warning budget
+projects:
+- Algebraic-Jacobian-Challenge
+summary: Two settled LuaLaTeX passes produce 618 pages with 734 overfull boxes and
+  95 missing-character notices. There are zero underfull boxes, unresolved references
+  or citations, rerun requests, or TeX errors; the parallel HTML blueprint also renders
+  successfully.
+status: pending
+kind: blueprint
+priority: normal
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+metadata:
+  author: horizon
+  created_at: '2026-07-24T13:48:49.027034+00:00'
+  provenance:
+    run: '0046'
+    session: 0038-horizon-ajc-optimize
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajc-optimize
+    task_title: Make the project clean and optimized
+    projects: Algebraic-Jacobian-Challenge
+  parent: AJC.maintenance.blueprint
+  updated_at: '2026-07-29T02:58:54.352975+00:00'
+  pinned_commits:
+  - c1d535ce6
+  - 9ee3841b2
+  - 9dac093df
+  - a49bf3c38
+  - f5e9c3b5e
+  - 21eefaf60
+  - 6aff13c82
+  - 3d7c61a1b
+  milestone: AJC.maintenance

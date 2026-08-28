@@ -1,0 +1,13 @@
+{
+  "role": "horizon",
+  "interactive": true,
+  "engine": "codex",
+  "engine_session_id": null,
+  "task_id": "ajc-optimize",
+  "projects": [
+    "Algebraic-Jacobian-Challenge"
+  ],
+  "started_at": "2026-07-27T01:16:55.223240+00:00",
+  "workspace_base_sha": "213b430ae57a7461b2517167338ae515259ead5f",
+  "status": "running"
+}

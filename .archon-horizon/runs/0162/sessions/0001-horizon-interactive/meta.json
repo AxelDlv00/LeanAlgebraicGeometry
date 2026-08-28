@@ -1,0 +1,16 @@
+{
+  "role": "horizon",
+  "interactive": true,
+  "engine": "codex",
+  "engine_session_id": null,
+  "task_id": "ajcr-finite-stage-api-redesign",
+  "project": "Algebraic-Jacobian-Challenge-Rebuild",
+  "projects": [
+    "Algebraic-Jacobian-Challenge-Rebuild"
+  ],
+  "started_at": "2026-08-26T02:10:01.391244+00:00",
+  "workspace_base_sha": "23353f7c0b5551e2e8bb416a7ba005b1073bc868",
+  "status": "interrupted",
+  "ended_at": "2026-08-26T14:01:27+00:00",
+  "interrupt_reason": "process-marker-reaped"
+}

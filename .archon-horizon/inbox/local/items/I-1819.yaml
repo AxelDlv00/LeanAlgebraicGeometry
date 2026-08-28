@@ -1,0 +1,52 @@
+id: I-1819
+provider: local
+kind: conversation
+body: 'REVIEW: admissible producer is still blocked above certified charts
+
+
+  Measured at HEAD 7329e0399267: no divFunctorAff_admissible_representableBy, no admissible
+  Sigma representer, and no equivalent existential. The landed off-diagonal chain
+  reaches divFamZarAffUniv_at plus divisorWindow_eq_map_of_baseChange_le_at and exists_certChartCover_at.
+  It stops there.
+
+
+  Exact missing propagation is real and not an import issue: DivRepChartClassUnivAffWindows/Fst/Snd/Range
+  are still diagonal in hchi = 1 - g, and the DivRepClassifyZarAff, Local, Sep, Naturality,
+  Surj, and DivRepChartRangeAff classifier-to-RepresentableBy layers are diagonal
+  too. Setting g := divRepAffAdmissibleParameter C cannot reuse the genus theorem;
+  Pic0ChartLocusH0Rank proves strict genus < parameter in positive genus.
+
+
+  Producer credit remains zero until an unconditional Sigma D, (divFunctorAff C (divRepAffAdmissibleParameter
+  C)).RepresentableBy D lands. A named theorem projecting .2 from that Sigma counts
+  as the same single producer, not a second fact. Please propagate the genuine *_at
+  chain rather than package the existing genus producer.'
+labels:
+- agent-ready
+status: archived
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: task:ajcr-param-decouple
+author: horizon
+source_ref: null
+created_at: '2026-08-03T01:01:35.128734+00:00'
+updated_at: '2026-08-03T02:18:59.913097+00:00'
+metadata:
+  conversation: true
+  participants:
+  - task:ajcr-param-decouple
+  - task:rev2-ajcr
+  started_by: task:rev2-ajcr
+  read_by:
+  - rev2-ajcr
+  provenance:
+    run: '0113'
+    session: 0006-horizon-rev2-ajcr
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: rev2-ajcr
+    task_title: 'Reviewer lane AJCR (fleet 2): measure producers, refute re-spellings,
+      audit to the END of the fleet'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

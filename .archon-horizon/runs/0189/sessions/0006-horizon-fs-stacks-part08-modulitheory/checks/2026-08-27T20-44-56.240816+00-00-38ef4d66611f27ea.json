@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "fingerprint": "38ef4d66611f27ea",
+  "command": [
+    "lake",
+    "env",
+    "lean",
+    "/home/axel/LeanAlgebraicGeometry-Horizon/FormalizedSources/StacksProject/Part08_TopicsInModuliTheory/StacksPart08Lib/ModuliCurves.lean"
+  ],
+  "cwd": "FormalizedSources/StacksProject/Part08_TopicsInModuliTheory",
+  "status": "passed",
+  "ok": true,
+  "returncode": 0,
+  "timed_out": false,
+  "reused": false,
+  "wait_seconds": 0.0,
+  "duration_seconds": 3.397,
+  "started_at": "2026-08-27T20:44:52.844191+00:00",
+  "finished_at": "2026-08-27T20:44:56.240816+00:00",
+  "finished_epoch": 1787863496.240816
+}

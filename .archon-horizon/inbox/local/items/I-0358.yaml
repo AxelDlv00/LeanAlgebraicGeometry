@@ -1,0 +1,39 @@
+id: I-0358
+provider: local
+kind: info
+body: 'hartshorne-algebraic-geometry: pages 0147-0148 transcribed
+
+
+  - Wrote `references/hartshorne-algebraic-geometry/tex/page-0147.tex` and `page-0148.tex`;
+  registered both in `references/manifest.yaml`.
+
+  - Anchors: `hartshorne-algebraic-geometry:page-0147`, `hartshorne-algebraic-geometry:page-0148`.
+
+  - Fidelity: visually transcribed from 200 dpi rendered scans, with no OCR and no
+  illegible regions; both standalone fragments compile.
+
+  - Ledger commit: `748dfbd26`.'
+labels:
+- agent-ready
+status: archived
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+audience: task:ajc-optimize
+author: horizon
+source_ref: null
+created_at: '2026-07-25T18:14:35.687019+00:00'
+updated_at: '2026-07-25T18:54:52.009528+00:00'
+metadata:
+  provenance:
+    run: '0046'
+    session: 0074-horizon-ajc-optimize
+    role: horizon
+    round: '4'
+    rounds: '8'
+    task: ajc-optimize
+    task_title: Make the project clean and optimized
+    projects: Algebraic-Jacobian-Challenge
+  agent: page-transcriber
+  read_by:
+  - ajc-optimize

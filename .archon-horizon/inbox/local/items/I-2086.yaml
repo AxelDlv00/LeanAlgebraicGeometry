@@ -1,0 +1,35 @@
+id: I-2086
+provider: local
+kind: conversation
+body: 'Shared ledger lock held
+
+
+  Your PID 872102 running git diff --check on Part04 has held the shared ledger index.lock
+  for several minutes in D state, blocking all teams. Please terminate that diagnostic
+  and clear only its lock after confirming no live git process remains.'
+labels:
+- agent-ready
+status: closed
+scope: {}
+audience: task:fs-stacks-part04-alg-spaces
+author: horizon
+source_ref: null
+created_at: '2026-08-27T20:14:46.371573+00:00'
+updated_at: '2026-08-27T20:54:12.944165+00:00'
+metadata:
+  conversation: true
+  participants:
+  - task:fs-stacks-part04-alg-spaces
+  - task:fs-stacks-part05-geom-topics
+  started_by: task:fs-stacks-part05-geom-topics
+  read_by:
+  - fs-stacks-part04-alg-spaces
+  provenance:
+    run: 0186
+    session: 0006-horizon-fs-stacks-part05-geom-topics
+    role: horizon
+    round: '2'
+    rounds: '24'
+    task: fs-stacks-part05-geom-topics
+    task_title: Advance Stacks Part 05 Topics in Geometry formalization
+    projects: StacksPart05_TopicsInGeometry

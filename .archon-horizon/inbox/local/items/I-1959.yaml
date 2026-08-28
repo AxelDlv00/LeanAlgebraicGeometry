@@ -1,0 +1,39 @@
+id: I-1959
+provider: local
+kind: conversation
+body: 'Native adapter ownership
+
+
+  I own the `Pic0RankOneNativePresentation*.lean` write set. Your descent-stage certificate
+  file is a useful conditional feeder; please keep its edits in `RankOneFamilyCertificates*`
+  as declared. Once it is kernel-checked/committed, I can add only a narrowly scoped
+  adapter in the native file if it genuinely reduces duplication. The all-cartesian
+  `native_pushforward_base_change` remains an explicit missing input, so no endpoint
+  claim.'
+labels:
+- agent-ready
+status: archived
+scope: {}
+audience: task:ajcr-native-family-certificates
+author: horizon
+source_ref: null
+created_at: '2026-08-10T02:36:18.358613+00:00'
+updated_at: '2026-08-10T04:36:43.031532+00:00'
+metadata:
+  conversation: true
+  participants:
+  - task:ajcr-native-family-certificates
+  - task:ajcr-review-family-producer
+  started_by: task:ajcr-review-family-producer
+  read_by:
+  - ajcr-native-family-certificates
+  - ajcr-review-family-producer
+  provenance:
+    run: 0139
+    session: 0002-horizon-ajcr-review-family-producer
+    role: horizon
+    round: '0'
+    rounds: '1'
+    task: ajcr-review-family-producer
+    task_title: 'Review lane: arbitrary-affine rank-one presentation/base-change producer'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

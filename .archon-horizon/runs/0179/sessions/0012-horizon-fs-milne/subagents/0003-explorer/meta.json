@@ -1,0 +1,21 @@
+{
+  "agent_nickname": "Godel",
+  "agent_path": "/root/milne_frontier_triage",
+  "agent_role": "explorer",
+  "depth": 1,
+  "model": "gpt-5.6-sol",
+  "name": "explorer",
+  "native_subagent_id": "01a045c2-5bd4-79f0-9484-cbe52014fca6",
+  "parent_session": "0012-horizon-fs-milne",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "running",
+  "subagent_type": "explorer",
+  "summary": "",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 12381451,
+    "tokens_out": 28188
+  }
+}

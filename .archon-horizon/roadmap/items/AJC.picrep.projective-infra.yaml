@@ -1,0 +1,74 @@
+id: AJC.picrep.projective-infra
+title: Demand-led projective-morphism infrastructure
+projects:
+- Algebraic-Jacobian-Challenge
+summary: 'PENDING at concrete Picard-component gates, with the owned projective API
+  frozen and verified. The Grassmannian program, carried-O(1) vocabulary, and demand
+  ledger remain complete. One demand-led boundary unit has now crossed into D3: EffectiveCartierSupport
+  proves finite support fibres for relative effective Cartier divisors, consumes the
+  existing locally-quasi-finite reduction, is rooted in AlgebraicJacobian, and is
+  synthesized in DemandLedger. This closes the finite-fibre sub-obligation only; D3
+  still owes the whole-fibre ExistsUnique locus, and D2 still owes rank/evaluation/naturality.
+  Relative Proj and ampleness remain intentionally absent until a represented Picard
+  component exposes exact signatures. No duplicate Proj, ample, very-ample, or generic
+  quasi-finiteness vocabulary is authorized.
+
+
+  --- RETAINED PRIOR SUMMARY (verbatim) ---
+
+  The prior summary below is retained verbatim because it records the exact D3/D4
+  activation boundary. Its opening status is superseded only by the finite-fibre D3
+  advance in dd26508b7485 and cb15d595e91d; its demand gates and vocabulary constraints
+  stay live.
+
+
+  PENDING at external Picard producer gates, with the owned projective API frozen
+  and verified. The demanded Grassmannian program is complete: Plucker immersion,
+  projectivity/H-quasi-projectivity over Spec Z, and field-representer transport are
+  proved and consumed by the generic D4 composition adapter. IsHQuasiProjectiveWith
+  remains the sole carried-O(1) very-ample vocabulary. Reactivate only when D3 supplies
+  an actual whole-fibre base locus Z and a quasi-compact immersion Z -> representingScheme,
+  or when a represented Picard component exposes an exact relative-Proj/ample signature.
+  Current D2 evaluation/rank/naturality and D3 locus construction are Picard-side
+  producer work; pointedPicSharpQuasiProjectivePieces_demand still packages that missing
+  representation and is not projective infrastructure. No duplicate Proj, ample, or
+  very-ample declarations are authorized.'
+status: pending
+kind: workspace
+priority: high
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+metadata:
+  author: horizon
+  created_at: '2026-08-03T02:54:57.504457+00:00'
+  provenance:
+    run: '0114'
+    session: 0002-horizon-ajc-proj-infra
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajc-proj-infra
+    task_title: 'AJC: own and build the projective-morphism infrastructure (Proj /
+      ample / very-ample), demand-first'
+    projects: Algebraic-Jacobian-Challenge
+  parent: AJC.picrep
+  milestone: AJC.picrep
+  updated_at: '2026-08-04T01:57:54.170184+00:00'
+  pinned_commits:
+  - f34a2841b0169d4e989263a4f77551778e5ff883
+  - cb15d595e91dbc239e94329f56f994228937d04c
+  - dd26508b7485d91ac602c6ede8db3229623486f0
+  - 0f28a9e8e5
+  - 650b9f291c30d87948001a1bab2bdb261f826219
+  - 11ca92188ad855dc2fd9571be92e8618fcf5345d
+  - 2273350a86d16ebe92532139498cf2e1564948ae
+  - a2a9285bfe36c7b528dbd70bffe8d7c86a58ff0e
+  - 0c8cd28814ad2c30add09d508760bfcacc904eb6
+  - 178f6526aff4b5133cfc4d7481579a1a805dcfe9
+  - d5675c08bf742df417e90e17805d8c5e56fe7b8b
+  - c7bcebbed219ee90c1b4794f63016f5643f9e9d2
+  - 1b7d1ff7b6ccc4e48622a3ee4191be1b89612e26

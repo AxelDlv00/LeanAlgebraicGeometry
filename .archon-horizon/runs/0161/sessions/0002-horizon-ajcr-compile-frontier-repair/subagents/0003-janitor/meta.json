@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Rawls",
+  "agent_path": "/root/final_hygiene",
+  "agent_role": "janitor",
+  "depth": 1,
+  "model": "gpt-5.6-sol",
+  "name": "janitor",
+  "native_subagent_id": "01a03953-2b41-73a2-90c1-bf9f469b0a78",
+  "ok": true,
+  "parent_session": "0002-horizon-ajcr-compile-frontier-repair",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "completed",
+  "subagent_type": "janitor",
+  "summary": "Read-only audit complete. Run 0161 owns four clean source commits:",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 2339158,
+    "tokens_out": 14918
+  }
+}

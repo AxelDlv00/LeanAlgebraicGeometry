@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Goodall",
+  "agent_path": "/root/janitor_start",
+  "agent_role": "janitor",
+  "depth": 1,
+  "model": "gpt-5.6-sol",
+  "name": "janitor",
+  "native_subagent_id": "01a01fdf-8c35-7901-875e-c26e72a88f9a",
+  "ok": true,
+  "parent_session": "0084-horizon-ajcr-reviewer-full",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "completed",
+  "subagent_type": "janitor",
+  "summary": "Pre-terminal hygiene audit completed read-only; no source, inbox, roadmap, managed file, or Git state was changed.",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 2288984,
+    "tokens_out": 10261
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Goodall",
+  "agent_path": "/root/cross_api",
+  "agent_role": "explorer",
+  "depth": 1,
+  "model": "gpt-5.6-sol",
+  "name": "explorer",
+  "native_subagent_id": "01a044f7-4b35-7a91-9480-8cd58fc5ad8e",
+  "ok": false,
+  "parent_session": "0008-horizon-fs-milne",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "interrupted",
+  "subagent_type": "explorer",
+  "summary": "",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 20749316,
+    "tokens_out": 51707
+  }
+}

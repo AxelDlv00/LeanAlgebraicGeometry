@@ -1,0 +1,1 @@
+The full `Products.lean` now passes both LSP diagnostics and `lake env lean`. I’m adding a small groupoid-specific projection API (the product inverse and its two components), since the existing `Groupoids.lean` only exposes closure and generic involution; these component lemmas are the useful bridge for pointwise groupoid arguments.

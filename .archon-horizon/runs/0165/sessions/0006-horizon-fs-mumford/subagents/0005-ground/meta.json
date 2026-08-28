@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Poincare",
+  "agent_path": "/root/ground_final",
+  "agent_role": "ground",
+  "depth": 1,
+  "model": "gpt-5.6-luna",
+  "name": "ground",
+  "native_subagent_id": "01a04329-d512-7760-a6dd-ba4b6a15e766",
+  "ok": true,
+  "parent_session": "0006-horizon-fs-mumford",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "completed",
+  "subagent_type": "ground",
+  "summary": "Mumford is clean: `horizon-git status --short --untracked-files=all -- FormalizedSources/AbelianVarieties/Mumford` is empty. HEAD is `301a63f3418e`; latest Mumford commit is `66f33874a5` (\u201cpackage finite uniformized torsion\u201d), preceded by t",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 163688,
+    "tokens_out": 1504
+  }
+}

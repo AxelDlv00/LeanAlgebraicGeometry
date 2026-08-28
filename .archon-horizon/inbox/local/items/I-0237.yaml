@@ -1,0 +1,86 @@
+id: I-0237
+provider: local
+kind: info
+body: 'G-5 COMPLETE: divClassify LANDED (files 5-6, Noetherian-free)
+
+
+  Commits b7753a2c6 (file 5, Picard/DivSchemeClassifyLocal.lean, 273L) + 08638d433
+  (file 6, Picard/DivSchemeClassifyGlobal.lean, 444L), each with its own root wire,
+  private-index CAS. lake build green (8766 jobs); all keystones axiom-clean [propext,
+  Classical.choice, Quot.sound]; zero sorries. G-5 is DONE: with I-0236''s files 1-4
+  this closes the whole w4-g5 six-file plan.
+
+
+  KEYSTONE: divClassify (DivSchemeClassifyGlobal) — w4-g5 SS4 in the exists-unique
+  form, WITHOUT [IsNoetherianRing S] (the w4-ddr9 SS0.4 binding change, honored: no
+  Noetherian hypothesis anywhere in either file; divRep''s homEquiv can consume as-is).
+  Clause shape: unique v : Spec S -> DivScheme! with, for EVERY (f0 : S), chart framing
+  (i, j, w : PairChartRing ->a[k] Away f0) satisfying divClassifyAff''s hw1/hw2 at
+  DivFam.mapAlg (Away f0) g F: Spec.map(algebraMap S (Away f0)) >> v >> divSchemeIota!
+  = Spec.map w >> pairChartMap i j. The clause is localization-stable BY CONSTRUCTION
+  (its proof at any f0 is the W3 pullback-cover comparison, so the arbitrary-f0 pattern
+  of w4-g5 SS4 is built in — DD-2''s ext_of_le_cover consumers get the strong form,
+  worksheet risk 2 did not materialize).
+
+
+  FILE 5 (per-piece layer, all generic in a structure-compatible tower S -> T -> B
+  of k-algebras): map_divFamWindowGr_algHom (tower transport of the packaged epsilon
+  point along ANY beta : T ->a[k] B with beta.toRingHom.comp(algebraMap S T) = algebraMap
+  S B — the file-4 map_divFamWindowGr mechanism freed from away-localizations); map_window_frame_toSubmodule
+  (THE W3 LEFT-LEG PUSHFORWARD, w4-ddr9 SS2.1 step 4: point framing the restricted
+  window at T |-> point framing at B, via Grassmannian.ext against congrAmbient(divFamWindowGr)
+  + K4 map_congrAmbient); divFamEps_carvePairArrow_mapAlg (carve transport, generic
+  multiplier mu: baseChange_carvePairArrow_eq_zero_iff.mp + G-2 window_mapAlg through
+  the pinned windowBaseChange orientation — I-0236''s ''one remaining obligation''
+  discharged); divClassifyLocal (per-piece exists-unique v_t = divClassifyAff at mapAlg
+  T g F; T any S-tower k-algebra, not just localizations).
+
+
+  FILE 6 W3 MECHANISM: specMap_pairChartMap_eq_of_window_frames — two framings over
+  T, T'' pushed along structure-compatible legs into ANY overlap k/S-tower ring B
+  present the same Spec B -> grPair: both pushed pairTaut images have toSubmodule
+  = coordinate image of epsilon(mapAlg B g F) (map_window_frame_toSubmodule per leg
+  + Module.Grassmannian.map_comp), Grassmannian.ext, then W2 specMap_pairChartMap_eq_of_map_pairTaut_eq
+  fires. Instantiated at B := Away fa (x)_S Away fb with legs includeLeft (S := k)
+  (hbeta = rfl) and includeRight.restrictScalars k (hbeta = includeLeftRingHom_comp_algebraMap.symm);
+  IsScalarTower k S B by hand via of_algebraMap_eq'' + algebraMap_def; B stays abstract
+  (no Away(fa*fb) identification). Stitch: glueMorphisms over affineOpenCoverOfSpanRangeEqTop
+  of the frame cover; uniqueness divScheme_hom_ext piecewise + Cover.hom_ext; arbitrary-f0
+  clause via Cover.pullback1 of Spec(Away f0) along the frame cover + pullback.condition
+  + iota_glueMorphisms_assoc + W3 at (f0, f t).
+
+
+  LEAN GOTCHAS (memory-worthy): (a) rw of pullbackSpecIso_inv_fst/snd_assoc FAILS
+  against cover-spelled pullback legs ((affineOpenCoverOfSpanRangeEqTop ..).openCover.f
+  t — ''not type-correct under instances transparency'', pullback1''s I0 vs Fin m);
+  the repair is the I-0232 pattern: prove the overlap equality in a standalone lemma
+  stated PURELY in the Spec.map (algebraMap ..) spelling (pullback_chartMap_compat)
+  and consume by exact — defeq bridges the cover spelling where rw cannot. (b) A refine
+  chain (?_ : _ = ..).trans (hW3.trans ?_) with metavariable-laden middles on tensor-ring
+  composites blows whnf (800k heartbeats); equation-haves (hL/hR : Spec.map incl >>
+  Spec.map w = Spec.map (comp), by rw [<- Spec.map_comp]; rfl) + plain rw + exact
+  is instant. (c) rw [<- Spec.map_comp] does NOT auto-close the residual ofHom-comp
+  goal; the trailing rfl is needed (default-transparency, instant). (d) The tensor-ring
+  instance pack (Algebra k (Away fa (x)_S Away fb) via leftAlgebra + SMulCommClass
+  tower instances) synthesizes automatically at maxSynthPendingDepth 3; only IsScalarTower
+  k S B needed a haveI.
+
+
+  DDR-9 CONSUMES: divClassify as the backward half of divRepAff (w4-ddr9 SS2.1 steps
+  3-5 are now fully landed vocabulary); the W3 lemma specMap_pairChartMap_eq_of_window_frames
+  is stated at GENERIC T, T'', B so the composite-cover overlaps {h l * f t} of SS2.1
+  step 4 consume it directly; divClassifyLocal at generic T serves step 3 with hcarve
+  from DDR-9.0 divFamEps_carve transported by divFamEps_carvePairArrow_mapAlg (also
+  generic in the multiplier).'
+labels:
+- agent-ready
+status: archived
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-19T01:50:49.144185+00:00'
+updated_at: '2026-07-20T03:14:47.382460+00:00'
+metadata: {}

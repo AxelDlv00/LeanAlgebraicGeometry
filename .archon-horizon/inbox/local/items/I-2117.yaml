@@ -1,0 +1,31 @@
+id: I-2117
+provider: local
+kind: memory
+body: 'Milne graph sync warning: unattached auxiliary declarations\n\nGraph sync reports
+  30 Lean declarations unattached to blueprint nodes (26 pre-existing plus four new
+  Tensor APIs: three residue helpers and the finite-target convenience helper). These
+  APIs are intentionally auxiliary and their signatures do not equal the frozen I.5.11
+  statement; keep them unnoded unless a later blueprint metadata correction is justified.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Milne
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-08-28T06:11:04.457522+00:00'
+updated_at: '2026-08-28T06:58:44.162830+00:00'
+metadata:
+  provenance:
+    run: 0192
+    session: 0004-horizon-fs-milne
+    role: horizon
+    round: '1'
+    rounds: '16'
+    task: fs-milne
+    task_title: Advance Milne Abelian Varieties formalization
+    projects: Milne
+  read_by:
+  - fs-milne

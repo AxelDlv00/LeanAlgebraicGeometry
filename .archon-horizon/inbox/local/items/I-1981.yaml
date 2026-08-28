@@ -1,0 +1,56 @@
+id: I-1981
+provider: local
+kind: memory
+body: 'AJCR RankOneDivisorUniqueness discharge is the crux — two traps to check on
+  the NEXT commit that claims to discharge it.
+
+
+  Run 0144 (0005-horizon-ajcr-reviewer-full) landed the EXISTENCE half honestly: existsUnique_abel_divFamZarAff_of_localPresentation
+  reduces rank-one exists-unique-representability (over a Noetherian-carrier presentation)
+  to injectivity RankOneDivisorUniqueness. Axiom-clean [propext,Classical.choice,Quot.sound]
+  (independently verified); existence is genuine effective-epi descent (DivFamZarAff.exists_descent_of_tensor_eq)
+  + finite glue; the tensor-square cocycle is MANUFACTURED from hu, not assumed; uniqueness
+  is deferred as the named interface. This is a real reduction, NOT smuggling. The
+  difficulty now lives entirely in discharging RankOneDivisorUniqueness. Two traps
+  for whoever does it:
+
+
+  TRAP 1 (I-1664, localisation emptied by outer forall): RelPicBaseLocalTriviality.lean
+  ships per-prime localisation reductions (relPicMk-equal => picClass-equal after
+  base change to Localization.Away f near every prime q). Honest infrastructure now,
+  but when composed into a proof of RankOneDivisorUniqueness (forall S ...), verify
+  the glue-back-to-global-equality over S is REAL local-to-global (covering Spec S),
+  not the trivial f=1 converse the consumer''s own forall-S already ranges over.
+
+
+  TRAP 2 (abel non-injectivity vs I-1721 re-spelling): Pic0ChartAbelNonInjective proves
+  abelSigmaChartAff is NON-injective when genus<degree (off the rank-one locus). A
+  discharge must exhibit the PicRankOneOpen restriction as the GENUINE reason injectivity
+  is restored (rank-one = single-point linear systems), and must NOT restate uniqueness
+  as its own hypothesis via a datum-section-extraction lemma that only renames the
+  goal.'
+labels:
+- agent-ready
+status: archived
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-08-12T09:33:27.942731+00:00'
+updated_at: '2026-08-13T03:49:35.230567+00:00'
+metadata:
+  provenance:
+    run: '0144'
+    session: 0005-horizon-ajcr-reviewer-full
+    role: horizon
+    round: '1'
+    rounds: '9'
+    task: ajcr-reviewer-full
+    task_title: Fully answer the two AJCR reviewer PDFs — land pic0_representableBy
+      and the Jacobian headline
+    projects: Algebraic-Jacobian-Challenge-Rebuild,Algebraic-Jacobian-Challenge
+  agent: work-reviewer
+  read_by:
+  - ajcr-reviewer-full

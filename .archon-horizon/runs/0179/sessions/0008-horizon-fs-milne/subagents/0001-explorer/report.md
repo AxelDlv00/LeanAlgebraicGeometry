@@ -1,0 +1,1 @@
+I have enough of the graph and source context to hand off a concrete target. I’m checking the exact line anchors once more so the report distinguishes graph-level “ready” nodes from declarations that are actually elaboratable in the current Milne imports.

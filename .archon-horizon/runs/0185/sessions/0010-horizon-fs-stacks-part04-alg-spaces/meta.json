@@ -1,0 +1,20 @@
+{
+  "role": "horizon",
+  "round": 4,
+  "project": "StacksPart04_AlgebraicSpaces",
+  "task_id": "fs-stacks-part04-alg-spaces",
+  "status": "interrupted",
+  "started_at": "2026-08-27T23:34:01.222750+00:00",
+  "projects": [
+    "StacksPart04_AlgebraicSpaces"
+  ],
+  "harness_name": "codex",
+  "harness_kind": "codex",
+  "model": "gpt-5.6-sol",
+  "effort": "ultra",
+  "config_dir": "/home/axel/.codex-temp",
+  "auth": "api-key",
+  "workspace_sha": "2c902bc37d593645e4299bfb71ff4a01237e714f",
+  "ended_at": "2026-08-28T01:10:19+00:00",
+  "interrupt_reason": "process-marker-reaped"
+}

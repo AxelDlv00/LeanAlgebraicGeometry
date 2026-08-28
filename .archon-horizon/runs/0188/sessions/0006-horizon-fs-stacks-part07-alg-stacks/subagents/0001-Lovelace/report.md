@@ -1,0 +1,1 @@
+The draft now elaborates cleanly after two API corrections: product isomorphism components need explicit `isIso_prod_iff` instances, and `rep.pullback` returns a chosen object rather than an existential. I’m doing the final axiom check and inspecting the diff before handing the file to you.

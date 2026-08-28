@@ -1,0 +1,14 @@
+Checkpoint report for `/root`:
+
+1. **Convergence:** Yes. Both landed commits are mathematically coherent and move toward the stated curve/sheaf substrate.
+
+   - [`Chapter2Sheaves.lean:168`](/home/axel/LeanAlgebraicGeometry-Horizon/FormalizedSources/Curves/Hartshorne/HartshorneLib/Chapter2Sheaves.lean:168) exposes ringed/locally-ringed spaces, the contravariant structure-sheaf map, local stalks, and identity/composition laws. These are faithful wrappers over Mathlib’s `AlgebraicGeometry.RingedSpace` API.
+   - [`Chapter1Curves.lean:23`](/home/axel/LeanAlgebraicGeometry-Horizon/FormalizedSources/Curves/Hartshorne/HartshorneLib/Chapter1Curves.lean:23) gives the fraction-field valuation dichotomy and the normal one-dimensional local-domain/DVR equivalence. The latter correctly uses Mathlib’s `DimensionLEOne` plus the non-field hypothesis.
+
+2. **Verification:** `horizon check HartshorneLib --timeout 1800 --json` passed all 2594 jobs. `lean_verify` on all nine exported declarations reported only the standard `propext`, `Classical.choice`, and `Quot.sound`; source scans found no suspicious patterns. No `sorry`, `admit`, or project axioms occur in committed Hartshorne Lean.
+
+3. **Blueprint/graph agreement:** Ledger and source contents match both commits; blueprint files are unchanged. The main coherence gap is graph attachment: the new declarations have `formalizes = null`, so `def:II-2-ringed`, `thm:ha-ch1-6-1A`, and `thm:ha-ch1-6-2A` (as well as the curve-valuation definition) remain TeX nodes with `lean_status: empty`. This is understandable under the frozen-blueprint protection, but should be treated as deliberate rather than as completed source bindings.
+
+4. **Workspace hygiene:** At review time, the only Hartshorne ledger changes outside these commits were the in-flight `Chapter4Curves.lean` and `Chapter2LineBundles.lean`. The divisor worker’s tightened type is the right direction: retain a generic `PointDivisor`, and restrict source-facing curve divisors/degree to the field/algebraically-closed, integral, smooth relative-dimension-one, proper setting. Be mindful that `Hartshorne.CurveDivisor` differs from AJCR-Rebuild’s established `AlgebraicGeometry.Scheme.CurveDivisor`; an alias or documented namespace choice may improve interoperability.
+
+5. **Next action:** Land and verify the corrected curve-divisor/degree unit first, because it consumes the DVR substrate and is closest to the Jacobian-facing curve API. The line-bundle unit is also a sound bounded parallel contribution: [`Chapter2LineBundles.lean:21`](/home/axel/LeanAlgebraicGeometry-Horizon/FormalizedSources/Curves/Hartshorne/HartshorneLib/Chapter2LineBundles.lean:21) matches AJCR-Rebuild’s existing local-triviality predicate, with correct isomorphism transport. Add the standard copyright header, import it from `HartshorneLib.lean`, and consider exposing it under the established `Scheme.Modules` namespace to avoid a parallel `Hartshorne.IsLineBundle` API.

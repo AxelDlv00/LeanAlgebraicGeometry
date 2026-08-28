@@ -1,0 +1,56 @@
+id: ajcr-abel-quotient
+project: Algebraic-Jacobian-Challenge-Rebuild
+objective: 'You are the SOLE OWNER of roadmap row AJCR.w4-rep.datum.dat-d.ddr.datum-tail.abel-quotient
+  - the last real mathematical gate of wave 4. CONTEXT: divFunctorAff_admissible_representableBy
+  now exists unconditionally (kernel-verified, axioms [propext, Classical.choice,
+  Quot.sound], root build green 9468 jobs) and Pic0AtlasFromDivRepAffChallenge.lean
+  already feeds it to abelSigmaChartAff. THE ENDPOINT (copy of the row, which is authoritative):
+  produce noncomputable def pic0AdmissibleAbelQuotientRepresenter : Sigma fun Q =>
+  (pic0TypeFunctor C).RepresentableBy Q, whose body directly consumes divFunctorAff_admissible_representableBy,
+  chooses the admissible Abel datum internally, and constructs in Scheme over Spec
+  k an effective quotient of divRepAffAdmissibleScheme C by the kernel relation of
+  the concrete admissible chartValueAffTrans (or its abelSigmaChartAff form). Identify
+  that kernel with the relative and etale-local linear-equivalence relation seen by
+  relPic and picEt including the picFromBase quotient; prove the admissible Abel transformation
+  is locally surjective as an etale-sheaf map; identify the quotient Yoneda functor
+  with pic0TypeFunctor C; establish the required quasi-projectivity or concrete project-local
+  embedding. FORBIDDEN (from the row, enforced by review): no equivalent Prop/class/structure/Nonempty/existential
+  reformulation, no projection wrapper, no binder for RepresentableBy/IsRepresentable/HasSmoothProperQuotient/open-atlas
+  coverage/rational points/local surjectivity/kernel-pair representer/quotient data.
+  The raw admissible Abel map cannot be an open atlas (positive-dimensional linear-system
+  fibres) - the quotient is the only route. METHOD: this is the corrected Altman-Kleiman
+  step - read the Kleiman reference in references/ before designing. Decompose into
+  committed sub-rows under the abel-quotient row as you go; commit each verified piece.
+  A lane ajcr-abel-surj may be proving the etale-local surjectivity input in ITS OWN
+  module - agree the exact lemma statement with it via inbox DM (to task:ajcr-abel-surj)
+  early, and consume its lemma rather than duplicating it. VERIFY: #print axioms on
+  every claimed piece, per-module lake build, root build green before any done claim.
+  Follow the BINDING protocol at MainProjects/Algebraic-Jacobian-Challenge-Rebuild/informal/protocol-concurrent-lanes.md.'
+title: 'Own the Altman-Kleiman quotient: pic0AdmissibleAbelQuotientRepresenter'
+explanation: ''
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+priority: urgent
+status: cancelled
+write_set:
+  files: []
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+  declarations: []
+  blueprint_nodes: []
+  workspace: false
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+roadmap_refs:
+- AJCR.w4-rep.datum.dat-d.ddr.datum-tail.abel-quotient
+inbox_refs:
+- I-1847
+- I-0074
+- I-1683
+- I-1850
+artifact_refs: []
+created_at: '2026-08-03T07:05:30.237970+00:00'
+updated_at: '2026-08-04T01:48:23.752883+00:00'
+metadata:
+  author: human

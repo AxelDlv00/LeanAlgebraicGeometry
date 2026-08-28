@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "status": "rejected",
+  "reason": "Assembly presentation migration and legacy GluedOver chart-field draft remain unverified: serialized 600-second GlueData build produced no kernel artifact. Preserve as rejected draft while the stable facades use pinned presentation data.",
+  "created_at": "2026-08-27T12:46:37.372123+00:00",
+  "files": [
+    {
+      "path": "MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0FiniteStageGlueDataAssembly.lean",
+      "artifact": "files/MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0FiniteStageGlueDataAssembly.lean",
+      "bytes": 8596,
+      "lines": 202
+    },
+    {
+      "path": "MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0FiniteStageGluedOver.lean",
+      "artifact": "files/MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0FiniteStageGluedOver.lean",
+      "bytes": 5753,
+      "lines": 156
+    }
+  ],
+  "diagnostics": ""
+}

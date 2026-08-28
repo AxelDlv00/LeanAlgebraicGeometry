@@ -1,0 +1,82 @@
+id: I-0183
+provider: local
+kind: memory
+body: 'DD-1 (dat-d.dd1) stage (c) progress (2026-07-17, Opus prover). LANDED 3 green
+  commits in Picard/DivisorFamilyPullback.lean (wired, root green 8644 jobs, all axiom-clean
+  [propext, Classical.choice, Quot.sound]):
+
+
+  (1) 0f593c8ee FinCoverData.baseChange + pieces_baseChange: Fin-indexed cover data
+  pushes forward along R->R2 via relSectionsMap; pieces to preimages (relSectionsMap_basicOpen).
+  Tensor-free, mirrors datum BasicOpenCoverData.baseChange.
+
+
+  (2) e330a5090 relTermBaseChangeAlg: chart-ring base change R2(x)_R Gamma(C_R,V_R)
+  =alg_R2 Gamma(C_R2,V_R2) as ALGEBRA equiv (promotion of relTermBaseChange via AlgEquiv.ofLinearEquiv;
+  mult because relSectionsMap is a ring hom; map_mul by tmul_mul_tmul+smul_mul_smul_comm+induction).
+  Carries 1(x)h |-> h2=relSectionsMap h. Has _tmul.
+
+
+  (3) 8789c8eea THE LINCHPIN pieceTermBaseChangeAlg: R2(x)_R Gamma(D(h)) =alg_R2 Gamma(D(h2)),
+  h2=relSectionsMap h -- "localization commutes with base change at the pieces", the
+  blocker I-0167 named for (c2). CLEAN route (NOT the datum termPieceLocalized monster):
+  mathlib IsLocalization.Away.tensorProductEquivTMulRight (source = away loc of R2(x)Gamma(V_R)
+  at 1(x)h) .trans (IsLocalization.algEquiv...).restrictScalars R2, with Gamma(D(h2))
+  exhibited as the SAME away loc via IsLocalization.of_ringEquiv_left relTermBaseChangeAlg.toRingEquiv
+  (Submonoid.map_powers, heh:e(1(x)h)=h2). Key: FinCoverData charts (relCover C R
+  (fiberTwoCover pi)).V0/V1 are DEFEQ to (fst).left preimages of fiberChart0/1 pi
+  (pullbackProd.V0:=(fst).left preimage; fiberChart @[reducible]), hence affine (relCover_isAffineOpen)
+  + preimage-shaped so relSectionsMap/relTermBaseChange/isLocalization_basicOpen apply.
+  Tower isScalarTower_R_chart_piece.
+
+
+  STILL OPEN (rest of (c) + all of (e)); (e)/DD-2 remain BLOCKED on DivFam.mapAlg
+  (do NOT claim (e) launchable yet):
+
+  - pieceTermBaseChangeAlg naturality: pieceTermBaseChangeAlg(1(x)s)=pieceMap s, pieceMap=(relCurveMap).appLE(basicOpen
+  h)(basicOpen h2).hom. SKETCH: IsLocalization.ringHom_ext (powers h) -> reduce to
+  s=algebraMap Gamma(V_R) Gamma(D(h)) a; e1 rule tensorProductEquivTMulRight_tmul
+  + algEquiv.commutes + appLE naturality; both = algebraMap Gamma(V_R2) Gamma(D(h2))(relSectionsMap
+  a).
+
+  - colength transport R2(x)colength(j)=colength2(j): quotient right-exactness carrying
+  span{1(x)f} to span{f2} (needs naturality rule; f2=pullbackEqn).
+
+  - overlap linchpin: generalize pieceTermBaseChangeAlg to D.pieces i inf j (also
+  a basic open of the affine overlap chart, relCover_inf) for ovlColength/ovlProd
+  + delta-naturality (id(x)delta=delta2).
+
+  - (c1) Module.Finite.baseChange + Module.Projective.baseChange on colength(j) via
+  colength iso.
+
+  - (c2) FlatCokernel.tensorKer_bijective_of_flat_coker (L3, consumes cert c3/c4 of
+  d): R2(x)Glued=ker(id(x)delta)=Glued2; finite+proj by baseChange; rankAtStalk via
+  Module.rankAtStalk_baseChange.
+
+  - (c3)/(c4) Module.Flat.baseChange + right-exactness.
+
+  - LocalEquations.pullback hreg: d.pullback(relCurveMap C R R2), hreg via FlatCokernel.includeRight_mem_nonZeroDivisors_of_flat_coker
+  through germ/stalk seam (IsAffineOpen.germ_mem_nonZeroDivisors, I-0162). Couples
+  to DivisorAdaptation.baseChange; pt/piece_le refinement transport is the tricky
+  bit (pulled cover indexes by points of C_R2; need y with f.base y = A.pt j or restructure).
+
+  - DivFam.mapAlg (eqns:=d.pullback, adaptation:=baseChange, certified:=transport)
+  + DivEq-invariance (setoid lift) + id/comp laws.
+
+  - (e) VEHICLE Picard/DivisorFamilyVehicle.lean: verbatim PicEt.lean:46-140 (subtype
+  over T.left.affineOpens, compat via DivFam.mapAlg (Over.resAlgHom T h)) + divFamAffineEquiv.
+  Needs mapAlg.
+
+
+  Sibling colength/field-dict lane shares DivisorFamilyField*.lean -- NOT touched.
+  dd1 roadmap left active.'
+labels:
+- agent-ready
+status: archived
+scope: {}
+audience: horizon
+author: Opus prover DD-1c
+source_ref: null
+created_at: '2026-07-17T02:53:45.485048+00:00'
+updated_at: '2026-07-20T03:15:56.388935+00:00'
+metadata: {}

@@ -1,0 +1,70 @@
+id: I-0429
+provider: local
+kind: issue
+body: 'B3 is now closed, but NO object in the tree satisfies the three AJC curve binders
+  — the headlines apply to nothing concrete yet
+
+
+  `Adelic.instHasRigidPushforwardOfCurve` (`Picard/RigidPushforwardGammaBaseChange.lean:253`)
+  needs `[SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom] [GeometricallyIntegral
+  C.hom]`. Measured with `lake env lean` (four `infer_instance` probes):
+
+
+  - `p1Over k` — `IsProper` **synthesizes**; `SmoothOfRelativeDimension 1 (p1Over
+  k).hom` and `GeometricallyIntegral (p1Over k).hom` **both fail**.
+
+  - `𝔸(1; Spec k)` — `GeometricallyIntegral` synthesizes (mathlib); `SmoothOfRelativeDimension
+  1` and `IsProper` fail (the latter correctly).
+
+  - `Scheme.HasRigidPushforward (p1Over k)` therefore **fails to synthesize**.
+
+
+  **This is not a defect of session 0006** and not a relocated gap: the three binders
+  are the campaign''s standing premise, quantified over all such `C`, so B3 is correctly
+  stated. The specific worry that `[HasFiniteMapToP1 C]` might be a silent producer-less
+  gate is **refuted** — it is derived from the three via `existsNonconstantMapToProjInt_of_ajc`
+  (`RiemannRoch/Adelic/NonconstantToP1.lean:1067`), and `rigidPushforwardGammaBaseChange_proved`
+  carries only the three binders and is axiom-clean.
+
+
+  **What it does mean:** no theorem in this tree can yet be applied to a named curve,
+  so per `I-0416` the word "unconditional" in the new docstrings should stay scoped
+  to "no gate beyond the AJC hypotheses". The two concrete missing prerequisites,
+  both already named in the source, are:
+
+
+  - `GeometricallyIntegral (terminal.from (Proj ℤ[X₀,X₁]))` — `Picard/RigidPushforwardP1Constants.lean:207-210`
+  calls it "a missing mathlib fact about `Proj`"; it would give `GeometricallyIntegral
+  (p1Over k).hom` for every field at once.
+
+  - smoothness of relative dimension 1 for `ℙ¹` — no producer anywhere; note `Curve/GeometricallyReduced.lean:172`
+  derives `GeometricallyIntegral` from `SmoothOfRelativeDimension n` + `GeometricallyIrreducible`,
+  so one smoothness instance would halve the gap.
+
+
+  **Next action:** decide explicitly whether exhibiting one witness curve is in campaign
+  scope, and record the decision; do not let "unconditional" drift into "instantiated".'
+labels:
+- agent-ready
+status: archived
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-27T12:37:14.992483+00:00'
+updated_at: '2026-07-27T13:33:58.459171+00:00'
+metadata:
+  provenance:
+    run: '0053'
+    session: 0006-horizon-ajc-gate
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: ajc-gate
+    task_title: Close the HasRigidPushforward representability gate
+    projects: Algebraic-Jacobian-Challenge
+  agent: work-reviewer
+  read_by:
+  - ajc-rr

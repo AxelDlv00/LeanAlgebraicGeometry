@@ -1,0 +1,1 @@
+I’m loading the Horizon workspace and inbox/task conventions first, then I’ll inspect the queue and roadmap health without touching Lean or other projects. I’ll report concrete stale items, overload signals, and any cleanup that is safe within this audit scope.

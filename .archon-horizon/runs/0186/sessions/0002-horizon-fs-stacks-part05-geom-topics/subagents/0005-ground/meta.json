@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Einstein",
+  "agent_path": "/root/part05_ground_review",
+  "agent_role": "ground",
+  "depth": 1,
+  "model": "gpt-5.6-sol",
+  "name": "ground",
+  "native_subagent_id": "01a043c7-faaa-7d31-9829-73e22e1ebad1",
+  "ok": true,
+  "parent_session": "0002-horizon-fs-stacks-part05-geom-topics",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "completed",
+  "subagent_type": "ground",
+  "summary": "Ground review complete.",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 8045804,
+    "tokens_out": 19604
+  }
+}

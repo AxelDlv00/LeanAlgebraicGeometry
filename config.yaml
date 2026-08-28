@@ -5,7 +5,7 @@ workspace:
   delegation:
     allow_launch_tasks: true
     allow_launch_runs: true
-    max_parallel_sessions: 3
+    max_parallel_sessions: 14
     accounts:
     - name: codex-temp
       harness: codex
@@ -85,3 +85,140 @@ projects:
       git_dir: .archon-horizon/vcs/Algebraic-Jacobian-Challenge.git
     build:
       command: lake build
+  Milne:
+    path: FormalizedSources/AbelianVarieties/Milne
+    type: lean
+    build:
+      command: lake build
+    freeze:
+      files:
+      - PROVENANCE.md
+      - '**/PROVENANCE.md'
+      - '**/GFDL-1.2.txt'
+      - '**/stacks-my.bib'
+      declarations: []
+  Mumford:
+    path: FormalizedSources/AbelianVarieties/Mumford
+    type: lean
+    build:
+      command: lake build
+    freeze:
+      files:
+      - PROVENANCE.md
+      - '**/PROVENANCE.md'
+      - '**/GFDL-1.2.txt'
+      - '**/stacks-my.bib'
+      declarations: []
+  Hartshorne:
+    path: FormalizedSources/Curves/Hartshorne
+    type: lean
+    build:
+      command: lake build
+    freeze:
+      files:
+      - PROVENANCE.md
+      - '**/PROVENANCE.md'
+      - '**/GFDL-1.2.txt'
+      - '**/stacks-my.bib'
+      declarations: []
+  StacksPart01_Preliminaries:
+    path: FormalizedSources/StacksProject/Part01_Preliminaries
+    type: lean
+    build:
+      command: lake build
+    freeze:
+      files:
+      - PROVENANCE.md
+      - '**/PROVENANCE.md'
+      - '**/GFDL-1.2.txt'
+      - '**/stacks-my.bib'
+      declarations: []
+  StacksPart02_Schemes:
+    path: FormalizedSources/StacksProject/Part02_Schemes
+    type: lean
+    build:
+      command: lake build
+    freeze:
+      files:
+      - PROVENANCE.md
+      - '**/PROVENANCE.md'
+      - '**/GFDL-1.2.txt'
+      - '**/stacks-my.bib'
+      declarations: []
+  StacksPart03_TopicsInSchemeTheory:
+    path: FormalizedSources/StacksProject/Part03_TopicsInSchemeTheory
+    type: lean
+    build:
+      command: lake build
+    freeze:
+      files:
+      - PROVENANCE.md
+      - '**/PROVENANCE.md'
+      - '**/GFDL-1.2.txt'
+      - '**/stacks-my.bib'
+      declarations: []
+  StacksPart04_AlgebraicSpaces:
+    path: FormalizedSources/StacksProject/Part04_AlgebraicSpaces
+    type: lean
+    build:
+      command: lake build
+    freeze:
+      files:
+      - PROVENANCE.md
+      - '**/PROVENANCE.md'
+      - '**/GFDL-1.2.txt'
+      - '**/stacks-my.bib'
+      declarations: []
+  StacksPart05_TopicsInGeometry:
+    path: FormalizedSources/StacksProject/Part05_TopicsInGeometry
+    type: lean
+    build:
+      command: lake build
+    freeze:
+      files:
+      - PROVENANCE.md
+      - '**/PROVENANCE.md'
+      - '**/GFDL-1.2.txt'
+      - '**/stacks-my.bib'
+      declarations: []
+  StacksPart06_DeformationTheory:
+    path: FormalizedSources/StacksProject/Part06_DeformationTheory
+    type: lean
+    build:
+      command: lake build
+    freeze:
+      files:
+      - PROVENANCE.md
+      - '**/PROVENANCE.md'
+      - '**/GFDL-1.2.txt'
+      - '**/stacks-my.bib'
+      declarations: []
+  StacksPart07_AlgebraicStacks:
+    path: FormalizedSources/StacksProject/Part07_AlgebraicStacks
+    type: lean
+    build:
+      command: lake build
+    freeze:
+      files:
+      - PROVENANCE.md
+      - '**/PROVENANCE.md'
+      - '**/GFDL-1.2.txt'
+      - '**/stacks-my.bib'
+      declarations: []
+  StacksPart08_TopicsInModuliTheory:
+    path: FormalizedSources/StacksProject/Part08_TopicsInModuliTheory
+    type: lean
+    build:
+      command: lake build
+    freeze:
+      files:
+      - PROVENANCE.md
+      - '**/PROVENANCE.md'
+      - '**/GFDL-1.2.txt'
+      - '**/stacks-my.bib'
+      declarations: []
+freeze:
+  files:
+  - FormalizedSources/StacksProject/convert_stacks_chapter.py
+  - FormalizedSources/README.md
+  - FormalizedSources/StacksProject/README.md

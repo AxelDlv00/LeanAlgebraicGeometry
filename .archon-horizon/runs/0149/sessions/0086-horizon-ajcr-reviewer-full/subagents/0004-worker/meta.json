@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Kant",
+  "agent_path": "/root/snd_instance_probe",
+  "agent_role": "worker",
+  "depth": 1,
+  "model": "gpt-5.6-luna",
+  "name": "worker",
+  "native_subagent_id": "01a02104-7627-7131-a6ea-011a944e384f",
+  "ok": true,
+  "parent_session": "0086-horizon-ajcr-reviewer-full",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "completed",
+  "subagent_type": "worker",
+  "summary": "Probe complete; no production files were edited.",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 1453634,
+    "tokens_out": 5059
+  }
+}

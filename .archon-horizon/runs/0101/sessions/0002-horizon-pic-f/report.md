@@ -1,0 +1,1 @@
+The required pre-edit diagnostics found a real parser break already at HEAD in our owned file: the declaration docstring precedes `set_option ... in`, so Lean expects a declaration immediately and rejects the option command. I’m fixing that ordering first as a standalone verified repair, then I’ll add the Grassmannian-point constructor.

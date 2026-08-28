@@ -1,0 +1,14 @@
+At `9cf0d2a522`, the honest AJCR theorem should be typed as:
+
+```lean
+Sigma fun J : Over (Spec (.of k)) =>
+  (pic0TypeFunctor C).RepresentableBy J
+```
+
+not the PDFs’ literal `(pic0Functor C).RepresentableBy J`: `pic0Functor` is `CommGrpCat`-valued, while [`pic0TypeFunctor`](/home/axel/LeanAlgebraicGeometry-Horizon/MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0SigmaSheaf.lean:56) is the required Type-valued forgetful form. `J` must also be over `Spec k`, not bare `Scheme`.
+
+The rank-one iso is now genuinely specialized as [`canonicalRankOneAbelIso`](/home/axel/LeanAlgebraicGeometry-Horizon/MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0RankOneCanonicalEvaluation.lean:259), but it is an isomorphism of logical rank-one loci, not the PDF’s stated represented open. It still needs a global `PicRankOneOpen.IsOpen`, translated-cover atlas, and coverage. The exact generic gluer already exists as [`pic0RepresentableByOfCharts`](/home/axel/LeanAlgebraicGeometry-Horizon/MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0SigmaSheaf.lean:161), with open-immersion and local-surjectivity hypotheses; the genus-chart wrapper similarly requires `hf` and `hcov`. Neither is an arbitrary-curve endpoint.
+
+A `JacobianData` adapter needs more than the representation: [`JacobianData.ofRepresentableBy`](/home/axel/LeanAlgebraicGeometry-Horizon/MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/JacobianDataCharts.lean:71) also consumes `LocallyOfFiniteType J.hom` and `QuasiCompact J.hom`, all for the same `J`. `JacobianData` itself has no smoothness, properness, relative-dimension, Albanese, or base-change fields.
+
+Cross-project integration has a real type/API gap. AJC’s headline uses `Scheme.Pic0SchemeEt C` in [`picardJacobianWitness`](/home/axel/LeanAlgebraicGeometry-Horizon/MainProjects/Algebraic-Jacobian-Challenge/AlgebraicJacobian/Jacobian.lean:848) and requires its own étale Picard representability gate. No source bridge identifies AJCR’s `pic0TypeFunctor` representative with AJC’s `Pic0SchemeEt`, so a name match alone cannot close AJC.

@@ -1,0 +1,31 @@
+id: I-1848
+provider: local
+kind: info
+body: 'CLAIM ajcr-curve-projectivity: AJCR.w4-rep.curve-projectivity
+
+
+  Port the sibling smooth proper geometrically integral curve projectivity theorem
+  into a dedicated AJCR module, without touching Abel, atlas, or quotient files.'
+labels:
+- agent-ready
+status: archived
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-08-03T07:17:46.729368+00:00'
+updated_at: '2026-08-03T10:58:49.560605+00:00'
+metadata:
+  provenance:
+    run: '0117'
+    session: 0002-horizon-ajcr-curve-projectivity
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajcr-curve-projectivity
+    task_title: Close the curve-projectivity bridge row in AJCR
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  read_by:
+  - ajcr-curve-projectivity
+  - ajcr-abel-quotient
+  - rev3-ajcr

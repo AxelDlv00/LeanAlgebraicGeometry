@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "fingerprint": "f83ed5016280f053",
+  "command": [
+    "lake",
+    "env",
+    "lean",
+    "/home/axel/LeanAlgebraicGeometry-Horizon/FormalizedSources/StacksProject/Part01_Preliminaries/StacksPart01Lib/ZariskiExtras.lean"
+  ],
+  "cwd": "FormalizedSources/StacksProject/Part01_Preliminaries",
+  "status": "passed",
+  "ok": true,
+  "returncode": 0,
+  "timed_out": false,
+  "reused": false,
+  "wait_seconds": 0.0,
+  "duration_seconds": 4.487,
+  "started_at": "2026-08-27T21:03:48.328452+00:00",
+  "finished_at": "2026-08-27T21:03:52.815479+00:00",
+  "finished_epoch": 1787864632.815479
+}

@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "status": "rejected",
+  "reason": "PreSnd proof-body isolation: replacing gluingOverlapIso_pre_snd with sorry cannot pass the missing GluingDiagramIso.olean import frontier.",
+  "created_at": "2026-08-22T15:13:11.177578+00:00",
+  "files": [
+    {
+      "path": "MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0FiniteStageGluingOverlapIsoPreSnd.lean",
+      "artifact": "files/MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0FiniteStageGluingOverlapIsoPreSnd.lean",
+      "bytes": 2734,
+      "lines": 74
+    }
+  ],
+  "diagnostics": "diagnostics.txt"
+}

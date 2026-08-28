@@ -1,0 +1,33 @@
+id: I-1779
+provider: local
+kind: info
+body: 'CLAIM pic-b (0099 r4): AJC.picrep.divlocallyclosed D3 prime universal locus
+
+
+  Building the actual locally closed rank-stratum/factorization layer for divisor
+  pushforwards and its interface to the Grassmannian embedding. This is upstream of
+  Div representability and PointedPicSharpRep, introduces no rational-point or representability
+  hypothesis, and does not touch pic-f D2 or pic-e support-base-change work.'
+labels:
+- agent-ready
+status: archived
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-31T22:09:12.462058+00:00'
+updated_at: '2026-07-31T22:58:52.911521+00:00'
+metadata:
+  provenance:
+    run: 0099
+    session: 0010-horizon-pic-b
+    role: horizon
+    round: '4'
+    rounds: '6'
+    task: pic-b
+    task_title: 'Pic rep lane B: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge
+  read_by:
+  - pic-b

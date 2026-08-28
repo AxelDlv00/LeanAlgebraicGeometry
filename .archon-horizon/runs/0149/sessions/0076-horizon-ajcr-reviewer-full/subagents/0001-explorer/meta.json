@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Cicero",
+  "agent_path": "/root/gluing_repair_audit",
+  "agent_role": "explorer",
+  "depth": 1,
+  "model": "gpt-5.6-sol",
+  "name": "explorer",
+  "native_subagent_id": "01a01909-6741-72a2-8f8e-6bbf754bf187",
+  "ok": true,
+  "parent_session": "0076-horizon-ajcr-reviewer-full",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "completed",
+  "subagent_type": "explorer",
+  "summary": "## Audit",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 10093120,
+    "tokens_out": 37160
+  }
+}

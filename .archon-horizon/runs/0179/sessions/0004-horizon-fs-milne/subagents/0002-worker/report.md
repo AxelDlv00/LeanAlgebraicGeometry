@@ -1,0 +1,1 @@
+The index is now correctly staged with only `LocalProperties.lean`, but the ledger repository has an `index.lock` held by another concurrent Horizon commit. I’m checking whether a live git process owns it before retrying, so I don’t remove a legitimate lock.

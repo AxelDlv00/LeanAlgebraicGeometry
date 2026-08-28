@@ -1,0 +1,1 @@
+Inventory delivered to `/root` with exact counts, extraction queries, and hazards. No files or Horizon state were modified, and all I-1988 fenced paths were excluded from classification scope.

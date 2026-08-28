@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Ohm",
+  "agent_path": "/root/ideal_unit",
+  "agent_role": "worker",
+  "depth": 1,
+  "model": "gpt-5.6-sol",
+  "name": "worker",
+  "native_subagent_id": "01a04317-41a4-7c71-b94e-70fb02f1bc47",
+  "ok": false,
+  "parent_session": "0006-horizon-fs-stacks-part01-prelim",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "interrupted",
+  "subagent_type": "worker",
+  "summary": "",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 2697302,
+    "tokens_out": 10171
+  }
+}

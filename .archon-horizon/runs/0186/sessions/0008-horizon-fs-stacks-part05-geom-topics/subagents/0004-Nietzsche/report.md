@@ -1,0 +1,3 @@
+Review complete. The three ledger commits are narrow, ancestry-clean, and mathematically sound; all relevant Lean checks pass with no `sorry`, `admit`, or project axioms. Hgraph reports 774 blueprint nodes, 48 Lean nodes, 282 edges, and zero stale nodes.
+
+One concrete issue remains: `FiniteType.lean`’s multiline `/-! ... -/` before `scheme_finiteType_baseChange_of_mem` confuses the hgraph parser. The generated `scheme_finiteType_comp_of_mem` node has an empty body, while the following node absorbs its proof/comment; a dry-run sync reports `node_changes=2`. Replacing that block with a declaration-local `/-- ... -/` doc comment makes parsing idempotent. Ordinary Git also has an incidental separate commit `6e2e3e5`; the Horizon ledger commits are unaffected.
