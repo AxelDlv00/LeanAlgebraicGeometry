@@ -438,6 +438,109 @@ theorem commutatorPairingBihom_apply (k l : K) :
       Additive.ofMul (E.commutatorPairing k l) :=
   rfl
 
+/-! The radical records the quotient classes whose chosen lifts commute with
+    every quotient lift.  The next results identify it with the image of the
+    center and recover the usual theta-group centralizer criterion. -/
+
+/-- The radical of the quotient commutator pairing. -/
+def commutatorPairingRadical : AddSubgroup K where
+  carrier := {k | ∀ l, E.commutatorPairing k l = 1}
+  zero_mem' := by
+    intro l
+    exact E.commutatorPairing_zero_left l
+  add_mem' := by
+    intro k₁ k₂ hk₁ hk₂ l
+    rw [E.commutatorPairing_add_left, hk₁ l, hk₂ l, one_mul]
+  neg_mem' := by
+    intro k hk l
+    rw [E.commutatorPairing_neg_left, hk l, inv_one]
+
+@[simp]
+theorem mem_commutatorPairingRadical_iff (k : K) :
+    k ∈ E.commutatorPairingRadical ↔
+      ∀ l, E.commutatorPairing k l = 1 :=
+  Iff.rfl
+
+private theorem quotientHom_quotientLift_quotient (g : G) :
+    E.quotientHom (E.quotientLift (E.quotient g)) = E.quotientHom g := by
+  rw [E.quotientHom_quotientLift]
+  change Multiplicative.ofAdd (Multiplicative.toAdd (E.quotientHom g)) =
+    E.quotientHom g
+  exact (Multiplicative.ofAdd : K ≃ Multiplicative K).symm_apply_apply _
+
+/-- A class is in the pairing radical exactly when any lift of it is central. -/
+theorem mem_center_iff_mem_commutatorPairingRadical (g : G) :
+    g ∈ Subgroup.center G ↔ E.quotient g ∈ E.commutatorPairingRadical := by
+  constructor
+  · intro hg l
+    have hcenter : ∀ h : G, h * g = g * h :=
+      Subgroup.mem_center_iff.mp hg
+    have hcomm : Commute g (E.quotientLift l) :=
+      (hcenter (E.quotientLift l)).symm
+    have hscalar : E.commutatorScalar g (E.quotientLift l) = 1 := by
+      apply E.includeScalar_injective
+      rw [E.includeScalar_commutatorScalar,
+        commutatorElement_eq_one_iff_commute.mpr hcomm, map_one]
+    calc
+      E.commutatorPairing (E.quotient g) l =
+          E.commutatorScalar (E.quotientLift (E.quotient g))
+            (E.quotientLift l) := rfl
+      _ = E.commutatorScalar g (E.quotientLift l) :=
+        E.commutatorScalar_eq_of_quotient_eq_left
+          (E.quotientHom_quotientLift_quotient g)
+      _ = 1 := hscalar
+  · intro hg
+    rw [Subgroup.mem_center_iff]
+    intro h
+    have hqg := E.quotientHom_quotientLift_quotient g
+    have hqh := E.quotientHom_quotientLift_quotient h
+    have hpair : E.commutatorPairing (E.quotient g) (E.quotient h) = 1 :=
+      ((E.mem_commutatorPairingRadical_iff (E.quotient g)).mp hg)
+        (E.quotient h)
+    have hscalar : E.commutatorScalar g h = 1 := by
+      calc
+        E.commutatorScalar g h =
+            E.commutatorScalar (E.quotientLift (E.quotient g)) h :=
+          E.commutatorScalar_eq_of_quotient_eq_left hqg.symm
+        _ = E.commutatorScalar (E.quotientLift (E.quotient g))
+              (E.quotientLift (E.quotient h)) :=
+          E.commutatorScalar_eq_of_quotient_eq_right hqh.symm
+        _ = E.commutatorPairing (E.quotient g) (E.quotient h) := rfl
+        _ = 1 := hpair
+    have hcomm : Commute g h := by
+      apply commutatorElement_eq_one_iff_commute.mp
+      calc
+        ⁅g, h⁆ = E.includeScalar (E.commutatorScalar g h) :=
+          (E.includeScalar_commutatorScalar g h).symm
+        _ = E.includeScalar 1 := by rw [hscalar]
+        _ = 1 := map_one E.includeScalar
+    exact hcomm.eq.symm
+
+/-- If the quotient pairing has trivial radical, the center is exactly the
+    scalar subgroup in the theta extension. -/
+theorem center_eq_includeScalar_range_of_commutatorPairingRadical_eq_bot
+    (hrad : E.commutatorPairingRadical = ⊥) :
+    Subgroup.center G = E.includeScalar.range := by
+  ext g
+  constructor
+  · intro hg
+    have hmem : E.quotient g ∈ E.commutatorPairingRadical :=
+      (E.mem_center_iff_mem_commutatorPairingRadical g).mp hg
+    rw [hrad] at hmem
+    have hzero : E.quotient g = 0 := AddSubgroup.mem_bot.mp hmem
+    have hqone : E.quotientHom g = 1 := by
+      have hz := (Multiplicative.toAdd : Multiplicative K ≃ K).injective hzero
+      change E.quotientHom g = (1 : Multiplicative K) at hz
+      exact hz
+    change g ∈ E.includeScalar.range
+    rw [E.exact]
+    exact (MonoidHom.mem_ker).mpr hqone
+  · intro hg
+    rcases hg with ⟨s, rfl⟩
+    rw [Subgroup.mem_center_iff]
+    intro g
+    exact (E.includeScalar_commute s g).eq.symm
+
 end ThetaExtension
 
 end Mumford
