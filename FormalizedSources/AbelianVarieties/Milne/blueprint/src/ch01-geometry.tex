@@ -35,6 +35,8 @@ abelian variety; its group law is written additively.
 \label{thm:milne-rigidity}
 
 \dcref{MI:ch1:1.1}
+\lean{MilneLib.GroupVariety.rigidity_constant_of_two_axes}
+\leanok
 Consider a regular map $\alpha:V\times W\to U$, and assume that $V$ is
 complete and that $V\times W$ is geometrically irreducible.  If there are
 points $u_0\in U(k)$, $v_0\in V(k)$, and $w_0\in W(k)$ such that
@@ -45,6 +47,8 @@ then $\alpha(V\times W)=\{u_0\}$.
 \end{theorem}
 
 \begin{proof}
+
+\leanok
 
 Since the hypotheses continue to hold after extending scalars from $k$ to
 $k^{\rm al}$, we can assume that $k$ is algebraically closed.  Note that $V$
