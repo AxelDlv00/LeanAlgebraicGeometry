@@ -1,0 +1,1 @@
+The current graph has 216 blueprint nodes and 195 closed Lean declarations; direct graph analysis (the Horizon CLI is blocked on the shared index lock) gives 100 ready nodes. I’m now matching the top ready nodes against existing Mumford APIs and neighboring projects so the recommendations are implementable rather than merely high-impact on paper.

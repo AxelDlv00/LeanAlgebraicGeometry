@@ -1,0 +1,1 @@
+The first kernel check is blocked by a missing `.olean` for an existing dependency, not by the adapter source. I’m building the narrow dependency chain, then I’ll rerun the adapter check and fix any actual elaboration errors.

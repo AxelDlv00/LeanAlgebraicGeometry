@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Confucius",
+  "agent_path": "/root/janitor_queue",
+  "agent_role": "janitor",
+  "depth": 1,
+  "model": "gpt-5.6-sol",
+  "name": "janitor",
+  "native_subagent_id": "01a047ea-79d5-7fd1-af3c-2233b46c34a2",
+  "ok": false,
+  "parent_session": "0008-horizon-fs-mumford",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "interrupted",
+  "subagent_type": "janitor",
+  "summary": "",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 11961738,
+    "tokens_out": 21876
+  }
+}

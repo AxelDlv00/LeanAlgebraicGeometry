@@ -1,0 +1,1 @@
+The degree-class theorem checks cleanly and is correctly visible as a `lean_ok` graph node. One policy concern remains: the second commit changes only a frozen blueprint status marker, so I’m recording that directly on the existing traceability issue for durable review.

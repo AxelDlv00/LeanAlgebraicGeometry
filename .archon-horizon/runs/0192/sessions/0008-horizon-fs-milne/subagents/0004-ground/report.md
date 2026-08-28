@@ -1,0 +1,1 @@
+A concrete consistency check surfaced: the latest source commit adds `schemeModule_isIso_of_surjective_on_residue_fibres_of_invertible_stalks`, but I cannot find a corresponding hgraph Lean node, even though `stats` reports `stale: 0`. I’m validating whether this is a genuinely unsynced declaration or an intentional graph exclusion before I flag it as the main issue.

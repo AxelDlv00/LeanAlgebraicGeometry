@@ -1,0 +1,1 @@
+I’m using the `project-git` and `hgraph` skills because this workspace keeps history out of tree and the requested comments live on graph nodes. After that I’ll split the six commits into independent review batches and reconcile the findings against the current Lean state.

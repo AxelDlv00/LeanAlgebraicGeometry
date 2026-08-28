@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Socrates",
+  "agent_path": "/root/frontier_scan",
+  "agent_role": "explorer",
+  "depth": 1,
+  "model": "gpt-5.6-luna",
+  "name": "explorer",
+  "native_subagent_id": "01a04889-9076-7bb2-adbc-efd38441322e",
+  "ok": true,
+  "parent_session": "0010-horizon-fs-hartshorne",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "completed",
+  "subagent_type": "explorer",
+  "summary": "Read-only frontier scan complete; no source edits made.",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 1309757,
+    "tokens_out": 5425
+  }
+}

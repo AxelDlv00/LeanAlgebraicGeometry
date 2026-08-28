@@ -1,0 +1,18 @@
+{
+  "role": "horizon",
+  "round": 2,
+  "project": "Algebraic-Jacobian-Challenge-Rebuild",
+  "task_id": "ajcr-finite-stage-api-redesign",
+  "status": "running",
+  "started_at": "2026-08-28T11:07:13.105613+00:00",
+  "projects": [
+    "Algebraic-Jacobian-Challenge-Rebuild"
+  ],
+  "harness_name": "codex",
+  "harness_kind": "codex",
+  "model": "gpt-5.6-sol",
+  "effort": "ultra",
+  "config_dir": "/home/axel/.codex-temp",
+  "auth": "api-key",
+  "workspace_sha": "778ec12ed9a340bb5f1a29db434000ae0c5d28e3"
+}

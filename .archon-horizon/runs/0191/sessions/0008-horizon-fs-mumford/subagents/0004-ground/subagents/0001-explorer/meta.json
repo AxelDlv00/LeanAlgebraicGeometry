@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Volta",
+  "agent_path": "/root/ground_checkpoint/latest_unit_audit",
+  "agent_role": "explorer",
+  "depth": 2,
+  "model": "gpt-5.6-sol",
+  "name": "explorer",
+  "native_subagent_id": "01a04889-aef4-74c1-aaf7-392d7ab53066",
+  "ok": true,
+  "parent_session": "0008-horizon-fs-mumford",
+  "parent_subagent_id": "01a04883-3ce1-7021-8cc0-4d21c23c6cdb",
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "completed",
+  "subagent_type": "explorer",
+  "summary": "Audit verdict: the four patches are kernel-correct and `lake build MumfordLib` passes all 3,078 jobs; no `sorry`, `admit`, or axiom regressions found.",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 9033439,
+    "tokens_out": 26141
+  }
+}

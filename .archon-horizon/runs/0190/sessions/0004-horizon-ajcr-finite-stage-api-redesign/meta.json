@@ -3,16 +3,23 @@
   "round": 1,
   "project": "Algebraic-Jacobian-Challenge-Rebuild",
   "task_id": "ajcr-finite-stage-api-redesign",
-  "status": "running",
-  "started_at": "2026-08-28T06:14:30.838506+00:00",
   "projects": [
     "Algebraic-Jacobian-Challenge-Rebuild"
   ],
+  "status": "queued",
+  "started_at": "2026-08-28T06:14:30.838506+00:00",
+  "ended_at": "2026-08-28T10:40:25.144604+00:00",
   "harness_name": "codex",
   "harness_kind": "codex",
   "model": "gpt-5.6-sol",
   "effort": "ultra",
   "config_dir": "/home/axel/.codex-temp",
   "auth": "api-key",
-  "workspace_sha": "408b72a0a0bc8eef9e60ecdc9c9a78c948d225b0"
+  "usage": {
+    "tokens_in": 81766571,
+    "tokens_out": 114478,
+    "cost_usd": null
+  },
+  "engine_session_id": "01a04701-79e6-7601-842e-12795f0b3de5",
+  "workspace_sha": "c1b84f214a05afe7206add19a5f32e82bd8c28e2"
 }

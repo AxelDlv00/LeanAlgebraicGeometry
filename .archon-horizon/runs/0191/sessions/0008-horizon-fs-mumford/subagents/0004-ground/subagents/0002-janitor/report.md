@@ -1,0 +1,1 @@
+The snapshot shows a shared queue problem, but I’m checking one more consistency layer: open inbox conversations aimed at tasks that are already terminal or whose runs have ended, plus Mumford’s own issue/protections. That will tell the parent whether any cleanup is warranted beyond the eight orphaned Stacks statuses.

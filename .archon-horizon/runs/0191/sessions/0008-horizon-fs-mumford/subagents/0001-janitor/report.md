@@ -1,0 +1,1 @@
+I confirmed the eight Stacks rows are orphaned: their only corresponding runs (0182–0189) have no live process, no `process.json`, and no session directories, whereas `horizon ps` lists only 0190–0193. I’m resetting those statuses to `queued` through `horizon task set`; this is the control-plane repair the warning is asking for.

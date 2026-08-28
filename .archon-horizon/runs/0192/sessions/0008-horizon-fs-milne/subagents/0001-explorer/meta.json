@@ -6,16 +6,17 @@
   "model": "gpt-5.6-sol",
   "name": "explorer",
   "native_subagent_id": "01a047d3-4b06-7563-bec7-8df1d889b9eb",
+  "ok": true,
   "parent_session": "0008-horizon-fs-milne",
   "parent_subagent_id": null,
   "report_ref": "report.md",
   "role": "subagent",
-  "status": "running",
+  "status": "completed",
   "subagent_type": "explorer",
-  "summary": "",
+  "summary": "I.5.11 (`hgraph/nodes/8206e8e8e5b5.md`, blueprint `src/ch01-geometry.tex:1613-1631`) is still blocked by two genuinely absent ingredients: arbitrary coherent-stalk finiteness and residue-fibre identification. Inbox item I-2118 confirms Math",
   "usage": {
     "cost_usd": null,
-    "tokens_in": 2564449,
-    "tokens_out": 8098
+    "tokens_in": 11169964,
+    "tokens_out": 21896
   }
 }

@@ -1,0 +1,1 @@
+The independent unit audit agrees: all four patches are kernel-clean and algebraically sound, but they do not discharge the source-level theorems. I’m doing one final hygiene pass now, including the shared task-queue warning, then I’ll leave a durable checkpoint note for the parent.

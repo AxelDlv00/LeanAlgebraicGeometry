@@ -6,16 +6,17 @@
   "model": "gpt-5.6-luna",
   "name": "janitor",
   "native_subagent_id": "01a047e1-2cdc-7531-965f-a92c414ef944",
+  "ok": true,
   "parent_session": "0008-horizon-fs-hartshorne",
   "parent_subagent_id": null,
   "report_ref": "report.md",
   "role": "subagent",
-  "status": "running",
+  "status": "completed",
   "subagent_type": "janitor",
-  "summary": "",
+  "summary": "Hygiene review complete; no files or Horizon items were changed.",
   "usage": {
     "cost_usd": null,
-    "tokens_in": 304844,
-    "tokens_out": 2369
+    "tokens_in": 1201115,
+    "tokens_out": 6624
   }
 }

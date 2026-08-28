@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "status": "rejected",
+  "reason": "Final base-change naturality composition proof draft; serialized kernel check timed out at 600s with no diagnostics",
+  "created_at": "2026-08-28T12:27:00.548880+00:00",
+  "files": [
+    {
+      "path": "MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0FiniteStageFinalBaseChange.lean",
+      "artifact": "files/MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0FiniteStageFinalBaseChange.lean",
+      "bytes": 56783,
+      "lines": 1202
+    }
+  ],
+  "diagnostics": ""
+}

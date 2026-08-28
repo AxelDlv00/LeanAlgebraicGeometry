@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Wegener",
+  "agent_path": "/root/ground_review",
+  "agent_role": "ground",
+  "depth": 1,
+  "model": "gpt-5.6-terra",
+  "name": "ground",
+  "native_subagent_id": "01a047e8-6b07-7461-83d2-dc2698097100",
+  "ok": false,
+  "parent_session": "0008-horizon-fs-hartshorne",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "interrupted",
+  "subagent_type": "ground",
+  "summary": "",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 2982438,
+    "tokens_out": 10408
+  }
+}
