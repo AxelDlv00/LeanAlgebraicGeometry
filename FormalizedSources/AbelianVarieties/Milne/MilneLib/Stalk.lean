@@ -81,4 +81,28 @@ theorem stalkLinearMap_germ
   exact TopCat.Presheaf.stalkFunctor_map_germ_apply (F := M.presheaf) (G := N.presheaf)
     U x hx ((toPresheaf _).map g) s
 
+/-- A morphism that is an isomorphism on the underlying additive stalk gives
+a bijective linear map on that stalk. -/
+theorem stalkLinearMap_bijective_of_isIso
+    {X : TopCat.{u}} {R : X.Presheaf CommRingCat.{u}}
+    {M N : PresheafOfModules.{u} (R ⋙ forget₂ _ _)} (g : M ⟶ N) (x : X)
+    (h : IsIso ((TopCat.Presheaf.stalkFunctor AddCommGrpCat.{u} x).map
+      ((toPresheaf _).map g))) :
+    Function.Bijective (stalkLinearMap g x) := by
+  change Function.Bijective ⇑(ConcreteCategory.hom
+    ((TopCat.Presheaf.stalkFunctor AddCommGrpCat.{u} x).map ((toPresheaf _).map g)))
+  exact ConcreteCategory.bijective_of_isIso _
+
+/-- The linear equivalence on stalks induced by an isomorphism of the
+underlying additive stalks. -/
+noncomputable def stalkLinearEquivOfIsIso
+    {X : TopCat.{u}} {R : X.Presheaf CommRingCat.{u}}
+    {M N : PresheafOfModules.{u} (R ⋙ forget₂ _ _)} (g : M ⟶ N) (x : X)
+    (h : IsIso ((TopCat.Presheaf.stalkFunctor AddCommGrpCat.{u} x).map
+      ((toPresheaf _).map g))) :
+    (↑(TopCat.Presheaf.stalk M.presheaf x) : Type u) ≃ₗ[↑(R.stalk x)]
+      (↑(TopCat.Presheaf.stalk N.presheaf x) : Type u) :=
+  LinearEquiv.ofBijective (stalkLinearMap g x)
+    (stalkLinearMap_bijective_of_isIso g x h)
+
 end PresheafOfModules
