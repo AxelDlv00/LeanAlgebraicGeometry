@@ -9,6 +9,7 @@ import StacksPart02Lib.AffineOpens
 import StacksPart02Lib.FiberProducts
 import StacksPart02Lib.GoodSubcover
 import StacksPart02Lib.OpenImmersion
+import StacksPart02Lib.Properties
 import StacksPart02Lib.Schemes
 import StacksPart02Lib.StandardOpen
 
