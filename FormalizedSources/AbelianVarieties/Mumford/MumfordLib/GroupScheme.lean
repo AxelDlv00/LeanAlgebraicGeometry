@@ -99,6 +99,13 @@ theorem comp_pointTranslation_hom (x y : 𝟙_ C ⟶ G) :
     comp_mulRight_inv, comp_mulRight_hom, toUnit_unit,
     Category.id_comp, Category.id_comp, mul_inv_cancel, _root_.one_mul]
 
+/- The inverse translation carries `y` back to `x`; keeping this as a named
+   simp lemma avoids repeating the symmetry rewrite at geometric use sites. -/
+@[reassoc (attr := simp)]
+theorem comp_pointTranslation_inv (x y : 𝟙_ C ⟶ G) :
+    y ≫ (pointTranslation G x y).inv = x := by
+  exact comp_pointTranslation_hom (G := G) y x
+
 end Categorical
 
 section RigidityGeometry
