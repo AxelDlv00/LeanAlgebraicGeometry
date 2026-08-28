@@ -6,6 +6,7 @@ Authors: The Hartshorne Contributors
 
 import HartshorneLib.Chapter2
 import Mathlib.CategoryTheory.Sites.LeftExact
+import Mathlib.Topology.Sheaves.AddCommGrpCat
 import Mathlib.Topology.Sheaves.Sheafify
 import Mathlib.Topology.Sheaves.Functors
 import Mathlib.Topology.Sheaves.Stalks
@@ -162,6 +163,51 @@ theorem sheaf_iso_iff_stalkMap_iso
     {F G : Sheaf C X} (f : F ⟶ G) :
     IsIso f ↔ ∀ x : X, IsIso (stalkMap f.hom x) := by
   exact TopCat.Presheaf.isIso_iff_stalkFunctor_map_iso f
+
+/-- A sheaf of objects in a concrete abelian category is zero exactly when all
+of its stalks are zero. -/
+theorem sheaf_isZero_iff_stalk_isZero
+    {C : Type u} [Category.{v} C] [HasColimits C] [HasLimits C]
+    {FC : C → C → Type*} {CC : C → Type v}
+    [∀ X Y : C, FunLike (FC X Y) (CC X) (CC Y)]
+    [ConcreteCategory C FC]
+    [PreservesFilteredColimits (CategoryTheory.forget C)]
+    [PreservesLimits (CategoryTheory.forget C)] [Abelian C]
+    {X : TopCat.{v}} (F : Sheaf C X) :
+    IsZero F ↔ ∀ x : X, IsZero ((TopCat.Sheaf.forget C X ⋙
+      TopCat.Presheaf.stalkFunctor C (X := X) x).obj F) := by
+  exact TopCat.Sheaf.isZero_iff_stalkFunctor_obj_isZero F
+
+/-- Exactness of a short complex of sheaves can be checked on every stalk. -/
+theorem sheaf_exact_iff_stalk_exact
+    {C : Type u} [Category.{v} C] [HasColimits C] [HasLimits C]
+    {FC : C → C → Type*} {CC : C → Type v}
+    [∀ X Y : C, FunLike (FC X Y) (CC X) (CC Y)]
+    [ConcreteCategory C FC]
+    [PreservesFilteredColimits (CategoryTheory.forget C)]
+    [PreservesLimits (CategoryTheory.forget C)] [Abelian C]
+    {X : TopCat.{v}} (S : ShortComplex (Sheaf C X)) :
+    S.Exact ↔ ∀ x : X, (S.map (TopCat.Sheaf.forget C X ⋙
+      TopCat.Presheaf.stalkFunctor C (X := X) x)).Exact := by
+  exact TopCat.Sheaf.exact_iff_stalkFunctor_map_exact S
+
+/-- Exactness of a presheaf complex of abelian groups gives sectionwise
+surjectivity at every open. -/
+theorem presheaf_sections_exact_of_exact {X : TopCat.{u}} {U : Opens X}
+    {S : ShortComplex (Presheaf AddCommGrpCat.{u} X)}
+    (hS : S.Exact) {s : S.X₂.obj (op U)}
+    (h : S.g.app (op U) s = 0) :
+    ∃ t : S.X₁.obj (op U), S.f.app (op U) t = s := by
+  exact TopCat.Presheaf.sections_exact_of_exact (X := X) (U := U) hS h
+
+/-- For a short exact sheaf complex of abelian groups, a monomorphism on the
+left gives surjectivity on sections over every open. -/
+theorem sheaf_sections_exact_of_left_exact {X : TopCat.{u}} {U : Opens X}
+    {S : ShortComplex (Sheaf AddCommGrpCat.{u} X)}
+    (hS : S.Exact) (hf : Mono S.f) (s : S.X₂.obj.obj (op U))
+    (h : S.g.hom.app (op U) s = 0) :
+    ∃ t : S.X₁.obj.obj (op U), S.f.hom.app (op U) t = s := by
+  exact TopCat.Sheaf.sections_exact_of_left_exact hS hf s h
 
 /-! ### Ringed and locally ringed spaces -/
 
