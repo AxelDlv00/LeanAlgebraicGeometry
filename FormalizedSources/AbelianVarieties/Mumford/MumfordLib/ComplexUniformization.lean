@@ -24,8 +24,8 @@ noncomputable section
 /-- A chosen additive uniformization by a complex period-lattice quotient.
 
 This is the algebraic interface to the analytic uniformization theorem; the
-existence of such a witness is intentionally a hypothesis rather than a
-project axiom. -/
+existence of such a witness is intentionally a hypothesis rather than an
+unproved global declaration. -/
 structure ComplexTorusUniformization (X : Type*) [AddCommGroup X] (g : ℕ) where
   equiv : X ≃+ (GenusComplexVector g ⧸ complexPeriodLattice g)
 
