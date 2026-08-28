@@ -77,4 +77,23 @@ theorem IsLineBundle.pullback {X Y : Scheme.{u}} (f : Y ⟶ X) {M : X.Modules}
   let i7 := asIso (SheafOfModules.pullbackObjUnitToUnit g.toRingCatSheafHom)
   exact i1 ≪≫ i2 ≪≫ i3 ≪≫ i4 ≪≫ i5 ≪≫ i6 ≪≫ i7
 
+/-! ### Pullback functoriality -/
+
+/-- Pulling a line bundle back along a composite morphism agrees with pulling it
+back successively along the two morphisms. -/
+theorem IsLineBundle.pullback_comp {X Y Z : Scheme.{u}} (f : Y ⟶ X) (g : Z ⟶ Y)
+    {M : X.Modules} (hM : IsLineBundle M) :
+    IsLineBundle ((Scheme.Modules.pullback (g ≫ f)).obj M) := by
+  have hgf : IsLineBundle
+      ((Scheme.Modules.pullback g).obj ((Scheme.Modules.pullback f).obj M)) :=
+    IsLineBundle.pullback g (IsLineBundle.pullback f hM)
+  exact hgf.of_iso ((Scheme.Modules.pullbackComp g f).app M)
+
+/-- Pulling a line bundle back along the identity morphism preserves the
+line-bundle property. -/
+theorem IsLineBundle.pullback_id {X : Scheme.{u}} {M : X.Modules}
+    (hM : IsLineBundle M) :
+    IsLineBundle ((Scheme.Modules.pullback (𝟙 X)).obj M) := by
+  exact hM.of_iso ((Scheme.Modules.pullbackId X).app M).symm
+
 end Hartshorne
