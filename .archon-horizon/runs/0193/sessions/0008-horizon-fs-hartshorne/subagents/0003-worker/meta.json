@@ -1,0 +1,21 @@
+{
+  "agent_nickname": "Ramanujan",
+  "agent_path": "/root/baseline_check",
+  "agent_role": "worker",
+  "depth": 1,
+  "model": "gpt-5.6-sol",
+  "name": "worker",
+  "native_subagent_id": "01a047b4-2da9-7191-ad87-d982a1a05b0e",
+  "parent_session": "0008-horizon-fs-hartshorne",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "running",
+  "subagent_type": "worker",
+  "summary": "",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 4587810,
+    "tokens_out": 13135
+  }
+}

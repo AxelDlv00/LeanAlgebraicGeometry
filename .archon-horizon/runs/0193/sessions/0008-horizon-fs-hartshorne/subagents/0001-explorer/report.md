@@ -1,0 +1,1 @@
+The graph result is now independently confirmed from the project-local hgraph engine, bypassing the contended Horizon wrapper. I’m checking prior Hartshorne task history and the exact recent source diffs once more, mainly to distinguish a genuinely missing proof from a coverage/`\\leanok` gap before I hand off.

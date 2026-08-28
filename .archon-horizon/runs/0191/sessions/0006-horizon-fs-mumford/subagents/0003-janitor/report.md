@@ -1,0 +1,1 @@
+I’ll re-scan the workspace inbox metadata and classify the 12 memories, 17 conversations, and 54 non-protection items by project/task ownership. I’ll leave every item untouched and report only Mumford-relevant dispositions, with any lock-induced CLI limitation called out.

@@ -1,0 +1,1 @@
+The full build completed cleanly (`3108 jobs`, exit 0). The additional per-file checks were launched concurrently and are still consuming processes despite the wrapper returning early; I’m waiting on those checks and will report only their final statuses, ensuring no background work is left behind.

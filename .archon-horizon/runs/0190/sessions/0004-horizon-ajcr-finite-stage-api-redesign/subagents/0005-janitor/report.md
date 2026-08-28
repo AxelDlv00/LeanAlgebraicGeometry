@@ -1,0 +1,1 @@
+No unread conversations or advisory items remain for this task; the shared inbox still reports 11 open conversations and 37 non-protection items, above its advisory limits. I’m now separating task-local hygiene from shared parallel-run noise, and checking whether the AJCR graph directory is merely generated state or genuinely stale.

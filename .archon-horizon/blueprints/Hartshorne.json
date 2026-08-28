@@ -984,7 +984,7 @@
     },
     "states": {
       "blocked": 144,
-      "closed": 273,
+      "closed": 281,
       "formalized_open": 3,
       "informal": 485,
       "ready": 342
@@ -1028,6 +1028,7 @@
       "Hartshorne.LinearlyEquivalent: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Hartshorne.LocallyRingedSpace: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Hartshorne.PointDivisor: Lean declaration is not referenced by any blueprint \\lean{...}",
+      "Hartshorne.PrincipalDivisorsHaveDegreeZero: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Hartshorne.RingedSpace: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Hartshorne.TypePresheaf: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Hartshorne.TypeSheaf: Lean declaration is not referenced by any blueprint \\lean{...}",
@@ -1038,8 +1039,7 @@
       "Hartshorne.affinePoint_ext: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Hartshorne.affineSpecMap_comp: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Hartshorne.affineSpecMap_globalSections_naturality: Lean declaration is not referenced by any blueprint \\lean{...}",
-      "Hartshorne.affineSpecMap_id: Lean declaration is not referenced by any blueprint \\lean{...}",
-      "Hartshorne.affineSpecMap_injective: Lean declaration is not referenced by any blueprint \\lean{...}"
+      "Hartshorne.affineSpecMap_id: Lean declaration is not referenced by any blueprint \\lean{...}"
     ]
   },
   "nodes": [

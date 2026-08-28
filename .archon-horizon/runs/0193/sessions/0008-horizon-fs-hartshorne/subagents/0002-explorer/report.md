@@ -1,0 +1,1 @@
+I’m tightening the cross-project findings into an actionable recommendation: checking exact current Hartshorne theorem signatures and the sibling proof dependencies so the parent can choose a target without accidentally importing an unavailable project.

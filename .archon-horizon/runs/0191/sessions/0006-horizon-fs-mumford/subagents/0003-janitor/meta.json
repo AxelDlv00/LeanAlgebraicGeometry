@@ -1,0 +1,21 @@
+{
+  "agent_nickname": "Nietzsche",
+  "agent_path": "/root/mumford_health",
+  "agent_role": "janitor",
+  "depth": 1,
+  "model": "gpt-5.6-sol",
+  "name": "janitor",
+  "native_subagent_id": "01a047af-0f5d-73b0-9019-7de5da775260",
+  "parent_session": "0006-horizon-fs-mumford",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "running",
+  "subagent_type": "janitor",
+  "summary": "",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 9442830,
+    "tokens_out": 24809
+  }
+}
