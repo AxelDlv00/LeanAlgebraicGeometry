@@ -9,6 +9,8 @@ import Mathlib.LinearAlgebra.Matrix.Adjugate
 import Mathlib.Algebra.Module.FinitePresentation
 import Mathlib.RingTheory.Artinian.Module
 import Mathlib.RingTheory.Ideal.Maps
+import Mathlib.RingTheory.Finiteness.Ideal
+import Mathlib.RingTheory.Localization.Submodule
 
 /-!
 # StacksPart01Lib.CommutativeAlgebra
@@ -155,5 +157,46 @@ theorem matrix_left_inverse_square_mem_minorIdeal
   rw [Set.mem_range]
   refine ⟨Function.Embedding.refl ι, ?_⟩
   congr 1
+
+/-! ### Noetherian permanence
+
+The two permanence statements below are the algebraic core of Stacks, Lemma
+00FN.  We expose both the general localization form and the canonical
+`Localization` specialization so later source-faithful statements can use
+either presentation.
+-/
+
+/-- A finite-type algebra over a Noetherian ring is Noetherian
+(Stacks, Tag 00FN). -/
+theorem noetherian_of_finiteType
+    {R S : Type*} [CommRing R] [CommRing S] [Algebra R S]
+    [Algebra.FiniteType R S] [IsNoetherianRing R] :
+    IsNoetherianRing S := by
+  exact Algebra.FiniteType.isNoetherianRing R S
+
+/-- Any ring localized at a submonoid of a Noetherian ring is Noetherian
+(Stacks, Tag 00FN). -/
+theorem noetherian_of_isLocalization
+    {R S : Type*} [CommRing R] [CommRing S] [Algebra R S]
+    (M : Submonoid R) [IsLocalization M S] [IsNoetherianRing R] :
+    IsNoetherianRing S := by
+  exact IsLocalization.isNoetherianRing M S inferInstance
+
+/-- The canonical localization of a Noetherian ring is Noetherian
+(Stacks, Tag 00FN). -/
+theorem noetherian_localization
+    {R : Type*} [CommRing R] (M : Submonoid R)
+    [IsNoetherianRing R] :
+    IsNoetherianRing (Localization M) := by
+  exact IsLocalization.instIsNoetherianRingLocalization M
+
+/-- In a Noetherian ring, an ideal contained in a radical has a power
+contained in the original ideal (Stacks, Tag 00IM). -/
+theorem noetherian_ideal_power_subset
+    {R : Type*} [CommRing R] [IsNoetherianRing R]
+    {I J : Ideal R} (hJI : J ≤ I.radical) :
+    ∃ n : ℕ, J ^ n ≤ I := by
+  exact Ideal.exists_pow_le_of_le_radical_of_fg hJI
+    (Ideal.fg_of_isNoetherianRing J)
 
 end StacksPart01
