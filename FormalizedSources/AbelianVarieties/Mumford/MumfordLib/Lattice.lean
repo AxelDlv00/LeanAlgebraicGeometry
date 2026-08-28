@@ -109,6 +109,15 @@ theorem genusTorus_isConnected (g : ℕ) :
     exact isConnected_univ
   simpa only [Set.pi_univ] using hpi
 
+/-- The standard genus torus is path connected. -/
+theorem genusTorus_isPathConnected (g : ℕ) : PathConnectedSpace (GenusTorus g) := by
+  letI : Nonempty (GenusTorus g) := ⟨0⟩
+  exact
+    { nonempty := inferInstance
+      joined := by
+        intro x y
+        exact ⟨Path.pi (fun i => PathConnectedSpace.somePath (x i) (y i))⟩ }
+
 /-- The coordinatewise exponential to the genus torus is surjective. -/
 theorem genusTorusExponential_surjective (g : ℕ) :
     Function.Surjective (genusTorusExponential g) := by
