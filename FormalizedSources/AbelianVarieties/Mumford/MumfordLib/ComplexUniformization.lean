@@ -156,6 +156,20 @@ theorem complexUniformization_zsmulTorsion_addEquiv_apply
           u.toGenusTorusUniformization.equiv n) x) := by
   rfl
 
+/- The positive-natural notation is obtained from the signed classification by
+transporting the canonical equality `(n : ℤ).natAbs = n`. -/
+noncomputable def complexUniformization_natCast_zsmulTorsion_addEquiv
+    {X : Type*} [AddCommGroup X] {g n : ℕ}
+    (u : ComplexTorusUniformization X g) (hn : 0 < n) :
+    zsmulTorsionSubgroup X (n : ℤ) ≃+ (Fin (2 * g) → ZMod n) := by
+  have hne : (n : ℤ) ≠ 0 := by
+    exact_mod_cast (Nat.ne_of_gt hn)
+  let castEquiv : (Fin (2 * g) → ZMod (n : ℤ).natAbs) ≃+
+      (Fin (2 * g) → ZMod n) :=
+    AddEquiv.cast (M := fun m : ℕ => Fin (2 * g) → ZMod m)
+      (Int.natAbs_ofNat' n)
+  exact (complexUniformization_zsmulTorsion_addEquiv u hne).trans castEquiv
+
 /-- Cardinality of signed-integer torsion under a complex uniformization. -/
 theorem complexUniformization_zsmulTorsion_card
     {X : Type*} [AddCommGroup X] {g : ℕ} {n : ℤ}
