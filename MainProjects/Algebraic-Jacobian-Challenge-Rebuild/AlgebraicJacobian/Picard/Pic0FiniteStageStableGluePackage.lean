@@ -121,11 +121,6 @@ theorem openImmersion
       P.context.models.relation P.context.models.M P.context.models.mapM i :=
   P.context.context.models.openImmersion i
 
-def tripleComparison
-    (P : Pic0FiniteStageStableGluePackage C F)
-    (p : Pic0FiniteStageTripleTransitionIndex C) :=
-  P.context.context.triple.comparison p
-
 end Pic0FiniteStageStableGluePackage
 
 end
