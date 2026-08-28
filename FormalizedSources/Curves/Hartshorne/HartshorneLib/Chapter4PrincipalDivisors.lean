@@ -182,6 +182,12 @@ theorem principalDivisor_inv (g : X.left.functionFieldˣ) :
   simp only [coeffAt_principalDivisor, map_inv, toAdd_inv,
     CurveDivisor.coeffAt_neg]
 
+/-- Dividing rational functions subtracts their principal divisors. -/
+theorem principalDivisor_div (g h : X.left.functionFieldˣ) :
+    principalDivisor (g / h) = principalDivisor g - principalDivisor h := by
+  rw [div_eq_mul_inv, principalDivisor_mul, principalDivisor_inv]
+  rw [sub_eq_add_neg]
+
 /-- Principal divisors as an additive homomorphism from the multiplicative
 group of rational functions, viewed additively. -/
 noncomputable def principalDivisorAddHom :
