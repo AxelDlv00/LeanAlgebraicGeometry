@@ -461,6 +461,29 @@ theorem mem_commutatorPairingRadical_iff (k : K) :
       ∀ l, E.commutatorPairing k l = 1 :=
   Iff.rfl
 
+/-- The kernel of the additive pairing homomorphism is the pairing radical. -/
+theorem mem_commutatorPairingBihom_ker_iff (k : K) :
+    k ∈ (E.commutatorPairingBihom).ker ↔
+      ∀ l, E.commutatorPairing k l = 1 := by
+  rw [AddMonoidHom.mem_ker]
+  constructor
+  · intro h l
+    have hl := congrArg (fun f => f l) h
+    have hl' : Additive.ofMul (E.commutatorPairing k l) = 0 := by
+      simpa using hl
+    change E.commutatorPairing k l = 1 at hl'
+    exact hl'
+  · intro h
+    ext l
+    change Additive.ofMul (E.commutatorPairing k l) = 0
+    rw [h l]
+    rfl
+
+theorem commutatorPairingBihom_ker_eq_radical :
+    (E.commutatorPairingBihom).ker = E.commutatorPairingRadical := by
+  ext k
+  exact E.mem_commutatorPairingBihom_ker_iff k
+
 private theorem quotientHom_quotientLift_quotient (g : G) :
     E.quotientHom (E.quotientLift (E.quotient g)) = E.quotientHom g := by
   rw [E.quotientHom_quotientLift]
