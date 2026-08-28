@@ -6,16 +6,17 @@
   "model": "gpt-5.6-sol",
   "name": "worker",
   "native_subagent_id": "01a048a7-3f9b-7791-8bae-796b098b5859",
+  "ok": true,
   "parent_session": "0010-horizon-fs-milne",
   "parent_subagent_id": null,
   "report_ref": "report.md",
   "role": "subagent",
-  "status": "running",
+  "status": "completed",
   "subagent_type": "worker",
-  "summary": "",
+  "summary": "Implemented and committed `isIntegral_of_retract` in `MilneLib/GroupScheme.lean` after `eq_comp_of_isAffine_of_properIntegral`.",
   "usage": {
     "cost_usd": null,
-    "tokens_in": 23623407,
-    "tokens_out": 27558
+    "tokens_in": 24336461,
+    "tokens_out": 29797
   }
 }

@@ -1,0 +1,18 @@
+{
+  "role": "horizon",
+  "round": 5,
+  "project": "Hartshorne",
+  "task_id": "fs-hartshorne",
+  "status": "running",
+  "started_at": "2026-08-28T14:38:14.482240+00:00",
+  "projects": [
+    "Hartshorne"
+  ],
+  "harness_name": "codex",
+  "harness_kind": "codex",
+  "model": "gpt-5.6-sol",
+  "effort": "ultra",
+  "config_dir": "/home/axel/.codex-temp",
+  "auth": "api-key",
+  "workspace_sha": "4514d71cffb1dd3384adaecc42544d989e3e0775"
+}

@@ -984,7 +984,7 @@
     },
     "states": {
       "blocked": 144,
-      "closed": 284,
+      "closed": 301,
       "formalized_open": 3,
       "informal": 485,
       "ready": 342
@@ -1008,6 +1008,7 @@
       "Hartshorne.CurveDivisor.degree_neg: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Hartshorne.CurveDivisor.degree_nonneg: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Hartshorne.CurveDivisor.degree_pos_of_nonneg_of_ne_zero: Lean declaration is not referenced by any blueprint \\lean{...}",
+      "Hartshorne.CurveDivisor.degree_positivePart_sub_negativePart: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Hartshorne.CurveDivisor.degree_single: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Hartshorne.CurveDivisor.degree_sub: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Hartshorne.CurveDivisor.degree_zero: Lean declaration is not referenced by any blueprint \\lean{...}",
@@ -1015,8 +1016,17 @@
       "Hartshorne.CurveDivisor.ext_coeffAt: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Hartshorne.CurveDivisor.inf_add_sup: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Hartshorne.CurveDivisor.le_iff_coeffAt: Lean declaration is not referenced by any blueprint \\lean{...}",
+      "Hartshorne.CurveDivisor.negativePart: Lean declaration is not referenced by any blueprint \\lean{...}",
+      "Hartshorne.CurveDivisor.negativePart_eq_zero_iff: Lean declaration is not referenced by any blueprint \\lean{...}",
+      "Hartshorne.CurveDivisor.negativePart_nonneg: Lean declaration is not referenced by any blueprint \\lean{...}",
+      "Hartshorne.CurveDivisor.positivePart: Lean declaration is not referenced by any blueprint \\lean{...}",
+      "Hartshorne.CurveDivisor.positivePart_eq_zero_iff: Lean declaration is not referenced by any blueprint \\lean{...}",
+      "Hartshorne.CurveDivisor.positivePart_inf_negativePart: Lean declaration is not referenced by any blueprint \\lean{...}",
+      "Hartshorne.CurveDivisor.positivePart_nonneg: Lean declaration is not referenced by any blueprint \\lean{...}",
+      "Hartshorne.CurveDivisor.positivePart_sub_negativePart: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Hartshorne.CurveDivisor.support_card_le_degree: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Hartshorne.DivisorClassGroup: Lean declaration is not referenced by any blueprint \\lean{...}",
+      "Hartshorne.HasEffectiveRepresentative: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Hartshorne.IsAffineVariety: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Hartshorne.IsAffineVariety.isAlgebraicSet: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Hartshorne.IsAffineVariety.isIrreducible: Lean declaration is not referenced by any blueprint \\lean{...}",
@@ -1029,17 +1039,7 @@
       "Hartshorne.LocallyRingedSpace: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Hartshorne.PointDivisor: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Hartshorne.PrincipalDivisorsHaveDegreeZero: Lean declaration is not referenced by any blueprint \\lean{...}",
-      "Hartshorne.RingedSpace: Lean declaration is not referenced by any blueprint \\lean{...}",
-      "Hartshorne.TypePresheaf: Lean declaration is not referenced by any blueprint \\lean{...}",
-      "Hartshorne.TypeSheaf: Lean declaration is not referenced by any blueprint \\lean{...}",
-      "Hartshorne.affineOpen_specializes_eq_genericPoint_or_eq: Lean declaration is not referenced by any blueprint \\lean{...}",
-      "Hartshorne.affineOpen_stalk_isDiscreteValuationRing: Lean declaration is not referenced by any blueprint \\lean{...}",
-      "Hartshorne.affineOpen_stalk_valuationRing: Lean declaration is not referenced by any blueprint \\lean{...}",
-      "Hartshorne.affinePoint_eq_iff: Lean declaration is not referenced by any blueprint \\lean{...}",
-      "Hartshorne.affinePoint_ext: Lean declaration is not referenced by any blueprint \\lean{...}",
-      "Hartshorne.affineSpecMap_comp: Lean declaration is not referenced by any blueprint \\lean{...}",
-      "Hartshorne.affineSpecMap_globalSections_naturality: Lean declaration is not referenced by any blueprint \\lean{...}",
-      "Hartshorne.affineSpecMap_id: Lean declaration is not referenced by any blueprint \\lean{...}"
+      "Hartshorne.RingedSpace: Lean declaration is not referenced by any blueprint \\lean{...}"
     ]
   },
   "nodes": [

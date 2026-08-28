@@ -13,10 +13,10 @@
   "role": "subagent",
   "status": "completed",
   "subagent_type": "janitor",
-  "summary": "Read-only hygiene audit complete; no Milne source, README, blueprint, task, or inbox files were edited.",
+  "summary": "Read-only triage complete. The current global inbox is 59 open items: 3 protections, 25 issues, 12 memories, and 19 conversations. Milne owns only memory `I-2117`; it duplicates the current Milne task/run report and is safe to archive. `I-1",
   "usage": {
     "cost_usd": null,
-    "tokens_in": 12610533,
-    "tokens_out": 35855
+    "tokens_in": 14997599,
+    "tokens_out": 41262
   }
 }
