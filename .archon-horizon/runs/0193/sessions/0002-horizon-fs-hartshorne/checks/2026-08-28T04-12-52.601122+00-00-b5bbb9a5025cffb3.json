@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "fingerprint": "b5bbb9a5025cffb3",
+  "command": [
+    "lake",
+    "env",
+    "lean",
+    "/home/axel/LeanAlgebraicGeometry-Horizon/FormalizedSources/Curves/Hartshorne/HartshorneLib/Chapter2Sheaves.lean"
+  ],
+  "cwd": "FormalizedSources/Curves/Hartshorne",
+  "status": "passed",
+  "ok": true,
+  "returncode": 0,
+  "timed_out": false,
+  "reused": false,
+  "wait_seconds": 340.651,
+  "duration_seconds": 4.435,
+  "started_at": "2026-08-28T04:12:48.166239+00:00",
+  "finished_at": "2026-08-28T04:12:52.601122+00:00",
+  "finished_epoch": 1787890372.601122
+}
