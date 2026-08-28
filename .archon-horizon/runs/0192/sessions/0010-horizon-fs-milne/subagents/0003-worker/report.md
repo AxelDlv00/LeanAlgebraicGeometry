@@ -1,0 +1,1 @@
+The active protections confirm that only Milne Lean files may be written, blueprints are frozen, and the AJCR choke-point files are out of scope. The previous Milne sessions have already exhausted several residue/stalk wrappers, so I’m checking the current graph frontier and declarations for a genuinely new, low-risk closure rather than duplicating those commits.

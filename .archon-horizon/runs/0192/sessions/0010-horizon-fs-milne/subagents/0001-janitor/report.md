@@ -1,0 +1,1 @@
+The run is round 4 of 16, with prior Milne sessions present and a recent integration commit from round 3. I’m checking the full queue and board now; the process listing showed no other live-run rows, so I’ll verify that through JSON and inspect session handoff files for stale state.

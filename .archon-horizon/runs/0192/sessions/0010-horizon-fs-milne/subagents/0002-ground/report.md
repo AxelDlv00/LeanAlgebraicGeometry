@@ -1,0 +1,1 @@
+The task is correctly still `running`, and its own comments consistently identify I.5.11 as the live boundary. One structural mismatch is already clear: `fs-milne` has no `roadmap_refs`, and `roadmap --focus fs-milne` fails, so I’m locating the actual Milne roadmap nodes and checking whether that disconnect is intentional or a stale board defect.

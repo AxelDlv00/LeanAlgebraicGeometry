@@ -1,0 +1,21 @@
+{
+  "agent_nickname": "Erdos",
+  "agent_path": "/root/frontier_worker",
+  "agent_role": "worker",
+  "depth": 1,
+  "model": "gpt-5.6-sol",
+  "name": "worker",
+  "native_subagent_id": "01a048a7-3f9b-7791-8bae-796b098b5859",
+  "parent_session": "0010-horizon-fs-milne",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "running",
+  "subagent_type": "worker",
+  "summary": "",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 991219,
+    "tokens_out": 4605
+  }
+}

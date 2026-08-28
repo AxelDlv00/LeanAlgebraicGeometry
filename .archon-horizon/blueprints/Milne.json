@@ -852,7 +852,7 @@
     },
     "states": {
       "blocked": 125,
-      "closed": 73,
+      "closed": 80,
       "formalized_open": 0,
       "informal": 259,
       "ready": 138
@@ -872,6 +872,7 @@
       "MilneLib.LinearMap.surjective_of_localized_at_maximal: Lean declaration is not referenced by any blueprint \\lean{...}",
       "MilneLib.LinearMap.surjective_of_surjective_residue: Lean declaration is not referenced by any blueprint \\lean{...}",
       "MilneLib.LinearMap.surjective_of_surjective_residue_at_maximal: Lean declaration is not referenced by any blueprint \\lean{...}",
+      "MilneLib.affineModuleSheaf_epi_of_surjective_on_residue_fibres: Lean declaration is not referenced by any blueprint \\lean{...}",
       "MilneLib.moduleFinite_affineModuleSheaf_stalk: Lean declaration is not referenced by any blueprint \\lean{...}",
       "MilneLib.moduleFinite_tilde_stalk: Lean declaration is not referenced by any blueprint \\lean{...}",
       "MilneLib.quotTensorEquivQuotSMul: Lean declaration is not referenced by any blueprint \\lean{...}",
@@ -879,19 +880,25 @@
       "MilneLib.quotTensorEquivQuotSMul_mk_tmul: Lean declaration is not referenced by any blueprint \\lean{...}",
       "MilneLib.quotTensorEquivQuotSMul_naturality: Lean declaration is not referenced by any blueprint \\lean{...}",
       "MilneLib.residueFieldTensorEquivQuotSMul: Lean declaration is not referenced by any blueprint \\lean{...}",
+      "MilneLib.schemeModuleStalkLinearMap: Lean declaration is not referenced by any blueprint \\lean{...}",
+      "MilneLib.schemeModuleStalkLinearMap_germ: Lean declaration is not referenced by any blueprint \\lean{...}",
       "MilneLib.schemeModuleStalkModule: Lean declaration is not referenced by any blueprint \\lean{...}",
       "MilneLib.schemeModuleStalkResidueTensorEquiv: Lean declaration is not referenced by any blueprint \\lean{...}",
       "MilneLib.schemeModuleStalkResidueTensorEquiv_mk_tmul: Lean declaration is not referenced by any blueprint \\lean{...}",
+      "MilneLib.schemeModule_epi_of_surjective_on_residue_fibres: Lean declaration is not referenced by any blueprint \\lean{...}",
       "MilneLib.schemeModule_epi_of_surjective_on_stalks: Lean declaration is not referenced by any blueprint \\lean{...}",
       "MilneLib.schemeModule_isIso_iff_isIso_on_stalks: Lean declaration is not referenced by any blueprint \\lean{...}",
       "MilneLib.schemeModule_isIso_of_bijective_on_stalks: Lean declaration is not referenced by any blueprint \\lean{...}",
+      "MilneLib.schemeModule_isIso_of_surjective_on_residue_fibres_of_invertible_stalks: Lean declaration is not referenced by any blueprint \\lean{...}",
       "MilneLib.schemeSheafCoevaluation: Lean declaration is not referenced by any blueprint \\lean{...}",
       "MilneLib.schemeSheafCoevaluationAt: Lean declaration is not referenced by any blueprint \\lean{...}",
       "MilneLib.schemeSheafCoevaluationAt_naturality: Lean declaration is not referenced by any blueprint \\lean{...}",
       "MilneLib.schemeSheafCoevaluation_app: Lean declaration is not referenced by any blueprint \\lean{...}",
       "MilneLib.schemeSheafCoevaluation_evaluation: Lean declaration is not referenced by any blueprint \\lean{...}",
       "MilneLib.schemeSheafEvaluationAt_naturality: Lean declaration is not referenced by any blueprint \\lean{...}",
-      "MilneLib.schemeSheafEvaluation_coevaluation: Lean declaration is not referenced by any blueprint \\lean{...}"
+      "MilneLib.schemeSheafEvaluation_coevaluation: Lean declaration is not referenced by any blueprint \\lean{...}",
+      "PresheafOfModules.stalkLinearMap: Lean declaration is not referenced by any blueprint \\lean{...}",
+      "PresheafOfModules.stalkLinearMap_germ: Lean declaration is not referenced by any blueprint \\lean{...}"
     ]
   },
   "nodes": [
@@ -4957,7 +4964,7 @@
     },
     {
       "chapter": "Geometry of Abelian Varieties",
-      "comment_count": 9,
+      "comment_count": 11,
       "dep_count": 1,
       "descendant_count": 0,
       "group": "c140",
