@@ -5,6 +5,7 @@ import MumfordLib.Uniformization
 import MumfordLib.Lattice
 import MumfordLib.ComplexModel
 import MumfordLib.ComplexUniformization
+import MumfordLib.Theta
 
 /-!
 # MumfordLib
