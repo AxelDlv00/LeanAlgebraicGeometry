@@ -7,6 +7,7 @@ Authors: The Milne Contributors
 import Mathlib.AlgebraicGeometry.Modules.Sheaf
 import Mathlib.Topology.Sheaves.LocallySurjective
 import MilneLib.Affine
+import MilneLib.LinearAlgebra
 import MilneLib.Tensor
 
 /-!
@@ -111,6 +112,52 @@ theorem schemeModule_epi_of_surjective_on_residue_fibres
     hfinite x
   exact (LinearMap.surjective_lTensor_residueField_iff_surjective
     (schemeModuleStalkLinearMap f x)).mp (hres x)
+
+/-- If the source and target stalks are invertible modules, residue-fibre
+surjectivity upgrades to an isomorphism.  This is the algebraic and stalkwise
+content of the invertible-sheaf conclusion in Milne I.5.11; the hypotheses are
+kept at stalk level until Mathlib exposes the corresponding global sheaf
+predicate and its stalk instances. -/
+theorem schemeModule_isIso_of_surjective_on_residue_fibres_of_invertible_stalks
+    {X : Scheme.{u}} {M N : X.Modules} (f : M ⟶ N)
+    (hinv : ∀ x : X,
+      letI : Module (X.presheaf.stalk x)
+          (↑(TopCat.Presheaf.stalk M.val.presheaf x) : Type u) :=
+        schemeModuleStalkModule M x
+      letI : Module (X.presheaf.stalk x)
+          (↑(TopCat.Presheaf.stalk N.val.presheaf x) : Type u) :=
+        schemeModuleStalkModule N x
+      Module.Invertible (X.presheaf.stalk x)
+          (↑(TopCat.Presheaf.stalk M.val.presheaf x) : Type u) ∧
+        Module.Invertible (X.presheaf.stalk x)
+          (↑(TopCat.Presheaf.stalk N.val.presheaf x) : Type u))
+    (hres : ∀ x : X,
+      letI : Module (X.presheaf.stalk x)
+          (↑(TopCat.Presheaf.stalk M.val.presheaf x) : Type u) :=
+        schemeModuleStalkModule M x
+      letI : Module (X.presheaf.stalk x)
+          (↑(TopCat.Presheaf.stalk N.val.presheaf x) : Type u) :=
+        schemeModuleStalkModule N x
+      Function.Surjective
+        ((schemeModuleStalkLinearMap f x).lTensor
+          (IsLocalRing.ResidueField (X.presheaf.stalk x)))) :
+    IsIso f := by
+  apply schemeModule_isIso_of_bijective_on_stalks f
+  intro x
+  letI : Module (X.presheaf.stalk x)
+      (↑(TopCat.Presheaf.stalk M.val.presheaf x) : Type u) :=
+    schemeModuleStalkModule M x
+  letI : Module (X.presheaf.stalk x)
+      (↑(TopCat.Presheaf.stalk N.val.presheaf x) : Type u) :=
+    schemeModuleStalkModule N x
+  let hi := hinv x
+  letI : Module.Invertible (X.presheaf.stalk x)
+      (↑(TopCat.Presheaf.stalk M.val.presheaf x) : Type u) := hi.1
+  letI : Module.Invertible (X.presheaf.stalk x)
+      (↑(TopCat.Presheaf.stalk N.val.presheaf x) : Type u) := hi.2
+  exact Module.Invertible.bijective_of_surjective
+    ((LinearMap.surjective_lTensor_residueField_iff_surjective
+      (schemeModuleStalkLinearMap f x)).mp (hres x))
 
 /-- Affine tilde specialization of the residue-fibre epi bridge.  For a
 finite target module, the required finite-stalk instances are supplied by
