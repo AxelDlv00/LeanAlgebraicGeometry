@@ -101,6 +101,29 @@ theorem comp_pointTranslation_hom (x y : 𝟙_ C ⟶ G) :
 
 end Categorical
 
+section RigidityGeometry
+
+open AlgebraicGeometry
+
+variable {kbar : Type u} [Field kbar]
+
+/-- Properness of the first factor makes the second projection a closed map.
+
+The underlying scheme morphism is the pullback of `X.hom` along `Y.hom`; this
+is the geometric input used in the closed-map proof of Mumford's rigidity
+lemma. -/
+theorem snd_left_isClosedMap
+    {X Y : Over (Spec (.of kbar))} [IsProper X.hom] :
+    IsClosedMap (snd X Y).left.base := by
+  haveI hp : UniversallyClosed X.hom := IsProper.toUniversallyClosed
+  haveI : UniversallyClosed (snd X Y).left := by
+    rw [Over.snd_left]
+    exact universallyClosed_isStableUnderBaseChange.of_isPullback
+      (IsPullback.of_hasPullback X.hom Y.hom) hp
+  exact Scheme.Hom.isClosedMap _
+
+end RigidityGeometry
+
 section Scheme
 
 open AlgebraicGeometry
