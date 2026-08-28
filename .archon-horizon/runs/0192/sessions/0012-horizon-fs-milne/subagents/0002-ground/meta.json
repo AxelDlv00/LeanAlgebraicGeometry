@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Kant",
+  "agent_path": "/root/ground_round5",
+  "agent_role": "ground",
+  "depth": 1,
+  "model": "gpt-5.6-sol",
+  "name": "ground",
+  "native_subagent_id": "01a048e4-d7b6-7960-8558-a56f8547d65f",
+  "ok": true,
+  "parent_session": "0012-horizon-fs-milne",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "completed",
+  "subagent_type": "ground",
+  "summary": "Fresh review complete.",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 7292488,
+    "tokens_out": 18989
+  }
+}

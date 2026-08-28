@@ -1,0 +1,1 @@
+I’m tracing the exact I.5.11 statement against the current Milne module/sheaf APIs, then checking whether AJC’s affine-localization machinery can be isolated without importing its project-specific tensor/Quot stack. I’ll report declaration names, line anchors, and the smallest plausible proof dependency cone.

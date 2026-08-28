@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Leibniz",
+  "agent_path": "/root/explore_i511",
+  "agent_role": "explorer",
+  "depth": 1,
+  "model": "gpt-5.6-sol",
+  "name": "explorer",
+  "native_subagent_id": "01a048e4-f4bd-78f0-a5a1-6bc658c2f34b",
+  "ok": false,
+  "parent_session": "0012-horizon-fs-milne",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "interrupted",
+  "subagent_type": "explorer",
+  "summary": "",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 16841526,
+    "tokens_out": 39770
+  }
+}

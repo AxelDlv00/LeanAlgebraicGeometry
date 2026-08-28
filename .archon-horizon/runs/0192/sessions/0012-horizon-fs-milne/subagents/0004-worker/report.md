@@ -1,0 +1,1 @@
+The dense-open theorem is clean under LSP and kernel checking. The remaining two declarations are the global gluing (`rigidity_core`) and categorical factorization (`rigidity_lemma`); I’m adding them now, then I’ll run diagnostics and the isolated file check once more.

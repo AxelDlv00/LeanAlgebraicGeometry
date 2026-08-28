@@ -1,0 +1,1 @@
+The prior round’s janitors already archived Milne’s superseded graph memory (`I-2117`) and concluded the I.5.11 conversation (`I-2118`); both are now archived, so there is no duplicate Milne item to remove. I’m doing the final filesystem/layout pass now, including scoped ledger dirt and temporary/lock artifacts, and will avoid deleting anything that could belong to a live run.
