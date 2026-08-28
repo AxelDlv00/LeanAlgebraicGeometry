@@ -17,6 +17,7 @@ import HartshorneLib.Chapter4Effective
 import HartshorneLib.Chapter4PrincipalDivisors
 import HartshorneLib.Chapter4DivisorClass
 import HartshorneLib.Chapter4DegreeClass
+import HartshorneLib.Chapter4EffectiveRepresentative
 import HartshorneLib.Chapter2
 import HartshorneLib.Chapter2Sheaves
 import HartshorneLib.Chapter2LineBundles
