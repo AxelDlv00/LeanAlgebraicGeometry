@@ -74,6 +74,16 @@ theorem degreeClass_zero
     degreeClass hzero (0 : DivisorClassGroup (k := k) (X := X)) = 0 :=
   map_zero (degreeClass hzero)
 
+/-! The quotient map sends every principal divisor to the zero class, so the
+degree descended above vanishes on principal classes as well. -/
+
+@[simp]
+theorem degreeClass_principalDivisor
+    (hzero : PrincipalDivisorsHaveDegreeZero (k := k) (X := X))
+    (g : X.left.functionFieldˣ) :
+    degreeClass hzero (divisorClass (principalDivisor g)) = 0 := by
+  rw [divisorClass_principalDivisor, degreeClass_zero]
+
 theorem degreeClass_add
     (hzero : PrincipalDivisorsHaveDegreeZero (k := k) (X := X))
     (a b : DivisorClassGroup (k := k) (X := X)) :
