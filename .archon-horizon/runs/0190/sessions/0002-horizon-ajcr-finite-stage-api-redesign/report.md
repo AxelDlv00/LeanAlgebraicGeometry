@@ -24,6 +24,10 @@
   invalidated by concurrent workspace runs; it timed out at 300 seconds without
   diagnostics.  This is recorded as an environmental/dependency-graph failure,
   not as source success.  The broad stable-cover Lake target likewise timed out.
+- A direct legacy-orbit check was also attempted after the split; it stopped at
+  the import boundary because `Pic0FiniteStageGlueDataAssembly.olean` is absent.
+  No declaration error was emitted, and the failure reinforces the value of the
+  stable module's import-light dependency cone.
 
 ## Issues
 
