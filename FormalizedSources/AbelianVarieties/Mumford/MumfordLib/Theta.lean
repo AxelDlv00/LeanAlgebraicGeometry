@@ -337,6 +337,15 @@ theorem commutatorPairing_swap (k l : K) :
   unfold commutatorPairing
   exact E.commutatorScalar_swap _ _
 
+/- The alternating law can be used without unpacking the inverse identity. -/
+theorem commutatorPairing_mul_swap_eq_one (k l : K) :
+    E.commutatorPairing k l * E.commutatorPairing l k = 1 := by
+  calc
+    E.commutatorPairing k l * E.commutatorPairing l k =
+        E.commutatorPairing k l * (E.commutatorPairing k l)⁻¹ := by
+      rw [E.commutatorPairing_swap k l]
+    _ = 1 := mul_inv_cancel _
+
 /-- The quotient commutator pairing detects commutativity of its chosen lifts. -/
 theorem commutatorPairing_eq_one_iff_commute (k l : K) :
     E.commutatorPairing k l = 1 ↔
