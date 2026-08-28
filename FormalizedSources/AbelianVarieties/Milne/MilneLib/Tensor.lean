@@ -144,6 +144,25 @@ noncomputable def schemeModuleStalkResidueTensorEquiv
     schemeModuleStalkModule F x
   exact residueFieldTensorEquivQuotSMul
 
+@[simp]
+theorem schemeModuleStalkResidueTensorEquiv_mk_tmul
+    {X : Scheme.{u}} (F : X.Modules) (x : X)
+    (r : X.presheaf.stalk x)
+    (m : (↑(TopCat.Presheaf.stalk F.val.presheaf x) : Type u)) :
+    letI : Module (X.presheaf.stalk x)
+        (↑(TopCat.Presheaf.stalk F.val.presheaf x) : Type u) :=
+      schemeModuleStalkModule F x
+    schemeModuleStalkResidueTensorEquiv F x
+        (Ideal.Quotient.mk (IsLocalRing.maximalIdeal (X.presheaf.stalk x)) r
+          ⊗ₜ[X.presheaf.stalk x] m) =
+      Submodule.Quotient.mk (r • m) := by
+  letI : Module (X.presheaf.stalk x)
+      (↑(TopCat.Presheaf.stalk F.val.presheaf x) : Type u) :=
+    schemeModuleStalkModule F x
+  exact quotTensorEquivQuotSMul_mk_tmul
+    (M := (↑(TopCat.Presheaf.stalk F.val.presheaf x) : Type u))
+    (IsLocalRing.maximalIdeal (X.presheaf.stalk x)) r m
+
 /-! The quotient model is functorial for maps preserving the ideal action. -/
 
 /-- The tensor--quotient equivalence commutes with a linear map that carries
@@ -167,5 +186,103 @@ theorem quotTensorEquivQuotSMul_naturality
   | add x y hx hy =>
       simpa only [map_add, LinearMap.comp_apply] using
         congrArg₂ (fun a b => a + b) hx hy
+
+/-!
+## Surjectivity on residue fibres
+
+The tensor--quotient equivalence transports surjectivity of a scalar-extension
+map to surjectivity of the corresponding map between ideal quotients.  The
+local form below is the residue-fibre spelling used with Nakayama's lemma.
+-/
+
+/-- Surjectivity is preserved by the tensor--quotient equivalences. -/
+theorem LinearMap.surjective_lTensor_iff_surjective_mapQ
+    {R M N : Type*} [CommRing R]
+    [AddCommGroup M] [AddCommGroup N] [Module R M] [Module R N]
+    (I : Ideal R) (f : M →ₗ[R] N)
+    (hI : I • (⊤ : Submodule R M) ≤
+      (I • (⊤ : Submodule R N)).comap f) :
+    Function.Surjective (f.lTensor (R ⧸ I)) ↔
+      Function.Surjective
+        ((I • (⊤ : Submodule R M)).mapQ
+          (I • (⊤ : Submodule R N)) f hI) := by
+  let eM := quotTensorEquivQuotSMul (M := M) I
+  let eN := quotTensorEquivQuotSMul (M := N) I
+  let qf := (I • (⊤ : Submodule R M)).mapQ
+      (I • (⊤ : Submodule R N)) f hI
+  have hnat :
+      eN.toLinearMap ∘ₗ (f.lTensor (R ⧸ I)) =
+        qf ∘ₗ eM.toLinearMap :=
+    quotTensorEquivQuotSMul_naturality I f hI
+  constructor
+  · intro hf y
+    obtain ⟨z, hz⟩ := eN.surjective y
+    obtain ⟨w, hw⟩ := hf z
+    refine ⟨eM w, ?_⟩
+    have hcomp := congrArg (fun g => g w) hnat
+    change eN ((f.lTensor (R ⧸ I)) w) = qf (eM w) at hcomp
+    rw [hw] at hcomp
+    exact hcomp.symm.trans hz
+  · intro hq z
+    obtain ⟨wq, hwq⟩ := hq (eN z)
+    obtain ⟨t, ht⟩ := eM.surjective wq
+    refine ⟨t, ?_⟩
+    apply eN.injective
+    have hcomp := congrArg (fun g => g t) hnat
+    change eN ((f.lTensor (R ⧸ I)) t) = qf (eM t) at hcomp
+    rw [ht, hwq] at hcomp
+    exact hcomp
+
+/-- For a local ring, surjectivity on the residue-field tensor fibre is
+equivalent to surjectivity after quotienting by the maximal-ideal action. -/
+theorem LinearMap.surjective_lTensor_residueField_iff_surjective_residue
+    {R M N : Type*} [CommRing R] [IsLocalRing R]
+    [AddCommGroup M] [AddCommGroup N] [Module R M] [Module R N]
+    (f : M →ₗ[R] N) :
+    Function.Surjective (f.lTensor (IsLocalRing.ResidueField R)) ↔
+      Function.Surjective
+        (((IsLocalRing.maximalIdeal R • (⊤ : Submodule R N)).mkQ) ∘ₗ f) := by
+  let I := IsLocalRing.maximalIdeal R
+  change Function.Surjective (f.lTensor (R ⧸ I)) ↔
+      Function.Surjective (((I • (⊤ : Submodule R N)).mkQ) ∘ₗ f)
+  have hI : I • (⊤ : Submodule R M) ≤
+      (I • (⊤ : Submodule R N)).comap f := by
+    rw [Submodule.smul_le]
+    intro r hr m hm
+    change f (r • m) ∈ I • (⊤ : Submodule R N)
+    rw [f.map_smul]
+    exact Submodule.smul_mem_smul hr trivial
+  let qf := (I • (⊤ : Submodule R M)).mapQ
+      (I • (⊤ : Submodule R N)) f hI
+  have hq :
+      Function.Surjective (f.lTensor (R ⧸ I)) ↔ Function.Surjective qf :=
+    LinearMap.surjective_lTensor_iff_surjective_mapQ I f hI
+  have hrel :
+      qf ∘ₗ (I • (⊤ : Submodule R M)).mkQ =
+      (I • (⊤ : Submodule R N)).mkQ ∘ₗ f :=
+    Submodule.mapQ_mkQ _ _ f
+  constructor
+  · intro h
+    have hqsurj : Function.Surjective qf := hq.mp h
+    intro y
+    obtain ⟨z, hz⟩ := hqsurj y
+    obtain ⟨x, hx⟩ := Submodule.mkQ_surjective (I • (⊤ : Submodule R M)) z
+    refine ⟨x, ?_⟩
+    have he := congrArg (fun g => g x) hrel
+    calc
+      ((I • (⊤ : Submodule R N)).mkQ ∘ₗ f) x =
+          qf ((I • (⊤ : Submodule R M)).mkQ x) := he.symm
+      _ = qf z := congrArg qf hx
+      _ = y := hz
+  · intro h
+    apply hq.mpr
+    intro y
+    obtain ⟨x, hx⟩ := h y
+    refine ⟨(I • (⊤ : Submodule R M)).mkQ x, ?_⟩
+    have he := congrArg (fun g => g x) hrel
+    calc
+      qf ((I • (⊤ : Submodule R M)).mkQ x) =
+          ((I • (⊤ : Submodule R N)).mkQ ∘ₗ f) x := he
+      _ = y := hx
 
 end MilneLib
