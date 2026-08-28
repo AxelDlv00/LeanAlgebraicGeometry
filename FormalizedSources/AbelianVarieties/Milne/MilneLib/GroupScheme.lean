@@ -210,6 +210,44 @@ theorem eq_comp_of_isAffine_of_properIntegral
   apply ext_of_isAffine
   rw [Scheme.Hom.comp_appTop, Scheme.Hom.comp_appTop, hab]
 
+/- Integrality descends along a scheme-theoretic retract.  The section makes
+the retraction surjective on points, while the stalk map of the retraction is
+injective because it is a factor of an isomorphism. -/
+theorem isIntegral_of_retract {S T : Scheme.{u}} [IsIntegral T]
+    (r : S ⟶ T) (pr : T ⟶ S) (hrp : r ≫ pr = 𝟙 S) : IsIntegral S := by
+  have hsurj : Function.Surjective pr.base := by
+    intro x
+    refine ⟨r.base x, ?_⟩
+    have h := congrArg (fun m => m.base x) hrp
+    simpa using h
+  haveI : IrreducibleSpace S := by
+    rw [irreducibleSpace_def]
+    have h := (IrreducibleSpace.isIrreducible_univ T).image pr.base
+      pr.base.hom.continuous.continuousOn
+    rwa [Set.image_univ, hsurj.range_eq] at h
+  haveI hstalk : ∀ x : S, _root_.IsReduced (S.presheaf.stalk x) := by
+    intro x
+    haveI hiso : IsIso ((r ≫ pr).stalkMap x) := by
+      rw [Scheme.Hom.stalkMap_congr_hom (r ≫ pr) (𝟙 S) hrp x,
+        Scheme.Hom.stalkMap_id]
+      exact inferInstanceAs (IsIso ((S.presheaf.stalkCongr _).hom ≫ 𝟙 _))
+    rw [Scheme.Hom.stalkMap_comp] at hiso
+    have hbij := (ConcreteCategory.isIso_iff_bijective
+      (pr.stalkMap (r.base x) ≫ r.stalkMap x)).1 hiso
+    have hinj : Function.Injective (pr.stalkMap (r.base x)).hom := by
+      intro a b hab
+      apply hbij.injective
+      rw [ConcreteCategory.comp_apply, ConcreteCategory.comp_apply]
+      exact congrArg (r.stalkMap x) hab
+    have hb : pr.base (r.base x) = x := by
+      have h := congrArg (fun m => m.base x) hrp
+      simpa using h
+    have hred : _root_.IsReduced (S.presheaf.stalk (pr.base (r.base x))) :=
+      isReduced_of_injective (pr.stalkMap (r.base x)).hom hinj
+    rwa [hb] at hred
+  haveI : IsReduced S := isReduced_of_isReduced_stalk S
+  exact isIntegral_of_irreducibleSpace_of_isReduced S
+
 end ProperAffineConstancy
 
 section Scheme
