@@ -1,0 +1,1 @@
+The shared CLI is blocked behind another run’s state lock (my inbox query was stopped after the bounded wait; no lock or source files were touched). I’ll finish from the on-disk YAML/JSON records and process markers, then send the parent a compact evidence report with the lock contention called out.

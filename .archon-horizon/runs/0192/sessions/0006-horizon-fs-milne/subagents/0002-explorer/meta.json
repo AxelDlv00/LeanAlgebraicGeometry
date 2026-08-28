@@ -6,16 +6,17 @@
   "model": "gpt-5.6-sol",
   "name": "explorer",
   "native_subagent_id": "01a04741-195e-7b10-895b-b29f174834e5",
+  "ok": true,
   "parent_session": "0006-horizon-fs-milne",
   "parent_subagent_id": null,
   "report_ref": "report.md",
   "role": "subagent",
-  "status": "running",
+  "status": "completed",
   "subagent_type": "explorer",
-  "summary": "",
+  "summary": "Audit complete.",
   "usage": {
     "cost_usd": null,
-    "tokens_in": 16575577,
-    "tokens_out": 34714
+    "tokens_in": 17903242,
+    "tokens_out": 37180
   }
 }

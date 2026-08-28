@@ -1,0 +1,1 @@
+The initial workspace probe found this is round 2 of run 0193, with prior Hartshorne sessions present. The `horizon usage` CLI is currently hanging without output, so I’m isolating that tooling issue while continuing read-only ledger/source inspection; I’ll record it if it persists.

@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Newton",
+  "agent_path": "/root/janitor_pass",
+  "agent_role": "janitor",
+  "depth": 1,
+  "model": "gpt-5.6-sol",
+  "name": "janitor",
+  "native_subagent_id": "01a04786-5bce-70a3-96c4-f4b70b89fcc5",
+  "ok": false,
+  "parent_session": "0006-horizon-fs-hartshorne",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "interrupted",
+  "subagent_type": "janitor",
+  "summary": "",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 4084910,
+    "tokens_out": 10386
+  }
+}
