@@ -378,6 +378,17 @@ def ofData {R : Type u} [CommRing R]
     AffineRingGluePresentation R :=
   { glueData := D, mapData := M }
 
+/-- Package map data while inferring its glue datum from the dependent index.
+
+This is the preferred adapter for an existing `GluedMapData`: it does not reconstruct the
+proof-sensitive `Scheme.GlueData` term already fixed by the type of `M`.
+-/
+def ofMapData {R : Type u} [CommRing R]
+    {D : Scheme.GlueData.{u}}
+    (M : GluedMapData D (Spec (CommRingCat.of R))) :
+    AffineRingGluePresentation R :=
+  { glueData := D, mapData := M }
+
 @[simp]
 theorem ofData_glueData {R : Type u} [CommRing R]
     (D : Scheme.GlueData.{u})
@@ -390,6 +401,20 @@ theorem ofData_mapData {R : Type u} [CommRing R]
     (D : Scheme.GlueData.{u})
     (M : GluedMapData D (Spec (CommRingCat.of R))) :
     (ofData D M).mapData = M :=
+  rfl
+
+@[simp]
+theorem ofMapData_glueData {R : Type u} [CommRing R]
+    {D : Scheme.GlueData.{u}}
+    (M : GluedMapData D (Spec (CommRingCat.of R))) :
+    (ofMapData M).glueData = D :=
+  rfl
+
+@[simp]
+theorem ofMapData_mapData {R : Type u} [CommRing R]
+    {D : Scheme.GlueData.{u}}
+    (M : GluedMapData D (Spec (CommRingCat.of R))) :
+    (ofMapData M).mapData = M :=
   rfl
 
 /-- The selected glued scheme. -/
@@ -428,8 +453,7 @@ noncomputable def toPresentation
         AlgHom.id R (AffineTripleTensor A B i j k))
     (P : AffineRingGluePackage A B tau theta fId fOpen tauId thetaFac thetaCocycle) :
     AffineRingGluePresentation R :=
-  { glueData := affineRingGlueData A B tau theta fId fOpen tauId thetaFac thetaCocycle
-    mapData := P.mapData }
+  AffineRingGluePresentation.ofMapData P.mapData
 
 /-! The explicit-argument adapter above is retained for source compatibility.  `pin` is the
 consumer-facing projection: all legacy parameters are inferred from one package value, while
@@ -456,9 +480,7 @@ noncomputable def pin
         AlgHom.id R (AffineTripleTensor A B i j k)}
     (P : AffineRingGluePackage A B tau theta fId fOpen tauId thetaFac thetaCocycle) :
     AffineRingGluePresentation R :=
-  AffineRingGluePresentation.ofData
-    (affineRingGlueData A B tau theta fId fOpen tauId thetaFac thetaCocycle)
-    P.mapData
+  AffineRingGluePresentation.ofMapData P.mapData
 
 @[simp]
 theorem pin_mapData
