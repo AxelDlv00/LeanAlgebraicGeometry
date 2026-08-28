@@ -58,6 +58,92 @@ noncomputable def degree (D : CurveDivisor k X) : ℤ :=
 noncomputable def degreeHom : CurveDivisor k X →+ ℤ :=
   Finsupp.liftAddHom fun _ => AddMonoidHom.id ℤ
 
+/-! ### Coefficients and effectivity -/
+
+/-- The coefficient of a divisor at a non-generic point. -/
+def coeffAt {x : X.left} (hx : x ≠ genericPoint X.left)
+    (D : CurveDivisor k X) : ℤ :=
+  (show PointDivisor X.left from D).toFun ⟨x, hx⟩
+
+@[simp]
+theorem coeffAt_zero {x : X.left} (hx : x ≠ genericPoint X.left) :
+    coeffAt hx (0 : CurveDivisor k X) = 0 := by
+  rfl
+
+@[simp]
+theorem coeffAt_add {x : X.left} (hx : x ≠ genericPoint X.left)
+    (D E : CurveDivisor k X) :
+    coeffAt hx (D + E) = coeffAt hx D + coeffAt hx E := by
+  rfl
+
+@[simp]
+theorem coeffAt_neg {x : X.left} (hx : x ≠ genericPoint X.left)
+    (D : CurveDivisor k X) :
+    coeffAt hx (-D) = -coeffAt hx D := by
+  rfl
+
+@[simp]
+theorem coeffAt_sub {x : X.left} (hx : x ≠ genericPoint X.left)
+    (D E : CurveDivisor k X) :
+    coeffAt hx (D - E) = coeffAt hx D - coeffAt hx E := by
+  rfl
+
+/-- Coefficients at all closed points determine a curve divisor. -/
+theorem ext_coeffAt {D E : CurveDivisor k X}
+    (h : ∀ (x : X.left) (hx : x ≠ genericPoint X.left),
+      coeffAt hx D = coeffAt hx E) : D = E := by
+  apply Finsupp.ext
+  intro x
+  exact h x.1 x.2
+
+/-- The divisor order is the pointwise coefficient order. -/
+theorem le_iff_coeffAt {D E : CurveDivisor k X} :
+    D ≤ E ↔ ∀ (x : X.left) (hx : x ≠ genericPoint X.left),
+      coeffAt hx D ≤ coeffAt hx E := by
+  constructor
+  · intro h x hx
+    exact Finsupp.le_def.mp h ⟨x, hx⟩
+  · intro h
+    change ∀ x, _
+    intro x
+    exact h x.1 x.2
+
+/-! ### Degree and effective divisors -/
+
+/-- An effective divisor has nonnegative degree. -/
+theorem degree_nonneg {D : CurveDivisor k X} (hD : 0 ≤ D) :
+    0 ≤ degree D := by
+  exact Finsupp.sum_nonneg fun x _ => Finsupp.le_def.mp hD x
+
+/-- An effective divisor of degree zero is the zero divisor. -/
+theorem eq_zero_of_nonneg_of_degree_eq_zero {D : CurveDivisor k X}
+    (hD : 0 ≤ D) (hdegree : degree D = 0) : D = 0 := by
+  apply Finsupp.ext
+  intro x
+  change (show PointDivisor X.left from D).toFun x = 0
+  have hxnonneg : 0 ≤ (show PointDivisor X.left from D).toFun x := by
+    exact Finsupp.le_def.mp hD x
+  by_contra hne
+  have hxpos : 0 < (show PointDivisor X.left from D).toFun x := by
+    omega
+  have hmem : x ∈ (show PointDivisor X.left from D).support :=
+    Finsupp.mem_support_iff.mpr hne
+  have hterms : ∀ y ∈ (show PointDivisor X.left from D).support,
+      0 ≤ (show PointDivisor X.left from D).toFun y := by
+    intro y hy
+    exact Finsupp.le_def.mp hD y
+  have hsumpos : 0 < degree D := by
+    exact Finsupp.sum_pos' hterms ⟨x, hmem, hxpos⟩
+  omega
+
+/-- A nonzero effective divisor has positive degree. -/
+theorem degree_pos_of_nonneg_of_ne_zero {D : CurveDivisor k X}
+    (hD : 0 ≤ D) (hne : D ≠ 0) : 0 < degree D := by
+  have hnonneg := degree_nonneg hD
+  have hdegree : degree D ≠ 0 := fun h =>
+    hne (eq_zero_of_nonneg_of_degree_eq_zero hD h)
+  omega
+
 @[simp]
 theorem degreeHom_apply (D : CurveDivisor k X) : degreeHom D = degree D :=
   Finsupp.liftAddHom_apply
