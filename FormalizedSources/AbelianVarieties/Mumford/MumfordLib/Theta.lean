@@ -122,6 +122,114 @@ theorem exists_scalar_eq_commutator (x y : G) :
     ∃ s, E.includeScalar s = ⁅x, y⁆ :=
   (E.mem_quotientHom_ker_iff ⁅x, y⁆).mp (E.commutator_mem_ker x y)
 
+/-! The central exact sequence makes the commutator a scalar-valued
+bihomomorphism.  This is the algebraic core of the theta commutator pairing;
+the quotient-level pairing is obtained after choosing lifts in a later layer. -/
+
+include E
+
+theorem commutator_commute (x y z : G) :
+    Commute ⁅x, y⁆ z := by
+  obtain ⟨s, hs⟩ := E.exists_scalar_eq_commutator x y
+  rw [← hs]
+  exact E.includeScalar_commute s z
+
+noncomputable def commutatorScalar (x y : G) : S :=
+  Classical.choose (E.exists_scalar_eq_commutator x y)
+
+@[simp]
+theorem includeScalar_commutatorScalar (x y : G) :
+    E.includeScalar (E.commutatorScalar x y) = ⁅x, y⁆ :=
+  Classical.choose_spec (E.exists_scalar_eq_commutator x y)
+
+theorem commutatorScalar_unique (x y : G) {s : S}
+    (hs : E.includeScalar s = ⁅x, y⁆) :
+    s = E.commutatorScalar x y :=
+  E.includeScalar_injective (hs.trans (E.includeScalar_commutatorScalar x y).symm)
+
+@[simp]
+theorem commutatorScalar_one_left (y : G) :
+    E.commutatorScalar 1 y = 1 := by
+  apply E.includeScalar_injective
+  rw [E.includeScalar_commutatorScalar, commutatorElement_one_left, map_one]
+
+@[simp]
+theorem commutatorScalar_one_right (x : G) :
+    E.commutatorScalar x 1 = 1 := by
+  apply E.includeScalar_injective
+  rw [E.includeScalar_commutatorScalar, commutatorElement_one_right, map_one]
+
+@[simp]
+theorem commutatorScalar_self (x : G) :
+    E.commutatorScalar x x = 1 := by
+  apply E.includeScalar_injective
+  rw [E.includeScalar_commutatorScalar, commutatorElement_self, map_one]
+
+theorem commutatorScalar_swap (x y : G) :
+    E.commutatorScalar y x = (E.commutatorScalar x y)⁻¹ := by
+  apply E.includeScalar_injective
+  calc
+    E.includeScalar (E.commutatorScalar y x) = ⁅y, x⁆ :=
+      E.includeScalar_commutatorScalar y x
+    _ = ⁅x, y⁆⁻¹ := by rw [commutatorElement_inv]
+    _ = (E.includeScalar (E.commutatorScalar x y))⁻¹ :=
+      congrArg Inv.inv (E.includeScalar_commutatorScalar x y).symm
+    _ = E.includeScalar ((E.commutatorScalar x y)⁻¹) :=
+      (map_inv E.includeScalar _).symm
+
+@[simp]
+theorem commutatorScalar_includeScalar_left (s : S) (y : G) :
+    E.commutatorScalar (E.includeScalar s) y = 1 := by
+  apply E.includeScalar_injective
+  rw [E.includeScalar_commutatorScalar,
+    (E.includeScalar_commute s y).commutator_eq, map_one]
+
+@[simp]
+theorem commutatorScalar_includeScalar_right (x : G) (s : S) :
+    E.commutatorScalar x (E.includeScalar s) = 1 := by
+  rw [E.commutatorScalar_swap, E.commutatorScalar_includeScalar_left, inv_one]
+
+theorem commutatorScalar_mul_left (x y z : G) :
+    E.commutatorScalar (x * y) z =
+      E.commutatorScalar x z * E.commutatorScalar y z := by
+  apply E.includeScalar_injective
+  rw [map_mul, E.includeScalar_commutatorScalar, E.includeScalar_commutatorScalar,
+    E.includeScalar_commutatorScalar, commutatorElement_mul_left_eq_conj_mul,
+    (E.commutator_commute y z x).symm.mul_inv_cancel,
+    (E.commutator_commute x z ⁅y, z⁆).eq]
+
+theorem commutatorScalar_mul_right (x y z : G) :
+    E.commutatorScalar x (y * z) =
+      E.commutatorScalar x y * E.commutatorScalar x z := by
+  apply E.includeScalar_injective
+  rw [map_mul, E.includeScalar_commutatorScalar, E.includeScalar_commutatorScalar,
+    E.includeScalar_commutatorScalar, commutatorElement_mul_right_eq_mul_conj]
+  calc
+    ⁅x, y⁆ * y * ⁅x, z⁆ * y⁻¹ =
+        ⁅x, y⁆ * (y * ⁅x, z⁆ * y⁻¹) := by simp only [mul_assoc]
+    _ = ⁅x, y⁆ * ⁅x, z⁆ := by
+      rw [(E.commutator_commute x z y).symm.mul_inv_cancel]
+
+noncomputable def commutatorHom (x : G) : G →* S where
+  toFun := E.commutatorScalar x
+  map_one' := E.commutatorScalar_one_right x
+  map_mul' := E.commutatorScalar_mul_right x
+
+@[simp]
+theorem commutatorHom_apply (x y : G) :
+    E.commutatorHom x y = E.commutatorScalar x y :=
+  rfl
+
+noncomputable def commutatorBihom : G →* G →* S where
+  toFun := E.commutatorHom
+  map_one' := by ext y; exact E.commutatorScalar_one_left y
+  map_mul' x y := by ext z; exact E.commutatorScalar_mul_left x y z
+
+@[simp]
+theorem commutatorBihom_apply (x y : G) :
+    E.commutatorBihom x y = E.commutatorScalar x y :=
+  rfl
+
 end ThetaExtension
 
 end Mumford
