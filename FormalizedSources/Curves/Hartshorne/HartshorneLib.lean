@@ -13,6 +13,7 @@ import HartshorneLib.Chapter1Spectrum
 import HartshorneLib.Chapter1Curves
 import HartshorneLib.Chapter1CurveStalks
 import HartshorneLib.Chapter4Curves
+import HartshorneLib.Chapter4PrincipalDivisors
 import HartshorneLib.Chapter2
 import HartshorneLib.Chapter2Sheaves
 import HartshorneLib.Chapter2LineBundles
