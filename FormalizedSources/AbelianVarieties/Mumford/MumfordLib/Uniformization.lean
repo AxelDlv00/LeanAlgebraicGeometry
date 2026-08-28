@@ -224,6 +224,27 @@ theorem zsmulTorsion_map_of_addEquiv {X Y : Type*} [AddCommGroup X] [AddCommGrou
   ext x
   rfl
 
+/- Torsion transport is coherent with composition of additive equivalences. -/
+theorem zsmulTorsion_addEquiv_of_addEquiv_trans
+    {X Y Z : Type*} [AddCommGroup X] [AddCommGroup Y] [AddCommGroup Z]
+    (e : X ≃+ Y) (f : Y ≃+ Z) (n : ℤ) :
+    zsmulTorsion_addEquiv_of_addEquiv (e.trans f) n =
+      (zsmulTorsion_addEquiv_of_addEquiv e n).trans
+        (zsmulTorsion_addEquiv_of_addEquiv f n) := by
+  apply AddEquiv.ext
+  intro x
+  rfl
+
+/- The same transport commutes with taking the inverse equivalence. -/
+theorem zsmulTorsion_addEquiv_of_addEquiv_symm
+    {X Y : Type*} [AddCommGroup X] [AddCommGroup Y]
+    (e : X ≃+ Y) (n : ℤ) :
+    zsmulTorsion_addEquiv_of_addEquiv e.symm n =
+      (zsmulTorsion_addEquiv_of_addEquiv e n).symm := by
+  apply AddEquiv.ext
+  intro x
+  rfl
+
 /- The torsion cardinality is invariant under an additive equivalence.  Keeping
 this as a separate theorem avoids repeating the subtype-equivalence argument
 when a uniformization is composed with another group isomorphism. -/
