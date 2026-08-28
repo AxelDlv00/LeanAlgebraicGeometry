@@ -50,6 +50,28 @@ theorem quotientAddEquiv_mk {V X : Type*} [AddCommGroup V] [AddCommGroup X]
     u.exponential v
   rw [QuotientAddGroup.kerLift_mk]
 
+/- Two representatives define the same quotient point exactly when their
+   difference is a period. -/
+theorem quotientAddEquiv_mk_eq_iff {V X : Type*} [AddCommGroup V] [AddCommGroup X]
+    (u : PeriodLatticeQuotient V X) (v w : V) :
+    u.quotientAddEquiv (QuotientAddGroup.mk' u.periodLattice v) =
+        u.quotientAddEquiv (QuotientAddGroup.mk' u.periodLattice w) ↔
+      v - w ∈ u.periodLattice := by
+  rw [quotientAddEquiv_mk, quotientAddEquiv_mk]
+  constructor
+  · intro h
+    have hz : u.exponential (v - w) = 0 := by
+      rw [map_sub, h, sub_self]
+    rw [← AddMonoidHom.mem_ker, u.kernel_exponential] at hz
+    exact hz
+  · intro h
+    have hz : u.exponential (v - w) = 0 := by
+      rw [← AddMonoidHom.mem_ker, u.kernel_exponential]
+      exact h
+    have heq : u.exponential v - u.exponential w = 0 := by
+      simpa only [map_sub] using hz
+    exact sub_eq_zero.mp heq
+
 end PeriodLatticeQuotient
 
 /-- The real vector group underlying a complex torus of dimension `g`. -/
