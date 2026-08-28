@@ -90,6 +90,94 @@ theorem degreeClass_add
     degreeClass hzero (a + b) = degreeClass hzero a + degreeClass hzero b :=
   map_add (degreeClass hzero) a b
 
+/-! ## Degree-zero classes and the degree splitting attached to a point -/
+
+/-- The subgroup of divisor classes of degree zero. -/
+noncomputable def degreeZeroDivisorClasses
+    (hzero : PrincipalDivisorsHaveDegreeZero (k := k) (X := X)) :
+    AddSubgroup (DivisorClassGroup (k := k) (X := X)) :=
+  (degreeClass hzero).ker
+
+@[simp]
+theorem mem_degreeZeroDivisorClasses_iff
+    (hzero : PrincipalDivisorsHaveDegreeZero (k := k) (X := X))
+    (a : DivisorClassGroup (k := k) (X := X)) :
+    a ∈ degreeZeroDivisorClasses hzero ↔ degreeClass hzero a = 0 :=
+  AddMonoidHom.mem_ker
+
+@[simp]
+theorem divisorClass_mem_degreeZeroDivisorClasses_iff
+    (hzero : PrincipalDivisorsHaveDegreeZero (k := k) (X := X))
+    (D : CurveDivisor k X) :
+    divisorClass D ∈ degreeZeroDivisorClasses hzero ↔
+      CurveDivisor.degree D = 0 := by
+  rw [mem_degreeZeroDivisorClasses_iff, degreeClass_divisorClass]
+
+/-- Multiples of a non-generic point, viewed in the divisor class group. -/
+noncomputable def pointClassHom
+    (x : {x : X.left // x ≠ genericPoint X.left}) :
+    ℤ →+ DivisorClassGroup (k := k) (X := X) :=
+  divisorClass.comp (Finsupp.singleAddHom x)
+
+@[simp]
+theorem pointClassHom_apply
+    (x : {x : X.left // x ≠ genericPoint X.left}) (n : ℤ) :
+    pointClassHom (k := k) x n = divisorClass (Finsupp.single x n) :=
+  rfl
+
+@[simp]
+theorem degreeClass_pointClassHom
+    (hzero : PrincipalDivisorsHaveDegreeZero (k := k) (X := X))
+    (x : {x : X.left // x ≠ genericPoint X.left}) (n : ℤ) :
+    degreeClass hzero (pointClassHom (k := k) x n) = n := by
+  rw [pointClassHom_apply, degreeClass_divisorClass,
+    CurveDivisor.degree_single]
+
+/-- The class attached to `n` is the `n`-fold multiple of the point class. -/
+theorem pointClassHom_eq_zsmul
+    (x : {x : X.left // x ≠ genericPoint X.left}) (n : ℤ) :
+    pointClassHom (k := k) x n = n • pointClassHom (k := k) x 1 := by
+  simpa using (map_zsmul (pointClassHom (k := k) x) n (1 : ℤ))
+
+/-- A chosen non-generic point gives a section of the degree map. -/
+theorem degreeClass_comp_pointClassHom
+    (hzero : PrincipalDivisorsHaveDegreeZero (k := k) (X := X))
+    (x : {x : X.left // x ≠ genericPoint X.left}) :
+    (degreeClass hzero).comp (pointClassHom (k := k) x) =
+      AddMonoidHom.id ℤ := by
+  apply AddMonoidHom.ext
+  intro n
+  rw [AddMonoidHom.comp_apply, degreeClass_pointClassHom]
+  rfl
+
+/-- If the curve has a non-generic point, every integer occurs as the degree of
+a divisor class. -/
+theorem degreeClass_surjective_of_point
+    (hzero : PrincipalDivisorsHaveDegreeZero (k := k) (X := X))
+    (x : {x : X.left // x ≠ genericPoint X.left}) :
+    Function.Surjective (degreeClass hzero) := by
+  intro n
+  exact ⟨pointClassHom (k := k) x n, degreeClass_pointClassHom hzero x n⟩
+
+/-- Relative to a chosen non-generic point, every divisor class is the sum of
+a degree-zero class and a canonical point class of the same degree. -/
+theorem exists_degreeZero_add_pointClass
+    (hzero : PrincipalDivisorsHaveDegreeZero (k := k) (X := X))
+    (x : {x : X.left // x ≠ genericPoint X.left})
+    (a : DivisorClassGroup (k := k) (X := X)) :
+    ∃ a₀ : DivisorClassGroup (k := k) (X := X),
+      a₀ ∈ degreeZeroDivisorClasses hzero ∧
+        a = a₀ + pointClassHom (k := k) x (degreeClass hzero a) := by
+  let px := pointClassHom (k := k) x (degreeClass hzero a)
+  refine ⟨a - px, ?_, ?_⟩
+  · have hpx : degreeClass hzero px = degreeClass hzero a := by
+      change degreeClass hzero
+        (pointClassHom (k := k) x (degreeClass hzero a)) = _
+      exact degreeClass_pointClassHom hzero x (degreeClass hzero a)
+    rw [mem_degreeZeroDivisorClasses_iff, map_sub, hpx, sub_self]
+  · dsimp [px]
+    abel
+
 /-- Degree is invariant under linear equivalence once principal divisors have
 degree zero. -/
 theorem degree_eq_of_linearlyEquivalent
@@ -114,5 +202,13 @@ theorem degreeClass_proof_irrel
   obtain ⟨D, rfl⟩ := QuotientAddGroup.mk'_surjective principalDivisors q
   change degreeClass h₁ (divisorClass D) = degreeClass h₂ (divisorClass D)
   rw [degreeClass_divisorClass]
+
+/-- The subgroup of degree-zero classes is independent of the proof used to
+descend degree to the divisor class group. -/
+theorem degreeZeroDivisorClasses_proof_irrel
+    (h₁ h₂ : PrincipalDivisorsHaveDegreeZero (k := k) (X := X)) :
+    degreeZeroDivisorClasses h₁ = degreeZeroDivisorClasses h₂ := by
+  unfold degreeZeroDivisorClasses
+  rw [degreeClass_proof_irrel h₁ h₂]
 
 end Hartshorne
