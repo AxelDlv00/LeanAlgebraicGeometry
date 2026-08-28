@@ -37,15 +37,33 @@ variable {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
 
 /-! ## The canonical comparison family -/
 
-/-- The comparison family determined by one bundled transition-model datum. -/
-noncomputable opaque canonicalComparisonFamily
+/- The family is kept behind an opaque witness so elaborating a context never unfolds the
+dependent tensor-model comparison.  The witness also stores the specification equation; this
+is the proof-level bridge needed by consumers that use the model-level face theorem.
+-/
+noncomputable opaque canonicalComparisonWitness
     (D : Pic0FiniteStageTransitionModelsData C F) :
-    ∀ q : Pic0FiniteStageTripleTransitionIndex C,
+    {Q : ∀ q : Pic0FiniteStageTripleTransitionIndex C,
       k ⊗[D.M.1] Pic0FiniteStageTripleTransitionModelTarget
           C D.L D.n D.m D.relation D.M D.mapM q ≃ₐ[k]
-        Pic0FiniteStageTripleRing C q.1 q.2.1 q.2.2 :=
-  pic0FiniteStageTripleModelComparisonFamily C D.L D.n D.m D.relation
-    D.e D.M D.mapM D.comparison
+        Pic0FiniteStageTripleRing C q.1 q.2.1 q.2.2 //
+      Q = pic0FiniteStageTripleModelComparisonFamily C D.L D.n D.m D.relation
+        D.e D.M D.mapM D.comparison} :=
+  ⟨pic0FiniteStageTripleModelComparisonFamily C D.L D.n D.m D.relation
+      D.e D.M D.mapM D.comparison, rfl⟩
+
+/-- The comparison family determined by one bundled transition-model datum. -/
+noncomputable def canonicalComparisonFamily
+    (D : Pic0FiniteStageTransitionModelsData C F) :=
+  (canonicalComparisonWitness C D).1
+
+@[simp]
+theorem canonicalComparisonFamily_spec
+    (D : Pic0FiniteStageTransitionModelsData C F) :
+    canonicalComparisonFamily C D =
+      pic0FiniteStageTripleModelComparisonFamily C D.L D.n D.m D.relation
+        D.e D.M D.mapM D.comparison :=
+  (canonicalComparisonWitness C D).2
 
 /-! ## Canonical constructor -/
 
