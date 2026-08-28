@@ -25,7 +25,7 @@ namespace MilneLib
 
 /-- A morphism of sheaves of modules that is surjective on every stalk is an
 epimorphism. -/
-theorem schemeModule_epi_of_surjective_on_stalks {X : Scheme} {M N : X.Modules}
+theorem schemeModule_epi_of_surjective_on_stalks {X : Scheme.{u}} {M N : X.Modules}
     (f : M ⟶ N)
     (hf : ∀ x : X, Function.Surjective
       ((TopCat.Presheaf.stalkFunctor AddCommGrpCat x).map f.mapPresheaf)) :
@@ -43,7 +43,7 @@ isomorphism.  This stalk-level criterion is useful for the invertible-sheaf
 conclusion in Milne I.5.11 without assuming a separate formalization of
 coherence or local freeness. -/
 theorem schemeModule_isIso_of_bijective_on_stalks
-    {X : Scheme} {M N : X.Modules} (f : M ⟶ N)
+    {X : Scheme.{u}} {M N : X.Modules} (f : M ⟶ N)
     (hf : ∀ x : X, Function.Bijective
       ((TopCat.Presheaf.stalkFunctor AddCommGrpCat x).map f.mapPresheaf)) :
     IsIso f := by
@@ -57,7 +57,7 @@ theorem schemeModule_isIso_of_bijective_on_stalks
 /-- A morphism of scheme modules is an isomorphism exactly when all of its
 additive stalk maps are isomorphisms. -/
 theorem schemeModule_isIso_iff_isIso_on_stalks
-    {X : Scheme} {M N : X.Modules} (f : M ⟶ N) :
+    {X : Scheme.{u}} {M N : X.Modules} (f : M ⟶ N) :
     IsIso f ↔ ∀ x : X, IsIso
       ((TopCat.Presheaf.stalkFunctor AddCommGrpCat x).map f.mapPresheaf) := by
   constructor
