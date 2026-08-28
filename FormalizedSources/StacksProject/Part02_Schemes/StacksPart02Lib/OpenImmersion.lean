@@ -63,4 +63,17 @@ theorem scheme_openImmersion_pullback_fst_range
     Set.range (pullback.fst g f) = g ⁻¹ᵁ f.opensRange := by
   exact IsOpenImmersion.range_pullbackFst f g
 
+/-- Pullback preserves open immersions along the second projection. -/
+theorem scheme_openImmersion_pullback_snd
+    {X Y Z : Scheme.{u}} (f : X ⟶ Z) (g : Y ⟶ Z) [IsOpenImmersion f] :
+    IsOpenImmersion (pullback.snd f g) := by
+  infer_instance
+
+/-- The image of the second pullback projection is the preimage of the
+original open immersion's range. -/
+theorem scheme_openImmersion_pullback_snd_range
+    {X Y Z : Scheme.{u}} (f : X ⟶ Z) (g : Y ⟶ Z) [IsOpenImmersion f] :
+    Set.range (pullback.snd f g) = g ⁻¹ᵁ f.opensRange := by
+  exact IsOpenImmersion.range_pullbackSnd f g
+
 end StacksPart02
