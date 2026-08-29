@@ -31,16 +31,20 @@ namespace Pic0FiniteStageStableGluePackage
 
 variable {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
 
-/-- The selected finite-stage gluing and its structure map.
-
-The map is indexed by the exact affine presentation.  Its slice object is derived below rather
-than stored independently, keeping the source definitionally equal to the selected gluing.
--/
-structure GluedOverData (P : Pic0FiniteStageStableGluePackage C F) where
-  mapData : AlgebraicJacobian.GluedMapData P.presentation.glueData
+/-! The presentation already contains the selected map datum.  Keep this name as an
+abbreviation for the map datum itself, rather than wrapping the same dependent value in a
+second structure.  The exact `P.presentation.glueData` index is retained in the alias. -/
+abbrev GluedOverData (P : Pic0FiniteStageStableGluePackage C F) :=
+  AlgebraicJacobian.GluedMapData P.presentation.glueData
     (Spec (.of P.context.triple.N.1))
 
 namespace GluedOverData
+
+/-- Compatibility projection for clients that used the former wrapper field. -/
+abbrev mapData {P : Pic0FiniteStageStableGluePackage C F}
+    (Q : GluedOverData C P) : AlgebraicJacobian.GluedMapData P.presentation.glueData
+      (Spec (.of P.context.triple.N.1)) :=
+  Q
 
 /-- The exact glue datum indexed by the packaged structure map. -/
 def glueData {P : Pic0FiniteStageStableGluePackage C F}
@@ -51,7 +55,7 @@ def glueData {P : Pic0FiniteStageStableGluePackage C F}
 def map {P : Pic0FiniteStageStableGluePackage C F}
     (Q : GluedOverData C P) :
     P.presentation.glueData.glued ⟶ Spec (.of P.context.triple.N.1) :=
-  Q.mapData.map
+  AlgebraicJacobian.GluedMapData.map Q
 
 /-- The packaged gluing as an object over its finite-stage field. -/
 def asOver {P : Pic0FiniteStageStableGluePackage C F}
@@ -67,13 +71,13 @@ theorem asOver_hom {P : Pic0FiniteStageStableGluePackage C F}
 theorem chartMap_factor {P : Pic0FiniteStageStableGluePackage C F}
     (Q : GluedOverData C P) (i : P.presentation.glueData.J) :
     P.presentation.glueData.ι i ≫ Q.map = Q.mapData.chartMap i :=
-  Q.mapData.chartMap_factor i
+  AlgebraicJacobian.GluedMapData.chartMap_factor Q i
 
 end GluedOverData
 
 /-- Project the stable gluing and map without reopening their construction. -/
 def gluedOverData (P : Pic0FiniteStageStableGluePackage C F) : GluedOverData C P :=
-  { mapData := P.presentation.mapData }
+  P.presentation.mapData
 
 /-! Compatibility names for consumers that previously projected the legacy package's
 `gluedOver`.  The stable object is definitionally the selected presentation's `Over`, so
