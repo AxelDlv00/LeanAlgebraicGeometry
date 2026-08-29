@@ -13,6 +13,7 @@ import MumfordLib.QuotientTopology
 import MumfordLib.UniformizedTopology
 import MumfordLib.Theta
 import MumfordLib.ThetaNondegenerate
+import MumfordLib.ThetaIsotropic
 
 /-!
 # MumfordLib
