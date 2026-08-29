@@ -7,6 +7,7 @@ import MumfordLib.Uniformization
 import MumfordLib.Lattice
 import MumfordLib.ComplexModel
 import MumfordLib.ComplexUniformization
+import MumfordLib.DivisionFiber
 import MumfordLib.Theta
 
 /-!
