@@ -29,6 +29,86 @@ unproved global declaration. -/
 structure ComplexTorusUniformization (X : Type*) [AddCommGroup X] (g : ℕ) where
   equiv : X ≃+ (GenusComplexVector g ⧸ complexPeriodLattice g)
 
+/-- Package an additive exponential with the canonical period kernel as a
+period-lattice quotient certificate. -/
+def complexPeriodLatticeQuotientOfExponential
+    {X : Type*} [AddCommGroup X] {g : ℕ}
+    (exponential : GenusComplexVector g →+ X)
+    (hsurj : Function.Surjective exponential)
+    (hker : exponential.ker = complexPeriodLattice g) :
+    PeriodLatticeQuotient (GenusComplexVector g) X where
+  periodLattice := complexPeriodLattice g
+  exponential := exponential
+  exponential_surjective := hsurj
+  kernel_exponential := hker
+
+/-- A surjective additive exponential with the canonical period kernel induces
+the chosen complex uniformization witness. -/
+def ComplexTorusUniformization.ofExponential
+    {X : Type*} [AddCommGroup X] {g : ℕ}
+    (exponential : GenusComplexVector g →+ X)
+    (hsurj : Function.Surjective exponential)
+    (hker : exponential.ker = complexPeriodLattice g) :
+    ComplexTorusUniformization X g where
+  equiv :=
+    (complexPeriodLatticeQuotientOfExponential exponential hsurj hker).quotientAddEquiv.symm
+
+@[simp]
+theorem ComplexTorusUniformization.ofExponential_equiv_symm_mk
+    {X : Type*} [AddCommGroup X] {g : ℕ}
+    (exponential : GenusComplexVector g →+ X)
+    (hsurj : Function.Surjective exponential)
+    (hker : exponential.ker = complexPeriodLattice g)
+    (z : GenusComplexVector g) :
+    (ComplexTorusUniformization.ofExponential exponential hsurj hker).equiv.symm
+        (QuotientAddGroup.mk' (complexPeriodLattice g) z) =
+      exponential z := by
+  change
+    (complexPeriodLatticeQuotientOfExponential exponential hsurj hker).quotientAddEquiv
+        (QuotientAddGroup.mk' (complexPeriodLattice g) z) =
+      exponential z
+  exact PeriodLatticeQuotient.quotientAddEquiv_mk
+    (complexPeriodLatticeQuotientOfExponential exponential hsurj hker) z
+
+/-- Two complex uniformization witnesses agree when their quotient maps agree
+on representatives. -/
+@[ext]
+theorem ComplexTorusUniformization.ext
+    {X : Type*} [AddCommGroup X] {g : ℕ}
+    {u v : ComplexTorusUniformization X g}
+    (h : ∀ z : GenusComplexVector g,
+      u.equiv.symm (QuotientAddGroup.mk' (complexPeriodLattice g) z) =
+        v.equiv.symm (QuotientAddGroup.mk' (complexPeriodLattice g) z)) :
+    u = v := by
+  have hinv : u.equiv.symm = v.equiv.symm := by
+    apply AddEquiv.ext
+    intro q
+    refine QuotientAddGroup.induction_on q ?_
+    intro z
+    exact h z
+  have hequiv : u.equiv = v.equiv := by
+    simpa only [AddEquiv.symm_symm] using congrArg AddEquiv.symm hinv
+  cases u
+  cases v
+  simpa only [ComplexTorusUniformization.mk.injEq] using hequiv
+
+/-- The quotient witness induced by an exponential is unique among witnesses
+whose inverse map has the same representative formula. -/
+theorem ComplexTorusUniformization.eq_of_exponential_compatibility
+    {X : Type*} [AddCommGroup X] {g : ℕ}
+    (u : ComplexTorusUniformization X g)
+    (exponential : GenusComplexVector g →+ X)
+    (hsurj : Function.Surjective exponential)
+    (hker : exponential.ker = complexPeriodLattice g)
+    (hcompat : ∀ z : GenusComplexVector g,
+      u.equiv.symm (QuotientAddGroup.mk' (complexPeriodLattice g) z) =
+        exponential z) :
+    u = ComplexTorusUniformization.ofExponential exponential hsurj hker := by
+  apply ComplexTorusUniformization.ext
+  intro z
+  rw [ComplexTorusUniformization.ofExponential_equiv_symm_mk]
+  exact hcompat z
+
 /-- Forget the complex coordinates and obtain the real genus-torus model. -/
 def ComplexTorusUniformization.toGenusTorusUniformization
     {X : Type*} [AddCommGroup X] {g : ℕ}
