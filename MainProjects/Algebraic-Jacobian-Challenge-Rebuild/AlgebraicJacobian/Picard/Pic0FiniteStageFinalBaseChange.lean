@@ -1113,6 +1113,44 @@ noncomputable def pic0FiniteStageFinalBaseChangeEquiv
     (inferInstance : IsScalarTower N.1 k k)).trans
       (pic0FiniteStageModelBaseChangeEquiv C L n m relation e M j)
 
+set_option synthInstance.maxHeartbeats 3200000 in
+-- The explicit tensor witnesses avoid instance-search loops at this API boundary.
+set_option maxHeartbeats 12800000 in
+/-- The scalar extension of a selected finite-stage map, with the final-model ring and
+algebra witnesses pinned in its result type.  Naturality consumers should use this map
+instead of reconstructing `scalarExtensionMapOfAlgHom` from inferred tensor instances. -/
+noncomputable def pic0FiniteStageFinalScalarExtensionMap
+    {F : Type u} [Field F] [Algebra F k]
+    (L : DatG0.FinSubext F k)
+    (n m : Pic0FiniteStageRingIndex C -> Nat)
+    (relation : forall j, Fin (m j) -> MvPolynomial (Fin (n j)) L.1)
+    (M : DatG0.FinSubext L.1 k)
+    (mapM : forall q : Pic0FiniteStageMapIndex C,
+      Pic0FiniteStageModelRing C L n m relation M
+          (Pic0FiniteStageMapSource C q) →ₐ[M.1]
+        Pic0FiniteStageModelRing C L n m relation M
+          (Pic0FiniteStageMapTarget C q))
+    (N : DatG0.FinSubext M.1 k)
+    (q : Pic0FiniteStageMapIndex C) :
+    @AlgHom k
+      (k ⊗[N.1] Pic0FiniteStageFinalModelRing C L n m relation M N
+        (Pic0FiniteStageMapSource C q))
+      (k ⊗[N.1] Pic0FiniteStageFinalModelRing C L n m relation M N
+        (Pic0FiniteStageMapTarget C q))
+      (inferInstance : CommSemiring k)
+      (pic0FiniteStageFinalScalarExtensionSemiring C L n m relation M N
+        (Pic0FiniteStageMapSource C q))
+      (pic0FiniteStageFinalScalarExtensionSemiring C L n m relation M N
+        (Pic0FiniteStageMapTarget C q))
+      (pic0FiniteStageFinalScalarExtensionAlgebra C L n m relation M N
+        (Pic0FiniteStageMapSource C q))
+      (pic0FiniteStageFinalScalarExtensionAlgebra C L n m relation M N
+        (Pic0FiniteStageMapTarget C q)) :=
+  pic0FiniteStageFinalScalarExtensionMapExplicit C L n m relation M N
+    (Pic0FiniteStageMapSource C q) (Pic0FiniteStageMapTarget C q)
+    (pic0FiniteStageModelScalarExtensionMap C L n m relation M N
+      (Pic0FiniteStageMapSource C q) (Pic0FiniteStageMapTarget C q) (mapM q))
+
 set_option synthInstance.maxHeartbeats 400000 in
 -- Naturality elaborates the cancellation and model-comparison squares together.
 set_option maxHeartbeats 12800000 in
@@ -1143,12 +1181,7 @@ theorem pic0FiniteStageFinalBaseChangeEquiv_naturality
     (q : Pic0FiniteStageMapIndex C) :
     (pic0FiniteStageFinalBaseChangeEquiv C L n m relation e M N
         (Pic0FiniteStageMapTarget C q)).toAlgHom.comp
-        (AlgebraicJacobian.scalarExtensionMapOfAlgHom
-          (R := N.1) (K := k)
-          (pic0FiniteStageModelScalarExtensionMap C L n m relation M N
-            (Pic0FiniteStageMapSource C q)
-            (Pic0FiniteStageMapTarget C q)
-            (mapM q))) =
+        (pic0FiniteStageFinalScalarExtensionMap C L n m relation M mapM N q) =
         (pic0FiniteStageMap C q).comp
         (pic0FiniteStageFinalBaseChangeEquiv C L n m relation e M N
           (Pic0FiniteStageMapSource C q)).toAlgHom := by
