@@ -5,6 +5,7 @@ Authors: The Hartshorne Contributors
 -/
 
 import HartshorneLib.Chapter2Chi
+import HartshorneLib.Chapter4DivisorClass
 import HartshorneLib.Chapter4DivisorMultiplication
 
 /-!
@@ -180,5 +181,16 @@ theorem chi_divisorSheaf_sub_principalDivisor (g : X.left.functionFieldˣ)
     CategoryTheory.Sheaf.chi (divisorSheaf (D - principalDivisor g)) =
       CategoryTheory.Sheaf.chi (divisorSheaf D) :=
   CategoryTheory.Sheaf.chi_congr (mulEquivDivisorSheaf g D).symm
+
+theorem chi_divisorSheaf_eq_of_linearlyEquivalent
+    {D E : CurveDivisor k X} (h : LinearlyEquivalent D E) :
+    CategoryTheory.Sheaf.chi (divisorSheaf D) =
+      CategoryTheory.Sheaf.chi (divisorSheaf E) := by
+  obtain ⟨g, hg⟩ := (linearlyEquivalent_iff_exists D E).mp h
+  have heq : D - principalDivisor g = E := by
+    rw [← hg]
+    abel
+  rw [← heq]
+  exact CategoryTheory.Sheaf.chi_congr (mulEquivDivisorSheaf g D)
 
 end Hartshorne
