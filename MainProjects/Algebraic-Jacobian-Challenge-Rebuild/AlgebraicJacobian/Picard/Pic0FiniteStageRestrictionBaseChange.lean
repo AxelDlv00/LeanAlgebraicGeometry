@@ -34,7 +34,7 @@ namespace Pic0FiniteStageGluePackage
 -- Pin the descended restriction to the same nested tensor witnesses used by the
 -- final-stage affine comparison APIs.  The raw scalar-extension definition
 -- otherwise asks typeclass search to reconstruct the dependent model carrier.
-private noncomputable def restrictionBaseChangeAlgHomCanonical
+noncomputable def restrictionBaseChangeAlgHomCanonical
     {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
     (P : Pic0FiniteStageGluePackage C F)
     (U V : Pic0FiniteStageChartIndex C) :
@@ -42,15 +42,12 @@ private noncomputable def restrictionBaseChangeAlgHomCanonical
       (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U)
       (Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M P.N U V)
       (inferInstance : CommSemiring P.N.1)
-      (pic0FiniteStageFinalModelRingCommRing C P.L P.n P.m P.relation P.M P.N
-        (Sum.inl U)).toSemiring
-      (pic0FiniteStageOverlapBaseChangeRingCommRing C P.L P.n P.m P.relation P.M P.N U V).toSemiring
-      (pic0FiniteStageFinalModelRingAlgebra C P.L P.n P.m P.relation P.M P.N
-        (Sum.inl U))
-      (pic0FiniteStageOverlapBaseChangeRingAlgebra C P.L P.n P.m P.relation P.M P.N U V) := by
-  exact pic0FiniteStageModelScalarExtensionMap
-    C P.L P.n P.m P.relation P.M P.N (Sum.inl U) (Sum.inr (U, V))
-    (P.mapM (Sum.inl (Sum.inl (U, V))))
+      (pic0FiniteStageChartBaseChangeCommRing C P.L P.n P.m P.relation P.M P.N U).toSemiring
+      (pic0FiniteStageOverlapBaseChangeCommRing C P.L P.n P.m P.relation P.M P.N U V).toSemiring
+      (pic0FiniteStageChartBaseChangeAlgebra C P.L P.n P.m P.relation P.M P.N U)
+      (pic0FiniteStageOverlapBaseChangeAlgebra C P.L P.n P.m P.relation P.M P.N U V) :=
+  pic0FiniteStageRestrictionBaseChange
+    C P.L P.n P.m P.relation P.M P.mapM P.N U V
 
 set_option synthInstance.maxHeartbeats 3200000 in
 -- Projecting the package unfolds the dependent finite-subextension towers.
@@ -75,10 +72,14 @@ noncomputable def restrictionBaseChangeAlgHom
     {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
     (P : Pic0FiniteStageGluePackage C F)
     (U V : Pic0FiniteStageChartIndex C) :
-    Pic0FiniteStageChartBaseChangeRing
-        C P.L P.n P.m P.relation P.M P.N U →ₐ[P.N.1]
-      Pic0FiniteStageOverlapBaseChangeRing
-        C P.L P.n P.m P.relation P.M P.N U V :=
+    @AlgHom P.N.1
+      (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U)
+      (Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M P.N U V)
+      (inferInstance : CommSemiring P.N.1)
+      (pic0FiniteStageChartBaseChangeCommRing C P.L P.n P.m P.relation P.M P.N U).toSemiring
+      (pic0FiniteStageOverlapBaseChangeCommRing C P.L P.n P.m P.relation P.M P.N U V).toSemiring
+      (pic0FiniteStageChartBaseChangeAlgebra C P.L P.n P.m P.relation P.M P.N U)
+      (pic0FiniteStageOverlapBaseChangeAlgebra C P.L P.n P.m P.relation P.M P.N U V) :=
   restrictionBaseChangeAlgHomCanonical C P U V
 
 /-- The exact left restriction with indexed source and target rings.  Keeping
@@ -158,6 +159,18 @@ noncomputable def restrictionBaseChangeMap
             (Pic0FiniteStageChartBaseChangeRing
               C P.L P.n P.m P.relation P.M P.N U))))
         (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k))) :=
+  letI : CommRing
+      (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U) :=
+    pic0FiniteStageChartBaseChangeCommRing C P.L P.n P.m P.relation P.M P.N U
+  letI : Algebra P.N.1
+      (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U) :=
+    pic0FiniteStageChartBaseChangeAlgebra C P.L P.n P.m P.relation P.M P.N U
+  letI : CommRing
+      (Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M P.N U V) :=
+    pic0FiniteStageOverlapBaseChangeCommRing C P.L P.n P.m P.relation P.M P.N U V
+  letI : Algebra P.N.1
+      (Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M P.N U V) :=
+    pic0FiniteStageOverlapBaseChangeAlgebra C P.L P.n P.m P.relation P.M P.N U V
   affineBaseChangeMap P.N.1 k
     (Pic0FiniteStageChartBaseChangeRing
       C P.L P.n P.m P.relation P.M P.N U)
