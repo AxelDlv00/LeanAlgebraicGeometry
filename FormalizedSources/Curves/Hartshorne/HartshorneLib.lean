@@ -28,6 +28,7 @@ import HartshorneLib.Chapter2Sheaves
 import HartshorneLib.Chapter2LineBundles
 import HartshorneLib.Chapter2ModuleKSheaf
 import HartshorneLib.Chapter2Cohomology
+import HartshorneLib.Chapter2Chi
 import HartshorneLib.Chapter4ResidueDegree
 import HartshorneLib.Chapter4WeightedDegree
 
