@@ -17,7 +17,7 @@ geometric existence assumptions beyond those already in `CurveDivisor`.
 
 set_option autoImplicit false
 
-universe u
+universe u v
 
 open CategoryTheory
 open AlgebraicGeometry
@@ -123,6 +123,31 @@ theorem induction_devissage {P : CurveDivisor k X → Prop} (zero : P 0)
       abel
     rw [heq]
   exact h.trans h2
+
+/-! ## Finite-sum form of additive divisor maps -/
+
+/-- An additive map out of divisors is determined by its values on one-point
+divisors, with the finite support providing the sum. -/
+theorem addHom_apply_eq_sum_single_smul
+    {A : Type v} [AddCommGroup A] (φ : CurveDivisor k X →+ A)
+    (D : CurveDivisor k X) :
+    φ D = ∑ x ∈ (show PointDivisor X.left from D).support,
+      ((show PointDivisor X.left from D).toFun x : ℤ) •
+        φ (single x.2 1) := by
+  change (({x : X.left // x ≠ genericPoint X.left} →₀ ℤ) →+ A) at φ
+  change ({x : X.left // x ≠ genericPoint X.left} →₀ ℤ) at D
+  change φ D = ∑ x ∈ D.support, (D x : ℤ) • φ (Finsupp.single x 1)
+  calc
+    φ D = φ (D.sum (fun x n => Finsupp.single x n)) := by
+      rw [Finsupp.sum_single]
+    _ = ∑ x ∈ D.support, φ (Finsupp.single x (D x)) := by
+      simp only [Finsupp.sum]
+      rw [map_sum]
+    _ = ∑ x ∈ D.support, (D x : ℤ) • φ (Finsupp.single x 1) := by
+      apply Finset.sum_congr rfl
+      intro x hx
+      rw [← Finsupp.smul_single_one]
+      rw [map_zsmul]
 
 end CurveDivisor
 
