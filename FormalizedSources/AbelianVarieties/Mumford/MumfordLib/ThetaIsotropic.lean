@@ -147,6 +147,31 @@ theorem isIsotropic_iff
     intro l
     exact h hk l.property
 
+/- The join of isotropic subgroups remains isotropic when the two subgroups
+   are mutually orthogonal. -/
+theorem isIsotropic_sup_of_isIsotropic
+    (E : ThetaExtension G S K) (H J : AddSubgroup K)
+    (hH : E.IsIsotropic H) (hJ : E.IsIsotropic J)
+    (hHJ : H ≤ E.commutatorPairingOrthogonal J) :
+    E.IsIsotropic (H ⊔ J) := by
+  rw [E.isIsotropic_iff]
+  intro a ha b hb
+  rcases AddSubgroup.mem_sup.mp ha with ⟨aH, haH, aJ, haJ, rfl⟩
+  rcases AddSubgroup.mem_sup.mp hb with ⟨bH, hbH, bJ, hbJ, rfl⟩
+  have hHH : E.commutatorPairing aH bH = 1 :=
+    (E.isIsotropic_iff H).mp hH haH hbH
+  have hJJ : E.commutatorPairing aJ bJ = 1 :=
+    (E.isIsotropic_iff J).mp hJ haJ hbJ
+  have hHJ' : E.commutatorPairing aH bJ = 1 :=
+    (E.mem_commutatorPairingOrthogonal_iff J aH).mp (hHJ haH) ⟨bJ, hbJ⟩
+  have hJH : E.commutatorPairing aJ bH = 1 := by
+    have h : E.commutatorPairing bH aJ = 1 :=
+      (E.mem_commutatorPairingOrthogonal_iff J bH).mp (hHJ hbH) ⟨aJ, haJ⟩
+    rw [E.commutatorPairing_swap, h, inv_one]
+  rw [E.commutatorPairing_add_left, E.commutatorPairing_add_right,
+    E.commutatorPairing_add_right, hHH, hHJ', hJH, hJJ]
+  simp
+
 theorem commutatorPairing_zsmul_left
     (E : ThetaExtension G S K) (n : ℤ) (k l : K) :
     E.commutatorPairing (n • k) l = E.commutatorPairing k l ^ n := by
