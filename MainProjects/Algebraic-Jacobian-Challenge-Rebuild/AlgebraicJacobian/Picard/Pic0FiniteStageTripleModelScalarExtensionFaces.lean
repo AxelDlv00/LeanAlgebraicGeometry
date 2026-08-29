@@ -84,13 +84,13 @@ theorem finiteStageTensorPushoutScalarExtension_faceLeft_map
       letI : Algebra (K ⊗[R] A) (K ⊗[R] B₁) := g₁.toRingHom.toAlgebra
       letI : Algebra (K ⊗[R] A) (K ⊗[R] B₂) := g₂.toRingHom.toAlgebra
       change
-        AlgebraicJacobian.tensorProductPushoutBaseChangeHom
+        AlgebraicJacobian.tensorProductPushoutBaseChangeHomPinned
             (M := R) (K := K) (A := A) (B₁ := B₁) (B₂ := B₂)
             (c ⊗ₜ[R] (b₁ ⊗ₜ[A] (1 : B₂))) =
           Algebra.TensorProduct.includeLeft
             (R := K ⊗[R] A) (S := K) (A := K ⊗[R] B₁) (B := K ⊗[R] B₂)
             (c ⊗ₜ[R] b₁)
-      rw [AlgebraicJacobian.tensorProductPushoutBaseChangeHom_tmul]
+      rw [AlgebraicJacobian.tensorProductPushoutBaseChangeHomPinned_tmul]
       rfl
 
 /-- Scalar extension of the right face, followed by the tensor-pushout base-change
@@ -154,13 +154,13 @@ theorem finiteStageTensorPushoutScalarExtension_faceRight_map
         letI : Algebra (K ⊗[R] A) (K ⊗[R] B₁) := g₁.toRingHom.toAlgebra
         letI : Algebra (K ⊗[R] A) (K ⊗[R] B₂) := g₂.toRingHom.toAlgebra
         change
-          AlgebraicJacobian.tensorProductPushoutBaseChangeHom
+          AlgebraicJacobian.tensorProductPushoutBaseChangeHomPinned
               (M := R) (K := K) (A := A) (B₁ := B₁) (B₂ := B₂)
               ((1 : K) ⊗ₜ[R] ((1 : B₁) ⊗ₜ[A] b₂)) =
             ((Algebra.TensorProduct.includeRight
               (R := K ⊗[R] A) (A := K ⊗[R] B₁) (B := K ⊗[R] B₂)
                 ).restrictScalars K) ((1 : K) ⊗ₜ[R] b₂)
-        rw [AlgebraicJacobian.tensorProductPushoutBaseChangeHom_tmul]
+        rw [AlgebraicJacobian.tensorProductPushoutBaseChangeHomPinned_tmul]
         rfl
       have hcb :
           c ⊗ₜ[R] b₂ = c • ((1 : K) ⊗ₜ[R] b₂) := by
