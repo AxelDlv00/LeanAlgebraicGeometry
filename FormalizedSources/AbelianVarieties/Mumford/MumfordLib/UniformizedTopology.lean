@@ -41,6 +41,30 @@ theorem GenusTorusUniformization.toHomeomorph_apply
     u.toHomeomorph hcont hcont_symm x = u.equiv x :=
   rfl
 
+/- Compactness of arbitrary subsets is invariant under an explicit topological
+   uniformization.  The continuity assumptions remain visible because the
+   additive equivalence alone does not determine the topology. -/
+theorem genusTorusUniformization_isCompact_image_iff
+    {X : Type*} [AddCommGroup X] [TopologicalSpace X] {g : ℕ}
+    (u : GenusTorusUniformization X g)
+    (hcont : Continuous u.equiv)
+    (hcont_symm : Continuous u.equiv.symm)
+    (s : Set X) :
+    IsCompact (u.equiv '' s) ↔ IsCompact s := by
+  exact (u.toHomeomorph hcont hcont_symm).isCompact_image
+
+/- The same subset-level compactness transport for a complex period-quotient
+   witness, expressed through its canonical real-torus model. -/
+theorem complexTorusUniformization_isCompact_image_iff
+    {X : Type*} [AddCommGroup X] [TopologicalSpace X] {g : ℕ}
+    (u : ComplexTorusUniformization X g)
+    (hcont : Continuous u.equiv)
+    (hcont_symm : Continuous u.equiv.symm)
+    (s : Set X) :
+    IsCompact (u.toGenusTorusUniformization.equiv '' s) ↔ IsCompact s := by
+  simpa only [ComplexTorusUniformization.toGenusTorusHomeomorph_apply] using
+    ((u.toGenusTorusHomeomorph hcont hcont_symm).isCompact_image (s := s))
+
 theorem isCompact_of_genusTorusHomeomorph
     {X : Type*} [TopologicalSpace X] {g : ℕ}
     (e : X ≃ₜ GenusTorus g) :
