@@ -66,7 +66,7 @@ def triple (P : Pic0FiniteStageStableGluePackage C F) :
     Pic0FiniteStageTripleTransitionFamilyData
       C P.context.models.L P.context.models.n P.context.models.m
       P.context.models.relation P.context.models.M P.context.models.mapM
-        P.context.context.Q :=
+        P.context.Q :=
   P.context.triple
 
 def L (P : Pic0FiniteStageStableGluePackage C F) := P.context.models.L
@@ -110,7 +110,7 @@ theorem comparison
       P.context.models.L P.context.models.n P.context.models.m
       P.context.models.relation P.context.models.e P.context.models.M
       P.context.models.mapM q :=
-  P.context.context.models.comparison q
+  P.context.models.comparison q
 
 @[simp]
 theorem openImmersion
@@ -119,7 +119,7 @@ theorem openImmersion
     Pic0FiniteStageTransitionOpenImmersion C
       P.context.models.L P.context.models.n P.context.models.m
       P.context.models.relation P.context.models.M P.context.models.mapM i :=
-  P.context.context.models.openImmersion i
+  P.context.models.openImmersion i
 
 end Pic0FiniteStageStableGluePackage
 
