@@ -11,9 +11,9 @@ import MumfordLib.QuotientTopology
 
 The standard genus torus is compact, connected, and path connected.  A
 uniformization whose equivalence and inverse are continuous therefore
-transports these properties to the uniformized topological group.  The
-continuity hypotheses are kept explicit: they are the analytic input and are
-not available from the additive equivalence alone.
+transports these properties to the uniformized topological group.  When the
+source is compact, continuity of the inverse follows from continuity of the
+equivalence because the target is Hausdorff.
 -/
 
 namespace Mumford
@@ -40,6 +40,56 @@ theorem GenusTorusUniformization.toHomeomorph_apply
     (hcont_symm : Continuous u.equiv.symm) (x : X) :
     u.toHomeomorph hcont hcont_symm x = u.equiv x :=
   rfl
+
+/-- Upgrade a genus-torus additive uniformization from a compact source to a
+homeomorphism; continuity of the inverse follows from the Hausdorff target. -/
+def GenusTorusUniformization.toHomeomorph_of_compact
+    {X : Type*} [AddCommGroup X] [TopologicalSpace X] [CompactSpace X] {g : ℕ}
+    (u : GenusTorusUniformization X g)
+    (hcont : Continuous u.equiv) :
+    X ≃ₜ GenusTorus g :=
+  Continuous.homeoOfEquivCompactToT2 (f := u.equiv.toEquiv) hcont
+
+@[simp]
+theorem GenusTorusUniformization.toHomeomorph_of_compact_apply
+    {X : Type*} [AddCommGroup X] [TopologicalSpace X] [CompactSpace X] {g : ℕ}
+    (u : GenusTorusUniformization X g)
+    (hcont : Continuous u.equiv) (x : X) :
+    u.toHomeomorph_of_compact hcont x = u.equiv x :=
+  rfl
+
+theorem GenusTorusUniformization.toHomeomorph_of_compact_eq_toHomeomorph
+    {X : Type*} [AddCommGroup X] [TopologicalSpace X] [CompactSpace X] {g : ℕ}
+    (u : GenusTorusUniformization X g)
+    (hcont : Continuous u.equiv)
+    (hcont_symm : Continuous u.equiv.symm) :
+    u.toHomeomorph_of_compact hcont = u.toHomeomorph hcont hcont_symm :=
+  Homeomorph.ext fun _ => rfl
+
+/-- Upgrade a complex-torus additive uniformization from a compact source to a
+homeomorphism; continuity of the inverse follows from the Hausdorff target. -/
+def ComplexTorusUniformization.toHomeomorph_of_compact
+    {X : Type*} [AddCommGroup X] [TopologicalSpace X] [CompactSpace X] {g : ℕ}
+    (u : ComplexTorusUniformization X g)
+    (hcont : Continuous u.equiv) :
+    X ≃ₜ (GenusComplexVector g ⧸ complexPeriodLattice g) :=
+  Continuous.homeoOfEquivCompactToT2 (f := u.equiv.toEquiv) hcont
+
+@[simp]
+theorem ComplexTorusUniformization.toHomeomorph_of_compact_apply
+    {X : Type*} [AddCommGroup X] [TopologicalSpace X] [CompactSpace X] {g : ℕ}
+    (u : ComplexTorusUniformization X g)
+    (hcont : Continuous u.equiv) (x : X) :
+    u.toHomeomorph_of_compact hcont x = u.equiv x :=
+  rfl
+
+theorem ComplexTorusUniformization.toHomeomorph_of_compact_eq_toHomeomorph
+    {X : Type*} [AddCommGroup X] [TopologicalSpace X] [CompactSpace X] {g : ℕ}
+    (u : ComplexTorusUniformization X g)
+    (hcont : Continuous u.equiv)
+    (hcont_symm : Continuous u.equiv.symm) :
+    u.toHomeomorph_of_compact hcont = u.toHomeomorph hcont hcont_symm :=
+  Homeomorph.ext fun _ => rfl
 
 /- Compactness of arbitrary subsets is invariant under an explicit topological
    uniformization.  The continuity assumptions remain visible because the
