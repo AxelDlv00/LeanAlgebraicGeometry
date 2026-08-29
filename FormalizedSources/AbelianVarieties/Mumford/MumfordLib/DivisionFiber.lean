@@ -96,6 +96,14 @@ theorem zsmulDivisionFiberEquivBetween_refl
   apply Subtype.ext
   simp
 
+@[simp]
+theorem zsmulDivisionFiberEquivBetween_symm
+    {X : Type*} [AddCommGroup X] [DivisibleBy X ℤ]
+    (n : ℤ) (x y : X) (hn : n ≠ 0) :
+    (zsmulDivisionFiberEquivBetween n x y hn).symm =
+      zsmulDivisionFiberEquivBetween n y x hn := by
+  rfl
+
 theorem zsmulDivisionFiberEquivBetween_trans
     {X : Type*} [AddCommGroup X] [DivisibleBy X ℤ]
     (n : ℤ) (x y z : X) (hn : n ≠ 0) :
