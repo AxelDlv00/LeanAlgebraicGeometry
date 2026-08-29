@@ -88,6 +88,46 @@ def SchemeModule.IsStalkwiseFinite {X : Scheme.{u}} (F : X.Modules) : Prop :=
     Module.Finite (X.presheaf.stalk x)
       (↑(TopCat.Presheaf.stalk F.val.presheaf x) : Type u)
 
+/-- Stalkwise finiteness is invariant under isomorphism of scheme modules. -/
+theorem SchemeModule.IsStalkwiseFinite.of_iso
+    {X : Scheme.{u}} {M N : X.Modules} (f : M ⟶ N) [IsIso f]
+    (hN : SchemeModule.IsStalkwiseFinite N) :
+    SchemeModule.IsStalkwiseFinite M := by
+  intro x
+  letI : Module (X.presheaf.stalk x)
+      (↑(TopCat.Presheaf.stalk M.val.presheaf x) : Type u) :=
+    schemeModuleStalkModule M x
+  letI : Module (X.presheaf.stalk x)
+      (↑(TopCat.Presheaf.stalk N.val.presheaf x) : Type u) :=
+    schemeModuleStalkModule N x
+  letI hstalk : IsIso
+      ((TopCat.Presheaf.stalkFunctor AddCommGrpCat x).map f.mapPresheaf) := by
+    change IsIso ((TopCat.Presheaf.stalkFunctor AddCommGrpCat x).map
+      ((Scheme.Modules.toPresheaf X).map f))
+    infer_instance
+  let e := schemeModuleStalkLinearEquivOfIsIso f x hstalk
+  letI : Module.Finite (X.presheaf.stalk x)
+      (↑(TopCat.Presheaf.stalk N.val.presheaf x) : Type u) := hN x
+  exact Module.Finite.equiv e.symm
+
+/-- Stalkwise finiteness descends along a map that is surjective on stalks. -/
+theorem SchemeModule.IsStalkwiseFinite.of_surjective_stalks
+    {X : Scheme.{u}} {M N : X.Modules}
+    (hM : SchemeModule.IsStalkwiseFinite M) (f : M ⟶ N)
+    (hsurj : ∀ x : X, Function.Surjective
+      ((TopCat.Presheaf.stalkFunctor AddCommGrpCat x).map f.mapPresheaf)) :
+    SchemeModule.IsStalkwiseFinite N := by
+  intro x
+  letI : Module (X.presheaf.stalk x)
+      (↑(TopCat.Presheaf.stalk M.val.presheaf x) : Type u) :=
+    schemeModuleStalkModule M x
+  letI : Module (X.presheaf.stalk x)
+      (↑(TopCat.Presheaf.stalk N.val.presheaf x) : Type u) :=
+    schemeModuleStalkModule N x
+  letI : Module.Finite (X.presheaf.stalk x)
+      (↑(TopCat.Presheaf.stalk M.val.presheaf x) : Type u) := hM x
+  exact Module.Finite.of_surjective (schemeModuleStalkLinearMap f x) (hsurj x)
+
 /-- A residue-fibre surjection gives a sheaf epimorphism once the target
 stalks are known to be finite.  The finite-stalk hypothesis is explicit: the
 general coherent-stalk theorem needed by Milne I.5.11 is not yet available in
