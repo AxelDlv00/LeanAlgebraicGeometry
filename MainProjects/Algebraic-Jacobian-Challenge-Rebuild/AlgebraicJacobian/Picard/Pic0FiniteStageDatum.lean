@@ -15,6 +15,9 @@ A `BasicOpenCocycleDatum` over `K ⊗[F] B` descends to a datum over
 `M ⊗[F] B` for a finite intermediate field `M/F`.  The datum is first descended to a
 finitely generated coefficient subalgebra, then that subalgebra is factored through one
 finite tensor stage.  The tower law for datum base change transports the certificate strictly.
+
+The noncomputable `FiniteStageCocycleDatum.choose` operation fixes this witness once at the
+producer boundary, so consumers can use the packaged datum and its pinned base-change proof.
 -/
 
 set_option autoImplicit false
