@@ -48,6 +48,11 @@ theorem isCompact_of_genusTorusHomeomorph
   have h := e.isCompact_preimage (s := (Set.univ : Set (GenusTorus g)))
   simpa using h.mpr (genusTorus_isCompact g)
 
+theorem t2Space_of_genusTorusHomeomorph
+    {X : Type*} [TopologicalSpace X] {g : ℕ}
+    (e : X ≃ₜ GenusTorus g) : T2Space X :=
+  e.symm.t2Space
+
 theorem isConnected_of_genusTorusHomeomorph
     {X : Type*} [TopologicalSpace X] {g : ℕ}
     (e : X ≃ₜ GenusTorus g) :
@@ -103,6 +108,13 @@ theorem genusTorusUniformization_isCompact
     IsCompact (Set.univ : Set X) :=
   isCompact_of_genusTorusHomeomorph (u.toHomeomorph hcont hcont_symm)
 
+theorem genusTorusUniformization_isT2
+    {X : Type*} [AddCommGroup X] [TopologicalSpace X] {g : ℕ}
+    (u : GenusTorusUniformization X g)
+    (hcont : Continuous u.equiv)
+    (hcont_symm : Continuous u.equiv.symm) : T2Space X :=
+  t2Space_of_genusTorusHomeomorph (u.toHomeomorph hcont hcont_symm)
+
 theorem genusTorusUniformization_isConnected
     {X : Type*} [AddCommGroup X] [TopologicalSpace X] {g : ℕ}
     (u : GenusTorusUniformization X g)
@@ -134,6 +146,13 @@ theorem complexTorusUniformization_isCompact
     (hcont_symm : Continuous u.equiv.symm) :
     IsCompact (Set.univ : Set X) :=
   isCompact_of_genusTorusHomeomorph (u.toGenusTorusHomeomorph hcont hcont_symm)
+
+theorem complexTorusUniformization_isT2
+    {X : Type*} [AddCommGroup X] [TopologicalSpace X] {g : ℕ}
+    (u : ComplexTorusUniformization X g)
+    (hcont : Continuous u.equiv)
+    (hcont_symm : Continuous u.equiv.symm) : T2Space X :=
+  t2Space_of_genusTorusHomeomorph (u.toGenusTorusHomeomorph hcont hcont_symm)
 
 theorem complexTorusUniformization_isConnected
     {X : Type*} [AddCommGroup X] [TopologicalSpace X] {g : ℕ}
