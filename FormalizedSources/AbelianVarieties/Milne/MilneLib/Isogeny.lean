@@ -102,6 +102,33 @@ theorem Isogeny.comp_of_isIso_right
   letI : IsFinite g.left := inferInstance
   exact Isogeny.comp_of_finite f g hf (Isogeny.of_isIso g)
 
+omit [GrpObj A] in
+/-- Finiteness of the underlying map makes the kernel finite by base change. -/
+theorem isogenyKernelToBase_isFinite_of_finite
+    (f : A ⟶ B) [IsFinite f.left] :
+    IsFinite (isogenyKernelToBase f) := by
+  change IsFinite (pullback.snd f.left (η[B].left))
+  exact CategoryTheory.MorphismProperty.pullback_snd _ _
+    (inferInstance : IsFinite f.left)
+
+omit [GrpObj A] in
+/-- Flatness of a homomorphism is inherited by its kernel over the identity. -/
+theorem isogenyKernelToBase_flat_of_flat
+    (f : A ⟶ B) [Flat f.left] :
+    Flat (isogenyKernelToBase f) := by
+  change Flat (pullback.snd f.left (η[B].left))
+  exact CategoryTheory.MorphismProperty.pullback_snd _ _
+    (inferInstance : Flat f.left)
+
+omit [GrpObj A] in
+/-- Surjectivity of a homomorphism is inherited by its kernel over the identity. -/
+theorem isogenyKernelToBase_surjective_of_surjective
+    (f : A ⟶ B) [Surjective f.left] :
+    Surjective (isogenyKernelToBase f) := by
+  change Surjective (pullback.snd f.left (η[B].left))
+  exact CategoryTheory.MorphismProperty.pullback_snd _ _
+    (inferInstance : Surjective f.left)
+
 /- A finite underlying morphism has finite kernel, so in this common case the
    isogeny predicate is exactly surjectivity.  The finite-map hypothesis is
    explicit because the general finite-kernel/finite-map equivalence is not
@@ -109,9 +136,7 @@ theorem Isogeny.comp_of_isIso_right
 theorem Isogeny.of_surjective_of_finite
     (f : A ⟶ B) [IsMonHom f] [IsFinite f.left]
     (hf : Surjective f.left) : Isogeny f := by
-  refine ⟨hf, ?_⟩
-  dsimp [isogenyKernelToBase, isogenyKernel]
-  infer_instance
+  exact ⟨hf, isogenyKernelToBase_isFinite_of_finite f⟩
 
 theorem Isogeny.iff_surjective_of_finite
     (f : A ⟶ B) [IsMonHom f] [IsFinite f.left] :
@@ -128,5 +153,23 @@ theorem Isogeny.surjective (f : A ⟶ B) [IsMonHom f] (h : Isogeny f) :
 theorem Isogeny.finite_kernel (f : A ⟶ B) [IsMonHom f] (h : Isogeny f) :
     IsFinite (isogenyKernelToBase f) :=
   h.2
+
+/- The finite-flat-surjective condition from Milne's characterization implies
+   the source-faithful isogeny predicate.  The flatness hypothesis is retained
+   in the interface because it is part of the geometric characterization and
+   is used by the companion kernel lemma below. -/
+theorem Isogeny.of_finite_flat_surjective
+    (f : A ⟶ B) [IsMonHom f] [IsFinite f.left] [Flat f.left]
+    (hf : Surjective f.left) : Isogeny f := by
+  exact Isogeny.of_surjective_of_finite f hf
+
+/- A flat isogeny has a finite, flat, and surjective kernel over the base. -/
+theorem Isogeny.kernel_isFinite_flat_surjective
+    (f : A ⟶ B) [IsMonHom f] [Flat f.left] (h : Isogeny f) :
+    IsFinite (isogenyKernelToBase f) ∧
+      Flat (isogenyKernelToBase f) ∧ Surjective (isogenyKernelToBase f) := by
+  letI : Surjective f.left := h.1
+  exact ⟨h.2, isogenyKernelToBase_flat_of_flat f,
+    isogenyKernelToBase_surjective_of_surjective f⟩
 
 end MilneLib
