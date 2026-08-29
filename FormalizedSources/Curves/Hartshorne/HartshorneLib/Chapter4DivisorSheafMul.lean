@@ -4,6 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: The Hartshorne Contributors
 -/
 
+import HartshorneLib.Chapter2Chi
 import HartshorneLib.Chapter4DivisorMultiplication
 
 /-!
@@ -173,5 +174,11 @@ theorem divisorVal_mulEquiv {U : X.left.Opens}
     divisorVal ((divisorMulPresheaf g D).app (op U) s) =
       (g : X.left.functionField) * divisorVal s :=
   divisorMulPresheafApp_coe_of_nonempty g D hU s
+
+theorem chi_divisorSheaf_sub_principalDivisor (g : X.left.functionFieldˣ)
+    (D : CurveDivisor k X) :
+    CategoryTheory.Sheaf.chi (divisorSheaf (D - principalDivisor g)) =
+      CategoryTheory.Sheaf.chi (divisorSheaf D) :=
+  CategoryTheory.Sheaf.chi_congr (mulEquivDivisorSheaf g D).symm
 
 end Hartshorne
