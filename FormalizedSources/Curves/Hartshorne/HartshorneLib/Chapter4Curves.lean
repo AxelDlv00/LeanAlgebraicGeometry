@@ -178,6 +178,13 @@ theorem degree_zero : degree (0 : CurveDivisor k X) = 0 := by
   rw [← degreeHom_apply]
   exact map_zero degreeHom
 
+theorem degree_eq_zero_iff_of_nonneg {D : CurveDivisor k X} (hD : 0 ≤ D) :
+    degree D = 0 ↔ D = 0 := by
+  constructor
+  · exact eq_zero_of_nonneg_of_degree_eq_zero hD
+  · intro h
+    rw [h, degree_zero]
+
 theorem degree_add (D E : CurveDivisor k X) :
     degree (D + E) = degree D + degree E := by
   rw [← degreeHom_apply, ← degreeHom_apply, ← degreeHom_apply]
