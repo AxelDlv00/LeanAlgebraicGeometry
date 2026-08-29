@@ -90,6 +90,18 @@ def SchemeModule.IsStalkwiseFinite {X : Scheme.{u}} (F : X.Modules) : Prop :=
     Module.Finite (X.presheaf.stalk x)
       (↑(TopCat.Presheaf.stalk F.val.presheaf x) : Type u)
 
+/-- A finite family spanning the stalk of a scheme module at a point.  The
+canonical stalk module structure is recorded explicitly so this predicate can
+be used as an interface between geometric generators and algebraic finiteness. -/
+def SchemeModule.HasFiniteStalkGenerators {X : Scheme.{u}} (F : X.Modules)
+    (x : X) : Prop :=
+  letI : Module (X.presheaf.stalk x)
+      (↑(TopCat.Presheaf.stalk F.val.presheaf x) : Type u) :=
+    schemeModuleStalkModule F x
+  ∃ (ι : Type u), ∃ (_ : Fintype ι),
+    ∃ (g : ι → (↑(TopCat.Presheaf.stalk F.val.presheaf x) : Type u)),
+      Submodule.span (X.presheaf.stalk x) (Set.range g) = ⊤
+
 /-- A finite family of sections is a local generating family at a point when
 every section on a neighbourhood of that point becomes a linear combination
 of the family's restrictions after shrinking once more.  The predicate is
@@ -106,6 +118,41 @@ def SchemeModule.HasFiniteLocalGenerators {X : Scheme.{u}} (F : X.Modules)
         ∑ i, c i • (ConcreteCategory.hom
           (F.val.map (homOfLE (hWV.trans hVU)).op)) (s i)
 
+/-- Local generating sections produce a finite spanning family in the stalk. -/
+theorem SchemeModule.HasFiniteStalkGenerators.of_hasFiniteLocalGenerators
+    {X : Scheme.{u}} (F : X.Modules) (x : X)
+    (hgen : SchemeModule.HasFiniteLocalGenerators F x) :
+    SchemeModule.HasFiniteStalkGenerators F x := by
+  obtain ⟨ι, hι, U, hxU, s, hs⟩ := hgen
+  letI : Fintype ι := hι
+  letI : Module (X.presheaf.stalk x)
+      (↑(TopCat.Presheaf.stalk F.val.presheaf x) : Type u) :=
+    schemeModuleStalkModule F x
+  letI : Module.Finite (X.presheaf.stalk x)
+      (↑(TopCat.Presheaf.stalk F.val.presheaf x) : Type u) :=
+    moduleFinite_stalk_of_local_generators F.val hxU s hs
+  obtain ⟨ι' : Type u, hι', g, hg⟩ :=
+    (Submodule.fg_iff_exists_finite_generating_family
+      (A := X.presheaf.stalk x)
+      (M := (↑(TopCat.Presheaf.stalk F.val.presheaf x) : Type u))).mp
+      Module.Finite.fg_top
+  letI : Fintype ι' := Fintype.ofFinite ι'
+  exact ⟨ι', inferInstance, g, hg⟩
+
+/-- A finite spanning family in every stalk gives stalkwise finiteness. -/
+theorem SchemeModule.IsStalkwiseFinite.of_hasFiniteStalkGenerators
+    {X : Scheme.{u}} (F : X.Modules)
+    (hgen : ∀ x : X, SchemeModule.HasFiniteStalkGenerators F x) :
+    SchemeModule.IsStalkwiseFinite F := by
+  intro x
+  letI : Module (X.presheaf.stalk x)
+      (↑(TopCat.Presheaf.stalk F.val.presheaf x) : Type u) :=
+    schemeModuleStalkModule F x
+  dsimp [SchemeModule.HasFiniteStalkGenerators] at hgen
+  obtain ⟨ι, hι, g, hg⟩ := hgen x
+  letI : Fintype ι := hι
+  exact moduleFinite_of_finite_generating_family g hg
+
 /-- Finite local generating families give finite scheme-module stalks.  This
 is the explicit local-generation route needed before a general coherence
 instance can be connected to stalk finiteness. -/
@@ -113,13 +160,39 @@ theorem SchemeModule.IsStalkwiseFinite.of_hasFiniteLocalGenerators
     {X : Scheme.{u}} (F : X.Modules)
     (hgen : ∀ x : X, SchemeModule.HasFiniteLocalGenerators F x) :
     SchemeModule.IsStalkwiseFinite F := by
+  apply SchemeModule.IsStalkwiseFinite.of_hasFiniteStalkGenerators F
   intro x
-  obtain ⟨ι, hι, U, hxU, s, hs⟩ := hgen x
-  letI : Fintype ι := hι
+  exact SchemeModule.HasFiniteStalkGenerators.of_hasFiniteLocalGenerators F x
+    (hgen x)
+
+/-- Stalkwise finiteness can be represented by a finite spanning family at
+each point. -/
+theorem SchemeModule.HasFiniteStalkGenerators.of_isStalkwiseFinite
+    {X : Scheme.{u}} {F : X.Modules}
+    (hF : SchemeModule.IsStalkwiseFinite F) (x : X) :
+    SchemeModule.HasFiniteStalkGenerators F x := by
   letI : Module (X.presheaf.stalk x)
       (↑(TopCat.Presheaf.stalk F.val.presheaf x) : Type u) :=
     schemeModuleStalkModule F x
-  exact moduleFinite_stalk_of_local_generators F.val hxU s hs
+  letI : Module.Finite (X.presheaf.stalk x)
+      (↑(TopCat.Presheaf.stalk F.val.presheaf x) : Type u) := hF x
+  obtain ⟨ι : Type u, hι, g, hg⟩ :=
+    (Submodule.fg_iff_exists_finite_generating_family
+      (A := X.presheaf.stalk x)
+      (M := (↑(TopCat.Presheaf.stalk F.val.presheaf x) : Type u))).mp
+      Module.Finite.fg_top
+  letI : Fintype ι := Fintype.ofFinite ι
+  exact ⟨ι, inferInstance, g, hg⟩
+
+/-- The explicit finite-generator and stalkwise-finite formulations agree. -/
+theorem schemeModule_isStalkwiseFinite_iff_hasFiniteStalkGenerators
+    {X : Scheme.{u}} (F : X.Modules) :
+    SchemeModule.IsStalkwiseFinite F ↔
+      ∀ x : X, SchemeModule.HasFiniteStalkGenerators F x := by
+  constructor
+  · intro h x
+    exact SchemeModule.HasFiniteStalkGenerators.of_isStalkwiseFinite h x
+  · exact SchemeModule.IsStalkwiseFinite.of_hasFiniteStalkGenerators F
 
 /-- Stalkwise finiteness is invariant under isomorphism of scheme modules. -/
 theorem SchemeModule.IsStalkwiseFinite.of_iso
