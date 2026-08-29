@@ -7,6 +7,7 @@ Authors: The Milne Contributors
 import Mathlib.AlgebraicGeometry.Modules.Sheaf
 import Mathlib.Topology.Sheaves.LocallySurjective
 import MilneLib.Affine
+import MilneLib.Coherent
 import MilneLib.LinearAlgebra
 import MilneLib.Tensor
 
@@ -20,6 +21,7 @@ the functor and object levels.
 
 open CategoryTheory
 open AlgebraicGeometry
+open Opposite
 
 universe u
 
@@ -87,6 +89,37 @@ def SchemeModule.IsStalkwiseFinite {X : Scheme.{u}} (F : X.Modules) : Prop :=
       schemeModuleStalkModule F x
     Module.Finite (X.presheaf.stalk x)
       (↑(TopCat.Presheaf.stalk F.val.presheaf x) : Type u)
+
+/-- A finite family of sections is a local generating family at a point when
+every section on a neighbourhood of that point becomes a linear combination
+of the family's restrictions after shrinking once more.  The predicate is
+deliberately stated with the scheme-module scalar ring so it can be used
+without transporting typeclass instances through `ringCatSheaf`. -/
+def SchemeModule.HasFiniteLocalGenerators {X : Scheme.{u}} (F : X.Modules)
+    (x : X) : Prop :=
+  ∃ (ι : Type u), ∃ (_ : Fintype ι), ∃ (U : X.Opens) (_ : x ∈ U)
+    (s : ι → (F.val.obj (op U) : Type u)),
+    ∀ (V : X.Opens) (hVU : V ≤ U)
+      (t : (F.val.obj (op V) : Type u)), ∃ (W : X.Opens) (_ : x ∈ W)
+      (hWV : W ≤ V) (c : ι → (X.ringCatSheaf.obj.obj (op W) : Type u)),
+      (ConcreteCategory.hom (F.val.map (homOfLE hWV).op)) t =
+        ∑ i, c i • (ConcreteCategory.hom
+          (F.val.map (homOfLE (hWV.trans hVU)).op)) (s i)
+
+/-- Finite local generating families give finite scheme-module stalks.  This
+is the explicit local-generation route needed before a general coherence
+instance can be connected to stalk finiteness. -/
+theorem SchemeModule.IsStalkwiseFinite.of_hasFiniteLocalGenerators
+    {X : Scheme.{u}} (F : X.Modules)
+    (hgen : ∀ x : X, SchemeModule.HasFiniteLocalGenerators F x) :
+    SchemeModule.IsStalkwiseFinite F := by
+  intro x
+  obtain ⟨ι, hι, U, hxU, s, hs⟩ := hgen x
+  letI : Fintype ι := hι
+  letI : Module (X.presheaf.stalk x)
+      (↑(TopCat.Presheaf.stalk F.val.presheaf x) : Type u) :=
+    schemeModuleStalkModule F x
+  exact moduleFinite_stalk_of_local_generators F.val hxU s hs
 
 /-- Stalkwise finiteness is invariant under isomorphism of scheme modules. -/
 theorem SchemeModule.IsStalkwiseFinite.of_iso
@@ -165,6 +198,26 @@ theorem schemeModule_epi_of_surjective_on_residue_fibres
     hfinite x
   exact (LinearMap.surjective_lTensor_residueField_iff_surjective
     (schemeModuleStalkLinearMap f x)).mp (hres x)
+
+/-- The residue-fibre epimorphism criterion can consume finite local
+generators directly, without a separately supplied stalk-finiteness proof. -/
+theorem schemeModule_epi_of_surjective_on_residue_fibres_of_hasFiniteLocalGenerators
+    {X : Scheme.{u}} {M N : X.Modules} (f : M ⟶ N)
+    (hgen : ∀ x : X, SchemeModule.HasFiniteLocalGenerators N x)
+    (hres : ∀ x : X,
+      letI : Module (X.presheaf.stalk x)
+          (↑(TopCat.Presheaf.stalk M.val.presheaf x) : Type u) :=
+        schemeModuleStalkModule M x
+      letI : Module (X.presheaf.stalk x)
+          (↑(TopCat.Presheaf.stalk N.val.presheaf x) : Type u) :=
+        schemeModuleStalkModule N x
+      Function.Surjective
+        ((schemeModuleStalkLinearMap f x).lTensor
+          (IsLocalRing.ResidueField (X.presheaf.stalk x)))) :
+    Epi f := by
+  apply schemeModule_epi_of_surjective_on_residue_fibres f
+  · exact SchemeModule.IsStalkwiseFinite.of_hasFiniteLocalGenerators N hgen
+  · exact hres
 
 /-- If the source and target stalks are invertible modules, residue-fibre
 surjectivity upgrades to an isomorphism.  This is the algebraic and stalkwise
