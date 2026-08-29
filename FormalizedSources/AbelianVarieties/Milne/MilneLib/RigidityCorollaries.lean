@@ -73,6 +73,65 @@ theorem hom_additive_decomp_of_rigidity
   have hdiv : h / ((fst V W ≫ f) * (snd V W ≫ g)) = 1 := by rw [← hφ]; exact hφ1
   exact div_eq_one.mp hdiv
 
+/- Evaluating a proposed additive decomposition on the two distinguished axes
+   recovers its factors.  This is the uniqueness calculation behind Milne's
+   product-decomposition corollary. -/
+omit [IsAlgClosed kbar] in
+theorem hom_additive_decomp_axis_unique
+    {V W : Over (Spec (.of kbar))}
+    {A : Over (Spec (.of kbar))} [GrpObj A]
+    (v₀ : 𝟙_ (Over (Spec (.of kbar))) ⟶ V)
+    (w₀ : 𝟙_ (Over (Spec (.of kbar))) ⟶ W)
+    (h : V ⊗ W ⟶ A) (f : V ⟶ A) (g : W ⟶ A)
+    (hf : v₀ ≫ f = η[A]) (hg : w₀ ≫ g = η[A])
+    (hdecomp : h = (fst V W ≫ f) * (snd V W ≫ g)) :
+    f = lift (𝟙 V) (toUnit V ≫ w₀) ≫ h ∧
+      g = lift (toUnit W ≫ v₀) (𝟙 W) ≫ h := by
+  constructor
+  · rw [hdecomp, MonObj.comp_mul, ← Category.assoc, lift_fst, Category.id_comp,
+      ← Category.assoc, lift_snd, Category.assoc, hg, ← Hom.one_def, _root_.mul_one]
+  · rw [hdecomp, MonObj.comp_mul, ← Category.assoc, lift_fst, Category.assoc, hf,
+      ← Hom.one_def, ← Category.assoc, lift_snd, Category.id_comp, _root_.one_mul]
+
+/- The existence theorem above and the axis calculation package the
+   decomposition as an actual unique pair of pointed factors. -/
+theorem existsUnique_hom_additive_decomp_of_rigidity
+    {V W : Over (Spec (.of kbar))}
+    [IsProper V.hom]
+    [GeometricallyIrreducible (V ⊗ W).hom]
+    [LocallyOfFiniteType (V ⊗ W).hom]
+    [IsReduced (V ⊗ W).left]
+    {A : Over (Spec (.of kbar))}
+    [GrpObj A] [IsSeparated A.hom]
+    (v₀ : 𝟙_ (Over (Spec (.of kbar))) ⟶ V)
+    (w₀ : 𝟙_ (Over (Spec (.of kbar))) ⟶ W)
+    (h : V ⊗ W ⟶ A)
+    (hh : lift v₀ w₀ ≫ h = η[A]) :
+    ∃! p : (V ⟶ A) × (W ⟶ A),
+      v₀ ≫ p.1 = η[A] ∧ w₀ ≫ p.2 = η[A] ∧
+        h = (fst V W ≫ p.1) * (snd V W ≫ p.2) := by
+  let f : V ⟶ A := lift (𝟙 V) (toUnit V ≫ w₀) ≫ h
+  let g : W ⟶ A := lift (toUnit W ≫ v₀) (𝟙 W) ≫ h
+  have hwsW : w₀ ≫ lift (toUnit W ≫ v₀) (𝟙 W) = lift v₀ w₀ := by
+    rw [comp_lift, Category.comp_id, ← Category.assoc,
+      toUnit_unique (w₀ ≫ toUnit W) (𝟙 _), Category.id_comp]
+  have hvsV : v₀ ≫ lift (𝟙 V) (toUnit V ≫ w₀) = lift v₀ w₀ := by
+    rw [comp_lift, Category.comp_id, ← Category.assoc,
+      toUnit_unique (v₀ ≫ toUnit V) (𝟙 _), Category.id_comp]
+  have hwg : w₀ ≫ g = η[A] := by
+    change w₀ ≫ (lift (toUnit W ≫ v₀) (𝟙 W) ≫ h) = η[A]
+    rw [← Category.assoc, hwsW, hh]
+  have hvf : v₀ ≫ f = η[A] := by
+    change v₀ ≫ (lift (𝟙 V) (toUnit V ≫ w₀) ≫ h) = η[A]
+    rw [← Category.assoc, hvsV, hh]
+  have hdecomp := hom_additive_decomp_of_rigidity v₀ w₀ h hh
+  refine ⟨(f, g), ⟨hvf, hwg, hdecomp⟩, ?_⟩
+  rintro ⟨f', g'⟩ ⟨hf', hg', hd'⟩
+  have hu := hom_additive_decomp_axis_unique v₀ w₀ h f' g' hf' hg' hd'
+  apply Prod.ext
+  · simpa only [f] using hu.1
+  · simpa only [g] using hu.2
+
 /-- A pointed morphism of group varieties is a monoid homomorphism. -/
 theorem isMonHom_of_pointed
     {A B : Over (Spec (.of kbar))}
