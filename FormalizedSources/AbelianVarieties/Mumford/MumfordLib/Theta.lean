@@ -564,6 +564,47 @@ theorem center_eq_includeScalar_range_of_commutatorPairingRadical_eq_bot
     intro g
     exact (E.includeScalar_commute s g).eq.symm
 
+/-- Evaluating the pairing on quotient classes agrees with the scalar
+    commutator of any representatives of those classes. -/
+theorem commutatorPairing_quotient_eq_commutatorScalar (g h : G) :
+    E.commutatorPairing (E.quotient g) (E.quotient h) =
+      E.commutatorScalar g h := by
+  have hq (x : G) :
+      E.quotientHom (E.quotientLift (E.quotient x)) = E.quotientHom x := by
+    rw [E.quotientHom_quotientLift]
+    change Multiplicative.ofAdd (Multiplicative.toAdd (E.quotientHom x)) =
+      E.quotientHom x
+    exact (Multiplicative.ofAdd : K ≃ Multiplicative K).symm_apply_apply _
+  calc
+    E.commutatorPairing (E.quotient g) (E.quotient h) =
+        E.commutatorScalar (E.quotientLift (E.quotient g))
+          (E.quotientLift (E.quotient h)) := rfl
+    _ = E.commutatorScalar g (E.quotientLift (E.quotient h)) :=
+      E.commutatorScalar_eq_of_quotient_eq_left
+        (hq g)
+    _ = E.commutatorScalar g h :=
+      E.commutatorScalar_eq_of_quotient_eq_right
+        (hq h)
+
+/-- The quotient pairing detects commutativity of arbitrary representatives,
+    rather than only the chosen representatives used in its definition. -/
+theorem commutatorPairing_quotient_eq_one_iff_commute (g h : G) :
+    E.commutatorPairing (E.quotient g) (E.quotient h) = 1 ↔
+      Commute g h := by
+  rw [E.commutatorPairing_quotient_eq_commutatorScalar]
+  constructor
+  · intro hpair
+    apply commutatorElement_eq_one_iff_commute.mp
+    calc
+      ⁅g, h⁆ = E.includeScalar (E.commutatorScalar g h) :=
+        (E.includeScalar_commutatorScalar g h).symm
+      _ = E.includeScalar 1 := by rw [hpair]
+      _ = 1 := map_one E.includeScalar
+  · intro hcomm
+    apply E.includeScalar_injective
+    rw [E.includeScalar_commutatorScalar,
+      commutatorElement_eq_one_iff_commute.mpr hcomm, map_one]
+
 end ThetaExtension
 
 end Mumford
