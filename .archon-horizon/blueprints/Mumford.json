@@ -727,7 +727,7 @@
     },
     "states": {
       "blocked": 116,
-      "closed": 333,
+      "closed": 365,
       "formalized_open": 0,
       "informal": 216,
       "ready": 100
@@ -739,10 +739,12 @@
       "Mumford.GroupScheme.comp_pointTranslation_inv: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Mumford.GroupScheme.eq_comp_of_isAffine_of_properIntegral: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Mumford.GroupScheme.existsUnique_factor_through_snd_iff: Lean declaration is not referenced by any blueprint \\lean{...}",
+      "Mumford.GroupScheme.existsUnique_hom_additive_decomp_of_rigidity: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Mumford.GroupScheme.exists_hom_comp_pointTranslation_of_isAbelianVariety: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Mumford.GroupScheme.exists_hom_comp_pointTranslation_of_isAbelianVariety_arbitraryField: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Mumford.GroupScheme.factor_through_snd_unique: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Mumford.GroupScheme.factors_through_snd_iff: Lean declaration is not referenced by any blueprint \\lean{...}",
+      "Mumford.GroupScheme.hom_additive_decomp_axis_unique: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Mumford.GroupScheme.hom_additive_decomp_of_rigidity: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Mumford.GroupScheme.isIntegral_of_retract: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Mumford.GroupScheme.isIntegral_tensorObj_left_of_geometricallyIntegral: Lean declaration is not referenced by any blueprint \\lean{...}",
@@ -780,9 +782,7 @@
       "Mumford.GroupScheme.rigidity_eqOn_saturated_open_to_affine: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Mumford.GroupScheme.rigidity_lemma: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Mumford.GroupScheme.rigidity_lemma_unique: Lean declaration is not referenced by any blueprint \\lean{...}",
-      "Mumford.GroupScheme.rigidity_snd_lift: Lean declaration is not referenced by any blueprint \\lean{...}",
-      "Mumford.GroupScheme.snd_left_isClosedMap: Lean declaration is not referenced by any blueprint \\lean{...}",
-      "Mumford.IsAbelianVariety: Lean declaration is not referenced by any blueprint \\lean{...}"
+      "Mumford.GroupScheme.rigidity_snd_lift: Lean declaration is not referenced by any blueprint \\lean{...}"
     ]
   },
   "nodes": [
@@ -1977,7 +1977,7 @@
     },
     {
       "chapter": "$\\Hom(X,\\Adual)$ and the $\\ell$-adic Representation",
-      "comment_count": 0,
+      "comment_count": 1,
       "dep_count": 0,
       "descendant_count": 0,
       "group": "ch:$\\Hom(X,\\Adual)$ and the $\\ell$-adic Representation",
@@ -2151,7 +2151,7 @@
     },
     {
       "chapter": "$\\Hom(X,\\Adual)$ and the $\\ell$-adic Representation",
-      "comment_count": 0,
+      "comment_count": 1,
       "dep_count": 0,
       "descendant_count": 3,
       "group": "c52",
@@ -2180,7 +2180,7 @@
     },
     {
       "chapter": "$\\Hom(X,\\Adual)$ and the $\\ell$-adic Representation",
-      "comment_count": 0,
+      "comment_count": 2,
       "dep_count": 0,
       "descendant_count": 1,
       "group": "c49",
@@ -4036,7 +4036,7 @@
     },
     {
       "chapter": "Algebraic Theory via Varieties",
-      "comment_count": 0,
+      "comment_count": 1,
       "dep_count": 0,
       "descendant_count": 0,
       "group": "ch:Algebraic Theory via Varieties",
@@ -5080,7 +5080,7 @@
     },
     {
       "chapter": "Analytic Theory",
-      "comment_count": 2,
+      "comment_count": 4,
       "dep_count": 0,
       "descendant_count": 0,
       "group": "ch:Analytic Theory",
@@ -5109,7 +5109,7 @@
     },
     {
       "chapter": "Analytic Theory",
-      "comment_count": 7,
+      "comment_count": 8,
       "dep_count": 0,
       "descendant_count": 0,
       "group": "ch:Analytic Theory",
