@@ -142,4 +142,66 @@ theorem exists_hom_comp_pointTranslation_of_isAbelianVariety
   rw [Category.assoc, ← Iso.trans_hom, pointTranslation_trans]
   simp
 
+/- The pointed-homomorphism criterion descends from an algebraic closure. -/
+theorem isMonHom_of_pointed_of_isAbelianVariety_arbitraryField
+    {K : Type u} [Field K]
+    {A B : Over (Spec (.of K))} [GrpObj A] [GrpObj B]
+    (hA : IsAbelianVariety A)
+    (hB : IsAbelianVariety B)
+    (α : A ⟶ B) (hα : η[A] ≫ α = η[B]) : IsMonHom α := by
+  letI : IsProper A.hom := hA.1
+  letI : GeometricallyIntegral A.hom := hA.2
+  letI : IsProper B.hom := hB.1
+  letI : GeometricallyIntegral B.hom := hB.2
+  let f := Spec.map (CommRingCat.ofHom <| algebraMap K (AlgebraicClosure K))
+  let F := Over.pullback f
+  let A' := F.obj A
+  let B' := F.obj B
+  letI : GrpObj A' := Functor.grpObjObj
+  letI : GrpObj B' := Functor.grpObjObj
+  have hA' : IsAbelianVariety A' := by
+    constructor
+    · change IsProper (Limits.pullback.snd A.hom f)
+      infer_instance
+    · change GeometricallyIntegral (Limits.pullback.snd A.hom f)
+      infer_instance
+  have hB' : IsAbelianVariety B' := by
+    constructor
+    · change IsProper (Limits.pullback.snd B.hom f)
+      infer_instance
+    · change GeometricallyIntegral (Limits.pullback.snd B.hom f)
+      infer_instance
+  have hup : IsMonHom (F.map α) := by
+    have hpt : η[A'] ≫ F.map α = η[B'] := by
+      simp [← Functor.map_comp, hα]
+    exact isMonHom_of_pointed_of_isAbelianVariety hA' hB' (F.map α) hpt
+  letI : IsMonHom (F.map α) := hup
+  refine { one_hom := hα, mul_hom := ?_ }
+  exact F.map_injective <| by
+    simpa [← Functor.LaxMonoidal.μ_natural_assoc,
+      ← cancel_epi (Functor.LaxMonoidal.μ F A A)] using IsMonHom.mul_hom (F.map α)
+
+/- The decomposition is likewise valid over an arbitrary base field; only the
+   scalar-extension step is new, while the translation calculation is formal. -/
+theorem exists_hom_comp_pointTranslation_of_isAbelianVariety_arbitraryField
+    {K : Type u} [Field K]
+    {A B : Over (Spec (.of K))} [GrpObj A] [GrpObj B]
+    (hA : IsAbelianVariety A)
+    (hB : IsAbelianVariety B)
+    (α : A ⟶ B) :
+    ∃ (β : A ⟶ B) (b : 𝟙_ (Over (Spec (.of K))) ⟶ B),
+      IsMonHom β ∧ η[A] ≫ β = η[B] ∧
+        α = β ≫ (pointTranslation B η[B] b).hom := by
+  let b := η[A] ≫ α
+  let β := α ≫ (pointTranslation B b η[B]).hom
+  have hβ : η[A] ≫ β = η[B] := by
+    change b ≫ (pointTranslation B b η[B]).hom = η[B]
+    exact comp_pointTranslation_hom b η[B]
+  have hβhom := isMonHom_of_pointed_of_isAbelianVariety_arbitraryField hA hB β hβ
+  refine ⟨β, b, hβhom, hβ, ?_⟩
+  dsimp [β]
+  symm
+  rw [Category.assoc, ← Iso.trans_hom, pointTranslation_trans]
+  simp
+
 end Mumford.GroupScheme
