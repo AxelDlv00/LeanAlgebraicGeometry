@@ -218,6 +218,31 @@ theorem isMonHom_of_pointed_of_isAbelianVariety_arbitraryField
     simpa [← Functor.LaxMonoidal.μ_natural_assoc,
       ← cancel_epi (Functor.LaxMonoidal.μ F A A)] using IsMonHom.mul_hom (F.map α)
 
+/- Proper geometrically integral group schemes are commutative.  This proof
+   records Milne's rigidity route explicitly: the inverse is pointed, hence a
+   homomorphism, and inversion of a product reverses its factors. -/
+theorem isCommMonObj_of_isAbelianVariety_via_rigidity
+    {K : Type u} [Field K]
+    (A : Over (Spec (.of K))) [GrpObj A]
+    (hA : MilneLib.IsAbelianVariety A) : IsCommMonObj A := by
+  letI : IsMonHom (GrpObj.inv (X := A)) := by
+    apply isMonHom_of_pointed_of_isAbelianVariety_arbitraryField hA hA
+    exact GrpObj.one_inv
+  rw [isCommMonObj_iff_isMulCommutative]
+  intro X
+  constructor
+  constructor
+  intro f g
+  have key : ∀ u v : X ⟶ A, (u * v) ≫ GrpObj.inv (X := A) =
+      (u ≫ GrpObj.inv (X := A)) * (v ≫ GrpObj.inv (X := A)) := by
+    intro u v
+    rw [Hom.mul_def, Hom.mul_def, Category.assoc, IsMonHom.mul_hom]
+    simp [lift_map_assoc]
+  have h1 := key f g
+  rw [← Hom.inv_def, ← Hom.inv_def, ← Hom.inv_def] at h1
+  have h2 : ((f * g)⁻¹)⁻¹ = (f⁻¹ * g⁻¹)⁻¹ := by rw [h1]
+  simpa using h2
+
 /-- Every morphism between abelian varieties is a homomorphism followed by a
 translation, expressed using the canonical point translation on the target. -/
 theorem exists_hom_comp_pointTranslation_of_isAbelianVariety
