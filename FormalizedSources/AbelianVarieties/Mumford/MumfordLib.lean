@@ -1,5 +1,7 @@
 import MumfordLib.Basic
 import MumfordLib.GroupScheme
+import MumfordLib.RigidityPointwise
+import MumfordLib.RigidityChain
 import MumfordLib.Analytic
 import MumfordLib.Uniformization
 import MumfordLib.Lattice
