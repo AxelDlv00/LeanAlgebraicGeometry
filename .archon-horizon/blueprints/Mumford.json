@@ -660,7 +660,7 @@
   ],
   "meta": {
     "engine": "hgraph",
-    "entry": "/home/axel/LeanAlgebraicGeometry-Horizon/FormalizedSources/AbelianVarieties/Mumford/blueprint/src/content.tex",
+    "entry": "FormalizedSources/AbelianVarieties/Mumford/blueprint/src/content.tex",
     "macros": {
       "\\A": "\\mathbb{A}",
       "\\Adual": "\\widehat{A}",
