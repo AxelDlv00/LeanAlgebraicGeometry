@@ -727,7 +727,7 @@
     },
     "states": {
       "blocked": 116,
-      "closed": 325,
+      "closed": 333,
       "formalized_open": 0,
       "informal": 216,
       "ready": 100
@@ -765,6 +765,7 @@
       "Mumford.GroupScheme.pointTranslationIso_self: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Mumford.GroupScheme.pointTranslationIso_symm: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Mumford.GroupScheme.pointTranslationIso_trans: Lean declaration is not referenced by any blueprint \\lean{...}",
+      "Mumford.GroupScheme.pointTranslation_decomposition_unique: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Mumford.GroupScheme.pointTranslation_self: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Mumford.GroupScheme.pointTranslation_symm: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Mumford.GroupScheme.pointTranslation_trans: Lean declaration is not referenced by any blueprint \\lean{...}",
@@ -781,8 +782,7 @@
       "Mumford.GroupScheme.rigidity_lemma_unique: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Mumford.GroupScheme.rigidity_snd_lift: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Mumford.GroupScheme.snd_left_isClosedMap: Lean declaration is not referenced by any blueprint \\lean{...}",
-      "Mumford.IsAbelianVariety: Lean declaration is not referenced by any blueprint \\lean{...}",
-      "Mumford.ProductTorus: Lean declaration is not referenced by any blueprint \\lean{...}"
+      "Mumford.IsAbelianVariety: Lean declaration is not referenced by any blueprint \\lean{...}"
     ]
   },
   "nodes": [
