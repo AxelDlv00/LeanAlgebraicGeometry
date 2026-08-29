@@ -53,6 +53,19 @@ theorem degree_principalDivisor_div (g h : X.left.functionFieldˣ) :
         CurveDivisor.degree (principalDivisor h) := by
   rw [principalDivisor_div, CurveDivisor.degree_sub]
 
+/-- The degree of a principal divisor is the finite sum of its local orders.
+
+This is the finite-support normal form used by the global product formula;
+the vanishing of this sum is the separate geometric input of II.6.10. -/
+theorem degree_principalDivisor_eq_sum_orderZAt
+    (g : X.left.functionFieldˣ) :
+    CurveDivisor.degree (principalDivisor g) =
+      ∑ p ∈ (orderZAt_support_finite X.hom g).toFinset,
+        Multiplicative.toAdd (orderZAt X.hom p.2 g) := by
+  simp only [CurveDivisor.degree, principalDivisor]
+  rw [Finsupp.onFinset_sum]
+  simp
+
 /-! ### The degree obstruction as a homomorphism -/
 
 /-- The degree of a principal divisor, viewed as an additive obstruction on
