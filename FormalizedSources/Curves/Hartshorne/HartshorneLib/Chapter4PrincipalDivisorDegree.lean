@@ -94,6 +94,21 @@ theorem principalDivisor_eq_zero_of_orderZAt_eq_one
   rw [coeffAt_principalDivisor, h x hx]
   simp [CurveDivisor.coeffAt_zero]
 
+/-- A principal divisor is zero exactly when all of its local orders are
+trivial. -/
+theorem principalDivisor_eq_zero_iff_orderZAt_eq_one
+    (g : X.left.functionFieldˣ) :
+    principalDivisor g = 0 ↔
+      ∀ x : X.left, ∀ hx : x ≠ genericPoint X.left,
+        orderZAt X.hom hx g = 1 := by
+  constructor
+  · intro hg x hx
+    apply Multiplicative.toAdd.injective
+    have hc := congrArg (CurveDivisor.coeffAt hx) hg
+    simpa only [coeffAt_principalDivisor, CurveDivisor.coeffAt_zero, toAdd_one] using hc
+  · intro h
+    exact principalDivisor_eq_zero_of_orderZAt_eq_one g h
+
 theorem degree_principalDivisor_eq_zero_of_orderZAt_eq_one
     (g : X.left.functionFieldˣ)
     (h : ∀ x : X.left, ∀ hx : x ≠ genericPoint X.left,
