@@ -5,6 +5,7 @@ import MumfordLib.RigidityChain
 import MumfordLib.Analytic
 import MumfordLib.Uniformization
 import MumfordLib.Lattice
+import MumfordLib.ZLattice
 import MumfordLib.ComplexModel
 import MumfordLib.ComplexUniformization
 import MumfordLib.DivisionFiber
