@@ -81,6 +81,27 @@ theorem Isogeny.comp_of_finite
       infer_instance
     infer_instance
 
+/- Composition with an isomorphism is a useful specialization of the finite
+   composition lemma: the underlying map of the isomorphism is finite after
+   transporting its `IsIso` instance through the slice forgetful functor. -/
+theorem Isogeny.comp_of_isIso_left
+    {C : Over (Spec (.of K))} [GrpObj C]
+    (f : A ⟶ B) (g : B ⟶ C) [IsMonHom f] [IsMonHom g]
+    [IsIso f] [IsFinite g.left] (hg : Isogeny g) :
+    Isogeny (f ≫ g) := by
+  letI : IsIso f.left := (Over.forget (Spec (CommRingCat.of K))).map_isIso f
+  letI : IsFinite f.left := inferInstance
+  exact Isogeny.comp_of_finite f g (Isogeny.of_isIso f) hg
+
+theorem Isogeny.comp_of_isIso_right
+    {C : Over (Spec (.of K))} [GrpObj C]
+    (f : A ⟶ B) (g : B ⟶ C) [IsMonHom f] [IsMonHom g]
+    [IsFinite f.left] [IsIso g] (hf : Isogeny f) :
+    Isogeny (f ≫ g) := by
+  letI : IsIso g.left := (Over.forget (Spec (CommRingCat.of K))).map_isIso g
+  letI : IsFinite g.left := inferInstance
+  exact Isogeny.comp_of_finite f g hf (Isogeny.of_isIso g)
+
 /- A finite underlying morphism has finite kernel, so in this common case the
    isogeny predicate is exactly surjectivity.  The finite-map hypothesis is
    explicit because the general finite-kernel/finite-map equivalence is not
