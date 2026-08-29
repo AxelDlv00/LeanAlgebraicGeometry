@@ -171,6 +171,28 @@ noncomputable def pic0FiniteStageAffineRingGlueData
     exact pic0FiniteStageAffineTripleTransition_cocycle
       C L n m relation M mapM N e hmapM thetaN hthetaN U V W
 
+set_option synthInstance.maxHeartbeats 400000 in
+set_option maxHeartbeats 12800000 in
+/-- Assemble a glue datum directly from the canonical context facade.
+
+The context stores the model comparison, open-immersion certificates, and final-stage
+face equations with their dependent carriers already aligned.  This wrapper keeps those
+witnesses opaque to consumers and leaves the legacy, fully explicit constructor above
+available for callers that are still assembling the data by hand.
+-/
+noncomputable def pic0FiniteStageAffineRingGlueData_of_canonical_context
+    {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
+    (D : Pic0FiniteStageCanonicalGlueContext C F) :
+    Scheme.GlueData := by
+  letI : Algebra.IsAlgebraic D.context.models.L.1 k := by infer_instance
+  letI : Algebra.IsAlgebraic D.context.models.M.1 k := by infer_instance
+  exact pic0FiniteStageAffineRingGlueData
+    C D.context.models.L D.context.models.n D.context.models.m
+      D.context.models.relation D.context.models.M D.context.models.mapM
+      D.context.triple.N D.context.models.e D.context.models.comparison
+      D.context.models.openImmersion D.context.triple.thetaN
+      (fun p => D.comparison_of_models C p)
+
 end
 
 end

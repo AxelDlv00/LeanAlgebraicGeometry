@@ -37,12 +37,12 @@ set_option maxHeartbeats 12800000 in
 noncomputable def baseChangeGluingIso
     {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
     (P : Pic0FiniteStageGluePackage C F) :
-    pullback P.gluedMap
+    pullback P.presentation.map
         (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k))) ≅
-      (Scheme.Pullback.gluing P.glueData.openCover P.gluedMap
+      (Scheme.Pullback.gluing P.presentation.glueData.openCover P.presentation.map
         (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k)))).glued :=
   limit.isoLimitCone
-    ⟨_, Scheme.Pullback.gluedIsLimit P.glueData.openCover P.gluedMap
+    ⟨_, Scheme.Pullback.gluedIsLimit P.presentation.glueData.openCover P.presentation.map
       (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k)))⟩
 
 set_option synthInstance.maxHeartbeats 3200000 in
@@ -53,10 +53,13 @@ noncomputable def gluingChartIso
     {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
     (P : Pic0FiniteStageGluePackage C F)
     (U : Pic0FiniteStageChartIndex C) :
-    (Scheme.Pullback.gluing P.glueData.openCover P.gluedMap
+    (Scheme.Pullback.gluing P.presentation.glueData.openCover P.presentation.map
       (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k)))).U U ≅
       (pic0SepClosedAtlasOpenCover C).X U :=
-  pullback.congrHom (glueData_ι_gluedMap C P U) rfl ≪≫
+  pullback.congrHom (by
+    change P.presentation.glueData.ι U ≫ P.presentation.map = _
+    simpa only [presentation_glueData, presentation_mapData,
+      gluedMapData_chartMap] using P.presentation.chartMap_factor U) rfl ≪≫
     chartBaseChangeIso C P U
 
 /-! As for chart maps, keep the overlap structure map as one named term.  The overlap

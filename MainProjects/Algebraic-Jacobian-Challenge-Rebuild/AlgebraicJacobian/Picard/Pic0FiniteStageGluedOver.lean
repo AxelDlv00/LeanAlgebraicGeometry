@@ -239,7 +239,14 @@ noncomputable def gluedMap
     {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
     (P : Pic0FiniteStageGluePackage C F) :
     P.glueData.glued ⟶ Spec (.of P.N.1) :=
-  P.gluedMapData.map
+  P.presentation.map
+
+@[simp]
+theorem gluedMap_presentation
+    {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
+    (P : Pic0FiniteStageGluePackage C F) :
+    P.gluedMap = P.presentation.map :=
+  rfl
 
 /-! The chart maps are exported as named data, rather than as an `algebraMap` expression
 with instances inferred at each call site.  The carrier is a dependent tensor product, so
