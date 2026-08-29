@@ -99,7 +99,7 @@ def SchemeModule.HasFiniteLocalGenerators {X : Scheme.{u}} (F : X.Modules)
     (x : X) : Prop :=
   ∃ (ι : Type u), ∃ (_ : Fintype ι), ∃ (U : X.Opens) (_ : x ∈ U)
     (s : ι → (F.val.obj (op U) : Type u)),
-    ∀ (V : X.Opens) (hVU : V ≤ U)
+    ∀ (V : X.Opens) (hVU : V ≤ U) (_ : x ∈ V)
       (t : (F.val.obj (op V) : Type u)), ∃ (W : X.Opens) (_ : x ∈ W)
       (hWV : W ≤ V) (c : ι → (X.ringCatSheaf.obj.obj (op W) : Type u)),
       (ConcreteCategory.hom (F.val.map (homOfLE hWV).op)) t =

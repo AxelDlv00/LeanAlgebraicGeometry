@@ -66,7 +66,7 @@ theorem moduleFinite_stalk_of_local_generators
     {x : X} {U : Opens X} (hxU : x ∈ U)
     {ι : Type u} [Fintype ι]
     (s : ι → (M.obj (op U) : Type u))
-    (hgen : ∀ (V : Opens X) (hVU : V ≤ U)
+    (hgen : ∀ (V : Opens X) (hVU : V ≤ U) (_ : x ∈ V)
       (t : (M.obj (op V) : Type u)), ∃ (W : Opens X) (_ : x ∈ W)
       (hWV : W ≤ V) (c : ι → ((R ⋙ forget₂ CommRingCat RingCat).obj (op W) : Type u)),
       (ConcreteCategory.hom (M.map (homOfLE hWV).op)) t =
@@ -87,7 +87,7 @@ theorem moduleFinite_stalk_of_local_generators
   let iV0V : V0 ⟶ V := homOfLE inf_le_left
   let tV0 : (M.obj (op V0) : Type u) :=
     (ConcreteCategory.hom (M.map iV0V.op)) tV
-  obtain ⟨W, hxW, hWV0, c, hc⟩ := hgen V0 inf_le_right tV0
+  obtain ⟨W, hxW, hWV0, c, hc⟩ := hgen V0 inf_le_right hxV0 tV0
   let iWV : W ⟶ V := homOfLE (hWV0.trans inf_le_left)
   let iWU : W ⟶ U := homOfLE (hWV0.trans inf_le_right)
   apply (Submodule.mem_span_range_iff_exists_fun (R.stalk x)).2
@@ -151,7 +151,7 @@ theorem moduleFinite_stalk_of_local_generators_ring
     {x : X} {U : Opens X} (hxU : x ∈ U)
     {ι : Type u} [Fintype ι]
     (s : ι → (M.obj (op U) : Type u))
-    (hgen : ∀ (V : Opens X) (hVU : V ≤ U)
+    (hgen : ∀ (V : Opens X) (hVU : V ≤ U) (_ : x ∈ V)
       (t : (M.obj (op V) : Type u)), ∃ (W : Opens X) (_ : x ∈ W)
       (hWV : W ≤ V) (c : ι → (R.obj (op W) : Type u)),
       (ConcreteCategory.hom (M.map (homOfLE hWV).op)) t =
@@ -172,7 +172,7 @@ theorem moduleFinite_stalk_of_local_generators_ring
   let iV0V : V0 ⟶ V := homOfLE inf_le_left
   let tV0 : (M.obj (op V0) : Type u) :=
     (ConcreteCategory.hom (M.map iV0V.op)) tV
-  obtain ⟨W, hxW, hWV0, c, hc⟩ := hgen V0 inf_le_right tV0
+  obtain ⟨W, hxW, hWV0, c, hc⟩ := hgen V0 inf_le_right hxV0 tV0
   let iWV : W ⟶ V := homOfLE (hWV0.trans inf_le_left)
   let iWU : W ⟶ U := homOfLE (hWV0.trans inf_le_right)
   apply (Submodule.mem_span_range_iff_exists_fun
