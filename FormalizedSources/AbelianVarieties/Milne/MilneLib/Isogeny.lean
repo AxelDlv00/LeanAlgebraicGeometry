@@ -81,6 +81,25 @@ theorem Isogeny.comp_of_finite
       infer_instance
     infer_instance
 
+/- A finite underlying morphism has finite kernel, so in this common case the
+   isogeny predicate is exactly surjectivity.  The finite-map hypothesis is
+   explicit because the general finite-kernel/finite-map equivalence is not
+   available in the current Mathlib API. -/
+theorem Isogeny.of_surjective_of_finite
+    (f : A ⟶ B) [IsMonHom f] [IsFinite f.left]
+    (hf : Surjective f.left) : Isogeny f := by
+  refine ⟨hf, ?_⟩
+  dsimp [isogenyKernelToBase, isogenyKernel]
+  infer_instance
+
+theorem Isogeny.iff_surjective_of_finite
+    (f : A ⟶ B) [IsMonHom f] [IsFinite f.left] :
+    Isogeny f ↔ Surjective f.left := by
+  constructor
+  · intro h
+    exact h.1
+  · exact Isogeny.of_surjective_of_finite f
+
 theorem Isogeny.surjective (f : A ⟶ B) [IsMonHom f] (h : Isogeny f) :
     Surjective f.left :=
   h.1
