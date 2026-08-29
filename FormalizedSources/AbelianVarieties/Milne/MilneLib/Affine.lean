@@ -5,6 +5,7 @@ Authors: The Milne Contributors
 -/
 
 import Mathlib.AlgebraicGeometry.Modules.Tilde
+import Mathlib.Algebra.Category.ModuleCat.Sheaf.Generators
 import Mathlib.RingTheory.Localization.Finiteness
 
 /-!
@@ -36,6 +37,59 @@ noncomputable def affineModuleGlobalSectionsIso
     M ≅ AlgebraicGeometry.moduleSpecΓFunctor.obj (affineModuleSheaf R M) :=
   AlgebraicGeometry.tilde.isoTop M
 
+/- A finite generating family of the affine tilde gives finite generation of
+   the underlying module.  This is the affine finite-type half needed before
+   localizing to stalks; no arbitrary-scheme coherent-stalk theorem is used. -/
+set_option backward.isDefEq.respectTransparency false in
+set_option synthInstance.maxHeartbeats 400000 in
+-- The tilde--Γ adjunction instance chain needs extra synthesis headroom.
+set_option maxHeartbeats 800000 in
+theorem module_finite_of_tilde_genSections
+    {R : CommRingCat.{u}} (N : ModuleCat.{u} R)
+    (σ : (AlgebraicGeometry.tilde N).GeneratingSections) [σ.IsFiniteType] :
+    Module.Finite R N := by
+  haveI hσπ : Epi σ.π := σ.epi
+  let π' : (AlgebraicGeometry.tilde.functor R).obj
+      (ModuleCat.of R (σ.I →₀ R)) ⟶ AlgebraicGeometry.tilde N :=
+    (AlgebraicGeometry.tildeFinsupp σ.I).hom ≫ σ.π
+  haveI hπ' : Epi π' := epi_comp _ _
+  let t : ModuleCat.of R (σ.I →₀ R) ⟶
+      AlgebraicGeometry.moduleSpecΓFunctor.obj (AlgebraicGeometry.tilde N) :=
+    (AlgebraicGeometry.tilde.adjunction.homEquiv _ _) π'
+  have hfac : (AlgebraicGeometry.tilde.functor R).map t ≫
+      AlgebraicGeometry.tilde.adjunction.counit.app (AlgebraicGeometry.tilde N) = π' :=
+    (Adjunction.homEquiv_counit AlgebraicGeometry.tilde.adjunction _ _ t).symm.trans
+      ((AlgebraicGeometry.tilde.adjunction.homEquiv _ _).symm_apply_apply π')
+  haveI hu : IsIso (AlgebraicGeometry.tilde.adjunction.unit.app N) := inferInstance
+  haveI hmu : IsIso ((AlgebraicGeometry.tilde.functor R).map
+      (AlgebraicGeometry.tilde.adjunction.unit.app N)) := inferInstance
+  haveI hcomp : IsIso ((AlgebraicGeometry.tilde.functor R).map
+      (AlgebraicGeometry.tilde.adjunction.unit.app N) ≫
+      AlgebraicGeometry.tilde.adjunction.counit.app
+        ((AlgebraicGeometry.tilde.functor R).obj N)) := by
+    rw [AlgebraicGeometry.tilde.adjunction.left_triangle_components N]
+    infer_instance
+  haveI hcu : IsIso (AlgebraicGeometry.tilde.adjunction.counit.app
+      (AlgebraicGeometry.tilde N)) :=
+    IsIso.of_isIso_comp_left
+      ((AlgebraicGeometry.tilde.functor R).map
+        (AlgebraicGeometry.tilde.adjunction.unit.app N))
+      (AlgebraicGeometry.tilde.adjunction.counit.app
+        ((AlgebraicGeometry.tilde.functor R).obj N))
+  haveI hmt : Epi ((AlgebraicGeometry.tilde.functor R).map t) := by
+    have hre : (AlgebraicGeometry.tilde.functor R).map t =
+        π' ≫ inv (AlgebraicGeometry.tilde.adjunction.counit.app
+          (AlgebraicGeometry.tilde N)) := by
+      rw [← hfac, Category.assoc, IsIso.hom_inv_id, Category.comp_id]
+    rw [hre]
+    exact epi_comp _ _
+  haveI ht : Epi t := (AlgebraicGeometry.tilde.functor R).epi_of_epi_map hmt
+  haveI : Epi (t ≫ inv (AlgebraicGeometry.tilde.adjunction.unit.app N)) :=
+    epi_comp _ _
+  exact Module.Finite.of_surjective
+    (ModuleCat.Hom.hom (t ≫ inv (AlgebraicGeometry.tilde.adjunction.unit.app N)))
+    ((ModuleCat.epi_iff_surjective _).mp ‹_›)
+
 /-- The affine global-sections identification is natural in the module. -/
 theorem affineModuleGlobalSectionsIso_naturality
     (R : CommRingCat.{u}) {M N : ModuleCat R} (f : M ⟶ N) :
@@ -65,6 +119,18 @@ theorem moduleFinite_tilde_stalk
         (AlgebraicGeometry.moduleStructurePresheaf R M).presheaf x) : Ab.{u}) := by
   exact Module.Finite.of_isLocalizedModule x.asIdeal.primeCompl
     (AlgebraicGeometry.StructureSheaf.toStalkₗ R M x)
+
+/-- Finite generating sections of an affine tilde therefore give finite stalks. -/
+theorem tilde_stalk_finite_of_finite_generating_sections
+    {R : CommRingCat.{u}} {N : ModuleCat.{u} R}
+    (σ : (AlgebraicGeometry.tilde N).GeneratingSections) [σ.IsFiniteType]
+    (x : PrimeSpectrum.Top R) :
+    Module.Finite
+      ((AlgebraicGeometry.structurePresheafInCommRingCat R).stalk x)
+      ((TopCat.Presheaf.stalk (C := Ab.{u})
+        (AlgebraicGeometry.moduleStructurePresheaf R N).presheaf x) : Ab.{u}) := by
+  letI : Module.Finite R N := module_finite_of_tilde_genSections N σ
+  exact moduleFinite_tilde_stalk N x
 
 /- The affine-module stalk finiteness statement with the scheme-module stalk
    instance made explicit for later residue-fibre arguments. -/
