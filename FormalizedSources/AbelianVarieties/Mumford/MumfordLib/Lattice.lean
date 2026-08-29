@@ -72,6 +72,46 @@ theorem quotientAddEquiv_mk_eq_iff {V X : Type*} [AddCommGroup V] [AddCommGroup 
       simpa only [map_sub] using hz
     exact sub_eq_zero.mp heq
 
+/-- An open quotient exponential identifies its period quotient with the
+target also at the topological level. -/
+noncomputable def quotientHomeomorph
+    {V X : Type*} [AddCommGroup V] [AddCommGroup X]
+    [TopologicalSpace V] [TopologicalSpace X]
+    (u : PeriodLatticeQuotient V X)
+    (hquot : IsOpenQuotientMap u.exponential) :
+    V ⧸ u.periodLattice ≃ₜ X := by
+  refine
+    { toEquiv := u.quotientAddEquiv.toEquiv
+      continuous_toFun := ?_
+      continuous_invFun := ?_ }
+  · rw [(QuotientAddGroup.isQuotientMap_mk
+      u.periodLattice).continuous_iff]
+    change Continuous (fun v : V =>
+      u.quotientAddEquiv (QuotientAddGroup.mk' u.periodLattice v))
+    simpa only [quotientAddEquiv_mk] using hquot.continuous
+  · apply hquot.continuous_comp_iff.mp
+    change Continuous (fun v : V =>
+      u.quotientAddEquiv.symm (u.exponential v))
+    have hcomp :
+        (fun v : V => u.quotientAddEquiv.symm (u.exponential v)) =
+          (fun v : V => QuotientAddGroup.mk' u.periodLattice v) := by
+      funext v
+      rw [← quotientAddEquiv_mk]
+      exact u.quotientAddEquiv.symm_apply_apply _
+    rw [hcomp]
+    exact QuotientAddGroup.continuous_mk
+
+@[simp]
+theorem quotientHomeomorph_mk
+    {V X : Type*} [AddCommGroup V] [AddCommGroup X]
+    [TopologicalSpace V] [TopologicalSpace X]
+    (u : PeriodLatticeQuotient V X)
+    (hquot : IsOpenQuotientMap u.exponential) (v : V) :
+    u.quotientHomeomorph hquot
+        (QuotientAddGroup.mk' u.periodLattice v) =
+      u.exponential v :=
+  quotientAddEquiv_mk u v
+
 end PeriodLatticeQuotient
 
 /-- The real vector group underlying a complex torus of dimension `g`. -/

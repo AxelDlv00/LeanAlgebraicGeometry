@@ -98,33 +98,9 @@ theorem complexTorusUniformization_nonempty_iff_genusTorusUniformization_nonempt
 /- The open quotient exponential identifies the real period quotient with the
    product torus also at the topological level. -/
 noncomputable def genusRealVectorQuotientHomeomorph (g : ℕ) :
-    (GenusRealVector g ⧸ integerPeriodLattice g) ≃ₜ GenusTorus g := by
-  refine
-    { toEquiv := (genusRealVectorQuotientAddEquiv g).toEquiv
-      continuous_toFun := ?_
-      continuous_invFun := ?_ }
-  · rw [(QuotientAddGroup.isQuotientMap_mk
-      (integerPeriodLattice g)).continuous_iff]
-    change Continuous (fun v : GenusRealVector g =>
-      genusRealVectorQuotientAddEquiv g
-        (QuotientAddGroup.mk' (integerPeriodLattice g) v))
-    simpa only [genusRealVectorQuotientAddEquiv_mk] using
-      (genusTorusExponential_continuous g)
-  · apply (genusTorusExponential_isOpenQuotientMap g).continuous_comp_iff.mp
-    change Continuous (fun v : GenusRealVector g =>
-      (genusRealVectorQuotientAddEquiv g).symm
-        (genusTorusExponential g v))
-    have hcomp :
-        (fun v : GenusRealVector g =>
-          (genusRealVectorQuotientAddEquiv g).symm
-            (genusTorusExponential g v)) =
-          (fun v : GenusRealVector g =>
-            QuotientAddGroup.mk' (integerPeriodLattice g) v) := by
-      funext v
-      rw [← genusRealVectorQuotientAddEquiv_mk]
-      exact (genusRealVectorQuotientAddEquiv g).symm_apply_apply _
-    rw [hcomp]
-    exact QuotientAddGroup.continuous_mk
+    (GenusRealVector g ⧸ integerPeriodLattice g) ≃ₜ GenusTorus g :=
+  (standardGenusTorusPeriodLatticeQuotient g).quotientHomeomorph
+    (genusTorusExponential_isOpenQuotientMap g)
 
 @[simp]
 theorem genusRealVectorQuotientHomeomorph_apply (g : ℕ)
