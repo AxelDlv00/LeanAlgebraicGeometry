@@ -6,6 +6,13 @@ Authors: The Mumford Contributors
 
 import MumfordLib.Theta
 
+/-!
+# Theta nondegeneracy
+
+The commutator radical, injectivity of the bihomomorphism, and the scalar
+center condition give equivalent formulations of nondegeneracy.
+-/
+
 set_option autoImplicit false
 
 namespace Mumford
