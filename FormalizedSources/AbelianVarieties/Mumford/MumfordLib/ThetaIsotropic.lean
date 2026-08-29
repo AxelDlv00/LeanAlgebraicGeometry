@@ -54,6 +54,60 @@ theorem mem_commutatorPairingOrthogonal_iff
     change E.commutatorPairing k h = 1
     exact hk h
 
+/-! The orthogonal operation reverses subgroup inclusions and exchanges joins
+with intersections.  These elementary lattice identities are useful when
+building and comparing isotropic subgroups. -/
+
+theorem commutatorPairingOrthogonal_anti
+    (E : ThetaExtension G S K) {H J : AddSubgroup K} (hHJ : H ≤ J) :
+    E.commutatorPairingOrthogonal J ≤ E.commutatorPairingOrthogonal H := by
+  intro k hk
+  rw [E.mem_commutatorPairingOrthogonal_iff J k] at hk
+  rw [E.mem_commutatorPairingOrthogonal_iff H k]
+  intro h
+  exact hk ⟨h, hHJ h.property⟩
+
+theorem commutatorPairingOrthogonal_sup
+    (E : ThetaExtension G S K) (H J : AddSubgroup K) :
+    E.commutatorPairingOrthogonal (H ⊔ J) =
+      E.commutatorPairingOrthogonal H ⊓
+        E.commutatorPairingOrthogonal J := by
+  apply le_antisymm
+  · intro k hk
+    rw [E.mem_commutatorPairingOrthogonal_iff (H ⊔ J) k] at hk
+    rw [AddSubgroup.mem_inf]
+    constructor
+    · rw [E.mem_commutatorPairingOrthogonal_iff H k]
+      intro h
+      exact hk ⟨h, AddSubgroup.mem_sup_left h.property⟩
+    · rw [E.mem_commutatorPairingOrthogonal_iff J k]
+      intro h
+      exact hk ⟨h, AddSubgroup.mem_sup_right h.property⟩
+  · intro k hk
+    rw [AddSubgroup.mem_inf] at hk
+    rw [E.mem_commutatorPairingOrthogonal_iff (H ⊔ J) k]
+    intro h
+    rcases AddSubgroup.mem_sup.mp h.property with ⟨hH, hhH, hJ, hhJ, heq⟩
+    have h1 := (E.mem_commutatorPairingOrthogonal_iff H k).mp hk.1 ⟨hH, hhH⟩
+    have h2 := (E.mem_commutatorPairingOrthogonal_iff J k).mp hk.2 ⟨hJ, hhJ⟩
+    rw [← heq, E.commutatorPairing_add_right, h1, h2, mul_one]
+
+theorem commutatorPairingOrthogonal_top
+    (E : ThetaExtension G S K) :
+    E.commutatorPairingOrthogonal (⊤ : AddSubgroup K) =
+      E.commutatorPairingRadical := by
+  apply le_antisymm
+  · intro k hk
+    rw [E.mem_commutatorPairingOrthogonal_iff (⊤ : AddSubgroup K) k] at hk
+    rw [E.mem_commutatorPairingRadical_iff k]
+    intro l
+    exact hk ⟨l, AddSubgroup.mem_top l⟩
+  · intro k hk
+    rw [E.mem_commutatorPairingRadical_iff k] at hk
+    rw [E.mem_commutatorPairingOrthogonal_iff (⊤ : AddSubgroup K) k]
+    intro l
+    exact hk l
+
 /-- A subgroup is isotropic when its pairing restricts trivially. -/
 def IsIsotropic (E : ThetaExtension G S K) (H : AddSubgroup K) : Prop :=
   H ≤ E.commutatorPairingOrthogonal H
