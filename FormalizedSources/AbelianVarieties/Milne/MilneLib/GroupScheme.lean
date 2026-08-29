@@ -153,6 +153,21 @@ open AlgebraicGeometry
 
 variable {kbar : Type u} [Field kbar]
 
+/- Geometric integrality of both factors gives the integral source needed by
+   the rigidity argument.  The tensor object is definitionally the scheme
+   pullback, so the standard pullback instance applies once the first factor's
+   integrality and local noetherianity have been exposed. -/
+theorem isIntegral_tensorObj_left_of_geometricallyIntegral
+    {X Y : Over (Spec (.of kbar))}
+    [GeometricallyIntegral X.hom] [GeometricallyIntegral Y.hom]
+    [LocallyOfFiniteType X.hom] [LocallyOfFiniteType Y.hom] :
+    IsIntegral (X ⊗ Y).left := by
+  have hX : IsIntegral X.left :=
+    GeometricallyIntegral.isIntegral_of_subsingleton X.hom
+  have hNoeth : IsLocallyNoetherian X.left :=
+    LocallyOfFiniteType.isLocallyNoetherian X.hom
+  exact inferInstanceAs (IsIntegral (pullback X.hom Y.hom))
+
 /-- Properness of the first factor makes the second projection a closed map.
 
 The underlying scheme morphism is the pullback of `X.hom` along `Y.hom`; this
