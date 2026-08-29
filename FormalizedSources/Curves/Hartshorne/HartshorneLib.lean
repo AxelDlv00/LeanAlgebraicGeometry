@@ -34,6 +34,7 @@ import HartshorneLib.Chapter4DivisorSheaf
 import HartshorneLib.Chapter4DivisorSheafZero
 import HartshorneLib.Chapter4ChiBase
 import HartshorneLib.Chapter4DivisorMultiplication
+import HartshorneLib.Chapter4DivisorSheafMul
 import HartshorneLib.Chapter4Skyscraper
 import HartshorneLib.Chapter4ResidueDegree
 import HartshorneLib.Chapter4WeightedDegree
