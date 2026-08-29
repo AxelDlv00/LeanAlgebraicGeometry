@@ -17,6 +17,8 @@ one `AffineRingGluePresentation` instead.
 
 The two fields are independent values: consumers can use the context for algebraic
 maps and the presentation for scheme data without reopening either construction.
+The presentation is indexed by the same `context.triple.N.1` ring, so this boundary
+does not ask downstream code to reconcile a second finite-stage carrier.
 The legacy package remains available as an adapter while its producer is migrated.
 -/
 
