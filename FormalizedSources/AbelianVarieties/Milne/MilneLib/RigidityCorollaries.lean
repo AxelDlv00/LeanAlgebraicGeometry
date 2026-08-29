@@ -288,4 +288,54 @@ theorem exists_hom_comp_pointTranslation_of_isAbelianVariety_arbitraryField
   rw [Category.assoc, ← Iso.trans_hom, pointTranslation_trans]
   simp
 
+/- The pointed factor and translating section in a translation decomposition
+   are uniquely determined.  This calculation is formal and does not use
+   algebraic closedness or the geometric hypotheses on the source. -/
+theorem pointTranslation_decomposition_unique
+    {K : Type u} [Field K]
+    {A B : Over (Spec (.of K))} [GrpObj A] [GrpObj B]
+    {alpha beta₁ beta₂ : A ⟶ B}
+    {b₁ b₂ : 𝟙_ (Over (Spec (.of K))) ⟶ B}
+    (h₁ : η[A] ≫ beta₁ = η[B])
+    (h₂ : η[A] ≫ beta₂ = η[B])
+    (ha₁ : alpha = beta₁ ≫ (pointTranslation B η[B] b₁).hom)
+    (ha₂ : alpha = beta₂ ≫ (pointTranslation B η[B] b₂).hom) :
+    b₁ = b₂ ∧ beta₁ = beta₂ := by
+  have hb : b₁ = b₂ := by
+    have h := congrArg (fun q => η[A] ≫ q) (ha₁.symm.trans ha₂)
+    calc
+      b₁ = η[A] ≫ beta₁ ≫ (pointTranslation B η[B] b₁).hom := by
+        rw [← Category.assoc, h₁, comp_pointTranslation_hom]
+      _ = η[A] ≫ beta₂ ≫ (pointTranslation B η[B] b₂).hom := h
+      _ = b₂ := by
+        rw [← Category.assoc, h₂, comp_pointTranslation_hom]
+  have hcomp :
+      beta₁ ≫ (pointTranslation B η[B] b₂).hom =
+        beta₂ ≫ (pointTranslation B η[B] b₂).hom := by
+    simpa [hb] using ha₁.symm.trans ha₂
+  have hcancel := congrArg
+    (fun q => q ≫ (pointTranslation B η[B] b₂).inv) hcomp
+  have hbeta : beta₁ = beta₂ := by
+    simpa [Category.assoc] using hcancel
+  exact ⟨hb, hbeta⟩
+
+/- Every morphism of abelian varieties has a unique presentation as a pointed
+   homomorphism followed by translation by the image of the identity. -/
+theorem existsUnique_hom_comp_pointTranslation_of_isAbelianVariety_arbitraryField
+    {K : Type u} [Field K]
+    {A B : Over (Spec (.of K))} [GrpObj A] [GrpObj B]
+    (hA : MilneLib.IsAbelianVariety A)
+    (hB : MilneLib.IsAbelianVariety B)
+    (alpha : A ⟶ B) :
+    ∃! p : (A ⟶ B) × (𝟙_ (Over (Spec (.of K))) ⟶ B),
+      IsMonHom p.1 ∧ η[A] ≫ p.1 = η[B] ∧
+        alpha = p.1 ≫ (pointTranslation B η[B] p.2).hom := by
+  obtain ⟨beta, b, hbeta, hpointed, hdecomp⟩ :=
+    exists_hom_comp_pointTranslation_of_isAbelianVariety_arbitraryField hA hB alpha
+  refine ⟨(beta, b), ⟨hbeta, hpointed, hdecomp⟩, ?_⟩
+  rintro ⟨beta', b'⟩ ⟨_, hpointed', hdecomp'⟩
+  have hunique := pointTranslation_decomposition_unique
+    hpointed hpointed' hdecomp hdecomp'
+  exact Prod.ext hunique.2.symm hunique.1.symm
+
 end MilneLib.GroupVariety
