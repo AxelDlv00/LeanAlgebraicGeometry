@@ -53,6 +53,31 @@ def ComplexTorusUniformization.ofExponential
   equiv :=
     (complexPeriodLatticeQuotientOfExponential exponential hsurj hker).quotientAddEquiv.symm
 
+/-- An open quotient exponential supplies the topological form of the complex
+uniformization witness.  The open-quotient hypothesis is the analytic input;
+the additive and kernel data are inherited from `ofExponential`. -/
+noncomputable def ComplexTorusUniformization.ofExponential_toHomeomorph
+    {X : Type*} [AddCommGroup X] [TopologicalSpace X] {g : ℕ}
+    (exponential : GenusComplexVector g →+ X)
+    (hsurj : Function.Surjective exponential)
+    (hker : exponential.ker = complexPeriodLattice g)
+    (hquot : IsOpenQuotientMap exponential) :
+    X ≃ₜ (GenusComplexVector g ⧸ complexPeriodLattice g) :=
+  (complexPeriodLatticeQuotientOfExponential exponential hsurj hker)
+    |>.quotientHomeomorph hquot |>.symm
+
+@[simp]
+theorem ComplexTorusUniformization.ofExponential_toHomeomorph_apply
+    {X : Type*} [AddCommGroup X] [TopologicalSpace X] {g : ℕ}
+    (exponential : GenusComplexVector g →+ X)
+    (hsurj : Function.Surjective exponential)
+    (hker : exponential.ker = complexPeriodLattice g)
+    (hquot : IsOpenQuotientMap exponential) (x : X) :
+    ComplexTorusUniformization.ofExponential_toHomeomorph
+        exponential hsurj hker hquot x =
+      (ComplexTorusUniformization.ofExponential exponential hsurj hker).equiv x :=
+  rfl
+
 @[simp]
 theorem ComplexTorusUniformization.ofExponential_equiv_symm_mk
     {X : Type*} [AddCommGroup X] {g : ℕ}
