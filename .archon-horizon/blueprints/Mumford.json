@@ -660,7 +660,7 @@
   ],
   "meta": {
     "engine": "hgraph",
-    "entry": "FormalizedSources/AbelianVarieties/Mumford/blueprint/src/content.tex",
+    "entry": "/home/axel/LeanAlgebraicGeometry-Horizon/FormalizedSources/AbelianVarieties/Mumford/blueprint/src/content.tex",
     "macros": {
       "\\A": "\\mathbb{A}",
       "\\Adual": "\\widehat{A}",
@@ -727,7 +727,7 @@
     },
     "states": {
       "blocked": 116,
-      "closed": 314,
+      "closed": 325,
       "formalized_open": 0,
       "informal": 216,
       "ready": 100
@@ -739,6 +739,8 @@
       "Mumford.GroupScheme.comp_pointTranslation_inv: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Mumford.GroupScheme.eq_comp_of_isAffine_of_properIntegral: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Mumford.GroupScheme.existsUnique_factor_through_snd_iff: Lean declaration is not referenced by any blueprint \\lean{...}",
+      "Mumford.GroupScheme.exists_hom_comp_pointTranslation_of_isAbelianVariety: Lean declaration is not referenced by any blueprint \\lean{...}",
+      "Mumford.GroupScheme.exists_hom_comp_pointTranslation_of_isAbelianVariety_arbitraryField: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Mumford.GroupScheme.factor_through_snd_unique: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Mumford.GroupScheme.factors_through_snd_iff: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Mumford.GroupScheme.hom_additive_decomp_of_rigidity: Lean declaration is not referenced by any blueprint \\lean{...}",
@@ -747,6 +749,8 @@
       "Mumford.GroupScheme.isIrreducible_pointTranslationIso_preimage_iff: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Mumford.GroupScheme.isIrreducible_preimage_iff_of_isIso: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Mumford.GroupScheme.isMonHom_of_pointed: Lean declaration is not referenced by any blueprint \\lean{...}",
+      "Mumford.GroupScheme.isMonHom_of_pointed_of_isAbelianVariety: Lean declaration is not referenced by any blueprint \\lean{...}",
+      "Mumford.GroupScheme.isMonHom_of_pointed_of_isAbelianVariety_arbitraryField: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Mumford.GroupScheme.isReduced_stalk_iff_of_isOpenImmersion: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Mumford.GroupScheme.isReduced_stalk_pointTranslationIso_iff: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Mumford.GroupScheme.mem_smoothLocus_iff_of_comp_eq: Lean declaration is not referenced by any blueprint \\lean{...}",
@@ -778,11 +782,7 @@
       "Mumford.GroupScheme.rigidity_snd_lift: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Mumford.GroupScheme.snd_left_isClosedMap: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Mumford.IsAbelianVariety: Lean declaration is not referenced by any blueprint \\lean{...}",
-      "Mumford.ProductTorus: Lean declaration is not referenced by any blueprint \\lean{...}",
-      "Mumford.ThetaExtension: Lean declaration is not referenced by any blueprint \\lean{...}",
-      "Mumford.ThetaExtension.IsNondegenerate: Lean declaration is not referenced by any blueprint \\lean{...}",
-      "Mumford.ThetaExtension.center_eq_includeScalar_range_of_commutatorPairingRadical_eq_bot: Lean declaration is not referenced by any blueprint \\lean{...}",
-      "Mumford.ThetaExtension.center_eq_includeScalar_range_of_isNondegenerate: Lean declaration is not referenced by any blueprint \\lean{...}"
+      "Mumford.ProductTorus: Lean declaration is not referenced by any blueprint \\lean{...}"
     ]
   },
   "nodes": [
