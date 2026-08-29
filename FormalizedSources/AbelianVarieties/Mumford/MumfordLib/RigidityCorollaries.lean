@@ -119,4 +119,27 @@ theorem isMonHom_of_pointed_of_isAbelianVariety
   haveI : IsReduced (A ⊗ A).left := inferInstance
   exact isMonHom_of_pointed α hα
 
+/-- Every morphism between abelian varieties is a pointed homomorphism followed
+by the canonical translation carrying the image of the identity to the target
+identity. -/
+theorem exists_hom_comp_pointTranslation_of_isAbelianVariety
+    {A B : Over (Spec (.of kbar))} [GrpObj A] [GrpObj B]
+    (hA : IsAbelianVariety A)
+    (hB : IsAbelianVariety B)
+    (α : A ⟶ B) :
+    ∃ (β : A ⟶ B) (b : 𝟙_ (Over (Spec (.of kbar))) ⟶ B),
+      IsMonHom β ∧ η[A] ≫ β = η[B] ∧
+        α = β ≫ (pointTranslation B η[B] b).hom := by
+  let b := η[A] ≫ α
+  let β := α ≫ (pointTranslation B b η[B]).hom
+  have hβ : η[A] ≫ β = η[B] := by
+    change b ≫ (pointTranslation B b η[B]).hom = η[B]
+    exact comp_pointTranslation_hom b η[B]
+  have hβhom := isMonHom_of_pointed_of_isAbelianVariety hA hB β hβ
+  refine ⟨β, b, hβhom, hβ, ?_⟩
+  dsimp [β]
+  symm
+  rw [Category.assoc, ← Iso.trans_hom, pointTranslation_trans]
+  simp
+
 end Mumford.GroupScheme
