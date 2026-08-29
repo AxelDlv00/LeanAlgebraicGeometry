@@ -53,6 +53,17 @@ theorem degree_principalDivisor_div (g h : X.left.functionFieldˣ) :
         CurveDivisor.degree (principalDivisor h) := by
   rw [principalDivisor_div, CurveDivisor.degree_sub]
 
+/- The additive degree law iterates over powers of a rational function. -/
+theorem degree_principalDivisor_pow (g : X.left.functionFieldˣ) (n : ℕ) :
+    CurveDivisor.degree (principalDivisor (g ^ n)) =
+      (n : ℤ) * CurveDivisor.degree (principalDivisor g) := by
+  induction n with
+  | zero => simp
+  | succ n ih =>
+      rw [pow_succ, principalDivisor_mul, CurveDivisor.degree_add, ih]
+      push_cast
+      ring
+
 /-- The degree of a principal divisor is the finite sum of its local orders.
 
 This is the finite-support normal form used by the global product formula;
