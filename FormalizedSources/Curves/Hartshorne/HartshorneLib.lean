@@ -29,6 +29,10 @@ import HartshorneLib.Chapter2LineBundles
 import HartshorneLib.Chapter2ModuleKSheaf
 import HartshorneLib.Chapter2Cohomology
 import HartshorneLib.Chapter2Chi
+import HartshorneLib.Chapter2ChiSlice
+import HartshorneLib.Chapter4DivisorSheaf
+import HartshorneLib.Chapter4DivisorSheafZero
+import HartshorneLib.Chapter4Skyscraper
 import HartshorneLib.Chapter4ResidueDegree
 import HartshorneLib.Chapter4WeightedDegree
 
