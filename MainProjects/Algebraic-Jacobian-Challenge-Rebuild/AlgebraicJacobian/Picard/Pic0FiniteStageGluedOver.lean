@@ -241,29 +241,43 @@ noncomputable def gluedMap
     P.glueData.glued ⟶ Spec (.of P.N.1) :=
   P.gluedMapData.map
 
+/-! The chart maps are exported as named data, rather than as an `algebraMap` expression
+with instances inferred at each call site.  The carrier is a dependent tensor product, so
+reconstructing its `CommRing`/`Algebra` witnesses changes the elaborated morphism even when
+the printed types agree. -/
+
+set_option synthInstance.maxHeartbeats 400000 in
+set_option maxHeartbeats 12800000 in
+/-- The pinned structure map from a finite-stage chart to the field of definition. -/
+noncomputable def chartBaseChangeMap
+    {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
+    (P : Pic0FiniteStageGluePackage C F)
+    (U : Pic0FiniteStageChartIndex C) :
+    P.glueData.U U ⟶ Spec (.of P.N.1) :=
+  letI : CommRing
+      (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U) :=
+    pic0FiniteStageChartBaseChangeRingCommRing
+      C P.L P.n P.m P.relation P.M P.N U
+  letI : Algebra P.N.1
+      (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U) :=
+    pic0FiniteStageChartBaseChangeRingAlgebra
+      C P.L P.n P.m P.relation P.M P.N U
+  Spec.map (CommRingCat.ofHom
+    (@algebraMap P.N.1
+      (Pic0FiniteStageChartBaseChangeRing
+        C P.L P.n P.m P.relation P.M P.N U)
+      (inferInstance : CommSemiring P.N.1)
+      (pic0FiniteStageChartBaseChangeRingCommRing
+        C P.L P.n P.m P.relation P.M P.N U).toSemiring
+      (pic0FiniteStageChartBaseChangeRingAlgebra
+        C P.L P.n P.m P.relation P.M P.N U)))
+
 @[simp]
 theorem gluedMapData_chartMap
     {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
     (P : Pic0FiniteStageGluePackage C F)
     (U : Pic0FiniteStageChartIndex C) :
-    P.gluedMapData.chartMap U =
-      (letI : CommRing
-          (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U) :=
-        pic0FiniteStageChartBaseChangeRingCommRing
-          C P.L P.n P.m P.relation P.M P.N U
-       letI : Algebra P.N.1
-          (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U) :=
-        pic0FiniteStageChartBaseChangeRingAlgebra
-          C P.L P.n P.m P.relation P.M P.N U
-       Spec.map (CommRingCat.ofHom
-         (@algebraMap P.N.1
-           (Pic0FiniteStageChartBaseChangeRing
-             C P.L P.n P.m P.relation P.M P.N U)
-           (inferInstance : CommSemiring P.N.1)
-           (pic0FiniteStageChartBaseChangeRingCommRing
-             C P.L P.n P.m P.relation P.M P.N U).toSemiring
-           (pic0FiniteStageChartBaseChangeRingAlgebra
-             C P.L P.n P.m P.relation P.M P.N U)))) := by
+    P.gluedMapData.chartMap U = chartBaseChangeMap C P U := by
   rfl
 
 /-- The finite-stage Picard glue, retained over the finite field `P.N.1`. -/

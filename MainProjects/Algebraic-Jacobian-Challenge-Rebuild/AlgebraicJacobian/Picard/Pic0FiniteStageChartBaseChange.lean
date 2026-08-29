@@ -42,10 +42,7 @@ theorem glueData_ι_gluedMap
     (P : Pic0FiniteStageGluePackage C F)
     (U : Pic0FiniteStageChartIndex C) :
     P.glueData.ι U ≫ P.gluedMap =
-      Spec.map (CommRingCat.ofHom
-        (algebraMap P.N.1
-          (Pic0FiniteStageChartBaseChangeRing
-            C P.L P.n P.m P.relation P.M P.N U))) := by
+      chartBaseChangeMap C P U := by
   simpa only [gluedMap, gluedMapData_chartMap] using
     P.gluedMapData.chartMap_factor U
 
@@ -58,11 +55,7 @@ noncomputable def chartBaseChangeIso
     {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
     (P : Pic0FiniteStageGluePackage C F)
     (U : Pic0FiniteStageChartIndex C) :
-    pullback
-        (Spec.map (CommRingCat.ofHom
-          (algebraMap P.N.1
-            (Pic0FiniteStageChartBaseChangeRing
-              C P.L P.n P.m P.relation P.M P.N U))))
+    pullback (chartBaseChangeMap C P U)
       (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k))) ≅
       (pic0SepClosedAtlasOpenCover C).X U := by
   letI : Algebra P.N.1
