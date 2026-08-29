@@ -353,6 +353,37 @@ theorem complexGenusQuotient_zsmulTorsion_card {g : ℕ} {n : ℤ} (hn : n ≠ 0
       zsmulTorsion_card_eq_of_addEquiv (complexGenusQuotientAddEquiv g) n
     _ = n.natAbs ^ (2 * g) := genusTorus_zsmulTorsion_card g hn
 
+/-- The nonzero-integer torsion of the complex period quotient is finite. -/
+theorem complexGenusQuotient_zsmulTorsion_finite {g : ℕ} {n : ℤ} (hn : n ≠ 0) :
+    Finite
+      (zsmulTorsionSubgroup
+        (GenusComplexVector g ⧸ complexPeriodLattice g) n) := by
+  letI : NeZero n.natAbs := ⟨Int.natAbs_pos.mpr hn |>.ne'⟩
+  exact (complexGenusQuotient_zsmulTorsion_addEquiv hn).toEquiv.finite_iff.mpr
+    inferInstance
+
+/-- Positive-natural torsion in the complex period quotient has the expected
+cardinality. -/
+theorem complexGenusQuotient_natCast_zsmulTorsion_card
+    {g n : ℕ} (hn : 0 < n) :
+    Nat.card
+        (zsmulTorsionSubgroup
+          (GenusComplexVector g ⧸ complexPeriodLattice g) (n : ℤ)) =
+      n ^ (2 * g) := by
+  have hne : (n : ℤ) ≠ 0 := by
+    exact_mod_cast (Nat.ne_of_gt hn)
+  simpa using complexGenusQuotient_zsmulTorsion_card (g := g) hne
+
+/-- Positive-natural torsion in the complex period quotient is finite. -/
+theorem complexGenusQuotient_natCast_zsmulTorsion_finite
+    {g n : ℕ} (hn : 0 < n) :
+    Finite
+      (zsmulTorsionSubgroup
+        (GenusComplexVector g ⧸ complexPeriodLattice g) (n : ℤ)) := by
+  have hne : (n : ℤ) ≠ 0 := by
+    exact_mod_cast (Nat.ne_of_gt hn)
+  exact complexGenusQuotient_zsmulTorsion_finite (g := g) hne
+
 end
 end Uniformization
 end Mumford
