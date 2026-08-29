@@ -94,4 +94,30 @@ theorem isMonHom_of_pointed
         rw [← Category.assoc, lift_comp_one_left, Category.id_comp]] at key
   exact { one_hom := hα, mul_hom := by rw [key, Hom.mul_def, lift_fst_comp_snd_comp] }
 
+/- The product hypotheses in the preceding theorem are automatic for the
+   ordinary abelian-variety package once the base field is algebraically
+   closed.  They are installed explicitly here because typeclass synthesis
+   does not unfold the tensor object into its pullback presentation. -/
+theorem isMonHom_of_pointed_of_isAbelianVariety
+    {A B : Over (Spec (.of kbar))} [GrpObj A] [GrpObj B]
+    (hA : MilneLib.IsAbelianVariety A)
+    (hB : MilneLib.IsAbelianVariety B)
+    (α : A ⟶ B) (hα : η[A] ≫ α = η[B]) : IsMonHom α := by
+  letI : IsProper A.hom := hA.1
+  letI : GeometricallyIntegral A.hom := hA.2
+  letI : IsProper B.hom := hB.1
+  letI : GeometricallyIntegral B.hom := hB.2
+  letI : LocallyOfFiniteType A.hom := IsProper.toLocallyOfFiniteType
+  haveI : GeometricallyIrreducible (A ⊗ A).hom := by
+    rw [Over.tensorObj_hom]
+    exact GeometricallyIrreducible.comp (pullback.fst A.hom A.hom) A.hom
+  haveI : LocallyOfFiniteType (A ⊗ A).hom := by
+    rw [Over.tensorObj_hom]
+    exact AlgebraicGeometry.locallyOfFiniteType_comp
+      (pullback.fst A.hom A.hom) A.hom
+  letI : IsIntegral (A ⊗ A).left :=
+    isIntegral_tensorObj_left_of_geometricallyIntegral (X := A) (Y := A)
+  haveI : IsReduced (A ⊗ A).left := inferInstance
+  exact isMonHom_of_pointed α hα
+
 end MilneLib.GroupVariety
