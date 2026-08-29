@@ -65,6 +65,7 @@ noncomputable def pointLattice {x : X.left} (hx : x ≠ genericPoint X.left)
       _ ≤ ((Multiplicative.ofAdd n : Multiplicative ℤ) :
         WithZero (Multiplicative ℤ)) := hg
 
+omit [IsAlgClosed k] [IsProper X.hom] in
 lemma mem_pointLattice {x : X.left} (hx : x ≠ genericPoint X.left)
     {n : ℤ} {g : X.left.functionField} :
     g ∈ pointLattice (X := X) hx n ↔
@@ -72,7 +73,8 @@ lemma mem_pointLattice {x : X.left} (hx : x ≠ genericPoint X.left)
         ((Multiplicative.ofAdd n : Multiplicative ℤ) : WithZero (Multiplicative ℤ)) :=
   Iff.rfl
 
-/-- Increasing the integer bound enlarges the one-point lattice. -/
+/- Increasing the integer bound enlarges the one-point lattice. -/
+omit [IsAlgClosed k] [IsProper X.hom] in
 lemma pointLattice_mono {x : X.left} (hx : x ≠ genericPoint X.left)
     {m n : ℤ} (h : m ≤ n) :
     pointLattice (X := X) hx m ≤ pointLattice (X := X) hx n := by
@@ -138,11 +140,15 @@ lemma jumpProj_eq_of_coe_eq {x : X.left} (hx : x ≠ genericPoint X.left)
 
 /-! ## The skyscraper target -/
 
+omit [IsAlgClosed k] [IsIntegral X.left] [SmoothOfRelativeDimension 1 X.hom]
+    [IsProper X.hom] in
 lemma skyModule_obj_of_mem' {x : X.left} (M : ModuleCat.{u} k)
     {W : (X.left.Opens)ᵒᵖ} (h : x ∈ W.unop) :
     (skyModule (X := X) x M).obj.obj W = M :=
   skyModule_obj_of_mem x M h
 
+omit [IsAlgClosed k] [IsIntegral X.left] [SmoothOfRelativeDimension 1 X.hom]
+    [IsProper X.hom] in
 lemma skyModule_map_eq {x : X.left} (M : ModuleCat.{u} k)
     {U V : (X.left.Opens)ᵒᵖ} (i : U ⟶ V)
     (hU : x ∈ U.unop) (hV : x ∈ V.unop) :
@@ -153,6 +159,8 @@ lemma skyModule_map_eq {x : X.left} (M : ModuleCat.{u} k)
   rw [skyscraperSheaf_obj_map]
   exact dif_pos hV
 
+omit [IsAlgClosed k] [IsIntegral X.left] [SmoothOfRelativeDimension 1 X.hom]
+    [IsProper X.hom] in
 lemma skyModule_obj_subsingleton {x : X.left} (M : ModuleCat.{u} k)
     {V : X.left.Opens} (hV : x ∉ V) :
     Subsingleton ((skyModule (X := X) x M).obj.obj (op V)) := by
@@ -188,6 +196,8 @@ lemma skyComponent_hom_apply_of_mem {x : X.left}
   rw [skyComponent_of_mem hx D W hxW]
   rfl
 
+omit [IsAlgClosed k] [IsIntegral X.left] [SmoothOfRelativeDimension 1 X.hom]
+    [IsProper X.hom] in
 lemma eqToHom_comp_skyModule_map {x : X.left} (M : ModuleCat.{u} k)
     {U V : (X.left.Opens)ᵒᵖ} (i : U ⟶ V)
     (hU : x ∈ U.unop) (hV : x ∈ V.unop) :
