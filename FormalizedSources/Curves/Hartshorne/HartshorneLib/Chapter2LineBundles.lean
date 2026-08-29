@@ -96,4 +96,12 @@ theorem IsLineBundle.pullback_id {X : Scheme.{u}} {M : X.Modules}
     IsLineBundle ((Scheme.Modules.pullback (𝟙 X)).obj M) := by
   exact hM.of_iso ((Scheme.Modules.pullbackId X).app M).symm
 
+/-! ### Restriction along open immersions -/
+
+/-- Restricting a line bundle to an open subscheme preserves local triviality. -/
+theorem IsLineBundle.restrict {X Y : Scheme.{u}} (f : Y ⟶ X) [IsOpenImmersion f]
+    {M : X.Modules} (hM : IsLineBundle M) :
+    IsLineBundle ((Scheme.Modules.restrictFunctor f).obj M) := by
+  exact (hM.pullback f).of_iso ((Scheme.Modules.restrictFunctorIsoPullback f).app M).symm
+
 end Hartshorne
