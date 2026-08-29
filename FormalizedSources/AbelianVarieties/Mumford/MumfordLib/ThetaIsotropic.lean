@@ -67,6 +67,28 @@ theorem commutatorPairingOrthogonal_anti
   intro h
   exact hk ⟨h, hHJ h.property⟩
 
+/- The skew symmetry makes orthogonality a Galois connection: either
+   inclusion determines the corresponding inclusion in the opposite order. -/
+theorem le_commutatorPairingOrthogonal_iff
+    (E : ThetaExtension G S K) (H J : AddSubgroup K) :
+    H ≤ E.commutatorPairingOrthogonal J ↔
+      J ≤ E.commutatorPairingOrthogonal H := by
+  constructor
+  · intro h j hj
+    rw [E.mem_commutatorPairingOrthogonal_iff H j]
+    intro i
+    have hp : E.commutatorPairing (i : K) j = 1 := by
+      exact (E.mem_commutatorPairingOrthogonal_iff J (i : K)).mp
+        (h i.property) ⟨j, hj⟩
+    rw [E.commutatorPairing_swap, hp, inv_one]
+  · intro h i hi
+    rw [E.mem_commutatorPairingOrthogonal_iff J i]
+    intro j
+    have hp : E.commutatorPairing (j : K) i = 1 := by
+      exact (E.mem_commutatorPairingOrthogonal_iff H (j : K)).mp
+        (h j.property) ⟨i, hi⟩
+    rw [E.commutatorPairing_swap, hp, inv_one]
+
 theorem commutatorPairingOrthogonal_sup
     (E : ThetaExtension G S K) (H J : AddSubgroup K) :
     E.commutatorPairingOrthogonal (H ⊔ J) =
