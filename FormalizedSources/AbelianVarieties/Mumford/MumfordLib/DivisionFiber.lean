@@ -68,6 +68,64 @@ theorem zsmulDivisionFiberEquiv_symm_apply
       (y : X) - DivisibleBy.div x n := by
   rfl
 
+/-- Translation through the common torsion subgroup identifies any two
+nonzero-integer division fibres. -/
+noncomputable def zsmulDivisionFiberEquivBetween
+    {X : Type*} [AddCommGroup X] [DivisibleBy X ℤ]
+    (n : ℤ) (x y : X) (hn : n ≠ 0) :
+    zsmulDivisionFiber X n x ≃ zsmulDivisionFiber X n y :=
+  (zsmulDivisionFiberEquiv n x hn).symm.trans
+    (zsmulDivisionFiberEquiv n y hn)
+
+@[simp]
+theorem zsmulDivisionFiberEquivBetween_apply
+    {X : Type*} [AddCommGroup X] [DivisibleBy X ℤ]
+    (n : ℤ) (x y : X) (hn : n ≠ 0)
+    (a : zsmulDivisionFiber X n x) :
+    ((zsmulDivisionFiberEquivBetween n x y hn) a : X) =
+      (a : X) - DivisibleBy.div x n + DivisibleBy.div y n := by
+  rfl
+
+@[simp]
+theorem zsmulDivisionFiberEquivBetween_refl
+    {X : Type*} [AddCommGroup X] [DivisibleBy X ℤ]
+    (n : ℤ) (x : X) (hn : n ≠ 0) :
+    zsmulDivisionFiberEquivBetween n x x hn = Equiv.refl _ := by
+  apply Equiv.ext
+  intro a
+  apply Subtype.ext
+  simp
+
+theorem zsmulDivisionFiberEquivBetween_trans
+    {X : Type*} [AddCommGroup X] [DivisibleBy X ℤ]
+    (n : ℤ) (x y z : X) (hn : n ≠ 0) :
+    (zsmulDivisionFiberEquivBetween n x y hn).trans
+        (zsmulDivisionFiberEquivBetween n y z hn) =
+      zsmulDivisionFiberEquivBetween n x z hn := by
+  apply Equiv.ext
+  intro a
+  apply Subtype.ext
+  simp only [Equiv.trans_apply, zsmulDivisionFiberEquivBetween_apply]
+  abel
+
+/-- All fibres of multiplication by a fixed nonzero integer have the same
+cardinality in a divisible group. -/
+theorem zsmulDivisionFiber_card_eq
+    {X : Type*} [AddCommGroup X] [DivisibleBy X ℤ]
+    (n : ℤ) (x y : X) (hn : n ≠ 0) :
+    Nat.card (zsmulDivisionFiber X n x) =
+      Nat.card (zsmulDivisionFiber X n y) := by
+  exact Nat.card_congr (zsmulDivisionFiberEquivBetween n x y hn)
+
+/-- Finiteness of one nonzero-integer division fibre is equivalent to
+finiteness of every other fibre. -/
+theorem zsmulDivisionFiber_finite_iff_finite
+    {X : Type*} [AddCommGroup X] [DivisibleBy X ℤ]
+    (n : ℤ) (x y : X) (hn : n ≠ 0) :
+    Finite (zsmulDivisionFiber X n x) ↔
+      Finite (zsmulDivisionFiber X n y) :=
+  Equiv.finite_iff (zsmulDivisionFiberEquivBetween n x y hn)
+
 /-- All nonzero-integer division fibres have the cardinality of torsion. -/
 theorem zsmulDivisionFiber_card
     {X : Type*} [AddCommGroup X] [DivisibleBy X ℤ]
