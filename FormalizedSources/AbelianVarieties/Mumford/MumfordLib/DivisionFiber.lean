@@ -76,6 +76,23 @@ theorem zsmulDivisionFiber_card
       Nat.card (zsmulTorsionSubgroup X n) := by
   exact Nat.card_congr (zsmulDivisionFiberEquiv n x hn).symm
 
+/-- Every nonzero-integer division fibre is inhabited in a divisible group. -/
+theorem zsmulDivisionFiber_nonempty
+    {X : Type*} [AddCommGroup X] [DivisibleBy X ℤ]
+    (n : ℤ) (x : X) (hn : n ≠ 0) :
+    Nonempty (zsmulDivisionFiber X n x) := by
+  refine ⟨⟨DivisibleBy.div x n, ?_⟩⟩
+  exact DivisibleBy.div_cancel x hn
+
+/-- Finiteness of a nonzero-integer division fibre is equivalent to finiteness
+of the corresponding torsion subgroup. -/
+theorem zsmulDivisionFiber_finite_iff
+    {X : Type*} [AddCommGroup X] [DivisibleBy X ℤ]
+    (n : ℤ) (x : X) (hn : n ≠ 0) :
+    Finite (zsmulDivisionFiber X n x) ↔
+      Finite (zsmulTorsionSubgroup X n) :=
+  (Equiv.finite_iff (zsmulDivisionFiberEquiv n x hn)).symm
+
 /-- Under a genus-torus uniformization, every nonzero-integer division fibre
 has cardinality `|n|^(2g)`. -/
 theorem zsmulDivisionFiber_card_of_uniformization
@@ -86,6 +103,37 @@ theorem zsmulDivisionFiber_card_of_uniformization
   rw [zsmulDivisionFiber_card n x hn]
   exact zsmulTorsion_card_of_uniformization u hn
 
+/-- Under a genus-torus uniformization, every nonzero-integer division fibre
+is finite. -/
+theorem zsmulDivisionFiber_finite_of_uniformization
+    {X : Type*} [AddCommGroup X] {g : ℕ}
+    (u : GenusTorusUniformization X g) (n : ℤ) (x : X) (hn : n ≠ 0) :
+    Finite (zsmulDivisionFiber X n x) := by
+  letI : DivisibleBy X ℤ := divisibleBy_of_uniformization u
+  have ht : Finite (zsmulTorsionSubgroup X n) :=
+    zsmulTorsion_finite_of_uniformization u hn
+  exact (zsmulDivisionFiberEquiv n x hn).finite_iff.mp ht
+
+/-- The positive-natural division-fibre cardinality under a genus-torus
+uniformization. -/
+theorem zsmulDivisionFiber_natCast_card_of_uniformization
+    {X : Type*} [AddCommGroup X] {g n : ℕ}
+    (u : GenusTorusUniformization X g) (x : X) (hn : 0 < n) :
+    Nat.card (zsmulDivisionFiber X (n : ℤ) x) = n ^ (2 * g) := by
+  have hne : (n : ℤ) ≠ 0 := by
+    exact_mod_cast (Nat.ne_of_gt hn)
+  simpa using zsmulDivisionFiber_card_of_uniformization u (n : ℤ) x hne
+
+/-- The positive-natural division fibres are finite under a genus-torus
+uniformization. -/
+theorem zsmulDivisionFiber_natCast_finite_of_uniformization
+    {X : Type*} [AddCommGroup X] {g n : ℕ}
+    (u : GenusTorusUniformization X g) (x : X) (hn : 0 < n) :
+    Finite (zsmulDivisionFiber X (n : ℤ) x) := by
+  have hne : (n : ℤ) ≠ 0 := by
+    exact_mod_cast (Nat.ne_of_gt hn)
+  exact zsmulDivisionFiber_finite_of_uniformization u (n : ℤ) x hne
+
 /-- The same division-fibre cardinality for a complex uniformization witness. -/
 theorem zsmulDivisionFiber_card_of_complex_uniformization
     {X : Type*} [AddCommGroup X] {g : ℕ}
@@ -93,6 +141,32 @@ theorem zsmulDivisionFiber_card_of_complex_uniformization
     Nat.card (zsmulDivisionFiber X n x) = n.natAbs ^ (2 * g) := by
   exact zsmulDivisionFiber_card_of_uniformization
     u.toGenusTorusUniformization n x hn
+
+/-- The same division-fibre finiteness for a complex uniformization witness. -/
+theorem zsmulDivisionFiber_finite_of_complex_uniformization
+    {X : Type*} [AddCommGroup X] {g : ℕ}
+    (u : ComplexTorusUniformization X g) (n : ℤ) (x : X) (hn : n ≠ 0) :
+    Finite (zsmulDivisionFiber X n x) := by
+  exact zsmulDivisionFiber_finite_of_uniformization
+    u.toGenusTorusUniformization n x hn
+
+/-- The positive-natural division-fibre cardinality for a complex
+uniformization witness. -/
+theorem zsmulDivisionFiber_natCast_card_of_complex_uniformization
+    {X : Type*} [AddCommGroup X] {g n : ℕ}
+    (u : ComplexTorusUniformization X g) (x : X) (hn : 0 < n) :
+    Nat.card (zsmulDivisionFiber X (n : ℤ) x) = n ^ (2 * g) := by
+  exact zsmulDivisionFiber_natCast_card_of_uniformization
+    u.toGenusTorusUniformization x hn
+
+/-- The positive-natural division fibres are finite for a complex
+uniformization witness. -/
+theorem zsmulDivisionFiber_natCast_finite_of_complex_uniformization
+    {X : Type*} [AddCommGroup X] {g n : ℕ}
+    (u : ComplexTorusUniformization X g) (x : X) (hn : 0 < n) :
+    Finite (zsmulDivisionFiber X (n : ℤ) x) := by
+  exact zsmulDivisionFiber_natCast_finite_of_uniformization
+    u.toGenusTorusUniformization x hn
 
 end
 end Uniformization
