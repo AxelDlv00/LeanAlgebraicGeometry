@@ -182,6 +182,37 @@ theorem of_raw
   obtain ⟨D_M, hD⟩ := hS
   exact ⟨{ stage := S, datum := D_M, baseChange_eq := hD }⟩
 
+/-- Select one finite-stage cocycle datum from the legacy existential producer.
+
+The choice is made once at the producer boundary, so consumers can retain the
+stage, descended datum, and pinned comparison certificate as one value. -/
+noncomputable def choose
+    {F K B : Type u} [Field F] [Field K] [Algebra F K] [Algebra.IsAlgebraic F K]
+    [CommRing B] [Algebra F B]
+    {C : Over (Spec (.of F))} {pi : C.left ⟶ P1 F} [IsAffineHom pi]
+    (D : BasicOpenCocycleDatum C (K ⊗[F] B) pi) :
+    FiniteStageCocycleDatum D :=
+  Classical.choice (of_raw D)
+
+theorem choose_baseChange_eq_pinned
+    {F K B : Type u} [Field F] [Field K] [Algebra F K] [Algebra.IsAlgebraic F K]
+    [CommRing B] [Algebra F B]
+    {C : Over (Spec (.of F))} {pi : C.left ⟶ P1 F} [IsAffineHom pi]
+    (D : BasicOpenCocycleDatum C (K ⊗[F] B) pi) :
+    @BasicOpenCocycleDatum.baseChange F (inferInstance : Field F) C
+      ((choose D).stage.stage ⊗[F] B)
+      (inferInstance : CommRing ((choose D).stage.stage ⊗[F] B))
+      (inferInstance : Algebra F ((choose D).stage.stage ⊗[F] B))
+      (K ⊗[F] B)
+      (inferInstance : CommRing (K ⊗[F] B))
+      (inferInstance : Algebra F (K ⊗[F] B))
+      ((choose D).stage.tensorAlgebra (A := B))
+      ((choose D).stage.tensorTower (A := B))
+      pi
+      (inferInstance : IsAffineHom pi)
+      (choose D).datum = D := by
+  exact (choose D).baseChange_eq_pinned
+
 @[simp]
 theorem map_apply_tmul
     {F K B : Type u} [Field F] [Field K] [Algebra F K]
