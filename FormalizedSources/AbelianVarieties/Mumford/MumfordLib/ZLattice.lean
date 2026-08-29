@@ -5,6 +5,7 @@ Authors: The Mumford Contributors
 -/
 
 import MumfordLib.Lattice
+import MumfordLib.ComplexModel
 import Mathlib.Algebra.Module.ZLattice.Basic
 
 /-!
@@ -58,6 +59,40 @@ instance integerPeriodLatticeSubmodule_isZLattice (g : ℕ) :
   refine ⟨?_⟩
   rw [integerPeriodLatticeSubmodule_eq_span]
   exact ZSpan.span_top (Pi.basisFun ℝ (Fin (2 * g)))
+
+/-- The realification equivalence, with its finite-dimensional topology. -/
+noncomputable def genusComplexVectorRealificationContinuousLinearEquiv (g : ℕ) :
+    GenusComplexVector g ≃L[ℝ] GenusRealVector g :=
+  (genusComplexVectorRealification g).toContinuousLinearEquiv
+
+/-- The complex period subgroup viewed as an integer submodule. -/
+def complexPeriodLatticeSubmodule (g : ℕ) :
+    Submodule ℤ (GenusComplexVector g) :=
+  ZLattice.comap ℝ (integerPeriodLatticeSubmodule g)
+    (genusComplexVectorRealificationContinuousLinearEquiv g).toLinearMap
+
+@[simp]
+theorem complexPeriodLatticeSubmodule_mem_iff (g : ℕ)
+    (z : GenusComplexVector g) :
+    z ∈ complexPeriodLatticeSubmodule g ↔ z ∈ complexPeriodLattice g := by
+  change genusComplexVectorRealification g z ∈ integerPeriodLattice g ↔
+    z ∈ complexPeriodLattice g
+  rfl
+
+instance complexPeriodLatticeSubmodule_discreteTopology (g : ℕ) :
+    DiscreteTopology (complexPeriodLatticeSubmodule g) := by
+  unfold complexPeriodLatticeSubmodule
+  infer_instance
+
+instance complexPeriodLatticeSubmodule_isZLattice (g : ℕ) :
+    IsZLattice ℝ (complexPeriodLatticeSubmodule g) := by
+  unfold complexPeriodLatticeSubmodule
+  infer_instance
+
+theorem complexPeriodLatticeSubmodule_toAddSubgroup (g : ℕ) :
+    (complexPeriodLatticeSubmodule g).toAddSubgroup = complexPeriodLattice g := by
+  ext z
+  exact complexPeriodLatticeSubmodule_mem_iff g z
 
 end
 end Uniformization
