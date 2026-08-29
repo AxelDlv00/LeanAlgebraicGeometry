@@ -193,6 +193,17 @@ theorem degree_sub (D E : CurveDivisor k X) :
   rw [← degreeHom_apply, ← degreeHom_apply, ← degreeHom_apply]
   exact map_sub degreeHom D E
 
+@[simp]
+theorem degree_nsmul (n : ℕ) (D : CurveDivisor k X) :
+    degree (n • D) = n • degree D := by
+  rw [← degreeHom_apply, ← degreeHom_apply]
+  exact map_nsmul (degreeHom (k := k) (X := X)) n D
+
+theorem degree_zsmul (n : ℤ) (D : CurveDivisor k X) :
+    degree (n • D) = n • degree D := by
+  rw [← degreeHom_apply, ← degreeHom_apply]
+  exact map_zsmul (degreeHom (k := k) (X := X)) n D
+
 /-- Degree is monotone for the pointwise divisor order. -/
 theorem degree_mono {D E : CurveDivisor k X} (hDE : D ≤ E) :
     degree D ≤ degree E := by
