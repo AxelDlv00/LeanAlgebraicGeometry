@@ -5,6 +5,7 @@ Authors: The Mumford Contributors
 -/
 
 import Mathlib.GroupTheory.Commutator.Basic
+import Mathlib.GroupTheory.SpecificGroups.Cyclic
 
 /-!
 # Abstract theta extensions
@@ -604,6 +605,37 @@ theorem commutatorPairing_quotient_eq_one_iff_commute (g h : G) :
     apply E.includeScalar_injective
     rw [E.includeScalar_commutatorScalar,
       commutatorElement_eq_one_iff_commute.mpr hcomm, map_one]
+
+/-! The quotient pairing also detects commutativity of the entire extension.
+For a cyclic quotient, centrality of the scalar kernel then forces
+commutativity; the prime-cardinality case is Mumford's theta-extension
+criterion. -/
+
+theorem isMulCommutative_iff_commutatorPairing_eq_one :
+    IsMulCommutative G ↔ ∀ k l : K, E.commutatorPairing k l = 1 := by
+  constructor
+  · intro hG k l
+    apply (E.commutatorPairing_eq_one_iff_commute k l).mpr
+    exact hG.1.1 (E.quotientLift k) (E.quotientLift l)
+  · intro hpair
+    refine ⟨⟨fun g h => ?_⟩⟩
+    exact ((E.commutatorPairing_quotient_eq_one_iff_commute g h).mp
+      (hpair (E.quotient g) (E.quotient h))).eq
+
+theorem isMulCommutative_of_isAddCyclic [IsAddCyclic K] :
+    IsMulCommutative G := by
+  apply MonoidHom.isMulCommutative_of_isCyclic_of_ker_le_center E.quotientHom
+  intro g hg
+  rw [← E.exact] at hg
+  obtain ⟨s, rfl⟩ := hg
+  rw [Subgroup.mem_center_iff]
+  intro g
+  exact (E.includeScalar_commute s g).eq.symm
+
+theorem isMulCommutative_of_prime_card {p : ℕ} [Fact p.Prime]
+    (hK : Nat.card K = p) : IsMulCommutative G := by
+  letI : IsAddCyclic K := isAddCyclic_of_prime_card hK
+  exact E.isMulCommutative_of_isAddCyclic
 
 end ThetaExtension
 
