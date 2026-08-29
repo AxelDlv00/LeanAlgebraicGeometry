@@ -126,6 +126,36 @@ theorem eq_commutatorPairingOrthogonal_of_isMaximalIsotropic
   exact (le_sup_right : AddSubgroup.zmultiples k ≤ J)
     (AddSubgroup.mem_zmultiples k)
 
+/-- The cardinality of the quotient by an orthogonal subgroup is the
+cardinality of the character image whenever the restricted pairing is
+surjective. -/
+theorem natCard_eq_orthogonal_mul_character_of_surjective_restriction
+    (E : ThetaExtension G S K) (H : AddSubgroup K)
+    (hsurj : Function.Surjective (E.commutatorPairingRestriction H)) :
+    Nat.card K =
+      Nat.card (E.commutatorPairingOrthogonal H) *
+        Nat.card (H →+ Additive S) := by
+  calc
+    Nat.card K =
+        Nat.card (K ⧸ E.commutatorPairingOrthogonal H) *
+          Nat.card (E.commutatorPairingOrthogonal H) :=
+      AddSubgroup.card_eq_card_quotient_mul_card_addSubgroup
+        (E.commutatorPairingOrthogonal H)
+    _ = Nat.card (H →+ Additive S) *
+          Nat.card (E.commutatorPairingOrthogonal H) := by
+      let e : K ⧸ (E.commutatorPairingRestriction H).ker ≃+
+          (H →+ Additive S) :=
+        QuotientAddGroup.quotientKerEquivOfSurjective
+          (E.commutatorPairingRestriction H) hsurj
+      have hc :
+          Nat.card (K ⧸ E.commutatorPairingOrthogonal H) =
+            Nat.card (H →+ Additive S) := by
+        apply Nat.card_congr
+        simpa only [commutatorPairingOrthogonal] using e.toEquiv
+      rw [hc]
+    _ = Nat.card (E.commutatorPairingOrthogonal H) *
+        Nat.card (H →+ Additive S) := by rw [Nat.mul_comm]
+
 /-- A maximal isotropic subgroup has square order when restriction of the
 commutator pairing realizes all of its characters and finite character duality
 preserves cardinality. -/
