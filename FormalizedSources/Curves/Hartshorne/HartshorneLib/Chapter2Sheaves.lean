@@ -183,6 +183,30 @@ theorem sheaf_iso_iff_stalkMap_iso
     IsIso f ↔ ∀ x : X, IsIso (stalkMap f.hom x) := by
   exact TopCat.Presheaf.isIso_iff_stalkFunctor_map_iso f
 
+/-- Morphisms of sheaves are determined by their maps on all stalks. -/
+theorem sheaf_hom_ext_of_stalkMap_eq
+    {C : Type u} [Category.{v} C] {X : TopCat.{v}}
+    {FC : C → C → Type*} {CC : C → Type v}
+    [∀ X Y : C, FunLike (FC X Y) (CC X) (CC Y)]
+    [ConcreteCategory C FC] [HasColimits C]
+    [PreservesFilteredColimits (CategoryTheory.forget C)] [HasLimits C]
+    [PreservesLimits (CategoryTheory.forget C)]
+    [(CategoryTheory.forget C).ReflectsIsomorphisms]
+    {F G : Sheaf C X} (f g : F ⟶ G)
+    (h : ∀ x : X, stalkMap f.hom x = stalkMap g.hom x) : f = g := by
+  apply (TopCat.Sheaf.forget C X).map_injective
+  change f.1 = g.1
+  apply TopCat.Presheaf.ext
+  intro U
+  apply ConcreteCategory.hom_ext
+  intro s
+  apply TopCat.Presheaf.section_ext G U
+  intro x hx
+  rw [← TopCat.Presheaf.stalkFunctor_map_germ_apply,
+    ← TopCat.Presheaf.stalkFunctor_map_germ_apply]
+  exact congrArg (fun k => (ConcreteCategory.hom k)
+      ((ConcreteCategory.hom (TopCat.Presheaf.germ F.obj U x hx)) s)) (h x)
+
 /-- A sheaf of objects in a concrete abelian category is zero exactly when all
 of its stalks are zero. -/
 theorem sheaf_isZero_iff_stalk_isZero
