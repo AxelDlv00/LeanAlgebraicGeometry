@@ -5,6 +5,8 @@ Authors: The Mumford Contributors
 -/
 
 import MumfordLib.Theta
+import Mathlib.GroupTheory.Coset.Card
+import Mathlib.SetTheory.Cardinal.NatCard
 
 /-!
 # Isotropic subgroups of theta extensions
@@ -123,6 +125,29 @@ theorem eq_commutatorPairingOrthogonal_of_isMaximalIsotropic
   apply hmax.2 J le_sup_left hJ
   exact (le_sup_right : AddSubgroup.zmultiples k ≤ J)
     (AddSubgroup.mem_zmultiples k)
+
+/-- A maximal isotropic subgroup has square order when restriction of the
+commutator pairing realizes all of its characters and finite character duality
+preserves cardinality. -/
+theorem natCard_eq_square_of_isMaximalIsotropic
+    (E : ThetaExtension G S K) (H : AddSubgroup K)
+    (hmax : E.IsMaximalIsotropic H)
+    (hsurj : Function.Surjective (E.commutatorPairingRestriction H))
+    (hdual : Nat.card (H →+ Additive S) = Nat.card H) :
+    Nat.card K = Nat.card H ^ 2 := by
+  have hker : (E.commutatorPairingRestriction H).ker = H := by
+    change E.commutatorPairingOrthogonal H = H
+    exact (E.eq_commutatorPairingOrthogonal_of_isMaximalIsotropic H hmax).symm
+  let e : K ⧸ H ≃+ (H →+ Additive S) :=
+    (QuotientAddGroup.quotientAddEquivOfEq hker.symm).trans
+      (QuotientAddGroup.quotientKerEquivOfSurjective
+        (E.commutatorPairingRestriction H) hsurj)
+  calc
+    Nat.card K = Nat.card (K ⧸ H) * Nat.card H :=
+      AddSubgroup.card_eq_card_quotient_mul_card_addSubgroup H
+    _ = Nat.card (H →+ Additive S) * Nat.card H := by
+      rw [Nat.card_congr e.toEquiv]
+    _ = Nat.card H ^ 2 := by rw [hdual, pow_two]
 
 end ThetaExtension
 end Mumford
