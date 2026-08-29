@@ -91,10 +91,37 @@ noncomputable def gluedMapData
   let r : ∀ U V, A U →ₐ[P.N.1] B U V := fun U V =>
     pic0FiniteStageRestrictionBaseChange
       C P.L P.n P.m P.relation P.M P.mapM P.N U V
+  /- Pin the carrier witnesses before constructing the scalar tower.  These
+     aliases are dependent tensor products, so an inferred propositionally equal
+     instance is not interchangeable with the one used by `r`. -/
+  letI (U : Pic0FiniteStageChartIndex C) : CommRing (A U) :=
+    pic0FiniteStageChartBaseChangeCommRing
+      C P.L P.n P.m P.relation P.M P.N U
+  letI (U V : Pic0FiniteStageChartIndex C) : CommRing (B U V) :=
+    pic0FiniteStageOverlapBaseChangeCommRing
+      C P.L P.n P.m P.relation P.M P.N U V
+  letI (U : Pic0FiniteStageChartIndex C) : Algebra P.N.1 (A U) :=
+    pic0FiniteStageChartBaseChangeAlgebra
+      C P.L P.n P.m P.relation P.M P.N U
+  letI (U V : Pic0FiniteStageChartIndex C) : Algebra P.N.1 (B U V) :=
+    pic0FiniteStageOverlapBaseChangeAlgebra
+      C P.L P.n P.m P.relation P.M P.N U V
   letI : ∀ U V, Algebra (A U) (B U V) := fun U V =>
-    pic0FiniteStageAlgebraOfMap (r U V)
+    @pic0FiniteStageAlgebraOfMap P.N.1 (A U) (B U V)
+      (inferInstance : CommRing P.N.1)
+      (inferInstance : CommRing (A U))
+      (inferInstance : CommRing (B U V))
+      (inferInstance : Algebra P.N.1 (A U))
+      (inferInstance : Algebra P.N.1 (B U V))
+      (r U V)
   letI : ∀ U V, IsScalarTower P.N.1 (A U) (B U V) := fun U V =>
-    pic0FiniteStageTowerOfMap (r U V)
+    @pic0FiniteStageTowerOfMap P.N.1 (A U) (B U V)
+      (inferInstance : CommRing P.N.1)
+      (inferInstance : CommRing (A U))
+      (inferInstance : CommRing (B U V))
+      (inferInstance : Algebra P.N.1 (A U))
+      (inferInstance : Algebra P.N.1 (B U V))
+      (r U V)
   let tau : ∀ U V, B V U →ₐ[P.N.1] B U V := fun U V =>
     pic0FiniteStageTransitionBaseChange
       C P.L P.n P.m P.relation P.M P.mapM P.N U V
@@ -122,39 +149,67 @@ noncomputable def gluedMapData
     rw [← IsScalarTower.algebraMap_apply P.N.1 (A V) (B V U)]
     exact (tau U V).commutes x |>.symm
 
-/-- The finite-stage glue datum and its structure map, retained as one dependent value.
+/-! ## Stable presentation boundary
 
-The `mapData` field is indexed by `P.glueData` itself.  This is intentional: consumers can
-pass the package projections together without transporting a map across a propositionally
-equal copy of the glue datum or rebuilding the chart-factor proof.
+The legacy package computes a dependent `GluedMapData` whose glue datum is fixed by its
+type.  Pin that value immediately into the generic presentation API.  Downstream code can
+then carry one value with a proof-independent projection type instead of reopening the
+assembly definition through `P.glueData`.
 -/
-structure GluedOverData
+
+set_option synthInstance.maxHeartbeats 400000 in
+-- The presentation body contains the legacy nested tensor witnesses.
+set_option maxHeartbeats 12800000 in
+-- The presentation body unfolds the legacy map datum once, at this boundary.
+/-- The selected affine gluing presentation attached to a legacy finite-stage package. -/
+noncomputable def presentation
     {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
-    (P : Pic0FiniteStageGluePackage C F) where
-  mapData : AlgebraicJacobian.GluedMapData P.glueData (Spec (.of P.N.1))
+    (P : Pic0FiniteStageGluePackage C F) :
+    AlgebraicJacobian.AffineRingGluePresentation P.N.1 :=
+  AlgebraicJacobian.AffineRingGluePresentation.ofMapData P.gluedMapData
+
+set_option maxHeartbeats 12800000 in
+-- The projection reduces a dependent `GluedMapData` once, so keep it out of client files.
+@[simp]
+theorem presentation_glueData
+    {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
+    (P : Pic0FiniteStageGluePackage C F) :
+    P.presentation.glueData = P.glueData :=
+  rfl
+
+set_option maxHeartbeats 12800000 in
+-- The projection is definitionally the selected map datum.
+@[simp]
+theorem presentation_mapData
+    {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
+    (P : Pic0FiniteStageGluePackage C F) :
+    P.presentation.mapData = P.gluedMapData :=
+  rfl
+
+/-! The old wrapper stored `GluedMapData P.glueData` directly.  That repeated the
+dependent glue construction at every use site.  Reuse the pinned presentation instead:
+the carrier and map are now indexed by one selected value, with no producer proofs in the
+consumer-facing type. -/
+abbrev GluedOverData
+    {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
+    (P : Pic0FiniteStageGluePackage C F) :=
+  AlgebraicJacobian.AffineRingGluePresentation P.N.1
 
 namespace GluedOverData
 
-/-- The exact glue datum indexed by the packaged map. -/
-abbrev glueData
-    {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
-    {P : Pic0FiniteStageGluePackage C F}
-    (_Q : GluedOverData C P) : Scheme.GlueData :=
-  P.glueData
-
-/-- The map carried by the packaged glue datum. -/
+/-- The structure map carried by the selected presentation. -/
 def map
     {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
     {P : Pic0FiniteStageGluePackage C F}
-    (Q : GluedOverData C P) : P.glueData.glued ⟶ Spec (.of P.N.1) :=
-  Q.mapData.map
+    (Q : GluedOverData C P) : Q.glueData.glued ⟶ Spec (.of P.N.1) :=
+  AlgebraicJacobian.AffineRingGluePresentation.map Q
 
-/-- The packaged glue as an object of the slice over its finite-stage field. -/
-def over
+/-- The selected glue as an object of the slice over its finite-stage field. -/
+def «over»
     {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
     {P : Pic0FiniteStageGluePackage C F}
     (Q : GluedOverData C P) : Over (Spec (.of P.N.1)) :=
-  Over.mk Q.map
+  AlgebraicJacobian.AffineRingGluePresentation.over Q
 
 @[simp]
 theorem map_eq
@@ -163,25 +218,13 @@ theorem map_eq
     (Q : GluedOverData C P) : Q.map = Q.mapData.map :=
   rfl
 
-@[simp]
-theorem chartMap
-    {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
-    {P : Pic0FiniteStageGluePackage C F}
-    (Q : GluedOverData C P) (U : Pic0FiniteStageChartIndex C) :
-    Q.mapData.chartMap U =
-      Spec.map (CommRingCat.ofHom
-        (algebraMap P.N.1
-          (Pic0FiniteStageChartBaseChangeRing
-            C P.L P.n P.m P.relation P.M P.N U))) := by
-  rfl
-
 /-- The chart-factor equation exposed without opening the generic map package. -/
 theorem chartMap_factor
     {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
     {P : Pic0FiniteStageGluePackage C F}
-    (Q : GluedOverData C P) (U : Pic0FiniteStageChartIndex C) :
-    P.glueData.ι U ≫ Q.map = Q.mapData.chartMap U := by
-  exact Q.mapData.chartMap_factor U
+    (Q : GluedOverData C P) (U : Q.glueData.J) :
+    Q.glueData.ι U ≫ Q.map = Q.mapData.chartMap U := by
+  exact AlgebraicJacobian.AffineRingGluePresentation.chartMap_factor Q U
 
 end GluedOverData
 
@@ -189,14 +232,14 @@ end GluedOverData
 noncomputable def gluedOverData
     {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
     (P : Pic0FiniteStageGluePackage C F) : GluedOverData C P :=
-  ⟨P.gluedMapData⟩
+  P.presentation
 
 /-- The structure map from the finite-stage glued scheme to its field of definition. -/
 noncomputable def gluedMap
     {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
     (P : Pic0FiniteStageGluePackage C F) :
     P.glueData.glued ⟶ Spec (.of P.N.1) :=
-  P.gluedOverData.map
+  P.gluedMapData.map
 
 @[simp]
 theorem gluedMapData_chartMap
@@ -204,17 +247,30 @@ theorem gluedMapData_chartMap
     (P : Pic0FiniteStageGluePackage C F)
     (U : Pic0FiniteStageChartIndex C) :
     P.gluedMapData.chartMap U =
-      Spec.map (CommRingCat.ofHom
-        (algebraMap P.N.1
-          (Pic0FiniteStageChartBaseChangeRing
-            C P.L P.n P.m P.relation P.M P.N U))) := by
+      (letI : CommRing
+          (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U) :=
+        pic0FiniteStageChartBaseChangeRingCommRing
+          C P.L P.n P.m P.relation P.M P.N U
+       letI : Algebra P.N.1
+          (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U) :=
+        pic0FiniteStageChartBaseChangeRingAlgebra
+          C P.L P.n P.m P.relation P.M P.N U
+       Spec.map (CommRingCat.ofHom
+         (@algebraMap P.N.1
+           (Pic0FiniteStageChartBaseChangeRing
+             C P.L P.n P.m P.relation P.M P.N U)
+           (inferInstance : CommSemiring P.N.1)
+           (pic0FiniteStageChartBaseChangeRingCommRing
+             C P.L P.n P.m P.relation P.M P.N U).toSemiring
+           (pic0FiniteStageChartBaseChangeRingAlgebra
+             C P.L P.n P.m P.relation P.M P.N U)))) := by
   rfl
 
 /-- The finite-stage Picard glue, retained over the finite field `P.N.1`. -/
 noncomputable def gluedOver
     {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
     (P : Pic0FiniteStageGluePackage C F) : Over (Spec (.of P.N.1)) :=
-  P.gluedOverData.over
+  Over.mk P.gluedMap
 
 end Pic0FiniteStageGluePackage
 
