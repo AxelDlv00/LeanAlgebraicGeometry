@@ -100,6 +100,28 @@ instance complexGenusQuotient_compactSpace (g : ℕ) :
     CompactSpace (GenusComplexVector g ⧸ complexPeriodLattice g) :=
   ⟨complexGenusQuotient_isCompact g⟩
 
+/- The quotient spaces are Hausdorff because they are homeomorphic to the
+   finite product of Hausdorff additive circles. -/
+instance genusRealVectorQuotient_t2Space (g : ℕ) :
+    T2Space (GenusRealVector g ⧸ integerPeriodLattice g) :=
+  (genusRealVectorQuotientHomeomorph g).symm.t2Space
+
+instance complexGenusQuotient_t2Space (g : ℕ) :
+    T2Space (GenusComplexVector g ⧸ complexPeriodLattice g) := by
+  letI : T2Space (GenusRealVector g ⧸ integerPeriodLattice g) :=
+    (genusRealVectorQuotientHomeomorph g).symm.t2Space
+  exact (complexQuotientToRealQuotientHomeomorph g).symm.t2Space
+
+theorem genusRealVectorQuotient_isClosed_of_isCompact
+    {g : ℕ} {s : Set (GenusRealVector g ⧸ integerPeriodLattice g)}
+    (hs : IsCompact s) : IsClosed s :=
+  hs.isClosed
+
+theorem complexGenusQuotient_isClosed_of_isCompact
+    {g : ℕ} {s : Set (GenusComplexVector g ⧸ complexPeriodLattice g)}
+    (hs : IsCompact s) : IsClosed s :=
+  hs.isClosed
+
 instance genusRealVectorQuotient_connectedSpace (g : ℕ) :
     ConnectedSpace (GenusRealVector g ⧸ integerPeriodLattice g) :=
   (connectedSpace_iff_univ).2 (genusRealVectorQuotient_isConnected g)
