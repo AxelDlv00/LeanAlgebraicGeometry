@@ -32,18 +32,18 @@ the codebase, but new work is organized only by the following phases.
 | 5 | done | Translated rank-one cover over a separably closed field. |
 | 6 | done | Kernel-checked representability of `Pic^0` over the separable closure. |
 | 7 | active | Descend the representative and universal Picard equivalence to the original field. |
-| 8 | pending | Build the final Jacobian package and discharge the protected challenge statements. |
+| 8 | blocked | Build the final Jacobian package and discharge the protected challenge statements after the original-field representative exists. |
 
 ### Phase 7: Finite-Galois Descent
 
 | Item | Status |
 | --- | --- |
 | Finite-stage affine atlas and `Scheme.GlueData` | done |
-| Global glued-scheme base-change isomorphism | active |
-| Universal Picard element and natural-equivalence descent | pending |
+| Global glued-scheme base-change isomorphism and critical-root certification | blocked |
+| Universal Picard element, natural equivalence, and finite-stage representative | done |
 | Original-field filtered-colimit bridge for `Pic^0` | pending |
-| Stable affine cover via orbit containment or quasi-projectivity | pending |
-| Assemble and consume `pic0_representableBy` | pending |
+| Stable affine cover for the exact glued carrier | blocked |
+| Assemble and consume original-field `pic0_representableBy` | blocked |
 
 ### Phase 8: Jacobian Capstone
 
