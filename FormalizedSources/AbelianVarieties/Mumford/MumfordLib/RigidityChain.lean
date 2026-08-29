@@ -197,6 +197,27 @@ theorem rigidity_lemma
   rw [← Category.assoc, rigidity_snd_lift]
   exact rigidity_core f x₀ y₀ z₀ _hf
 
+/- The factor in Form I is unique; this packages the existential theorem with
+   the categorical uniqueness lemma for downstream uses. -/
+theorem rigidity_lemma_unique
+    [IsAlgClosed kbar]
+    {X Y Z : Over (Spec (.of kbar))}
+    [IsProper X.hom]
+    [GeometricallyIrreducible (X ⊗ Y).hom]
+    [LocallyOfFiniteType (X ⊗ Y).hom]
+    [IsReduced (X ⊗ Y).left]
+    [IsSeparated Z.hom]
+    (f : (X ⊗ Y) ⟶ Z)
+    (x₀ : 𝟙_ (Over (Spec (.of kbar))) ⟶ X)
+    (y₀ : 𝟙_ (Over (Spec (.of kbar))) ⟶ Y)
+    (z₀ : 𝟙_ (Over (Spec (.of kbar))) ⟶ Z)
+    (_hf : lift (𝟙 X) (toUnit X ≫ y₀) ≫ f = toUnit X ≫ z₀) :
+    ∃! g : Y ⟶ Z, f = snd X Y ≫ g := by
+  obtain ⟨g, hg⟩ := rigidity_lemma f x₀ y₀ z₀ _hf
+  refine ⟨g, hg, ?_⟩
+  intro g' hg'
+  exact factor_through_snd_unique x₀ f hg' hg
+
 /- The two-axis form in Milne's statement: once the first-axis collapse gives
    factorisation through the second projection, the second-axis collapse makes
    that factor constant. -/
