@@ -142,6 +142,37 @@ theorem exists_hom_comp_pointTranslation_of_isAbelianVariety
   rw [Category.assoc, ← Iso.trans_hom, pointTranslation_trans]
   simp
 
+/- The pointed factor and the translating section in this decomposition are
+   uniquely determined.  This is the categorical uniqueness statement used
+   when comparing two choices of the Form-I translation. -/
+omit [IsAlgClosed kbar] in
+theorem pointTranslation_decomposition_unique
+    {A B : Over (Spec (.of kbar))} [GrpObj A] [GrpObj B]
+    {alpha beta₁ beta₂ : A ⟶ B}
+    {b₁ b₂ : 𝟙_ (Over (Spec (.of kbar))) ⟶ B}
+    (h₁ : η[A] ≫ beta₁ = η[B])
+    (h₂ : η[A] ≫ beta₂ = η[B])
+    (ha₁ : alpha = beta₁ ≫ (pointTranslation B η[B] b₁).hom)
+    (ha₂ : alpha = beta₂ ≫ (pointTranslation B η[B] b₂).hom) :
+    b₁ = b₂ ∧ beta₁ = beta₂ := by
+  have hb : b₁ = b₂ := by
+    have h := congrArg (fun q => η[A] ≫ q) (ha₁.symm.trans ha₂)
+    calc
+      b₁ = η[A] ≫ beta₁ ≫ (pointTranslation B η[B] b₁).hom := by
+        rw [← Category.assoc, h₁, comp_pointTranslation_hom]
+      _ = η[A] ≫ beta₂ ≫ (pointTranslation B η[B] b₂).hom := h
+      _ = b₂ := by
+        rw [← Category.assoc, h₂, comp_pointTranslation_hom]
+  have hcomp :
+      beta₁ ≫ (pointTranslation B η[B] b₂).hom =
+        beta₂ ≫ (pointTranslation B η[B] b₂).hom := by
+    simpa [hb] using ha₁.symm.trans ha₂
+  have hcancel := congrArg
+    (fun q => q ≫ (pointTranslation B η[B] b₂).inv) hcomp
+  have hbeta : beta₁ = beta₂ := by
+    simpa [Category.assoc] using hcancel
+  exact ⟨hb, hbeta⟩
+
 /- The pointed-homomorphism criterion descends from an algebraic closure. -/
 theorem isMonHom_of_pointed_of_isAbelianVariety_arbitraryField
     {K : Type u} [Field K]
