@@ -5,6 +5,8 @@ Authors: The Mumford Contributors
 -/
 
 import MumfordLib.Theta
+import Mathlib.Data.Fintype.Card
+import Mathlib.SetTheory.Cardinal.NatCard
 
 /-!
 # Theta nondegeneracy
@@ -69,6 +71,48 @@ theorem isNondegenerate_iff_center_eq_includeScalar_range :
     have hqzero : E.quotient (E.quotientLift k) = 0 := by
       rw [← hs, E.quotient_includeScalar]
     exact hq.symm.trans hqzero
+
+/-! For a finite quotient whose character group has the same cardinality,
+nondegeneracy upgrades the commutator map from injective to bijective. -/
+
+theorem commutatorPairingBihom_bijective_of_isNondegenerate
+    [Finite K] [Finite (K →+ Additive S)]
+    (hcard : Nat.card K = Nat.card (K →+ Additive S))
+    (hE : E.IsNondegenerate) :
+    Function.Bijective E.commutatorPairingBihom := by
+  have hinj := E.commutatorPairingBihom_injective hE
+  let e : K ≃ (K →+ Additive S) :=
+    Classical.choice ((Finite.card_eq).mp hcard)
+  exact ⟨hinj, (Finite.injective_iff_surjective_of_equiv e).mp hinj⟩
+
+theorem isNondegenerate_iff_commutatorPairingBihom_bijective
+    [Finite K] [Finite (K →+ Additive S)]
+    (hcard : Nat.card K = Nat.card (K →+ Additive S)) :
+    E.IsNondegenerate ↔ Function.Bijective E.commutatorPairingBihom := by
+  constructor
+  · exact E.commutatorPairingBihom_bijective_of_isNondegenerate hcard
+  · intro hbij
+    exact E.isNondegenerate_iff_commutatorPairingBihom_injective.mpr hbij.1
+
+/-- Under finite character duality, the scalar-center condition is equivalent
+to the commutator map being an isomorphism of the underlying finite groups. -/
+theorem center_eq_includeScalar_range_iff_commutatorPairingBihom_bijective
+    [Finite K] [Finite (K →+ Additive S)]
+    (hcard : Nat.card K = Nat.card (K →+ Additive S)) :
+    Subgroup.center G = E.includeScalar.range ↔
+      Function.Bijective E.commutatorPairingBihom :=
+  E.isNondegenerate_iff_center_eq_includeScalar_range.symm.trans
+    (E.isNondegenerate_iff_commutatorPairingBihom_bijective hcard)
+
+/-- A nondegenerate finite theta commutator identifies the quotient with its
+character group. -/
+noncomputable def commutatorPairingAddEquiv
+    [Finite K] [Finite (K →+ Additive S)]
+    (hcard : Nat.card K = Nat.card (K →+ Additive S))
+    (hE : E.IsNondegenerate) :
+    K ≃+ (K →+ Additive S) :=
+  AddEquiv.ofBijective E.commutatorPairingBihom
+    (E.commutatorPairingBihom_bijective_of_isNondegenerate hcard hE)
 
 end ThetaExtension
 
