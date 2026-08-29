@@ -608,8 +608,9 @@ theorem commutatorPairing_quotient_eq_one_iff_commute (g h : G) :
 
 /-! The quotient pairing also detects commutativity of the entire extension.
 For a cyclic quotient, centrality of the scalar kernel then forces
-commutativity; the prime-cardinality case is Mumford's theta-extension
-criterion. -/
+commutativity. The prime-cardinality theorem below is the abstract-group part
+of Mumford's theta-extension criterion; it does not model nonreduced finite
+group schemes. -/
 
 theorem isMulCommutative_iff_commutatorPairing_eq_one :
     IsMulCommutative G ↔ ∀ k l : K, E.commutatorPairing k l = 1 := by
