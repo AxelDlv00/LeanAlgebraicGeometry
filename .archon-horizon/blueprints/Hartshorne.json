@@ -984,7 +984,7 @@
     },
     "states": {
       "blocked": 144,
-      "closed": 357,
+      "closed": 362,
       "formalized_open": 3,
       "informal": 485,
       "ready": 342
@@ -1004,15 +1004,18 @@
       "Hartshorne.CurveDivisor.degreeHom: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Hartshorne.CurveDivisor.degreeHom_apply: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Hartshorne.CurveDivisor.degree_add: Lean declaration is not referenced by any blueprint \\lean{...}",
+      "Hartshorne.CurveDivisor.degree_eq_zero_iff_of_nonneg: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Hartshorne.CurveDivisor.degree_inf_add_degree_sup: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Hartshorne.CurveDivisor.degree_mono: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Hartshorne.CurveDivisor.degree_neg: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Hartshorne.CurveDivisor.degree_nonneg: Lean declaration is not referenced by any blueprint \\lean{...}",
+      "Hartshorne.CurveDivisor.degree_nsmul: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Hartshorne.CurveDivisor.degree_pos_of_nonneg_of_ne_zero: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Hartshorne.CurveDivisor.degree_positivePart_sub_negativePart: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Hartshorne.CurveDivisor.degree_single: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Hartshorne.CurveDivisor.degree_sub: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Hartshorne.CurveDivisor.degree_zero: Lean declaration is not referenced by any blueprint \\lean{...}",
+      "Hartshorne.CurveDivisor.degree_zsmul: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Hartshorne.CurveDivisor.devissageDivisor: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Hartshorne.CurveDivisor.devissageDivisor_add_single: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Hartshorne.CurveDivisor.devissageDivisor_eq_sub: Lean declaration is not referenced by any blueprint \\lean{...}",
@@ -1036,10 +1039,7 @@
       "Hartshorne.CurveDivisor.single_zero: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Hartshorne.CurveDivisor.support: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Hartshorne.CurveDivisor.support_add_subset: Lean declaration is not referenced by any blueprint \\lean{...}",
-      "Hartshorne.CurveDivisor.support_card_le_degree: Lean declaration is not referenced by any blueprint \\lean{...}",
-      "Hartshorne.CurveDivisor.support_eq_empty_iff: Lean declaration is not referenced by any blueprint \\lean{...}",
-      "Hartshorne.CurveDivisor.support_neg_eq: Lean declaration is not referenced by any blueprint \\lean{...}",
-      "Hartshorne.CurveDivisor.support_nonempty_iff: Lean declaration is not referenced by any blueprint \\lean{...}"
+      "Hartshorne.CurveDivisor.support_card_le_degree: Lean declaration is not referenced by any blueprint \\lean{...}"
     ]
   },
   "nodes": [
