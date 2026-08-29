@@ -5,6 +5,8 @@ Authors: The Mumford Contributors
 -/
 
 import MumfordLib.ComplexModel
+import Mathlib.Topology.Algebra.Group.OpenMapping
+import Mathlib.Topology.Baire.LocallyCompactRegular
 
 /-!
 # Complex uniformization interface
@@ -42,6 +44,19 @@ def complexPeriodLatticeQuotientOfExponential
   exponential_surjective := hsurj
   kernel_exponential := hker
 
+/- A continuous surjective exponential into a locally compact Hausdorff
+   additive group is open by the topological-group open mapping theorem. -/
+theorem isOpenQuotientMap_of_continuous_surjective_of_locallyCompact
+    {X : Type*} [AddCommGroup X] [TopologicalSpace X]
+    [LocallyCompactSpace X] [T2Space X] [ContinuousAdd X] {g : ℕ}
+    (exponential : GenusComplexVector g →+ X)
+    (hsurj : Function.Surjective exponential)
+    (hcont : Continuous exponential) :
+    IsOpenQuotientMap exponential := by
+  rw [isOpenQuotientMap_iff]
+  exact ⟨hsurj, hcont,
+    AddMonoidHom.isOpenMap_of_sigmaCompact exponential hsurj hcont⟩
+
 /-- A surjective additive exponential with the canonical period kernel induces
 the chosen complex uniformization witness. -/
 def ComplexTorusUniformization.ofExponential
@@ -65,6 +80,34 @@ noncomputable def ComplexTorusUniformization.ofExponential_toHomeomorph
     X ≃ₜ (GenusComplexVector g ⧸ complexPeriodLattice g) :=
   (complexPeriodLatticeQuotientOfExponential exponential hsurj hker)
     |>.quotientHomeomorph hquot |>.symm
+
+/- The open-mapping variant exposes the usual locally compact Hausdorff target
+   assumptions directly, so callers need not manufacture an open-quotient
+   certificate separately. -/
+noncomputable def ComplexTorusUniformization.ofExponential_toHomeomorph_of_locallyCompact
+    {X : Type*} [AddCommGroup X] [TopologicalSpace X]
+    [LocallyCompactSpace X] [T2Space X] [ContinuousAdd X] {g : ℕ}
+    (exponential : GenusComplexVector g →+ X)
+    (hsurj : Function.Surjective exponential)
+    (hker : exponential.ker = complexPeriodLattice g)
+    (hcont : Continuous exponential) :
+    X ≃ₜ (GenusComplexVector g ⧸ complexPeriodLattice g) :=
+  ComplexTorusUniformization.ofExponential_toHomeomorph exponential hsurj hker
+    (isOpenQuotientMap_of_continuous_surjective_of_locallyCompact
+      exponential hsurj hcont)
+
+@[simp]
+theorem ComplexTorusUniformization.ofExponential_toHomeomorph_of_locallyCompact_apply
+    {X : Type*} [AddCommGroup X] [TopologicalSpace X]
+    [LocallyCompactSpace X] [T2Space X] [ContinuousAdd X] {g : ℕ}
+    (exponential : GenusComplexVector g →+ X)
+    (hsurj : Function.Surjective exponential)
+    (hker : exponential.ker = complexPeriodLattice g)
+    (hcont : Continuous exponential) (x : X) :
+    ComplexTorusUniformization.ofExponential_toHomeomorph_of_locallyCompact
+        exponential hsurj hker hcont x =
+      (ComplexTorusUniformization.ofExponential exponential hsurj hker).equiv x :=
+  rfl
 
 @[simp]
 theorem ComplexTorusUniformization.ofExponential_toHomeomorph_apply
