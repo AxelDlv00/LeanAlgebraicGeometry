@@ -796,7 +796,7 @@
   ],
   "meta": {
     "engine": "hgraph",
-    "entry": "/home/axel/LeanAlgebraicGeometry-Horizon/FormalizedSources/AbelianVarieties/Milne/blueprint/src/content.tex",
+    "entry": "FormalizedSources/AbelianVarieties/Milne/blueprint/src/content.tex",
     "macros": {
       "\\A": "\\mathbb{A}",
       "\\Alb": "\\operatorname{Alb}",
