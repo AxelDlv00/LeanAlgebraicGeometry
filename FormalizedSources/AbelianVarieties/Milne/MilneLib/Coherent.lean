@@ -141,4 +141,91 @@ theorem moduleFinite_stalk_of_local_generators
           (∑ i, c i • (ConcreteCategory.hom (M.map iWU.op)) (s i)) := hsum.symm
     _ = t := hc'.symm
 
+/-- The same local-generation argument for an arbitrary `RingCat`-valued
+presheaf of rings.  This is kept separate from the commutative-structure-sheaf
+version above because the two stalk rings are canonically isomorphic, but not
+definitionally identical. -/
+theorem moduleFinite_stalk_of_local_generators_ring
+    {X : TopCat.{u}} {R : X.Presheaf RingCat.{u}}
+    (M : PresheafOfModules.{u} R)
+    {x : X} {U : Opens X} (hxU : x ∈ U)
+    {ι : Type u} [Fintype ι]
+    (s : ι → (M.obj (op U) : Type u))
+    (hgen : ∀ (V : Opens X) (hVU : V ≤ U)
+      (t : (M.obj (op V) : Type u)), ∃ (W : Opens X) (_ : x ∈ W)
+      (hWV : W ≤ V) (c : ι → (R.obj (op W) : Type u)),
+      (ConcreteCategory.hom (M.map (homOfLE hWV).op)) t =
+        ∑ i, c i • (ConcreteCategory.hom
+          (M.map (homOfLE (hWV.trans hVU)).op)) (s i)) :
+    Module.Finite (TopCat.Presheaf.stalk (C := RingCat) R x)
+      (↑(TopCat.Presheaf.stalk (C := Ab.{u}) M.presheaf x) : Type u) := by
+  let g : ι → (↑(TopCat.Presheaf.stalk (C := Ab.{u}) M.presheaf x) : Type u) :=
+    fun i => (ConcreteCategory.hom (TopCat.Presheaf.germ M.presheaf U x hxU)) (s i)
+  apply Module.Finite.of_fg_top
+  apply (Submodule.fg_iff_exists_finite_generating_family).2
+  refine ⟨ι, inferInstance, g, ?_⟩
+  apply top_unique
+  intro t ht
+  obtain ⟨V, hxV, tV, htV⟩ := TopCat.Presheaf.exists_germ_eq M.presheaf t
+  let V0 : Opens X := V ⊓ U
+  let hxV0 : x ∈ V0 := ⟨hxV, hxU⟩
+  let iV0V : V0 ⟶ V := homOfLE inf_le_left
+  let tV0 : (M.obj (op V0) : Type u) :=
+    (ConcreteCategory.hom (M.map iV0V.op)) tV
+  obtain ⟨W, hxW, hWV0, c, hc⟩ := hgen V0 inf_le_right tV0
+  let iWV : W ⟶ V := homOfLE (hWV0.trans inf_le_left)
+  let iWU : W ⟶ U := homOfLE (hWV0.trans inf_le_right)
+  apply (Submodule.mem_span_range_iff_exists_fun
+    (TopCat.Presheaf.stalk (C := RingCat) R x)).2
+  refine ⟨fun i => (ConcreteCategory.hom (TopCat.Presheaf.germ
+    R W x hxW)) (c i), ?_⟩
+  have hleft :
+      (ConcreteCategory.hom (TopCat.Presheaf.germ M.presheaf W x hxW))
+          ((ConcreteCategory.hom (M.map (homOfLE hWV0).op)) tV0) = t := by
+    have hmap :
+        (ConcreteCategory.hom (M.presheaf.map (homOfLE hWV0).op))
+            ((ConcreteCategory.hom (M.presheaf.map iV0V.op)) tV) =
+          (ConcreteCategory.hom (M.presheaf.map iWV.op)) tV := by
+      rw [← ConcreteCategory.comp_apply, ← M.presheaf.map_comp]
+      rw [show iV0V.op ≫ (homOfLE hWV0).op = iWV.op by apply Subsingleton.elim]
+    change (ConcreteCategory.hom (TopCat.Presheaf.germ M.presheaf W x hxW))
+      ((ConcreteCategory.hom (M.presheaf.map (homOfLE hWV0).op))
+        ((ConcreteCategory.hom (M.presheaf.map iV0V.op)) tV)) = t
+    rw [hmap, TopCat.Presheaf.germ_res_apply]
+    exact htV
+  have hc' := congrArg (fun z => (ConcreteCategory.hom
+      (TopCat.Presheaf.germ M.presheaf W x hxW)) z) hc
+  have hsum :
+      (ConcreteCategory.hom (TopCat.Presheaf.germ M.presheaf W x hxW))
+          (∑ i, c i • (ConcreteCategory.hom (M.map iWU.op)) (s i)) =
+        ∑ i, (ConcreteCategory.hom (TopCat.Presheaf.germ R W x hxW) (c i)) •
+          (ConcreteCategory.hom (TopCat.Presheaf.germ M.presheaf W x hxW))
+            ((ConcreteCategory.hom (M.map iWU.op)) (s i)) := by
+    rw [map_sum]
+    apply Finset.sum_congr rfl
+    intro i hi
+    exact PresheafOfModules.germ_ringCat_smul M x W hxW (c i)
+      ((ConcreteCategory.hom (M.map iWU.op)) (s i))
+  have hgens :
+      ∀ i, (ConcreteCategory.hom (TopCat.Presheaf.germ M.presheaf W x hxW))
+          ((ConcreteCategory.hom (M.map iWU.op)) (s i)) = g i := by
+    intro i
+    change (ConcreteCategory.hom (TopCat.Presheaf.germ M.presheaf W x hxW))
+      ((ConcreteCategory.hom (M.presheaf.map iWU.op)) (s i)) = _
+    dsimp [g, iWU]
+    exact (TopCat.Presheaf.germ_res_apply M.presheaf
+      (homOfLE (hWV0.trans inf_le_right)) x hxW (s i)).trans rfl
+  rw [hleft] at hc'
+  calc
+    ∑ i, (ConcreteCategory.hom (TopCat.Presheaf.germ R W x hxW) (c i)) • g i =
+        ∑ i, (ConcreteCategory.hom (TopCat.Presheaf.germ R W x hxW) (c i)) •
+          (ConcreteCategory.hom (TopCat.Presheaf.germ M.presheaf W x hxW))
+            ((ConcreteCategory.hom (M.map iWU.op)) (s i)) := by
+              apply Finset.sum_congr rfl
+              intro i hi
+              rw [hgens]
+    _ = (ConcreteCategory.hom (TopCat.Presheaf.germ M.presheaf W x hxW))
+          (∑ i, c i • (ConcreteCategory.hom (M.map iWU.op)) (s i)) := hsum.symm
+    _ = t := hc'.symm
+
 end MilneLib
