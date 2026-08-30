@@ -293,4 +293,23 @@ theorem exists_hom_comp_pointTranslation_of_isAbelianVariety_arbitraryField
   rw [Category.assoc, ← Iso.trans_hom, pointTranslation_trans]
   simp
 
+/- Every morphism of abelian varieties has a unique presentation as a pointed
+   homomorphism followed by translation by the image of the identity. -/
+theorem existsUnique_hom_comp_pointTranslation_of_isAbelianVariety_arbitraryField
+    {K : Type u} [Field K]
+    {A B : Over (Spec (.of K))} [GrpObj A] [GrpObj B]
+    (hA : IsAbelianVariety A)
+    (hB : IsAbelianVariety B)
+    (alpha : A ⟶ B) :
+    ∃! p : (A ⟶ B) × (𝟙_ (Over (Spec (.of K))) ⟶ B),
+      IsMonHom p.1 ∧ η[A] ≫ p.1 = η[B] ∧
+        alpha = p.1 ≫ (pointTranslation B η[B] p.2).hom := by
+  obtain ⟨beta, b, hbeta, hpointed, hdecomp⟩ :=
+    exists_hom_comp_pointTranslation_of_isAbelianVariety_arbitraryField hA hB alpha
+  refine ⟨(beta, b), ⟨hbeta, hpointed, hdecomp⟩, ?_⟩
+  rintro ⟨beta', b'⟩ ⟨_, hpointed', hdecomp'⟩
+  have hunique := pointTranslation_decomposition_unique
+    hpointed hpointed' hdecomp hdecomp'
+  exact Prod.ext hunique.2.symm hunique.1.symm
+
 end Mumford.GroupScheme
