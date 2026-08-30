@@ -228,4 +228,29 @@ theorem moduleFinite_stalk_of_local_generators_ring
           (∑ i, c i • (ConcreteCategory.hom (M.map iWU.op)) (s i)) := hsum.symm
     _ = t := hc'.symm
 
+section FiniteIndex
+
+variable {ι : Type u} [Finite ι]
+
+noncomputable local instance fintypeOfFinite : Fintype ι := Fintype.ofFinite ι
+
+/- A finite (rather than fintype) index is the form supplied by
+`SheafOfModules.GeneratingSections.IsFiniteType`. -/
+theorem moduleFinite_stalk_of_local_generators_ring_of_finite
+    {X : TopCat.{u}} {R : X.Presheaf RingCat.{u}}
+    (M : PresheafOfModules.{u} R)
+    {x : X} {U : Opens X} (hxU : x ∈ U)
+    (s : ι → (M.obj (op U) : Type u))
+    (hgen : ∀ (V : Opens X) (hVU : V ≤ U) (_ : x ∈ V)
+      (t : (M.obj (op V) : Type u)), ∃ (W : Opens X) (_ : x ∈ W)
+      (hWV : W ≤ V) (c : ι → (R.obj (op W) : Type u)),
+      (ConcreteCategory.hom (M.map (homOfLE hWV).op)) t =
+        ∑ i, c i • (ConcreteCategory.hom
+          (M.map (homOfLE (hWV.trans hVU)).op)) (s i)) :
+    Module.Finite (TopCat.Presheaf.stalk (C := RingCat) R x)
+      (↑(TopCat.Presheaf.stalk (C := Ab.{u}) M.presheaf x) : Type u) := by
+  exact moduleFinite_stalk_of_local_generators_ring M hxU s hgen
+
+end FiniteIndex
+
 end MilneLib
