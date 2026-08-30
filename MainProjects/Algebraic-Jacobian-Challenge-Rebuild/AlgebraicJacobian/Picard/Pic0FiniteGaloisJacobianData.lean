@@ -5,7 +5,7 @@ Authors: The AlgebraicJacobian Contributors
 -/
 import AlgebraicJacobian.Descent.FiniteGaloisQuotientGeometry
 import AlgebraicJacobian.Picard.Pic0FiniteGaloisRepresentable
-import AlgebraicJacobian.Picard.Pic0FiniteStageOrbitAffine
+import AlgebraicJacobian.Picard.Pic0FiniteStageStableAffineCover
 import AlgebraicJacobian.Picard.JacobianDataHandoff
 
 /-!
@@ -123,13 +123,15 @@ noncomputable def picRepDatum_finiteStageGaloisDescent_of_isProjective
     (Ck : Over (Spec (CommRingCat.of k)))
     [SmoothOfRelativeDimension 1 Ck.hom] [IsProper Ck.hom]
     [GeometricallyIrreducible Ck.hom] [IsSepClosed k]
-    (P : Pic0FiniteStageGluePackage Ck F)
-    [Algebra K P.N.1] [FiniteDimensional K P.N.1] [IsGalois K P.N.1]
-    (rep : (pic0TypeFunctor ((baseChange K P.N.1).obj C)).RepresentableBy P.gluedOver)
-    (hproj : P.gluedMap.IsProjective) :
+    (P : Pic0FiniteStageStableGluePackage Ck F)
+    [Algebra K P.context.triple.N.1] [FiniteDimensional K P.context.triple.N.1]
+    [IsGalois K P.context.triple.N.1]
+    (rep : (pic0TypeFunctor ((baseChange K P.context.triple.N.1).obj C)).RepresentableBy
+      P.presentation.over)
+    (hproj : P.presentation.map.IsProjective) :
     PicRepDatum K K C := by
   letI : (pic0SemilinearGalActionOfRepresentableBy C rep).OrbitsInAffineOpen :=
-    pic0FiniteStageOrbitsInAffineOpen_of_isProjective C Ck P rep hproj
+    pic0FiniteStageStableOrbitsInAffineOpen_of_isProjective C Ck P rep hproj
   exact
     { J := StableAffineOpen.gluedQuotientOver
         (pic0SemilinearGalActionOfRepresentableBy C rep)
@@ -137,8 +139,8 @@ noncomputable def picRepDatum_finiteStageGaloisDescent_of_isProjective
       lft :=
         locallyOfFiniteType_pic0FiniteGaloisDescent C rep
           (by
-            change LocallyOfFiniteType P.gluedMap
-            infer_instance) }
+            change LocallyOfFiniteType P.presentation.map
+            exact hproj.locallyOfFiniteType) }
 
 /-- Finite-stage projectivity packages the conditional finite Galois descent directly as
 `JacobianData`.  The finite-stage glued carrier is already locally of finite type and
@@ -151,18 +153,21 @@ noncomputable def jacobianData_finiteStageGaloisDescent_of_isProjective
     (Ck : Over (Spec (CommRingCat.of k)))
     [SmoothOfRelativeDimension 1 Ck.hom] [IsProper Ck.hom]
     [GeometricallyIrreducible Ck.hom] [IsSepClosed k]
-    (P : Pic0FiniteStageGluePackage Ck F)
-    [Algebra K P.N.1] [FiniteDimensional K P.N.1] [IsGalois K P.N.1]
-    (rep : (pic0TypeFunctor ((baseChange K P.N.1).obj C)).RepresentableBy P.gluedOver)
-    (hproj : P.gluedMap.IsProjective) :
+    (P : Pic0FiniteStageStableGluePackage Ck F)
+    [Algebra K P.context.triple.N.1] [FiniteDimensional K P.context.triple.N.1]
+    [IsGalois K P.context.triple.N.1]
+    (rep : (pic0TypeFunctor ((baseChange K P.context.triple.N.1).obj C)).RepresentableBy
+      P.presentation.over)
+    (hproj : P.presentation.map.IsProjective) :
     JacobianData C :=
   (picRepDatum_finiteStageGaloisDescent_of_isProjective C Ck P rep hproj).toJacobianData
     (by
       letI : (pic0SemilinearGalActionOfRepresentableBy C rep).OrbitsInAffineOpen :=
-        pic0FiniteStageOrbitsInAffineOpen_of_isProjective C Ck P rep hproj
+        pic0FiniteStageStableOrbitsInAffineOpen_of_isProjective C Ck P rep hproj
       exact quasiCompact_pic0FiniteGaloisDescent C rep
         (by
-          change QuasiCompact P.gluedMap
+          change QuasiCompact P.presentation.map
+          letI : IsProper P.presentation.map := hproj.isProper
           infer_instance))
 
 end
