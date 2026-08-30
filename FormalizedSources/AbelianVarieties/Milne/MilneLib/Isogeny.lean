@@ -384,7 +384,8 @@ theorem finite_preimage_singleton_of_homeomorph
 
 /- Translation by a rational section identifies its target fibre with the
    identity fibre.  The statement is deliberately phrased for sections: the
-   residue-field bridge for arbitrary geometric points is a separate layer. -/
+   global residue-field consequence is derived below from finiteness of the
+   entire underlying morphism. -/
 theorem isogeny_fibre_finite_of_section
     (f : A ⟶ B) [IsMonHom f]
     (x : 𝟙_ (Over (Spec (.of K))) ⟶ A)
@@ -552,8 +553,8 @@ theorem Isogeny.finite_preimage_singleton_of_closed_target
     (mem_closedPoints_iff.mp hxclosed) hxy
 
 /- Zariski's main theorem turns the finite fibre above a closed point into a
-   finite restriction on a target neighbourhood.  This is the local finiteness
-   input needed before addressing fibres over arbitrary residue fields. -/
+   finite restriction on a target neighbourhood.  This is the local input used
+   below to show that the entire morphism is finite. -/
 theorem Isogeny.exists_isFinite_morphismRestrict_of_closed_target
     {K : Type u} [Field K] [IsAlgClosed K]
     {A B : Over (Spec (.of K))} [GrpObj A] [GrpObj B]
@@ -648,9 +649,9 @@ theorem Isogeny.iff_isFinite_and_surjective_of_isAbelianVariety
     exact ⟨hs, isogenyKernelToBase_isFinite_of_finite f⟩
 
 /- A finite underlying morphism has finite kernel, so in this common case the
-   isogeny predicate is exactly surjectivity.  The finite-map hypothesis is
-   explicit because the general finite-kernel/finite-map equivalence is not
-   available in the current Mathlib API. -/
+   isogeny predicate is exactly surjectivity.  This generic interface keeps the
+   finite-map hypothesis explicit; the abelian-variety specialization above
+   supplies it over an algebraically closed field. -/
 theorem Isogeny.of_surjective_of_finite
     (f : A ⟶ B) [IsMonHom f] [IsFinite f.left]
     (hf : Surjective f.left) : Isogeny f := by
