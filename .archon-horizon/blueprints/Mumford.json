@@ -727,7 +727,7 @@
     },
     "states": {
       "blocked": 116,
-      "closed": 406,
+      "closed": 412,
       "formalized_open": 0,
       "informal": 216,
       "ready": 100
