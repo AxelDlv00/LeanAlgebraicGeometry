@@ -7,6 +7,7 @@ Authors: The Milne Contributors
 import Mathlib.RingTheory.LocalProperties.Exactness
 import Mathlib.RingTheory.LocalProperties.Basic
 import Mathlib.RingTheory.Localization.Finiteness
+import Mathlib.Algebra.Module.LocalizedModule.Exact
 
 import MilneLib.Nakayama
 
@@ -94,5 +95,24 @@ theorem LinearMap.surjective_of_surjective_residue_at_maximal
   rw [LinearMap.range_comp, Submodule.map_mkQ_eq_top]
   simpa only [Submodule.localized'_smul, Ideal.localized'_eq_map,
     Localization.AtPrime.map_eq_maximalIdeal, Submodule.localized'_top] using hlocal
+
+/-- Exactness of a module complex can be tested after localizing at every
+maximal ideal.  The reverse implication is the local-global step used in the
+coherent-sheaf arguments, while the forward implication is preservation of
+exactness by localization. -/
+theorem LinearMap.exact_iff_exact_localized_at_maximal
+    {R M N L : Type*} [CommSemiring R]
+    [AddCommMonoid M] [Module R M]
+    [AddCommMonoid N] [Module R N]
+    [AddCommMonoid L] [Module R L]
+    (f : M →ₗ[R] N) (g : N →ₗ[R] L) :
+    Function.Exact f g ↔
+      ∀ (J : Ideal R) [J.IsMaximal],
+        Function.Exact (LocalizedModule.map J.primeCompl f)
+          (LocalizedModule.map J.primeCompl g) := by
+  constructor
+  · intro h J hJ
+    exact LocalizedModule.map_exact J.primeCompl f g h
+  · exact LinearMap.exact_of_localized_at_maximal f g
 
 end MilneLib
