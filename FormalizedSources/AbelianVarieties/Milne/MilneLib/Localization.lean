@@ -6,6 +6,13 @@ Authors: The Milne Contributors
 
 import MilneLib.LocalProperties
 
+/-!
+# Localization of residue-surjective maps
+
+The residue-quotient criteria in `LocalProperties` transport to canonical
+localizations at maximal ideals.
+-/
+
 open IsLocalizedModule
 
 namespace MilneLib
