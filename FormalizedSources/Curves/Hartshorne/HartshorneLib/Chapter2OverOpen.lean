@@ -236,6 +236,23 @@ instance HModule'.subsingleton_of_injective [Injective F] (U : C) (n : ℕ) :
     Subsingleton (HModule' F U (n + 1)) :=
   subsingleton_of_forall_eq 0 fun x ↦ x.eq_zero_of_injective
 
+/-- Degree-one objectwise cohomology vanishes when the canonical cokernel map is
+surjective on sections over the object. -/
+theorem HModule'.subsingleton_one_of_cokernel_app_surjective
+    (F : Sheaf J (ModuleCat.{u} R)) (U : C)
+    (hsurj : Function.Surjective
+      ((cokernel.π (Injective.ι F)).hom.app (op U)).hom) :
+    Subsingleton (HModule' F U 1) := by
+  change Subsingleton (Abelian.Ext (freeModuleSheaf J R U) F 1)
+  apply Abelian.Ext.subsingleton_one_of_injective_of_surjective
+    (Injective.ι F)
+  intro φ
+  obtain ⟨s, hs⟩ := hsurj (freeModuleSheafHomEquiv (cokernel (Injective.ι F)) φ)
+  refine ⟨(freeModuleSheafHomEquiv (Injective.under F)).symm s, ?_⟩
+  apply (freeModuleSheafHomEquiv (cokernel (Injective.ι F))).injective
+  rw [freeModuleSheafHomEquiv_comp]
+  simpa only [LinearEquiv.apply_symm_apply] using hs
+
 /-- Degree-zero cohomology of `U` is its module of sections. -/
 noncomputable def HModule'.linearEquiv₀ (F : Sheaf J (ModuleCat.{u} R)) (U : C) :
     HModule' F U 0 ≃ₗ[R] F.obj.obj (op U) :=

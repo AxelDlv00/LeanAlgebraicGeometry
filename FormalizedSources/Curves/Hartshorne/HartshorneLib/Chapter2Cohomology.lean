@@ -17,11 +17,42 @@ sections, together with the functoriality needed by later divisor-sheaf units.
 
 set_option autoImplicit false
 
-universe u
+universe u v w
 
 open CategoryTheory Limits Opposite TopologicalSpace
 
 namespace CategoryTheory
+
+namespace Abelian.Ext
+
+variable {C : Type v} [Category.{w} C] [Abelian C] [HasExt.{u} C]
+
+/-- Vanishing criterion for `Ext¹`: if `A` admits a monomorphism into an injective
+object and every map from `L` to its cokernel lifts, then `Ext¹(L, A)` is
+subsingleton. -/
+theorem subsingleton_one_of_injective_of_surjective {A I : C} (ι : A ⟶ I) [Mono ι]
+    [Injective I] (L : C)
+    (hsurj : ∀ φ : L ⟶ cokernel ι, ∃ ψ : L ⟶ I, ψ ≫ cokernel.π ι = φ) :
+    Subsingleton (Abelian.Ext L A 1) := by
+  suffices h : ∀ z : Abelian.Ext L A 1, z = 0 from ⟨fun x y ↦ (h x).trans (h y).symm⟩
+  intro z
+  have hS : (ShortComplex.mk ι (cokernel.π ι) (cokernel.condition ι)).ShortExact :=
+    { exact := ShortComplex.exact_of_g_is_cokernel _ (cokernelIsCokernel ι) }
+  have h1 : z.comp (mk₀ ι) (add_zero 1) = 0 := eq_zero_of_injective _
+  obtain ⟨x₃, hx₃⟩ := covariant_sequence_exact₁ L hS z h1 (zero_add 1)
+  obtain ⟨ψ, hψ⟩ := hsurj (homEquiv₀ x₃)
+  have hx₃' : mk₀ (ψ ≫ cokernel.π ι) = x₃ := by
+    rw [hψ, mk₀_homEquiv₀_apply]
+  calc
+    z = x₃.comp hS.extClass (zero_add 1) := hx₃.symm
+    _ = ((mk₀ ψ).comp (mk₀ (cokernel.π ι)) (zero_add 0)).comp hS.extClass
+        (zero_add 1) := by rw [mk₀_comp_mk₀, hx₃']
+    _ = (mk₀ ψ).comp ((mk₀ (cokernel.π ι)).comp hS.extClass (zero_add 1))
+        (zero_add 1) := comp_assoc _ _ _ rfl rfl rfl
+    _ = 0 := by rw [hS.comp_extClass]; simp
+
+end Abelian.Ext
+
 namespace Sheaf
 
 variable {C : Type u} [SmallCategory C]
