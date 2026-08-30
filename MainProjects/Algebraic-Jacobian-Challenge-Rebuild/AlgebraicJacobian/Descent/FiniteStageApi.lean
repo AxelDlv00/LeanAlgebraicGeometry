@@ -26,4 +26,9 @@ The legacy flat-package conversion is intentionally separate: import
 `AlgebraicJacobian.Picard.Pic0FiniteStageLegacyAdapter` when an existing
 `Pic0FiniteStageGluePackage` must be converted.  Keeping that dependent reconstruction out
 of this facade preserves the bounded import surface for ordinary stable consumers.
+
+The final-stage comparison has the same dependent tensor boundary and is exposed through
+`AlgebraicJacobian.Picard.Pic0FiniteStageFinalBaseChangeApi`; keeping that import separate
+lets clients opt into the pinned comparison functions without widening this lightweight
+facade.
 -/

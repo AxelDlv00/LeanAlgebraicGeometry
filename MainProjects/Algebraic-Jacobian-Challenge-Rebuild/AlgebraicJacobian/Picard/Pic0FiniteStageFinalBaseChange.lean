@@ -1143,10 +1143,13 @@ noncomputable def pic0FiniteStageFinalBaseChangeEquivPinned
   pic0FiniteStageFinalBaseChangeEquiv C L n m relation e M N j
 
 /-!
-The ring-level equivalence above is kept for compatibility.  New consumers should use this
-opaque package instead: `of_equiv` records the exact semiring and algebra witnesses selected
-while the equivalence is constructed, and its `forward` projection therefore does not ask
-typeclass search to reconstruct dependent tensor instances at the use site.
+The ring-level equivalence and the package below are retained as compatibility adapters.
+The package's abstract `source` carrier is not definitionally identified with
+`Pic0FiniteStageFinalScalarExtensionCarrier`, so it is unsuitable for new dependent
+compositions.  New consumers should use the pinned façade above and its class-free
+`pic0FiniteStageFinalBaseChangeEquivPinnedFun` and
+`pic0FiniteStageFinalScalarExtensionMapPinnedFun` projections; these preserve the explicit
+carrier and structure witnesses at the API boundary.
 -/
 noncomputable opaque pic0FiniteStageFinalBaseChangeData
     {F : Type u} [Field F] [Algebra F k]
@@ -1308,7 +1311,7 @@ noncomputable def pic0FiniteStageFinalBaseChangeForwardPinned
 
 /- As with the scalar-extension map, expose a class-free pointwise projection for consumers
    that only need the comparison function.  This definition is the function-level view of
-   the opaque pinned equivalence, so naturality statements cannot silently switch boundaries. -/
+   the pinned equivalence, so naturality statements cannot silently switch boundaries. -/
 noncomputable def pic0FiniteStageFinalBaseChangeEquivPinnedFun
     {F : Type u} [Field F] [Algebra F k]
     (L : DatG0.FinSubext F k)
