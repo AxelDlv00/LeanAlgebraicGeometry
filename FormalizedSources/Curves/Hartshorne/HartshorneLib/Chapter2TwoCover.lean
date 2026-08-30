@@ -75,6 +75,24 @@ noncomputable def Scheme.twoCoverH1LinearEquiv
       (isTerminalTop : IsTerminal (⊤ : X.Opens)) F 1).trans
     ((X.twoCoverSquare U₀ U₁ hcov).h1LinearEquiv F).symm
 
+/-- The canonical two-cover `H¹` equivalence under explicit section-surjectivity
+hypotheses for the two injective cokernel maps. -/
+noncomputable def Scheme.twoCoverH1LinearEquiv_of_cokernel_app_surjective
+    (F : Sheaf (Opens.grothendieckTopology (X : TopCat)) (ModuleCat.{u} R))
+    (hcov : U₀ ⊔ U₁ = ⊤)
+    (hsurj₀ : Function.Surjective
+      ((cokernel.π (Injective.ι F)).hom.app (op U₀)).hom)
+    (hsurj₁ : Function.Surjective
+      ((cokernel.π (Injective.ι F)).hom.app (op U₁)).hom) :
+    Sheaf.HModule (Opens.grothendieckTopology (X : TopCat)) R F 1 ≃ₗ[R]
+      (F.obj.obj (op (U₀ ⊓ U₁)) ⧸
+        LinearMap.range ((X.twoCoverSquare U₀ U₁ hcov).moduleDiff F)) := by
+  letI : Subsingleton (Sheaf.HModule' F U₀ 1) :=
+    Sheaf.HModule'.subsingleton_one_of_cokernel_app_surjective F U₀ hsurj₀
+  letI : Subsingleton (Sheaf.HModule' F U₁ 1) :=
+    Sheaf.HModule'.subsingleton_one_of_cokernel_app_surjective F U₁ hsurj₁
+  exact Scheme.twoCoverH1LinearEquiv R X U₀ U₁ F hcov
+
 end HOne
 
 end AlgebraicGeometry
