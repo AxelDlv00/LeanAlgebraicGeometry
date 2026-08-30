@@ -288,6 +288,32 @@ theorem genusRealVectorQuotientHomeomorph_apply (g : ℕ)
     genusRealVectorQuotientHomeomorph g q = genusRealVectorQuotientAddEquiv g q :=
   rfl
 
+/- The complex quotient homeomorphism agrees with the composite obtained by
+   realifying first and then applying the standard real quotient model. -/
+theorem complexGenusQuotientHomeomorph_eq_trans (g : ℕ) :
+    (complexQuotientToRealQuotientHomeomorph g).trans
+        (genusRealVectorQuotientHomeomorph g) =
+      complexGenusQuotientHomeomorph g := by
+  apply Homeomorph.ext
+  intro q
+  refine QuotientAddGroup.induction_on q ?_
+  intro z
+  change genusRealVectorQuotientHomeomorph g
+      (complexQuotientToRealQuotientHomeomorph g
+        (QuotientAddGroup.mk' (complexPeriodLattice g) z)) =
+    complexGenusQuotientHomeomorph g
+      (QuotientAddGroup.mk' (complexPeriodLattice g) z)
+  rw [complexGenusQuotientHomeomorph_mk]
+  rw [genusRealVectorQuotientHomeomorph_apply]
+  change genusRealVectorQuotientAddEquiv g
+      (complexQuotientToRealQuotientAddEquiv g
+        (QuotientAddGroup.mk' (complexPeriodLattice g) z)) =
+    complexGenusTorusExponential g z
+  rw [complexQuotientToRealQuotientAddEquiv_mk,
+    genusRealVectorQuotientAddEquiv_mk,
+    complexGenusTorusExponential]
+  rfl
+
 /- The analytic witness can be upgraded to a homeomorphism once continuity of
    its chosen equivalence and inverse has been supplied.  Keeping these as
    explicit hypotheses records the genuine analytic boundary. -/
