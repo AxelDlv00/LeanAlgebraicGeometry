@@ -40,6 +40,41 @@ noncomputable def isogenyKernelToBase (f : A ⟶ B) :
 def Isogeny (f : A ⟶ B) [IsMonHom f] : Prop :=
   Surjective f.left ∧ IsFinite (isogenyKernelToBase f)
 
+/-- The homomorphism on global sections induced by a homomorphism of group schemes. -/
+noncomputable def homSectionMap (f : A ⟶ B) [IsMonHom f] :
+    (𝟙_ (Over (Spec (.of K))) ⟶ A) →*
+      (𝟙_ (Over (Spec (.of K))) ⟶ B) :=
+  { toFun := fun a => a ≫ f
+    map_one' := by
+      rw [Hom.one_def, Category.assoc, IsMonHom.one_hom, Hom.one_def]
+    map_mul' := by
+      intro a b
+      rw [Hom.mul_def, Category.assoc, IsMonHom.mul_hom, Hom.mul_def]
+      simp }
+
+/-- Every section fibre of a group-scheme homomorphism is equivalent to its kernel. -/
+noncomputable def homSectionFiberEquivKernel
+    (f : A ⟶ B) [IsMonHom f]
+    (a₀ : 𝟙_ (Over (Spec (.of K))) ⟶ A) :
+    (homSectionMap f ⁻¹' {homSectionMap f a₀}) ≃ (homSectionMap f).ker :=
+  MonoidHom.fiberEquivKer (homSectionMap f) a₀
+
+/-- Finiteness of a section fibre is equivalent to finiteness of the section kernel. -/
+theorem homSectionFiber_finite_iff_kernel_finite
+    (f : A ⟶ B) [IsMonHom f]
+    (a₀ : 𝟙_ (Over (Spec (.of K))) ⟶ A) :
+    Finite (homSectionMap f ⁻¹' {homSectionMap f a₀}) ↔
+      Finite (homSectionMap f).ker := by
+  exact (homSectionFiberEquivKernel f a₀).finite_iff
+
+/-- A finite section kernel gives finite section fibres at every chosen section. -/
+theorem homSectionFiber_finite_of_kernel_finite
+    (f : A ⟶ B) [IsMonHom f]
+    (a₀ : 𝟙_ (Over (Spec (.of K))) ⟶ A)
+    [Finite (homSectionMap f).ker] :
+    Finite (homSectionMap f ⁻¹' {homSectionMap f a₀}) := by
+  exact Finite.of_equiv _ (homSectionFiberEquivKernel f a₀).symm
+
 /-- The identity homomorphism is an isogeny. -/
 @[simp]
 theorem Isogeny.id (A : Over (Spec (.of K))) [GrpObj A] :
