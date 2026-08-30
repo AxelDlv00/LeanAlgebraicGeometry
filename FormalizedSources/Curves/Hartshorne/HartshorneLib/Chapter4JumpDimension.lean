@@ -56,6 +56,7 @@ private lemma ord_lt_one_iff (z : WithZero (Multiplicative ℤ)) : z < 1 ↔
 
 /-! ## A uniformizer and the valuation shift -/
 
+omit [IsAlgClosed k] [IsProper X.hom] in
 /-- A rational function with order `ofAdd (-1)` at a chosen non-generic point. -/
 lemma exists_orderAt_eq_neg_one {x : X.left} (hx : x ≠ genericPoint X.left) :
     ∃ t : X.left.functionField,
@@ -67,15 +68,18 @@ lemma exists_orderAt_eq_neg_one {x : X.left} (hx : x ≠ genericPoint X.left) :
   obtain ⟨t, ht⟩ := (stalkHeightOne X.left x).valuation_exists_uniformizer X.left.functionField
   exact ⟨t, ht⟩
 
+omit [IsAlgClosed k] [IsProper X.hom] in
 noncomputable def uniformizer {x : X.left} (hx : x ≠ genericPoint X.left) :
     X.left.functionField := (exists_orderAt_eq_neg_one (X := X) hx).choose
 
+omit [IsAlgClosed k] [IsProper X.hom] in
 lemma orderAt_uniformizer {x : X.left} (hx : x ≠ genericPoint X.left) :
     orderAt X.hom hx (uniformizer (X := X) hx) =
       ((Multiplicative.ofAdd (-1 : ℤ) : Multiplicative ℤ) :
         WithZero (Multiplicative ℤ)) :=
   (exists_orderAt_eq_neg_one (X := X) hx).choose_spec
 
+omit [IsAlgClosed k] [IsProper X.hom] in
 lemma uniformizer_ne_zero {x : X.left} (hx : x ≠ genericPoint X.left) :
     uniformizer (X := X) hx ≠ 0 := by
   intro h
@@ -83,12 +87,14 @@ lemma uniformizer_ne_zero {x : X.left} (hx : x ≠ genericPoint X.left) :
   rw [h, map_zero] at hord
   exact WithZero.coe_ne_zero hord.symm
 
+omit [IsAlgClosed k] [IsProper X.hom] in
 lemma orderAt_uniformizer_zpow {x : X.left} (hx : x ≠ genericPoint X.left) (a : ℤ) :
     orderAt X.hom hx (uniformizer (X := X) hx ^ a) =
       ((Multiplicative.ofAdd (-a : ℤ) : Multiplicative ℤ) :
         WithZero (Multiplicative ℤ)) := by
   rw [map_zpow₀, orderAt_uniformizer, ← WithZero.coe_zpow, ← Int.ofAdd_mul, neg_one_mul]
 
+omit [IsAlgClosed k] [IsProper X.hom] in
 lemma mem_pointLattice_uniformizer_zpow_mul {x : X.left}
     (hx : x ≠ genericPoint X.left) {a n : ℤ} {g : X.left.functionField} :
     uniformizer (X := X) hx ^ a * g ∈ pointLattice (X := X) hx n ↔
@@ -96,6 +102,7 @@ lemma mem_pointLattice_uniformizer_zpow_mul {x : X.left}
   rw [mem_pointLattice, mem_pointLattice, map_mul, orderAt_uniformizer_zpow]
   exact ofAdd_neg_mul_le_iff (orderAt X.hom hx g) a n
 
+omit [IsAlgClosed k] [IsProper X.hom] in
 noncomputable def shiftMap {x : X.left} (hx : x ≠ genericPoint X.left) (a : ℤ) :
     ↥(pointLattice (X := X) hx a) →ₗ[k] ↥(pointLattice (X := X) hx 0) where
   toFun g := ⟨uniformizer (X := X) hx ^ a * (g : X.left.functionField), by
@@ -106,12 +113,14 @@ noncomputable def shiftMap {x : X.left} (hx : x ≠ genericPoint X.left) (a : �
     simp only [SetLike.val_smul, RingHom.id_apply, functionFieldOverModule_smul_def]
     ring)
 
+omit [IsAlgClosed k] [IsProper X.hom] in
 @[simp] lemma shiftMap_coe {x : X.left} (hx : x ≠ genericPoint X.left) (a : ℤ)
     (g : ↥(pointLattice (X := X) hx a)) :
     (shiftMap (X := X) hx a g : X.left.functionField) =
       uniformizer (X := X) hx ^ a * (g : X.left.functionField) :=
   rfl
 
+omit [IsAlgClosed k] [IsProper X.hom] in
 lemma shiftMap_surjective {x : X.left} (hx : x ≠ genericPoint X.left) (a : ℤ) :
     Function.Surjective (shiftMap (X := X) hx a) := by
   intro h
@@ -124,20 +133,24 @@ lemma shiftMap_surjective {x : X.left} (hx : x ≠ genericPoint X.left) (a : ℤ
 
 /-! ## The base map to the residue field -/
 
+omit [IsAlgClosed k] [IsProper X.hom] in
 private lemma mem_pointLattice_zero_iff {x : X.left} (hx : x ≠ genericPoint X.left)
     {g : X.left.functionField} :
     g ∈ pointLattice (X := X) hx 0 ↔ orderAt X.hom hx g ≤ 1 := by
   rw [mem_pointLattice, ofAdd_zero, WithZero.coe_one]
 
+omit [IsAlgClosed k] [SmoothOfRelativeDimension 1 X.hom] [IsProper X.hom] in
 lemma algebraMap_stalk_injective {x : X.left} :
     Function.Injective (algebraMap (X.left.presheaf.stalk x) X.left.functionField) :=
   IsFractionRing.injective (X.left.presheaf.stalk x) X.left.functionField
 
+omit [IsAlgClosed k] [IsProper X.hom] in
 noncomputable def preimageStalk {x : X.left} (hx : x ≠ genericPoint X.left)
     (g : ↥(pointLattice (X := X) hx 0)) : X.left.presheaf.stalk x :=
   (exists_stalk_of_order_le_one hx
     ((mem_pointLattice_zero_iff (X := X) hx).mp g.2)).choose
 
+omit [IsAlgClosed k] [IsProper X.hom] in
 lemma algebraMap_preimageStalk {x : X.left} (hx : x ≠ genericPoint X.left)
     (g : ↥(pointLattice (X := X) hx 0)) :
     algebraMap (X.left.presheaf.stalk x) X.left.functionField
@@ -145,6 +158,7 @@ lemma algebraMap_preimageStalk {x : X.left} (hx : x ≠ genericPoint X.left)
   (exists_stalk_of_order_le_one hx
     ((mem_pointLattice_zero_iff (X := X) hx).mp g.2)).choose_spec
 
+omit [IsAlgClosed k] [SmoothOfRelativeDimension 1 X.hom] [IsProper X.hom] in
 private lemma functionFieldOverAlgebraMap_eq_algebraMap {x : X.left}
     (r : k) :
     functionFieldOverAlgebraMap k X.left r =
@@ -184,6 +198,7 @@ noncomputable def baseHom {x : X.left} (hx : x ≠ genericPoint X.left) :
     rw [algebraMap_stalk_injective (X := X) hseam, map_mul, RingHom.id_apply]
     rfl
 
+omit [IsAlgClosed k] [IsProper X.hom] in
 lemma baseHom_surjective {x : X.left} (hx : x ≠ genericPoint X.left) :
     Function.Surjective (baseHom (X := X) hx) := by
   intro w
@@ -197,6 +212,7 @@ lemma baseHom_surjective {x : X.left} (hx : x ≠ genericPoint X.left) :
     exact algebraMap_stalk_injective (X := X)
       (algebraMap_preimageStalk (X := X) hx _)
 
+omit [IsAlgClosed k] [IsProper X.hom] in
 lemma baseHom_ker {x : X.left} (hx : x ≠ genericPoint X.left) :
     LinearMap.ker (baseHom (X := X) hx) =
       (pointLattice (X := X) hx (-1)).submoduleOf
