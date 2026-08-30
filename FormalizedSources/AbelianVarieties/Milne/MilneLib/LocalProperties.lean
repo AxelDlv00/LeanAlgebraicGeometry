@@ -11,6 +11,8 @@ import Mathlib.Algebra.Module.LocalizedModule.Exact
 import Mathlib.RingTheory.Finiteness.Descent
 import Mathlib.RingTheory.Flat.FaithfullyFlat.Algebra
 import Mathlib.RingTheory.RingHom.QuasiFinite
+import Mathlib.AlgebraicGeometry.Morphisms.FlatDescent
+import Mathlib.AlgebraicGeometry.Morphisms.QuasiFinite
 
 import MilneLib.Nakayama
 
@@ -32,6 +34,9 @@ variable {R M N L : Type*} [CommSemiring R]
   [AddCommMonoid L] [Module R L]
 
 open TensorProduct
+
+open CategoryTheory MorphismProperty
+open AlgebraicGeometry
 
 /-- Quasi-finiteness descends from a faithfully flat base change. -/
 theorem quasiFinite_of_faithfullyFlat_baseChange
@@ -66,6 +71,13 @@ theorem quasiFinite_codescendsAlong_faithfullyFlat :
   rw [RingHom.quasiFinite_algebraMap] at h' ⊢
   rw [RingHom.faithfullyFlat_algebraMap_iff] at h
   exact quasiFinite_of_faithfullyFlat_baseChange (R := R) (S := T) (A := S)
+
+/-- Scheme-theoretic local quasi-finiteness descends along an fpqc cover. -/
+theorem locallyQuasiFinite_descendsAlong_faithfullyFlat :
+    DescendsAlong @LocallyQuasiFinite
+      (@Surjective ⊓ @Flat ⊓ @QuasiCompact) :=
+  HasRingHomProperty.descendsAlong_flat
+    quasiFinite_codescendsAlong_faithfullyFlat
 
 /-
 The canonical `LocalizedModule` maps keep the statement independent of a
