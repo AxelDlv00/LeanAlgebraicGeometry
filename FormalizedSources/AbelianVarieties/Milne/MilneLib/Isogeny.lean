@@ -711,6 +711,23 @@ theorem Isogeny.isFinite_of_isAbelianVariety
   letI : LocallyQuasiFinite f.left := hLQF
   exact IsFinite.of_isProper_of_locallyQuasiFinite f.left
 
+/- Once the source and intermediate abelian varieties are known to be
+   proper over an algebraically closed field, the preceding theorem supplies
+   the finite-map instances needed by the general composition result.  This
+   is the usual closure of isogenies under composition, exposed without
+   making callers repeat those implementation-level instances. -/
+theorem Isogeny.comp_of_isAbelianVariety
+    {K : Type u} [Field K] [IsAlgClosed K]
+    {A B C : Over (Spec (.of K))} [GrpObj A] [GrpObj B] [GrpObj C]
+    (hA : IsAbelianVariety A) (hB : IsAbelianVariety B)
+    (hC : IsAbelianVariety C)
+    (f : A ⟶ B) (g : B ⟶ C) [IsMonHom f] [IsMonHom g]
+    (hf : Isogeny f) (hg : Isogeny g) :
+    Isogeny (f ≫ g) := by
+  letI : IsFinite f.left := Isogeny.isFinite_of_isAbelianVariety hA hB f hf
+  letI : IsFinite g.left := Isogeny.isFinite_of_isAbelianVariety hB hC g hg
+  exact Isogeny.comp_of_finite f g hf hg
+
 /- Once the underlying map is finite, every scheme-theoretic fibre obtained by
    pulling back the target point to its residue field is finite as well. -/
 theorem Isogeny.isFinite_fiberToSpecResidueField
