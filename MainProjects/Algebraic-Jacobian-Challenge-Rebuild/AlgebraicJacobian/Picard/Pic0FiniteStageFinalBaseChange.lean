@@ -1307,7 +1307,24 @@ noncomputable def pic0FiniteStageFinalBaseChangeForwardPinned
     (pic0FiniteStageFinalBaseChangeEquivPinned C L n m relation e M N j)
 
 /- As with the scalar-extension map, expose a class-free pointwise projection for consumers
-   that only need the comparison function. -/
+   that only need the comparison function.  This definition is the function-level view of
+   the opaque pinned equivalence, so naturality statements cannot silently switch boundaries. -/
+noncomputable def pic0FiniteStageFinalBaseChangeEquivPinnedFun
+    {F : Type u} [Field F] [Algebra F k]
+    (L : DatG0.FinSubext F k)
+    (n m : Pic0FiniteStageRingIndex C -> Nat)
+    (relation : forall j, Fin (m j) -> MvPolynomial (Fin (n j)) L.1)
+    (e : forall j,
+      k ⊗[L.1] DatG0.FiniteRelationAlgebra L.1 (n j) (m j) (relation j) ≃ₐ[k]
+        Pic0FiniteStageRing C j)
+    (M : DatG0.FinSubext L.1 k)
+    (N : DatG0.FinSubext M.1 k)
+    (j : Pic0FiniteStageRingIndex C) :
+  Pic0FiniteStageFinalScalarExtensionCarrier C L n m relation M N j →
+      Pic0FiniteStageRing C j :=
+  fun x => (pic0FiniteStageFinalBaseChangeEquivPinned C L n m relation e M N j).toFun x
+
+/- Compatibility name for clients that think of the comparison as its forward map. -/
 noncomputable def pic0FiniteStageFinalBaseChangeForwardPinnedFun
     {F : Type u} [Field F] [Algebra F k]
     (L : DatG0.FinSubext F k)
@@ -1321,7 +1338,7 @@ noncomputable def pic0FiniteStageFinalBaseChangeForwardPinnedFun
     (j : Pic0FiniteStageRingIndex C) :
     Pic0FiniteStageFinalScalarExtensionCarrier C L n m relation M N j →
       Pic0FiniteStageRing C j :=
-  fun x => (pic0FiniteStageFinalBaseChangeEquivPinned C L n m relation e M N j).toFun x
+  pic0FiniteStageFinalBaseChangeEquivPinnedFun C L n m relation e M N j
 
 set_option synthInstance.maxHeartbeats 400000 in
 -- Naturality elaborates the cancellation and model-comparison squares together.
@@ -1472,11 +1489,11 @@ theorem pic0FiniteStageFinalBaseChangeEquivPinned_naturality
     (q : Pic0FiniteStageMapIndex C)
     (x : Pic0FiniteStageFinalScalarExtensionCarrier C L n m relation M N
       (Pic0FiniteStageMapSource C q)) :
-    (pic0FiniteStageFinalBaseChangeEquivPinned C L n m relation e M N
-      (Pic0FiniteStageMapTarget C q)).toFun
+    (pic0FiniteStageFinalBaseChangeEquivPinnedFun C L n m relation e M N
+      (Pic0FiniteStageMapTarget C q))
         (pic0FiniteStageFinalScalarExtensionMapPinnedFun C L n m relation M mapM N q x) =
       (pic0FiniteStageMap C q).toFun
-        (pic0FiniteStageFinalBaseChangeForwardPinnedFun C L n m relation e M N
+        (pic0FiniteStageFinalBaseChangeEquivPinnedFun C L n m relation e M N
           (Pic0FiniteStageMapSource C q) x) := by
   have h := DFunLike.congr_fun
     (pic0FiniteStageFinalBaseChangeEquiv_naturality
@@ -1484,6 +1501,7 @@ theorem pic0FiniteStageFinalBaseChangeEquivPinned_naturality
   simpa [pic0FiniteStageFinalBaseChangeEquivPinned,
     pic0FiniteStageFinalScalarExtensionMapPinned,
     pic0FiniteStageFinalScalarExtensionMapPinnedFun,
+    pic0FiniteStageFinalBaseChangeEquivPinnedFun,
     pic0FiniteStageFinalBaseChangeForwardPinnedFun] using h
 
 end
