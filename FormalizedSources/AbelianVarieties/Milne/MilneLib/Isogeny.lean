@@ -129,6 +129,17 @@ theorem isogenyKernelToBase_surjective_of_surjective
   exact CategoryTheory.MorphismProperty.pullback_snd _ _
     (inferInstance : Surjective f.left)
 
+/- A proper morphism with finite set-theoretic fibres is finite.  This is the
+   geometric bridge used in the finite-kernel direction of Milne's
+   characterization; the separate group-theoretic argument identifying all
+   fibres with translates of the kernel is intentionally left explicit. -/
+theorem IsFinite.of_isProper_of_finite_preimage_singleton
+    {X Y : Scheme.{u}} (f : X ⟶ Y) [IsProper f]
+    (hfib : ∀ y : Y, (f ⁻¹' {y}).Finite) : IsFinite f := by
+  letI : LocallyQuasiFinite f :=
+    LocallyQuasiFinite.of_finite_preimage_singleton f hfib
+  exact IsFinite.of_isProper_of_locallyQuasiFinite f
+
 /- A finite underlying morphism has finite kernel, so in this common case the
    isogeny predicate is exactly surjectivity.  The finite-map hypothesis is
    explicit because the general finite-kernel/finite-map equivalence is not
