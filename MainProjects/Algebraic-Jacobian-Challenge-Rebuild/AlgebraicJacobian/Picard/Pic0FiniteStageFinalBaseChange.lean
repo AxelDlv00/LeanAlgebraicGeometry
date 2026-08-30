@@ -894,6 +894,32 @@ noncomputable def pic0FiniteStageTransportedMapRestrictCompAmbient
 
 attribute [local instance] pic0FiniteStageFinalModelRingModule
 
+/-!
+The notation `k ⊗[N.1] Pic0FiniteStageFinalModelRing ...` carries the module
+instance used to form the tensor product as an implicit argument.  That instance
+is intentionally local while the legacy API is built, so repeating the notation
+in an importing file makes typeclass search reconstruct the dependent tower (and
+can time out).  This alias records the exact module witness once; public pinned
+maps below use it in their result types.
+-/
+noncomputable abbrev Pic0FiniteStageFinalScalarExtensionCarrier
+    {F : Type u} [Field F] [Algebra F k]
+    (L : DatG0.FinSubext F k)
+    (n m : Pic0FiniteStageRingIndex C -> Nat)
+    (relation : forall j, Fin (m j) -> MvPolynomial (Fin (n j)) L.1)
+    (M : DatG0.FinSubext L.1 k)
+    (N : DatG0.FinSubext M.1 k)
+    (j : Pic0FiniteStageRingIndex C) : Type u :=
+  @TensorProduct N.1
+    (inferInstance : CommSemiring N.1)
+    k
+    (Pic0FiniteStageFinalModelRing C L n m relation M N j)
+    (inferInstance : AddCommMonoid k)
+    (inferInstance : AddCommMonoid
+      (Pic0FiniteStageFinalModelRing C L n m relation M N j))
+    (inferInstance : Module N.1 k)
+    (pic0FiniteStageFinalModelRingModule C L n m relation M N j)
+
 @[reducible] noncomputable def pic0FiniteStageFinalScalarExtensionSemiring
     {F : Type u} [Field F] [Algebra F k]
     (L : DatG0.FinSubext F k)
@@ -1086,6 +1112,35 @@ noncomputable def pic0FiniteStageFinalBaseChangeEquiv
     (pic0FiniteStageModelBaseChangeEquiv C L n m relation e M j)
 
 /-!
+The shorthand equivalence above remains for source compatibility.  Its displayed
+carrier still asks an importing file to synthesize the module hidden in the tensor
+notation.  The pinned façade has a fully elaborated carrier and structure tuple in
+its type, so consumers can use `@AlgEquiv.toAlgHom` without any local instances.
+-/
+set_option synthInstance.maxHeartbeats 400000 in
+set_option maxHeartbeats 6400000 in
+noncomputable opaque pic0FiniteStageFinalBaseChangeEquivPinned
+    {F : Type u} [Field F] [Algebra F k]
+    (L : DatG0.FinSubext F k)
+    (n m : Pic0FiniteStageRingIndex C -> Nat)
+    (relation : forall j, Fin (m j) -> MvPolynomial (Fin (n j)) L.1)
+    (e : forall j,
+      k ⊗[L.1] DatG0.FiniteRelationAlgebra L.1 (n j) (m j) (relation j) ≃ₐ[k]
+        Pic0FiniteStageRing C j)
+    (M : DatG0.FinSubext L.1 k)
+    (N : DatG0.FinSubext M.1 k)
+    (j : Pic0FiniteStageRingIndex C) :
+    @AlgEquiv k
+      (Pic0FiniteStageFinalScalarExtensionCarrier C L n m relation M N j)
+      (Pic0FiniteStageRing C j)
+      (inferInstance : CommSemiring k)
+      (pic0FiniteStageFinalScalarExtensionSemiring C L n m relation M N j)
+      (instCommRingPic0FiniteStageRing C j).toSemiring
+      (pic0FiniteStageFinalScalarExtensionAlgebra C L n m relation M N j)
+      (instAlgebraPic0FiniteStageRing C j) :=
+  pic0FiniteStageFinalBaseChangeEquiv C L n m relation e M N j
+
+/-!
 The ring-level equivalence above is kept for compatibility.  New consumers should use this
 opaque package instead: `of_equiv` records the exact semiring and algebra witnesses selected
 while the equivalence is constructed, and its `forward` projection therefore does not ask
@@ -1158,6 +1213,70 @@ noncomputable def pic0FiniteStageFinalScalarExtensionMap
     (Pic0FiniteStageMapSource C q) (Pic0FiniteStageMapTarget C q)
     (pic0FiniteStageModelScalarExtensionMap C L n m relation M N
       (Pic0FiniteStageMapSource C q) (Pic0FiniteStageMapTarget C q) (mapM q))
+
+/- The explicit carrier alias and structure tuple make this projection usable from
+   importing modules; the legacy map above remains a compatibility adapter. -/
+set_option synthInstance.maxHeartbeats 400000 in
+set_option maxHeartbeats 12800000 in
+noncomputable def pic0FiniteStageFinalScalarExtensionMapPinned
+    {F : Type u} [Field F] [Algebra F k]
+    (L : DatG0.FinSubext F k)
+    (n m : Pic0FiniteStageRingIndex C -> Nat)
+    (relation : forall j, Fin (m j) -> MvPolynomial (Fin (n j)) L.1)
+    (M : DatG0.FinSubext L.1 k)
+    (mapM : forall q : Pic0FiniteStageMapIndex C,
+      Pic0FiniteStageModelRing C L n m relation M
+          (Pic0FiniteStageMapSource C q) →ₐ[M.1]
+        Pic0FiniteStageModelRing C L n m relation M
+          (Pic0FiniteStageMapTarget C q))
+    (N : DatG0.FinSubext M.1 k)
+    (q : Pic0FiniteStageMapIndex C) :
+    @AlgHom k
+      (Pic0FiniteStageFinalScalarExtensionCarrier C L n m relation M N
+        (Pic0FiniteStageMapSource C q))
+      (Pic0FiniteStageFinalScalarExtensionCarrier C L n m relation M N
+        (Pic0FiniteStageMapTarget C q))
+      (inferInstance : CommSemiring k)
+      (pic0FiniteStageFinalScalarExtensionSemiring C L n m relation M N
+        (Pic0FiniteStageMapSource C q))
+      (pic0FiniteStageFinalScalarExtensionSemiring C L n m relation M N
+        (Pic0FiniteStageMapTarget C q))
+      (pic0FiniteStageFinalScalarExtensionAlgebra C L n m relation M N
+        (Pic0FiniteStageMapSource C q))
+      (pic0FiniteStageFinalScalarExtensionAlgebra C L n m relation M N
+        (Pic0FiniteStageMapTarget C q)) :=
+  pic0FiniteStageFinalScalarExtensionMap C L n m relation M mapM N q
+
+set_option synthInstance.maxHeartbeats 400000 in
+set_option maxHeartbeats 6400000 in
+noncomputable def pic0FiniteStageFinalBaseChangeForwardPinned
+    {F : Type u} [Field F] [Algebra F k]
+    (L : DatG0.FinSubext F k)
+    (n m : Pic0FiniteStageRingIndex C -> Nat)
+    (relation : forall j, Fin (m j) -> MvPolynomial (Fin (n j)) L.1)
+    (e : forall j,
+      k ⊗[L.1] DatG0.FiniteRelationAlgebra L.1 (n j) (m j) (relation j) ≃ₐ[k]
+        Pic0FiniteStageRing C j)
+    (M : DatG0.FinSubext L.1 k)
+    (N : DatG0.FinSubext M.1 k)
+    (j : Pic0FiniteStageRingIndex C) :
+    @AlgHom k
+      (Pic0FiniteStageFinalScalarExtensionCarrier C L n m relation M N j)
+      (Pic0FiniteStageRing C j)
+      (inferInstance : CommSemiring k)
+      (pic0FiniteStageFinalScalarExtensionSemiring C L n m relation M N j)
+      (instCommRingPic0FiniteStageRing C j).toSemiring
+      (pic0FiniteStageFinalScalarExtensionAlgebra C L n m relation M N j)
+      (instAlgebraPic0FiniteStageRing C j) :=
+  @AlgEquiv.toAlgHom k
+    (Pic0FiniteStageFinalScalarExtensionCarrier C L n m relation M N j)
+    (Pic0FiniteStageRing C j)
+    (inferInstance : CommSemiring k)
+    (pic0FiniteStageFinalScalarExtensionSemiring C L n m relation M N j)
+    (instCommRingPic0FiniteStageRing C j).toSemiring
+    (pic0FiniteStageFinalScalarExtensionAlgebra C L n m relation M N j)
+    (instAlgebraPic0FiniteStageRing C j)
+    (pic0FiniteStageFinalBaseChangeEquivPinned C L n m relation e M N j)
 
 set_option synthInstance.maxHeartbeats 400000 in
 -- Naturality elaborates the cancellation and model-comparison squares together.
