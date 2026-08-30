@@ -4,7 +4,17 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: The Milne Contributors
 -/
 
+import Mathlib.CategoryTheory.Sites.Equivalence
+import Mathlib.CategoryTheory.Sites.Over
+import Mathlib.Topology.Sheaves.Sheaf
 import Mathlib.Topology.Sheaves.Over
+
+/-!
+# Over-site sheaf equivalence
+
+The topological equivalence between opens over an open subset and opens of the
+subspace is promoted here to an equivalence of sites and sheaf categories.
+-/
 
 set_option autoImplicit false
 
@@ -75,7 +85,9 @@ instance overEquivalence_inverse_isCocontinuous :
       obtain ⟨p', hp'V, rfl⟩ := hp
       exact hp'V
     convert S.downward_closed hSf0 (Over.homMk (homOfLE hdomle) ?_) using 1
-    all_goals apply Subsingleton.elim
+    · apply Over.OverMorphism.ext
+      apply Subsingleton.elim
+    · apply Subsingleton.elim
 
 /-- The inverse leg is a dense subsite, obtained from the two cocontinuity
 instances for the over-site equivalence. -/
