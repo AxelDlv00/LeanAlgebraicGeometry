@@ -52,6 +52,70 @@ noncomputable def homSectionMap (f : A ⟶ B) [IsMonHom f] :
       rw [Hom.mul_def, Category.assoc, IsMonHom.mul_hom, Hom.mul_def]
       simp }
 
+/-- Postcomposition by a group-scheme homomorphism on generalized points.
+
+Unlike `homSectionMap`, this keeps the test object explicit.  It is the
+group-theoretic interface used when a fibre is tested after an arbitrary base
+change (or by an arbitrary scheme in the slice). -/
+noncomputable def homMap (X : Over (Spec (.of K))) (f : A ⟶ B) [IsMonHom f] :
+    (X ⟶ A) →* (X ⟶ B) :=
+  { toFun := fun a => a ≫ f
+    map_one' := by
+      rw [Hom.one_def, Category.assoc, IsMonHom.one_hom, Hom.one_def]
+    map_mul' := by
+      intro a b
+      rw [Hom.mul_def, Category.assoc, IsMonHom.mul_hom, Hom.mul_def]
+      simp }
+
+@[simp]
+theorem homMap_apply (X : Over (Spec (.of K))) (f : A ⟶ B) [IsMonHom f]
+    (a : X ⟶ A) : homMap X f a = a ≫ f :=
+  rfl
+
+@[simp]
+theorem homSectionMap_eq_homMap (f : A ⟶ B) [IsMonHom f] :
+    homSectionMap f = homMap (𝟙_ (Over (Spec (.of K)))) f :=
+  rfl
+
+/- The next declarations package the fibre/kernel translation for arbitrary
+   generalized points.  They are deliberately stated for section fibres of
+   `homMap`; no set-theoretic identification with the points of the kernel
+   scheme is assumed here. -/
+noncomputable def homFiberEquivKernel
+    (X : Over (Spec (.of K))) (f : A ⟶ B) [IsMonHom f]
+    (a₀ : X ⟶ A) :
+    (homMap X f ⁻¹' {homMap X f a₀}) ≃ (homMap X f).ker :=
+  MonoidHom.fiberEquivKer (homMap X f) a₀
+
+theorem homFiber_finite_iff_kernel_finite
+    (X : Over (Spec (.of K))) (f : A ⟶ B) [IsMonHom f]
+    (a₀ : X ⟶ A) :
+    Finite (homMap X f ⁻¹' {homMap X f a₀}) ↔
+      Finite (homMap X f).ker := by
+  exact (homFiberEquivKernel X f a₀).finite_iff
+
+theorem homFiber_finite_of_kernel_finite
+    (X : Over (Spec (.of K))) (f : A ⟶ B) [IsMonHom f]
+    (a₀ : X ⟶ A) [Finite (homMap X f).ker] :
+    Finite (homMap X f ⁻¹' {homMap X f a₀}) := by
+  exact Finite.of_equiv _ (homFiberEquivKernel X f a₀).symm
+
+/-- Any two nonempty generalized-point fibres are equivalent. -/
+noncomputable def homFiberEquiv
+    (X : Over (Spec (.of K))) (f : A ⟶ B) [IsMonHom f]
+    (a₀ a₁ : X ⟶ A) :
+    (homMap X f ⁻¹' {homMap X f a₀}) ≃
+      (homMap X f ⁻¹' {homMap X f a₁}) :=
+  MonoidHom.fiberEquiv (homMap X f) a₀ a₁
+
+@[simp]
+theorem homFiberEquiv_apply
+    (X : Over (Spec (.of K))) (f : A ⟶ B) [IsMonHom f]
+    (a₀ a₁ : X ⟶ A)
+    (a : homMap X f ⁻¹' {homMap X f a₀}) :
+    homFiberEquiv X f a₀ a₁ a = a₁ * (a₀⁻¹ * a) :=
+  rfl
+
 /-- Every section fibre of a group-scheme homomorphism is equivalent to its kernel. -/
 noncomputable def homSectionFiberEquivKernel
     (f : A ⟶ B) [IsMonHom f]
