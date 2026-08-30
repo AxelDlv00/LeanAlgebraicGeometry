@@ -37,6 +37,9 @@ import HartshorneLib.Chapter2ModuleKSheaf
 import HartshorneLib.Chapter2Cohomology
 import HartshorneLib.Chapter2CohomologyFunctoriality
 import HartshorneLib.Chapter2OverOpen
+import HartshorneLib.Chapter2AffineCech
+import HartshorneLib.Chapter2QcohSections
+import HartshorneLib.Chapter2AffineVanishingQcoh
 import HartshorneLib.Chapter2MayerVietoris
 import HartshorneLib.Chapter2TwoCover
 import HartshorneLib.Chapter2Chi
