@@ -8,6 +8,9 @@ import Mathlib.RingTheory.LocalProperties.Exactness
 import Mathlib.RingTheory.LocalProperties.Basic
 import Mathlib.RingTheory.Localization.Finiteness
 import Mathlib.Algebra.Module.LocalizedModule.Exact
+import Mathlib.RingTheory.Finiteness.Descent
+import Mathlib.RingTheory.Flat.FaithfullyFlat.Algebra
+import Mathlib.RingTheory.RingHom.QuasiFinite
 
 import MilneLib.Nakayama
 
@@ -27,6 +30,42 @@ variable {R M N L : Type*} [CommSemiring R]
   [AddCommMonoid M] [Module R M]
   [AddCommMonoid N] [Module R N]
   [AddCommMonoid L] [Module R L]
+
+open TensorProduct
+
+/-- Quasi-finiteness descends from a faithfully flat base change. -/
+theorem quasiFinite_of_faithfullyFlat_baseChange
+    {R S A : Type*} [CommRing R] [CommRing S] [CommRing A]
+    [Algebra R S] [Algebra R A] [Module.FaithfullyFlat R A]
+    [Algebra.QuasiFinite A (A ⊗[R] S)] :
+    Algebra.QuasiFinite R S := by
+  refine ⟨fun p hp => ?_⟩
+  obtain ⟨P, hP, hPover⟩ :=
+    Ideal.exists_isPrime_liesOver_of_faithfullyFlat (A := R) (B := A) p
+  letI : P.IsPrime := hP
+  letI : P.LiesOver p := hPover
+  letI := Localization.AtPrime.algebraOfLiesOver p P
+  have hfin : Module.Finite P.ResidueField (P.Fiber (A ⊗[R] S)) := inferInstance
+  let e : P.Fiber (A ⊗[R] S) ≃ₐ[P.ResidueField]
+      P.ResidueField ⊗[p.ResidueField] (p.Fiber S) :=
+    (Algebra.TensorProduct.cancelBaseChange _ _ _ _ _).trans
+      (Algebra.TensorProduct.cancelBaseChange _ _ _ _ _).symm
+  have hfin' : Module.Finite P.ResidueField
+      (P.ResidueField ⊗[p.ResidueField] (p.Fiber S)) := by
+    letI : Module.Finite P.ResidueField (P.Fiber (A ⊗[R] S)) := hfin
+    exact Module.Finite.equiv e.toLinearEquiv
+  letI : Module.Finite P.ResidueField
+      (P.ResidueField ⊗[p.ResidueField] (p.Fiber S)) := hfin'
+  exact Module.Finite.of_finite_tensorProduct_of_faithfullyFlat P.ResidueField
+
+/-- The RingHom QuasiFinite property codescends along faithfully flat maps. -/
+theorem quasiFinite_codescendsAlong_faithfullyFlat :
+    RingHom.CodescendsAlong RingHom.QuasiFinite RingHom.FaithfullyFlat := by
+  refine .mk _ RingHom.QuasiFinite.respectsIso ?_
+  intro R S T _ _ _ _ _ h h'
+  rw [RingHom.quasiFinite_algebraMap] at h' ⊢
+  rw [RingHom.faithfullyFlat_algebraMap_iff] at h
+  exact quasiFinite_of_faithfullyFlat_baseChange (R := R) (S := T) (A := S)
 
 /-
 The canonical `LocalizedModule` maps keep the statement independent of a
