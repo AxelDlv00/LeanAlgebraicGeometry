@@ -74,6 +74,12 @@ theorem presentation_spec
     P.presentation = pic0FiniteStageAffineRingGluePresentation_of_canonical_context C P.context :=
   (presentationWitness C P).2
 
+/-- Named compatibility alias for clients that need to rewrite to the canonical assembly. -/
+theorem presentation_eq
+    (P : Pic0FiniteStageStableGluePackage C F) :
+    P.presentation = pic0FiniteStageAffineRingGluePresentation_of_canonical_context C P.context :=
+  P.presentation_spec C
+
 /-! The following accessors are ordinary definitions rather than reducible aliases.
 This keeps expensive tensor carriers behind the package boundary. -/
 
