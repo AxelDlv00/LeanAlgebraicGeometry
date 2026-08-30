@@ -984,7 +984,7 @@
     },
     "states": {
       "blocked": 144,
-      "closed": 620,
+      "closed": 649,
       "formalized_open": 3,
       "informal": 485,
       "ready": 342
@@ -1023,7 +1023,9 @@
       "CategoryTheory.Sheaf.HModule.map: Lean declaration is not referenced by any blueprint \\lean{...}",
       "CategoryTheory.Sheaf.HModule.mapEquiv: Lean declaration is not referenced by any blueprint \\lean{...}",
       "CategoryTheory.Sheaf.HModule.mapEquiv_apply: Lean declaration is not referenced by any blueprint \\lean{...}",
+      "CategoryTheory.Sheaf.HModule.mapEquiv_refl: Lean declaration is not referenced by any blueprint \\lean{...}",
       "CategoryTheory.Sheaf.HModule.mapEquiv_symm_apply: Lean declaration is not referenced by any blueprint \\lean{...}",
+      "CategoryTheory.Sheaf.HModule.mapEquiv_trans: Lean declaration is not referenced by any blueprint \\lean{...}",
       "CategoryTheory.Sheaf.HModule.map_apply: Lean declaration is not referenced by any blueprint \\lean{...}",
       "CategoryTheory.Sheaf.HModule.map_comp_apply: Lean declaration is not referenced by any blueprint \\lean{...}",
       "CategoryTheory.Sheaf.HModule.map_id_apply: Lean declaration is not referenced by any blueprint \\lean{...}",
@@ -1037,9 +1039,7 @@
       "CategoryTheory.Sheaf.chi_eq_add_of_shortExact: Lean declaration is not referenced by any blueprint \\lean{...}",
       "CategoryTheory.Sheaf.chi_eq_h0: Lean declaration is not referenced by any blueprint \\lean{...}",
       "CategoryTheory.Sheaf.constModuleSheaf: Lean declaration is not referenced by any blueprint \\lean{...}",
-      "CategoryTheory.Sheaf.constModuleSheafHomEquiv: Lean declaration is not referenced by any blueprint \\lean{...}",
-      "CategoryTheory.Sheaf.constModuleSheafHomEquiv_naturality: Lean declaration is not referenced by any blueprint \\lean{...}",
-      "CategoryTheory.Sheaf.constantSheafAdjHomLinearEquiv: Lean declaration is not referenced by any blueprint \\lean{...}"
+      "CategoryTheory.Sheaf.constModuleSheafHomEquiv: Lean declaration is not referenced by any blueprint \\lean{...}"
     ]
   },
   "nodes": [
