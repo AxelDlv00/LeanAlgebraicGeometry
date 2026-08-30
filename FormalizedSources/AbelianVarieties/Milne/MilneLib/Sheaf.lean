@@ -216,6 +216,15 @@ theorem SchemeModule.IsStalkwiseFinite.of_iso
       (↑(TopCat.Presheaf.stalk N.val.presheaf x) : Type u) := hN x
   exact Module.Finite.equiv e.symm
 
+/-- Stalkwise finiteness is equivalent across an isomorphism of scheme modules. -/
+theorem schemeModule_isStalkwiseFinite_iff_of_iso
+    {X : Scheme.{u}} {M N : X.Modules} (f : M ⟶ N) [IsIso f] :
+    SchemeModule.IsStalkwiseFinite M ↔ SchemeModule.IsStalkwiseFinite N := by
+  constructor
+  · intro hM
+    exact SchemeModule.IsStalkwiseFinite.of_iso (inv f) hM
+  · exact SchemeModule.IsStalkwiseFinite.of_iso f
+
 /-- Stalkwise finiteness descends along a map that is surjective on stalks. -/
 theorem SchemeModule.IsStalkwiseFinite.of_surjective_stalks
     {X : Scheme.{u}} {M N : X.Modules}
