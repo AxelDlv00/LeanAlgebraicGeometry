@@ -6,6 +6,7 @@ import MilneLib.Localization
 import MilneLib.GroupScheme
 import MilneLib.RigidityCorollaries
 import MilneLib.Isogeny
+import MilneLib.Torsion
 import MilneLib.Coherent
 import MilneLib.LinearAlgebra
 import MilneLib.Stalk
