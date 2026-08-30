@@ -48,6 +48,34 @@ theorem isogenyKernel_fst_mem_preimage
   have h := pullback.condition (f := f.left) (g := η[B].left)
   exact congrArg (fun q => q.base x) h
 
+omit [GrpObj A] in
+/-- The range of the kernel projection is the set-theoretic fibre over the
+identity point of `Spec K`. -/
+theorem isogenyKernel_range_fst (f : A ⟶ B) :
+    Set.range
+        (CategoryTheory.Limits.pullback.fst (C := Scheme) f.left (η[B].left)) =
+      f.left ⁻¹' {(η[B].left).base (IsLocalRing.closedPoint K)} := by
+  letI : Nonempty ((𝟙_ (Over (Spec (.of K)))).left) :=
+    ⟨IsLocalRing.closedPoint K⟩
+  letI : Subsingleton ((𝟙_ (Over (Spec (.of K)))).left) := by
+    rw [Over.tensorUnit_left]
+    infer_instance
+  rw [Scheme.Pullback.range_fst, Set.range_eq_singleton]
+  intro x
+  exact congrArg (η[B].left)
+    (Subsingleton.elim x (IsLocalRing.closedPoint K))
+
+/-- The underlying topological space of the kernel is homeomorphic to its
+set-theoretic identity fibre. -/
+noncomputable def isogenyKernelHomeo (f : A ⟶ B) :
+    isogenyKernel f ≃ₜ
+      f.left ⁻¹' {(η[B].left).base (IsLocalRing.closedPoint K)} := by
+  change (CategoryTheory.Limits.pullback (C := Scheme) f.left (η[B].left)) ≃ₜ
+    f.left ⁻¹' {(η[B].left).base (IsLocalRing.closedPoint K)}
+  let hE :=
+    ((CategoryTheory.Limits.pullback.fst (C := Scheme) f.left (η[B].left)).isEmbedding).toHomeomorph
+  exact hE.trans (Homeomorph.setCongr (isogenyKernel_range_fst f))
+
 /-- A surjective group-scheme homomorphism with finite kernel. -/
 def Isogeny (f : A ⟶ B) [IsMonHom f] : Prop :=
   Surjective f.left ∧ IsFinite (isogenyKernelToBase f)
