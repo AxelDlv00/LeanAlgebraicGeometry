@@ -13,7 +13,7 @@ import MumfordLib.Uniformization
 `zsmulTorsionSubgroup` is the signed-integer torsion API used by the
 uniformization development.  This file identifies it with Mathlib's
 `AddSubgroup.torsionBy`, allowing results about the latter (including its
-`ZMod n` module structure) to be reused without an additional axiom.
+`ZMod n` module structure) to be reused without additional assumptions.
 -/
 
 namespace Mumford.Uniformization
