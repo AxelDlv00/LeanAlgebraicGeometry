@@ -89,6 +89,29 @@ theorem moduleFinite_H1Cok
       hσ₀ hσ₁ hσ₀loc hσ₁loc
   exact Module.Finite.equiv (h1CokEquiv σ₀ σ₁)
 
+/-! The finiteness result is independent of the presentation of the target: any
+linear equivalence to the Cech quotient transports it to the compared module. -/
+
+theorem moduleFinite_of_equiv_H1Cok
+    {H : Type v} [AddCommGroup H] [Module k H]
+    (σ₀ : M₀ →ₗ[k] N) (σ₁ : M₁ →ₗ[k] N)
+    [Module (LaurentPolynomial k) N]
+    [IsScalarTower k (LaurentPolynomial k) N]
+    [Module.Finite (LaurentPolynomial k) N]
+    (hσ₀ : ∀ x ∈ LinearMap.range σ₀,
+      (LaurentPolynomial.T 1 : LaurentPolynomial k) • x ∈ LinearMap.range σ₀)
+    (hσ₁ : ∀ x ∈ LinearMap.range σ₁,
+      (LaurentPolynomial.T (-1) : LaurentPolynomial k) • x ∈ LinearMap.range σ₁)
+    (hσ₀loc : ∀ n : N, ∃ m : ℕ,
+      ((LaurentPolynomial.T 1 : LaurentPolynomial k) ^ m) • n ∈ LinearMap.range σ₀)
+    (hσ₁loc : ∀ n : N, ∃ m : ℕ,
+      ((LaurentPolynomial.T (-1) : LaurentPolynomial k) ^ m) • n ∈ LinearMap.range σ₁)
+    (e : H ≃ₗ[k] H1Cok σ₀ σ₁) :
+    Module.Finite k H := by
+  letI : Module.Finite k (H1Cok σ₀ σ₁) :=
+    moduleFinite_H1Cok σ₀ σ₁ hσ₀ hσ₁ hσ₀loc hσ₁loc
+  exact Module.Finite.equiv e.symm
+
 /-! ## Scheme-section specialization -/
 
 open CategoryTheory Opposite TopologicalSpace
