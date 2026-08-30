@@ -1118,8 +1118,10 @@ notation.  The pinned façade has a fully elaborated carrier and structure tuple
 its type, so consumers can use `@AlgEquiv.toAlgHom` without any local instances.
 -/
 set_option synthInstance.maxHeartbeats 400000 in
+-- The pinned result type fixes the tensor carrier before the legacy composition is elaborated.
 set_option maxHeartbeats 6400000 in
-noncomputable opaque pic0FiniteStageFinalBaseChangeEquivPinned
+-- The legacy cancellation/model composition is intentionally checked once at this boundary.
+noncomputable def pic0FiniteStageFinalBaseChangeEquivPinned
     {F : Type u} [Field F] [Algebra F k]
     (L : DatG0.FinSubext F k)
     (n m : Pic0FiniteStageRingIndex C -> Nat)
@@ -1217,7 +1219,9 @@ noncomputable def pic0FiniteStageFinalScalarExtensionMap
 /- The explicit carrier alias and structure tuple make this projection usable from
    importing modules; the legacy map above remains a compatibility adapter. -/
 set_option synthInstance.maxHeartbeats 400000 in
+-- The scalar-extension wrapper elaborates a dependent source and target map exactly once.
 set_option maxHeartbeats 12800000 in
+-- Keep the explicit structure tuple visible in the public result type.
 noncomputable def pic0FiniteStageFinalScalarExtensionMapPinned
     {F : Type u} [Field F] [Algebra F k]
     (L : DatG0.FinSubext F k)
@@ -1248,7 +1252,9 @@ noncomputable def pic0FiniteStageFinalScalarExtensionMapPinned
   pic0FiniteStageFinalScalarExtensionMap C L n m relation M mapM N q
 
 set_option synthInstance.maxHeartbeats 400000 in
+-- Converting the pinned equivalence to a hom uses its already fixed structure witnesses.
 set_option maxHeartbeats 6400000 in
+-- Do not ask typeclass search to infer the dependent tensor structures at a use site.
 noncomputable def pic0FiniteStageFinalBaseChangeForwardPinned
     {F : Type u} [Field F] [Algebra F k]
     (L : DatG0.FinSubext F k)
@@ -1396,6 +1402,48 @@ theorem pic0FiniteStageFinalBaseChangeEquiv_naturality
             (Pic0FiniteStageMapSource C q)) x) by
     exact hx]
   exact hm
+
+set_option synthInstance.maxHeartbeats 400000 in
+-- Pointwise naturality avoids rebuilding an `AlgHom` composition from hidden tensor instances.
+set_option maxHeartbeats 12800000 in
+-- The pinned equivalence and scalar map are unfolded only inside this compatibility proof.
+/-- Pointwise naturality for the import-safe final-stage comparison API. -/
+theorem pic0FiniteStageFinalBaseChangeEquivPinned_naturality
+    {F : Type u} [Field F] [Algebra F k]
+    (L : DatG0.FinSubext F k)
+    (n m : Pic0FiniteStageRingIndex C -> Nat)
+    (relation : forall j, Fin (m j) -> MvPolynomial (Fin (n j)) L.1)
+    (e : forall j,
+      k ⊗[L.1] DatG0.FiniteRelationAlgebra L.1 (n j) (m j) (relation j) ≃ₐ[k]
+        Pic0FiniteStageRing C j)
+    (M : DatG0.FinSubext L.1 k)
+    [Algebra.IsAlgebraic M.1 k]
+    (mapM : forall q : Pic0FiniteStageMapIndex C,
+      Pic0FiniteStageModelRing C L n m relation M
+          (Pic0FiniteStageMapSource C q) →ₐ[M.1]
+        Pic0FiniteStageModelRing C L n m relation M
+          (Pic0FiniteStageMapTarget C q))
+    (hmapM : forall q,
+      (pic0FiniteStageModelAmbientMapCompRestrict C L n m relation M
+        (Pic0FiniteStageMapSource C q)
+        (Pic0FiniteStageMapTarget C q)
+        (mapM q)) =
+        (pic0FiniteStageTransportedMapRestrictCompAmbient C L n m relation e M q))
+    (N : DatG0.FinSubext M.1 k)
+    (q : Pic0FiniteStageMapIndex C)
+    (x : Pic0FiniteStageFinalScalarExtensionCarrier C L n m relation M N
+      (Pic0FiniteStageMapSource C q)) :
+    (pic0FiniteStageFinalBaseChangeEquivPinned C L n m relation e M N
+      (Pic0FiniteStageMapTarget C q)).toFun
+        ((pic0FiniteStageFinalScalarExtensionMapPinned C L n m relation M mapM N q).toFun x) =
+      (pic0FiniteStageMap C q).toFun
+        ((pic0FiniteStageFinalBaseChangeEquivPinned C L n m relation e M N
+          (Pic0FiniteStageMapSource C q)).toFun x) := by
+  have h := DFunLike.congr_fun
+    (pic0FiniteStageFinalBaseChangeEquiv_naturality
+      C L n m relation e M mapM hmapM N q) x
+  simpa [pic0FiniteStageFinalBaseChangeEquivPinned,
+    pic0FiniteStageFinalScalarExtensionMapPinned] using h
 
 end
 
