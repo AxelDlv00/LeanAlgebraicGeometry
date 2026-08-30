@@ -304,6 +304,29 @@ theorem zsmulDivisionFiber_natCast_nonempty_of_complex_uniformization
   exact zsmulDivisionFiber_natCast_nonempty_of_uniformization
     u.toGenusTorusUniformization x hn
 
+/- The canonical quotient itself is a valid uniformization target via the
+   identity equivalence; these specializations do not assert existence of a
+   uniformization for an arbitrary analytic abelian variety. -/
+theorem zsmulDivisionFiber_card_of_complex_quotient
+    {g : ℕ} (n : ℤ)
+    (x : GenusComplexVector g ⧸ complexPeriodLattice g) (hn : n ≠ 0) :
+    Nat.card (zsmulDivisionFiber
+      (GenusComplexVector g ⧸ complexPeriodLattice g) n x) =
+      n.natAbs ^ (2 * g) := by
+  let u : ComplexTorusUniformization
+      (GenusComplexVector g ⧸ complexPeriodLattice g) g :=
+    ⟨AddEquiv.refl _⟩
+  exact zsmulDivisionFiber_card_of_complex_uniformization u n x hn
+
+theorem zsmulDivisionFiber_natCast_card_of_complex_quotient
+    {g n : ℕ} (x : GenusComplexVector g ⧸ complexPeriodLattice g) (hn : 0 < n) :
+    Nat.card (zsmulDivisionFiber
+      (GenusComplexVector g ⧸ complexPeriodLattice g) (n : ℤ) x) =
+      n ^ (2 * g) := by
+  have hne : (n : ℤ) ≠ 0 := by
+    exact_mod_cast (Nat.ne_of_gt hn)
+  simpa using zsmulDivisionFiber_card_of_complex_quotient (n : ℤ) x hne
+
 end
 end Uniformization
 end Mumford
