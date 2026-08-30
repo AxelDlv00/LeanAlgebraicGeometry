@@ -194,6 +194,39 @@ theorem schemeModule_isStalkwiseFinite_iff_hasFiniteStalkGenerators
     exact SchemeModule.HasFiniteStalkGenerators.of_isStalkwiseFinite h x
   · exact SchemeModule.IsStalkwiseFinite.of_hasFiniteStalkGenerators F
 
+/-- At a fixed point, the finite-generator and finite-module formulations of
+stalkwise finiteness agree. -/
+theorem schemeModule_hasFiniteStalkGenerators_iff_moduleFinite_stalk
+    {X : Scheme.{u}} (F : X.Modules) (x : X) :
+    SchemeModule.HasFiniteStalkGenerators F x ↔
+      letI : Module (X.presheaf.stalk x)
+          (↑(TopCat.Presheaf.stalk F.val.presheaf x) : Type u) :=
+        schemeModuleStalkModule F x
+      Module.Finite (X.presheaf.stalk x)
+        (↑(TopCat.Presheaf.stalk F.val.presheaf x) : Type u) := by
+  constructor
+  · intro hgen
+    letI : Module (X.presheaf.stalk x)
+        (↑(TopCat.Presheaf.stalk F.val.presheaf x) : Type u) :=
+      schemeModuleStalkModule F x
+    dsimp [SchemeModule.HasFiniteStalkGenerators] at hgen
+    obtain ⟨ι, hι, g, hg⟩ := hgen
+    letI : Fintype ι := hι
+    exact moduleFinite_of_finite_generating_family g hg
+  · intro hfinite
+    letI : Module (X.presheaf.stalk x)
+        (↑(TopCat.Presheaf.stalk F.val.presheaf x) : Type u) :=
+      schemeModuleStalkModule F x
+    letI : Module.Finite (X.presheaf.stalk x)
+        (↑(TopCat.Presheaf.stalk F.val.presheaf x) : Type u) := hfinite
+    obtain ⟨ι : Type u, hι, g, hg⟩ :=
+      (Submodule.fg_iff_exists_finite_generating_family
+        (A := X.presheaf.stalk x)
+        (M := (↑(TopCat.Presheaf.stalk F.val.presheaf x) : Type u))).mp
+        Module.Finite.fg_top
+    letI : Fintype ι := Fintype.ofFinite ι
+    exact ⟨ι, inferInstance, g, hg⟩
+
 /-- Stalkwise finiteness is invariant under isomorphism of scheme modules. -/
 theorem SchemeModule.IsStalkwiseFinite.of_iso
     {X : Scheme.{u}} {M N : X.Modules} (f : M ⟶ N) [IsIso f]

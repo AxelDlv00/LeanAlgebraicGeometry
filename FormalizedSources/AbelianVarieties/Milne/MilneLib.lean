@@ -11,6 +11,7 @@ import MilneLib.LinearAlgebra
 import MilneLib.Stalk
 import MilneLib.Tensor
 import MilneLib.Sheaf
+import MilneLib.OverSheaf
 
 /-!
 # MilneLib
