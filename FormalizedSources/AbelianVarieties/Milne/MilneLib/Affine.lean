@@ -107,6 +107,30 @@ theorem pushforward_globalSections_top
       Γ(M, (⊤ : X.Opens)) := by
   rfl
 
+/-- A quasi-coherent presentation cover on an affine scheme has a finite basic-open
+refinement.  Each selected basic open is contained in one member of the cover,
+which is the finite-cover input for affine section-localization arguments. -/
+theorem exists_finite_basicOpen_cover_le_quasicoherentData {R : CommRingCat.{u}}
+    (M : (Spec R).Modules) (q : M.QuasicoherentData) :
+    ∃ t : Finset R, Ideal.span (t : Set R) = ⊤ ∧
+      ∀ r ∈ t, ∃ i, (PrimeSpectrum.basicOpen r : (Spec R).Opens) ≤ q.X i := by
+  classical
+  set G : Set R := {r | ∃ i, (PrimeSpectrum.basicOpen r : (Spec R).Opens) ≤ q.X i} with hG
+  have hspanG : Ideal.span G = ⊤ := by
+    rw [← PrimeSpectrum.iSup_basicOpen_eq_top_iff']
+    rw [eq_top_iff]
+    intro x _
+    simp only [TopologicalSpace.Opens.mem_iSup]
+    obtain ⟨U, f, hf, hxU⟩ := q.coversTop ⊤ x (by trivial)
+    rw [Sieve.mem_ofObjects_iff] at hf
+    obtain ⟨i, ⟨hUi⟩⟩ := hf
+    have hxXi : x ∈ q.X i := (leOfHom hUi) hxU
+    obtain ⟨V, ⟨r, rfl⟩, hxV, hVle⟩ :=
+      (TopologicalSpace.Opens.isBasis_iff_nbhd.mp PrimeSpectrum.isBasis_basic_opens) hxXi
+    exact ⟨r, ⟨i, hVle⟩, hxV⟩
+  obtain ⟨t, htsub, htspan⟩ := (Ideal.span_eq_top_iff_finite G).mp hspanG
+  exact ⟨t, htspan, fun r hr => htsub hr⟩
+
 /-- A finite affine module has finite stalks after applying the tilde
 construction.  The stalk is viewed as a module over the corresponding
 structure-sheaf stalk. -/
