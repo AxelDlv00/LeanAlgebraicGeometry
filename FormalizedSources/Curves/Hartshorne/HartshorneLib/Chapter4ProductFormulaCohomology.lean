@@ -438,6 +438,17 @@ theorem hasFiniteDivisorCohomology_of_moduleKSheaf
       (CategoryTheory.Sheaf.HModule.mapEquiv
         (moduleKSheafDivisorSheafZeroIso (X := X)) 1)
 
+/-- Properness supplies the degree-zero finiteness input, so only degree one
+cohomology remains explicit in this specialization. -/
+theorem hasFiniteDivisorCohomology_of_moduleKSheaf_oneFinite
+    (h1 : Module.Finite k
+      (CategoryTheory.Sheaf.HModule
+        (Opens.grothendieckTopology (X.left : TopCat)) k
+        (X.left.moduleKSheaf k) 1)) :
+    HasFiniteDivisorCohomology (k := k) (X := X) :=
+  hasFiniteDivisorCohomology_of_moduleKSheaf
+    (moduleFinite_moduleKSheaf_zero_of_isProper (k := k) (X := X)) h1
+
 /-- Structure-sheaf cohomology finiteness therefore suffices for the
 principal-divisor degree-zero statement. -/
 theorem principalDivisorsHaveDegreeZero_of_moduleKSheafCohomologyFinite
@@ -452,6 +463,17 @@ theorem principalDivisorsHaveDegreeZero_of_moduleKSheafCohomologyFinite
     PrincipalDivisorsHaveDegreeZero (k := k) (X := X) :=
   principalDivisorsHaveDegreeZero_of_finiteDivisorCohomology
     (hasFiniteDivisorCohomology_of_moduleKSheaf h0 h1)
+
+/-- The principal-divisor degree-zero conclusion with the properness-derived
+degree-zero finiteness discharged. -/
+theorem principalDivisorsHaveDegreeZero_of_moduleKSheaf_oneFinite
+    (h1 : Module.Finite k
+      (CategoryTheory.Sheaf.HModule
+        (Opens.grothendieckTopology (X.left : TopCat)) k
+        (X.left.moduleKSheaf k) 1)) :
+    PrincipalDivisorsHaveDegreeZero (k := k) (X := X) :=
+  principalDivisorsHaveDegreeZero_of_moduleKSheafCohomologyFinite
+    (moduleFinite_moduleKSheaf_zero_of_isProper (k := k) (X := X)) h1
 
 end
 end Hartshorne
