@@ -796,6 +796,82 @@ theorem pointTranslationIso_hom_comp (x y : 𝟙_ (Over S) ⟶ G) :
 
 end Scheme
 
+section Transport
+
+open AlgebraicGeometry
+
+/- Point-local geometric properties are invariant under the translation
+   isomorphisms above.  These general scheme lemmas keep later abelian-variety
+   arguments independent of a chosen point. -/
+
+theorem mem_smoothLocus_iff_of_comp_eq
+    {X S : Scheme.{u}} (e : X ⟶ X) [IsOpenImmersion e]
+    (f : X ⟶ S) [LocallyOfFinitePresentation f] (he : e ≫ f = f) (z : X) :
+    e z ∈ f.smoothLocus ↔ z ∈ f.smoothLocus := by
+  conv_lhs => rw [← Scheme.Hom.mem_preimage]
+  rw [Scheme.Hom.preimage_smoothLocus_eq]
+  simp only [he]
+
+theorem isReduced_stalk_iff_of_isOpenImmersion
+    {X Y : Scheme.{u}} (e : X ⟶ Y) [IsOpenImmersion e] (z : X) :
+    _root_.IsReduced (X.presheaf.stalk z) ↔
+      _root_.IsReduced (Y.presheaf.stalk (e z)) := by
+  constructor
+  · intro h
+    exact isReduced_of_injective (asIso (e.stalkMap z)).commRingCatIsoToRingEquiv
+      (asIso (e.stalkMap z)).commRingCatIsoToRingEquiv.injective
+  · intro h
+    exact isReduced_of_injective (asIso (e.stalkMap z)).commRingCatIsoToRingEquiv.symm
+      (asIso (e.stalkMap z)).commRingCatIsoToRingEquiv.symm.injective
+
+theorem isIrreducible_preimage_iff_of_isIso
+    {X Y : Scheme.{u}} (e : X ⟶ Y) [IsIso e] (t : Set Y) :
+    IsIrreducible (e ⁻¹' t) ↔ IsIrreducible t := by
+  have hcoe : ⇑(Scheme.homeoOfIso (asIso e)) = ⇑e := by
+    rw [Scheme.coe_homeoOfIso, asIso_hom]
+  constructor
+  · intro hi
+    have hsurj : Function.Surjective ⇑e := by
+      rw [← hcoe]
+      exact (Scheme.homeoOfIso (asIso e)).surjective
+    have h2 := hi.image ⇑e e.continuous.continuousOn
+    rwa [Set.image_preimage_eq t hsurj] at h2
+  · intro ht
+    refine ht.preimage ?_ ?_
+    · rw [← hcoe]
+      exact (Scheme.homeoOfIso (asIso e)).isOpenEmbedding
+    · have hr : Set.range ⇑e = Set.univ := by
+        rw [← hcoe]
+        exact (Scheme.homeoOfIso (asIso e)).surjective.range_eq
+      rw [hr, Set.inter_univ]
+      exact ht.nonempty
+
+theorem pointTranslationIso_mem_smoothLocus_iff
+    {S : Scheme.{u}} (G : Over S) [GrpObj G]
+    [LocallyOfFinitePresentation G.hom]
+    (x y : 𝟙_ (Over S) ⟶ G) (z : G.left) :
+    (pointTranslationIso G x y).hom z ∈ G.hom.smoothLocus ↔
+      z ∈ G.hom.smoothLocus :=
+  mem_smoothLocus_iff_of_comp_eq _ G.hom
+    (pointTranslationIso_hom_comp G x y) z
+
+theorem isReduced_stalk_pointTranslationIso_iff
+    {S : Scheme.{u}} (G : Over S) [GrpObj G]
+    (x y : 𝟙_ (Over S) ⟶ G) (z : G.left) :
+    _root_.IsReduced (G.left.presheaf.stalk z) ↔
+      _root_.IsReduced (G.left.presheaf.stalk
+        ((pointTranslationIso G x y).hom z)) :=
+  isReduced_stalk_iff_of_isOpenImmersion _ z
+
+theorem isIrreducible_pointTranslationIso_preimage_iff
+    {S : Scheme.{u}} (G : Over S) [GrpObj G]
+    (x y : 𝟙_ (Over S) ⟶ G) (t : Set G.left) :
+    IsIrreducible ((pointTranslationIso G x y).hom ⁻¹' t) ↔
+      IsIrreducible t :=
+  isIrreducible_preimage_iff_of_isIso _ t
+
+end Transport
+
 end GroupVariety
 
 open AlgebraicGeometry
