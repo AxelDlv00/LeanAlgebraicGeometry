@@ -17,6 +17,7 @@ import HartshorneLib.Chapter4DivisorInduction
 import HartshorneLib.Chapter4DivisorDegreeStep
 import HartshorneLib.Chapter4DivisorSupport
 import HartshorneLib.Chapter4Effective
+import HartshorneLib.Chapter4EffectiveBounds
 import HartshorneLib.Chapter4PrincipalDivisors
 import HartshorneLib.Chapter4OrderComparison
 import HartshorneLib.Chapter4PrincipalDivisorDegree
@@ -28,6 +29,7 @@ import HartshorneLib.Chapter2
 import HartshorneLib.Chapter2Sheaves
 import HartshorneLib.Chapter2LineBundles
 import HartshorneLib.Chapter2LineBundleAPI
+import HartshorneLib.Chapter2LineBundlePullback
 import HartshorneLib.Chapter2ModuleKSheaf
 import HartshorneLib.Chapter2Cohomology
 import HartshorneLib.Chapter2Chi
