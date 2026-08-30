@@ -53,6 +53,14 @@ def zsmulTorsionSubgroup (X : Type*) [AddCommGroup X] (n : ℤ) : AddSubgroup X 
     simp only [Set.mem_setOf_eq] at ha ⊢
     rw [zsmul_neg, ha, neg_zero]
 
+/- At a natural scalar, the signed subgroup has the usual `n`-torsion
+   membership predicate. -/
+theorem zsmulTorsionSubgroup_natCast_mem_iff
+    {X : Type*} [AddCommGroup X] {n : ℕ} (x : X) :
+    x ∈ zsmulTorsionSubgroup X (n : ℤ) ↔ n • x = 0 := by
+  change (n : ℤ) • x = 0 ↔ n • x = 0
+  rw [Nat.cast_smul_eq_nsmul]
+
 /- Divisibility of scalars induces inclusion of the corresponding torsion. -/
 theorem zsmulTorsionSubgroup_mono_of_dvd {X : Type*} [AddCommGroup X]
     {n m : ℤ} (h : n ∣ m) :
