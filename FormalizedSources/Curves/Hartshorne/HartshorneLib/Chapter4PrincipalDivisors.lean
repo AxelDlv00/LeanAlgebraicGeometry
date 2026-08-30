@@ -62,6 +62,13 @@ noncomputable def orderZAt (f : X ⟶ Spec (CommRingCat.of k))
     (WithZero.unitsWithZeroEquiv.toMonoidHom.comp
       (Units.map (orderAt f hx).toMonoidWithZeroHom.toMonoidHom))
 
+/-- The classical order is multiplicative on powers of a rational function. -/
+theorem orderZAt_pow (f : X ⟶ Spec (CommRingCat.of k))
+    [SmoothOfRelativeDimension 1 f] [IsIntegral X] {x : X}
+    (hx : x ≠ genericPoint X) (g : X.functionFieldˣ) (n : ℕ) :
+    orderZAt f hx (g ^ n) = (orderZAt f hx g) ^ n := by
+  exact map_pow (orderZAt f hx) g n
+
 /-- `orderAt` is the adic valuation of the maximal ideal of the stalk. -/
 theorem orderAt_eq_valuation (f : X ⟶ Spec (CommRingCat.of k))
     [SmoothOfRelativeDimension 1 f] [IsIntegral X] {x : X}
