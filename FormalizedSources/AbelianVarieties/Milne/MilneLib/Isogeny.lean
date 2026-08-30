@@ -551,6 +551,20 @@ theorem Isogeny.finite_preimage_singleton_of_closed_target
   exact Isogeny.finite_preimage_singleton_of_closed_point hA hB f h hy
     (mem_closedPoints_iff.mp hxclosed) hxy
 
+/- Zariski's main theorem turns the finite fibre above a closed point into a
+   finite restriction on a target neighbourhood.  This is the local finiteness
+   input needed before addressing fibres over arbitrary residue fields. -/
+theorem Isogeny.exists_isFinite_morphismRestrict_of_closed_target
+    {K : Type u} [Field K] [IsAlgClosed K]
+    {A B : Over (Spec (.of K))} [GrpObj A] [GrpObj B]
+    (hA : IsAbelianVariety A) (hB : IsAbelianVariety B)
+    (f : A ⟶ B) [IsMonHom f] (h : Isogeny f)
+    {y : B.left} (hy : IsClosed {y}) :
+    ∃ V : B.left.Opens, y ∈ V ∧ IsFinite (f.left ∣_ V) := by
+  letI : IsProper f.left := isProper_left_of_isAbelianVariety hA hB f
+  exact exists_isFinite_morphismRestrict_of_finite_preimage_singleton f.left y
+    (Isogeny.finite_preimage_singleton_of_closed_target hA hB f h hy)
+
 /- A finite underlying morphism has finite kernel, so in this common case the
    isogeny predicate is exactly surjectivity.  The finite-map hypothesis is
    explicit because the general finite-kernel/finite-map equivalence is not
