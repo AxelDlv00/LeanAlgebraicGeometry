@@ -5,6 +5,7 @@ Authors: The Milne Contributors
 -/
 
 import Mathlib.AlgebraicGeometry.Group.Abelian
+import MilneLib.GroupScheme
 
 /-!
 # Isogenies
@@ -23,6 +24,8 @@ open CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj
 open AlgebraicGeometry
 
 namespace MilneLib
+
+open GroupVariety
 
 variable {K : Type u} [Field K]
 variable {A B : Over (Spec (.of K))} [GrpObj A] [GrpObj B]
@@ -346,6 +349,174 @@ theorem isogenyKernelToBase_isFinite_iff_identity_fibre_finite
     exact isogenyKernel_identity_fibre_finite_of_isFinite f
   · intro h
     exact isogenyKernelToBase_isFinite_of_proper_of_finite_identity_fibre f h
+
+/- A homeomorphism square transports finiteness of a singleton fibre.  This
+   set-theoretic form is useful because scheme fibres are represented by the
+   underlying preimage sets in the current Mathlib API. -/
+theorem finite_preimage_singleton_of_homeomorph
+    {X Y : Type*} [TopologicalSpace X] [TopologicalSpace Y]
+    (f : X → Y) (eX : X ≃ₜ X) (eY : Y ≃ₜ Y)
+    (hcomm : ∀ z, f (eX z) = eY (f z)) {y : Y}
+    (h : (f ⁻¹' {y}).Finite) : (f ⁻¹' {eY y}).Finite := by
+  have hset : f ⁻¹' {eY y} = eX '' (f ⁻¹' {y}) := by
+    ext z
+    constructor
+    · intro hz
+      have hz' : f z = eY y := by
+        simpa only [Set.mem_preimage, Set.mem_singleton_iff] using hz
+      let w := eX.symm z
+      refine ⟨w, ?_, ?_⟩
+      · change f w = y
+        apply eY.injective
+        calc
+          eY (f w) = f (eX w) := (hcomm w).symm
+          _ = f z := by rw [eX.apply_symm_apply]
+          _ = eY y := hz'
+      · exact eX.apply_symm_apply z
+    · rintro ⟨w, hw, rfl⟩
+      have hw' : f w = y := by
+        simpa only [Set.mem_preimage, Set.mem_singleton_iff] using hw
+      change f (eX w) = eY y
+      rw [hcomm]
+      exact congrArg eY hw'
+  rw [hset]
+  exact h.image eX
+
+/- Translation by a rational section identifies its target fibre with the
+   identity fibre.  The statement is deliberately phrased for sections: the
+   residue-field bridge for arbitrary geometric points is a separate layer. -/
+theorem isogeny_fibre_finite_of_section
+    (f : A ⟶ B) [IsMonHom f]
+    (x : 𝟙_ (Over (Spec (.of K))) ⟶ A)
+    (h : (f.left ⁻¹' {(η[B].left).base (IsLocalRing.closedPoint K)}).Finite) :
+    (f.left ⁻¹' {((x ≫ f).left).base (IsLocalRing.closedPoint K)}).Finite := by
+  let eX := pointTranslationIso A (η[A]) x
+  let eY := pointTranslationIso B (η[B]) (x ≫ f)
+  have hnat := pointTranslation_hom_naturality f (η[A]) x
+  have hnat' : eX.hom ≫ f.left = f.left ≫ eY.hom := by
+    change (pointTranslation A (η[A]) x).hom.left ≫ f.left =
+      f.left ≫ (pointTranslation B (η[B]) (x ≫ f)).hom.left
+    simpa using congrArg Over.Hom.left hnat
+  have htransport :
+      (f.left ⁻¹' {(Scheme.homeoOfIso eY)
+        ((η[B].left).base (IsLocalRing.closedPoint K))}).Finite := by
+    apply finite_preimage_singleton_of_homeomorph f.left
+      (Scheme.homeoOfIso eX) (Scheme.homeoOfIso eY) (y :=
+        (η[B].left).base (IsLocalRing.closedPoint K)) ?_ h
+    intro z
+    have hz := congrArg (fun q => q z) hnat'
+    simpa [Scheme.Hom.comp_apply, Scheme.coe_homeoOfIso, eX, eY] using hz
+  have hpoint :
+      (Scheme.homeoOfIso eY) ((η[B].left).base (IsLocalRing.closedPoint K)) =
+        ((x ≫ f).left).base (IsLocalRing.closedPoint K) := by
+    change eY.hom ((η[B].left).base (IsLocalRing.closedPoint K)) = _
+    simpa [eY] using
+      (pointTranslationIso_hom_apply B (η[B]) (x ≫ f)
+        (IsLocalRing.closedPoint K))
+  rw [hpoint] at htransport
+  exact htransport
+
+/- The preceding transport is immediately available from the isogeny kernel
+   condition, without asking callers to unpack its identity-fibre consequence. -/
+theorem Isogeny.finite_fibre_of_section
+    (f : A ⟶ B) [IsMonHom f] (hf : Isogeny f)
+    (x : 𝟙_ (Over (Spec (.of K))) ⟶ A) :
+    (f.left ⁻¹' {((x ≫ f).left).base (IsLocalRing.closedPoint K)}).Finite := by
+  letI : IsFinite (isogenyKernelToBase f) := hf.2
+  exact isogeny_fibre_finite_of_section f x
+    (isogenyKernel_identity_fibre_finite_of_isFinite f)
+
+/- Over an algebraically closed field, a closed fibre with a chosen closed
+   source point is finite.  The chosen point is the only geometric input here;
+   selecting one in every fibre is the separate Jacobson-space step. -/
+theorem Isogeny.finite_preimage_singleton_of_closed_point
+    {K : Type u} [Field K] [IsAlgClosed K]
+    {A B : Over (Spec (.of K))} [GrpObj A] [GrpObj B]
+    (hA : IsAbelianVariety A) (hB : IsAbelianVariety B)
+    (f : A ⟶ B) [IsMonHom f] (h : Isogeny f)
+    {y : B.left} (hy : IsClosed {y})
+    {x : A.left} (hx : IsClosed {x}) (hxy : f.left x = y) :
+    (f.left ⁻¹' {y}).Finite := by
+  letI : IsProper A.hom := hA.1
+  letI : IsProper B.hom := hB.1
+  letI : LocallyOfFiniteType A.hom := inferInstance
+  letI : LocallyOfFiniteType B.hom := inferInstance
+  letI : IsProper f.left := isProper_left_of_isAbelianVariety hA hB f
+  letI : Surjective f.left := h.1
+  letI : IsFinite (isogenyKernelToBase f) := h.2
+  let py : Spec (.of K) ⟶ B.left := pointOfClosedPoint B.hom y hy
+  have hpy : py ≫ B.hom = 𝟙 _ := pointOfClosedPoint_comp B.hom y hy
+  let yhat : 𝟙_ (Over (Spec (.of K))) ⟶ B := Over.homMk py hpy
+  have hyhat : yhat.left (IsLocalRing.closedPoint K) = y := by
+    exact pointOfClosedPoint_apply B.hom y hy _
+  let px : Spec (.of K) ⟶ A.left := pointOfClosedPoint A.hom x hx
+  have hpx : px ≫ A.hom = 𝟙 _ := pointOfClosedPoint_comp A.hom x hx
+  let xhat : 𝟙_ (Over (Spec (.of K))) ⟶ A := Over.homMk px hpx
+  have hxhat : xhat.left (IsLocalRing.closedPoint K) = x := by
+    exact pointOfClosedPoint_apply A.hom x hx _
+  have hcomp : xhat ≫ f = yhat := by
+    apply Over.OverMorphism.ext
+    apply ext_of_apply_closedPoint_eq B.hom
+    · exact Over.w _
+    · exact Over.w _
+    · change f.left (xhat.left (IsLocalRing.closedPoint K)) =
+        yhat.left (IsLocalRing.closedPoint K)
+      rw [hxhat, hxy, hyhat]
+  have hn := pointTranslation_hom_naturality f (η[A]) xhat
+  have hnL := congrArg Over.Hom.left hn
+  have hnL2 :
+      (pointTranslationIso A (η[A]) xhat).hom ≫ f.left =
+        f.left ≫ (pointTranslationIso B (η[B]) yhat).hom := by
+    simpa [pointTranslationIso_hom, hcomp] using hnL
+  let e : B.left := (η[B].left).base (IsLocalRing.closedPoint K)
+  let tauA := pointTranslationIso A (η[A]) xhat
+  let tauB := pointTranslationIso B (η[B]) yhat
+  let k : A.left → A.left := tauA.inv
+  have htauB : tauB.hom e = y := by
+    change (pointTranslationIso B (η[B]) yhat).hom
+      ((η[B].left) (IsLocalRing.closedPoint K)) = y
+    rw [pointTranslationIso_hom_apply]
+    exact hyhat
+  have htauBinv : tauB.inv y = e := by
+    have hi := congrArg (fun g : B.left ⟶ B.left => g e) tauB.hom_inv_id
+    have hi' : tauB.inv (tauB.hom e) = e := by
+      simpa [Scheme.Hom.comp_apply] using hi
+    rw [htauB] at hi'
+    exact hi'
+  have hker : (f.left ⁻¹' {e}).Finite := by
+    dsimp [e]
+    exact isogenyKernel_identity_fibre_finite_of_isFinite f
+  have hmap : Set.MapsTo k (f.left ⁻¹' {y}) (f.left ⁻¹' {e}) := by
+    intro z hz
+    change f.left (k z) = e
+    have hval := congrArg (fun g : A.left ⟶ B.left => g (k z)) hnL2
+    change f.left (tauA.hom (tauA.inv z)) =
+      tauB.hom (f.left (tauA.inv z)) at hval
+    have hi := congrArg (fun g : A.left ⟶ A.left => g z) tauA.inv_hom_id
+    have hi' : tauA.hom (tauA.inv z) = z := by
+      simpa [Scheme.Hom.comp_apply] using hi
+    rw [hi'] at hval
+    have hval' := congrArg tauB.inv hval
+    have hi2 := congrArg (fun g : B.left ⟶ B.left =>
+      g (f.left (tauA.inv z))) tauB.hom_inv_id
+    have hi2' : tauB.inv (tauB.hom (f.left (tauA.inv z))) =
+        f.left (tauA.inv z) := by
+      simpa [Scheme.Hom.comp_apply] using hi2
+    rw [hi2'] at hval'
+    rw [hz, htauBinv] at hval'
+    exact hval'.symm
+  have hinj : Set.InjOn k (f.left ⁻¹' {y}) := by
+    intro z₁ hz₁ z₂ hz₂ heq
+    have heq' := congrArg (fun q : A.left => tauA.hom q) heq
+    have hi₁ := congrArg (fun g : A.left ⟶ A.left => g z₁) tauA.inv_hom_id
+    have hi₁' : tauA.hom (tauA.inv z₁) = z₁ := by
+      simpa [Scheme.Hom.comp_apply] using hi₁
+    have hi₂ := congrArg (fun g : A.left ⟶ A.left => g z₂) tauA.inv_hom_id
+    have hi₂' : tauA.hom (tauA.inv z₂) = z₂ := by
+      simpa [Scheme.Hom.comp_apply] using hi₂
+    rw [hi₁', hi₂'] at heq'
+    exact heq'
+  exact Set.Finite.of_injOn hmap hinj hker
 
 /- A finite underlying morphism has finite kernel, so in this common case the
    isogeny predicate is exactly surjectivity.  The finite-map hypothesis is
