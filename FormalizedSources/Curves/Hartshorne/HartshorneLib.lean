@@ -21,12 +21,14 @@ import HartshorneLib.Chapter4EffectiveBounds
 import HartshorneLib.Chapter4PrincipalDivisors
 import HartshorneLib.Chapter4OrderComparison
 import HartshorneLib.Chapter4PrincipalDivisorDegree
+import HartshorneLib.Chapter4PrincipalDivisorSupport
 import HartshorneLib.Chapter4DivisorClass
 import HartshorneLib.Chapter4DegreeClass
 import HartshorneLib.Chapter4EffectiveRepresentative
 import HartshorneLib.Chapter4LinearSystems
 import HartshorneLib.Chapter2
 import HartshorneLib.Chapter2Sheaves
+import HartshorneLib.Chapter2SheafPushforwardAPI
 import HartshorneLib.Chapter2LineBundles
 import HartshorneLib.Chapter2LineBundleAPI
 import HartshorneLib.Chapter2LineBundlePullback
