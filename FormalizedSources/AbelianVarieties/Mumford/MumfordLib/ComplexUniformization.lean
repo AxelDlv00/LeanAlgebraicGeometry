@@ -456,6 +456,14 @@ theorem complexUniformization_natCast_zsmulTorsion_card
   exact natCast_zsmulTorsion_card_of_uniformization
     u.toGenusTorusUniformization hn
 
+/-- Positive-natural torsion is finite in the complex model. -/
+theorem complexUniformization_natCast_zsmulTorsion_finite
+    {X : Type*} [AddCommGroup X] {g n : ℕ}
+    (u : ComplexTorusUniformization X g) (hn : 0 < n) :
+    Finite (zsmulTorsionSubgroup X (n : ℤ)) := by
+  exact complexUniformization_zsmulTorsion_finite u
+    (by exact_mod_cast (Nat.ne_of_gt hn))
+
 end
 end Uniformization
 end Mumford
