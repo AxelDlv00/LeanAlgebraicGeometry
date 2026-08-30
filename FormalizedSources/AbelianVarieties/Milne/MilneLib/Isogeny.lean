@@ -728,6 +728,30 @@ theorem Isogeny.comp_of_isAbelianVariety
   letI : IsFinite g.left := Isogeny.isFinite_of_isAbelianVariety hB hC g hg
   exact Isogeny.comp_of_finite f g hf hg
 
+/- The same composition closure can be used over an arbitrary field once the
+   residue-field finiteness input has been established for the two factors.
+   Keeping that input explicit makes this a faithful adapter for the pending
+   geometric descent theorem. -/
+theorem Isogeny.comp_of_finite_residue_fibres
+    {K : Type u} [Field K]
+    {A B C : Over (Spec (.of K))} [GrpObj A] [GrpObj B] [GrpObj C]
+    (hA : IsAbelianVariety A) (hB : IsAbelianVariety B)
+    (hC : IsAbelianVariety C)
+    (f : A ⟶ B) (g : B ⟶ C) [IsMonHom f] [IsMonHom g]
+    (hf : Isogeny f) (hg : Isogeny g)
+    (hff : ∀ y : B.left,
+      IsFinite (f.left.fiberToSpecResidueField y))
+    (hgf : ∀ z : C.left,
+      IsFinite (g.left.fiberToSpecResidueField z)) :
+    Isogeny (f ≫ g) := by
+  letI : IsProper f.left := isProper_left_of_isAbelianVariety hA hB f
+  letI : IsProper g.left := isProper_left_of_isAbelianVariety hB hC g
+  letI : IsFinite f.left :=
+    (isFinite_iff_finite_residue_fibres_of_isProper f.left).2 hff
+  letI : IsFinite g.left :=
+    (isFinite_iff_finite_residue_fibres_of_isProper g.left).2 hgf
+  exact Isogeny.comp_of_finite f g hf hg
+
 /- Once the underlying map is finite, every scheme-theoretic fibre obtained by
    pulling back the target point to its residue field is finite as well. -/
 theorem Isogeny.isFinite_fiberToSpecResidueField
