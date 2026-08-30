@@ -2,11 +2,10 @@ id: AJCR.review-plan.p7-galois-descent.finite-glue
 title: Finite-stage affine atlas and GlueData
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: 'Complete for the assembled finite transition/triple data: GlueDataFace,
-  GlueDataAssembly, and the finite-stage face/cocycle infrastructure have native artifacts
-  and root evidence. The source-level Pic0FiniteStageGluePackage and exists_pic0FiniteStageGluePackage
-  declarations are tracked separately under base-change.compile-glue-package until
-  GluePackage.olean and a fresh root import exist.'
+summary: 'Complete: GlueDataFace, GlueDataAssembly, finite-stage face/cocycle infrastructure,
+  and Pic0FiniteStageGluePackage/exists_pic0FiniteStageGluePackage have fresh native
+  artifacts; FiniteStageApi root import passes. Canonical presentation and stable
+  consumer adapters are pinned. Diagram/base-change obligations remain downstream.'
 status: done
 kind: proof
 priority: high
@@ -21,7 +20,7 @@ metadata:
   created_at: '2026-08-18T06:11:51.159581+00:00'
   parent: AJCR.review-plan.p7-galois-descent
   milestone: AJCR.review-plan
-  updated_at: '2026-08-27T10:54:29.549070+00:00'
+  updated_at: '2026-08-30T06:01:31.517162+00:00'
   pinned_commits:
   - f90b60bcfd
   - '6655666759'
