@@ -53,6 +53,7 @@ import HartshorneLib.Chapter4WeightedDegree
 import HartshorneLib.Chapter4ProductFormulaBridge
 import HartshorneLib.Chapter4ProductFormulaAPI
 import HartshorneLib.Chapter4JumpDimension
+import HartshorneLib.Chapter4ProductFormulaCohomology
 
 /-!
 # HartshorneLib
