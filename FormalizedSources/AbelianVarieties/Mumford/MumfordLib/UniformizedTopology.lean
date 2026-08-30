@@ -172,6 +172,14 @@ def pathConnectedSpace_of_genusTorusHomeomorph
   letI : PathConnectedSpace (GenusTorus g) := genusTorus_isPathConnected g
   exact e.symm.surjective.pathConnectedSpace e.symm.continuous
 
+/-- The locally compact space instance obtained from a topological
+uniformization. -/
+@[reducible]
+def locallyCompactSpace_of_genusTorusHomeomorph
+    {X : Type*} [TopologicalSpace X] {g : ℕ}
+    (e : X ≃ₜ GenusTorus g) : LocallyCompactSpace X := by
+  exact e.locallyCompactSpace_iff.mpr inferInstance
+
 /-! The same bridge stated directly for the two uniformization interfaces. -/
 
 theorem genusTorusUniformization_isCompact
@@ -277,6 +285,15 @@ def pathConnectedSpace_of_genusTorusUniformization
   exact pathConnectedSpace_of_genusTorusHomeomorph (u.toHomeomorph hcont hcont_symm)
 
 @[reducible]
+def locallyCompactSpace_of_genusTorusUniformization
+    {X : Type*} [AddCommGroup X] [TopologicalSpace X] {g : ℕ}
+    (u : GenusTorusUniformization X g)
+    (hcont : Continuous u.equiv)
+    (hcont_symm : Continuous u.equiv.symm) : LocallyCompactSpace X :=
+  locallyCompactSpace_of_genusTorusHomeomorph
+    (u.toHomeomorph hcont hcont_symm)
+
+@[reducible]
 def compactSpace_of_complexTorusUniformization
     {X : Type*} [AddCommGroup X] [TopologicalSpace X] {g : ℕ}
     (u : ComplexTorusUniformization X g)
@@ -299,6 +316,15 @@ def pathConnectedSpace_of_complexTorusUniformization
     (hcont : Continuous u.equiv)
     (hcont_symm : Continuous u.equiv.symm) : PathConnectedSpace X := by
   exact pathConnectedSpace_of_genusTorusHomeomorph
+    (u.toGenusTorusHomeomorph hcont hcont_symm)
+
+@[reducible]
+def locallyCompactSpace_of_complexTorusUniformization
+    {X : Type*} [AddCommGroup X] [TopologicalSpace X] {g : ℕ}
+    (u : ComplexTorusUniformization X g)
+    (hcont : Continuous u.equiv)
+    (hcont_symm : Continuous u.equiv.symm) : LocallyCompactSpace X :=
+  locallyCompactSpace_of_genusTorusHomeomorph
     (u.toGenusTorusHomeomorph hcont hcont_symm)
 
 end
