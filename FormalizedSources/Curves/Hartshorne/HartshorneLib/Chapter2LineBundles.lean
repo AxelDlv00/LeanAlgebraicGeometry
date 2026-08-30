@@ -104,4 +104,20 @@ theorem IsLineBundle.restrict {X Y : Scheme.{u}} (f : Y ⟶ X) [IsOpenImmersion 
     IsLineBundle ((Scheme.Modules.restrictFunctor f).obj M) := by
   exact (hM.pullback f).of_iso ((Scheme.Modules.restrictFunctorIsoPullback f).app M).symm
 
+/-- Restriction along a composite of open immersions agrees with successive restriction. -/
+theorem IsLineBundle.restrict_comp {X Y Z : Scheme.{u}} (f : Y ⟶ X) (g : Z ⟶ Y)
+    [IsOpenImmersion f] [IsOpenImmersion g] {M : X.Modules} (hM : IsLineBundle M) :
+    IsLineBundle ((Scheme.Modules.restrictFunctor (g ≫ f)).obj M) := by
+  have htwo : IsLineBundle
+      ((Scheme.Modules.restrictFunctor g).obj
+        ((Scheme.Modules.restrictFunctor f).obj M)) :=
+    (hM.restrict f).restrict g
+  exact htwo.of_iso ((Scheme.Modules.restrictFunctorComp g f).app M).symm
+
+/-- Restriction along the identity immersion preserves the line-bundle property. -/
+theorem IsLineBundle.restrict_id {X : Scheme.{u}} {M : X.Modules}
+    (hM : IsLineBundle M) :
+    IsLineBundle ((Scheme.Modules.restrictFunctor (𝟙 X)).obj M) := by
+  exact hM.of_iso ((Scheme.Modules.restrictFunctorId).app M).symm
+
 end Hartshorne
