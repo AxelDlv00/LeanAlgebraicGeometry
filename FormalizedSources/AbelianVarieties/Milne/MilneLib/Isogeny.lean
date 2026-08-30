@@ -310,6 +310,43 @@ theorem isogenyKernelToBase_isFinite_of_proper_of_finite_identity_fibre
   rw [hpre]
   exact Set.finite_univ
 
+omit [GrpObj A] in
+/-- A finite kernel morphism has a finite set-theoretic identity fibre. -/
+theorem isogenyKernel_identity_fibre_finite_of_isFinite
+    (f : A ⟶ B) [IsFinite (isogenyKernelToBase f)] :
+    (f.left ⁻¹' {(η[B].left).base (IsLocalRing.closedPoint K)}).Finite := by
+  have hpre :=
+    Scheme.Hom.finite_preimage_singleton (isogenyKernelToBase f)
+      (IsLocalRing.closedPoint K)
+  have hEq :
+      (isogenyKernelToBase f ⁻¹' {IsLocalRing.closedPoint K}) =
+        (Set.univ : Set (isogenyKernel f)) := by
+    ext x
+    simp only [Set.mem_preimage, Set.mem_univ, iff_true]
+    exact Subsingleton.elim _ _
+  have hPset : (Set.univ : Set (isogenyKernel f)).Finite := by
+    rw [← hEq]
+    exact hpre
+  letI : Finite (isogenyKernel f) :=
+    Set.finite_univ_iff.mp hPset
+  haveI : Finite (f.left ⁻¹' {(η[B].left).base (IsLocalRing.closedPoint K)}) := by
+    exact (Equiv.finite_iff (isogenyKernelHomeo f).toEquiv).mp inferInstance
+  exact Set.toFinite _
+
+omit [GrpObj A] in
+/-- Under properness of the underlying map, finite kernel and finite identity
+fibre are equivalent as set-theoretic conditions. -/
+theorem isogenyKernelToBase_isFinite_iff_identity_fibre_finite
+    (f : A ⟶ B) [IsProper f.left] :
+    IsFinite (isogenyKernelToBase f) ↔
+      (f.left ⁻¹' {(η[B].left).base (IsLocalRing.closedPoint K)}).Finite := by
+  constructor
+  · intro h
+    letI : IsFinite (isogenyKernelToBase f) := h
+    exact isogenyKernel_identity_fibre_finite_of_isFinite f
+  · intro h
+    exact isogenyKernelToBase_isFinite_of_proper_of_finite_identity_fibre f h
+
 /- A finite underlying morphism has finite kernel, so in this common case the
    isogeny predicate is exactly surjectivity.  The finite-map hypothesis is
    explicit because the general finite-kernel/finite-map equivalence is not
