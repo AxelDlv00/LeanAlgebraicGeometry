@@ -852,7 +852,7 @@
     },
     "states": {
       "blocked": 124,
-      "closed": 134,
+      "closed": 143,
       "formalized_open": 0,
       "informal": 256,
       "ready": 138
@@ -903,11 +903,11 @@
       "MilneLib.LinearMap.surjective_of_localized_at_maximal: Lean declaration is not referenced by any blueprint \\lean{...}",
       "MilneLib.LinearMap.surjective_of_surjective_residue: Lean declaration is not referenced by any blueprint \\lean{...}",
       "MilneLib.LinearMap.surjective_of_surjective_residue_at_maximal: Lean declaration is not referenced by any blueprint \\lean{...}",
-      "MilneLib.SchemeModule.IsStalkwiseFinite: Lean declaration is not referenced by any blueprint \\lean{...}",
-      "MilneLib.SchemeModule.IsStalkwiseFinite.epi_of_surjective_on_residue_fibres: Lean declaration is not referenced by any blueprint \\lean{...}",
-      "MilneLib.SchemeModule.IsStalkwiseFinite.isIso_of_surjective_on_residue_fibres_of_injective_stalks: Lean declaration is not referenced by any blueprint \\lean{...}",
-      "MilneLib.SchemeModule.IsStalkwiseFinite.of_iso: Lean declaration is not referenced by any blueprint \\lean{...}",
-      "MilneLib.SchemeModule.IsStalkwiseFinite.of_surjective_stalks: Lean declaration is not referenced by any blueprint \\lean{...}"
+      "MilneLib.SchemeModule.HasFiniteLocalGenerators: Lean declaration is not referenced by any blueprint \\lean{...}",
+      "MilneLib.SchemeModule.HasFiniteStalkGenerators: Lean declaration is not referenced by any blueprint \\lean{...}",
+      "MilneLib.SchemeModule.HasFiniteStalkGenerators.of_hasFiniteLocalGenerators: Lean declaration is not referenced by any blueprint \\lean{...}",
+      "MilneLib.SchemeModule.HasFiniteStalkGenerators.of_isStalkwiseFinite: Lean declaration is not referenced by any blueprint \\lean{...}",
+      "MilneLib.SchemeModule.IsStalkwiseFinite: Lean declaration is not referenced by any blueprint \\lean{...}"
     ]
   },
   "nodes": [
@@ -4973,7 +4973,7 @@
     },
     {
       "chapter": "Geometry of Abelian Varieties",
-      "comment_count": 14,
+      "comment_count": 15,
       "dep_count": 1,
       "descendant_count": 0,
       "group": "c140",
