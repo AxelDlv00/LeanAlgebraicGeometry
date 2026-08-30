@@ -45,7 +45,8 @@ Keeping these witnesses in the declarations prevents importing modules from
 reconstructing dependent tensor-product instances while elaborating a theorem
 statement.
 -/
-private noncomputable def rightChartFinalBaseChangeHom
+/-- Pinned forward map from the scalar-extended right chart to the exact chart ring. -/
+noncomputable def rightChartFinalBaseChangeHom
     {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
     (P : Pic0FiniteStageGluePackage C F)
     (V : Pic0FiniteStageChartIndex C) :
@@ -63,7 +64,8 @@ private noncomputable def rightChartFinalBaseChangeHom
   pic0FiniteStageFinalBaseChangeForwardPinned
     C P.L P.n P.m P.relation P.e P.M P.N (Sum.inl V)
 
-private noncomputable def rightOverlapFinalBaseChangeHom
+/-- Pinned forward map from the scalar-extended overlap to the exact overlap ring. -/
+noncomputable def rightOverlapFinalBaseChangeHom
     {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
     (P : Pic0FiniteStageGluePackage C F)
     (U V : Pic0FiniteStageChartIndex C) :
@@ -81,7 +83,9 @@ private noncomputable def rightOverlapFinalBaseChangeHom
   pic0FiniteStageFinalBaseChangeForwardPinned
     C P.L P.n P.m P.relation P.e P.M P.N (Sum.inr (U, V))
 
-private noncomputable def rightScalarExtensionHom
+/-- The direct scalar extension of the exact right restriction, with all tensor
+structure witnesses fixed by the final-stage API. -/
+noncomputable def rightScalarExtensionHom
     {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
     (P : Pic0FiniteStageGluePackage C F)
     (U V : Pic0FiniteStageChartIndex C) :
@@ -103,7 +107,9 @@ private noncomputable def rightScalarExtensionHom
     C P.L P.n P.m P.relation P.M P.mapM P.N
       (Sum.inl (Sum.inr (U, V)))
 
-private noncomputable def rightRestrictionScalarExtensionHom
+/-- The scalar extension obtained from the package right restriction map.  This
+is the compatibility-side name used by the affine square theorem. -/
+noncomputable def rightRestrictionScalarExtensionHom
     {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
     (P : Pic0FiniteStageGluePackage C F)
     (U V : Pic0FiniteStageChartIndex C) :
@@ -134,7 +140,8 @@ private noncomputable def rightRestrictionScalarExtensionHom
     (pic0FiniteStageOverlapBaseChangeAlgebra C P.L P.n P.m P.relation P.M P.N U V)
     (rightRestrictionBaseChangeAlgHom C P U V)
 
-private theorem rightRestrictionScalarExtensionHom_eq_direct
+/-- The package scalar-extension map agrees with the direct pinned map. -/
+theorem rightRestrictionScalarExtensionHom_eq_direct
     {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
     (P : Pic0FiniteStageGluePackage C F)
     (U V : Pic0FiniteStageChartIndex C) :
@@ -147,9 +154,10 @@ private theorem rightRestrictionScalarExtensionHom_eq_direct
 set_option synthInstance.maxHeartbeats 3200000 in
 -- Pointwise comparison uses the pinned carrier and structure witnesses.
 set_option maxHeartbeats 12800000 in
-/-- The pinned final chart and overlap comparisons identify the direct scalar-
-extended right restriction with the exact right restriction. -/
-private theorem rightRestrictionFinalBaseChangeEquivPinned_naturality
+/-- Naturality on the fully pinned carrier: the final chart and overlap
+comparisons identify the direct scalar-extended right restriction with the exact
+right restriction before it is adapted to the affine API. -/
+theorem rightRestrictionFinalBaseChangeEquivPinned_naturality
     {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
     (P : Pic0FiniteStageGluePackage C F)
     (U V : Pic0FiniteStageChartIndex C) :
