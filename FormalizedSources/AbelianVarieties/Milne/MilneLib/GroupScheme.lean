@@ -911,6 +911,18 @@ variable {K : Type u} [Field K]
 def IsAbelianVariety (G : Over (Spec (.of K))) [GrpObj G] : Prop :=
   IsProper G.hom ∧ GeometricallyIntegral G.hom
 
+/- A morphism between abelian varieties is proper: its underlying map is
+   proper after cancelling the separated target structure morphism. -/
+theorem isProper_left_of_isAbelianVariety
+    {A B : Over (Spec (.of K))} [GrpObj A] [GrpObj B]
+    (hA : IsAbelianVariety A) (hB : IsAbelianVariety B)
+    (f : A ⟶ B) : IsProper f.left := by
+  letI : IsSeparated B.hom := hB.1.toIsSeparated
+  haveI : IsProper (f.left ≫ B.hom) := by
+    rw [Over.w f]
+    exact hA.1
+  exact IsProper.of_comp f.left B.hom
+
 /-- Proper geometrically integral group schemes over a field are commutative. -/
 theorem isCommMonObj_of_isAbelianVariety
     (G : Over (Spec (.of K))) [GrpObj G] (hG : IsAbelianVariety G) :
