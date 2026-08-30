@@ -145,6 +145,35 @@ theorem comp_pointTranslation_inv (x y : 𝟙_ C ⟶ G) :
     y ≫ (pointTranslation G x y).inv = x := by
   exact comp_pointTranslation_hom (G := G) y x
 
+/- Translation is natural for homomorphisms of group objects.  This is the
+   categorical transport used when moving a local fibre calculation to a
+   different section. -/
+theorem pointTranslation_hom_naturality
+    {G H : C} [GrpObj G] [GrpObj H]
+    (f : G ⟶ H) [IsMonHom f]
+    (x y : 𝟙_ C ⟶ G) :
+    (pointTranslation G x y).hom ≫ f =
+      f ≫ (pointTranslation H (x ≫ f) (y ≫ f)).hom := by
+  have hhom (g : 𝟙_ C ⟶ G) :
+      (GrpObj.mulRight g).hom ≫ f =
+        f ≫ (GrpObj.mulRight (g ≫ f)).hom := by
+    rw [GrpObj.mulRight_hom, Category.assoc, IsMonHom.mul_hom,
+      ← Category.assoc, CartesianMonoidalCategory.lift_map]
+    rw [GrpObj.mulRight_hom, comp_lift_assoc]
+    simp
+  have hinv (g : 𝟙_ C ⟶ G) :
+      (GrpObj.mulRight g).inv ≫ f =
+        f ≫ (GrpObj.mulRight (g ≫ f)).inv := by
+    rw [GrpObj.mulRight_inv, Category.assoc, IsMonHom.mul_hom,
+      ← Category.assoc, CartesianMonoidalCategory.lift_map]
+    rw [GrpObj.mulRight_inv, comp_lift_assoc]
+    simp
+  simp only [pointTranslation, Iso.trans_hom, Iso.symm_hom]
+  rw [Category.assoc, hhom y]
+  conv_lhs => rw [← Category.assoc]
+  rw [hinv x]
+  simp only [Category.assoc]
+
 end Categorical
 
 section RigidityGeometry
