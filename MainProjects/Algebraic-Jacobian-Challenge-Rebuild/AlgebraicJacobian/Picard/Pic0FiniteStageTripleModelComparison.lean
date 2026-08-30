@@ -55,6 +55,85 @@ def pic0FiniteStageModelBaseChangeEquiv
   (Algebra.TensorProduct.cancelBaseChange L.1 M.1 k k
     (DatG0.FiniteRelationAlgebra L.1 (n j) (m j) (relation j))).trans (e j)
 
+/-!
+The comparison above is intentionally retained for source compatibility, but its inferred
+tensor instances are part of the returned `AlgEquiv`.  Rebuilding a map from the displayed
+carrier later can therefore select a propositionally equal, non-definitional algebra.  The
+package below is the stable boundary for new consumers: pass the already elaborated
+equivalence once, then carry its exact witnesses explicitly through subsequent definitions.
+-/
+
+/-- An algebra equivalence together with the exact structures in its type.
+
+This record has no dependent `letI` fields.  In particular, projections below use explicit
+`@AlgEquiv.toAlgHom` arguments, so taking a map from the package never invokes typeclass
+search on a dependent tensor carrier.
+-/
+structure Pic0FiniteStageModelBaseChangeData (R : Type u) where
+  baseSemiring : CommSemiring R
+  source : Type u
+  target : Type u
+  sourceSemiring : Semiring source
+  targetSemiring : Semiring target
+  sourceAlgebra : Algebra R source
+  targetAlgebra : Algebra R target
+  equiv : @AlgEquiv R source target baseSemiring sourceSemiring targetSemiring
+    sourceAlgebra targetAlgebra
+
+namespace Pic0FiniteStageModelBaseChangeData
+
+/- The explicit instance arguments are intentional: `D.equiv.toAlgHom` would ask Lean to
+   synthesize the same witnesses again. -/
+/-- Package an already elaborated comparison without changing any of its witnesses. -/
+noncomputable def of_equiv
+    {R A B : Type u}
+    {baseSemiring : CommSemiring R}
+    {sourceSemiring : Semiring A} {targetSemiring : Semiring B}
+    {sourceAlgebra : Algebra R A} {targetAlgebra : Algebra R B}
+    (equiv : @AlgEquiv R A B baseSemiring sourceSemiring targetSemiring
+      sourceAlgebra targetAlgebra) :
+    Pic0FiniteStageModelBaseChangeData R :=
+  { baseSemiring := baseSemiring
+    source := A
+    target := B
+    sourceSemiring := sourceSemiring
+    targetSemiring := targetSemiring
+    sourceAlgebra := sourceAlgebra
+    targetAlgebra := targetAlgebra
+    equiv := equiv }
+
+/-- The forward map with the package's source and target structures pinned. -/
+abbrev forward {R : Type u} (D : Pic0FiniteStageModelBaseChangeData R) :
+    @AlgHom R D.source D.target D.baseSemiring D.sourceSemiring D.targetSemiring
+      D.sourceAlgebra D.targetAlgebra :=
+  @AlgEquiv.toAlgHom R D.source D.target D.baseSemiring D.sourceSemiring
+    D.targetSemiring D.sourceAlgebra D.targetAlgebra D.equiv
+
+/-- The backward map with the package's source and target structures pinned. -/
+abbrev backward {R : Type u} (D : Pic0FiniteStageModelBaseChangeData R) :
+    @AlgHom R D.target D.source D.baseSemiring D.targetSemiring D.sourceSemiring
+      D.targetAlgebra D.sourceAlgebra :=
+  @AlgEquiv.toAlgHom R D.target D.source D.baseSemiring D.targetSemiring
+    D.sourceSemiring D.targetAlgebra D.sourceAlgebra
+    (@AlgEquiv.symm R D.source D.target D.baseSemiring D.sourceSemiring
+      D.targetSemiring D.sourceAlgebra D.targetAlgebra D.equiv)
+
+@[simp]
+theorem backward_apply_forward {R : Type u}
+    (D : Pic0FiniteStageModelBaseChangeData R) (x : D.source) :
+    D.backward (D.forward x) = x := by
+  change D.equiv.invFun (D.equiv.toFun x) = x
+  exact D.equiv.left_inv x
+
+@[simp]
+theorem forward_apply_backward {R : Type u}
+    (D : Pic0FiniteStageModelBaseChangeData R) (x : D.target) :
+    D.forward (D.backward x) = x := by
+  change D.equiv.toFun (D.equiv.invFun x) = x
+  exact D.equiv.right_inv x
+
+end Pic0FiniteStageModelBaseChangeData
+
 set_option synthInstance.maxHeartbeats 200000 in
 -- The source and target quotient algebras depend on the finite ring tag.
 set_option maxHeartbeats 1600000 in

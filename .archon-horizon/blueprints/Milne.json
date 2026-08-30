@@ -852,7 +852,7 @@
     },
     "states": {
       "blocked": 124,
-      "closed": 170,
+      "closed": 193,
       "formalized_open": 0,
       "informal": 255,
       "ready": 138
@@ -3929,7 +3929,7 @@
     },
     {
       "chapter": "Geometry of Abelian Varieties",
-      "comment_count": 2,
+      "comment_count": 5,
       "dep_count": 0,
       "descendant_count": 23,
       "group": "c109",
@@ -3938,7 +3938,7 @@
       "id": "def:milne-isogeny",
       "lean_file": "MilneLib/Isogeny.lean",
       "lean_name": "MilneLib.isogenyKernel, MilneLib.Isogeny, MilneLib.isogenyKernelToBase, MilneLib.Isogeny.surjective, MilneLib.Isogeny.finite_kernel",
-      "lean_source": "noncomputable def isogenyKernel (f : A \u27f6 B) : Scheme :=\n  pullback f.left (\u03b7[B].left)\n\ndef Isogeny (f : A \u27f6 B) [IsMonHom f] : Prop :=\n  Surjective f.left \u2227 IsFinite (isogenyKernelToBase f)\n\nnoncomputable def isogenyKernelToBase (f : A \u27f6 B) :\n    isogenyKernel f \u27f6 Spec (.of K) :=\n  pullback.snd f.left (\u03b7[B].left)\n\ntheorem Isogeny.surjective (f : A \u27f6 B) [IsMonHom f] (h : Isogeny f) :\n    Surjective f.left :=\n  h.1\n\ntheorem Isogeny.finite_kernel (f : A \u27f6 B) [IsMonHom f] (h : Isogeny f) :\n    IsFinite (isogenyKernelToBase f) :=\n  h.2\n\n/- The finite-flat-surjective condition from Milne's characterization implies\n   the source-faithful isogeny predicate.  The flatness hypothesis is retained\n   in the interface because it is part of the geometric characterization and\n   is used by the companion kernel lemma below. -/",
+      "lean_source": "noncomputable def isogenyKernel (f : A \u27f6 B) : Scheme :=\n  pullback f.left (\u03b7[B].left)\n\ndef Isogeny (f : A \u27f6 B) [IsMonHom f] : Prop :=\n  Surjective f.left \u2227 IsFinite (isogenyKernelToBase f)\n\nnoncomputable def isogenyKernelToBase (f : A \u27f6 B) :\n    isogenyKernel f \u27f6 Spec (.of K) :=\n  pullback.snd f.left (\u03b7[B].left)\n\nomit [GrpObj A] in\n\ntheorem Isogeny.surjective (f : A \u27f6 B) [IsMonHom f] (h : Isogeny f) :\n    Surjective f.left :=\n  h.1\n\ntheorem Isogeny.finite_kernel (f : A \u27f6 B) [IsMonHom f] (h : Isogeny f) :\n    IsFinite (isogenyKernelToBase f) :=\n  h.2\n\n/- The finite-flat-surjective condition from Milne's characterization implies\n   the source-faithful isogeny predicate.  The flatness hypothesis is retained\n   in the interface because it is part of the geometric characterization and\n   is used by the companion kernel lemma below. -/",
       "lean_status": "linked",
       "level": "coarse",
       "mathlib_ok": false,
