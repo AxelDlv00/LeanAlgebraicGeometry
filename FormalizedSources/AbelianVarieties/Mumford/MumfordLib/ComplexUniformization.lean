@@ -433,6 +433,30 @@ noncomputable def complexUniformization_natCast_zsmulTorsion_addEquiv
       (Int.natAbs_ofNat' n)
   exact (complexUniformization_zsmulTorsion_addEquiv u hne).trans castEquiv
 
+/-- The natural-number torsion equivalence is the signed equivalence followed
+by the canonical `natAbs` cast. -/
+theorem complexUniformization_natCast_zsmulTorsion_addEquiv_eq_trans_cast
+    {X : Type*} [AddCommGroup X] {g n : ℕ}
+    (u : ComplexTorusUniformization X g) (hn : 0 < n) :
+    complexUniformization_natCast_zsmulTorsion_addEquiv u hn =
+      (complexUniformization_zsmulTorsion_addEquiv u
+        (Int.ofNat_ne_zero.mpr (Nat.ne_of_gt hn))).trans
+        (AddEquiv.cast (M := fun m : ℕ => Fin (2 * g) → ZMod m)
+          (Int.natAbs_ofNat' n)) := by
+  rfl
+
+@[simp]
+theorem complexUniformization_natCast_zsmulTorsion_addEquiv_apply
+    {X : Type*} [AddCommGroup X] {g n : ℕ}
+    (u : ComplexTorusUniformization X g) (hn : 0 < n)
+    (x : zsmulTorsionSubgroup X (n : ℤ)) :
+    (complexUniformization_natCast_zsmulTorsion_addEquiv u hn) x =
+      (AddEquiv.cast (M := fun m : ℕ => Fin (2 * g) → ZMod m)
+          (Int.natAbs_ofNat' n))
+        ((complexUniformization_zsmulTorsion_addEquiv u
+          (Int.ofNat_ne_zero.mpr (Nat.ne_of_gt hn))) x) := by
+  rfl
+
 /-- Cardinality of signed-integer torsion under a complex uniformization. -/
 theorem complexUniformization_zsmulTorsion_card
     {X : Type*} [AddCommGroup X] {g : ℕ} {n : ℤ}
