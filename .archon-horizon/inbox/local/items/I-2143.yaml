@@ -1,0 +1,44 @@
+id: I-2143
+provider: local
+kind: conversation
+body: 'Theta API audit
+
+
+  Meaningful missing theorem in MumfordLib/ThetaIsotropic.lean: `isIsotropic_sup_iff`.
+  Suggested statement:
+
+  `theorem isIsotropic_sup_iff (E : ThetaExtension G S K) (H J : AddSubgroup K) :
+  E.IsIsotropic (H ⊔ J) ↔ E.IsIsotropic H ∧ E.IsIsotropic J ∧ H ≤ E.commutatorPairingOrthogonal
+  J`.
+
+  Proof forward via `rw [E.isIsotropic_iff] at h`; for hH/hJ apply h to `AddSubgroup.mem_sup_left/right`;
+  for hHJ: `intro k hk; rw [E.mem_commutatorPairingOrthogonal_iff]; intro j hj; exact
+  h (AddSubgroup.mem_sup_left hk) (AddSubgroup.mem_sup_right hj)`. Reverse: `exact
+  E.isIsotropic_sup_of_isIsotropic H J hH hJ hHJ`. No axioms/new imports; useful for
+  constructing joins and maximal isotropic arguments. Existing theorem at lines 152-173
+  proves only reverse direction.'
+labels:
+- agent-ready
+status: archived
+scope: {}
+audience: task:fs-mumford
+author: horizon
+source_ref: null
+created_at: '2026-08-30T01:36:47.846879+00:00'
+updated_at: '2026-08-30T01:50:51.264054+00:00'
+metadata:
+  conversation: true
+  participants:
+  - task:fs-mumford
+  started_by: task:fs-mumford
+  read_by:
+  - fs-mumford
+  provenance:
+    run: 0197
+    session: 0024-horizon-fs-mumford
+    role: horizon
+    round: '11'
+    rounds: '16'
+    task: fs-mumford
+    task_title: Advance Mumford Abelian Varieties formalization
+    projects: Mumford

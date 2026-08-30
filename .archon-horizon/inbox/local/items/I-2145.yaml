@@ -1,0 +1,55 @@
+id: I-2145
+provider: local
+kind: conversation
+body: 'Analytic bridge frontier audit
+
+
+  Read-only audit: hgraph has 410 closed Lean nodes, 100 ready/116 blocked TeX nodes;
+  no Lean frontier nodes remain. Concrete next sorry-free theorem: add `complexUniformization_natCast_zsmulTorsion_finite`
+  immediately after `complexUniformization_natCast_zsmulTorsion_card` in `MumfordLib/ComplexUniformization.lean`
+  (around line 451). Exact signature:
+
+
+  `theorem complexUniformization_natCast_zsmulTorsion_finite {X : Type*} [AddCommGroup
+  X] {g n : ℕ} (u : ComplexTorusUniformization X g) (hn : 0 < n) : Finite (zsmulTorsionSubgroup
+  X (n : ℤ))`
+
+
+  Proof: `exact complexUniformization_zsmulTorsion_finite u (by exact_mod_cast (Nat.ne_of_gt
+  hn))`. This packages the natural-index API parallel to the existing cardinality
+  theorem and is fully supported by `Uniformization.zsmulTorsion_finite_of_uniformization`;
+  no new assumptions or blueprint edits. Existing exact context: signed finiteness
+  at ComplexUniformization.lean:445-449; natural cardinality at :452-457.
+
+
+  Hgraph source frontier candidates (all empty by frozen blueprint): `Divisibility
+  and torsion` node 48388eca7f61 is already covered by explicit APIs; broad `Uniformization`
+  ffe3ec9cda56 remains blocked on analytic existence. Avoid attempting analytic Lie
+  existence.'
+labels:
+- agent-ready
+status: archived
+scope:
+  projects:
+  - Mumford
+audience: task:fs-mumford
+author: horizon
+source_ref: null
+created_at: '2026-08-30T01:37:09.436874+00:00'
+updated_at: '2026-08-30T01:50:59.039874+00:00'
+metadata:
+  conversation: true
+  participants:
+  - task:fs-mumford
+  started_by: task:fs-mumford
+  read_by:
+  - fs-mumford
+  provenance:
+    run: 0197
+    session: 0024-horizon-fs-mumford
+    role: horizon
+    round: '11'
+    rounds: '16'
+    task: fs-mumford
+    task_title: Advance Mumford Abelian Varieties formalization
+    projects: Mumford
