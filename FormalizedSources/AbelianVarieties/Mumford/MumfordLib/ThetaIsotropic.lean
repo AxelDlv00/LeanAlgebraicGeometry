@@ -227,6 +227,21 @@ theorem eq_commutatorPairingOrthogonal_of_isMaximalIsotropic
   exact (le_sup_right : AddSubgroup.zmultiples k ≤ J)
     (AddSubgroup.mem_zmultiples k)
 
+/- A self-orthogonal subgroup is maximal isotropic, giving the converse to
+   `eq_commutatorPairingOrthogonal_of_isMaximalIsotropic`. -/
+theorem isMaximalIsotropic_iff_eq_commutatorPairingOrthogonal
+    (E : ThetaExtension G S K) (H : AddSubgroup K) :
+    E.IsMaximalIsotropic H ↔
+      H = E.commutatorPairingOrthogonal H := by
+  constructor
+  · exact E.eq_commutatorPairingOrthogonal_of_isMaximalIsotropic H
+  · intro hEq
+    refine ⟨le_of_eq hEq, ?_⟩
+    intro J hHJ hJ
+    rw [hEq]
+    intro j hj
+    exact (E.commutatorPairingOrthogonal_anti hHJ) (hJ hj)
+
 /-- The cardinality of the quotient by an orthogonal subgroup is the
 cardinality of the character image whenever the restricted pairing is
 surjective. -/
