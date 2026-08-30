@@ -18,6 +18,7 @@ import HartshorneLib.Chapter4DivisorDegreeStep
 import HartshorneLib.Chapter4DivisorSupport
 import HartshorneLib.Chapter4Effective
 import HartshorneLib.Chapter4EffectiveBounds
+import HartshorneLib.Chapter4DivisorLatticeAPI
 import HartshorneLib.Chapter4PrincipalDivisors
 import HartshorneLib.Chapter4OrderComparison
 import HartshorneLib.Chapter4PrincipalDivisorDegree
@@ -34,6 +35,7 @@ import HartshorneLib.Chapter2LineBundleAPI
 import HartshorneLib.Chapter2LineBundlePullback
 import HartshorneLib.Chapter2ModuleKSheaf
 import HartshorneLib.Chapter2Cohomology
+import HartshorneLib.Chapter2CohomologyFunctoriality
 import HartshorneLib.Chapter2Chi
 import HartshorneLib.Chapter2ChiSlice
 import HartshorneLib.Chapter4DivisorSheaf
@@ -49,6 +51,7 @@ import HartshorneLib.Chapter4DivisorSheafOrder
 import HartshorneLib.Chapter4ResidueDegree
 import HartshorneLib.Chapter4WeightedDegree
 import HartshorneLib.Chapter4ProductFormulaBridge
+import HartshorneLib.Chapter4ProductFormulaAPI
 import HartshorneLib.Chapter4JumpDimension
 
 /-!
