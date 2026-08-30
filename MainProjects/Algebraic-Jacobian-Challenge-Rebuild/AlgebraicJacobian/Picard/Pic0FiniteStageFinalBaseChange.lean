@@ -1251,6 +1251,28 @@ noncomputable def pic0FiniteStageFinalScalarExtensionMapPinned
         (Pic0FiniteStageMapTarget C q)) :=
   pic0FiniteStageFinalScalarExtensionMap C L n m relation M mapM N q
 
+/- The inherited `OneHom.toFun` projection of an `AlgHom` still asks importing modules
+   to synthesize `One` on the dependent tensor carrier.  Export its underlying function
+   separately; this projection is plain data and therefore has no class arguments at use sites. -/
+noncomputable def pic0FiniteStageFinalScalarExtensionMapPinnedFun
+    {F : Type u} [Field F] [Algebra F k]
+    (L : DatG0.FinSubext F k)
+    (n m : Pic0FiniteStageRingIndex C -> Nat)
+    (relation : forall j, Fin (m j) -> MvPolynomial (Fin (n j)) L.1)
+    (M : DatG0.FinSubext L.1 k)
+    (mapM : forall q : Pic0FiniteStageMapIndex C,
+      Pic0FiniteStageModelRing C L n m relation M
+          (Pic0FiniteStageMapSource C q) →ₐ[M.1]
+        Pic0FiniteStageModelRing C L n m relation M
+          (Pic0FiniteStageMapTarget C q))
+    (N : DatG0.FinSubext M.1 k)
+    (q : Pic0FiniteStageMapIndex C) :
+    Pic0FiniteStageFinalScalarExtensionCarrier C L n m relation M N
+        (Pic0FiniteStageMapSource C q) →
+      Pic0FiniteStageFinalScalarExtensionCarrier C L n m relation M N
+        (Pic0FiniteStageMapTarget C q) :=
+  fun x => pic0FiniteStageFinalScalarExtensionMapPinned C L n m relation M mapM N q x
+
 set_option synthInstance.maxHeartbeats 400000 in
 -- Converting the pinned equivalence to a hom uses its already fixed structure witnesses.
 set_option maxHeartbeats 6400000 in
@@ -1283,6 +1305,23 @@ noncomputable def pic0FiniteStageFinalBaseChangeForwardPinned
     (pic0FiniteStageFinalScalarExtensionAlgebra C L n m relation M N j)
     (instAlgebraPic0FiniteStageRing C j)
     (pic0FiniteStageFinalBaseChangeEquivPinned C L n m relation e M N j)
+
+/- As with the scalar-extension map, expose a class-free pointwise projection for consumers
+   that only need the comparison function. -/
+noncomputable def pic0FiniteStageFinalBaseChangeForwardPinnedFun
+    {F : Type u} [Field F] [Algebra F k]
+    (L : DatG0.FinSubext F k)
+    (n m : Pic0FiniteStageRingIndex C -> Nat)
+    (relation : forall j, Fin (m j) -> MvPolynomial (Fin (n j)) L.1)
+    (e : forall j,
+      k ⊗[L.1] DatG0.FiniteRelationAlgebra L.1 (n j) (m j) (relation j) ≃ₐ[k]
+        Pic0FiniteStageRing C j)
+    (M : DatG0.FinSubext L.1 k)
+    (N : DatG0.FinSubext M.1 k)
+    (j : Pic0FiniteStageRingIndex C) :
+    Pic0FiniteStageFinalScalarExtensionCarrier C L n m relation M N j →
+      Pic0FiniteStageRing C j :=
+  fun x => (pic0FiniteStageFinalBaseChangeEquivPinned C L n m relation e M N j).toFun x
 
 set_option synthInstance.maxHeartbeats 400000 in
 -- Naturality elaborates the cancellation and model-comparison squares together.
@@ -1435,15 +1474,17 @@ theorem pic0FiniteStageFinalBaseChangeEquivPinned_naturality
       (Pic0FiniteStageMapSource C q)) :
     (pic0FiniteStageFinalBaseChangeEquivPinned C L n m relation e M N
       (Pic0FiniteStageMapTarget C q)).toFun
-        ((pic0FiniteStageFinalScalarExtensionMapPinned C L n m relation M mapM N q).toFun x) =
+        (pic0FiniteStageFinalScalarExtensionMapPinnedFun C L n m relation M mapM N q x) =
       (pic0FiniteStageMap C q).toFun
-        ((pic0FiniteStageFinalBaseChangeEquivPinned C L n m relation e M N
-          (Pic0FiniteStageMapSource C q)).toFun x) := by
+        (pic0FiniteStageFinalBaseChangeForwardPinnedFun C L n m relation e M N
+          (Pic0FiniteStageMapSource C q) x) := by
   have h := DFunLike.congr_fun
     (pic0FiniteStageFinalBaseChangeEquiv_naturality
       C L n m relation e M mapM hmapM N q) x
   simpa [pic0FiniteStageFinalBaseChangeEquivPinned,
-    pic0FiniteStageFinalScalarExtensionMapPinned] using h
+    pic0FiniteStageFinalScalarExtensionMapPinned,
+    pic0FiniteStageFinalScalarExtensionMapPinnedFun,
+    pic0FiniteStageFinalBaseChangeForwardPinnedFun] using h
 
 end
 
