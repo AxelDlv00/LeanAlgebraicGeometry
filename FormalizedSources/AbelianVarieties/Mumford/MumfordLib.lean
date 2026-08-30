@@ -7,6 +7,7 @@ import MumfordLib.Uniformization
 import MumfordLib.TorsionBridge
 import MumfordLib.Lattice
 import MumfordLib.ZLattice
+import MumfordLib.AnalyticLatticeRank
 import MumfordLib.ComplexModel
 import MumfordLib.ComplexUniformization
 import MumfordLib.DivisionFiber
