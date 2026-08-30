@@ -1085,6 +1085,42 @@ noncomputable def pic0FiniteStageFinalBaseChangeEquiv
   (pic0FiniteStageCancelBaseChange C L n m relation M N j).trans
     (pic0FiniteStageModelBaseChangeEquiv C L n m relation e M j)
 
+/-!
+The ring-level equivalence above is kept for compatibility.  New consumers should use this
+opaque package instead: `of_equiv` records the exact semiring and algebra witnesses selected
+while the equivalence is constructed, and its `forward` projection therefore does not ask
+typeclass search to reconstruct dependent tensor instances at the use site.
+-/
+noncomputable opaque pic0FiniteStageFinalBaseChangeData
+    {F : Type u} [Field F] [Algebra F k]
+    (L : DatG0.FinSubext F k)
+    (n m : Pic0FiniteStageRingIndex C -> Nat)
+    (relation : forall j, Fin (m j) -> MvPolynomial (Fin (n j)) L.1)
+    (e : forall j,
+      k ⊗[L.1] DatG0.FiniteRelationAlgebra L.1 (n j) (m j) (relation j) ≃ₐ[k]
+        Pic0FiniteStageRing C j)
+    (M : DatG0.FinSubext L.1 k)
+    (N : DatG0.FinSubext M.1 k)
+    (j : Pic0FiniteStageRingIndex C) :
+    Pic0FiniteStageModelBaseChangeData k :=
+  Pic0FiniteStageModelBaseChangeData.of_equiv
+    (pic0FiniteStageFinalBaseChangeEquiv C L n m relation e M N j)
+
+/- The projection is intentionally exposed under a named declaration.  Its result type is
+   inherited from the package, so no hidden `≃ₐ` witness is synthesized by consumers. -/
+noncomputable def pic0FiniteStageFinalBaseChangeForward
+    {F : Type u} [Field F] [Algebra F k]
+    (L : DatG0.FinSubext F k)
+    (n m : Pic0FiniteStageRingIndex C -> Nat)
+    (relation : forall j, Fin (m j) -> MvPolynomial (Fin (n j)) L.1)
+    (e : forall j,
+      k ⊗[L.1] DatG0.FiniteRelationAlgebra L.1 (n j) (m j) (relation j) ≃ₐ[k]
+        Pic0FiniteStageRing C j)
+    (M : DatG0.FinSubext L.1 k)
+    (N : DatG0.FinSubext M.1 k)
+    (j : Pic0FiniteStageRingIndex C) :=
+  (pic0FiniteStageFinalBaseChangeData C L n m relation e M N j).forward
+
 set_option synthInstance.maxHeartbeats 3200000 in
 -- The explicit tensor witnesses avoid instance-search loops at this API boundary.
 set_option maxHeartbeats 12800000 in
