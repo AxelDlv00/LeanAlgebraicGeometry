@@ -21,4 +21,9 @@ import AlgebraicJacobian.Picard.Pic0FiniteStageStableRestrictionBaseChange
 This import-light facade is the migration boundary for finite-stage consumers.  New
 files should import it instead of rebuilding tensor, pullback, representer, and stage
 infrastructure from local `letI` blocks.
+
+The legacy flat-package conversion is intentionally separate: import
+`AlgebraicJacobian.Picard.Pic0FiniteStageLegacyAdapter` when an existing
+`Pic0FiniteStageGluePackage` must be converted.  Keeping that dependent reconstruction out
+of this facade preserves the bounded import surface for ordinary stable consumers.
 -/

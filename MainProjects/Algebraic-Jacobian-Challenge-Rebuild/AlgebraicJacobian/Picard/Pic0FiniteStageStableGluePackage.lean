@@ -52,6 +52,19 @@ noncomputable def ofContext
     : Pic0FiniteStageStableGluePackage C F :=
   { context := D }
 
+/-- Checked migration constructor for callers that already selected a presentation.
+
+The equality hypothesis is intentional: the former two-field constructor accepted a
+presentation sharing only the coefficient ring, which allowed unrelated glue data to be
+paired with a context.  A caller can retain a selected presentation only after certifying
+that it is the canonical assembly for `D`. -/
+noncomputable def ofContextWithPresentation
+    (D : Pic0FiniteStageCanonicalGlueContext C F)
+    (P : AlgebraicJacobian.AffineRingGluePresentation D.triple.N.1)
+    (_hP : P = pic0FiniteStageAffineRingGluePresentation_of_canonical_context C D) :
+    Pic0FiniteStageStableGluePackage C F :=
+  { context := D }
+
 /-! Keep the expensive canonical assembly opaque to downstream elaboration.  The witness
 also retains a named equality so clients can use canonicality without unfolding the tensor
 construction. -/
@@ -79,6 +92,14 @@ theorem presentation_eq
     (P : Pic0FiniteStageStableGluePackage C F) :
     P.presentation = pic0FiniteStageAffineRingGluePresentation_of_canonical_context C P.context :=
   P.presentation_spec C
+
+@[simp]
+theorem ofContextWithPresentation_presentation
+    (D : Pic0FiniteStageCanonicalGlueContext C F)
+    (P : AlgebraicJacobian.AffineRingGluePresentation D.triple.N.1)
+    (hP : P = pic0FiniteStageAffineRingGluePresentation_of_canonical_context C D) :
+    (ofContextWithPresentation C D P hP).presentation = P := by
+  exact (presentation_spec C _).trans hP.symm
 
 /-! The following accessors are ordinary definitions rather than reducible aliases.
 This keeps expensive tensor carriers behind the package boundary. -/
