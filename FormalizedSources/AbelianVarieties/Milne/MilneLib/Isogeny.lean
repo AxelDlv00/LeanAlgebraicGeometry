@@ -524,6 +524,33 @@ theorem Isogeny.finite_preimage_singleton_of_closed_point
     exact heq'
   exact Set.Finite.of_injOn hmap hinj hker
 
+/- Surjectivity makes every closed target fibre nonempty.  Since the source is
+   locally of finite type over the field, its Jacobson property supplies a
+   closed source point in that fibre and discharges the preceding hypothesis. -/
+theorem Isogeny.finite_preimage_singleton_of_closed_target
+    {K : Type u} [Field K] [IsAlgClosed K]
+    {A B : Over (Spec (.of K))} [GrpObj A] [GrpObj B]
+    (hA : IsAbelianVariety A) (hB : IsAbelianVariety B)
+    (f : A ⟶ B) [IsMonHom f] (h : Isogeny f)
+    {y : B.left} (hy : IsClosed {y}) :
+    (f.left ⁻¹' {y}).Finite := by
+  letI : IsProper A.hom := hA.1
+  letI : IsProper B.hom := hB.1
+  letI : LocallyOfFiniteType A.hom := inferInstance
+  letI : LocallyOfFiniteType B.hom := inferInstance
+  letI : JacobsonSpace A.left := LocallyOfFiniteType.jacobsonSpace A.hom
+  letI : Surjective f.left := h.1
+  have hpre : (f.left ⁻¹' {y}).Nonempty := by
+    obtain ⟨x, hx⟩ := f.left.surjective y
+    exact ⟨x, hx⟩
+  have hloc : IsLocallyClosed (f.left ⁻¹' {y}) :=
+    (hy.preimage f.left.continuous).isLocallyClosed
+  obtain ⟨x, hxpre, hxclosed⟩ :=
+    nonempty_inter_closedPoints hpre hloc
+  have hxy : f.left x = y := hxpre
+  exact Isogeny.finite_preimage_singleton_of_closed_point hA hB f h hy
+    (mem_closedPoints_iff.mp hxclosed) hxy
+
 /- A finite underlying morphism has finite kernel, so in this common case the
    isogeny predicate is exactly surjectivity.  The finite-map hypothesis is
    explicit because the general finite-kernel/finite-map equivalence is not
