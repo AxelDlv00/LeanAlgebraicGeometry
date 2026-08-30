@@ -4,6 +4,7 @@ import MumfordLib.RigidityPointwise
 import MumfordLib.RigidityChain
 import MumfordLib.Analytic
 import MumfordLib.Uniformization
+import MumfordLib.TorsionBridge
 import MumfordLib.Lattice
 import MumfordLib.ZLattice
 import MumfordLib.ComplexModel
