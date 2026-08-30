@@ -54,6 +54,7 @@ import HartshorneLib.Chapter4ProductFormulaBridge
 import HartshorneLib.Chapter4ProductFormulaAPI
 import HartshorneLib.Chapter4JumpDimension
 import HartshorneLib.Chapter4TwoLattice
+import HartshorneLib.Chapter4CechTwoCover
 import HartshorneLib.Chapter4ProductFormulaCohomology
 
 /-!
