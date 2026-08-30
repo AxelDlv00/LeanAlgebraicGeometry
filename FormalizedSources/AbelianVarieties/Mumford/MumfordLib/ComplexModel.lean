@@ -368,6 +368,54 @@ def complexGenusQuotient_zsmulTorsion_addEquiv {g : ℕ} {n : ℤ} (hn : n ≠ 0
   (zsmulTorsion_addEquiv_of_addEquiv (complexGenusQuotientAddEquiv g) n).trans
     (productTorus_zsmul_torsion_addEquiv_pi_zmod hn)
 
+@[simp]
+theorem complexGenusQuotient_zsmulTorsion_addEquiv_apply
+    {g : ℕ} {n : ℤ} (hn : n ≠ 0)
+    (x : zsmulTorsionSubgroup
+      (GenusComplexVector g ⧸ complexPeriodLattice g) n) :
+    ((complexGenusQuotient_zsmulTorsion_addEquiv hn) x :
+        Fin (2 * g) → ZMod n.natAbs) =
+      (productTorus_zsmul_torsion_addEquiv_pi_zmod hn)
+        ((zsmulTorsion_addEquiv_of_addEquiv
+          (complexGenusQuotientAddEquiv g) n) x) := by
+  rfl
+
+/- The positive-natural notation is obtained from the signed classification by
+transporting the canonical equality `(n : ℤ).natAbs = n`. -/
+noncomputable def complexGenusQuotient_natCast_zsmulTorsion_addEquiv
+    {g n : ℕ} (hn : 0 < n) :
+    zsmulTorsionSubgroup
+        (GenusComplexVector g ⧸ complexPeriodLattice g) (n : ℤ) ≃+
+      (Fin (2 * g) → ZMod n) := by
+  have hne : (n : ℤ) ≠ 0 := by
+    exact_mod_cast (Nat.ne_of_gt hn)
+  let castEquiv : (Fin (2 * g) → ZMod (n : ℤ).natAbs) ≃+
+      (Fin (2 * g) → ZMod n) :=
+    AddEquiv.cast (M := fun m : ℕ => Fin (2 * g) → ZMod m)
+      (Int.natAbs_ofNat' n)
+  exact (complexGenusQuotient_zsmulTorsion_addEquiv hne).trans castEquiv
+
+theorem complexGenusQuotient_natCast_zsmulTorsion_addEquiv_eq_trans_cast
+    {g n : ℕ} (hn : 0 < n) :
+    complexGenusQuotient_natCast_zsmulTorsion_addEquiv hn =
+      (complexGenusQuotient_zsmulTorsion_addEquiv
+        (Int.ofNat_ne_zero.mpr (Nat.ne_of_gt hn))).trans
+        (AddEquiv.cast (M := fun m : ℕ => Fin (2 * g) → ZMod m)
+          (Int.natAbs_ofNat' n)) := by
+  rfl
+
+@[simp]
+theorem complexGenusQuotient_natCast_zsmulTorsion_addEquiv_apply
+    {g n : ℕ} (hn : 0 < n)
+    (x : zsmulTorsionSubgroup
+      (GenusComplexVector g ⧸ complexPeriodLattice g) (n : ℤ)) :
+    (complexGenusQuotient_natCast_zsmulTorsion_addEquiv hn) x =
+      (AddEquiv.cast (M := fun m : ℕ => Fin (2 * g) → ZMod m)
+          (Int.natAbs_ofNat' n))
+        ((complexGenusQuotient_zsmulTorsion_addEquiv
+          (Int.ofNat_ne_zero.mpr (Nat.ne_of_gt hn))) x) := by
+  rfl
+
 /-- The complex-coordinate quotient has torsion order `|n| ^ (2 * g)`. -/
 theorem complexGenusQuotient_zsmulTorsion_card {g : ℕ} {n : ℤ} (hn : n ≠ 0) :
     Nat.card

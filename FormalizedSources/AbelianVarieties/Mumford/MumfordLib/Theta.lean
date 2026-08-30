@@ -421,6 +421,12 @@ noncomputable def commutatorPairingHom (k : K) : K →+ Additive S where
       Additive.ofMul (E.commutatorPairing k l₁ * E.commutatorPairing k l₂)
     rw [E.commutatorPairing_add_right]
 
+@[simp]
+theorem commutatorPairingHom_apply (k l : K) :
+    E.commutatorPairingHom k l =
+      Additive.ofMul (E.commutatorPairing k l) :=
+  rfl
+
 noncomputable def commutatorPairingBihom : K →+ K →+ Additive S where
   toFun k := E.commutatorPairingHom k
   map_zero' := by
