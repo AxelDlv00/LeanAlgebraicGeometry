@@ -480,7 +480,8 @@ theorem Isogeny.finite_preimage_singleton_of_closed_point
   have htauBinv : tauB.inv y = e := by
     have hi := congrArg (fun g : B.left ⟶ B.left => g e) tauB.hom_inv_id
     have hi' : tauB.inv (tauB.hom e) = e := by
-      simpa [Scheme.Hom.comp_apply] using hi
+      change tauB.inv (tauB.hom e) = e at hi
+      exact hi
     rw [htauB] at hi'
     exact hi'
   have hker : (f.left ⁻¹' {e}).Finite := by
@@ -494,14 +495,17 @@ theorem Isogeny.finite_preimage_singleton_of_closed_point
       tauB.hom (f.left (tauA.inv z)) at hval
     have hi := congrArg (fun g : A.left ⟶ A.left => g z) tauA.inv_hom_id
     have hi' : tauA.hom (tauA.inv z) = z := by
-      simpa [Scheme.Hom.comp_apply] using hi
+      change tauA.hom (tauA.inv z) = z at hi
+      exact hi
     rw [hi'] at hval
     have hval' := congrArg tauB.inv hval
     have hi2 := congrArg (fun g : B.left ⟶ B.left =>
       g (f.left (tauA.inv z))) tauB.hom_inv_id
     have hi2' : tauB.inv (tauB.hom (f.left (tauA.inv z))) =
         f.left (tauA.inv z) := by
-      simpa [Scheme.Hom.comp_apply] using hi2
+      change tauB.inv (tauB.hom (f.left (tauA.inv z))) =
+        f.left (tauA.inv z) at hi2
+      exact hi2
     rw [hi2'] at hval'
     rw [hz, htauBinv] at hval'
     exact hval'.symm
@@ -510,10 +514,12 @@ theorem Isogeny.finite_preimage_singleton_of_closed_point
     have heq' := congrArg (fun q : A.left => tauA.hom q) heq
     have hi₁ := congrArg (fun g : A.left ⟶ A.left => g z₁) tauA.inv_hom_id
     have hi₁' : tauA.hom (tauA.inv z₁) = z₁ := by
-      simpa [Scheme.Hom.comp_apply] using hi₁
+      change tauA.hom (tauA.inv z₁) = z₁ at hi₁
+      exact hi₁
     have hi₂ := congrArg (fun g : A.left ⟶ A.left => g z₂) tauA.inv_hom_id
     have hi₂' : tauA.hom (tauA.inv z₂) = z₂ := by
-      simpa [Scheme.Hom.comp_apply] using hi₂
+      change tauA.hom (tauA.inv z₂) = z₂ at hi₂
+      exact hi₂
     rw [hi₁', hi₂'] at heq'
     exact heq'
   exact Set.Finite.of_injOn hmap hinj hker
