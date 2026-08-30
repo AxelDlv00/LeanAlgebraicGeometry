@@ -124,6 +124,13 @@ theorem toTransitionModelsData_M (P : Pic0FiniteStageGluePackage C F) :
 theorem toStable_context (P : Pic0FiniteStageGluePackage C F) :
     P.toStable.context = P.toCanonicalContext := rfl
 
+/-- Produce a stable package by mapping the existing legacy finite-stage producer through the
+canonical adapter. -/
+theorem exists_stable :
+    Nonempty (Pic0FiniteStageStableGluePackage C F) :=
+  Nonempty.map (fun P => P.toStable C)
+    (exists_pic0FiniteStageGluePackage (C := C) (F := F))
+
 end Pic0FiniteStageGluePackage
 
 end
