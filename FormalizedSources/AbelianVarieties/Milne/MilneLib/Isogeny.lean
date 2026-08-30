@@ -279,6 +279,37 @@ theorem IsFinite.of_isProper_of_finite_preimage_singleton
     LocallyQuasiFinite.of_finite_preimage_singleton f hfib
   exact IsFinite.of_isProper_of_locallyQuasiFinite f
 
+omit [GrpObj A] in
+/-- For a proper morphism into a group scheme, a finite set-theoretic identity
+fibre makes the scheme-theoretic kernel finite over the field. -/
+theorem isogenyKernelToBase_isFinite_of_proper_of_finite_identity_fibre
+    (f : A ⟶ B) [IsProper f.left]
+    (h : (f.left ⁻¹' {(η[B].left).base (IsLocalRing.closedPoint K)}).Finite) :
+    IsFinite (isogenyKernelToBase f) := by
+  letI : IsProper (isogenyKernelToBase f) := by
+    change IsProper (pullback.snd f.left (η[B].left))
+    infer_instance
+  letI : Finite (f.left ⁻¹' {(η[B].left).base (IsLocalRing.closedPoint K)}) :=
+    h.to_subtype
+  letI : Finite (isogenyKernel f) :=
+    Finite.of_equiv _ (isogenyKernelHomeo f).symm.toEquiv
+  apply IsFinite.of_isProper_of_finite_preimage_singleton _
+  intro y
+  have hy : y = (default : Spec (.of K)) := Subsingleton.elim _ _
+  subst y
+  have hpre :
+      (isogenyKernelToBase f ⁻¹' {(default : Spec (.of K))}) =
+        (Set.univ : Set (isogenyKernel f)) := by
+    ext x
+    constructor
+    · intro _
+      trivial
+    · intro _
+      simp only [Set.mem_preimage]
+      exact Subsingleton.elim _ _
+  rw [hpre]
+  exact Set.finite_univ
+
 /- A finite underlying morphism has finite kernel, so in this common case the
    isogeny predicate is exactly surjectivity.  The finite-map hypothesis is
    explicit because the general finite-kernel/finite-map equivalence is not
