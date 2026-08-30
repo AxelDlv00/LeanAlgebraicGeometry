@@ -632,6 +632,21 @@ theorem Isogeny.isFinite_fiberToSpecResidueField
   exact CategoryTheory.MorphismProperty.pullback_snd _ _
     (inferInstance : IsFinite f.left)
 
+/- In the algebraically closed setting, the geometric isogeny condition now
+   admits the expected finite-and-surjective reformulation. -/
+theorem Isogeny.iff_isFinite_and_surjective_of_isAbelianVariety
+    {K : Type u} [Field K] [IsAlgClosed K]
+    {A B : Over (Spec (.of K))} [GrpObj A] [GrpObj B]
+    (hA : IsAbelianVariety A) (hB : IsAbelianVariety B)
+    (f : A ⟶ B) [IsMonHom f] :
+    Isogeny f ↔ IsFinite f.left ∧ Surjective f.left := by
+  constructor
+  · intro h
+    exact ⟨Isogeny.isFinite_of_isAbelianVariety hA hB f h, h.1⟩
+  · rintro ⟨hf, hs⟩
+    letI : IsFinite f.left := hf
+    exact ⟨hs, isogenyKernelToBase_isFinite_of_finite f⟩
+
 /- A finite underlying morphism has finite kernel, so in this common case the
    isogeny predicate is exactly surjectivity.  The finite-map hypothesis is
    explicit because the general finite-kernel/finite-map equivalence is not
