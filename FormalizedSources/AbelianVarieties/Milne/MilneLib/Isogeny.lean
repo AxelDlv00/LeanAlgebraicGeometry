@@ -565,6 +565,60 @@ theorem Isogeny.exists_isFinite_morphismRestrict_of_closed_target
   exact exists_isFinite_morphismRestrict_of_finite_preimage_singleton f.left y
     (Isogeny.finite_preimage_singleton_of_closed_target hA hB f h hy)
 
+/- The finite neighbourhoods at closed points cover the quasi-finite locus.
+   Jacobson density therefore upgrades closed-target fibre finiteness to global
+   local quasi-finiteness; properness then gives a finite underlying map. -/
+theorem Isogeny.isFinite_of_isAbelianVariety
+    {K : Type u} [Field K] [IsAlgClosed K]
+    {A B : Over (Spec (.of K))} [GrpObj A] [GrpObj B]
+    (hA : IsAbelianVariety A) (hB : IsAbelianVariety B)
+    (f : A ⟶ B) [IsMonHom f] (h : Isogeny f) : IsFinite f.left := by
+  letI : IsProper A.hom := hA.1
+  letI : IsProper B.hom := hB.1
+  letI : LocallyOfFiniteType A.hom := inferInstance
+  letI : LocallyOfFiniteType B.hom := inferInstance
+  letI : JacobsonSpace A.left := LocallyOfFiniteType.jacobsonSpace A.hom
+  letI : JacobsonSpace B.left := LocallyOfFiniteType.jacobsonSpace B.hom
+  letI : LocallyOfFiniteType (f.left ≫ B.hom) := by
+    rw [Over.w f]
+    infer_instance
+  letI : LocallyOfFiniteType f.left := locallyOfFiniteType_of_comp f.left B.hom
+  letI : IsProper f.left := isProper_left_of_isAbelianVariety hA hB f
+  have htop : f.left.quasiFiniteLocus = ⊤ := by
+    apply top_unique
+    intro z hz
+    by_contra hznot
+    have hcomp : ((f.left.quasiFiniteLocus : Set A.left)ᶜ).Nonempty :=
+      ⟨z, hznot⟩
+    obtain ⟨x, hxcomp, hxclosed⟩ := nonempty_inter_closedPoints hcomp
+      f.left.quasiFiniteLocus.isOpen.isClosed_compl.isLocallyClosed
+    have hxclosed' : IsClosed {x} := mem_closedPoints_iff.mp hxclosed
+    have hmap := Scheme.Hom.closePoints_subset_preimage_closedPoints f.left hxclosed'
+    have hy : IsClosed {f.left x} := mem_closedPoints_iff.mp hmap
+    obtain ⟨V, hyV, hfin⟩ :=
+      Isogeny.exists_isFinite_morphismRestrict_of_closed_target hA hB f h hy
+    letI : IsFinite (f.left ∣_ V) := hfin
+    let xV : (f.left ⁻¹ᵁ V).toScheme := ⟨x, hyV⟩
+    have hxV : (f.left ∣_ V).QuasiFiniteAt xV := by
+      letI : LocallyQuasiFinite (f.left ∣_ V) := by infer_instance
+      exact (f.left ∣_ V).quasiFiniteAt xV
+    have hcompV : ((f.left ∣_ V) ≫ V.ι).QuasiFiniteAt xV := by
+      rw [Scheme.Hom.quasiFiniteAt_comp_iff]
+      exact hxV
+    have hcompV' : ((f.left ⁻¹ᵁ V).ι ≫ f.left).QuasiFiniteAt xV := by
+      simpa only [morphismRestrict_ι] using hcompV
+    have hxq : f.left.QuasiFiniteAt ((f.left ⁻¹ᵁ V).ι xV) :=
+      (Scheme.Hom.quasiFiniteAt_comp_iff_of_isOpenImmersion).mp hcompV'
+    have hxq' : f.left.QuasiFiniteAt x := by
+      simpa [xV] using hxq
+    have hxmem : x ∈ f.left.quasiFiniteLocus := by
+      exact hxq'
+    exact hxcomp hxmem
+  have hLQF : LocallyQuasiFinite f.left :=
+    (Scheme.Hom.quasiFiniteLocus_eq_top_iff (f := f.left)).mp htop
+  letI : LocallyQuasiFinite f.left := hLQF
+  exact IsFinite.of_isProper_of_locallyQuasiFinite f.left
+
 /- A finite underlying morphism has finite kernel, so in this common case the
    isogeny predicate is exactly surjectivity.  The finite-map hypothesis is
    explicit because the general finite-kernel/finite-map equivalence is not
