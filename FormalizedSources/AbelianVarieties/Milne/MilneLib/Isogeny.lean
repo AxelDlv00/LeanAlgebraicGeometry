@@ -350,6 +350,23 @@ theorem isogenyKernelToBase_isFinite_iff_identity_fibre_finite
   · intro h
     exact isogenyKernelToBase_isFinite_of_proper_of_finite_identity_fibre f h
 
+/- For a proper scheme morphism, the residue-field fibres are the precise
+   local quasi-finiteness input needed for finiteness.  This formulation is
+   valid over arbitrary base fields and records the descent boundary used by
+   the isogeny characterization below. -/
+theorem isFinite_iff_finite_residue_fibres_of_isProper
+    {X Y : Scheme.{u}} (f : X ⟶ Y) [IsProper f] :
+    IsFinite f ↔ ∀ y : Y, IsFinite (f.fiberToSpecResidueField y) := by
+  constructor
+  · intro hf y
+    letI : IsFinite f := hf
+    infer_instance
+  · intro hf
+    letI : QuasiCompact f := inferInstance
+    letI : LocallyQuasiFinite f :=
+      (locallyQuasiFinite_iff_isFinite_fiber).2 hf
+    exact IsFinite.of_isProper_of_locallyQuasiFinite f
+
 /- A homeomorphism square transports finiteness of a singleton fibre.  This
    set-theoretic form is useful because scheme fibres are represented by the
    underlying preimage sets in the current Mathlib API. -/
@@ -644,6 +661,25 @@ theorem Isogeny.iff_isFinite_and_surjective_of_isAbelianVariety
   constructor
   · intro h
     exact ⟨Isogeny.isFinite_of_isAbelianVariety hA hB f h, h.1⟩
+  · rintro ⟨hf, hs⟩
+    letI : IsFinite f.left := hf
+    exact ⟨hs, isogenyKernelToBase_isFinite_of_finite f⟩
+
+/- Over an arbitrary field, the same finite-and-surjective reformulation
+   follows once the residue-field fibres have been descended.  The explicit
+   hypothesis isolates that remaining geometric input without asserting the
+   stronger blueprint characterization prematurely. -/
+theorem Isogeny.iff_isFinite_and_surjective_of_isAbelianVariety_of_finite_residue_fibres
+    {K : Type u} [Field K]
+    {A B : Over (Spec (.of K))} [GrpObj A] [GrpObj B]
+    (hA : IsAbelianVariety A) (hB : IsAbelianVariety B)
+    (f : A ⟶ B) [IsMonHom f]
+    (hfib : ∀ y : B.left, IsFinite (f.left.fiberToSpecResidueField y)) :
+    Isogeny f ↔ IsFinite f.left ∧ Surjective f.left := by
+  letI : IsProper f.left := isProper_left_of_isAbelianVariety hA hB f
+  constructor
+  · intro h
+    exact ⟨(isFinite_iff_finite_residue_fibres_of_isProper f.left).2 hfib, h.1⟩
   · rintro ⟨hf, hs⟩
     letI : IsFinite f.left := hf
     exact ⟨hs, isogenyKernelToBase_isFinite_of_finite f⟩
