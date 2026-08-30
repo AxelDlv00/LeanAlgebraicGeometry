@@ -14,6 +14,7 @@ import HartshorneLib.Chapter1Curves
 import HartshorneLib.Chapter1CurveStalks
 import HartshorneLib.Chapter4Curves
 import HartshorneLib.Chapter4DivisorInduction
+import HartshorneLib.Chapter4DivisorDegreeStep
 import HartshorneLib.Chapter4DivisorSupport
 import HartshorneLib.Chapter4Effective
 import HartshorneLib.Chapter4PrincipalDivisors
@@ -26,6 +27,7 @@ import HartshorneLib.Chapter4LinearSystems
 import HartshorneLib.Chapter2
 import HartshorneLib.Chapter2Sheaves
 import HartshorneLib.Chapter2LineBundles
+import HartshorneLib.Chapter2LineBundleAPI
 import HartshorneLib.Chapter2ModuleKSheaf
 import HartshorneLib.Chapter2Cohomology
 import HartshorneLib.Chapter2Chi
@@ -36,10 +38,13 @@ import HartshorneLib.Chapter4ChiBase
 import HartshorneLib.Chapter4DivisorMultiplication
 import HartshorneLib.Chapter4DivisorSheafMul
 import HartshorneLib.Chapter4Skyscraper
+import HartshorneLib.Chapter4SkyscraperCohomology
 import HartshorneLib.Chapter4DivisorDevissage
+import HartshorneLib.Chapter4DivisorDevissageExact
 import HartshorneLib.Chapter4DivisorSheafOrder
 import HartshorneLib.Chapter4ResidueDegree
 import HartshorneLib.Chapter4WeightedDegree
+import HartshorneLib.Chapter4ProductFormulaBridge
 import HartshorneLib.Chapter4JumpDimension
 
 /-!
