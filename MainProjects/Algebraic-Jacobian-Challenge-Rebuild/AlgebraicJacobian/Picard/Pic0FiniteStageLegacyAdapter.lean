@@ -38,7 +38,9 @@ namespace Pic0FiniteStageGluePackage
 
 variable {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
 
+-- The legacy package projections expose dependent tensor-map witnesses.
 set_option synthInstance.maxHeartbeats 400000 in
+-- The inverse comparison proof normalizes two nested finite-stage tensors.
 set_option maxHeartbeats 6400000 in
 /-- Repackage the finite-stage models carried by a legacy glue package. -/
 noncomputable def toTransitionModelsData
@@ -82,7 +84,9 @@ noncomputable def toTransitionModelsData
     · exact pic0FiniteStageTransportedTransition_inverse
         C P.L P.n P.m P.relation P.e U V
 
+-- Rebuilding the canonical Q/T context specializes those dependent witnesses.
 set_option synthInstance.maxHeartbeats 400000 in
+-- The dependent Q/T record must be elaborated against the selected family.
 set_option maxHeartbeats 6400000 in
 /-- Build the canonical context associated to the legacy package. -/
 noncomputable def toCanonicalContext
@@ -103,7 +107,7 @@ noncomputable def toCanonicalContext
     comparison := by
       intro p
       rcases p with ⟨U, V, W⟩
-      convert P.hthetaN (U, (V, W)) using 1 <;> rfl }
+      convert P.hthetaN (U, (V, W)) using 1; rfl }
   exact Pic0FiniteStageCanonicalGlueContext.ofModelsWithComparison C D Q T hQ
 
 /-- Convert a legacy package to the canonical stable package. -/
