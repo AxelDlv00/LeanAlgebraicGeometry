@@ -209,6 +209,84 @@ theorem ComplexTorusUniformization.eq_of_exponential_compatibility
   rw [ComplexTorusUniformization.ofExponential_equiv_symm_mk]
   exact hcompat z
 
+/- Recover the exponential map from a chosen quotient uniformization. -/
+def ComplexTorusUniformization.exponential
+    {X : Type*} [AddCommGroup X] {g : ℕ}
+    (u : ComplexTorusUniformization X g) :
+    GenusComplexVector g →+ X :=
+  u.equiv.symm.toAddMonoidHom.comp
+    (QuotientAddGroup.mk' (complexPeriodLattice g))
+
+@[simp]
+theorem ComplexTorusUniformization.exponential_apply
+    {X : Type*} [AddCommGroup X] {g : ℕ}
+    (u : ComplexTorusUniformization X g) (z : GenusComplexVector g) :
+    u.exponential z =
+      u.equiv.symm (QuotientAddGroup.mk' (complexPeriodLattice g) z) :=
+  rfl
+
+theorem ComplexTorusUniformization.exponential_surjective
+    {X : Type*} [AddCommGroup X] {g : ℕ}
+    (u : ComplexTorusUniformization X g) :
+    Function.Surjective u.exponential := by
+  intro x
+  obtain ⟨z, hz⟩ := QuotientAddGroup.mk'_surjective
+    (complexPeriodLattice g) (u.equiv x)
+  refine ⟨z, ?_⟩
+  change u.equiv.symm (QuotientAddGroup.mk' (complexPeriodLattice g) z) = x
+  rw [hz, u.equiv.symm_apply_apply]
+
+theorem ComplexTorusUniformization.exponential_ker
+    {X : Type*} [AddCommGroup X] {g : ℕ}
+    (u : ComplexTorusUniformization X g) :
+    u.exponential.ker = complexPeriodLattice g := by
+  ext z
+  rw [AddMonoidHom.mem_ker]
+  change u.equiv.symm (QuotientAddGroup.mk' (complexPeriodLattice g) z) = 0 ↔
+    z ∈ complexPeriodLattice g
+  constructor
+  · intro hz
+    have hz' : QuotientAddGroup.mk' (complexPeriodLattice g) z = 0 := by
+      apply u.equiv.symm.injective
+      simpa only [map_zero] using hz
+    rw [← AddMonoidHom.mem_ker, QuotientAddGroup.ker_mk'] at hz'
+    exact hz'
+  · intro hz
+    have hz' : QuotientAddGroup.mk' (complexPeriodLattice g) z = 0 := by
+      rw [← AddMonoidHom.mem_ker, QuotientAddGroup.ker_mk']
+      exact hz
+    rw [hz', map_zero]
+
+/- Reconstructing a witness from its recovered exponential is definitionally
+   compatible with the original representative formula. -/
+theorem ComplexTorusUniformization.ofExponential_exponential
+    {X : Type*} [AddCommGroup X] {g : ℕ}
+    (u : ComplexTorusUniformization X g) :
+    ComplexTorusUniformization.ofExponential
+        u.exponential u.exponential_surjective u.exponential_ker = u := by
+  symm
+  exact ComplexTorusUniformization.eq_of_exponential_compatibility u
+    u.exponential u.exponential_surjective u.exponential_ker
+    (fun z => rfl)
+
+/- Package the recovered map back into a period-lattice quotient certificate. -/
+def ComplexTorusUniformization.toPeriodLatticeQuotient
+    {X : Type*} [AddCommGroup X] {g : ℕ}
+    (u : ComplexTorusUniformization X g) :
+    PeriodLatticeQuotient (GenusComplexVector g) X :=
+  complexPeriodLatticeQuotientOfExponential
+    u.exponential u.exponential_surjective u.exponential_ker
+
+theorem ComplexTorusUniformization.toPeriodLatticeQuotient_quotientAddEquiv
+    {X : Type*} [AddCommGroup X] {g : ℕ}
+    (u : ComplexTorusUniformization X g) :
+    u.toPeriodLatticeQuotient.quotientAddEquiv = u.equiv.symm := by
+  apply AddEquiv.ext
+  intro q
+  refine QuotientAddGroup.induction_on q ?_
+  intro z
+  rfl
+
 /-- Forget the complex coordinates and obtain the real genus-torus model. -/
 def ComplexTorusUniformization.toGenusTorusUniformization
     {X : Type*} [AddCommGroup X] {g : ℕ}
@@ -334,6 +412,44 @@ theorem ComplexTorusUniformization.toHomeomorph_apply
     (hcont : Continuous u.equiv)
     (hcont_symm : Continuous u.equiv.symm) (x : X) :
     u.toHomeomorph hcont hcont_symm x = u.equiv x :=
+  rfl
+
+theorem ComplexTorusUniformization.exponential_continuous
+    {X : Type*} [AddCommGroup X] [TopologicalSpace X] {g : ℕ}
+    (u : ComplexTorusUniformization X g)
+    (hcont_symm : Continuous u.equiv.symm) :
+    Continuous u.exponential := by
+  change Continuous (u.equiv.symm ∘
+    (QuotientAddGroup.mk' (complexPeriodLattice g)))
+  exact hcont_symm.comp QuotientAddGroup.continuous_mk
+
+theorem ComplexTorusUniformization.exponential_isOpenQuotientMap
+    {X : Type*} [AddCommGroup X] [TopologicalSpace X] {g : ℕ}
+    (u : ComplexTorusUniformization X g)
+    (hcont : Continuous u.equiv)
+    (hcont_symm : Continuous u.equiv.symm) :
+    IsOpenQuotientMap u.exponential := by
+  rw [isOpenQuotientMap_iff]
+  refine ⟨u.exponential_surjective,
+    u.exponential_continuous hcont_symm, ?_⟩
+  change IsOpenMap (u.equiv.symm ∘
+    (QuotientAddGroup.mk' (complexPeriodLattice g)))
+  exact (u.toHomeomorph hcont hcont_symm).symm.isOpenMap.comp
+    QuotientAddGroup.isOpenQuotientMap_mk.isOpenMap
+
+theorem ComplexTorusUniformization.ofExponential_toHomeomorph_exponential
+    {X : Type*} [AddCommGroup X] [TopologicalSpace X] {g : ℕ}
+    (u : ComplexTorusUniformization X g)
+    (hcont : Continuous u.equiv)
+    (hcont_symm : Continuous u.equiv.symm) :
+    ComplexTorusUniformization.ofExponential_toHomeomorph
+        u.exponential u.exponential_surjective u.exponential_ker
+        (u.exponential_isOpenQuotientMap hcont hcont_symm) =
+      u.toHomeomorph hcont hcont_symm := by
+  apply Homeomorph.ext
+  intro x
+  rw [ComplexTorusUniformization.ofExponential_toHomeomorph_apply]
+  rw [ComplexTorusUniformization.ofExponential_exponential]
   rfl
 
 /- Combining the preceding maps gives a topological real-torus model for a
