@@ -36,6 +36,18 @@ noncomputable def isogenyKernelToBase (f : A ⟶ B) :
     isogenyKernel f ⟶ Spec (.of K) :=
   pullback.snd f.left (η[B].left)
 
+omit [GrpObj A] in
+/-- A point of the kernel projects to the fibre of `f.left` over the identity
+section at the same base point. -/
+theorem isogenyKernel_fst_mem_preimage
+    (f : A ⟶ B) (x : isogenyKernel f) :
+    (pullback.fst f.left (η[B].left)).base x ∈
+      f.left ⁻¹' {(η[B].left).base ((pullback.snd f.left (η[B].left)).base x)} := by
+  change f.left.base ((pullback.fst f.left (η[B].left)).base x) =
+    (η[B].left).base ((pullback.snd f.left (η[B].left)).base x)
+  have h := pullback.condition (f := f.left) (g := η[B].left)
+  exact congrArg (fun q => q.base x) h
+
 /-- A surjective group-scheme homomorphism with finite kernel. -/
 def Isogeny (f : A ⟶ B) [IsMonHom f] : Prop :=
   Surjective f.left ∧ IsFinite (isogenyKernelToBase f)
