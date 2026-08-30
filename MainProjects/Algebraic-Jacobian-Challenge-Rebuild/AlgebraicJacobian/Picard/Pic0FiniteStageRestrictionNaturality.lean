@@ -94,9 +94,11 @@ theorem restrictionBaseChangeMap_naturality
     (chartFinalBaseChangeEquiv C P U)
     (overlapFinalBaseChangeEquiv C P U V)
     (exactRestrictionAlgHom C U V)
-  exact pic0FiniteStageFinalBaseChangeEquiv_naturality
+  apply DFunLike.ext _ _
+  intro x
+  exact pic0FiniteStageFinalBaseChangeEquivPinned_naturality
     C P.L P.n P.m P.relation P.e P.M P.mapM P.hmapM P.N
-      (Sum.inl (Sum.inl (U, V)))
+      (Sum.inl (Sum.inl (U, V))) x
 
 end Pic0FiniteStageGluePackage
 
