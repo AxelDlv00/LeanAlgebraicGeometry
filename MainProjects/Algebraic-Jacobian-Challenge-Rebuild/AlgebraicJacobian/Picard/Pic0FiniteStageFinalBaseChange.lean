@@ -1157,9 +1157,90 @@ theorem pic0FiniteStageFinalBaseChangeEquiv_naturality
         (pic0FiniteStageMap C q).comp
         (pic0FiniteStageFinalBaseChangeEquiv C L n m relation e M N
           (Pic0FiniteStageMapSource C q)).toAlgHom := by
-  -- Temporary quarantine: the archived proof is preserved in Horizon attempt 0033.
-  -- The remaining issue is dependent `AlgHom` instance coherence, not the statement.
-  sorry
+  have htower := @AlgebraicJacobian.scalarExtensionMapOfAlgHom_tower
+    M.1 N.1 k
+    (Pic0FiniteStageModelRing C L n m relation M
+      (Pic0FiniteStageMapSource C q))
+    (Pic0FiniteStageModelRing C L n m relation M
+      (Pic0FiniteStageMapTarget C q))
+    (inferInstance : CommRing M.1)
+    (inferInstance : CommRing N.1)
+    (inferInstance : CommRing k)
+    (pic0FiniteStageModelRingCommRing C L n m relation M
+      (Pic0FiniteStageMapSource C q)).toSemiring
+    (pic0FiniteStageModelRingCommRing C L n m relation M
+      (Pic0FiniteStageMapTarget C q)).toSemiring
+    (inferInstance : Algebra M.1 N.1)
+    (inferInstance : Algebra M.1 k)
+    (inferInstance : Algebra N.1 k)
+    (inferInstance : IsScalarTower M.1 N.1 k)
+    (pic0FiniteStageModelRingAlgebra C L n m relation M
+      (Pic0FiniteStageMapSource C q))
+    (pic0FiniteStageModelRingAlgebra C L n m relation M
+      (Pic0FiniteStageMapTarget C q))
+    (mapM q)
+  have hcancel := @AlgebraicJacobian.cancelBaseChange_naturality
+    M.1 N.1 k
+    (Pic0FiniteStageModelRing C L n m relation M
+      (Pic0FiniteStageMapSource C q))
+    (Pic0FiniteStageModelRing C L n m relation M
+      (Pic0FiniteStageMapTarget C q))
+    (inferInstance : CommRing M.1)
+    (inferInstance : CommRing N.1)
+    (inferInstance : CommRing k)
+    (pic0FiniteStageModelRingCommRing C L n m relation M
+      (Pic0FiniteStageMapSource C q))
+    (pic0FiniteStageModelRingCommRing C L n m relation M
+      (Pic0FiniteStageMapTarget C q))
+    (inferInstance : Algebra M.1 N.1)
+    (inferInstance : Algebra M.1 k)
+    (inferInstance : Algebra N.1 k)
+    (inferInstance : IsScalarTower M.1 N.1 k)
+    (pic0FiniteStageModelRingAlgebra C L n m relation M
+      (Pic0FiniteStageMapSource C q))
+    (pic0FiniteStageModelRingAlgebra C L n m relation M
+      (Pic0FiniteStageMapTarget C q))
+    (pic0FiniteStageModelScalarExtensionMap C L n m relation M N
+      (Pic0FiniteStageMapSource C q) (Pic0FiniteStageMapTarget C q) (mapM q))
+    (pic0FiniteStageScalarExtensionMapOver C L n m relation M
+      (Pic0FiniteStageMapSource C q) (Pic0FiniteStageMapTarget C q) (mapM q))
+    htower
+  have hmodel := pic0FiniteStageModelBaseChangeEquiv_naturality
+    C L n m relation e M mapM hmapM q
+  apply DFunLike.ext _ _
+  intro x
+  change
+    (pic0FiniteStageFinalBaseChangeEquiv C L n m relation e M N
+        (Pic0FiniteStageMapTarget C q))
+        ((pic0FiniteStageFinalScalarExtensionMap C L n m relation M mapM N q) x) =
+      pic0FiniteStageMap C q
+        ((pic0FiniteStageFinalBaseChangeEquiv C L n m relation e M N
+          (Pic0FiniteStageMapSource C q)) x)
+  change
+    (pic0FiniteStageModelBaseChangeEquiv C L n m relation e M
+        (Pic0FiniteStageMapTarget C q))
+        ((pic0FiniteStageCancelBaseChange C L n m relation M N
+          (Pic0FiniteStageMapTarget C q))
+          ((pic0FiniteStageFinalScalarExtensionMap C L n m relation M mapM N q) x)) =
+      pic0FiniteStageMap C q
+        ((pic0FiniteStageModelBaseChangeEquiv C L n m relation e M
+          (Pic0FiniteStageMapSource C q))
+          ((pic0FiniteStageCancelBaseChange C L n m relation M N
+            (Pic0FiniteStageMapSource C q)) x))
+  have hx := DFunLike.congr_fun hcancel x
+  have hm := DFunLike.congr_fun hmodel
+    ((pic0FiniteStageCancelBaseChange C L n m relation M N
+      (Pic0FiniteStageMapSource C q)) x)
+  rw [show
+      (pic0FiniteStageCancelBaseChange C L n m relation M N
+          (Pic0FiniteStageMapTarget C q))
+          ((pic0FiniteStageFinalScalarExtensionMap C L n m relation M mapM N q) x) =
+        (AlgebraicJacobian.scalarExtensionMapOfAlgHom
+          (R := M.1) (K := k) (mapM q))
+          ((pic0FiniteStageCancelBaseChange C L n m relation M N
+            (Pic0FiniteStageMapSource C q)) x) by
+    exact hx]
+  exact hm
 
 end
 
