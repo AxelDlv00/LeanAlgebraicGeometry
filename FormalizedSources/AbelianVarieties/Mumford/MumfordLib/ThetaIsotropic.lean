@@ -172,6 +172,32 @@ theorem isIsotropic_sup_of_isIsotropic
     E.commutatorPairing_add_right, hHH, hHJ', hJH, hJJ]
   simp
 
+/- A join is isotropic exactly when its two factors are isotropic and
+   mutually orthogonal. -/
+theorem isIsotropic_sup_iff
+    (E : ThetaExtension G S K) (H J : AddSubgroup K) :
+    E.IsIsotropic (H ⊔ J) ↔
+      E.IsIsotropic H ∧ E.IsIsotropic J ∧
+        H ≤ E.commutatorPairingOrthogonal J := by
+  constructor
+  · intro h
+    refine ⟨?_, ?_, ?_⟩
+    · apply (E.isIsotropic_iff H).2
+      intro k hk l hl
+      exact (E.isIsotropic_iff (H ⊔ J)).1 h
+        (AddSubgroup.mem_sup_left hk) (AddSubgroup.mem_sup_left hl)
+    · apply (E.isIsotropic_iff J).2
+      intro k hk l hl
+      exact (E.isIsotropic_iff (H ⊔ J)).1 h
+        (AddSubgroup.mem_sup_right hk) (AddSubgroup.mem_sup_right hl)
+    · intro k hk
+      rw [E.mem_commutatorPairingOrthogonal_iff J k]
+      intro j
+      exact (E.isIsotropic_iff (H ⊔ J)).1 h
+        (AddSubgroup.mem_sup_left hk) (AddSubgroup.mem_sup_right j.property)
+  · rintro ⟨hH, hJ, hHJ⟩
+    exact E.isIsotropic_sup_of_isIsotropic H J hH hJ hHJ
+
 theorem commutatorPairing_zsmul_left
     (E : ThetaExtension G S K) (n : ℤ) (k l : K) :
     E.commutatorPairing (n • k) l = E.commutatorPairing k l ^ n := by
