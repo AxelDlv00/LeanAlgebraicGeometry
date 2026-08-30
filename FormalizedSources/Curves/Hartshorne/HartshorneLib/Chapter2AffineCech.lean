@@ -8,6 +8,11 @@ import Mathlib
 /-!
 # Degree-one Čech cobounding for the structure sheaf on an affine open
 
+This module ports the corresponding affine-localization development from the
+Algebraic-Jacobian-Challenge project (Copyright (c) 2026 The AlgebraicJacobian
+authors; The AlgebraicJacobian Contributors), with the declarations adapted to
+the Hartshorne library.
+
 This file proves the algebraic core of degree-one cohomology vanishing on affine opens
 (Serre): on an affine open `U` of a scheme `X`, every Čech 1-cocycle for the structure
 sheaf on a finite cover of `U` by basic opens is a coboundary

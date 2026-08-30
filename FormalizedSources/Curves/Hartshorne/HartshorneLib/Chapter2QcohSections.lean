@@ -9,6 +9,10 @@ import HartshorneLib.Chapter2AffineCech
 /-!
 # Quasi-coherence packaging for sheaves of modules on the small Zariski site
 
+This module ports the corresponding packaging from the Algebraic-Jacobian-Challenge
+project (Copyright (c) 2026 The AlgebraicJacobian authors; The AlgebraicJacobian
+Contributors), with the declarations adapted to the Hartshorne library.
+
 For a scheme `X`, an open `U`, and a sheaf `F` of `k`-modules on the small Zariski site
 of `X`, this file packages the two properties of the structure sheaf that drive Serre's
 affine degree-one vanishing argument, so
@@ -37,8 +41,8 @@ The two (P2) axioms are exactly `IsAffineOpen.exists_res_eq_pow_mul` and
 sheaf `Scheme.moduleKSheaf` satisfies the packaging on every open
 (`AlgebraicGeometry.Scheme.moduleKSheaf.instQcohOn`), with
 `qsmul h r s = X.resHom h r * s`. Sheaves glued from unit cocycles on finite affine
-trivializing covers (the twisted line bundles of the Wave-4 datum) satisfy it chartwise
-by the same localization facts, transported along the chart trivializations.
+trivializing covers satisfy it chartwise by the same localization facts, transported along
+the chart trivializations.
 
 The file also provides the public restriction operator `AlgebraicGeometry.secRes` on
 sections of a sheaf of `k`-modules (the analogue of the file-local operator of
@@ -127,8 +131,8 @@ affine degree-one vanishing argument
 `HartshorneLib.Chapter2AffineVanishingQcoh`).
 
 The structure sheaf satisfies the packaging on every open
-(`Scheme.moduleKSheaf.instQcohOn`); sheaves trivialized on an affine chart `U` (the
-Wave-4 twisted line bundles) satisfy it chart by chart. -/
+(`Scheme.moduleKSheaf.instQcohOn`); sheaves trivialized on an affine chart `U` (including
+twisted line bundles) satisfy it chart by chart. -/
 class Scheme.QcohOn (F : Sheaf (Opens.grothendieckTopology (X : TopCat)) (ModuleCat.{u} k))
     (U : X.Opens) where
   /-- The action of an ambient section `r ∈ Γ(X, U)` on `F`-sections over `W ≤ U`. -/

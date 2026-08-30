@@ -8,10 +8,14 @@ import HartshorneLib.Chapter2Cohomology
 import HartshorneLib.Chapter2OverOpen
 
 /-!
-# Twisted affine Serre vanishing: degree-one cohomology of quasi-coherently packaged sheaves
+# Generalized affine Serre vanishing: degree-one cohomology of quasi-coherently packaged sheaves
 
-The Wave-4 keystone (G-CBC-3(ii)): for a scheme `X`, an affine open `U`, and a sheaf `F`
-of `k`-modules on the small Zariski site carrying the quasi-coherence packaging
+This module ports the corresponding generalized affine vanishing development from the
+Algebraic-Jacobian-Challenge project (Copyright (c) 2026 The AlgebraicJacobian authors;
+The AlgebraicJacobian Contributors), with the declarations adapted to the Hartshorne library.
+
+For a scheme `X`, an affine open `U`, and a sheaf `F` of `k`-modules on the small Zariski site
+carrying the quasi-coherence packaging
 `Scheme.QcohOn F U` of `HartshorneLib.Chapter2QcohSections` (ambient-section
 action + localization on affine opens of `U`), the degree-one cohomology of `U` with
 coefficients in `F` vanishes:
@@ -25,9 +29,9 @@ This generalizes the landed structure-sheaf engine of
 the existing affine vanishing / Cech engine off the structure sheaf: taking
 `F = X.moduleKSheaf k` (whose packaging instance lives in
 `HartshorneLib.Chapter2QcohSections`) recovers
-`IsAffineOpen.subsingleton_moduleKSheaf_hModule'_one`. The intended coefficients are the
-twisted line bundles of the Wave-4 representability route — sheaves glued from unit
-cocycles on finite affine trivializing covers — for which the packaging holds chartwise.
+`IsAffineOpen.subsingleton_moduleKSheaf_hModule'_one`. The packaging is intended to apply to
+sheaves glued from unit cocycles on finite affine trivializing covers, where it can be checked
+chartwise.
 
 ## Proof architecture
 
@@ -387,7 +391,7 @@ noncomputable def cokernelAppEquivQuotientRangeOfQcoh (hU : IsAffineOpen U)
   CategoryTheory.Sheaf.cokernelAppEquivQuotientRange ι (op U)
     (fun q ↦ hU.cokernel_app_surjective_of_qcoh ι q)
 
-/-- **Twisted affine Serre vanishing in degree one** (G-CBC-3(ii)): for a scheme `X`, an
+/-- **Generalized affine Serre vanishing in degree one**: for a scheme `X`, an
 affine open `U`, and a sheaf `F` of `k`-modules on the small Zariski site of `X` carrying
 the quasi-coherence packaging `Scheme.QcohOn F U`, the degree-one cohomology of `U` with
 coefficients in `F` vanishes (in the sense of `Sheaf.HModule'`, cohomology of an object
@@ -410,7 +414,7 @@ theorem subsingleton_hModule'_one_of_qcoh (hU : IsAffineOpen U)
 
 end IsAffineOpen
 
-/-- **Twisted affine Serre vanishing, affine schemes** (G-CBC-3(ii), site form): for an
+/-- **Generalized affine Serre vanishing, affine schemes** (site form): for an
 affine scheme `X` and a sheaf `F` of `k`-modules on its small Zariski site carrying the
 quasi-coherence packaging on `⊤`, the degree-one cohomology of the site vanishes.
 Transport of `IsAffineOpen.subsingleton_hModule'_one_of_qcoh` along

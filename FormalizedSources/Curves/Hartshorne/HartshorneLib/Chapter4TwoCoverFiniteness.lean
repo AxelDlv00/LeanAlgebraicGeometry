@@ -5,6 +5,7 @@ Authors: The Hartshorne Contributors
 -/
 
 import HartshorneLib.Chapter2TwoCover
+import HartshorneLib.Chapter2AffineVanishingQcoh
 import HartshorneLib.Chapter4CechTwoCover
 
 /-!
@@ -82,6 +83,48 @@ theorem moduleFinite_hModule_one_of_twoCover
       (leftRestriction k X U₀ U₁) (rightRestriction k X U₀ U₁)
       hσ₀ hσ₁ hσ₀loc hσ₁loc
   exact Module.Finite.equiv ecomp.symm
+
+/-- Affine-open specialization of the two-cover finiteness consumer.  The
+surjectivity assumptions for the injective cokernel are discharged by the
+quasi-coherent affine vanishing API; the Cech comparison and Laurent-window
+conditions remain explicit geometric/algebraic inputs. -/
+theorem moduleFinite_hModule_one_of_twoCover_of_affine
+    (hcov : U₀ ⊔ U₁ = ⊤)
+    (hU₀ : IsAffineOpen U₀) (hU₁ : IsAffineOpen U₁)
+    (eCech :
+      ((X.moduleKSheaf k).obj.obj (op (U₀ ⊓ U₁)) ⧸
+        LinearMap.range ((X.twoCoverSquare U₀ U₁ hcov).moduleDiff (X.moduleKSheaf k))) ≃ₗ[k]
+          schemeH1Cok k X U₀ U₁)
+    [Module (LaurentPolynomial k) Γ(X, U₀ ⊓ U₁)]
+    [IsScalarTower k (LaurentPolynomial k) Γ(X, U₀ ⊓ U₁)]
+    [Module.Finite (LaurentPolynomial k) Γ(X, U₀ ⊓ U₁)]
+    (hσ₀ : ∀ x ∈ LinearMap.range (leftRestriction k X U₀ U₁),
+      (LaurentPolynomial.T 1 : LaurentPolynomial k) • x ∈
+        LinearMap.range (leftRestriction k X U₀ U₁))
+    (hσ₁ : ∀ x ∈ LinearMap.range (rightRestriction k X U₀ U₁),
+      (LaurentPolynomial.T (-1) : LaurentPolynomial k) • x ∈
+        LinearMap.range (rightRestriction k X U₀ U₁))
+    (hσ₀loc : ∀ n : Γ(X, U₀ ⊓ U₁), ∃ m : ℕ,
+      ((LaurentPolynomial.T 1 : LaurentPolynomial k) ^ m) • n ∈
+        LinearMap.range (leftRestriction k X U₀ U₁))
+    (hσ₁loc : ∀ n : Γ(X, U₀ ⊓ U₁), ∃ m : ℕ,
+      ((LaurentPolynomial.T (-1) : LaurentPolynomial k) ^ m) • n ∈
+        LinearMap.range (rightRestriction k X U₀ U₁)) :
+    Module.Finite k
+      (Sheaf.HModule (Opens.grothendieckTopology (X : TopCat)) k
+        (X.moduleKSheaf k) 1) := by
+  have hsurj₀ : Function.Surjective
+      ((cokernel.π (Injective.ι (X.moduleKSheaf k))).hom.app (op U₀)).hom := by
+    intro q
+    exact hU₀.cokernel_app_surjective_of_qcoh
+      (Injective.ι (X.moduleKSheaf k)) q
+  have hsurj₁ : Function.Surjective
+      ((cokernel.π (Injective.ι (X.moduleKSheaf k))).hom.app (op U₁)).hom := by
+    intro q
+    exact hU₁.cokernel_app_surjective_of_qcoh
+      (Injective.ι (X.moduleKSheaf k)) q
+  exact moduleFinite_hModule_one_of_twoCover k X U₀ U₁ hcov hsurj₀ hsurj₁ eCech
+    hσ₀ hσ₁ hσ₀loc hσ₁loc
 
 end CechTwoCover
 end Hartshorne
