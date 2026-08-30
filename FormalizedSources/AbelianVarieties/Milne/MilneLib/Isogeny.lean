@@ -619,6 +619,19 @@ theorem Isogeny.isFinite_of_isAbelianVariety
   letI : LocallyQuasiFinite f.left := hLQF
   exact IsFinite.of_isProper_of_locallyQuasiFinite f.left
 
+/- Once the underlying map is finite, every scheme-theoretic fibre obtained by
+   pulling back the target point to its residue field is finite as well. -/
+theorem Isogeny.isFinite_fiberToSpecResidueField
+    {K : Type u} [Field K] [IsAlgClosed K]
+    {A B : Over (Spec (.of K))} [GrpObj A] [GrpObj B]
+    (hA : IsAbelianVariety A) (hB : IsAbelianVariety B)
+    (f : A ⟶ B) [IsMonHom f] (h : Isogeny f) (y : B.left) :
+    IsFinite (f.left.fiberToSpecResidueField y) := by
+  letI : IsFinite f.left := Isogeny.isFinite_of_isAbelianVariety hA hB f h
+  change IsFinite (pullback.snd f.left (B.left.fromSpecResidueField y))
+  exact CategoryTheory.MorphismProperty.pullback_snd _ _
+    (inferInstance : IsFinite f.left)
+
 /- A finite underlying morphism has finite kernel, so in this common case the
    isogeny predicate is exactly surjectivity.  The finite-map hypothesis is
    explicit because the general finite-kernel/finite-map equivalence is not
