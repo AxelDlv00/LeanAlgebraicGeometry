@@ -226,6 +226,42 @@ def genusRealVectorQuotient_zsmulTorsion_addEquiv {g : ℕ} {n : ℤ} (hn : n �
   exact (zsmulTorsion_addEquiv_of_addEquiv (genusRealVectorQuotientAddEquiv g) n).trans
     (productTorus_zsmul_torsion_addEquiv_pi_zmod hn)
 
+/- The positive-natural notation is obtained from the signed classification by
+transporting the canonical equality `(n : ℤ).natAbs = n`. -/
+noncomputable def genusRealVectorQuotient_natCast_zsmulTorsion_addEquiv
+    {g n : ℕ} (hn : 0 < n) :
+    zsmulTorsionSubgroup (GenusRealVector g ⧸ integerPeriodLattice g) (n : ℤ) ≃+
+      (Fin (2 * g) → ZMod n) := by
+  have hne : (n : ℤ) ≠ 0 := Int.ofNat_ne_zero.mpr (Nat.ne_of_gt hn)
+  let castEquiv : (Fin (2 * g) → ZMod (n : ℤ).natAbs) ≃+
+      (Fin (2 * g) → ZMod n) :=
+    AddEquiv.cast (M := fun m : ℕ => Fin (2 * g) → ZMod m)
+      (Int.natAbs_ofNat' n)
+  exact (genusRealVectorQuotient_zsmulTorsion_addEquiv hne).trans castEquiv
+
+/-- The natural-number real quotient torsion equivalence is the signed one
+followed by the canonical `natAbs` cast. -/
+theorem genusRealVectorQuotient_natCast_zsmulTorsion_addEquiv_eq_trans_cast
+    {g n : ℕ} (hn : 0 < n) :
+    genusRealVectorQuotient_natCast_zsmulTorsion_addEquiv hn =
+      (genusRealVectorQuotient_zsmulTorsion_addEquiv
+        (Int.ofNat_ne_zero.mpr (Nat.ne_of_gt hn))).trans
+        (AddEquiv.cast (M := fun m : ℕ => Fin (2 * g) → ZMod m)
+          (Int.natAbs_ofNat' n)) := by
+  rfl
+
+@[simp]
+theorem genusRealVectorQuotient_natCast_zsmulTorsion_addEquiv_apply
+    {g n : ℕ} (hn : 0 < n)
+    (x : zsmulTorsionSubgroup
+      (GenusRealVector g ⧸ integerPeriodLattice g) (n : ℤ)) :
+    (genusRealVectorQuotient_natCast_zsmulTorsion_addEquiv hn) x =
+      (AddEquiv.cast (M := fun m : ℕ => Fin (2 * g) → ZMod m)
+          (Int.natAbs_ofNat' n))
+        ((genusRealVectorQuotient_zsmulTorsion_addEquiv
+          (Int.ofNat_ne_zero.mpr (Nat.ne_of_gt hn))) x) := by
+  rfl
+
 /-- The standard real lattice quotient has the expected finite torsion order. -/
 theorem genusRealVectorQuotient_zsmulTorsion_card {g : ℕ} {n : ℤ} (hn : n ≠ 0) :
     Nat.card (zsmulTorsionSubgroup (GenusRealVector g ⧸ integerPeriodLattice g) n) =
@@ -235,6 +271,16 @@ theorem genusRealVectorQuotient_zsmulTorsion_card {g : ℕ} {n : ℤ} (hn : n �
         Nat.card (zsmulTorsionSubgroup (GenusTorus g) n) :=
       zsmulTorsion_card_eq_of_addEquiv (genusRealVectorQuotientAddEquiv g) n
     _ = n.natAbs ^ (2 * g) := genusTorus_zsmulTorsion_card g hn
+
+/-- The standard real quotient has the expected positive-natural torsion
+order. -/
+theorem genusRealVectorQuotient_natCast_zsmulTorsion_card
+    {g n : ℕ} (hn : 0 < n) :
+    Nat.card (zsmulTorsionSubgroup
+      (GenusRealVector g ⧸ integerPeriodLattice g) (n : ℤ)) =
+      n ^ (2 * g) := by
+  have hne : (n : ℤ) ≠ 0 := Int.ofNat_ne_zero.mpr (Nat.ne_of_gt hn)
+  simpa using (genusRealVectorQuotient_zsmulTorsion_card (g := g) hne)
 
 /-- Every nonzero integer acts surjectively on the standard real lattice
 quotient. -/
@@ -253,6 +299,14 @@ theorem genusRealVectorQuotient_zsmulTorsion_finite {g : ℕ} {n : ℤ} (hn : n 
       (GenusRealVector g ⧸ integerPeriodLattice g) g :=
     ⟨genusRealVectorQuotientAddEquiv g⟩
   exact zsmulTorsion_finite_of_uniformization u hn
+
+/-- Positive-natural torsion in the standard real quotient is finite. -/
+theorem genusRealVectorQuotient_natCast_zsmulTorsion_finite
+    {g n : ℕ} (hn : 0 < n) :
+    Finite (zsmulTorsionSubgroup
+      (GenusRealVector g ⧸ integerPeriodLattice g) (n : ℤ)) := by
+  have hne : (n : ℤ) ≠ 0 := Int.ofNat_ne_zero.mpr (Nat.ne_of_gt hn)
+  exact genusRealVectorQuotient_zsmulTorsion_finite (g := g) hne
 
 /-- The standard real exponential transported to a chosen uniformized group. -/
 def exponential_to {X : Type*} [AddCommGroup X] {g : ℕ}
