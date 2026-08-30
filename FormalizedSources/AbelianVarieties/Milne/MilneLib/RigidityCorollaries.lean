@@ -394,4 +394,47 @@ theorem existsUnique_hom_comp_pointTranslation_of_isAbelianVariety_arbitraryFiel
     hpointed hpointed' hdecomp hdecomp'
   exact Prod.ext hunique.2.symm hunique.1.symm
 
+/- The arbitrary-field existence theorem also admits the same unique-pair
+   packaging as the algebraically closed version.  The axis calculation is
+   purely categorical, so no extra algebraic-closure hypothesis is needed. -/
+theorem existsUnique_hom_additive_decomp_of_rigidity_arbitraryField
+    {K : Type u} [Field K]
+    {V W : Over (Spec (.of K))}
+    [IsProper V.hom]
+    [GeometricallyIntegral V.hom]
+    [GeometricallyIntegral W.hom]
+    [LocallyOfFiniteType W.hom]
+    {A : Over (Spec (.of K))}
+    [GrpObj A] [IsSeparated A.hom]
+    (v₀ : 𝟙_ (Over (Spec (.of K))) ⟶ V)
+    (w₀ : 𝟙_ (Over (Spec (.of K))) ⟶ W)
+    (h : V ⊗ W ⟶ A)
+    (hh : lift v₀ w₀ ≫ h = η[A]) :
+    ∃! p : (V ⟶ A) × (W ⟶ A),
+      v₀ ≫ p.1 = η[A] ∧ w₀ ≫ p.2 = η[A] ∧
+        h = (fst V W ≫ p.1) * (snd V W ≫ p.2) := by
+  let f : V ⟶ A := lift (𝟙 V) (toUnit V ≫ w₀) ≫ h
+  let g : W ⟶ A := lift (toUnit W ≫ v₀) (𝟙 W) ≫ h
+  have hwsW : w₀ ≫ lift (toUnit W ≫ v₀) (𝟙 W) = lift v₀ w₀ := by
+    rw [comp_lift, Category.comp_id, ← Category.assoc,
+      toUnit_unique (w₀ ≫ toUnit W) (𝟙 _), Category.id_comp]
+  have hvsV : v₀ ≫ lift (𝟙 V) (toUnit V ≫ w₀) = lift v₀ w₀ := by
+    rw [comp_lift, Category.comp_id, ← Category.assoc,
+      toUnit_unique (v₀ ≫ toUnit V) (𝟙 _), Category.id_comp]
+  have hwg : w₀ ≫ g = η[A] := by
+    change w₀ ≫ (lift (toUnit W ≫ v₀) (𝟙 W) ≫ h) = η[A]
+    rw [← Category.assoc, hwsW, hh]
+  have hvf : v₀ ≫ f = η[A] := by
+    change v₀ ≫ (lift (𝟙 V) (toUnit V ≫ w₀) ≫ h) = η[A]
+    rw [← Category.assoc, hvsV, hh]
+  have hdecomp := hom_additive_decomp_of_rigidity_arbitraryField
+    (V := V) (W := W) (A := A) v₀ w₀ h hh
+  refine ⟨(f, g), ⟨hvf, hwg, hdecomp⟩, ?_⟩
+  rintro ⟨f', g'⟩ ⟨hf', hg', hd'⟩
+  have hu := hom_additive_decomp_axis_unique (kbar := K)
+    v₀ w₀ h f' g' hf' hg' hd'
+  apply Prod.ext
+  · simpa only [f] using hu.1
+  · simpa only [g] using hu.2
+
 end MilneLib.GroupVariety
