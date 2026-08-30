@@ -72,8 +72,19 @@ theorem quotientAddEquiv_mk_eq_iff {V X : Type*} [AddCommGroup V] [AddCommGroup 
       simpa only [map_sub] using hz
     exact sub_eq_zero.mp heq
 
+/- A quotient representative is killed by an integer precisely when the
+   corresponding scalar multiple lies in the period subgroup. -/
+theorem quotient_mk_mem_zsmulTorsion_iff
+    {V : Type*} [AddCommGroup V] (N : AddSubgroup V) (n : ℤ) (v : V) :
+    QuotientAddGroup.mk' N v ∈ zsmulTorsionSubgroup (V ⧸ N) n ↔
+      n • v ∈ N := by
+  change n • (QuotientAddGroup.mk' N v) = 0 ↔ _
+  rw [← (QuotientAddGroup.mk' N).map_zsmul]
+  change QuotientAddGroup.mk' N (n • v) = 0 ↔ _
+  rw [← AddMonoidHom.mem_ker, QuotientAddGroup.ker_mk']
+
 /-- An open quotient exponential identifies its period quotient with the
-target also at the topological level. -/
+   target also at the topological level. -/
 noncomputable def quotientHomeomorph
     {V X : Type*} [AddCommGroup V] [AddCommGroup X]
     [TopologicalSpace V] [TopologicalSpace X]
