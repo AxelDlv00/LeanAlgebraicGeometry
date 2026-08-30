@@ -984,7 +984,7 @@
     },
     "states": {
       "blocked": 144,
-      "closed": 510,
+      "closed": 620,
       "formalized_open": 3,
       "informal": 485,
       "ready": 342
@@ -1008,6 +1008,7 @@
       "AlgebraicGeometry.Scheme.residueFieldOverModule: Lean declaration is not referenced by any blueprint \\lean{...}",
       "AlgebraicGeometry.Scheme.residueOverAlgebraMap: Lean declaration is not referenced by any blueprint \\lean{...}",
       "AlgebraicGeometry.finrank_alt_sum_eq_zero_of_exact\u2085: Lean declaration is not referenced by any blueprint \\lean{...}",
+      "CategoryTheory.Abelian.Ext.subsingleton_one_of_injective_of_surjective: Lean declaration is not referenced by any blueprint \\lean{...}",
       "CategoryTheory.Sheaf.HModule: Lean declaration is not referenced by any blueprint \\lean{...}",
       "CategoryTheory.Sheaf.HModule.[Injective: Lean declaration is not referenced by any blueprint \\lean{...}",
       "CategoryTheory.Sheaf.HModule.delta: Lean declaration is not referenced by any blueprint \\lean{...}",
@@ -1030,6 +1031,7 @@
       "CategoryTheory.Sheaf.HModule.moduleFinite_left_zero: Lean declaration is not referenced by any blueprint \\lean{...}",
       "CategoryTheory.Sheaf.HModule.moduleFinite_middle: Lean declaration is not referenced by any blueprint \\lean{...}",
       "CategoryTheory.Sheaf.HModule.surjective_map_f: Lean declaration is not referenced by any blueprint \\lean{...}",
+      "CategoryTheory.Sheaf.app_injective_of_mono: Lean declaration is not referenced by any blueprint \\lean{...}",
       "CategoryTheory.Sheaf.chi: Lean declaration is not referenced by any blueprint \\lean{...}",
       "CategoryTheory.Sheaf.chi_congr: Lean declaration is not referenced by any blueprint \\lean{...}",
       "CategoryTheory.Sheaf.chi_eq_add_of_shortExact: Lean declaration is not referenced by any blueprint \\lean{...}",
@@ -1037,9 +1039,7 @@
       "CategoryTheory.Sheaf.constModuleSheaf: Lean declaration is not referenced by any blueprint \\lean{...}",
       "CategoryTheory.Sheaf.constModuleSheafHomEquiv: Lean declaration is not referenced by any blueprint \\lean{...}",
       "CategoryTheory.Sheaf.constModuleSheafHomEquiv_naturality: Lean declaration is not referenced by any blueprint \\lean{...}",
-      "CategoryTheory.Sheaf.constantSheafAdjHomLinearEquiv: Lean declaration is not referenced by any blueprint \\lean{...}",
-      "CategoryTheory.Sheaf.constantSheafAdjHomLinearEquiv_apply: Lean declaration is not referenced by any blueprint \\lean{...}",
-      "CategoryTheory.Sheaf.constantSheafAdjHomLinearEquiv_naturality: Lean declaration is not referenced by any blueprint \\lean{...}"
+      "CategoryTheory.Sheaf.constantSheafAdjHomLinearEquiv: Lean declaration is not referenced by any blueprint \\lean{...}"
     ]
   },
   "nodes": [
