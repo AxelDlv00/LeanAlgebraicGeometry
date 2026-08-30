@@ -3,23 +3,17 @@ Copyright (c) 2026 The AlgebraicJacobian Contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: The AlgebraicJacobian Contributors
 -/
-import AlgebraicJacobian.Descent.AffineRingGlueData
-import AlgebraicJacobian.Picard.Pic0FiniteStageCanonicalGlueContext
+import AlgebraicJacobian.Picard.Pic0FiniteStageGlueDataAssembly
 
 /-!
 # Stable finite-stage gluing boundary
 
 The historical `Pic0FiniteStageGluePackage` repeats every finite-stage witness as a
-field and reconstructs the affine gluing presentation from those fields.  That makes
-the type of each downstream projection depend on a large collection of instance
-choices.  This facade carries a certified `Pic0FiniteStageCanonicalGlueContext` and
-one `AffineRingGluePresentation` instead.
-
-The two fields are independent values: consumers can use the context for algebraic
-maps and the presentation for scheme data without reopening either construction.
-The presentation is indexed by the same `context.triple.N.1` ring, so this boundary
-does not ask downstream code to reconcile a second finite-stage carrier.
-The legacy package remains available as an adapter while its producer is migrated.
+field and reconstructs the affine gluing presentation from those fields.  This facade
+stores only the canonical context and derives its presentation at one opaque boundary.
+Consequently every stable consumer sees the same witness-bearing presentation; a caller
+cannot pair a context with an unrelated presentation that merely shares its coefficient
+ring.
 -/
 
 set_option autoImplicit false
@@ -36,7 +30,7 @@ variable {k : Type u} [Field k] (C : Over (Spec (.of k)))
 variable [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
   [GeometricallyIrreducible C.hom] [IsSepClosed k]
 
-/-- A finite-stage context together with its selected affine gluing presentation.
+/-- A finite-stage context with a presentation derived from that context.
 
 Unlike the legacy package, this boundary has no raw stage parameters and no
 instance-producing `let` expressions in its public fields.
@@ -44,18 +38,41 @@ instance-producing `let` expressions in its public fields.
 structure Pic0FiniteStageStableGluePackage
     (F : Type u) [Field F] [Algebra F k] [Algebra.IsAlgebraic F k] where
   context : Pic0FiniteStageCanonicalGlueContext C F
-  presentation : AlgebraicJacobian.AffineRingGluePresentation context.triple.N.1
 
 namespace Pic0FiniteStageStableGluePackage
 
 variable {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
 
-/-- Build the stable package from a context and an already selected presentation. -/
+/-- Build the stable package from its canonical context.
+
+The presentation is derived below, so this constructor cannot accept a value whose
+glue datum or map is disconnected from the context. -/
 noncomputable def ofContext
     (D : Pic0FiniteStageCanonicalGlueContext C F)
-    (P : AlgebraicJacobian.AffineRingGluePresentation D.triple.N.1) :
-    Pic0FiniteStageStableGluePackage C F :=
-  { context := D, presentation := P }
+    : Pic0FiniteStageStableGluePackage C F :=
+  { context := D }
+
+/-! Keep the expensive canonical assembly opaque to downstream elaboration.  The witness
+also retains a named equality so clients can use canonicality without unfolding the tensor
+construction. -/
+noncomputable opaque presentationWitness
+    (P : Pic0FiniteStageStableGluePackage C F) :
+    { A : AlgebraicJacobian.AffineRingGluePresentation P.context.triple.N.1 //
+      A = pic0FiniteStageAffineRingGluePresentation_of_canonical_context C P.context } :=
+  ⟨pic0FiniteStageAffineRingGluePresentation_of_canonical_context C P.context, rfl⟩
+
+/-- The presentation selected by the canonical context. -/
+noncomputable def presentation
+    (P : Pic0FiniteStageStableGluePackage C F) :
+    AlgebraicJacobian.AffineRingGluePresentation P.context.triple.N.1 :=
+  (presentationWitness C P).1
+
+/-- The stable presentation is definitionally the canonical context assembly, exposed as a
+rewrite theorem instead of requiring clients to unfold the opaque witness. -/
+theorem presentation_spec
+    (P : Pic0FiniteStageStableGluePackage C F) :
+    P.presentation = pic0FiniteStageAffineRingGluePresentation_of_canonical_context C P.context :=
+  (presentationWitness C P).2
 
 /-! The following accessors are ordinary definitions rather than reducible aliases.
 This keeps expensive tensor carriers behind the package boundary. -/

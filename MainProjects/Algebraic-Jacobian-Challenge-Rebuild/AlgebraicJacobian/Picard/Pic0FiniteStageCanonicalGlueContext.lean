@@ -130,6 +130,23 @@ def ofContext
     Pic0FiniteStageCanonicalGlueContext C F :=
   { context := D, q_spec := hQ }
 
+/-! The family and its dependent triple data are accepted together at this boundary.  In
+contrast to transporting a record with `hQ ▸ T`, this constructor preserves the selected
+family in the context and uses the equality only for the small canonicality field. -/
+def ofModelsWithComparison
+    (D : Pic0FiniteStageTransitionModelsData C F)
+    (Q : ∀ p : Pic0FiniteStageTripleTransitionIndex C,
+      k ⊗[D.M.1]
+          Pic0FiniteStageTripleTransitionModelTarget
+            C D.L D.n D.m D.relation D.M D.mapM p ≃ₐ[k]
+        Pic0FiniteStageTripleRing C p.1 p.2.1 p.2.2)
+    (T : Pic0FiniteStageTripleTransitionFamilyData
+      C D.L D.n D.m D.relation D.M D.mapM Q)
+    (hQ : Q = Pic0FiniteStageGlueContext.canonicalComparisonFamily C D) :
+    Pic0FiniteStageCanonicalGlueContext C F :=
+  { context := { models := D, Q := Q, triple := T }
+    q_spec := hQ }
+
 /-- Bundle model and triple data without forgetting that the triple family uses the canonical
 comparison attached to those models. -/
 def ofModels

@@ -14,11 +14,11 @@ The simultaneous pair- and triple-transition descent theorems supply every input
 `pic0FiniteStageAffineRingGlueData`.  This file records those dependent inputs in one
 package and immediately exposes the resulting scheme glue datum.
 
-This is the compatibility boundary for the historical flat API.  Its `glueData`
-constructor intentionally stays the original `Scheme.GlueData` interface: the assembly
-module does not yet provide a certified context-to-presentation bridge.  New consumers
-should use `Pic0FiniteStageStableGluePackage` with an explicit selected presentation,
-which keeps that expensive dependent construction out of downstream projections.
+This is the compatibility boundary for the historical flat API.  The package now assembles
+one pinned `AffineRingGluePresentation`; `glueData` is its projection, so the scheme datum
+and map cannot drift through separately inferred tensor instances.  New stable consumers
+should use `Pic0FiniteStageStableGluePackage`, which derives the same presentation from its
+canonical context.
 -/
 
 set_option autoImplicit false
@@ -319,14 +319,15 @@ noncomputable instance pic0FiniteStageChartBaseChangeRingAlgebra
     (B := Pic0FiniteStageChartModelRing C L n m relation M U)
 
 set_option maxHeartbeats 25600000 in
--- The package projections retain the dependent tensor-product instances of the constructor.
-/-- The scheme glue datum computed from an inhabited finite-stage package. -/
-noncomputable def glueData
+-- Assemble the package's dependent tensor carriers once, before exposing projections.
+/-- The pinned affine gluing presentation computed from an inhabited finite-stage package. -/
+noncomputable def presentation
     {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
-    (P : Pic0FiniteStageGluePackage C F) : Scheme.GlueData := by
+    (P : Pic0FiniteStageGluePackage C F) :
+    AlgebraicJacobian.AffineRingGluePresentation P.N.1 := by
   letI : Algebra.IsAlgebraic P.L.1 k := by infer_instance
   letI : Algebra.IsAlgebraic P.M.1 k := by infer_instance
-  refine pic0FiniteStageAffineRingGlueData
+  refine pic0FiniteStageAffineRingGluePresentation
     C P.L P.n P.m P.relation P.M P.mapM P.N
       P.e P.hmapM ?_ P.thetaN P.hthetaN
   intro i
@@ -343,6 +344,19 @@ noncomputable def glueData
       (Pic0FiniteStageModelRing C P.L P.n P.m P.relation P.M
         (Pic0FiniteStageMapTarget C (Sum.inl i)))).toSemiring
   simpa only [pic0FiniteStageModelMapToRingHom] using P.hOpen i
+
+/-- The scheme glue datum is the projection of the pinned presentation. -/
+noncomputable def glueData
+    {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
+    (P : Pic0FiniteStageGluePackage C F) : Scheme.GlueData :=
+  P.presentation.glueData
+
+@[simp]
+theorem presentation_glueData
+    {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
+    (P : Pic0FiniteStageGluePackage C F) :
+    P.presentation.glueData = P.glueData :=
+  rfl
 
 end Pic0FiniteStageGluePackage
 
