@@ -134,7 +134,8 @@ instance devissageπ_isLocallySurjective [QuasiCompact X.hom] {x : X.left}
       · subst hpx
         obtain ⟨W, i, hsieve, hxW⟩ := devissage_local_lift hx D hxU t
         exact ⟨W, i, hsieve, hxW⟩
-      · refine ⟨U ⊓ ⟨{x}ᶜ, (smoothCurve_isClosed_singleton_of_ne_genericPoint X.hom hx).isOpen_compl⟩,
+      · refine ⟨U ⊓ ⟨{x}ᶜ,
+            (smoothCurve_isClosed_singleton_of_ne_genericPoint X.hom hx).isOpen_compl⟩,
           homOfLE inf_le_left, imageSieve_of_not_mem hx D (homOfLE inf_le_left) ?_ t,
           ⟨hp, hpx⟩⟩
         exact fun hxW => hxW.2 rfl
@@ -249,7 +250,8 @@ theorem devissageSES_exact {x : X.left} (hx : x ≠ genericPoint X.left)
         ((devissageSES hx D).map (sheafToPresheaf (Opens.grothendieckTopology
           (X.left : TopCat)) (ModuleCat.{u} k) ⋙ (evaluation _ (ModuleCat.{u} k)).obj W)).f
         ((devissageSES hx D).map (sheafToPresheaf (Opens.grothendieckTopology
-          (X.left : TopCat)) (ModuleCat.{u} k) ⋙ (evaluation _ (ModuleCat.{u} k)).obj W)).zero) := by
+          (X.left : TopCat)) (ModuleCat.{u} k) ⋙
+          (evaluation _ (ModuleCat.{u} k)).obj W)).zero) := by
     intro W
     haveI : Mono ((devissageSES hx D).map (sheafToPresheaf
         (Opens.grothendieckTopology (X.left : TopCat)) (ModuleCat.{u} k) ⋙
