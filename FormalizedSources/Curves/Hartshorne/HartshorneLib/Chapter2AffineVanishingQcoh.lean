@@ -35,12 +35,12 @@ chartwise.
 
 ## Proof architecture
 
-Verbatim Serre, as in the affine vanishing engine, with the packaging
-axioms in place of the structure-sheaf localization lemmas:
+Verbatim Serre, as in the affine vanishing engine, with packaged localization
+facts in place of the structure-sheaf localization lemmas:
 
 * `IsAffineOpen.exists_cech_cobounding_of_qcoh` — every Čech 1-cocycle for `F` on a
   finite basic-open cover of `U` is a coboundary: clear denominators with one uniform
-  exponent (packaging axiom `QcohOn.exists_secRes_eq_qsmul_pow`), annihilate the
+  exponent (packaged fact `QcohOn.exists_secRes_eq_qsmul_pow`), annihilate the
   triple-overlap defects (`QcohOn.exists_qsmul_pow_eq_zero`), and assemble along a
   partition of unity `1 = ∑ h l · f l ^ (N + M)` of the affine `U` — the assembly needs
   only that ambient sections act on `F`-sections compatibly with restriction (the (P1)
