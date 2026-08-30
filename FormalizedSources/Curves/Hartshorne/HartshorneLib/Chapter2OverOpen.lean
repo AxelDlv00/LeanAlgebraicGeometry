@@ -231,6 +231,11 @@ variable {F G : Sheaf J (ModuleCat.{u} R)}
 noncomputable abbrev HModule' (F : Sheaf J (ModuleCat.{u} R)) (U : C) (n : ℕ) : Type u :=
   Abelian.Ext (freeModuleSheaf J R U) F n
 
+/-- Higher objectwise cohomology with injective coefficients vanishes. -/
+instance HModule'.subsingleton_of_injective [Injective F] (U : C) (n : ℕ) :
+    Subsingleton (HModule' F U (n + 1)) :=
+  subsingleton_of_forall_eq 0 fun x ↦ x.eq_zero_of_injective
+
 /-- Degree-zero cohomology of `U` is its module of sections. -/
 noncomputable def HModule'.linearEquiv₀ (F : Sheaf J (ModuleCat.{u} R)) (U : C) :
     HModule' F U 0 ≃ₗ[R] F.obj.obj (op U) :=
