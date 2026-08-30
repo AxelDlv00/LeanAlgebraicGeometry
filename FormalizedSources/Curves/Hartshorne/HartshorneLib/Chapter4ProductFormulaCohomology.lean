@@ -36,6 +36,7 @@ noncomputable section
 variable {k : Type u} [Field k] [IsAlgClosed k]
 variable {X : Over (Spec (CommRingCat.of k))} [IsIntegral X.left]
   [SmoothOfRelativeDimension 1 X.hom] [IsProper X.hom]
+attribute [local instance] Scheme.overModule
 
 /-! ## The one-point Euler-characteristic increment -/
 
@@ -56,6 +57,115 @@ theorem chi_skyModule_jump_eq_one {x : X.left} (hx : x ≠ genericPoint X.left)
   norm_num
 
 /-! ## The explicit finiteness input -/
+
+/-- Global sections of an integral scheme proper over `Spec k` are finite over `k`.
+
+The properness theorem gives finiteness over the global sections of `Spec k`.
+The displayed compatibility calculation transports that result across
+`Scheme.ΓSpecIso`, using the scalar map already built into `moduleKSheaf`.
+-/
+theorem moduleFinite_globalSections_of_isProper
+    (k : Type u) [Field k] (X : Over (Spec (CommRingCat.of k)))
+    [IsIntegral X.left] [IsProper X.hom] :
+    Module.Finite k
+      (X.left.presheaf.obj
+        (Opposite.op (⊤ : TopologicalSpace.Opens X.left.toTopCat))) := by
+  letI : Algebra k
+      (X.left.presheaf.obj
+        (Opposite.op (⊤ : TopologicalSpace.Opens X.left.toTopCat))) :=
+    (X.left.overAlgebraMap k (⊤ : X.left.Opens)).toAlgebra
+  have hf : (X.hom.appTop.hom).Finite :=
+    AlgebraicGeometry.finite_appTop_of_universallyClosed k X.hom
+  letI alg2 : Algebra
+      ((Spec (CommRingCat.of k)).presheaf.obj
+        (Opposite.op (⊤ : TopologicalSpace.Opens
+          (Spec (CommRingCat.of k)).toTopCat)))
+      (X.left.presheaf.obj
+        (Opposite.op (⊤ : TopologicalSpace.Opens X.left.toTopCat))) :=
+    RingHom.toAlgebra X.hom.appTop.hom
+  have hM_inter :
+      Module.Finite
+        ((Spec (CommRingCat.of k)).presheaf.obj
+          (Opposite.op (⊤ : TopologicalSpace.Opens
+            (Spec (CommRingCat.of k)).toTopCat)))
+        (X.left.presheaf.obj
+          (Opposite.op (⊤ : TopologicalSpace.Opens X.left.toTopCat))) := by
+    rw [← RingHom.finite_algebraMap]
+    exact hf
+  letI : Module.Finite
+      ((Spec (CommRingCat.of k)).presheaf.obj
+        (Opposite.op (⊤ : TopologicalSpace.Opens
+          (Spec (CommRingCat.of k)).toTopCat)))
+      (X.left.presheaf.obj
+        (Opposite.op (⊤ : TopologicalSpace.Opens X.left.toTopCat))) := hM_inter
+  refine Module.Finite.of_equiv_equiv
+    (A₁ := (Spec (CommRingCat.of k)).presheaf.obj
+      (Opposite.op (⊤ : TopologicalSpace.Opens
+        (Spec (CommRingCat.of k)).toTopCat)))
+    (B₁ := X.left.presheaf.obj
+      (Opposite.op (⊤ : TopologicalSpace.Opens X.left.toTopCat)))
+    (A₂ := k)
+    (B₂ := X.left.presheaf.obj
+      (Opposite.op (⊤ : TopologicalSpace.Opens X.left.toTopCat)))
+    (Scheme.ΓSpecIso (CommRingCat.of k)).commRingCatIsoToRingEquiv
+    (RingEquiv.refl
+      (X.left.presheaf.obj
+        (Opposite.op (⊤ : TopologicalSpace.Opens X.left.toTopCat)))) ?_
+  ext x
+  simp only [RingHom.coe_comp, RingEquiv.coe_toRingHom, RingEquiv.refl_apply,
+    Function.comp_apply, RingHom.algebraMap_toAlgebra]
+  have h_kts :
+      (X.left.overAlgebraMap k (⊤ : X.left.Opens)) =
+        (X.hom.appTop.hom).comp
+          ((Scheme.ΓSpecIso (CommRingCat.of k)).inv.hom) := by
+    ext y
+    simp only [Scheme.overAlgebraMap, CommRingCat.hom_comp, RingHom.coe_comp,
+      Function.comp_apply]
+    exact congrFun (congrArg (fun f => f.hom)
+      (X.left.presheaf.map_id (Opposite.op (⊤ :
+        TopologicalSpace.Opens X.left.toTopCat)))) _
+  calc
+    X.left.overAlgebraMap k (⊤ : X.left.Opens)
+        ((Scheme.ΓSpecIso (CommRingCat.of k)).commRingCatIsoToRingEquiv x)
+      = (X.hom.appTop.hom).comp
+          ((Scheme.ΓSpecIso (CommRingCat.of k)).inv.hom)
+          ((Scheme.ΓSpecIso (CommRingCat.of k)).commRingCatIsoToRingEquiv x) := by
+            exact congrFun (congrArg DFunLike.coe h_kts) _
+    _ = X.hom.appTop.hom x := by
+      simp only [RingHom.coe_comp, Function.comp_apply]
+      congr 1
+      change ((Scheme.ΓSpecIso (CommRingCat.of k)).hom ≫
+          (Scheme.ΓSpecIso (CommRingCat.of k)).inv).hom x = x
+      rw [Iso.hom_inv_id]
+      rfl
+
+/-- The degree-zero cohomology of the structure sheaf is finite on a proper
+integral `k`-scheme. -/
+theorem moduleFinite_moduleKSheaf_zero_of_isProper
+    (k : Type u) [Field k] (X : Over (Spec (CommRingCat.of k)))
+    [IsIntegral X.left] [IsProper X.hom] :
+    Module.Finite k
+      (CategoryTheory.Sheaf.HModule
+        (Opens.grothendieckTopology (X.left : TopCat)) k
+        (X.left.moduleKSheaf k) 0) := by
+  have hM_top : Module.Finite k
+      (X.left.presheaf.obj
+        (Opposite.op (⊤ : TopologicalSpace.Opens X.left.toTopCat))) :=
+    moduleFinite_globalSections_of_isProper k X
+  letI : Module.Finite k
+      ((X.left.moduleKSheaf k).obj.obj
+        (Opposite.op (⊤ : TopologicalSpace.Opens X.left.toTopCat))) := by
+    change Module.Finite k
+      (X.left.presheaf.obj
+        (Opposite.op (⊤ : TopologicalSpace.Opens X.left.toTopCat)))
+    exact hM_top
+  exact Module.Finite.equiv
+    (CategoryTheory.Sheaf.HModule.linearEquiv₀
+      (J := Opens.grothendieckTopology (X.left : TopCat))
+      (R := k)
+      (T := (⊤ : TopologicalSpace.Opens X.left.toTopCat))
+      (Preorder.isTerminalTop (TopologicalSpace.Opens X.left.toTopCat))
+      (X.left.moduleKSheaf k)).symm
 
 /-- The degree-zero and degree-one cohomology of one divisor sheaf are finite. -/
 def HasFiniteDivisorSheafCohomology (D : CurveDivisor k X) : Prop :=
