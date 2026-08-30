@@ -130,9 +130,33 @@ theorem commutatorPairingOrthogonal_top
     intro l
     exact hk l
 
+/-- Every element is orthogonal to the trivial subgroup. -/
+@[simp]
+theorem commutatorPairingOrthogonal_bot
+    (E : ThetaExtension G S K) :
+    E.commutatorPairingOrthogonal (⊥ : AddSubgroup K) =
+      (⊤ : AddSubgroup K) := by
+  apply AddSubgroup.ext
+  intro k
+  constructor
+  · intro hk
+    exact AddSubgroup.mem_top k
+  · intro hk
+    rw [E.mem_commutatorPairingOrthogonal_iff (⊥ : AddSubgroup K) k]
+    intro h
+    have hzero : (h : K) = 0 := by
+      exact AddSubgroup.mem_bot.mp h.property
+    rw [hzero, E.commutatorPairing_zero_right]
+
 /-- A subgroup is isotropic when its pairing restricts trivially. -/
 def IsIsotropic (E : ThetaExtension G S K) (H : AddSubgroup K) : Prop :=
   H ≤ E.commutatorPairingOrthogonal H
+
+/-- The trivial subgroup is isotropic. -/
+theorem isIsotropic_bot (E : ThetaExtension G S K) :
+    E.IsIsotropic (⊥ : AddSubgroup K) := by
+  rw [IsIsotropic, E.commutatorPairingOrthogonal_bot]
+  exact bot_le
 
 theorem isIsotropic_iff
     (E : ThetaExtension G S K) (H : AddSubgroup K) :
