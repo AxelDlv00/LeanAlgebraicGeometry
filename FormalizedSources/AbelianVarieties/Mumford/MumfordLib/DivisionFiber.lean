@@ -116,6 +116,27 @@ theorem zsmulDivisionFiberEquivBetween_trans
   simp only [Equiv.trans_apply, zsmulDivisionFiberEquivBetween_apply]
   abel
 
+/- Two points in one nonzero-integer division fibre differ by a unique
+   torsion point.  This is the pointwise torsor law behind the fibre
+   equivalences above. -/
+theorem existsUnique_zsmulTorsion_add_eq
+    {X : Type*} [AddCommGroup X]
+    {n : ℤ} {x : X} (p q : zsmulDivisionFiber X n x) :
+    ∃! t : zsmulTorsionSubgroup X n,
+      (t : X) + (p : X) = (q : X) := by
+  let t : zsmulTorsionSubgroup X n :=
+    ⟨(q : X) - (p : X), by
+      change n • ((q : X) - (p : X)) = 0
+      rw [zsmul_sub, q.property, p.property, sub_self]⟩
+  have ht : (t : X) + (p : X) = (q : X) := by
+    change ((q : X) - (p : X)) + (p : X) = (q : X)
+    exact sub_add_cancel _ _
+  refine ⟨t, ht, ?_⟩
+  intro s hs
+  apply Subtype.ext
+  apply add_right_cancel (b := (p : X))
+  exact hs.trans ht.symm
+
 /-- All fibres of multiplication by a fixed nonzero integer have the same
 cardinality in a divisible group. -/
 theorem zsmulDivisionFiber_card_eq
