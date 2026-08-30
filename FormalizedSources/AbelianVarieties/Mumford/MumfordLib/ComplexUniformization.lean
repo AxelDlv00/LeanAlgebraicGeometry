@@ -57,6 +57,15 @@ theorem isOpenQuotientMap_of_continuous_surjective_of_locallyCompact
   exact ⟨hsurj, hcont,
     AddMonoidHom.isOpenMap_of_sigmaCompact exponential hsurj hcont⟩
 
+/- The standard complex-coordinate exponential satisfies the hypotheses of the
+   open-mapping theorem, so its period quotient carries the canonical topology. -/
+theorem complexGenusTorusExponential_isOpenQuotientMap (g : ℕ) :
+    IsOpenQuotientMap (complexGenusTorusExponential g) := by
+  exact isOpenQuotientMap_of_continuous_surjective_of_locallyCompact
+    (complexGenusTorusExponential g)
+    (complexGenusTorusExponential_surjective g)
+    (complexGenusTorusExponential_continuous g)
+
 /-- A surjective additive exponential with the canonical period kernel induces
 the chosen complex uniformization witness. -/
 def ComplexTorusUniformization.ofExponential
@@ -137,6 +146,29 @@ theorem ComplexTorusUniformization.ofExponential_equiv_symm_mk
       exponential z
   exact PeriodLatticeQuotient.quotientAddEquiv_mk
     (complexPeriodLatticeQuotientOfExponential exponential hsurj hker) z
+
+/- The complex period quotient is homeomorphic to the standard real torus via
+   its own exponential, independently of the intermediate realification map. -/
+noncomputable def complexGenusQuotientHomeomorph (g : ℕ) :
+    (GenusComplexVector g ⧸ complexPeriodLattice g) ≃ₜ GenusTorus g :=
+  (standardComplexGenusPeriodLatticeQuotient g).quotientHomeomorph
+    (complexGenusTorusExponential_isOpenQuotientMap g)
+
+@[simp]
+theorem complexGenusQuotientHomeomorph_apply (g : ℕ)
+    (q : GenusComplexVector g ⧸ complexPeriodLattice g) :
+    complexGenusQuotientHomeomorph g q = complexGenusQuotientAddEquiv g q :=
+  rfl
+
+@[simp]
+theorem complexGenusQuotientHomeomorph_mk (g : ℕ)
+    (z : GenusComplexVector g) :
+    complexGenusQuotientHomeomorph g
+        (QuotientAddGroup.mk' (complexPeriodLattice g) z) =
+      complexGenusTorusExponential g z := by
+  exact PeriodLatticeQuotient.quotientHomeomorph_mk
+    (standardComplexGenusPeriodLatticeQuotient g)
+    (complexGenusTorusExponential_isOpenQuotientMap g) z
 
 /-- Two complex uniformization witnesses agree when their quotient maps agree
 on representatives. -/
