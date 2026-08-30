@@ -84,10 +84,10 @@ variable (R : Type u) [CommRing R]
 variable [HasWeakSheafify J (Type u)] [HasSheafify J (ModuleCat.{u} R)]
 variable (S : J.MayerVietorisSquare)
 
+omit [HasSheafify J (ModuleCat.{u} R)] in
 /-- A Mayer–Vietoris square becomes a pushout square of sheaves of `R`-modules after
 applying the free-module-sheaf functor. Mirrors
 `MayerVietorisSquare.isPushoutAddCommGrpFreeSheaf`. -/
-omit [HasSheafify J (ModuleCat.{u} R)] in
 lemma isPushoutFreeModuleSheaf :
     (S.map (CategoryTheory.yoneda ⋙ (Functor.whiskeringRight _ _ _).obj
       (ModuleCat.free R) ⋙ presheafToSheaf J _)).IsPushout :=
