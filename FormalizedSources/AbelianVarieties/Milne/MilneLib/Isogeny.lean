@@ -6,6 +6,7 @@ Authors: The Milne Contributors
 
 import Mathlib.AlgebraicGeometry.Group.Abelian
 import MilneLib.GroupScheme
+import MilneLib.LocalProperties
 
 /-!
 # Isogenies
@@ -20,7 +21,7 @@ set_option autoImplicit false
 
 universe u
 
-open CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj
+open CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj MorphismProperty
 open AlgebraicGeometry
 
 namespace MilneLib
@@ -282,6 +283,25 @@ theorem IsFinite.of_isProper_of_finite_preimage_singleton
     LocallyQuasiFinite.of_finite_preimage_singleton f hfib
   exact IsFinite.of_isProper_of_locallyQuasiFinite f
 
+/- Properness and a finite faithfully-flat base change also suffice for
+   finiteness.  This is the scheme-level descent step used when passing an
+   abelian-variety morphism to an algebraic closure. -/
+theorem IsFinite.of_isProper_of_faithfullyFlat_baseChange
+    {X Y Z : Scheme.{u}} (p : Y ⟶ Z) (f : X ⟶ Z)
+    [Surjective p] [Flat p] [QuasiCompact p] [IsProper f]
+    (hf : IsFinite (pullback.fst p f)) : IsFinite f := by
+  letI : DescendsAlong @LocallyQuasiFinite
+      (@Surjective ⊓ @Flat ⊓ @QuasiCompact) :=
+    locallyQuasiFinite_descendsAlong_faithfullyFlat
+  letI : IsFinite (pullback.fst p f) := hf
+  letI : LocallyQuasiFinite (pullback.fst p f) := inferInstance
+  letI : LocallyQuasiFinite f :=
+    MorphismProperty.of_pullback_fst_of_descendsAlong
+      (P := @LocallyQuasiFinite)
+      (Q := @Surjective ⊓ @Flat ⊓ @QuasiCompact) (f := p) (g := f)
+      ⟨⟨inferInstance, inferInstance⟩, inferInstance⟩ inferInstance
+  exact IsFinite.of_isProper_of_locallyQuasiFinite f
+
 omit [GrpObj A] in
 /-- For a proper morphism into a group scheme, a finite set-theoretic identity
 fibre makes the scheme-theoretic kernel finite over the field. -/
@@ -366,6 +386,60 @@ theorem isFinite_iff_finite_residue_fibres_of_isProper
     letI : LocallyQuasiFinite f :=
       (locallyQuasiFinite_iff_isFinite_fiber).2 hf
     exact IsFinite.of_isProper_of_locallyQuasiFinite f
+
+/- For a proper morphism, finiteness of a residue-field fibre is equivalent to
+   finiteness of the corresponding underlying preimage.  The forward direction
+   uses the fibre homeomorphism; the reverse direction packages the finite
+   topological fibre with properness and the standard quasi-finite criterion. -/
+theorem isFinite_fiberToSpecResidueField_iff_finite_preimage_singleton
+    {X Y : Scheme.{u}} (f : X ⟶ Y) [IsProper f] (y : Y) :
+    IsFinite (f.fiberToSpecResidueField y) ↔
+      (f ⁻¹' {y}).Finite := by
+  constructor
+  · intro hf
+    letI : IsFinite (f.fiberToSpecResidueField y) := hf
+    have hpre :=
+      Scheme.Hom.finite_preimage_singleton (f.fiberToSpecResidueField y)
+        (IsLocalRing.closedPoint (Y.residueField y))
+    have hEq :
+        (f.fiberToSpecResidueField y ⁻¹'
+          {IsLocalRing.closedPoint (Y.residueField y)}) =
+          (Set.univ : Set (f.fiber y)) := by
+      ext x
+      constructor
+      · intro _
+        trivial
+      · intro _
+        exact f.fiberToSpecResidueField_apply y x
+    have hPset : (Set.univ : Set (f.fiber y)).Finite := by
+      rw [← hEq]
+      exact hpre
+    letI : Finite (f.fiber y) :=
+      Set.finite_univ_iff.mp hPset
+    haveI : Finite (f ⁻¹' {y}) := by
+      exact (Equiv.finite_iff (f.fiberHomeo y).toEquiv).mp inferInstance
+    exact Set.toFinite _
+  · intro h
+    letI : IsProper (f.fiberToSpecResidueField y) := by
+      change IsProper (pullback.snd f (Y.fromSpecResidueField y))
+      infer_instance
+    letI : Finite (f ⁻¹' {y}) := h.to_subtype
+    letI : Finite (f.fiber y) :=
+      Finite.of_equiv _ (f.fiberHomeo y).symm.toEquiv
+    apply IsFinite.of_isProper_of_finite_preimage_singleton _
+    intro z
+    have hpre :
+        (f.fiberToSpecResidueField y ⁻¹' {z}) =
+          (Set.univ : Set (f.fiber y)) := by
+      ext x
+      constructor
+      · intro _
+        trivial
+      · intro _
+        change f.fiberToSpecResidueField y x = z
+        exact Subsingleton.elim _ _
+    rw [hpre]
+    exact Set.finite_univ
 
 /- A homeomorphism square transports finiteness of a singleton fibre.  This
    set-theoretic form is useful because scheme fibres are represented by the
@@ -683,6 +757,24 @@ theorem Isogeny.iff_isFinite_and_surjective_of_isAbelianVariety_of_finite_residu
   · rintro ⟨hf, hs⟩
     letI : IsFinite f.left := hf
     exact ⟨hs, isogenyKernelToBase_isFinite_of_finite f⟩
+
+/- The same criterion can be fed directly with finite underlying fibres.  This
+   is the form produced by translation and geometric-point arguments; the
+   residue-field scheme finiteness is supplied by the proper-fibre bridge
+   above. -/
+theorem Isogeny.iff_isFinite_and_surjective_of_isAbelianVariety_of_finite_set_fibres
+    {K : Type u} [Field K]
+    {A B : Over (Spec (.of K))} [GrpObj A] [GrpObj B]
+    (hA : IsAbelianVariety A) (hB : IsAbelianVariety B)
+    (f : A ⟶ B) [IsMonHom f]
+    (hfib : ∀ y : B.left, (f.left ⁻¹' {y}).Finite) :
+    Isogeny f ↔ IsFinite f.left ∧ Surjective f.left := by
+  letI : IsProper f.left := isProper_left_of_isAbelianVariety hA hB f
+  apply Isogeny.iff_isFinite_and_surjective_of_isAbelianVariety_of_finite_residue_fibres
+    hA hB f
+  intro y
+  exact (isFinite_fiberToSpecResidueField_iff_finite_preimage_singleton f.left y).2
+    (hfib y)
 
 /- A finite underlying morphism has finite kernel, so in this common case the
    isogeny predicate is exactly surjectivity.  This generic interface keeps the
