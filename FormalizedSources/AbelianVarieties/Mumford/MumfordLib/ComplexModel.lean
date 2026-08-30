@@ -102,6 +102,35 @@ theorem genusComplexVectorRealification_at_index (g : ℕ)
   rw [hrr]
   rfl
 
+@[simp]
+theorem genusComplexVectorRealification_real (g : ℕ)
+    (z : GenusComplexVector g) (i : Fin g) :
+    genusComplexVectorRealification g z (genusComplexIndexEquiv g (i, 0)) =
+      (z i).re := by
+  rw [genusComplexVectorRealification_at_index]
+  simp [realPairToFinTwoLinearEquiv]
+
+@[simp]
+theorem genusComplexVectorRealification_imag (g : ℕ)
+    (z : GenusComplexVector g) (i : Fin g) :
+    genusComplexVectorRealification g z (genusComplexIndexEquiv g (i, 1)) =
+      (z i).im := by
+  rw [genusComplexVectorRealification_at_index]
+  simp [realPairToFinTwoLinearEquiv]
+
+/-- The inverse realification reconstructs each complex coordinate from its
+real and imaginary coordinates in the `Fin (2 * g)` model. -/
+@[simp]
+theorem genusComplexVectorRealification_symm_apply (g : ℕ)
+    (v : GenusRealVector g) (i : Fin g) :
+    (genusComplexVectorRealification g).symm v i =
+      Complex.equivRealProdLm.symm
+        (v (genusComplexIndexEquiv g (i, 0)),
+          v (genusComplexIndexEquiv g (i, 1))) := by
+  apply (Complex.equivRealProdLm).injective
+  rw [Complex.equivRealProdLm_apply, LinearEquiv.apply_symm_apply]
+  rfl
+
 /-- The period lattice in complex coordinates, obtained by pulling back the
 standard integer lattice along realification. -/
 def complexPeriodLattice (g : ℕ) : AddSubgroup (GenusComplexVector g) :=
