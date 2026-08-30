@@ -47,6 +47,41 @@ theorem restrictionBaseChangeMap_naturality
           (exactRestrictionAlgHom C U V).toRingHom) := by
   letI : Algebra.IsAlgebraic P.L.1 k := by infer_instance
   letI : Algebra.IsAlgebraic P.M.1 k := by infer_instance
+  /- Pin the chart and overlap carrier witnesses before specializing the generic
+     affine-base-change square.  These carriers are reducible tensors, but the
+     generic theorem compares their instance arguments definitionally. -/
+  letI : CommRing
+      (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U) :=
+    pic0FiniteStageChartBaseChangeRingCommRing
+      C P.L P.n P.m P.relation P.M P.N U
+  letI : CommSemiring
+      (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U) :=
+    (inferInstance : CommRing
+      (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U)).toCommSemiring
+  letI : Semiring
+      (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U) :=
+    (inferInstance : CommSemiring
+      (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U)).toSemiring
+  letI : Algebra P.N.1
+      (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U) :=
+    pic0FiniteStageChartBaseChangeRingAlgebra
+      C P.L P.n P.m P.relation P.M P.N U
+  letI : CommRing
+      (Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M P.N U V) :=
+    pic0FiniteStageOverlapBaseChangeRingCommRing
+      C P.L P.n P.m P.relation P.M P.N U V
+  letI : CommSemiring
+      (Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M P.N U V) :=
+    (inferInstance : CommRing
+      (Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M P.N U V)).toCommSemiring
+  letI : Semiring
+      (Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M P.N U V) :=
+    (inferInstance : CommSemiring
+      (Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M P.N U V)).toSemiring
+  letI : Algebra P.N.1
+      (Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M P.N U V) :=
+    pic0FiniteStageOverlapBaseChangeRingAlgebra
+      C P.L P.n P.m P.relation P.M P.N U V
   apply affineBaseChangeIso_trans_naturality
     P.N.1 k
     (P.N.1 ⊗[P.M.1]
