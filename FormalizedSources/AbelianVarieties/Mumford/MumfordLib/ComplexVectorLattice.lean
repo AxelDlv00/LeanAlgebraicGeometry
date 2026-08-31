@@ -106,6 +106,74 @@ theorem quotientAddEquiv_mk
       d.exponential v :=
   PeriodLatticeQuotient.quotientAddEquiv_mk d.toPeriodLatticeQuotient v
 
+/-- A representative in the arbitrary tangent quotient is torsion exactly
+    when its scalar multiple lies in the transported period lattice. -/
+theorem quotient_mk_mem_zsmulTorsion_iff
+    {V X : Type*} [NormedAddCommGroup V] [NormedSpace ℂ V]
+    [AddCommGroup X] [TopologicalSpace X] {g : ℕ}
+    (d : ComplexVectorLatticeExponentialData V X g) (n : ℤ) (v : V) :
+    QuotientAddGroup.mk' d.ambientPeriodLattice v ∈
+        zsmulTorsionSubgroup (V ⧸ d.ambientPeriodLattice) n ↔
+      n • v ∈ d.ambientPeriodLattice := by
+  exact PeriodLatticeQuotient.quotient_mk_mem_zsmulTorsion_iff
+    d.ambientPeriodLattice n v
+
+/-- Signed-integer torsion in the arbitrary tangent quotient, transported
+    through its exponential and a chosen genus-torus uniformization. -/
+noncomputable def quotientTorsionAddEquiv_of_uniformization
+    {V X : Type*} [NormedAddCommGroup V] [NormedSpace ℂ V]
+    [AddCommGroup X] [TopologicalSpace X] {g : ℕ}
+    (d : ComplexVectorLatticeExponentialData V X g)
+    (u : GenusTorusUniformization X g) {n : ℤ} (hn : n ≠ 0) :
+    zsmulTorsionSubgroup (V ⧸ d.ambientPeriodLattice) n ≃+
+      (Fin (2 * g) → ZMod n.natAbs) :=
+  (zsmulTorsion_addEquiv_of_addEquiv d.quotientAddEquiv n).trans
+    (zsmulTorsion_addEquiv_of_uniformization u hn)
+
+@[simp]
+theorem quotientTorsionAddEquiv_of_uniformization_apply
+    {V X : Type*} [NormedAddCommGroup V] [NormedSpace ℂ V]
+    [AddCommGroup X] [TopologicalSpace X] {g : ℕ}
+    (d : ComplexVectorLatticeExponentialData V X g)
+    (u : GenusTorusUniformization X g) {n : ℤ} (hn : n ≠ 0)
+    (q : zsmulTorsionSubgroup (V ⧸ d.ambientPeriodLattice) n) :
+    (d.quotientTorsionAddEquiv_of_uniformization u hn) q =
+      (zsmulTorsion_addEquiv_of_uniformization u hn)
+        ((zsmulTorsion_addEquiv_of_addEquiv d.quotientAddEquiv n) q) := by
+  rfl
+
+/-- The positive-natural notation for the arbitrary tangent quotient torsion
+    equivalence. -/
+noncomputable def quotientTorsionAddEquiv_of_uniformization_natCast
+    {V X : Type*} [NormedAddCommGroup V] [NormedSpace ℂ V]
+    [AddCommGroup X] [TopologicalSpace X] {g n : ℕ}
+    (d : ComplexVectorLatticeExponentialData V X g)
+    (u : GenusTorusUniformization X g) (hn : 0 < n) :
+    zsmulTorsionSubgroup (V ⧸ d.ambientPeriodLattice) (n : ℤ) ≃+
+      (Fin (2 * g) → ZMod n) := by
+  have hne : (n : ℤ) ≠ 0 := by
+    exact_mod_cast (Nat.ne_of_gt hn)
+  let castEquiv : (Fin (2 * g) → ZMod (n : ℤ).natAbs) ≃+
+      (Fin (2 * g) → ZMod n) :=
+    AddEquiv.cast (M := fun m : ℕ => Fin (2 * g) → ZMod m)
+      (Int.natAbs_ofNat' n)
+  exact (d.quotientTorsionAddEquiv_of_uniformization u hne).trans castEquiv
+
+/-- The arbitrary tangent quotient has the expected positive-natural torsion
+    cardinality. -/
+theorem quotientTorsion_card_of_uniformization_natCast
+    {V X : Type*} [NormedAddCommGroup V] [NormedSpace ℂ V]
+    [AddCommGroup X] [TopologicalSpace X] {g n : ℕ}
+    (d : ComplexVectorLatticeExponentialData V X g)
+    (u : GenusTorusUniformization X g) (hn : 0 < n) :
+    Nat.card (zsmulTorsionSubgroup (V ⧸ d.ambientPeriodLattice) (n : ℤ)) =
+      n ^ (2 * g) := by
+  have hne : (n : ℤ) ≠ 0 := by
+    exact_mod_cast (Nat.ne_of_gt hn)
+  rw [Nat.card_congr
+    (d.quotientTorsionAddEquiv_of_uniformization u hne).toEquiv]
+  simp [Nat.card_fun, Nat.card_zmod, Nat.card_eq_fintype_card]
+
 /-- The same exponential expressed in the standard genus coordinates. -/
 def canonicalExponential
     {V X : Type*} [NormedAddCommGroup V] [NormedSpace ℂ V]
