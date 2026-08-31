@@ -82,6 +82,73 @@ noncomputable def restrictionBaseChangeAlgHom
       (pic0FiniteStageOverlapBaseChangeAlgebra C P.L P.n P.m P.relation P.M P.N U V) :=
   restrictionBaseChangeAlgHomCanonical C P U V
 
+set_option synthInstance.maxHeartbeats 3200000 in
+-- The pinned wrapper is used only to export a typeclass-independent ring homomorphism.
+set_option maxHeartbeats 12800000 in
+/-- The descended restriction with the same explicit tensor witnesses as the named
+chart and overlap structure maps. -/
+noncomputable def restrictionBaseChangeAlgHomPinned
+    {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
+    (P : Pic0FiniteStageGluePackage C F)
+    (U V : Pic0FiniteStageChartIndex C) :
+    @AlgHom P.N.1
+      (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U)
+      (Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M P.N U V)
+      (inferInstance : CommSemiring P.N.1)
+      (pic0FiniteStageChartBaseChangeRingCommRing
+        C P.L P.n P.m P.relation P.M P.N U).toSemiring
+      (pic0FiniteStageOverlapBaseChangeRingCommRing
+        C P.L P.n P.m P.relation P.M P.N U V).toSemiring
+      (pic0FiniteStageChartBaseChangeRingAlgebra
+        C P.L P.n P.m P.relation P.M P.N U)
+      (pic0FiniteStageOverlapBaseChangeRingAlgebra
+        C P.L P.n P.m P.relation P.M P.N U V) :=
+  restrictionBaseChangeAlgHomCanonical C P U V
+
+set_option synthInstance.maxHeartbeats 3200000 in
+-- Projecting the pinned algebra hom fixes both dependent tensor witnesses.
+set_option maxHeartbeats 12800000 in
+/-- The descended restriction as a ring homomorphism with all carrier structures
+fixed in its type.  Downstream scheme statements can use this without synthesizing
+dependent `Algebra` instances. -/
+noncomputable def restrictionBaseChangeRingHom
+    {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
+    (P : Pic0FiniteStageGluePackage C F)
+    (U V : Pic0FiniteStageChartIndex C) :
+    @RingHom
+      (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U)
+      (Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M P.N U V)
+      (pic0FiniteStageChartBaseChangeRingCommRing
+        C P.L P.n P.m P.relation P.M P.N U).toNonAssocSemiring
+      (pic0FiniteStageOverlapBaseChangeRingCommRing
+        C P.L P.n P.m P.relation P.M P.N U V).toNonAssocSemiring :=
+  @AlgHom.toRingHom P.N.1
+    (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U)
+    (Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M P.N U V)
+    (inferInstance : CommSemiring P.N.1)
+    (pic0FiniteStageChartBaseChangeRingCommRing
+      C P.L P.n P.m P.relation P.M P.N U).toSemiring
+    (pic0FiniteStageOverlapBaseChangeRingCommRing
+      C P.L P.n P.m P.relation P.M P.N U V).toSemiring
+    (pic0FiniteStageChartBaseChangeRingAlgebra
+      C P.L P.n P.m P.relation P.M P.N U)
+    (pic0FiniteStageOverlapBaseChangeRingAlgebra
+      C P.L P.n P.m P.relation P.M P.N U V)
+    (restrictionBaseChangeAlgHomPinned C P U V)
+
+set_option synthInstance.maxHeartbeats 3200000 in
+-- Relating the raw glue leg to the pinned wrapper unfolds the package presentation once.
+set_option maxHeartbeats 12800000 in
+/-- The left glue leg is the spectrum of the pinned restriction ring homomorphism. -/
+theorem glueData_f_pinned
+    {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
+    (P : Pic0FiniteStageGluePackage C F)
+    (U V : Pic0FiniteStageChartIndex C) :
+    P.glueData.f U V = Spec.map (CommRingCat.ofHom
+      (restrictionBaseChangeRingHom C P U V)) := by
+  rw [glueData_f C P U V]
+  rfl
+
 /-- The exact left restriction with indexed source and target rings.  Keeping
 the indexed rings avoids relying on typeclass transparency for their aliases. -/
 noncomputable def exactRestrictionAlgHom
