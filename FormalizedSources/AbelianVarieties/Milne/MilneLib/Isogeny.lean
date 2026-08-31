@@ -889,6 +889,74 @@ theorem Isogeny.kernel_baseChange_isFinite_flat_surjective
     MorphismProperty.pullback_snd _ _ inferInstance,
     MorphismProperty.pullback_snd _ _ inferInstance⟩
 
+/- The base change of the kernel is the iterated pullback obtained by first
+   taking the identity fibre and then changing the ground field.  This
+   associativity iso is the concrete scheme-level comparison used below. -/
+noncomputable def isogenyKernel_baseChange_assocIso
+    {L : Type u} [Field L]
+    (f : A ⟶ B) (b : Spec (.of L) ⟶ Spec (.of K)) :
+    pullback (isogenyKernelToBase f) b ≅
+      pullback f.left (b ≫ (η[B]).left) :=
+  pullbackLeftPullbackSndIso f.left (η[B]).left b
+
+omit [GrpObj A] in
+@[reassoc (attr := simp)]
+theorem isogenyKernel_baseChange_assocIso_hom_fst
+    {L : Type u} [Field L]
+    (f : A ⟶ B) (b : Spec (.of L) ⟶ Spec (.of K)) :
+    (isogenyKernel_baseChange_assocIso f b).hom ≫
+        pullback.fst f.left (b ≫ (η[B]).left) =
+      pullback.fst (isogenyKernelToBase f) b ≫
+        pullback.fst f.left (η[B]).left := by
+  exact pullbackLeftPullbackSndIso_hom_fst f.left (η[B]).left b
+
+omit [GrpObj A] in
+@[reassoc (attr := simp)]
+theorem isogenyKernel_baseChange_assocIso_hom_snd
+    {L : Type u} [Field L]
+    (f : A ⟶ B) (b : Spec (.of L) ⟶ Spec (.of K)) :
+    (isogenyKernel_baseChange_assocIso f b).hom ≫
+        pullback.snd f.left (b ≫ (η[B]).left) =
+      pullback.snd (isogenyKernelToBase f) b := by
+  exact pullbackLeftPullbackSndIso_hom_snd f.left (η[B]).left b
+
+/- The same comparison in the slice category retains the structure morphism
+   over the base.  In particular, it exposes the map on the identity section
+   after applying the `Over.pullback` functor, without choosing a presentation
+   of that section on underlying schemes. -/
+noncomputable def isogenyKernelOver (f : A ⟶ B) : Over (Spec (.of K)) :=
+  Limits.pullback f (η[B])
+
+noncomputable def isogenyKernelOver_baseChangeIso
+    {L : Type u} [Field L]
+    (f : A ⟶ B) (b : Spec (.of L) ⟶ Spec (.of K)) :
+    (Over.pullback b).obj (isogenyKernelOver f) ≅
+      Limits.pullback ((Over.pullback b).map f)
+        ((Over.pullback b).map (η[B])) :=
+  PreservesPullback.iso (Over.pullback b) f (η[B])
+
+omit [GrpObj A] in
+@[reassoc (attr := simp)]
+theorem isogenyKernelOver_baseChangeIso_hom_fst
+    {L : Type u} [Field L]
+    (f : A ⟶ B) (b : Spec (.of L) ⟶ Spec (.of K)) :
+    (isogenyKernelOver_baseChangeIso f b).hom ≫
+        pullback.fst ((Over.pullback b).map f)
+          ((Over.pullback b).map (η[B])) =
+      (Over.pullback b).map (pullback.fst f (η[B])) := by
+  exact pullbackComparison_comp_fst (Over.pullback b) f (η[B])
+
+omit [GrpObj A] in
+@[reassoc (attr := simp)]
+theorem isogenyKernelOver_baseChangeIso_hom_snd
+    {L : Type u} [Field L]
+    (f : A ⟶ B) (b : Spec (.of L) ⟶ Spec (.of K)) :
+    (isogenyKernelOver_baseChangeIso f b).hom ≫
+        pullback.snd ((Over.pullback b).map f)
+          ((Over.pullback b).map (η[B])) =
+      (Over.pullback b).map (pullback.snd f (η[B])) := by
+  exact pullbackComparison_comp_snd (Over.pullback b) f (η[B])
+
 /- An isogeny whose underlying morphism is already known to be finite remains
    an isogeny after arbitrary base change of the field.  The finite and
    surjective hypotheses are transported by the `Over` pullback functor. -/
