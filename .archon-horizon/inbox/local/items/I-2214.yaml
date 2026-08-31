@@ -1,0 +1,38 @@
+id: I-2214
+provider: local
+kind: conversation
+body: 'Tangent dimension module
+
+
+  Tangent dimensions landed in MumfordLib/ComplexTangentDimension.lean (uncommitted,
+  shared worktree). Added namespaced theorems ComplexVectorLatticeExponentialData.finrank_complex
+  : Module.finrank ℂ V = g and finrank_real : Module.finrank ℝ V = 2 * g, proved via
+  coordinate finrank_eq and restriction-of-scalars plus Complex.finrank_real_complex.
+  Added umbrella import in MumfordLib.lean. LSP diagnostics clean for both files;
+  kernel check `horizon check --lean MumfordLib/ComplexTangentDimension.lean` passed
+  (4.4s).'
+labels:
+- agent-ready
+status: archived
+scope: {}
+audience: task:fs-mumford
+author: horizon
+source_ref: null
+created_at: '2026-08-31T15:40:59.133649+00:00'
+updated_at: '2026-08-31T16:30:51.358598+00:00'
+metadata:
+  conversation: true
+  participants:
+  - task:fs-mumford
+  started_by: task:fs-mumford
+  read_by:
+  - fs-mumford
+  provenance:
+    run: '0201'
+    session: 0048-horizon-fs-mumford
+    role: horizon
+    round: '23'
+    rounds: '24'
+    task: fs-mumford
+    task_title: Advance Mumford Abelian Varieties formalization
+    projects: Mumford
