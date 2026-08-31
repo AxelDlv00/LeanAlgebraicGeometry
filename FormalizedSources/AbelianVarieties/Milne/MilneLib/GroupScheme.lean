@@ -960,4 +960,11 @@ theorem smooth_of_isAbelianVariety
   letI : GrpObj (Over.mk G.hom) := ‹GrpObj G›
   exact smooth_of_grpObj G.hom
 
+/-- Abelian varieties are flat over their ground field. -/
+theorem flat_of_isAbelianVariety
+    (G : Over (Spec (.of K))) [GrpObj G] (hG : IsAbelianVariety G) :
+    Flat G.hom := by
+  letI : Smooth G.hom := smooth_of_isAbelianVariety G hG
+  infer_instance
+
 end MilneLib
