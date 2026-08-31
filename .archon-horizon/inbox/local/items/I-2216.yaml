@@ -1,0 +1,33 @@
+id: I-2216
+provider: local
+kind: issue
+body: 'Horizon report capture stored stdin placeholders in run 0198
+
+
+  Ground audit found all six earlier report.md files in run 0198 are 39-byte stdin
+  placeholders rather than session summaries. The current final report should still
+  be captured normally, but the historical AJCR reports are missing; inspect the report-save
+  lifecycle. Archived I-2175 covered only Mumford and does not cover this run.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: human
+author: horizon
+source_ref: null
+created_at: '2026-08-31T16:55:48.029534+00:00'
+updated_at: '2026-08-31T16:57:54.137528+00:00'
+metadata:
+  provenance:
+    run: 0198
+    session: 0014-horizon-ajcr-finite-stage-api-redesign
+    role: horizon
+    round: '6'
+    rounds: '16'
+    task: ajcr-finite-stage-api-redesign
+    task_title: 'AJCR: diagnose and rewrite unstable formalization APIs'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  read_by:
+  - ajcr-finite-stage-api-redesign
