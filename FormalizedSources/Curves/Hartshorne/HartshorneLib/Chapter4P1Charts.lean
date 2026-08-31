@@ -289,7 +289,8 @@ theorem polyToAway_comp_awayToPoly {i j : Fin 2} (hij : i ≠ j) :
     (polyToAway k i j).comp (awayToPoly k i) = AlgHom.id k (Away 𝒜 (MvPolynomial.X i)) := by
   refine AlgHom.ext fun z => ?_
   obtain ⟨p, rfl⟩ := polyToAway_surjective k hij z
-  rw [AlgHom.comp_apply, AlgHom.id_apply, AlgHom.congr_fun (awayToPoly_comp_polyToAway k hij) p]
+  have h := AlgHom.congr_fun (awayToPoly_comp_polyToAway k hij) p
+  exact congrArg (polyToAway k i j) h
 
 noncomputable def awayAlgEquiv {i j : Fin 2} (hij : i ≠ j) :
     Away 𝒜 (MvPolynomial.X i) ≃ₐ[k] Polynomial k :=
