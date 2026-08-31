@@ -13,4 +13,4 @@ provenance:
   task_title: Advance Milne Abelian Varieties formalization
 updated: '2026-08-31T22:57:07'
 ---
-Verified support bridge (commit 00ef325b82): after arbitrary field-spectrum base change, the pulled-back identity-section kernel is finite. The proof transports kernelOver_baseChange_isFinite across isogenyKernelOver_baseChangeIso; this auxiliary declaration is intentionally not a frozen blueprint \u005clean attachment.
+Verified support bridge (commit 00ef325b82): after arbitrary field-spectrum base change, the pulled-back identity-section kernel is finite. The proof transports kernelOver_baseChange_isFinite across isogenyKernelOver_baseChangeIso; this auxiliary declaration is intentionally not a frozen blueprint \lean attachment.
