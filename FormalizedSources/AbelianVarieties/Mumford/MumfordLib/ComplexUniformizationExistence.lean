@@ -112,6 +112,43 @@ theorem complexTorusUniformization_nonempty_iff_exists_exponential
   · rintro ⟨exponential, hsurj, hkernel⟩
     exact ⟨ComplexTorusUniformization.ofExponential exponential hsurj hkernel⟩
 
+/-- A chosen exponential certificate gives division by every positive natural.
+
+This is the divisibility half of the analytic torsion statement, expressed at
+the explicit-data boundary so that it does not assert existence of an
+exponential for an arbitrary target. -/
+theorem ComplexTorusExponentialData.exists_division
+    {X : Type*} [AddCommGroup X] {g n : ℕ}
+    (d : ComplexTorusExponentialData X g) (x : X) (hn : 0 < n) :
+    ∃ y : X, (n : ℤ) • y = x := by
+  let u := d.toUniformization.toGenusTorusUniformization
+  have hnz : (n : ℤ) ≠ 0 := by
+    exact_mod_cast (Nat.ne_of_gt hn)
+  exact exists_division_of_uniformization u x hnz
+
+/-- The positive-natural torsion equivalence attached to an exponential
+certificate. -/
+noncomputable def ComplexTorusExponentialData.natCast_zsmulTorsion_addEquiv
+    {X : Type*} [AddCommGroup X] {g n : ℕ}
+    (d : ComplexTorusExponentialData X g) (hn : 0 < n) :
+    zsmulTorsionSubgroup X (n : ℤ) ≃+
+      (Fin (2 * g) → ZMod n) :=
+  natCast_zsmulTorsion_addEquiv_of_uniformization
+    d.toUniformization.toGenusTorusUniformization hn
+
+/-- Combined proposition-valued form of divisibility and finite torsion for a
+chosen exponential certificate.  `Nonempty` records the equivalence as a
+proposition, since an additive equivalence itself is data rather than a
+proposition. -/
+theorem ComplexTorusExponentialData.division_and_torsion
+    {X : Type*} [AddCommGroup X] {g n : ℕ}
+    (d : ComplexTorusExponentialData X g) (x : X) (hn : 0 < n) :
+    (∃ y : X, (n : ℤ) • y = x) ∧
+      Nonempty (zsmulTorsionSubgroup X (n : ℤ) ≃+
+        (Fin (2 * g) → ZMod n)) := by
+  refine ⟨d.exists_division x hn, ?_⟩
+  exact ⟨d.natCast_zsmulTorsion_addEquiv hn⟩
+
 /-- The standard coordinate exponential supplies the canonical witness for the
 explicit genus torus model. -/
 def standardComplexTorusUniformization (g : ℕ) :
