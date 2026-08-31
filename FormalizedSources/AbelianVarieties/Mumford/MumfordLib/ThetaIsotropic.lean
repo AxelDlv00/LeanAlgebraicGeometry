@@ -270,6 +270,20 @@ def IsMaximalIsotropic
   E.IsIsotropic H ∧
     ∀ J : AddSubgroup K, H ≤ J → E.IsIsotropic J → J ≤ H
 
+/-- A finite theta quotient has a maximal isotropic subgroup. -/
+theorem exists_isMaximalIsotropic
+    (E : ThetaExtension G S K) [Finite K] :
+    ∃ H : AddSubgroup K, E.IsMaximalIsotropic H := by
+  classical
+  letI : Fintype K := Fintype.ofFinite K
+  letI : Finite (AddSubgroup K) := Finite.of_injective
+    (fun H : AddSubgroup K => (H : Set K))
+    SetLike.coe_injective
+  obtain ⟨H, _, hH, hmax⟩ :=
+    Finite.exists_le_maximal (p := fun H : AddSubgroup K => E.IsIsotropic H)
+      (a := ⊥) E.isIsotropic_bot
+  exact ⟨H, ⟨hH, fun J hHJ hJ => hmax hJ hHJ⟩⟩
+
 /-- A maximal isotropic subgroup equals its commutator orthogonal. -/
 theorem eq_commutatorPairingOrthogonal_of_isMaximalIsotropic
     (E : ThetaExtension G S K) (H : AddSubgroup K)
