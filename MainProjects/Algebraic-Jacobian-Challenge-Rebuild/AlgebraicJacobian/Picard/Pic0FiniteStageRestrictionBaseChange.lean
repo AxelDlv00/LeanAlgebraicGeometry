@@ -179,6 +179,70 @@ noncomputable def restrictionBaseChangeMap
     (restrictionBaseChangeAlgHom C P U V)
 
 set_option synthInstance.maxHeartbeats 3200000 in
+-- Projecting the pinned map still exposes the package's dependent tensor carriers.
+set_option maxHeartbeats 12800000 in
+/-- The pulled-back restriction has the expected map on the affine projection.
+
+The pullback objects are inferred from `restrictionBaseChangeMap`, so consumers do
+not have to reconstruct the dependent chart and overlap ring instances. -/
+theorem restrictionBaseChangeMap_fst
+    {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
+    (P : Pic0FiniteStageGluePackage C F)
+    (U V : Pic0FiniteStageChartIndex C) :
+    restrictionBaseChangeMap C P U V ≫ pullback.fst _ _ =
+      pullback.fst _ _ ≫ Spec.map (CommRingCat.ofHom
+        (restrictionBaseChangeAlgHom C P U V).toRingHom) := by
+  letI : CommRing
+      (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U) :=
+    pic0FiniteStageChartBaseChangeCommRing C P.L P.n P.m P.relation P.M P.N U
+  letI : Algebra P.N.1
+      (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U) :=
+    pic0FiniteStageChartBaseChangeAlgebra C P.L P.n P.m P.relation P.M P.N U
+  letI : CommRing
+      (Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M P.N U V) :=
+    pic0FiniteStageOverlapBaseChangeCommRing C P.L P.n P.m P.relation P.M P.N U V
+  letI : Algebra P.N.1
+      (Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M P.N U V) :=
+    pic0FiniteStageOverlapBaseChangeAlgebra C P.L P.n P.m P.relation P.M P.N U V
+  unfold restrictionBaseChangeMap
+  exact affineBaseChangeMap_fst P.N.1 k
+    (Pic0FiniteStageChartBaseChangeRing
+      C P.L P.n P.m P.relation P.M P.N U)
+    (Pic0FiniteStageOverlapBaseChangeRing
+      C P.L P.n P.m P.relation P.M P.N U V)
+    (restrictionBaseChangeAlgHom C P U V)
+
+set_option synthInstance.maxHeartbeats 3200000 in
+-- Projecting the pinned map still exposes the package's dependent tensor carriers.
+set_option maxHeartbeats 12800000 in
+/-- The pulled-back restriction is the identity on the base projection. -/
+theorem restrictionBaseChangeMap_snd
+    {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
+    (P : Pic0FiniteStageGluePackage C F)
+    (U V : Pic0FiniteStageChartIndex C) :
+    restrictionBaseChangeMap C P U V ≫ pullback.snd _ _ =
+      pullback.snd _ _ := by
+  letI : CommRing
+      (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U) :=
+    pic0FiniteStageChartBaseChangeCommRing C P.L P.n P.m P.relation P.M P.N U
+  letI : Algebra P.N.1
+      (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U) :=
+    pic0FiniteStageChartBaseChangeAlgebra C P.L P.n P.m P.relation P.M P.N U
+  letI : CommRing
+      (Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M P.N U V) :=
+    pic0FiniteStageOverlapBaseChangeCommRing C P.L P.n P.m P.relation P.M P.N U V
+  letI : Algebra P.N.1
+      (Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M P.N U V) :=
+    pic0FiniteStageOverlapBaseChangeAlgebra C P.L P.n P.m P.relation P.M P.N U V
+  unfold restrictionBaseChangeMap
+  exact affineBaseChangeMap_snd P.N.1 k
+    (Pic0FiniteStageChartBaseChangeRing
+      C P.L P.n P.m P.relation P.M P.N U)
+    (Pic0FiniteStageOverlapBaseChangeRing
+      C P.L P.n P.m P.relation P.M P.N U V)
+    (restrictionBaseChangeAlgHom C P U V)
+
+set_option synthInstance.maxHeartbeats 3200000 in
 -- The chart comparison cancels the package's nested scalar extensions.
 set_option maxHeartbeats 12800000 in
 /-- The tensor-product and final-ring comparison for a chart, before applying
