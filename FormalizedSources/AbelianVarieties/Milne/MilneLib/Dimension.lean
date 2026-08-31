@@ -12,6 +12,7 @@ import Mathlib.Order.CompletePartialOrder
 import Mathlib.RingTheory.KrullDimension.Basic
 import Mathlib.RingTheory.Ideal.GoingUp
 import Mathlib.RingTheory.Ideal.KrullsHeightTheorem
+import Mathlib.RingTheory.RegularLocalRing.Defs
 import Mathlib.RingTheory.Spectrum.Prime.Topology
 
 /-!
@@ -208,6 +209,37 @@ theorem topologicalKrullDim_le_of_forall_finrank_cotangentSpace_le
   topologicalKrullDim_le_of_forall_ringKrullDim_stalk_le X _ fun z =>
     le_trans (ringKrullDim_stalk_le_finrank_cotangentSpace X z)
       (by exact_mod_cast Nat.cast_le.mpr (h z))
+
+/-- At a regular point, the cotangent-space dimension is a lower bound for the
+dimension of the ambient scheme. -/
+theorem le_topologicalKrullDim_of_finrank_cotangentSpace
+    (X : Scheme.{u}) (d : ℕ) (z : X)
+    (hreg : IsRegularLocalRing (X.presheaf.stalk z))
+    (h : Module.finrank (IsLocalRing.ResidueField (X.presheaf.stalk z))
+      (IsLocalRing.CotangentSpace (X.presheaf.stalk z)) = d) :
+    (d : WithBot ℕ∞) ≤ topologicalKrullDim X := by
+  haveI := hreg
+  have hdim : ringKrullDim (X.presheaf.stalk z) =
+      (d : WithBot ℕ∞) := by
+    rw [← (IsRegularLocalRing.iff_finrank_cotangentSpace
+      (R := X.presheaf.stalk z)).mp hreg, h]
+  rw [← hdim]
+  exact ringKrullDim_stalk_le_topologicalKrullDim X z
+
+/-- A uniform cotangent-space upper bound and one regular point attaining the
+bound determine the dimension of a locally Noetherian scheme. -/
+theorem topologicalKrullDim_eq_of_forall_finrank_cotangentSpace_le_of_regular
+    (X : Scheme.{u}) [IsLocallyNoetherian X] (d : ℕ)
+    (h : ∀ z : X,
+      Module.finrank (IsLocalRing.ResidueField (X.presheaf.stalk z))
+        (IsLocalRing.CotangentSpace (X.presheaf.stalk z)) ≤ d)
+    (z₀ : X) (hreg : IsRegularLocalRing (X.presheaf.stalk z₀))
+    (hz₀ : Module.finrank (IsLocalRing.ResidueField (X.presheaf.stalk z₀))
+      (IsLocalRing.CotangentSpace (X.presheaf.stalk z₀)) = d) :
+    topologicalKrullDim X = (d : WithBot ℕ∞) :=
+  le_antisymm
+    (topologicalKrullDim_le_of_forall_finrank_cotangentSpace_le X d h)
+    (le_topologicalKrullDim_of_finrank_cotangentSpace X d z₀ hreg hz₀)
 
 /-- An injective integral extension preserves Krull dimension. -/
 theorem ringKrullDim_eq_of_isIntegral_of_injective
