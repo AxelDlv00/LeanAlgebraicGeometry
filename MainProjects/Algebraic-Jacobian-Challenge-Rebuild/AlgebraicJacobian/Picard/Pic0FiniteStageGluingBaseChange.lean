@@ -218,6 +218,40 @@ theorem overlapBaseChangeIso_hom_ι
       (fun q => (overlapRingBaseChangeIso C P U V).hom ≫ q)
       (pic0FiniteStageAffineOverlap C U V).2.isoSpec_inv_ι
 
+set_option synthInstance.maxHeartbeats 3200000 in
+-- Normalize the right atlas projection at the overlap comparison boundary.
+set_option maxHeartbeats 12800000 in
+set_option backward.isDefEq.respectTransparency false in
+/-- The overlap comparison carries the exact right atlas projection to the
+pinned finite-stage overlap projection. -/
+theorem overlapBaseChangeIso_hom_atlas_t_f_ι
+    {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
+    (P : Pic0FiniteStageGluePackage C F)
+    (U V : Pic0FiniteStageChartIndex C) :
+    (overlapBaseChangeIso C P U V).hom ≫
+        ((pic0SepClosedAtlasOverlapIso C U V).hom ≫
+          (((pic0SepClosedAtlasGlueData C).t U V ≫
+            (pic0SepClosedAtlasGlueData C).f V U) ≫ V.1.1.ι)) =
+      (overlapRingBaseChangeIso C P U V).hom ≫
+        (pic0FiniteStageAffineOverlap C U V).2.fromSpec := by
+  have atlas_projection :
+      (pic0SepClosedAtlasOverlapIso C U V).hom ≫
+          (((pic0SepClosedAtlasGlueData C).t U V ≫
+            (pic0SepClosedAtlasGlueData C).f V U) ≫ V.1.1.ι) =
+        (pic0FiniteStageAffineOverlap C U V).1.ι := by
+    calc
+      _ = ((pic0_sepClosed_representableBy (C := C)).1.left.homOfLE
+            (pic0FiniteStageAffineOverlap_le_right C U V)) ≫ V.1.1.ι := by
+        simpa only [Category.assoc] using
+          pic0SepClosedAtlasOverlapIso_hom_t_f_assoc C U V V.1.1.ι
+      _ = _ := Scheme.homOfLE_ι _ _
+  calc
+    _ = (overlapBaseChangeIso C P U V).hom ≫
+        (pic0FiniteStageAffineOverlap C U V).1.ι :=
+      congrArg (fun q => (overlapBaseChangeIso C P U V).hom ≫ q)
+        atlas_projection
+    _ = _ := overlapBaseChangeIso_hom_ι C P U V
+
 end Pic0FiniteStageGluePackage
 
 end
