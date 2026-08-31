@@ -44,29 +44,20 @@ theorem gluingOverlapIso_pre_snd_fst
           (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k)))).f V U) ≫
         (pullback.congrHom (glueData_ι_gluedMap C P V) rfl).hom) ≫
       pullback.fst
-        (Spec.map (CommRingCat.ofHom
-          (algebraMap P.N.1
-            (Pic0FiniteStageChartBaseChangeRing
-              C P.L P.n P.m P.relation P.M P.N V))))
+        (chartBaseChangeMap C P V)
         (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k))) =
     (((gluingOverlapFlatteningIso C P U V).hom ≫
         (pullback.congrHom
           (glueData_f_comp_inclusion_comp_gluedMap C P U V) rfl).hom) ≫
         rightRestrictionBaseChangeMap C P U V) ≫
       pullback.fst
-        (Spec.map (CommRingCat.ofHom
-          (algebraMap P.N.1
-            (Pic0FiniteStageChartBaseChangeRing
-              C P.L P.n P.m P.relation P.M P.N V))))
+        (chartBaseChangeMap C P V)
         (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k))) := by
   simp only [Category.assoc]
   have hι_fst :
       (pullback.congrHom (glueData_ι_gluedMap C P V) rfl).hom ≫
           pullback.fst
-            (Spec.map (CommRingCat.ofHom
-              (algebraMap P.N.1
-                (Pic0FiniteStageChartBaseChangeRing
-                  C P.L P.n P.m P.relation P.M P.N V))))
+            (chartBaseChangeMap C P V)
             (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k))) =
         pullback.fst (P.glueData.ι V ≫ P.gluedMap)
           (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k))) :=
@@ -74,40 +65,31 @@ theorem gluingOverlapIso_pre_snd_fst
   have hfst :
       rightRestrictionBaseChangeMap C P U V ≫
           pullback.fst
-            (Spec.map (CommRingCat.ofHom
-              (algebraMap P.N.1
-                (Pic0FiniteStageChartBaseChangeRing
-                  C P.L P.n P.m P.relation P.M P.N V))))
+            (chartBaseChangeMap C P V)
             (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k))) =
         pullback.fst
-            (Spec.map (CommRingCat.ofHom
-              (algebraMap P.N.1
-                (Pic0FiniteStageOverlapBaseChangeRing
-                  C P.L P.n P.m P.relation P.M P.N U V))))
+            (overlapBaseChangeMap C P U V)
             (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k))) ≫
           Spec.map (CommRingCat.ofHom
-            (rightRestrictionBaseChangeAlgHom C P U V).toRingHom) :=
+            (rightRestrictionBaseChangeRingHom C P U V)) :=
     rightRestrictionBaseChangeMap_fst (C := C) (P := P) (U := U) (V := V)
   have hcongr_fst :
       (pullback.congrHom
           (glueData_f_comp_inclusion_comp_gluedMap C P U V) rfl).hom ≫
         pullback.fst
-          (Spec.map (CommRingCat.ofHom
-            (algebraMap P.N.1
-              (Pic0FiniteStageOverlapBaseChangeRing
-                C P.L P.n P.m P.relation P.M P.N U V))))
+          (overlapBaseChangeMap C P U V)
           (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k))) ≫
         Spec.map (CommRingCat.ofHom
-          (rightRestrictionBaseChangeAlgHom C P U V).toRingHom) =
+          (rightRestrictionBaseChangeRingHom C P U V)) =
       pullback.fst
         (P.glueData.f U V ≫ P.glueData.ι U ≫ P.gluedMap)
         (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k))) ≫
         Spec.map (CommRingCat.ofHom
-          (rightRestrictionBaseChangeAlgHom C P U V).toRingHom) :=
+          (rightRestrictionBaseChangeRingHom C P U V)) :=
     pullback_congrHom_hom_fst_assoc
       (glueData_f_comp_inclusion_comp_gluedMap C P U V) rfl
       (Spec.map (CommRingCat.ofHom
-        (rightRestrictionBaseChangeAlgHom C P U V).toRingHom))
+        (rightRestrictionBaseChangeRingHom C P U V)))
   refine Eq.trans
     (congrArg
       (fun q =>
