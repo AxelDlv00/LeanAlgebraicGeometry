@@ -28,8 +28,6 @@ namespace P1
 
 variable (k : Type u) [Field k]
 
-local notation "𝒜" => MvPolynomial.homogeneousSubmodule (Fin 2) k
-
 /-- The homogeneous coordinate divided by itself is the unit on its chart. -/
 @[simp] theorem chartCoord_self (i : Fin 2) :
     P1.chartCoord k i i = 1 := by
