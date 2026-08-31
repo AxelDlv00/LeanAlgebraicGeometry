@@ -13,9 +13,10 @@ The construction of the canonical sheaf and its duality pairing is a substantial
 geometric input.  This module keeps that input explicit while exposing the
 dimension-level statement consumed by Riemann--Roch: degree-one cohomology of
 `𝒪(D)` is linearly equivalent to the dual of degree-zero cohomology of
-`𝒪(K-D)`.  The resulting theorem is therefore a genuine consumer of a
-load-bearing duality certificate, rather than an unconditional axiom or hidden
-instance.
+`𝒪(K-D)`.  The resulting theorem is therefore a genuine consumer of an
+explicit, load-bearing duality certificate, rather than an unconditional axiom
+or hidden instance.  The certificate does not construct `K`, a canonical
+sheaf, or a trace pairing.
 -/
 
 set_option autoImplicit false
@@ -49,8 +50,13 @@ structure CurveSerreDualityData where
         (Opens.grothendieckTopology (X.left : TopCat)) k
         (divisorSheaf (canonicalDivisor - D)) 0)
 
-/-- Serre duality gives equality of the corresponding finite-dimensional
-cohomology dimensions. -/
+/-- Serre duality gives equality of the corresponding `Module.finrank` values.
+
+The statement deliberately keeps finiteness as a separate producer concern:
+`Subspace.dual_finrank_eq` is total even before finite-dimensional instances are
+installed, while the smooth-proper finiteness APIs remain available to a
+source-level producer.
+-/
 theorem h1_divisorSheaf_eq_h0_complementary
     (sd : CurveSerreDualityData (k := k) (X := X))
     (D : CurveDivisor k X) :
@@ -63,10 +69,12 @@ theorem h1_divisorSheaf_eq_h0_complementary
 /-!
 ## Riemann--Roch consumer
 
-The theorem below is the exact integer-valued form of Hartshorne IV.1.3 for
-the `h0`/`h1` carriers used by this project.  The Euler characteristic part is
-provided by `chi_divisorSheaf_eq_one_sub_h1_add_degree`; the only additional
-input is the explicit duality certificate above.
+The theorem below is the exact integer-valued `h0 - h1` ledger form that
+corresponds to Hartshorne IV.1.3 once the canonical-divisor and genus bridges
+are supplied.  The project-level `Sheaf.chi` is this truncated degree-zero/one
+ledger, not a separately proved higher-cohomology Euler characteristic.  Its
+Euler increment is provided by `chi_divisorSheaf_eq_one_sub_h1_add_degree`; the
+only additional input here is the explicit duality certificate above.
 -/
 
 theorem riemannRoch_of_curveSerreDuality
