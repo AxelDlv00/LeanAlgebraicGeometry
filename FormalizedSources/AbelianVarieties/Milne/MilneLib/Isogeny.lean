@@ -765,6 +765,25 @@ theorem Isogeny.isFinite_fiberToSpecResidueField
   exact CategoryTheory.MorphismProperty.pullback_snd _ _
     (inferInstance : IsFinite f.left)
 
+/- Properness upgrades globally finite set-theoretic fibres to a finite
+   underlying morphism.  This is the scheme-theoretic criterion used by the
+   abelian-variety specializations below, and remains valid for any proper
+   homomorphism of group schemes over the field. -/
+theorem Isogeny.iff_isFinite_and_surjective_of_isProper_of_finite_fibres
+    {K : Type u} [Field K]
+    {A B : Over (Spec (.of K))} [GrpObj A] [GrpObj B]
+    (f : A ⟶ B) [IsMonHom f] [IsProper f.left]
+    (hfib : ∀ y : B.left, (f.left ⁻¹' {y}).Finite) :
+    Isogeny f ↔ IsFinite f.left ∧ Surjective f.left := by
+  constructor
+  · intro h
+    have hfinite : IsFinite f.left :=
+      IsFinite.of_isProper_of_finite_preimage_singleton f.left hfib
+    exact ⟨hfinite, h.1⟩
+  · rintro ⟨hf, hs⟩
+    letI : IsFinite f.left := hf
+    exact ⟨hs, isogenyKernelToBase_isFinite_of_finite f⟩
+
 /- In the algebraically closed setting, the geometric isogeny condition now
    admits the expected finite-and-surjective reformulation. -/
 theorem Isogeny.iff_isFinite_and_surjective_of_isAbelianVariety
@@ -811,11 +830,7 @@ theorem Isogeny.iff_isFinite_and_surjective_of_isAbelianVariety_of_finite_set_fi
     (hfib : ∀ y : B.left, (f.left ⁻¹' {y}).Finite) :
     Isogeny f ↔ IsFinite f.left ∧ Surjective f.left := by
   letI : IsProper f.left := isProper_left_of_isAbelianVariety hA hB f
-  apply Isogeny.iff_isFinite_and_surjective_of_isAbelianVariety_of_finite_residue_fibres
-    hA hB f
-  intro y
-  exact (isFinite_fiberToSpecResidueField_iff_finite_preimage_singleton f.left y).2
-    (hfib y)
+  exact Isogeny.iff_isFinite_and_surjective_of_isProper_of_finite_fibres f hfib
 
 /- A finite underlying morphism has finite kernel, so in this common case the
    isogeny predicate is exactly surjectivity.  This generic interface keeps the
