@@ -81,6 +81,7 @@ import HartshorneLib.Chapter4FiniteMapP1Existence
 import HartshorneLib.Chapter4ProductFormulaCohomology
 import HartshorneLib.Chapter4FiniteMapP1Cohomology
 import HartshorneLib.Chapter4SmoothProperConsequences
+import HartshorneLib.Chapter4LinearEquivalenceAPI
 
 /-!
 # HartshorneLib
