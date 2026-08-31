@@ -77,5 +77,24 @@ theorem degree_canonicalDivisor_eq_two_mul_h1_sub_two
   rw [sub_self, hzero, hK] at hrr
   omega
 
+/-- The numerical Riemann inequality obtained from the same duality certificate. -/
+theorem riemann_inequality_of_curveSerreDuality
+    (sd : CurveSerreDualityData (k := k) (X := X))
+    (D : CurveDivisor k X) :
+    CurveDivisor.degree D + 1 -
+          (CategoryTheory.Sheaf.h1 (X.left.moduleKSheaf k) : ℤ) ≤
+      (CategoryTheory.Sheaf.h0 (divisorSheaf D) : ℤ) := by
+  have hrr := riemannRoch_of_curveSerreDuality
+    (k := k) (X := X) sd D
+  have hnonneg :
+      (0 : ℤ) ≤
+        (CategoryTheory.Sheaf.h0
+          (divisorSheaf (sd.canonicalDivisor - D)) : ℤ) := by
+    exact_mod_cast
+      (Nat.zero_le
+        (CategoryTheory.Sheaf.h0
+          (divisorSheaf (sd.canonicalDivisor - D))))
+  omega
+
 end
 end Hartshorne
