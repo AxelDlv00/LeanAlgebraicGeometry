@@ -74,6 +74,62 @@ theorem hom_additive_decomp_of_rigidity
   have hdiv : h / ((fst V W ≫ f) * (snd V W ≫ g)) = 1 := by rw [← hφ]; exact hφ1
   exact div_eq_one.mp hdiv
 
+/- The additive decomposition is valid over an arbitrary field once the two
+   factors are geometrically integral.  The quotient construction is formal;
+   only the final constancy step uses scalar extension through the preceding
+   arbitrary-field rigidity theorem. -/
+theorem hom_additive_decomp_of_rigidity_arbitraryField
+    {K : Type u} [Field K]
+    {V W : Over (Spec (.of K))}
+    [IsProper V.hom]
+    [GeometricallyIntegral V.hom]
+    [GeometricallyIntegral W.hom]
+    [LocallyOfFiniteType W.hom]
+    {A : Over (Spec (.of K))}
+    [GrpObj A] [IsSeparated A.hom]
+    (v₀ : 𝟙_ (Over (Spec (.of K))) ⟶ V)
+    (w₀ : 𝟙_ (Over (Spec (.of K))) ⟶ W)
+    (h : V ⊗ W ⟶ A)
+    (hh : lift v₀ w₀ ≫ h = η[A]) :
+    h = (fst V W ≫ (lift (𝟙 V) (toUnit V ≫ w₀) ≫ h)) *
+        (snd V W ≫ (lift (toUnit W ≫ v₀) (𝟙 W) ≫ h)) := by
+  set f : V ⟶ A := lift (𝟙 V) (toUnit V ≫ w₀) ≫ h with hf
+  set g : W ⟶ A := lift (toUnit W ≫ v₀) (𝟙 W) ≫ h with hg
+  have hsVfst : lift (𝟙 V) (toUnit V ≫ w₀) ≫ fst V W = 𝟙 V := by simp
+  have hsVsnd : lift (𝟙 V) (toUnit V ≫ w₀) ≫ snd V W = toUnit V ≫ w₀ := by simp
+  have hsWfst : lift (toUnit W ≫ v₀) (𝟙 W) ≫ fst V W = toUnit W ≫ v₀ := by simp
+  have hsWsnd : lift (toUnit W ≫ v₀) (𝟙 W) ≫ snd V W = 𝟙 W := by simp
+  have hwsW : w₀ ≫ lift (toUnit W ≫ v₀) (𝟙 W) = lift v₀ w₀ := by
+    rw [comp_lift, Category.comp_id, ← Category.assoc,
+      toUnit_unique (w₀ ≫ toUnit W) (𝟙 _), Category.id_comp]
+  have hvsV : v₀ ≫ lift (𝟙 V) (toUnit V ≫ w₀) = lift v₀ w₀ := by
+    rw [comp_lift, Category.comp_id, ← Category.assoc,
+      toUnit_unique (v₀ ≫ toUnit V) (𝟙 _), Category.id_comp]
+  have hwg : w₀ ≫ g = η[A] := by rw [hg, ← Category.assoc, hwsW, hh]
+  have hvf : v₀ ≫ f = η[A] := by rw [hf, ← Category.assoc, hvsV, hh]
+  set φ : V ⊗ W ⟶ A := h / ((fst V W ≫ f) * (snd V W ≫ g)) with hφ
+  have hcolV : lift (𝟙 V) (toUnit V ≫ w₀) ≫ φ = toUnit V ≫ η[A] := by
+    rw [← Hom.one_def, hφ, GrpObj.comp_div, ← hf, MonObj.comp_mul,
+      ← Category.assoc, hsVfst, Category.id_comp,
+      ← Category.assoc, hsVsnd, Category.assoc, hwg, ← Hom.one_def,
+      _root_.mul_one, div_self']
+  have hcolW : lift (toUnit W ≫ v₀) (𝟙 W) ≫ φ = (1 : W ⟶ A) := by
+    rw [hφ, GrpObj.comp_div, ← hg, MonObj.comp_mul,
+      ← Category.assoc, hsWfst, Category.assoc, hvf, ← Hom.one_def,
+      ← Category.assoc, hsWsnd, Category.id_comp, _root_.one_mul, div_self']
+  have hcolW' : lift (toUnit W ≫ v₀) (𝟙 W) ≫ φ = toUnit W ≫ η[A] := by
+    rw [hcolW, Hom.one_def]
+  have hφconst := rigidity_constant_of_two_axes_arbitraryField
+    (X := V) (Y := W) (Z := A) φ v₀ w₀ η[A] hcolV hcolW'
+  have hφ1 : φ = 1 := by
+    calc
+      φ = toUnit (V ⊗ W) ≫ η[A] := hφconst
+      _ = 1 := Hom.one_def.symm
+  have hdiv : h / ((fst V W ≫ f) * (snd V W ≫ g)) = 1 := by
+    rw [← hφ]
+    exact hφ1
+  exact div_eq_one.mp hdiv
+
 /- Evaluating a proposed additive decomposition on the two distinguished axes
    recovers its factors. -/
 omit [IsAlgClosed kbar] in
@@ -311,6 +367,49 @@ theorem existsUnique_hom_comp_pointTranslation_of_isAbelianVariety_arbitraryFiel
   have hunique := pointTranslation_decomposition_unique
     hpointed hpointed' hdecomp hdecomp'
   exact Prod.ext hunique.2.symm hunique.1.symm
+
+/- The arbitrary-field existence theorem also admits the same unique-pair
+   packaging as the algebraically closed version.  The axis calculation is
+   purely categorical, so no extra algebraic-closure hypothesis is needed. -/
+theorem existsUnique_hom_additive_decomp_of_rigidity_arbitraryField
+    {K : Type u} [Field K]
+    {V W : Over (Spec (.of K))}
+    [IsProper V.hom]
+    [GeometricallyIntegral V.hom]
+    [GeometricallyIntegral W.hom]
+    [LocallyOfFiniteType W.hom]
+    {A : Over (Spec (.of K))}
+    [GrpObj A] [IsSeparated A.hom]
+    (v₀ : 𝟙_ (Over (Spec (.of K))) ⟶ V)
+    (w₀ : 𝟙_ (Over (Spec (.of K))) ⟶ W)
+    (h : V ⊗ W ⟶ A)
+    (hh : lift v₀ w₀ ≫ h = η[A]) :
+    ∃! p : (V ⟶ A) × (W ⟶ A),
+      v₀ ≫ p.1 = η[A] ∧ w₀ ≫ p.2 = η[A] ∧
+        h = (fst V W ≫ p.1) * (snd V W ≫ p.2) := by
+  let f : V ⟶ A := lift (𝟙 V) (toUnit V ≫ w₀) ≫ h
+  let g : W ⟶ A := lift (toUnit W ≫ v₀) (𝟙 W) ≫ h
+  have hwsW : w₀ ≫ lift (toUnit W ≫ v₀) (𝟙 W) = lift v₀ w₀ := by
+    rw [comp_lift, Category.comp_id, ← Category.assoc,
+      toUnit_unique (w₀ ≫ toUnit W) (𝟙 _), Category.id_comp]
+  have hvsV : v₀ ≫ lift (𝟙 V) (toUnit V ≫ w₀) = lift v₀ w₀ := by
+    rw [comp_lift, Category.comp_id, ← Category.assoc,
+      toUnit_unique (v₀ ≫ toUnit V) (𝟙 _), Category.id_comp]
+  have hwg : w₀ ≫ g = η[A] := by
+    change w₀ ≫ (lift (toUnit W ≫ v₀) (𝟙 W) ≫ h) = η[A]
+    rw [← Category.assoc, hwsW, hh]
+  have hvf : v₀ ≫ f = η[A] := by
+    change v₀ ≫ (lift (𝟙 V) (toUnit V ≫ w₀) ≫ h) = η[A]
+    rw [← Category.assoc, hvsV, hh]
+  have hdecomp := hom_additive_decomp_of_rigidity_arbitraryField
+    (V := V) (W := W) (A := A) v₀ w₀ h hh
+  refine ⟨(f, g), ⟨hvf, hwg, hdecomp⟩, ?_⟩
+  rintro ⟨f', g'⟩ ⟨hf', hg', hd'⟩
+  have hu := hom_additive_decomp_axis_unique (kbar := K)
+    v₀ w₀ h f' g' hf' hg' hd'
+  apply Prod.ext
+  · simpa only [f] using hu.1
+  · simpa only [g] using hu.2
 
 /- Proper geometrically integral group schemes are commutative.  This proof
    records the rigidity route explicitly: inversion is pointed, hence a
