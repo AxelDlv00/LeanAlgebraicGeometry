@@ -4,6 +4,8 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: The Hartshorne Contributors
 -/
 import HartshorneLib.Chapter4TwoCoverFiniteness
+import HartshorneLib.Chapter4FiniteMapLaurent
+import HartshorneLib.Chapter4P1Overlap
 
 /-!
 # Finite-map Laurent-cover input
@@ -16,6 +18,10 @@ those facts as explicit data rather than asserting their existence.
 A concrete map `X ⟶ P¹` should instantiate `FiniteMapLaurentCover` with the two standard
 affine charts.  The theorem below then feeds its four Laurent-window properties directly
 to the proved two-cover finiteness engine.
+
+The final two lemmas record the part of this input already forced by a finite map: after
+identifying either standard chart ring with `k[t]`, sections on its inverse image form a
+finite `k[t]`-module.
 -/
 
 set_option autoImplicit false
@@ -82,4 +88,50 @@ theorem moduleFinite_hModule_one (data : FiniteMapLaurentCover k X) :
     data.stable₀ data.stable₁ data.localize₀ data.localize₁
 
 end FiniteMapLaurentCover
+
+namespace P1Geometry
+
+omit [X.Over (Spec (CommRingCat.of k))] in
+/-- A finite map to `P¹` makes sections over the inverse image of the `X₀`-chart finite over
+its polynomial coordinate ring.  The algebra structure is induced by the chart equivalence
+and the map on sections and is kept local to the statement. -/
+theorem moduleFinite_sections_chartZero
+    (π : X ⟶ AlgebraicGeometry.P1 k) [IsFinite π] :
+    letI : Algebra (Polynomial k)
+        Γ(X, π ⁻¹ᵁ (AlgebraicGeometry.P1.chartOpen k 0)) :=
+      (((π.app (AlgebraicGeometry.P1.chartOpen k 0)).hom.comp
+        (AlgebraicGeometry.P1.chartSectionsEquiv₀ k).symm.toRingHom).toAlgebra)
+    Module.Finite (Polynomial k)
+      Γ(X, π ⁻¹ᵁ (AlgebraicGeometry.P1.chartOpen k 0)) := by
+  letI : Algebra (Polynomial k)
+      Γ(X, π ⁻¹ᵁ (AlgebraicGeometry.P1.chartOpen k 0)) :=
+    (((π.app (AlgebraicGeometry.P1.chartOpen k 0)).hom.comp
+      (AlgebraicGeometry.P1.chartSectionsEquiv₀ k).symm.toRingHom).toAlgebra)
+  exact FiniteMapSections.moduleFinite_of_isFinite_of_ringEquiv π
+    (AlgebraicGeometry.P1.chartOpen k 0)
+    (AlgebraicGeometry.P1.isAffineOpen_chartOpen k 0)
+    (AlgebraicGeometry.P1.chartSectionsEquiv₀ k).symm
+
+omit [X.Over (Spec (CommRingCat.of k))] in
+/-- A finite map to `P¹` makes sections over the inverse image of the `X₁`-chart finite over
+its polynomial coordinate ring.  This is the reciprocal-coordinate companion to
+`moduleFinite_sections_chartZero`. -/
+theorem moduleFinite_sections_chartOne
+    (π : X ⟶ AlgebraicGeometry.P1 k) [IsFinite π] :
+    letI : Algebra (Polynomial k)
+        Γ(X, π ⁻¹ᵁ (AlgebraicGeometry.P1.chartOpen k 1)) :=
+      (((π.app (AlgebraicGeometry.P1.chartOpen k 1)).hom.comp
+        (AlgebraicGeometry.P1.chartSectionsEquiv₁ k).symm.toRingHom).toAlgebra)
+    Module.Finite (Polynomial k)
+      Γ(X, π ⁻¹ᵁ (AlgebraicGeometry.P1.chartOpen k 1)) := by
+  letI : Algebra (Polynomial k)
+      Γ(X, π ⁻¹ᵁ (AlgebraicGeometry.P1.chartOpen k 1)) :=
+    (((π.app (AlgebraicGeometry.P1.chartOpen k 1)).hom.comp
+      (AlgebraicGeometry.P1.chartSectionsEquiv₁ k).symm.toRingHom).toAlgebra)
+  exact FiniteMapSections.moduleFinite_of_isFinite_of_ringEquiv π
+    (AlgebraicGeometry.P1.chartOpen k 1)
+    (AlgebraicGeometry.P1.isAffineOpen_chartOpen k 1)
+    (AlgebraicGeometry.P1.chartSectionsEquiv₁ k).symm
+
+end P1Geometry
 end Hartshorne
