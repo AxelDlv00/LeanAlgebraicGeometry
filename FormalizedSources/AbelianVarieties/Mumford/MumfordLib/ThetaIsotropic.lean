@@ -331,6 +331,31 @@ theorem isMaximalIsotropic_iff_eq_commutatorPairingOrthogonal
     intro j hj
     exact (E.commutatorPairingOrthogonal_anti hHJ) (hJ hj)
 
+/-- A maximal isotropic subgroup identifies the quotient with its character
+group whenever restriction of the commutator pairing is surjective. -/
+noncomputable def quotientMaximalIsotropicAddEquiv
+    (E : ThetaExtension G S K) (H : AddSubgroup K)
+    (hmax : E.IsMaximalIsotropic H)
+    (hsurj : Function.Surjective (E.commutatorPairingRestriction H)) :
+    K ⧸ H ≃+ (H →+ Additive S) := by
+  have hker : (E.commutatorPairingRestriction H).ker = H := by
+    change E.commutatorPairingOrthogonal H = H
+    exact (E.eq_commutatorPairingOrthogonal_of_isMaximalIsotropic H hmax).symm
+  exact (QuotientAddGroup.quotientAddEquivOfEq hker.symm).trans
+    (QuotientAddGroup.quotientKerEquivOfSurjective
+      (E.commutatorPairingRestriction H) hsurj)
+
+@[simp]
+theorem quotientMaximalIsotropicAddEquiv_mk
+    (E : ThetaExtension G S K) (H : AddSubgroup K)
+    (hmax : E.IsMaximalIsotropic H)
+    (hsurj : Function.Surjective (E.commutatorPairingRestriction H))
+    (k : K) :
+    E.quotientMaximalIsotropicAddEquiv H hmax hsurj
+      (QuotientAddGroup.mk' H k) =
+      E.commutatorPairingRestriction H k := by
+  rfl
+
 /-- The cardinality of the quotient by an orthogonal subgroup is the
 cardinality of the character image whenever the restricted pairing is
 surjective. -/
@@ -370,18 +395,12 @@ theorem natCard_eq_square_of_isMaximalIsotropic
     (hsurj : Function.Surjective (E.commutatorPairingRestriction H))
     (hdual : Nat.card (H →+ Additive S) = Nat.card H) :
     Nat.card K = Nat.card H ^ 2 := by
-  have hker : (E.commutatorPairingRestriction H).ker = H := by
-    change E.commutatorPairingOrthogonal H = H
-    exact (E.eq_commutatorPairingOrthogonal_of_isMaximalIsotropic H hmax).symm
-  let e : K ⧸ H ≃+ (H →+ Additive S) :=
-    (QuotientAddGroup.quotientAddEquivOfEq hker.symm).trans
-      (QuotientAddGroup.quotientKerEquivOfSurjective
-        (E.commutatorPairingRestriction H) hsurj)
   calc
     Nat.card K = Nat.card (K ⧸ H) * Nat.card H :=
       AddSubgroup.card_eq_card_quotient_mul_card_addSubgroup H
     _ = Nat.card (H →+ Additive S) * Nat.card H := by
-      rw [Nat.card_congr e.toEquiv]
+      rw [Nat.card_congr
+        (E.quotientMaximalIsotropicAddEquiv H hmax hsurj).toEquiv]
     _ = Nat.card H ^ 2 := by rw [hdual, pow_two]
 
 end ThetaExtension
