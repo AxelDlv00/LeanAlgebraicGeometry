@@ -283,7 +283,6 @@ theorem polyToAway_surjective {i j : Fin 2} (hij : i ≠ j) :
     refine ⟨r • p, ?_⟩
     rw [map_smul]
     change r • polyToAway k i j p = (algebraMap k (𝒜 0) r) • polyToAway k i j p
-    rw [Algebra.algebraMap_eq_smul_one]
     exact (IsScalarTower.algebraMap_smul (𝒜 0) r
       (polyToAway k i j p)).symm
 
