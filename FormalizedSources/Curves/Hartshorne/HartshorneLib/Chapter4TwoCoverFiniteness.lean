@@ -139,5 +139,46 @@ theorem moduleFinite_hModule_one_of_twoCover_of_affine
   exact moduleFinite_hModule_one_of_twoCover k X U₀ U₁ hcov hsurj₀ hsurj₁
     hσ₀ hσ₁ hσ₀loc hσ₁loc
 
+/-! ### Finite-map consumer
+
+The projective-line argument supplies a finite morphism together with two affine target
+charts and Laurent-window data on their pulled-back overlap.  The following theorem isolates
+the map-theoretic part of that argument: it pulls the affine cover back along a supplied finite
+morphism, while leaving the Laurent module and four window conditions explicit.
+-/
+
+theorem moduleFinite_hModule_one_of_isFinite_affineCover
+    {Y : Scheme.{u}} (π : X ⟶ Y) [IsFinite π]
+    (V₀ V₁ : Y.Opens) (hcov : V₀ ⊔ V₁ = ⊤)
+    (hV₀ : IsAffineOpen V₀) (hV₁ : IsAffineOpen V₁)
+    [Module (LaurentPolynomial k)
+      Γ(X, π ⁻¹ᵁ V₀ ⊓ π ⁻¹ᵁ V₁)]
+    [IsScalarTower k (LaurentPolynomial k)
+      Γ(X, π ⁻¹ᵁ V₀ ⊓ π ⁻¹ᵁ V₁)]
+    [Module.Finite (LaurentPolynomial k)
+      Γ(X, π ⁻¹ᵁ V₀ ⊓ π ⁻¹ᵁ V₁)]
+    (hσ₀ : ∀ x ∈ LinearMap.range
+      (leftRestriction k X (π ⁻¹ᵁ V₀) (π ⁻¹ᵁ V₁)),
+      (LaurentPolynomial.T 1 : LaurentPolynomial k) • x ∈
+        LinearMap.range (leftRestriction k X (π ⁻¹ᵁ V₀) (π ⁻¹ᵁ V₁)))
+    (hσ₁ : ∀ x ∈ LinearMap.range
+      (rightRestriction k X (π ⁻¹ᵁ V₀) (π ⁻¹ᵁ V₁)),
+      (LaurentPolynomial.T (-1) : LaurentPolynomial k) • x ∈
+        LinearMap.range (rightRestriction k X (π ⁻¹ᵁ V₀) (π ⁻¹ᵁ V₁)))
+    (hσ₀loc : ∀ n : Γ(X, π ⁻¹ᵁ V₀ ⊓ π ⁻¹ᵁ V₁), ∃ m : ℕ,
+      ((LaurentPolynomial.T 1 : LaurentPolynomial k) ^ m) • n ∈
+        LinearMap.range (leftRestriction k X (π ⁻¹ᵁ V₀) (π ⁻¹ᵁ V₁)))
+    (hσ₁loc : ∀ n : Γ(X, π ⁻¹ᵁ V₀ ⊓ π ⁻¹ᵁ V₁), ∃ m : ℕ,
+      ((LaurentPolynomial.T (-1) : LaurentPolynomial k) ^ m) • n ∈
+        LinearMap.range (rightRestriction k X (π ⁻¹ᵁ V₀) (π ⁻¹ᵁ V₁))) :
+    Module.Finite k
+      (Sheaf.HModule (Opens.grothendieckTopology (X : TopCat)) k
+        (X.moduleKSheaf k) 1) := by
+  have hpre : π ⁻¹ᵁ V₀ ⊔ π ⁻¹ᵁ V₁ = ⊤ := by
+    rw [← Scheme.Hom.preimage_sup, hcov, Scheme.Hom.preimage_top]
+  exact moduleFinite_hModule_one_of_twoCover_of_affine k X
+    (π ⁻¹ᵁ V₀) (π ⁻¹ᵁ V₁) hpre (hV₀.preimage π) (hV₁.preimage π)
+    hσ₀ hσ₁ hσ₀loc hσ₁loc
+
 end CechTwoCover
 end Hartshorne
