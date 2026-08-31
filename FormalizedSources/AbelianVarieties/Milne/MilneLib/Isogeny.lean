@@ -1394,6 +1394,54 @@ theorem Isogeny.of_algebraicClosure_baseChange_isogeny
   exact Isogeny.of_surjective_of_finite f
     (surjective_of_algebraicClosure_baseChange_isogeny f hgeom)
 
+/- An isogeny between abelian varieties over any field has finite underlying
+   morphism.  Base change to the algebraic closure supplies the algebraically
+   closed finite-map theorem, while `baseChange_of_isogeny` supplies its
+   geometric isogeny certificate. -/
+theorem Isogeny.isFinite_of_isAbelianVariety_of_arbitraryField
+    {K : Type u} [Field K]
+    {A B : Over (Spec (.of K))} [GrpObj A] [GrpObj B]
+    (hA : IsAbelianVariety A) (hB : IsAbelianVariety B)
+    (f : A ⟶ B) [IsMonHom f] (h : Isogeny f) :
+    IsFinite f.left := by
+  let b : Spec (.of (AlgebraicClosure K)) ⟶ Spec (.of K) :=
+    Spec.map (CommRingCat.ofHom <| algebraMap K (AlgebraicClosure K))
+  let F := Over.pullback b
+  letI : GrpObj (F.obj A) := Functor.grpObjObj
+  letI : GrpObj (F.obj B) := Functor.grpObjObj
+  have hgeom : Isogeny (F.map f) := by
+    exact Isogeny.baseChange_of_isogeny f h b
+  exact finite_of_algebraicClosure_baseChange_isogeny hA hB f (by
+    simpa [F, b] using hgeom)
+
+/- The same descent gives finite residue-field fibres over every target point. -/
+theorem Isogeny.isFinite_fiberToSpecResidueField_of_isAbelianVariety
+    {K : Type u} [Field K]
+    {A B : Over (Spec (.of K))} [GrpObj A] [GrpObj B]
+    (hA : IsAbelianVariety A) (hB : IsAbelianVariety B)
+    (f : A ⟶ B) [IsMonHom f] (h : Isogeny f) (y : B.left) :
+    IsFinite (f.left.fiberToSpecResidueField y) := by
+  letI : IsFinite f.left :=
+    Isogeny.isFinite_of_isAbelianVariety_of_arbitraryField hA hB f h
+  change IsFinite (pullback.snd f.left (B.left.fromSpecResidueField y))
+  exact MorphismProperty.pullback_snd _ _ (inferInstance : IsFinite f.left)
+
+/- Over an arbitrary field, the finite-surjective characterization follows
+   unconditionally for morphisms of abelian varieties. -/
+theorem Isogeny.iff_isFinite_and_surjective_of_isAbelianVariety_of_arbitraryField
+    {K : Type u} [Field K]
+    {A B : Over (Spec (.of K))} [GrpObj A] [GrpObj B]
+    (hA : IsAbelianVariety A) (hB : IsAbelianVariety B)
+    (f : A ⟶ B) [IsMonHom f] :
+    Isogeny f ↔ IsFinite f.left ∧ Surjective f.left := by
+  letI : IsProper f.left := isProper_left_of_isAbelianVariety hA hB f
+  constructor
+  · intro h
+    exact ⟨Isogeny.isFinite_of_isAbelianVariety_of_arbitraryField hA hB f h, h.1⟩
+  · rintro ⟨hf, hs⟩
+    letI : IsFinite f.left := hf
+    exact Isogeny.of_surjective_of_finite f hs
+
 /- A geometric isogeny certificate over the algebraic closure supplies the
    finite pullback required by the faithfully-flat descent theorem above.  This
    legacy corollary retains an explicit surjectivity argument for callers; the
