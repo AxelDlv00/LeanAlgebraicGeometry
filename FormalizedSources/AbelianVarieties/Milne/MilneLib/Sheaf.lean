@@ -22,6 +22,7 @@ the functor and object levels.
 open CategoryTheory
 open AlgebraicGeometry
 open Opposite
+open scoped TensorProduct
 
 universe u
 
@@ -89,6 +90,20 @@ def SchemeModule.IsStalkwiseFinite {X : Scheme.{u}} (F : X.Modules) : Prop :=
       schemeModuleStalkModule F x
     Module.Finite (X.presheaf.stalk x)
       (↑(TopCat.Presheaf.stalk F.val.presheaf x) : Type u)
+
+/-- Stalkwise finite modules have finite residue-field fibres. -/
+theorem SchemeModule.IsStalkwiseFinite.residueFieldTensor
+    {X : Scheme.{u}} (F : X.Modules)
+    (hF : SchemeModule.IsStalkwiseFinite F) :
+    ∀ x : X,
+      letI : Module (X.presheaf.stalk x)
+          (↑(TopCat.Presheaf.stalk F.val.presheaf x) : Type u) :=
+        schemeModuleStalkModule F x
+      Module.Finite (IsLocalRing.ResidueField (X.presheaf.stalk x))
+        (IsLocalRing.ResidueField (X.presheaf.stalk x) ⊗[X.presheaf.stalk x]
+          (↑(TopCat.Presheaf.stalk F.val.presheaf x) : Type u)) := by
+  intro x
+  exact moduleFinite_schemeModuleStalk_residueTensor F x (hF x)
 
 /-- A finite family spanning the stalk of a scheme module at a point.  The
 canonical stalk module structure is recorded explicitly so this predicate can
