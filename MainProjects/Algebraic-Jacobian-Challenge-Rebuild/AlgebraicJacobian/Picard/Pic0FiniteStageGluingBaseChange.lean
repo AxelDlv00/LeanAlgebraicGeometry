@@ -3,7 +3,7 @@ Copyright (c) 2026 The AlgebraicJacobian Contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: The AlgebraicJacobian Contributors
 -/
-import AlgebraicJacobian.Picard.Pic0FiniteStageChartBaseChange
+import AlgebraicJacobian.Picard.Pic0FiniteStageRestrictionBaseChange
 
 /-!
 # Base change of the finite-stage Picard gluing
@@ -62,39 +62,25 @@ noncomputable def gluingChartIso
       gluedMapData_chartMap] using P.presentation.chartMap_factor U) rfl ≪≫
     chartBaseChangeIso C P U
 
-/-! As for chart maps, keep the overlap structure map as one named term.  The overlap
-carrier is a dependent tensor product; an inferred `Algebra` witness is not interchangeable
-with the witness used by the finite-stage comparison. -/
-
-set_option synthInstance.maxHeartbeats 400000 in
+set_option synthInstance.maxHeartbeats 3200000 in
+-- Comparing the two chart presentations unfolds their pinned tensor witnesses once.
 set_option maxHeartbeats 12800000 in
-/-- The pinned structure map from a finite-stage overlap to the field of definition. -/
-noncomputable def overlapBaseChangeMap
+set_option backward.isDefEq.respectTransparency false in
+/-- The chart comparison intertwines the exact affine-open inclusion. -/
+theorem chartBaseChangeIso_hom_ι
     {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
     (P : Pic0FiniteStageGluePackage C F)
-    (U V : Pic0FiniteStageChartIndex C) :
-    Spec (CommRingCat.of
-      (Pic0FiniteStageOverlapBaseChangeRing
-        C P.L P.n P.m P.relation P.M P.N U V)) ⟶ Spec (.of P.N.1) :=
-  letI : CommRing
-      (Pic0FiniteStageOverlapBaseChangeRing
-        C P.L P.n P.m P.relation P.M P.N U V) :=
-    pic0FiniteStageOverlapBaseChangeCommRing
-      C P.L P.n P.m P.relation P.M P.N U V
-  letI : Algebra P.N.1
-      (Pic0FiniteStageOverlapBaseChangeRing
-        C P.L P.n P.m P.relation P.M P.N U V) :=
-    pic0FiniteStageOverlapBaseChangeAlgebra
-      C P.L P.n P.m P.relation P.M P.N U V
-  Spec.map (CommRingCat.ofHom
-    (@algebraMap P.N.1
-      (Pic0FiniteStageOverlapBaseChangeRing
-        C P.L P.n P.m P.relation P.M P.N U V)
-      (inferInstance : CommSemiring P.N.1)
-      (pic0FiniteStageOverlapBaseChangeCommRing
-        C P.L P.n P.m P.relation P.M P.N U V).toSemiring
-      (pic0FiniteStageOverlapBaseChangeAlgebra
-        C P.L P.n P.m P.relation P.M P.N U V)))
+    (U : Pic0FiniteStageChartIndex C) :
+    (chartBaseChangeIso C P U).hom ≫ U.1.1.ι =
+      (chartRingBaseChangeIso C P U).hom ≫ U.1.2.fromSpec := by
+  calc
+    _ = (chartRingBaseChangeIso C P U).hom ≫
+        (U.1.2.isoSpec.inv ≫ U.1.1.ι) := by
+      simp only [chartBaseChangeIso, chartRingBaseChangeIso,
+        chartBaseChangeMap, chartFinalBaseChangeEquiv, affineBaseChangeIso,
+        Iso.trans_hom, Iso.symm_hom, Category.assoc]
+    _ = _ := congrArg (fun q => (chartRingBaseChangeIso C P U).hom ≫ q)
+      U.1.2.isoSpec_inv_ι
 
 set_option synthInstance.maxHeartbeats 3200000 in
 -- The overlap comparison elaborates the package's dependent scalar towers.
@@ -110,12 +96,12 @@ noncomputable def overlapBaseChangeIso
   letI : CommRing
       (Pic0FiniteStageOverlapBaseChangeRing
         C P.L P.n P.m P.relation P.M P.N U V) :=
-    pic0FiniteStageOverlapBaseChangeCommRing
+    pic0FiniteStageOverlapBaseChangeRingCommRing
       C P.L P.n P.m P.relation P.M P.N U V
   letI : Algebra P.N.1
       (Pic0FiniteStageOverlapBaseChangeRing
         C P.L P.n P.m P.relation P.M P.N U V) :=
-    pic0FiniteStageOverlapBaseChangeAlgebra
+    pic0FiniteStageOverlapBaseChangeRingAlgebra
       C P.L P.n P.m P.relation P.M P.N U V
   letI : Algebra P.N.1
       (Pic0FiniteStageFinalModelRing C P.L P.n P.m P.relation P.M P.N
@@ -183,6 +169,31 @@ noncomputable def overlapBaseChangeIso
         C P.L P.n P.m P.relation P.e P.M P.N
           (Sum.inr (U, V))).symm.toRingEquiv.toCommRingCatIso.op ≪≫
     (pic0FiniteStageAffineOverlap C U V).2.isoSpec.symm
+
+set_option synthInstance.maxHeartbeats 3200000 in
+-- Comparing the two overlap presentations unfolds their pinned tensor witnesses once.
+set_option maxHeartbeats 12800000 in
+set_option backward.isDefEq.respectTransparency false in
+/-- The overlap comparison intertwines the exact affine-open inclusion. -/
+theorem overlapBaseChangeIso_hom_ι
+    {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
+    (P : Pic0FiniteStageGluePackage C F)
+    (U V : Pic0FiniteStageChartIndex C) :
+    (overlapBaseChangeIso C P U V).hom ≫
+        (pic0FiniteStageAffineOverlap C U V).1.ι =
+      (overlapRingBaseChangeIso C P U V).hom ≫
+        (pic0FiniteStageAffineOverlap C U V).2.fromSpec := by
+  calc
+    _ = (overlapRingBaseChangeIso C P U V).hom ≫
+        ((pic0FiniteStageAffineOverlap C U V).2.isoSpec.inv ≫
+          (pic0FiniteStageAffineOverlap C U V).1.ι) := by
+      simp only [overlapBaseChangeIso, overlapRingBaseChangeIso,
+        overlapBaseChangeMap, overlapBaseChangeStructureRingHom,
+        overlapFinalBaseChangeEquiv, affineBaseChangeIso, Iso.trans_hom,
+        Iso.symm_hom, Category.assoc]
+    _ = _ := congrArg
+      (fun q => (overlapRingBaseChangeIso C P U V).hom ≫ q)
+      (pic0FiniteStageAffineOverlap C U V).2.isoSpec_inv_ι
 
 end Pic0FiniteStageGluePackage
 
