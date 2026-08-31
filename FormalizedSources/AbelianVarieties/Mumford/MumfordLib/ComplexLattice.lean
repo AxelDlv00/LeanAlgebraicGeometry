@@ -295,6 +295,18 @@ theorem quotientHomeomorph_mk
   PeriodLatticeQuotient.quotientHomeomorph_mk
     d.toPeriodLatticeQuotient d.isOpenQuotientMap z
 
+/-- The inverse quotient homeomorphism recovers the class of an exponential
+representative. -/
+theorem quotientHomeomorph_symm_exponential
+    {X : Type*} [AddCommGroup X] [TopologicalSpace X]
+    [T2Space X] [ContinuousAdd X] {g : ℕ}
+    (d : ComplexLatticeExponentialData X g)
+    (z : GenusComplexVector g) :
+    d.quotientHomeomorph.symm (d.exponential z) =
+      QuotientAddGroup.mk' d.periodLattice.toAddSubgroup z := by
+  rw [← d.quotientHomeomorph_mk z]
+  exact d.quotientHomeomorph.symm_apply_apply _
+
 /-- The topological quotient identification has the same underlying map as
 the additive quotient equivalence.  This lets later analytic arguments switch
 between the topological and algebraic interfaces without redoing quotient
