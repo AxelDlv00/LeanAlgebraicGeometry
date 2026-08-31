@@ -66,7 +66,7 @@ private theorem bijective_overAlgebraMapTop :
   exact hcomp
 
 omit [SmoothOfRelativeDimension 1 X.hom] in
-private theorem h0_moduleKSheaf_eq_one :
+theorem h0_moduleKSheaf_eq_one :
     CategoryTheory.Sheaf.h0 (X.left.moduleKSheaf k) = 1 := by
   let e : CategoryTheory.Sheaf.HModule
       (Opens.grothendieckTopology (X.left : TopCat)) k
