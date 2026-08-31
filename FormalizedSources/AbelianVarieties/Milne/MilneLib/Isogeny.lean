@@ -1063,27 +1063,9 @@ theorem Isogeny.baseChange_of_isogeny
   letI : GrpObj (F.obj B) := Functor.grpObjObj
   constructor
   · exact MorphismProperty.overPullbackMap b f h.1
-  · have hk : IsFinite ((F.map (toUnit (isogenyKernelOver f))).left) := by
-      exact Isogeny.kernelOver_baseChange_isFinite f h b
-    have hunit : toUnit (isogenyKernelOver f) = pullback.snd f (η[B]) :=
-      toUnit_unique _ _
-    rw [hunit] at hk
-    let e := isogenyKernelOver_baseChangeIso f b
-    have he0 := congrArg Over.Hom.left
-      (isogenyKernelOver_baseChangeIso_hom_snd f b)
-    rw [Over.comp_left] at he0
-    have he :
-        e.hom.left ≫ (pullback.snd (F.map f) (F.map (η[B]))).left =
-          (F.map (pullback.snd f (η[B]))).left := by
-      simpa [e, F] using he0
-    have hfinOver :
+  · have hfinOver :
         IsFinite (pullback.snd (F.map f) (F.map (η[B]))).left := by
-      have hc := (MorphismProperty.cancel_left_of_respectsIso
-        (P := @IsFinite) e.hom.left
-          (pullback.snd (F.map f) (F.map (η[B]))).left)
-      apply hc.mp
-      rw [he]
-      simpa [F, isogenyKernelOver] using hk
+      simpa [F] using Isogeny.kernelOver_baseChange_pullback_isFinite f h b
     let G := Over.forget (Spec (.of L))
     let eG := PreservesPullback.iso G (F.map f) (F.map (η[B]))
     have heG :
