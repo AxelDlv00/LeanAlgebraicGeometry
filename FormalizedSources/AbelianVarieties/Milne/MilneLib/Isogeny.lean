@@ -870,6 +870,28 @@ theorem Isogeny.kernel_isFinite_flat_surjective
   exact ⟨h.2, isogenyKernelToBase_flat_of_flat f,
     isogenyKernelToBase_surjective_of_surjective f⟩
 
+/- An isogeny whose underlying morphism is already known to be finite remains
+   an isogeny after arbitrary base change of the field.  The finite and
+   surjective hypotheses are transported by the `Over` pullback functor. -/
+theorem Isogeny.baseChange_of_finite
+    {L : Type u} [Field L]
+    {A B : Over (Spec (.of K))} [GrpObj A] [GrpObj B]
+    (f : A ⟶ B) [IsMonHom f] [IsFinite f.left]
+    (h : Isogeny f) (b : Spec (.of L) ⟶ Spec (.of K)) :
+    let F := Over.pullback b
+    letI : GrpObj (F.obj A) := Functor.grpObjObj
+    letI : GrpObj (F.obj B) := Functor.grpObjObj
+    Isogeny (F.map f) := by
+  let F := Over.pullback b
+  letI : GrpObj (F.obj A) := Functor.grpObjObj
+  letI : GrpObj (F.obj B) := Functor.grpObjObj
+  letI : IsFinite (F.map f).left :=
+    MorphismProperty.overPullbackMap b f (inferInstance : IsFinite f.left)
+  letI : Surjective (F.map f).left :=
+    MorphismProperty.overPullbackMap b f h.1
+  change Isogeny (F.map f)
+  exact Isogeny.of_surjective_of_finite (F.map f) inferInstance
+
 /- The finite-map converse can be descended from the algebraic closure.  The
    explicit pullback fibre is the map obtained by pulling `f.left` back along
    the faithfully flat cover of `B` induced by
