@@ -1069,7 +1069,7 @@ theorem Isogeny.baseChange_of_isogeny
     have heta :
         (η[F.obj B]).left =
           (Functor.LaxMonoidal.ε F).left ≫ (F.map (η[B])).left := by
-      simpa [F] using heta0
+      exact heta0
     let d := pullbackLeftPullbackSndIso
       (F.map f).left (F.map (η[B])).left
       (Functor.LaxMonoidal.ε F).left
