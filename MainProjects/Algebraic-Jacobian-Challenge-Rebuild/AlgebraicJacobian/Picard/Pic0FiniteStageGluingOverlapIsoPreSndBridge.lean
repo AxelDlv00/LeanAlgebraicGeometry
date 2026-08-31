@@ -39,7 +39,7 @@ theorem glueData_t_comp_f_eq_spec_rightRestriction
     (U V : Pic0FiniteStageChartIndex C) :
     P.glueData.t U V ≫ P.glueData.f V U =
       Spec.map (CommRingCat.ofHom
-        (rightRestrictionBaseChangeAlgHom C P U V).toRingHom) := by
+        (rightRestrictionBaseChangeRingHom C P U V)) := by
   rw [glueData_t C P U V, glueData_f C P V U]
   calc
     _ = Spec.map (CommRingCat.ofHom
@@ -52,7 +52,15 @@ theorem glueData_t_comp_f_eq_spec_rightRestriction
           C P.L P.n P.m P.relation P.M P.mapM P.N V U).toRingHom
         (pic0FiniteStageTransitionBaseChange
           C P.L P.n P.m P.relation P.M P.mapM P.N U V).toRingHom
-    _ = _ := rfl
+    _ = _ := by
+      rw [show
+        (pic0FiniteStageTransitionBaseChange
+            C P.L P.n P.m P.relation P.M P.mapM P.N U V).comp
+          (pic0FiniteStageRestrictionBaseChange
+            C P.L P.n P.m P.relation P.M P.mapM P.N V U) =
+          rightRestrictionBaseChangeAlgHom C P U V from
+        scalarExtension_transition_comp_restrictionLeft_eq_right C P U V]
+      rfl
 
 end Pic0FiniteStageGluePackage
 
