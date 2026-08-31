@@ -110,7 +110,8 @@ theorem ambientPeriodLattice_discreteTopology
   have hL : DiscreteTopology L.toAddSubgroup := inferInstance
   have hEq : d.ambientPeriodLattice = L.toAddSubgroup := by
     ext v
-    simp [ComplexVectorLatticeExponentialData.ambientPeriodLattice, L,
+    simp [ComplexVectorLatticeExponentialData.ambientPeriodLattice,
+      ComplexVectorLatticeExponentialData.ambientPeriodLatticeSubmodule, L,
       ZLattice.comap]
   rw [hEq]
   exact hL
