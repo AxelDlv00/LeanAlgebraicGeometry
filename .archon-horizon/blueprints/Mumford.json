@@ -154,6 +154,10 @@
       "target": "mumford-def-associated-finite-fibre"
     },
     {
+      "source": "mumford-frag-uniformization",
+      "target": "mumford-frag-torsion"
+    },
+    {
       "source": "mumford-def-weil-pairing-ladic",
       "target": "mumford-lem-riemann-pairing-divisor"
     },
@@ -656,6 +660,10 @@
     {
       "source": "mumford-lem-approximate-quadratic",
       "target": "mumford-lem-tate-height"
+    },
+    {
+      "source": "mumford-frag-commutative",
+      "target": "mumford-frag-uniformization"
     }
   ],
   "meta": {
@@ -726,11 +734,11 @@
       "\\uses": ""
     },
     "states": {
-      "blocked": 116,
-      "closed": 466,
+      "blocked": 118,
+      "closed": 494,
       "formalized_open": 0,
       "informal": 216,
-      "ready": 100
+      "ready": 98
     },
     "warnings": [
       "Mumford.GroupScheme.comp_mulRight_hom: Lean declaration is not referenced by any blueprint \\lean{...}",
@@ -5053,8 +5061,8 @@
       "chapter": "Analytic Theory",
       "comment_count": 0,
       "dep_count": 0,
-      "descendant_count": 0,
-      "group": "ch:Analytic Theory",
+      "descendant_count": 2,
+      "group": "c148",
       "has_sorry": false,
       "hgraph_id": "fc445e6aa095",
       "id": "mumford-frag-commutative",
@@ -5066,7 +5074,7 @@
       "mathlib_ok": false,
       "order": 0,
       "proved": false,
-      "rdep_count": 0,
+      "rdep_count": 1,
       "review_count": 0,
       "sources": [
         "M:ch1:I.1"
@@ -5075,15 +5083,15 @@
       "statement": "Let $X$ be a compact connected complex Lie group.  Then $X$ is commutative.",
       "title": "Commutativity of a compact connected complex Lie group",
       "type": "theorem",
-      "unlocks": 0,
+      "unlocks": 2,
       "uses": []
     },
     {
       "chapter": "Analytic Theory",
-      "comment_count": 4,
-      "dep_count": 0,
-      "descendant_count": 0,
-      "group": "ch:Analytic Theory",
+      "comment_count": 5,
+      "dep_count": 1,
+      "descendant_count": 1,
+      "group": "c148",
       "has_sorry": false,
       "hgraph_id": "ffe3ec9cda56",
       "id": "mumford-frag-uniformization",
@@ -5095,24 +5103,24 @@
       "mathlib_ok": false,
       "order": 1,
       "proved": false,
-      "rdep_count": 0,
+      "rdep_count": 1,
       "review_count": 0,
       "sources": [
         "M:ch1:I.1"
       ],
-      "state": "ready",
+      "state": "blocked",
       "statement": "The exponential map $\\exp:V\\to X$ is a surjective homomorphism of complex\nLie groups with kernel a lattice $U$ in $V$, and induces an isomorphism\n$V/U\\simeq X$.",
       "title": "Uniformization",
       "type": "theorem",
-      "unlocks": 0,
+      "unlocks": 1,
       "uses": []
     },
     {
       "chapter": "Analytic Theory",
       "comment_count": 8,
-      "dep_count": 0,
+      "dep_count": 1,
       "descendant_count": 0,
-      "group": "ch:Analytic Theory",
+      "group": "c148",
       "has_sorry": false,
       "hgraph_id": "48388eca7f61",
       "id": "mumford-frag-torsion",
@@ -5129,7 +5137,7 @@
       "sources": [
         "M:ch1:I.1"
       ],
-      "state": "ready",
+      "state": "blocked",
       "statement": "As an abstract group, $X$ is divisible.  If $n\\neq0$ and $X_n$ is the subgroup\nof elements annihilated by $n$, then\n\\[\n X_n\\simeq(\\mathbf Z/n\\mathbf Z)^{2g}.\n\\]",
       "title": "Divisibility and torsion",
       "type": "proposition",
