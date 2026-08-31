@@ -546,6 +546,31 @@ theorem mem_center_iff_mem_commutatorPairingRadical (g : G) :
         _ = 1 := map_one E.includeScalar
     exact hcomm.eq.symm
 
+/-- The center of the theta extension maps exactly onto the kernel of the
+    additive commutator pairing.  This is the set-level form of the
+    center-to-ker statement used in Mumford's theta-group argument. -/
+theorem quotient_image_center_eq_commutatorPairingBihom_ker :
+    E.quotient '' (Subgroup.center G : Set G) =
+      ((E.commutatorPairingBihom).ker : Set K) := by
+  apply Set.Subset.antisymm
+  · rintro k ⟨g, hg, rfl⟩
+    change E.quotient g ∈ (E.commutatorPairingBihom).ker
+    rw [E.mem_commutatorPairingBihom_ker_iff]
+    intro l
+    exact (E.mem_center_iff_mem_commutatorPairingRadical g).mp hg l
+  · intro k hk
+    obtain ⟨g, hg⟩ :=
+      E.quotientHom_surjective (Multiplicative.ofAdd k)
+    have hq : E.quotient g = k := by
+      unfold ThetaExtension.quotient
+      rw [hg]
+      rfl
+    refine ⟨g, ?_, hq⟩
+    apply (E.mem_center_iff_mem_commutatorPairingRadical g).mpr
+    intro l
+    have hl := (E.mem_commutatorPairingBihom_ker_iff k).mp hk l
+    simpa [hq] using hl
+
 /-- If the quotient pairing has trivial radical, the center is exactly the
     scalar subgroup in the theta extension. -/
 theorem center_eq_includeScalar_range_of_commutatorPairingRadical_eq_bot
