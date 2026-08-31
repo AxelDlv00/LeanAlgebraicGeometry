@@ -62,6 +62,7 @@ import HartshorneLib.Chapter4JumpDimension
 import HartshorneLib.Chapter4TwoLattice
 import HartshorneLib.Chapter4CechTwoCover
 import HartshorneLib.Chapter4TwoCoverFiniteness
+import HartshorneLib.Chapter4P1Geometry
 import HartshorneLib.Chapter4ProductFormulaCohomology
 
 /-!
