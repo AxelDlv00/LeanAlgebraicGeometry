@@ -735,7 +735,7 @@
     },
     "states": {
       "blocked": 116,
-      "closed": 526,
+      "closed": 544,
       "formalized_open": 0,
       "informal": 213,
       "ready": 97
@@ -1956,7 +1956,7 @@
     },
     {
       "chapter": "$\\Hom(X,\\Adual)$ and the $\\ell$-adic Representation",
-      "comment_count": 1,
+      "comment_count": 2,
       "dep_count": 0,
       "descendant_count": 0,
       "group": "ch:$\\Hom(X,\\Adual)$ and the $\\ell$-adic Representation",
@@ -5088,7 +5088,7 @@
     },
     {
       "chapter": "Analytic Theory",
-      "comment_count": 5,
+      "comment_count": 6,
       "dep_count": 1,
       "descendant_count": 1,
       "group": "c148",
@@ -5117,7 +5117,7 @@
     },
     {
       "chapter": "Analytic Theory",
-      "comment_count": 8,
+      "comment_count": 9,
       "dep_count": 1,
       "descendant_count": 0,
       "group": "c148",
