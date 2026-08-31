@@ -6,6 +6,8 @@ Authors: The Mumford Contributors
 
 import MumfordLib.Uniformization
 import Mathlib.Topology.Algebra.Group.Basic
+import Mathlib.Geometry.Manifold.Algebra.LieGroup
+import Mathlib.Geometry.Manifold.Diffeomorph
 
 /-!
 # Topological translations
@@ -58,6 +60,35 @@ theorem addTranslationHomeomorph_isCompact_image_iff
     IsCompact ((fun x : G => a + x) '' s) ↔ IsCompact s := by
   simpa only [addTranslationHomeomorph_apply] using
     (addTranslationHomeomorph a).isCompact_image (s := s)
+
+/-- Left translation is smooth at every differentiability order on a Lie
+    additive group. -/
+theorem addTranslation_contMDiff
+    {𝕜 : Type*} [NontriviallyNormedField 𝕜]
+    {H : Type*} [TopologicalSpace H]
+    {E : Type*} [NormedAddCommGroup E] [NormedSpace 𝕜 E]
+    (I : ModelWithCorners 𝕜 E H) (n : WithTop ℕ∞)
+    {G : Type*} [AddGroup G] [TopologicalSpace G] [ChartedSpace H G]
+    [LieAddGroup I n G] (a : G) :
+    ContMDiff I I n (fun x : G => a + x) := by
+  change ContMDiff I I n ((fun _ : G => a) + id)
+  exact contMDiff_const.add contMDiff_id
+
+/-- The smooth translation equivalence, including its smooth inverse. -/
+noncomputable def addTranslationDiffeomorph
+    {𝕜 : Type*} [NontriviallyNormedField 𝕜]
+    {H : Type*} [TopologicalSpace H]
+    {E : Type*} [NormedAddCommGroup E] [NormedSpace 𝕜 E]
+    (I : ModelWithCorners 𝕜 E H) (n : WithTop ℕ∞)
+    {G : Type*} [AddGroup G] [TopologicalSpace G] [ChartedSpace H G]
+    [LieAddGroup I n G] (a : G) : Diffeomorph I I G G n := by
+  letI : IsTopologicalAddGroup G := topologicalAddGroup_of_lieAddGroup I n
+  exact
+    { toEquiv := (addTranslationHomeomorph a).toEquiv
+      contMDiff_toFun := addTranslation_contMDiff I n a
+      contMDiff_invFun := by
+        change ContMDiff I I n (fun x : G => -a + x)
+        exact addTranslation_contMDiff I n (-a) }
 
 end Uniformization
 end Mumford
