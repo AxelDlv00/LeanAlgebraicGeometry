@@ -83,8 +83,9 @@ theorem isClosed_singleton_of_ne_genericPoint {x : P1 k}
   exact Hartshorne.closed_singleton_of_curve_specializations hcurve hx
 
 /-- The projective line is separated as a scheme. -/
-instance : Scheme.IsSeparated (P1 k) :=
-  ⟨by rw [← Limits.terminal.comp_from (structureMap k)]; infer_instance⟩
+instance : Scheme.IsSeparated (P1 k) := by
+  unfold P1
+  infer_instance
 
 end P1
 
