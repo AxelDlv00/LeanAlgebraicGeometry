@@ -79,6 +79,7 @@ import HartshorneLib.Chapter4FiniteMapP1Producer
 import HartshorneLib.Chapter4MapToP1
 import HartshorneLib.Chapter4FiniteMapP1Existence
 import HartshorneLib.Chapter4ProductFormulaCohomology
+import HartshorneLib.Chapter4FiniteMapP1Cohomology
 
 /-!
 # HartshorneLib
