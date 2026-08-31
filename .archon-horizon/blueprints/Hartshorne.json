@@ -984,7 +984,7 @@
     },
     "states": {
       "blocked": 144,
-      "closed": 931,
+      "closed": 948,
       "formalized_open": 3,
       "informal": 485,
       "ready": 342
@@ -1008,6 +1008,7 @@
       "AlgebraicGeometry.P1.X_mul_X_mem: Lean declaration is not referenced by any blueprint \\lean{...}",
       "AlgebraicGeometry.P1.adjoin_gradeZero_range_X: Lean declaration is not referenced by any blueprint \\lean{...}",
       "AlgebraicGeometry.P1.algebraMap_awayToOverlapLeft: Lean declaration is not referenced by any blueprint \\lean{...}",
+      "AlgebraicGeometry.P1.asOver: Lean declaration is not referenced by any blueprint \\lean{...}",
       "AlgebraicGeometry.P1.awayAlgEquiv: Lean declaration is not referenced by any blueprint \\lean{...}",
       "AlgebraicGeometry.P1.awayAlgEquiv_chartCoord: Lean declaration is not referenced by any blueprint \\lean{...}",
       "AlgebraicGeometry.P1.awayIota_structureMap: Lean declaration is not referenced by any blueprint \\lean{...}",
@@ -1038,8 +1039,7 @@
       "AlgebraicGeometry.P1.chartEval_apply: Lean declaration is not referenced by any blueprint \\lean{...}",
       "AlgebraicGeometry.P1.chartEval_chartCoord: Lean declaration is not referenced by any blueprint \\lean{...}",
       "AlgebraicGeometry.P1.chartOpen: Lean declaration is not referenced by any blueprint \\lean{...}",
-      "AlgebraicGeometry.P1.chartOpen_inf: Lean declaration is not referenced by any blueprint \\lean{...}",
-      "AlgebraicGeometry.P1.chartOpen_sup: Lean declaration is not referenced by any blueprint \\lean{...}"
+      "AlgebraicGeometry.P1.chartOpen_inf: Lean declaration is not referenced by any blueprint \\lean{...}"
     ]
   },
   "nodes": [
