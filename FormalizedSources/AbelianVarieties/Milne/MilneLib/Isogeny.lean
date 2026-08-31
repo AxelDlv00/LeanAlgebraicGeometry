@@ -1414,6 +1414,23 @@ theorem Isogeny.isFinite_of_isAbelianVariety_of_arbitraryField
   exact finite_of_algebraicClosure_baseChange_isogeny hA hB f (by
     simpa [F, b] using hgeom)
 
+/- Isogenies between abelian varieties over an arbitrary field are closed under
+   composition.  The arbitrary-field finite-map theorem supplies exactly the
+   two instances required by the generic composition lemma. -/
+theorem Isogeny.comp_of_isAbelianVariety_of_arbitraryField
+    {K : Type u} [Field K]
+    {A B C : Over (Spec (.of K))} [GrpObj A] [GrpObj B] [GrpObj C]
+    (hA : IsAbelianVariety A) (hB : IsAbelianVariety B)
+    (hC : IsAbelianVariety C)
+    (f : A ⟶ B) (g : B ⟶ C) [IsMonHom f] [IsMonHom g]
+    (hf : Isogeny f) (hg : Isogeny g) :
+    Isogeny (f ≫ g) := by
+  letI : IsFinite f.left :=
+    Isogeny.isFinite_of_isAbelianVariety_of_arbitraryField hA hB f hf
+  letI : IsFinite g.left :=
+    Isogeny.isFinite_of_isAbelianVariety_of_arbitraryField hB hC g hg
+  exact Isogeny.comp_of_finite f g hf hg
+
 /- The same descent gives finite residue-field fibres over every target point. -/
 theorem Isogeny.isFinite_fiberToSpecResidueField_of_isAbelianVariety
     {K : Type u} [Field K]
