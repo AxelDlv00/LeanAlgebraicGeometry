@@ -258,6 +258,23 @@ theorem exponential_isCoveringMap
     IsCoveringMap d.exponential :=
   d.exponential_isAddQuotientCoveringMap.isCoveringMap
 
+/- Surjectivity of the exponential transports the divisibility of the
+   complex torus target.  The witness is obtained by dividing upstairs and
+   then applying the additive homomorphism. -/
+@[reducible]
+noncomputable def targetDivisibleBy
+    {X : Type*} [AddCommGroup X] [TopologicalSpace X] {g : ℕ}
+    (d : ComplexLatticeExponentialData X g) : DivisibleBy X ℤ :=
+  Function.Surjective.divisibleBy (fun z => d.exponential z) d.surjective
+    (fun z n => d.exponential.map_zsmul n z)
+
+theorem exists_zsmul_eq
+    {X : Type*} [AddCommGroup X] [TopologicalSpace X] {g : ℕ}
+    (d : ComplexLatticeExponentialData X g) (x : X) {n : ℤ} (hn : n ≠ 0) :
+    ∃ y : X, n • y = x := by
+  letI : DivisibleBy X ℤ := d.targetDivisibleBy
+  exact DivisibleBy.surjective_smul X ℤ hn x
+
 /-- The arbitrary period quotient is homeomorphic to the target. -/
 noncomputable def quotientHomeomorph
     {X : Type*} [AddCommGroup X] [TopologicalSpace X]

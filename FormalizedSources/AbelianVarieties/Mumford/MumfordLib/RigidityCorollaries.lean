@@ -411,6 +411,59 @@ theorem existsUnique_hom_additive_decomp_of_rigidity_arbitraryField
   · simpa only [f] using hu.1
   · simpa only [g] using hu.2
 
+abbrev PointedHom
+    {K : Type u} [Field K]
+    (X A : Over (Spec (.of K)))
+    (x₀ : 𝟙_ (Over (Spec (.of K))) ⟶ X)
+    (a₀ : 𝟙_ (Over (Spec (.of K))) ⟶ A) :=
+  { f : X ⟶ A // x₀ ≫ f = a₀ }
+
+/- Restriction to the two pointed axes is an equivalence on pointed maps. -/
+noncomputable def pointedProductHomEquiv
+    {K : Type u} [Field K]
+    {V W : Over (Spec (.of K))}
+    [IsProper V.hom]
+    [GeometricallyIntegral V.hom]
+    [GeometricallyIntegral W.hom]
+    [LocallyOfFiniteType W.hom]
+    {A : Over (Spec (.of K))}
+    [GrpObj A] [IsSeparated A.hom]
+    (v₀ : 𝟙_ (Over (Spec (.of K))) ⟶ V)
+    (w₀ : 𝟙_ (Over (Spec (.of K))) ⟶ W) :
+    PointedHom V A v₀ η[A] × PointedHom W A w₀ η[A] ≃
+      PointedHom (V ⊗ W) A (lift v₀ w₀) η[A] where
+  toFun p := ⟨(fst V W ≫ p.1.1) * (snd V W ≫ p.2.1), by
+    rw [MonObj.comp_mul, lift_fst_assoc, lift_snd_assoc,
+      p.1.property, p.2.property]
+    have hη : (η[A] : 𝟙_ (Over (Spec (.of K))) ⟶ A) = 1 := by
+      rw [Hom.one_def]
+      simp
+    rw [hη, _root_.one_mul]⟩
+  invFun h :=
+    (⟨lift (𝟙 V) (toUnit V ≫ w₀) ≫ h.1, by
+      rw [← Category.assoc, comp_lift, Category.comp_id, ← Category.assoc,
+        toUnit_unique (v₀ ≫ toUnit V) (𝟙 _), Category.id_comp, h.property]⟩,
+     ⟨lift (toUnit W ≫ v₀) (𝟙 W) ≫ h.1, by
+      rw [← Category.assoc, comp_lift, Category.comp_id, ← Category.assoc,
+        toUnit_unique (w₀ ≫ toUnit W) (𝟙 _), Category.id_comp, h.property]⟩)
+  left_inv p := by
+    have hu := hom_additive_decomp_axis_unique (kbar := K)
+      v₀ w₀ ((fst V W ≫ p.1.1) * (snd V W ≫ p.2.1))
+      p.1.1 p.2.1 p.1.property p.2.property rfl
+    apply Prod.ext
+    · apply Subtype.ext
+      change (lift (𝟙 V) (toUnit V ≫ w₀) ≫
+        ((fst V W ≫ p.1.1) * (snd V W ≫ p.2.1))) = p.1.1
+      exact hu.1.symm
+    · apply Subtype.ext
+      change (lift (toUnit W ≫ v₀) (𝟙 W) ≫
+        ((fst V W ≫ p.1.1) * (snd V W ≫ p.2.1))) = p.2.1
+      exact hu.2.symm
+  right_inv h := by
+    apply Subtype.ext
+    exact (hom_additive_decomp_of_rigidity_arbitraryField
+      v₀ w₀ h.1 h.property).symm
+
 /- Proper geometrically integral group schemes are commutative.  This proof
    records the rigidity route explicitly: inversion is pointed, hence a
    homomorphism, and inversion of a product reverses its factors. -/
