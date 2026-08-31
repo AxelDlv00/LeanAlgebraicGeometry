@@ -1,5 +1,6 @@
 import HartshorneLib.Basic
 import HartshorneLib.Chapter1
+import HartshorneLib.Chapter1Projective
 import HartshorneLib.Chapter1Topology
 import HartshorneLib.Chapter1Ideals
 import HartshorneLib.Chapter1Variety
@@ -67,6 +68,7 @@ import HartshorneLib.Chapter4FiniteMapLaurent
 import HartshorneLib.Chapter4LaurentLadder
 import HartshorneLib.Chapter4P1Charts
 import HartshorneLib.Chapter4P1Overlap
+import HartshorneLib.Chapter4P1CoordinateAPI
 import HartshorneLib.Chapter4P1Geometry
 import HartshorneLib.Chapter4FiniteMapP1
 import HartshorneLib.Chapter4ProductFormulaCohomology
