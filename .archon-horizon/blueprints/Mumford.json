@@ -735,7 +735,7 @@
     },
     "states": {
       "blocked": 116,
-      "closed": 544,
+      "closed": 563,
       "formalized_open": 0,
       "informal": 213,
       "ready": 97
@@ -5088,7 +5088,7 @@
     },
     {
       "chapter": "Analytic Theory",
-      "comment_count": 6,
+      "comment_count": 7,
       "dep_count": 1,
       "descendant_count": 1,
       "group": "c148",
@@ -5117,7 +5117,7 @@
     },
     {
       "chapter": "Analytic Theory",
-      "comment_count": 9,
+      "comment_count": 10,
       "dep_count": 1,
       "descendant_count": 0,
       "group": "c148",
