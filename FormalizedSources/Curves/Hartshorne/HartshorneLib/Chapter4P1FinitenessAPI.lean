@@ -71,8 +71,9 @@ theorem awayIota_structureMap {f : MvPolynomial (Fin 2) k} {m : ℕ}
     Proj.awayι Astd f f_deg hm ≫ P1.structureMap k =
       Spec.map (CommRingCat.ofHom (algebraMap k (Away Astd f))) := by
   change Proj.awayι Astd f f_deg hm ≫
-      (Proj.toSpecZero Astd ≫ Spec.map (CommRingCat.ofHom (algebraMap k (Astd 0)))) = _
-    rw [Proj.awayι_toSpecZero_assoc, ← Spec.map_comp, ← CommRingCat.ofHom_comp]
+      (Proj.toSpecZero Astd ≫ Spec.map (CommRingCat.ofHom (algebraMap k (Astd 0)))) =
+      Spec.map (CommRingCat.ofHom (algebraMap k (Away Astd f)))
+  rw [Proj.awayι_toSpecZero_assoc, ← Spec.map_comp, ← CommRingCat.ofHom_comp]
   rfl
 
 /-- The inclusion of a standard basic open factors through its affine model. -/
