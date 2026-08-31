@@ -83,6 +83,29 @@ theorem chartBaseChangeIso_hom_ι
       U.1.2.isoSpec_inv_ι
 
 set_option synthInstance.maxHeartbeats 3200000 in
+-- Keep the glued-chart projection in the pinned chart comparison normal form.
+set_option maxHeartbeats 12800000 in
+set_option backward.isDefEq.respectTransparency false in
+/-- The glued chart comparison intertwines the exact affine-open inclusion. -/
+theorem gluingChartIso_hom_ι
+    {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
+    (P : Pic0FiniteStageGluePackage C F)
+    (U : Pic0FiniteStageChartIndex C) :
+    (gluingChartIso C P U).hom ≫ U.1.1.ι =
+      (pullback.congrHom (glueData_ι_gluedMap C P U) rfl).hom ≫
+        (chartRingBaseChangeIso C P U).hom ≫ U.1.2.fromSpec := by
+  change
+    ((pullback.congrHom (glueData_ι_gluedMap C P U) rfl).hom ≫
+      (chartBaseChangeIso C P U).hom) ≫ U.1.1.ι = _
+  calc
+    _ = (pullback.congrHom (glueData_ι_gluedMap C P U) rfl).hom ≫
+        ((chartBaseChangeIso C P U).hom ≫ U.1.1.ι) :=
+      Category.assoc _ _ _
+    _ = _ := congrArg
+      (fun q => (pullback.congrHom (glueData_ι_gluedMap C P U) rfl).hom ≫ q)
+      (chartBaseChangeIso_hom_ι C P U)
+
+set_option synthInstance.maxHeartbeats 3200000 in
 -- The overlap comparison elaborates the package's dependent scalar towers.
 set_option maxHeartbeats 12800000 in
 /-- Base change of a finite-stage overlap recovers the corresponding exact affine overlap. -/
