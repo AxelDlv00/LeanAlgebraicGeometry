@@ -243,6 +243,23 @@ theorem quotientHomeomorph_mk
   PeriodLatticeQuotient.quotientHomeomorph_mk
     d.toPeriodLatticeQuotient d.isOpenQuotientMap z
 
+/-- The topological quotient identification has the same underlying map as
+the additive quotient equivalence.  This lets later analytic arguments switch
+between the topological and algebraic interfaces without redoing quotient
+induction. -/
+theorem quotientHomeomorph_eq_quotientAddEquiv
+    {X : Type*} [AddCommGroup X] [TopologicalSpace X]
+    [T2Space X] [ContinuousAdd X] {g : ℕ}
+    (d : ComplexLatticeExponentialData X g) (q :
+      GenusComplexVector g ⧸ d.periodLattice.toAddSubgroup) :
+  d.quotientHomeomorph q = d.quotientAddEquiv q := by
+  refine QuotientAddGroup.induction_on q ?_
+  intro z
+  change d.quotientHomeomorph
+      (QuotientAddGroup.mk' d.periodLattice.toAddSubgroup z) =
+    d.quotientAddEquiv (QuotientAddGroup.mk' d.periodLattice.toAddSubgroup z)
+  rw [d.quotientHomeomorph_mk, d.quotientAddEquiv_mk]
+
 /-- The canonical exponential data for the quotient by any full lattice. -/
 def ofLattice
     (g : ℕ) (L : Submodule ℤ (GenusComplexVector g))
