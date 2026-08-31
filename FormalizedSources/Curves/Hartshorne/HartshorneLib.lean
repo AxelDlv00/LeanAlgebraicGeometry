@@ -65,7 +65,10 @@ import HartshorneLib.Chapter4TwoCoverFiniteness
 import HartshorneLib.Chapter4FiniteMapSections
 import HartshorneLib.Chapter4FiniteMapLaurent
 import HartshorneLib.Chapter4LaurentLadder
+import HartshorneLib.Chapter4P1Charts
+import HartshorneLib.Chapter4P1Overlap
 import HartshorneLib.Chapter4P1Geometry
+import HartshorneLib.Chapter4FiniteMapP1
 import HartshorneLib.Chapter4ProductFormulaCohomology
 
 /-!
