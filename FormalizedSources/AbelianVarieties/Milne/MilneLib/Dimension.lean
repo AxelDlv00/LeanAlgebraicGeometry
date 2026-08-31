@@ -295,7 +295,7 @@ theorem finrank_cotangentSpace_stalk_eq_of_isIso
 
 /-- The Krull dimension of stalks is preserved by a scheme isomorphism. -/
 theorem ringKrullDim_stalk_eq_of_isIso
-    {X Y : Scheme.{u}} [IsLocallyNoetherian X] [IsLocallyNoetherian Y]
+    {X Y : Scheme.{u}}
     (f : X ⟶ Y) [IsIso f] (x : X) :
     ringKrullDim (Y.presheaf.stalk (f.base x)) =
       ringKrullDim (X.presheaf.stalk x) :=
@@ -341,7 +341,6 @@ theorem finrank_cotangentSpace_eq_of_pointTranslation
 /-- A group-variety translation preserves the Krull dimension of local stalks. -/
 theorem ringKrullDim_stalk_eq_of_pointTranslation
     {S : Scheme.{u}} (G : Over S) [GrpObj G]
-    [IsLocallyNoetherian G.left]
     (x y : 𝟙_ (Over S) ⟶ G) (z : G.left) :
     ringKrullDim
         (G.left.presheaf.stalk ((pointTranslationIso G x y).hom.base z)) =
