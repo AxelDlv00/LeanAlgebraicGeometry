@@ -137,6 +137,74 @@ noncomputable def restrictionBaseChangeRingHom
     (restrictionBaseChangeAlgHomPinned C P U V)
 
 set_option synthInstance.maxHeartbeats 3200000 in
+-- The structure map retains the chart tensor witnesses in its public type.
+set_option maxHeartbeats 12800000 in
+/-- The pinned ring homomorphism underlying a finite-stage chart's structure map. -/
+noncomputable def chartBaseChangeStructureRingHom
+    {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
+    (P : Pic0FiniteStageGluePackage C F)
+    (U : Pic0FiniteStageChartIndex C) :
+    @RingHom P.N.1
+      (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U)
+      (inferInstance : NonAssocSemiring P.N.1)
+      (pic0FiniteStageChartBaseChangeRingCommRing
+        C P.L P.n P.m P.relation P.M P.N U).toNonAssocSemiring :=
+  @algebraMap P.N.1
+    (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U)
+    (inferInstance : CommSemiring P.N.1)
+    (pic0FiniteStageChartBaseChangeRingCommRing
+      C P.L P.n P.m P.relation P.M P.N U).toSemiring
+    (pic0FiniteStageChartBaseChangeRingAlgebra
+      C P.L P.n P.m P.relation P.M P.N U)
+
+set_option synthInstance.maxHeartbeats 3200000 in
+-- The structure map retains the overlap tensor witnesses in its public type.
+set_option maxHeartbeats 12800000 in
+/-- The pinned ring homomorphism underlying a finite-stage overlap's structure map. -/
+noncomputable def overlapBaseChangeStructureRingHom
+    {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
+    (P : Pic0FiniteStageGluePackage C F)
+    (U V : Pic0FiniteStageChartIndex C) :
+    @RingHom P.N.1
+      (Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M P.N U V)
+      (inferInstance : NonAssocSemiring P.N.1)
+      (pic0FiniteStageOverlapBaseChangeRingCommRing
+        C P.L P.n P.m P.relation P.M P.N U V).toNonAssocSemiring :=
+  @algebraMap P.N.1
+    (Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M P.N U V)
+    (inferInstance : CommSemiring P.N.1)
+    (pic0FiniteStageOverlapBaseChangeRingCommRing
+      C P.L P.n P.m P.relation P.M P.N U V).toSemiring
+    (pic0FiniteStageOverlapBaseChangeRingAlgebra
+      C P.L P.n P.m P.relation P.M P.N U V)
+
+set_option synthInstance.maxHeartbeats 3200000 in
+-- The equality uses the explicitly pinned algebra-homomorphism witnesses.
+set_option maxHeartbeats 12800000 in
+/-- The pinned restriction preserves the named chart and overlap structure maps. -/
+theorem restrictionBaseChangeRingHom_comp_structure
+    {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
+    (P : Pic0FiniteStageGluePackage C F)
+    (U V : Pic0FiniteStageChartIndex C) :
+    (restrictionBaseChangeRingHom C P U V).comp
+        (chartBaseChangeStructureRingHom C P U) =
+      overlapBaseChangeStructureRingHom C P U V := by
+  ext x
+  exact @AlgHom.commutes P.N.1
+    (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U)
+    (Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M P.N U V)
+    (inferInstance : CommSemiring P.N.1)
+    (pic0FiniteStageChartBaseChangeRingCommRing
+      C P.L P.n P.m P.relation P.M P.N U).toSemiring
+    (pic0FiniteStageOverlapBaseChangeRingCommRing
+      C P.L P.n P.m P.relation P.M P.N U V).toSemiring
+    (pic0FiniteStageChartBaseChangeRingAlgebra
+      C P.L P.n P.m P.relation P.M P.N U)
+    (pic0FiniteStageOverlapBaseChangeRingAlgebra
+      C P.L P.n P.m P.relation P.M P.N U V)
+    (restrictionBaseChangeAlgHomPinned C P U V) x
+
+set_option synthInstance.maxHeartbeats 3200000 in
 -- Relating the raw glue leg to the pinned wrapper unfolds the package presentation once.
 set_option maxHeartbeats 12800000 in
 /-- The left glue leg is the spectrum of the pinned restriction ring homomorphism. -/
@@ -147,6 +215,18 @@ theorem glueData_f_pinned
     P.glueData.f U V = Spec.map (CommRingCat.ofHom
       (restrictionBaseChangeRingHom C P U V)) := by
   rw [glueData_f C P U V]
+  rfl
+
+set_option synthInstance.maxHeartbeats 3200000 in
+-- The scheme map is exposed independently of global instance search.
+set_option maxHeartbeats 12800000 in
+/-- The named chart map is the spectrum of the pinned chart structure ring homomorphism. -/
+theorem chartBaseChangeMap_eq_spec
+    {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
+    (P : Pic0FiniteStageGluePackage C F)
+    (U : Pic0FiniteStageChartIndex C) :
+    chartBaseChangeMap C P U = Spec.map (CommRingCat.ofHom
+      (chartBaseChangeStructureRingHom C P U)) := by
   rfl
 
 set_option synthInstance.maxHeartbeats 400000 in
@@ -160,25 +240,26 @@ noncomputable def overlapBaseChangeMap
     Spec (CommRingCat.of
       (Pic0FiniteStageOverlapBaseChangeRing
         C P.L P.n P.m P.relation P.M P.N U V)) ⟶ Spec (.of P.N.1) :=
-  letI : CommRing
-      (Pic0FiniteStageOverlapBaseChangeRing
-        C P.L P.n P.m P.relation P.M P.N U V) :=
-    pic0FiniteStageOverlapBaseChangeRingCommRing
-      C P.L P.n P.m P.relation P.M P.N U V
-  letI : Algebra P.N.1
-      (Pic0FiniteStageOverlapBaseChangeRing
-        C P.L P.n P.m P.relation P.M P.N U V) :=
-    pic0FiniteStageOverlapBaseChangeRingAlgebra
-      C P.L P.n P.m P.relation P.M P.N U V
   Spec.map (CommRingCat.ofHom
-    (@algebraMap P.N.1
-      (Pic0FiniteStageOverlapBaseChangeRing
-        C P.L P.n P.m P.relation P.M P.N U V)
-      (inferInstance : CommSemiring P.N.1)
-      (pic0FiniteStageOverlapBaseChangeRingCommRing
-        C P.L P.n P.m P.relation P.M P.N U V).toSemiring
-      (pic0FiniteStageOverlapBaseChangeRingAlgebra
-        C P.L P.n P.m P.relation P.M P.N U V)))
+    (overlapBaseChangeStructureRingHom C P U V))
+
+set_option synthInstance.maxHeartbeats 3200000 in
+-- Functoriality now consumes only named ring homomorphisms with fixed structures.
+set_option maxHeartbeats 12800000 in
+/-- The finite-stage restriction followed by the chart structure map is the
+overlap structure map. -/
+theorem restrictionSpecMap_comp_chartBaseChangeMap
+    {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
+    (P : Pic0FiniteStageGluePackage C F)
+    (U V : Pic0FiniteStageChartIndex C) :
+    Spec.map (CommRingCat.ofHom (restrictionBaseChangeRingHom C P U V)) ≫
+        chartBaseChangeMap C P U =
+      overlapBaseChangeMap C P U V := by
+  rw [chartBaseChangeMap_eq_spec]
+  unfold overlapBaseChangeMap
+  rw [← Spec.map_comp]
+  rw [← CommRingCat.ofHom_comp]
+  rw [restrictionBaseChangeRingHom_comp_structure]
 
 /-- The exact left restriction with indexed source and target rings.  Keeping
 the indexed rings avoids relying on typeclass transparency for their aliases. -/
