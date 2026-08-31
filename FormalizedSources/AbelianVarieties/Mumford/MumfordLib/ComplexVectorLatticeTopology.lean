@@ -73,6 +73,24 @@ theorem quotientCoordinateAddEquiv_mk
       (QuotientAddGroup.mk' d.ambientPeriodLattice v) = _
   rfl
 
+/-- The coordinate quotient map and the canonical quotient map compose to the
+    direct quotient equivalence of the ambient tangent model. -/
+theorem quotientCoordinateAddEquiv_trans_quotientAddEquiv
+    {V X : Type*} [NormedAddCommGroup V] [NormedSpace ℂ V]
+    [AddCommGroup X] [TopologicalSpace X] {g : ℕ}
+    (d : ComplexVectorLatticeExponentialData V X g) :
+    d.quotientCoordinateAddEquiv.trans d.toCanonical.quotientAddEquiv =
+      d.quotientAddEquiv := by
+  apply AddEquiv.ext
+  intro q
+  refine QuotientAddGroup.induction_on q ?_
+  intro v
+  change d.toCanonical.quotientAddEquiv
+      (QuotientAddGroup.mk' d.toCanonical.periodLattice.toAddSubgroup
+        (d.coordinate v)) = d.exponential v
+  rw [ComplexLatticeExponentialData.quotientAddEquiv_mk]
+  simp [ComplexVectorLatticeExponentialData.toCanonical]
+
 /-- The transported ambient period subgroup is discrete in the tangent space.
 
 The explicit equality with `ZLattice.comap` is needed because the certificate
