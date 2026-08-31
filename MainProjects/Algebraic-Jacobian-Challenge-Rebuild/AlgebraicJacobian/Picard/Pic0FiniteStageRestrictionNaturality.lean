@@ -100,6 +100,41 @@ theorem restrictionBaseChangeMap_naturality
     C P.L P.n P.m P.relation P.e P.M P.mapM P.hmapM P.N
       (Sum.inl (Sum.inl (U, V))) x
 
+/-- The spectrum of the exact left restriction, followed by the chart's affine
+identification, is the affine-overlap identification. -/
+theorem exactRestrictionAlgHom_fromSpec
+    (U V : Pic0FiniteStageChartIndex C) :
+    Spec.map (CommRingCat.ofHom
+        (exactRestrictionAlgHom C U V).toRingHom) ≫
+        U.1.2.fromSpec =
+      (pic0FiniteStageAffineOverlap C U V).2.fromSpec := by
+  change Spec.map (CommRingCat.ofHom
+      (pic0FiniteStageRestrictionLeft C U V).toRingHom) ≫
+      U.1.2.fromSpec = _
+  change Spec.map
+      ((pic0_sepClosed_representableBy (C := C)).1.left.presheaf.map
+        (homOfLE (pic0FiniteStageAffineOverlap_le_left C U V)).op) ≫
+      U.1.2.fromSpec = _
+  exact U.1.2.map_fromSpec (pic0FiniteStageAffineOverlap C U V).2
+    (homOfLE (pic0FiniteStageAffineOverlap_le_left C U V)).op
+
+set_option synthInstance.maxHeartbeats 3200000 in
+-- Normalize the stable-index naturality square before entering glued diagrams.
+set_option maxHeartbeats 12800000 in
+set_option backward.isDefEq.respectTransparency false in
+/-- The pulled-back left restriction carries the chart's affine identification
+to the affine-overlap identification. -/
+theorem restrictionBaseChangeMap_fromSpec
+    {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
+    (P : Pic0FiniteStageGluePackage C F)
+    (U V : Pic0FiniteStageChartIndex C) :
+    restrictionBaseChangeMap C P U V ≫
+          (chartRingBaseChangeIso C P U).hom ≫ U.1.2.fromSpec =
+      (overlapRingBaseChangeIso C P U V).hom ≫
+        (pic0FiniteStageAffineOverlap C U V).2.fromSpec := by
+  rw [← Category.assoc, restrictionBaseChangeMap_naturality C P U V,
+    Category.assoc, exactRestrictionAlgHom_fromSpec C U V]
+
 end Pic0FiniteStageGluePackage
 
 end
