@@ -8,6 +8,9 @@ import Mathlib.RingTheory.Finiteness.Basic
 import Mathlib.LinearAlgebra.FreeModule.Finite.Basic
 import Mathlib.Algebra.Category.ModuleCat.Stalk
 import Mathlib.LinearAlgebra.Finsupp.LinearCombination
+import Mathlib.RingTheory.TensorProduct.Finite
+import Mathlib.RingTheory.LocalRing.ResidueField.Basic
+import Mathlib.AlgebraicGeometry.Modules.Sheaf
 
 /-!
 # Finite generation for coherent-module arguments
@@ -21,6 +24,8 @@ transfers finiteness to its target.
 
 open Function
 open CategoryTheory TopologicalSpace TopCat.Presheaf Opposite
+open AlgebraicGeometry
+open scoped TensorProduct
 
 namespace MilneLib
 
@@ -55,6 +60,41 @@ theorem moduleFinite_of_surjective_of_finite_basis
     Module.Finite R M := by
   letI : Module.Finite R P := Module.Finite.of_basis b
   exact Module.Finite.of_surjective f hf
+
+/-- A finite module over a local ring has a finite-dimensional residue fibre. -/
+theorem moduleFinite_residueFieldTensor
+    {R M : Type*} [CommRing R] [IsLocalRing R]
+    [AddCommGroup M] [Module R M] [Module.Finite R M] :
+    Module.Finite (IsLocalRing.ResidueField R)
+      (IsLocalRing.ResidueField R ⊗[R] M) := by
+  infer_instance
+
+/-- The residue fibre of a finite scheme-module stalk is finite-dimensional over
+the residue field of the local structure ring. -/
+theorem moduleFinite_schemeModuleStalk_residueTensor
+    {X : Scheme.{u}} (F : X.Modules) (x : X)
+    (hfinite :
+      letI : Module (X.presheaf.stalk x)
+          (↑(TopCat.Presheaf.stalk F.val.presheaf x) : Type u) :=
+        PresheafOfModules.instModuleCarrierStalkCommRingCatCarrierAbPresheafOpensCarrier
+          F.val x
+      Module.Finite (X.presheaf.stalk x)
+        (↑(TopCat.Presheaf.stalk F.val.presheaf x) : Type u)) :
+    letI : Module (X.presheaf.stalk x)
+        (↑(TopCat.Presheaf.stalk F.val.presheaf x) : Type u) :=
+      PresheafOfModules.instModuleCarrierStalkCommRingCatCarrierAbPresheafOpensCarrier
+        F.val x
+    Module.Finite (IsLocalRing.ResidueField (X.presheaf.stalk x))
+      (IsLocalRing.ResidueField (X.presheaf.stalk x) ⊗[X.presheaf.stalk x]
+        (↑(TopCat.Presheaf.stalk F.val.presheaf x) : Type u)) := by
+  letI : Module (X.presheaf.stalk x)
+      (↑(TopCat.Presheaf.stalk F.val.presheaf x) : Type u) :=
+    PresheafOfModules.instModuleCarrierStalkCommRingCatCarrierAbPresheafOpensCarrier
+      F.val x
+  letI : Module.Finite (X.presheaf.stalk x)
+      (↑(TopCat.Presheaf.stalk F.val.presheaf x) : Type u) :=
+    hfinite
+  exact moduleFinite_residueFieldTensor
 
 /-- A finite family of sections on an open set generates the stalk whenever
 every section near the point is locally a linear combination of its
