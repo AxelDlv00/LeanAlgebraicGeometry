@@ -302,6 +302,24 @@ theorem ringKrullDim_stalk_eq_of_isIso
   ringKrullDim_eq_of_ringEquiv
     ((asIso (f.stalkMap x)).commRingCatIsoToRingEquiv)
 
+/-! Regularity is likewise invariant under the stalk isomorphism.  This is
+useful when a dimension argument supplies regularity at one translated point. -/
+
+/-- Regularity of local stalks is preserved by a scheme isomorphism. -/
+theorem isRegularLocalRing_stalk_iff_of_isIso
+    {X Y : Scheme.{u}} [IsLocallyNoetherian X] [IsLocallyNoetherian Y]
+    (f : X ⟶ Y) [IsIso f] (x : X) :
+    IsRegularLocalRing (Y.presheaf.stalk (f.base x)) ↔
+      IsRegularLocalRing (X.presheaf.stalk x) := by
+  let e := (asIso (f.stalkMap x)).commRingCatIsoToRingEquiv
+  constructor
+  · intro h
+    letI : IsRegularLocalRing (Y.presheaf.stalk (f.base x)) := h
+    exact IsRegularLocalRing.of_ringEquiv e
+  · intro h
+    letI : IsRegularLocalRing (X.presheaf.stalk x) := h
+    exact IsRegularLocalRing.of_ringEquiv e.symm
+
 namespace GroupVariety
 
 /-- A group-variety translation preserves the cotangent-space finrank at every
@@ -329,6 +347,16 @@ theorem ringKrullDim_stalk_eq_of_pointTranslation
         (G.left.presheaf.stalk ((pointTranslationIso G x y).hom.base z)) =
       ringKrullDim (G.left.presheaf.stalk z) :=
   ringKrullDim_stalk_eq_of_isIso ((pointTranslationIso G x y).hom) z
+
+/-- Regularity of a group-variety stalk is preserved by point translation. -/
+theorem isRegularLocalRing_stalk_iff_of_pointTranslation
+    {S : Scheme.{u}} (G : Over S) [GrpObj G]
+    [IsLocallyNoetherian G.left]
+    (x y : 𝟙_ (Over S) ⟶ G) (z : G.left) :
+    IsRegularLocalRing
+        (G.left.presheaf.stalk ((pointTranslationIso G x y).hom.base z)) ↔
+      IsRegularLocalRing (G.left.presheaf.stalk z) :=
+  isRegularLocalRing_stalk_iff_of_isIso ((pointTranslationIso G x y).hom) z
 
 end GroupVariety
 
