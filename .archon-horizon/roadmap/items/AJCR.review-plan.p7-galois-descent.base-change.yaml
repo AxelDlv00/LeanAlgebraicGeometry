@@ -2,14 +2,11 @@ id: AJCR.review-plan.p7-galois-descent.base-change
 title: Global glued-scheme base-change isomorphism
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: 'Build/certification chain: finite-glue -> compile-glue-package -> compile-diagram-iso
-  -> diagram-left-leg -> pre-snd -> snd -> glued-comparison -> root-import-acceptance.
-  Source declarations for GluePackage, overlap projections, and finiteStageBaseChangeIso
-  exist, but the critical cache lacks all five top artifacts. Run 0154 owns only GluePackage,
-  GluingDiagramIso, GluingBaseChange, and OverlapBaseChange; do not edit or reassign
-  it. Pic0CriticalPath currently stops before importing top PreSnd, Snd, and GluedComparison,
-  so no root acceptance is claimed.'
-status: blocked
+summary: 'Complete: the GluePackage-to-diagram-to-PreSnd-to-Snd-to-GluedComparison
+  chain has fresh artifacts and passes Pic0CriticalPath plus the AlgebraicJacobian
+  root. The remaining RepresentableBy and orbit-affineness nodes are separate mathematical
+  gates.'
+status: done
 kind: proof
 priority: urgent
 depends_on:
@@ -24,8 +21,11 @@ metadata:
   created_at: '2026-08-18T06:11:53.823161+00:00'
   parent: AJCR.review-plan.p7-galois-descent
   milestone: AJCR.review-plan
-  updated_at: '2026-08-23T02:30:46.953646+00:00'
+  updated_at: '2026-08-31T16:50:24.462933+00:00'
   pinned_commits:
+  - 5d9073c2ee
+  - 15d71a94c1
+  - f53ec71db6
   - 312f90ea27
   - 663dea427f
   - b914523466

@@ -2,11 +2,9 @@ id: AJCR.review-plan.p7-galois-descent.base-change.diagram-left-leg
 title: Certify the left overlap projection
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: 'Declarations: gluingOverlapIso_pre_fst and gluingOverlapIso_fst in Pic0FiniteStageGluingDiagramIso.lean.
-  Source sync is lean_ok, but GluingDiagramIso.olean is absent. The former compile-frontier
-  lane was stopped and superseded by API diagnosis (human task comment C-0010); no
-  current owner. Acceptance requires a native artifact plus a fresh root import.'
-status: blocked
+summary: 'Verified: gluingOverlapIso_pre_fst and gluingOverlapIso_fst use the owned
+  left projection laws and compile in the root-reachable diagram artifact.'
+status: done
 kind: proof
 priority: urgent
 depends_on: []
@@ -29,4 +27,6 @@ metadata:
     projects: Algebraic-Jacobian-Challenge-Rebuild,Algebraic-Jacobian-Challenge
   parent: AJCR.review-plan.p7-galois-descent.base-change.compile-diagram-iso
   milestone: AJCR.review-plan
-  updated_at: '2026-08-27T14:33:18.223724+00:00'
+  updated_at: '2026-08-31T16:49:58.361927+00:00'
+  pinned_commits:
+  - 592f19a4ba

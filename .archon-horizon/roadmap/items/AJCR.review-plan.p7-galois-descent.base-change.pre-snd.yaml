@@ -2,12 +2,10 @@ id: AJCR.review-plan.p7-galois-descent.base-change.pre-snd
 title: Certify the top PreSnd hom-ext wrapper
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: 'Declaration: gluingOverlapIso_pre_snd in Pic0FiniteStageGluingOverlapIsoPreSnd.lean.
-  Dependency: compile-diagram-iso. Source sync says lean_ok, but no top PreSnd.olean
-  is present in the critical cache; this is a build/certification blocker, not a mathematical
-  result. Run 0154 explicitly does not own this file. Acceptance requires a standalone
-  artifact and a fresh Pic0CriticalPath import.'
-status: blocked
+summary: 'Verified: the top gluingOverlapIso_pre_snd wrapper and its fst/snd component
+  modules have fresh serialized artifacts under the explicit right-leg API; Pic0CriticalPath
+  imports them.'
+status: done
 kind: proof
 priority: urgent
 depends_on: []
@@ -30,4 +28,6 @@ metadata:
     projects: Algebraic-Jacobian-Challenge-Rebuild,Algebraic-Jacobian-Challenge
   parent: AJCR.review-plan.p7-galois-descent.base-change.diagram-left-leg
   milestone: AJCR.review-plan
-  updated_at: '2026-08-23T02:45:25.144775+00:00'
+  updated_at: '2026-08-31T16:49:56.828436+00:00'
+  pinned_commits:
+  - 0ba8f0776c

@@ -29,3 +29,23 @@
 {"at": "2026-08-29T18:31:04.460484+00:00", "actor": "system", "field": "status", "from": "queued", "to": "running", "note": "started by Horizon run"}
 {"at": "2026-08-29T21:17:04.257809+00:00", "actor": "system", "field": "status", "from": "running", "to": "queued", "note": "Horizon session ended without the agent recording a terminal status; returned to queued"}
 {"at": "2026-08-29T21:26:57.545108+00:00", "actor": "system", "field": "status", "from": "queued", "to": "running", "note": "started by Horizon run"}
+{"at": "2026-08-30T05:54:53.005119+00:00", "actor": "horizon", "field": "edited", "from": "", "to": "", "note": "roadmap_refs updated", "provenance": {"run": "0194", "session": "0006-horizon-ajcr-finite-stage-api-redesign", "role": "horizon", "round": "2", "rounds": "8", "task": "ajcr-finite-stage-api-redesign", "task_title": "AJCR: diagnose and rewrite unstable formalization APIs", "projects": "Algebraic-Jacobian-Challenge-Rebuild"}}
+{"at": "2026-08-30T06:04:57.566277+00:00", "actor": "system", "field": "status", "from": "running", "to": "queued", "note": "Horizon session ended without the agent recording a terminal status; returned to queued"}
+{"at": "2026-08-30T06:06:54.624135+00:00", "actor": "system", "field": "status", "from": "queued", "to": "running", "note": "started by Horizon run"}
+{"at": "2026-08-30T11:27:13.400247+00:00", "actor": "system", "field": "status", "from": "running", "to": "queued", "note": "Horizon session ended without the agent recording a terminal status; returned to queued"}
+{"at": "2026-08-30T11:39:07.912883+00:00", "actor": "system", "field": "status", "from": "queued", "to": "running", "note": "started by Horizon run"}
+{"at": "2026-08-30T19:59:36.374654+00:00", "actor": "system", "field": "status", "from": "running", "to": "queued", "note": "Horizon session ended without the agent recording a terminal status; returned to queued"}
+{"at": "2026-08-31T01:07:24.663661+00:00", "actor": "system", "field": "status", "from": "queued", "to": "running", "note": "started by Horizon run"}
+{"at": "2026-08-31T01:08:02.095478+00:00", "actor": "system", "field": "status", "from": "running", "to": "queued", "note": "Horizon session ended without the agent recording a terminal status; returned to queued"}
+{"at": "2026-08-31T01:08:29.663588+00:00", "actor": "system", "field": "status", "from": "queued", "to": "running", "note": "started by Horizon run"}
+{"at": "2026-08-31T01:09:05.558967+00:00", "actor": "system", "field": "status", "from": "running", "to": "queued", "note": "Horizon session ended without the agent recording a terminal status; returned to queued"}
+{"at": "2026-08-31T01:09:36.314132+00:00", "actor": "system", "field": "status", "from": "queued", "to": "running", "note": "started by Horizon run"}
+{"at": "2026-08-31T01:10:11.783867+00:00", "actor": "system", "field": "status", "from": "running", "to": "queued", "note": "Horizon session ended without the agent recording a terminal status; returned to queued"}
+{"at": "2026-08-31T01:10:36.974719+00:00", "actor": "system", "field": "status", "from": "queued", "to": "running", "note": "started by Horizon run"}
+{"at": "2026-08-31T01:11:13.019591+00:00", "actor": "system", "field": "status", "from": "running", "to": "queued", "note": "Horizon session ended without the agent recording a terminal status; returned to queued"}
+{"at": "2026-08-31T01:11:47.395152+00:00", "actor": "system", "field": "status", "from": "queued", "to": "running", "note": "started by Horizon run"}
+{"at": "2026-08-31T01:12:37.919504+00:00", "actor": "system", "field": "status", "from": "running", "to": "queued", "note": "Horizon session ended without the agent recording a terminal status; returned to queued"}
+{"at": "2026-08-31T01:13:04.129922+00:00", "actor": "system", "field": "status", "from": "queued", "to": "running", "note": "started by Horizon run"}
+{"at": "2026-08-31T01:13:34.794044+00:00", "actor": "system", "field": "status", "from": "running", "to": "queued", "note": "Horizon session ended without the agent recording a terminal status; returned to queued"}
+{"at": "2026-08-31T01:14:36.967065+00:00", "actor": "system", "field": "status", "from": "queued", "to": "running", "note": "started by Horizon run"}
+{"at": "2026-08-31T16:52:26.367577+00:00", "actor": "horizon", "field": "status", "from": "running", "to": "done", "note": "", "provenance": {"run": "0198", "session": "0014-horizon-ajcr-finite-stage-api-redesign", "role": "horizon", "round": "6", "rounds": "16", "task": "ajcr-finite-stage-api-redesign", "task_title": "AJCR: diagnose and rewrite unstable formalization APIs", "projects": "Algebraic-Jacobian-Challenge-Rebuild"}}

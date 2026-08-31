@@ -2,13 +2,10 @@ id: AJCR.review-plan.p7-galois-descent.base-change.root-import-acceptance
 title: Recheck the certified cone from the critical root
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: 'Acceptance gate: import and #check the top PreSnd, Snd, and GluedComparison
-  declarations through Pic0CriticalPath and AlgebraicJacobian, record fresh artifact
-  hashes, and audit axioms. Dependency: glued-comparison. At HEAD Pic0CriticalPath
-  does not import the top PreSnd, OverlapIsoSnd, or GluedComparison modules, so source-level
-  lean_ok labels are not root-reachable evidence. This is a build/root-reachability
-  gate, separate from the later mathematical RepresentableBy gap.'
-status: blocked
+summary: 'Verified: Pic0CriticalPath imports and checks the top PreSnd, Snd, gluingGluedIso,
+  finiteStageBaseChangeIso, and pinned chart-finiteness declarations; the full AlgebraicJacobian
+  root check passes with source-matching artifacts.'
+status: done
 kind: proof
 priority: urgent
 depends_on: []
@@ -31,4 +28,8 @@ metadata:
     projects: Algebraic-Jacobian-Challenge-Rebuild,Algebraic-Jacobian-Challenge
   parent: AJCR.review-plan.p7-galois-descent.base-change.glued-comparison
   milestone: AJCR.review-plan
-  updated_at: '2026-08-23T02:45:39.799474+00:00'
+  updated_at: '2026-08-31T16:49:52.235291+00:00'
+  pinned_commits:
+  - 5d9073c2ee
+  - 15d71a94c1
+  - f53ec71db6

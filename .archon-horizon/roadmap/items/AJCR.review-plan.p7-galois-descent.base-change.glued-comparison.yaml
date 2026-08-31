@@ -2,12 +2,9 @@ id: AJCR.review-plan.p7-galois-descent.base-change.glued-comparison
 title: Certify finiteStageBaseChangeIso at the root
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: 'Declaration: finiteStageBaseChangeIso in Pic0FiniteStageGluedComparison.lean.
-  Dependency: snd. The object comparison is a real source declaration, but GluedComparison.olean
-  is absent and the current root cannot certify it. Once the full cone is native,
-  this is a prerequisite for the universal Yoneda equivalence, not itself a RepresentableBy
-  proof.'
-status: blocked
+summary: 'Verified: finiteStageBaseChangeIso and gluingGluedIso consume the pinned
+  projection API; Pic0FiniteStageGluedComparison and both critical roots compile.'
+status: done
 kind: proof
 priority: urgent
 depends_on: []
@@ -30,4 +27,6 @@ metadata:
     projects: Algebraic-Jacobian-Challenge-Rebuild,Algebraic-Jacobian-Challenge
   parent: AJCR.review-plan.p7-galois-descent.base-change.snd
   milestone: AJCR.review-plan
-  updated_at: '2026-08-23T02:45:33.908245+00:00'
+  updated_at: '2026-08-31T16:49:53.943798+00:00'
+  pinned_commits:
+  - 8ff1d6a6d3

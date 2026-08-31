@@ -2,9 +2,9 @@ id: AJCR.review-plan.p7-galois-descent.base-change.compile-glue-package
 title: Compile and certify GluePackage
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: 'Verified: Pic0FiniteStageGluePackage and exists_pic0FiniteStageGluePackage
-  compile with the pinned presentation boundary; fresh GluePackage artifact and FiniteStageApi
-  root import are available. Remaining diagram/base-change nodes are separate.'
+summary: 'Verified: GluePackage remains artifact-backed, and all nested diagram, PreSnd,
+  Snd, glued-comparison, and root-acceptance descendants now compile through the pinned
+  finite-stage API.'
 status: done
 kind: proof
 priority: urgent
@@ -28,7 +28,8 @@ metadata:
     projects: Algebraic-Jacobian-Challenge-Rebuild,Algebraic-Jacobian-Challenge
   parent: AJCR.review-plan.p7-galois-descent.base-change
   milestone: AJCR.review-plan
-  updated_at: '2026-08-30T05:54:39.166568+00:00'
+  updated_at: '2026-08-31T16:50:23.017758+00:00'
   pinned_commits:
+  - f53ec71db6
   - 2c608823bf
   - 6d68c4ebff
