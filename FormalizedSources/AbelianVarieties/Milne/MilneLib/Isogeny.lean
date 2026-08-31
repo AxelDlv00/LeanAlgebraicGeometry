@@ -1124,6 +1124,75 @@ theorem finite_of_algebraicClosure_baseChange_isogeny
   letI : IsProper f.left := isProper_left_of_isAbelianVariety hA hB f
   exact IsFinite.of_isProper_of_faithfullyFlat_baseChange p f.left hf
 
+/- Surjectivity also descends from the algebraic-closure base change.  The
+   base-changed homomorphism is surjective, and composing it with the
+   surjective projection to the original target gives a surjective composite
+   through the source pullback.  The latter composite factors through `f.left`,
+   so `Surjective.of_comp` finishes the descent. -/
+theorem surjective_of_algebraicClosure_baseChange_isogeny
+    {K : Type u} [Field K]
+    {A B : Over (Spec (.of K))} [GrpObj A] [GrpObj B]
+    (f : A ⟶ B) [IsMonHom f]
+    (hgeom :
+      let F := Over.pullback
+        (Spec.map (CommRingCat.ofHom <| algebraMap K (AlgebraicClosure K)))
+      letI : GrpObj (F.obj A) := Functor.grpObjObj
+      letI : GrpObj (F.obj B) := Functor.grpObjObj
+      Isogeny (F.map f)) :
+    Surjective f.left := by
+  let b : Spec (.of (AlgebraicClosure K)) ⟶ Spec (.of K) :=
+    Spec.map (CommRingCat.ofHom <| algebraMap K (AlgebraicClosure K))
+  let F := Over.pullback b
+  letI : GrpObj (F.obj A) := Functor.grpObjObj
+  letI : GrpObj (F.obj B) := Functor.grpObjObj
+  have hgeom' : Isogeny (F.map f) := by
+    simpa [F, b] using hgeom
+  have hcond :
+      (pullback.fst A.hom b ≫ f.left) ≫ B.hom =
+        pullback.snd A.hom b ≫ b := by
+    rw [Category.assoc, CategoryTheory.Over.w f]
+    exact pullback.condition
+  let q : pullback A.hom b ⟶ pullback B.hom b :=
+    pullback.lift (pullback.fst A.hom b ≫ f.left) (pullback.snd A.hom b)
+      hcond
+  have hq : Surjective q := by
+    have hq' : Surjective (F.map f).left := hgeom'.1
+    change Surjective q at hq'
+    exact hq'
+  let p : pullback B.hom b ⟶ B.left := pullback.fst B.hom b
+  letI : Surjective p := by
+    dsimp [p]
+    infer_instance
+  letI : Surjective q := hq
+  have hqp : Surjective (q ≫ p) := by
+    exact MorphismProperty.comp_mem @Surjective q p hq (inferInstance : Surjective p)
+  have hm_fst : q ≫ p = pullback.fst A.hom b ≫ f.left := by
+    dsimp [q, p]
+    exact pullback.lift_fst _ _ _
+  letI : Surjective (pullback.fst A.hom b ≫ f.left) := by
+    rw [← hm_fst]
+    exact hqp
+  exact Surjective.of_comp (pullback.fst A.hom b) f.left
+
+/- Combining the two descent halves removes the auxiliary surjectivity input
+   from the arbitrary-field algebraic-closure characterization. -/
+theorem Isogeny.of_algebraicClosure_baseChange_isogeny
+    {K : Type u} [Field K]
+    {A B : Over (Spec (.of K))} [GrpObj A] [GrpObj B]
+    (hA : IsAbelianVariety A) (hB : IsAbelianVariety B)
+    (f : A ⟶ B) [IsMonHom f]
+    (hgeom :
+      let F := Over.pullback
+        (Spec.map (CommRingCat.ofHom <| algebraMap K (AlgebraicClosure K)))
+      letI : GrpObj (F.obj A) := Functor.grpObjObj
+      letI : GrpObj (F.obj B) := Functor.grpObjObj
+      Isogeny (F.map f)) :
+    Isogeny f := by
+  letI : IsFinite f.left :=
+    finite_of_algebraicClosure_baseChange_isogeny hA hB f hgeom
+  exact Isogeny.of_surjective_of_finite f
+    (surjective_of_algebraicClosure_baseChange_isogeny f hgeom)
+
 /- A geometric isogeny certificate over the algebraic closure supplies the
    finite pullback required by the faithfully-flat descent theorem above.  The
    surjectivity assumption is kept explicit: descent of surjectivity is a
