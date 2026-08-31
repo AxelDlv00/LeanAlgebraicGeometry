@@ -989,6 +989,40 @@ theorem Isogeny.kernelOver_baseChange_isFinite
     Isogeny.kernelOver_isFinite f h
   exact MorphismProperty.overPullbackMap b (toUnit (isogenyKernelOver f)) hbase
 
+/- The slice-level kernel pullback can be exposed directly as a finite
+   morphism.  This is the concrete target-side fibre used by consumers that
+   need the pulled-back identity section rather than the `toUnit` carrier. -/
+theorem Isogeny.kernelOver_baseChange_pullback_isFinite
+    (f : A ⟶ B) [IsMonHom f] (h : Isogeny f)
+    {L : Type u} [Field L]
+    (b : Spec (.of L) ⟶ Spec (.of K)) :
+    IsFinite
+      (pullback.snd ((Over.pullback b).map f)
+        ((Over.pullback b).map (η[B]))).left := by
+  let F := Over.pullback b
+  have hk : IsFinite ((F.map (toUnit (isogenyKernelOver f))).left) := by
+    exact Isogeny.kernelOver_baseChange_isFinite f h b
+  have hunit : toUnit (isogenyKernelOver f) = pullback.snd f (η[B]) :=
+    toUnit_unique _ _
+  rw [hunit] at hk
+  let e := isogenyKernelOver_baseChangeIso f b
+  have he0 := congrArg Over.Hom.left
+    (isogenyKernelOver_baseChangeIso_hom_snd f b)
+  rw [Over.comp_left] at he0
+  have he :
+      e.hom.left ≫ (pullback.snd (F.map f) (F.map (η[B]))).left =
+        (F.map (pullback.snd f (η[B]))).left := by
+    simpa [e, F] using he0
+  have hfinOver :
+      IsFinite (pullback.snd (F.map f) (F.map (η[B]))).left := by
+    have hc := (MorphismProperty.cancel_left_of_respectsIso
+      (P := @IsFinite) e.hom.left
+        (pullback.snd (F.map f) (F.map (η[B]))).left)
+    apply hc.mp
+    rw [he]
+    simpa [F, isogenyKernelOver] using hk
+  simpa [F] using hfinOver
+
 /- An isogeny whose underlying morphism is already known to be finite remains
    an isogeny after arbitrary base change of the field.  The finite and
    surjective hypotheses are transported by the `Over` pullback functor. -/
