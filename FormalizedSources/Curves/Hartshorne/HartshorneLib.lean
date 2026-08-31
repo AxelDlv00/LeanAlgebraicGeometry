@@ -85,6 +85,7 @@ import HartshorneLib.Chapter4RiemannRochEuler
 import HartshorneLib.Chapter4LinearEquivalenceAPI
 import HartshorneLib.Chapter4SerreDuality
 import HartshorneLib.Chapter4CanonicalDegree
+import HartshorneLib.Chapter4GenusBridge
 
 /-!
 # HartshorneLib
