@@ -730,8 +730,8 @@ theorem Isogeny.comp_of_isAbelianVariety
 
 /- The same composition closure can be used over an arbitrary field once the
    residue-field finiteness input has been established for the two factors.
-   Keeping that input explicit makes this a faithful adapter for the pending
-   geometric descent theorem. -/
+   Keeping that input explicit makes this a faithful adapter around the
+   algebraic-closure descent theorem above. -/
 theorem Isogeny.comp_of_finite_residue_fibres
     {K : Type u} [Field K]
     {A B C : Over (Spec (.of K))} [GrpObj A] [GrpObj B] [GrpObj C]
@@ -1201,9 +1201,10 @@ theorem Isogeny.of_algebraicClosure_baseChange_isogeny
     (surjective_of_algebraicClosure_baseChange_isogeny f hgeom)
 
 /- A geometric isogeny certificate over the algebraic closure supplies the
-   finite pullback required by the faithfully-flat descent theorem above.  The
-   surjectivity assumption is kept explicit: descent of surjectivity is a
-   separate property of the underlying morphism in the current API. -/
+   finite pullback required by the faithfully-flat descent theorem above.  This
+   legacy corollary retains an explicit surjectivity argument for callers; the
+   stronger algebraic-closure characterization immediately above derives it
+   by the generic pullback-surjectivity lemma. -/
 theorem Isogeny.of_surjective_of_algebraicClosure_baseChange_isogeny
     {K : Type u} [Field K]
     {A B : Over (Spec (.of K))} [GrpObj A] [GrpObj B]
