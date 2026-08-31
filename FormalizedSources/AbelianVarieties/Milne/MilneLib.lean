@@ -13,6 +13,7 @@ import MilneLib.Stalk
 import MilneLib.Tensor
 import MilneLib.Sheaf
 import MilneLib.OverSheaf
+import MilneLib.Dimension
 
 /-!
 # MilneLib

@@ -1124,11 +1124,40 @@ theorem finite_of_algebraicClosure_baseChange_isogeny
   letI : IsProper f.left := isProper_left_of_isAbelianVariety hA hB f
   exact IsFinite.of_isProper_of_faithfullyFlat_baseChange p f.left hf
 
+/- Surjectivity of an `Over` morphism descends from any surjective base change.
+   The proof composes the pulled-back map with the target pullback projection,
+   then cancels the source projection set-theoretically. -/
+theorem surjective_of_overPullbackMap
+    {S T : Scheme.{u}} {A B : Over S}
+    (b : T ⟶ S) [Surjective b] (f : A ⟶ B)
+    (h : Surjective ((Over.pullback b).map f).left) :
+    Surjective f.left := by
+  let p : pullback B.hom b ⟶ B.left := pullback.fst B.hom b
+  letI : Surjective p := by
+    dsimp [p]
+    infer_instance
+  have hcond :
+      (pullback.fst A.hom b ≫ f.left) ≫ B.hom =
+        pullback.snd A.hom b ≫ b := by
+    rw [Category.assoc, CategoryTheory.Over.w f]
+    exact pullback.condition
+  let q : pullback A.hom b ⟶ pullback B.hom b :=
+    pullback.lift (pullback.fst A.hom b ≫ f.left) (pullback.snd A.hom b) hcond
+  have hq : Surjective q := by
+    change Surjective q at h
+    exact h
+  letI : Surjective q := hq
+  haveI : Surjective (q ≫ p) := inferInstance
+  have hm_fst :
+      q ≫ p = pullback.fst A.hom b ≫ f.left := by
+    dsimp [q, p]
+    exact pullback.lift_fst _ _ _
+  haveI : Surjective (pullback.fst A.hom b ≫ f.left) := hm_fst ▸ inferInstance
+  exact Surjective.of_comp (pullback.fst A.hom b) f.left
+
 /- Surjectivity also descends from the algebraic-closure base change.  The
-   base-changed homomorphism is surjective, and composing it with the
-   surjective projection to the original target gives a surjective composite
-   through the source pullback.  The latter composite factors through `f.left`,
-   so `Surjective.of_comp` finishes the descent. -/
+   specialization installs the canonical surjectivity instance for the
+   algebraic-closure spectrum map and invokes the generic lemma above. -/
 theorem surjective_of_algebraicClosure_baseChange_isogeny
     {K : Type u} [Field K]
     {A B : Over (Spec (.of K))} [GrpObj A] [GrpObj B]
@@ -1147,32 +1176,10 @@ theorem surjective_of_algebraicClosure_baseChange_isogeny
   letI : GrpObj (F.obj B) := Functor.grpObjObj
   have hgeom' : Isogeny (F.map f) := by
     simpa [F, b] using hgeom
-  have hcond :
-      (pullback.fst A.hom b ≫ f.left) ≫ B.hom =
-        pullback.snd A.hom b ≫ b := by
-    rw [Category.assoc, CategoryTheory.Over.w f]
-    exact pullback.condition
-  let q : pullback A.hom b ⟶ pullback B.hom b :=
-    pullback.lift (pullback.fst A.hom b ≫ f.left) (pullback.snd A.hom b)
-      hcond
-  have hq : Surjective q := by
-    have hq' : Surjective (F.map f).left := hgeom'.1
-    change Surjective q at hq'
-    exact hq'
-  let p : pullback B.hom b ⟶ B.left := pullback.fst B.hom b
-  letI : Surjective p := by
-    dsimp [p]
+  letI : Surjective b := by
+    dsimp [b]
     infer_instance
-  letI : Surjective q := hq
-  have hqp : Surjective (q ≫ p) := by
-    exact MorphismProperty.comp_mem @Surjective q p hq (inferInstance : Surjective p)
-  have hm_fst : q ≫ p = pullback.fst A.hom b ≫ f.left := by
-    dsimp [q, p]
-    exact pullback.lift_fst _ _ _
-  letI : Surjective (pullback.fst A.hom b ≫ f.left) := by
-    rw [← hm_fst]
-    exact hqp
-  exact Surjective.of_comp (pullback.fst A.hom b) f.left
+  exact surjective_of_overPullbackMap b f hgeom'.1
 
 /- Combining the two descent halves removes the auxiliary surjectivity input
    from the arbitrary-field algebraic-closure characterization. -/
