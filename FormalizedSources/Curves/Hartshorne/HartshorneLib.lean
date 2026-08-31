@@ -83,6 +83,7 @@ import HartshorneLib.Chapter4FiniteMapP1Cohomology
 import HartshorneLib.Chapter4SmoothProperConsequences
 import HartshorneLib.Chapter4RiemannRochEuler
 import HartshorneLib.Chapter4SectionBound
+import HartshorneLib.Chapter4SectionDrop
 import HartshorneLib.Chapter4LinearEquivalenceCohomology
 import HartshorneLib.Chapter4LinearEquivalenceAPI
 import HartshorneLib.Chapter4SerreDuality
