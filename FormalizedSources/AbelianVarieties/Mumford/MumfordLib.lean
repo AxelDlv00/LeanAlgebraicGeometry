@@ -2,6 +2,7 @@ import MumfordLib.Basic
 import MumfordLib.GroupScheme
 import MumfordLib.RigidityPointwise
 import MumfordLib.RigidityChain
+import MumfordLib.RigidityExistence
 import MumfordLib.Analytic
 import MumfordLib.Uniformization
 import MumfordLib.TorsionBridge
@@ -10,6 +11,7 @@ import MumfordLib.ZLattice
 import MumfordLib.AnalyticLatticeRank
 import MumfordLib.ComplexModel
 import MumfordLib.ComplexUniformization
+import MumfordLib.ComplexUniformizationExistence
 import MumfordLib.DivisionFiber
 import MumfordLib.RigidityCorollaries
 import MumfordLib.QuotientTopology

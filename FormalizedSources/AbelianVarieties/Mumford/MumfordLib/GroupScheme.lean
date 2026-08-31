@@ -5,6 +5,7 @@ Authors: The Mumford Contributors
 -/
 
 import Mathlib.AlgebraicGeometry.Group.Abelian
+import Mathlib.AlgebraicGeometry.Group.Smooth
 
 /-!
 # Group schemes and translations
@@ -451,6 +452,16 @@ theorem isCommMonObj_of_isAbelianVariety
   letI : IsProper G.hom := hG.1
   letI : GeometricallyIntegral G.hom := hG.2
   exact AlgebraicGeometry.isCommMonObj_of_isProper_of_geometricallyIntegral G
+
+/-- An abelian variety is smooth over its base field. -/
+theorem smooth_of_isAbelianVariety
+    (G : Over (Spec (.of K))) [GrpObj G] (hG : IsAbelianVariety G) :
+    Smooth G.hom := by
+  letI : IsProper G.hom := hG.1
+  letI : GeometricallyIntegral G.hom := hG.2
+  letI : LocallyOfFiniteType G.hom := IsProper.toLocallyOfFiniteType
+  letI : GrpObj (Over.mk G.hom) := ‹GrpObj G›
+  exact smooth_of_grpObj G.hom
 
 end AbelianVariety
 
