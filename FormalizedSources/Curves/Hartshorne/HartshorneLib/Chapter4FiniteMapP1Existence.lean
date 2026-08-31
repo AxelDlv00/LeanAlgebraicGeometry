@@ -229,6 +229,26 @@ theorem exists_locallyQuasiFinite_isDominant_toP1_of_transcendental
     exact hz trivial
   exact ⟨π, LocallyQuasiFinite.of_finite_preimage_singleton π hfib, hdominant, hπover⟩
 
+/-- The finite-map form of
+`exists_locallyQuasiFinite_isDominant_toP1_of_transcendental`. -/
+theorem exists_isFinite_isDominant_toP1_of_transcendental
+    [IsIntegral X] [IsProper f] [SmoothOfRelativeDimension 1 f]
+    [LocallyOfFiniteType (P1.structureMap k)] [IsSeparated (P1.structureMap k)]
+    [Scheme.IsSeparated (P1 k)]
+    (f₀ : X.functionField)
+    (hf₀ : ∀ P : Polynomial k, P ≠ 0 →
+      Polynomial.eval₂ (f.structureStalk (genericPoint X)).hom f₀ P ≠ 0)
+    (hclosedP1 : ∀ y : P1 k, y ≠ genericPoint (P1 k) →
+      IsClosed ({y} : Set (P1 k)))
+    (zP1 : P1 k) (hzP1 : zP1 ≠ genericPoint (P1 k)) :
+    ∃ π : X ⟶ P1 k, IsFinite π ∧ IsDominant π ∧
+      π ≫ P1.structureMap k = f := by
+  obtain ⟨π, hqf, hdom, hcomp⟩ :=
+    exists_locallyQuasiFinite_isDominant_toP1_of_transcendental f f₀ hf₀
+      hclosedP1 zP1 hzP1
+  letI : LocallyQuasiFinite π := hqf
+  exact ⟨π, isFinite_toP1_of_locallyQuasiFinite f π hcomp, hdom, hcomp⟩
+
 end Main
 
 end AlgebraicGeometry
