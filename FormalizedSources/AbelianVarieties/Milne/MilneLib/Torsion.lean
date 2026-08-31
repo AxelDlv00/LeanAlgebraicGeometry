@@ -95,6 +95,18 @@ theorem multiplicationBy_comp (m n : ℕ) :
       simpa [q] using (congrArg (fun r : Grp.mk A ⟶ Grp.mk A => r.hom.hom)
         (pow_mul (𝟙 (Grp.mk A) : Grp.mk A ⟶ Grp.mk A) m n)).symm
 
+/-- Every homomorphism of commutative group schemes commutes with
+    multiplication-by-`n`. -/
+theorem multiplicationBy_naturality
+    {B : Over (Spec (.of K))} [GrpObj B] [IsCommMonObj B]
+    (f : A ⟶ B) [IsMonHom f] (n : ℕ) :
+    f ≫ multiplicationBy B n = multiplicationBy A n ≫ f := by
+  rw [comp_multiplicationBy]
+  change f ^ n =
+    (((𝟙 (Grp.mk A) : Grp.mk A ⟶ Grp.mk A) ^ n).hom.hom) ≫ f
+  have h := MonObj.pow_comp (𝟙 A : A ⟶ A) n f
+  simpa [multiplicationBy] using h.symm
+
 /-- The `n`-torsion group scheme, as the kernel fibre of multiplication-by-`n`.
 -/
 noncomputable def nTorsion (A : Over (Spec (.of K)))
