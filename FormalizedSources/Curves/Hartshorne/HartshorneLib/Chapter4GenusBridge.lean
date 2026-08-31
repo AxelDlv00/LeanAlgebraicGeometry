@@ -26,14 +26,20 @@ namespace Hartshorne
 
 noncomputable section
 
-variable {k : Type u} [Field k] [IsAlgClosed k]
-variable {X : Over (Spec (CommRingCat.of k))} [IsIntegral X.left]
-  [SmoothOfRelativeDimension 1 X.hom] [IsProper X.hom]
+variable {k : Type u} [Field k] [algClosed : IsAlgClosed k]
+variable {X : Over (Spec (CommRingCat.of k))} [integral : IsIntegral X.left]
+  [smooth : SmoothOfRelativeDimension 1 X.hom] [proper : IsProper X.hom]
 
 attribute [local instance] Scheme.overModule
 
 /-- The (cohomological) genus of a smooth proper integral curve. -/
+-- Keep the geometric hypotheses in the public signature: the cohomology term
+-- itself does not mention those typeclass instances syntactically.
 noncomputable def curveGenus : ℕ :=
+  let _ := algClosed
+  let _ := integral
+  let _ := smooth
+  let _ := proper
   CategoryTheory.Sheaf.h1 (X.left.moduleKSheaf k)
 
 /- The degree-one structure-sheaf cohomology carrying the genus is finite. -/
@@ -56,7 +62,6 @@ theorem riemannRoch_of_curveSerreDuality_genus
     (riemannRoch_of_curveSerreDuality (k := k) (X := X) sd D)
 
 /- Genus zero forces the degree-one structure-sheaf cohomology to be subsingleton. -/
-omit [IsAlgClosed k] in
 theorem subsingleton_h1_of_curveGenus_eq_zero
     (hgen : curveGenus (k := k) (X := X) = 0) :
     Subsingleton
