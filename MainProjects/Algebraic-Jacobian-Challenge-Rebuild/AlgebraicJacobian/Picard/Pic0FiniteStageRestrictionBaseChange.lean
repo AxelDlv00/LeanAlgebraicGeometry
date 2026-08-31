@@ -149,6 +149,37 @@ theorem glueData_f_pinned
   rw [glueData_f C P U V]
   rfl
 
+set_option synthInstance.maxHeartbeats 400000 in
+-- The explicit map fixes the overlap's dependent tensor witnesses.
+set_option maxHeartbeats 12800000 in
+/-- The pinned structure map from a finite-stage overlap to its field of definition. -/
+noncomputable def overlapBaseChangeMap
+    {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
+    (P : Pic0FiniteStageGluePackage C F)
+    (U V : Pic0FiniteStageChartIndex C) :
+    Spec (CommRingCat.of
+      (Pic0FiniteStageOverlapBaseChangeRing
+        C P.L P.n P.m P.relation P.M P.N U V)) ⟶ Spec (.of P.N.1) :=
+  letI : CommRing
+      (Pic0FiniteStageOverlapBaseChangeRing
+        C P.L P.n P.m P.relation P.M P.N U V) :=
+    pic0FiniteStageOverlapBaseChangeRingCommRing
+      C P.L P.n P.m P.relation P.M P.N U V
+  letI : Algebra P.N.1
+      (Pic0FiniteStageOverlapBaseChangeRing
+        C P.L P.n P.m P.relation P.M P.N U V) :=
+    pic0FiniteStageOverlapBaseChangeRingAlgebra
+      C P.L P.n P.m P.relation P.M P.N U V
+  Spec.map (CommRingCat.ofHom
+    (@algebraMap P.N.1
+      (Pic0FiniteStageOverlapBaseChangeRing
+        C P.L P.n P.m P.relation P.M P.N U V)
+      (inferInstance : CommSemiring P.N.1)
+      (pic0FiniteStageOverlapBaseChangeRingCommRing
+        C P.L P.n P.m P.relation P.M P.N U V).toSemiring
+      (pic0FiniteStageOverlapBaseChangeRingAlgebra
+        C P.L P.n P.m P.relation P.M P.N U V)))
+
 /-- The exact left restriction with indexed source and target rings.  Keeping
 the indexed rings avoids relying on typeclass transparency for their aliases. -/
 noncomputable def exactRestrictionAlgHom
@@ -214,36 +245,50 @@ noncomputable def restrictionBaseChangeMap
     {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
     (P : Pic0FiniteStageGluePackage C F)
     (U V : Pic0FiniteStageChartIndex C) :
-    pullback
-        (Spec.map (CommRingCat.ofHom
-          (algebraMap P.N.1
-            (Pic0FiniteStageOverlapBaseChangeRing
-              C P.L P.n P.m P.relation P.M P.N U V))))
+    pullback (overlapBaseChangeMap C P U V)
         (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k))) ⟶
-      pullback
-        (Spec.map (CommRingCat.ofHom
-          (algebraMap P.N.1
-            (Pic0FiniteStageChartBaseChangeRing
-              C P.L P.n P.m P.relation P.M P.N U))))
+      pullback (chartBaseChangeMap C P U)
         (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k))) :=
   letI : CommRing
       (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U) :=
-    pic0FiniteStageChartBaseChangeCommRing C P.L P.n P.m P.relation P.M P.N U
+    pic0FiniteStageChartBaseChangeRingCommRing
+      C P.L P.n P.m P.relation P.M P.N U
+  letI : CommSemiring
+      (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U) :=
+    (inferInstance : CommRing
+      (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U)).toCommSemiring
+  letI : Semiring
+      (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U) :=
+    (inferInstance : CommSemiring
+      (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U)).toSemiring
   letI : Algebra P.N.1
       (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U) :=
-    pic0FiniteStageChartBaseChangeAlgebra C P.L P.n P.m P.relation P.M P.N U
+    pic0FiniteStageChartBaseChangeRingAlgebra
+      C P.L P.n P.m P.relation P.M P.N U
   letI : CommRing
       (Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M P.N U V) :=
-    pic0FiniteStageOverlapBaseChangeCommRing C P.L P.n P.m P.relation P.M P.N U V
+    pic0FiniteStageOverlapBaseChangeRingCommRing
+      C P.L P.n P.m P.relation P.M P.N U V
+  letI : CommSemiring
+      (Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M P.N U V) :=
+    (inferInstance : CommRing
+      (Pic0FiniteStageOverlapBaseChangeRing
+        C P.L P.n P.m P.relation P.M P.N U V)).toCommSemiring
+  letI : Semiring
+      (Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M P.N U V) :=
+    (inferInstance : CommSemiring
+      (Pic0FiniteStageOverlapBaseChangeRing
+        C P.L P.n P.m P.relation P.M P.N U V)).toSemiring
   letI : Algebra P.N.1
       (Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M P.N U V) :=
-    pic0FiniteStageOverlapBaseChangeAlgebra C P.L P.n P.m P.relation P.M P.N U V
+    pic0FiniteStageOverlapBaseChangeRingAlgebra
+      C P.L P.n P.m P.relation P.M P.N U V
   affineBaseChangeMap P.N.1 k
     (Pic0FiniteStageChartBaseChangeRing
       C P.L P.n P.m P.relation P.M P.N U)
     (Pic0FiniteStageOverlapBaseChangeRing
       C P.L P.n P.m P.relation P.M P.N U V)
-    (restrictionBaseChangeAlgHom C P U V)
+    (restrictionBaseChangeAlgHomPinned C P U V)
 
 set_option synthInstance.maxHeartbeats 3200000 in
 -- Projecting the pinned map still exposes the package's dependent tensor carriers.
@@ -258,26 +303,48 @@ theorem restrictionBaseChangeMap_fst
     (U V : Pic0FiniteStageChartIndex C) :
     restrictionBaseChangeMap C P U V ≫ pullback.fst _ _ =
       pullback.fst _ _ ≫ Spec.map (CommRingCat.ofHom
-        (restrictionBaseChangeAlgHom C P U V).toRingHom) := by
+        (restrictionBaseChangeRingHom C P U V)) := by
   letI : CommRing
       (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U) :=
-    pic0FiniteStageChartBaseChangeCommRing C P.L P.n P.m P.relation P.M P.N U
+    pic0FiniteStageChartBaseChangeRingCommRing
+      C P.L P.n P.m P.relation P.M P.N U
+  letI : CommSemiring
+      (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U) :=
+    (inferInstance : CommRing
+      (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U)).toCommSemiring
+  letI : Semiring
+      (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U) :=
+    (inferInstance : CommSemiring
+      (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U)).toSemiring
   letI : Algebra P.N.1
       (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U) :=
-    pic0FiniteStageChartBaseChangeAlgebra C P.L P.n P.m P.relation P.M P.N U
+    pic0FiniteStageChartBaseChangeRingAlgebra
+      C P.L P.n P.m P.relation P.M P.N U
   letI : CommRing
       (Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M P.N U V) :=
-    pic0FiniteStageOverlapBaseChangeCommRing C P.L P.n P.m P.relation P.M P.N U V
+    pic0FiniteStageOverlapBaseChangeRingCommRing
+      C P.L P.n P.m P.relation P.M P.N U V
+  letI : CommSemiring
+      (Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M P.N U V) :=
+    (inferInstance : CommRing
+      (Pic0FiniteStageOverlapBaseChangeRing
+        C P.L P.n P.m P.relation P.M P.N U V)).toCommSemiring
+  letI : Semiring
+      (Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M P.N U V) :=
+    (inferInstance : CommSemiring
+      (Pic0FiniteStageOverlapBaseChangeRing
+        C P.L P.n P.m P.relation P.M P.N U V)).toSemiring
   letI : Algebra P.N.1
       (Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M P.N U V) :=
-    pic0FiniteStageOverlapBaseChangeAlgebra C P.L P.n P.m P.relation P.M P.N U V
+    pic0FiniteStageOverlapBaseChangeRingAlgebra
+      C P.L P.n P.m P.relation P.M P.N U V
   unfold restrictionBaseChangeMap
   exact affineBaseChangeMap_fst P.N.1 k
     (Pic0FiniteStageChartBaseChangeRing
       C P.L P.n P.m P.relation P.M P.N U)
     (Pic0FiniteStageOverlapBaseChangeRing
       C P.L P.n P.m P.relation P.M P.N U V)
-    (restrictionBaseChangeAlgHom C P U V)
+    (restrictionBaseChangeAlgHomPinned C P U V)
 
 set_option synthInstance.maxHeartbeats 3200000 in
 -- Projecting the pinned map still exposes the package's dependent tensor carriers.
@@ -291,23 +358,45 @@ theorem restrictionBaseChangeMap_snd
       pullback.snd _ _ := by
   letI : CommRing
       (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U) :=
-    pic0FiniteStageChartBaseChangeCommRing C P.L P.n P.m P.relation P.M P.N U
+    pic0FiniteStageChartBaseChangeRingCommRing
+      C P.L P.n P.m P.relation P.M P.N U
+  letI : CommSemiring
+      (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U) :=
+    (inferInstance : CommRing
+      (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U)).toCommSemiring
+  letI : Semiring
+      (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U) :=
+    (inferInstance : CommSemiring
+      (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U)).toSemiring
   letI : Algebra P.N.1
       (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U) :=
-    pic0FiniteStageChartBaseChangeAlgebra C P.L P.n P.m P.relation P.M P.N U
+    pic0FiniteStageChartBaseChangeRingAlgebra
+      C P.L P.n P.m P.relation P.M P.N U
   letI : CommRing
       (Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M P.N U V) :=
-    pic0FiniteStageOverlapBaseChangeCommRing C P.L P.n P.m P.relation P.M P.N U V
+    pic0FiniteStageOverlapBaseChangeRingCommRing
+      C P.L P.n P.m P.relation P.M P.N U V
+  letI : CommSemiring
+      (Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M P.N U V) :=
+    (inferInstance : CommRing
+      (Pic0FiniteStageOverlapBaseChangeRing
+        C P.L P.n P.m P.relation P.M P.N U V)).toCommSemiring
+  letI : Semiring
+      (Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M P.N U V) :=
+    (inferInstance : CommSemiring
+      (Pic0FiniteStageOverlapBaseChangeRing
+        C P.L P.n P.m P.relation P.M P.N U V)).toSemiring
   letI : Algebra P.N.1
       (Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M P.N U V) :=
-    pic0FiniteStageOverlapBaseChangeAlgebra C P.L P.n P.m P.relation P.M P.N U V
+    pic0FiniteStageOverlapBaseChangeRingAlgebra
+      C P.L P.n P.m P.relation P.M P.N U V
   unfold restrictionBaseChangeMap
   exact affineBaseChangeMap_snd P.N.1 k
     (Pic0FiniteStageChartBaseChangeRing
       C P.L P.n P.m P.relation P.M P.N U)
     (Pic0FiniteStageOverlapBaseChangeRing
       C P.L P.n P.m P.relation P.M P.N U V)
-    (restrictionBaseChangeAlgHom C P U V)
+    (restrictionBaseChangeAlgHomPinned C P U V)
 
 set_option synthInstance.maxHeartbeats 3200000 in
 -- The chart comparison cancels the package's nested scalar extensions.
@@ -318,18 +407,14 @@ noncomputable def chartRingBaseChangeIso
     {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
     (P : Pic0FiniteStageGluePackage C F)
     (U : Pic0FiniteStageChartIndex C) :
-    pullback
-        (Spec.map (CommRingCat.ofHom
-          (algebraMap P.N.1
-            (Pic0FiniteStageChartBaseChangeRing
-              C P.L P.n P.m P.relation P.M P.N U))))
+    pullback (chartBaseChangeMap C P U)
         (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k))) ≅
       Spec (.of (Pic0FiniteStageRing C (Sum.inl U))) :=
   by
     letI : CommRing
         (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U) :=
-      pic0FiniteStageFinalModelRingCommRing C P.L P.n P.m P.relation P.M P.N
-        (Sum.inl U)
+      pic0FiniteStageChartBaseChangeRingCommRing
+        C P.L P.n P.m P.relation P.M P.N U
     letI : CommSemiring
         (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U) :=
       (inferInstance : CommRing
@@ -340,8 +425,8 @@ noncomputable def chartRingBaseChangeIso
         (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U)).toSemiring
     letI : Algebra P.N.1
         (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U) :=
-      pic0FiniteStageFinalModelRingAlgebra C P.L P.n P.m P.relation P.M P.N
-        (Sum.inl U)
+      pic0FiniteStageChartBaseChangeRingAlgebra
+        C P.L P.n P.m P.relation P.M P.N U
     letI : CommRing
         (k ⊗[P.N.1]
           Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U) :=
@@ -384,18 +469,14 @@ noncomputable def overlapRingBaseChangeIso
     {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
     (P : Pic0FiniteStageGluePackage C F)
     (U V : Pic0FiniteStageChartIndex C) :
-    pullback
-        (Spec.map (CommRingCat.ofHom
-          (algebraMap P.N.1
-            (Pic0FiniteStageOverlapBaseChangeRing
-              C P.L P.n P.m P.relation P.M P.N U V))))
+    pullback (overlapBaseChangeMap C P U V)
         (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k))) ≅
       Spec (.of (Pic0FiniteStageRing C (Sum.inr (U, V)))) :=
   by
     letI : CommRing
         (Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M P.N U V) :=
-      pic0FiniteStageFinalModelRingCommRing C P.L P.n P.m P.relation P.M P.N
-        (Sum.inr (U, V))
+      pic0FiniteStageOverlapBaseChangeRingCommRing
+        C P.L P.n P.m P.relation P.M P.N U V
     letI : CommSemiring
         (Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M P.N U V) :=
       (inferInstance : CommRing
@@ -406,8 +487,8 @@ noncomputable def overlapRingBaseChangeIso
         (Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M P.N U V)).toSemiring
     letI : Algebra P.N.1
         (Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M P.N U V) :=
-      pic0FiniteStageFinalModelRingAlgebra C P.L P.n P.m P.relation P.M P.N
-        (Sum.inr (U, V))
+      pic0FiniteStageOverlapBaseChangeRingAlgebra
+        C P.L P.n P.m P.relation P.M P.N U V
     letI : CommRing
         (k ⊗[P.N.1]
           Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M P.N U V) :=
