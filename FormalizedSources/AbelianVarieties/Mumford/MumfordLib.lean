@@ -19,6 +19,7 @@ import MumfordLib.DivisionFiber
 import MumfordLib.RigidityCorollaries
 import MumfordLib.QuotientTopology
 import MumfordLib.UniformizedTopology
+import MumfordLib.TranslationTopology
 import MumfordLib.Theta
 import MumfordLib.ThetaNondegenerate
 import MumfordLib.ThetaIsotropic
