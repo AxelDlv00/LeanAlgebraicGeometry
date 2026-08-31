@@ -253,18 +253,8 @@ theorem isMonHom_of_pointed_of_isAbelianVariety_arbitraryField
   let B' := F.obj B
   letI : GrpObj A' := Functor.grpObjObj
   letI : GrpObj B' := Functor.grpObjObj
-  have hA' : MilneLib.IsAbelianVariety A' := by
-    constructor
-    · change IsProper (Limits.pullback.snd A.hom f)
-      infer_instance
-    · change GeometricallyIntegral (Limits.pullback.snd A.hom f)
-      infer_instance
-  have hB' : MilneLib.IsAbelianVariety B' := by
-    constructor
-    · change IsProper (Limits.pullback.snd B.hom f)
-      infer_instance
-    · change GeometricallyIntegral (Limits.pullback.snd B.hom f)
-      infer_instance
+  have hA' : MilneLib.IsAbelianVariety A' := hA.baseChange f
+  have hB' : MilneLib.IsAbelianVariety B' := hB.baseChange f
   have hup : IsMonHom (F.map α) := by
     have hpt : η[A'] ≫ F.map α = η[B'] := by
       simp [← Functor.map_comp, hα]

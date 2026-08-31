@@ -912,6 +912,24 @@ variable {K : Type u} [Field K]
 def IsAbelianVariety (G : Over (Spec (.of K))) [GrpObj G] : Prop :=
   IsProper G.hom ∧ GeometricallyIntegral G.hom
 
+/-- An abelian variety remains an abelian variety after base change along a
+morphism of field spectra.  The group structure on the pullback is the one
+transported by the pullback functor. -/
+theorem IsAbelianVariety.baseChange
+    {L : Type u} [Field L]
+    {G : Over (Spec (.of K))} [GrpObj G]
+    (hG : IsAbelianVariety G)
+    (f : Spec (.of L) ⟶ Spec (.of K)) :
+    letI : GrpObj ((Over.pullback f).obj G) := Functor.grpObjObj
+    IsAbelianVariety ((Over.pullback f).obj G) := by
+  letI : IsProper G.hom := hG.1
+  letI : GeometricallyIntegral G.hom := hG.2
+  constructor
+  · change IsProper (pullback.snd G.hom f)
+    infer_instance
+  · change GeometricallyIntegral (pullback.snd G.hom f)
+    infer_instance
+
 /- A morphism between abelian varieties is proper: its underlying map is
    proper after cancelling the separated target structure morphism. -/
 theorem isProper_left_of_isAbelianVariety
