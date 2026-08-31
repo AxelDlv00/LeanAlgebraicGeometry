@@ -90,7 +90,7 @@ theorem restrictionBaseChangeMap_naturality
       Pic0FiniteStageOverlapModelRing C P.L P.n P.m P.relation P.M U V)
     (Pic0FiniteStageRing C (Sum.inl U))
     (Pic0FiniteStageRing C (Sum.inr (U, V)))
-    (restrictionBaseChangeAlgHom C P U V)
+    (restrictionBaseChangeAlgHomPinned C P U V)
     (chartFinalBaseChangeEquiv C P U)
     (overlapFinalBaseChangeEquiv C P U V)
     (exactRestrictionAlgHom C U V)
