@@ -5,6 +5,7 @@ Authors: The Hartshorne Contributors
 -/
 
 import HartshorneLib.Chapter4DegreeClass
+import HartshorneLib.Chapter4ProductFormulaCohomology
 import HartshorneLib.Chapter4WeightedDegree
 
 /-!
@@ -38,5 +39,29 @@ theorem principalDivisorsHaveDegreeZero_of_residueWeightedProductFormula
   intro g
   rw [← CurveDivisor.residueWeightedDegree_eq_degree]
   exact hformula g
+
+/-- The cohomological product-formula argument also gives the standard
+residue-weighted formulation. -/
+theorem residueWeightedProductFormula_of_finiteDivisorCohomology
+    (hfin : HasFiniteDivisorCohomology (k := k) (X := X)) :
+    ∀ g : X.left.functionFieldˣ,
+      CurveDivisor.residueWeightedDegree (principalDivisor g) = 0 := by
+  intro g
+  rw [CurveDivisor.residueWeightedDegree_eq_degree]
+  exact principalDivisorsHaveDegreeZero_of_finiteDivisorCohomology hfin g
+
+/-- Properness supplies the degree-zero finiteness needed by the cohomological
+argument, so finite first cohomology alone yields the residue-weighted product
+formula. -/
+theorem residueWeightedProductFormula_of_moduleKSheaf_oneFinite
+    (h1 : Module.Finite k
+      (CategoryTheory.Sheaf.HModule
+        (Opens.grothendieckTopology (X.left : TopCat)) k
+        (X.left.moduleKSheaf k) 1)) :
+    ∀ g : X.left.functionFieldˣ,
+      CurveDivisor.residueWeightedDegree (principalDivisor g) = 0 := by
+  intro g
+  rw [CurveDivisor.residueWeightedDegree_eq_degree]
+  exact principalDivisorsHaveDegreeZero_of_moduleKSheaf_oneFinite h1 g
 
 end Hartshorne
