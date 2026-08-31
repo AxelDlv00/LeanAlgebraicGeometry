@@ -7,9 +7,11 @@ Authors: The Milne Contributors
 import Mathlib.AlgebraicGeometry.Morphisms.Finite
 import Mathlib.AlgebraicGeometry.Morphisms.SchemeTheoreticallyDominant
 import Mathlib.AlgebraicGeometry.AffineSpace
+import Mathlib.Algebra.Module.SpanRankOperations
 import Mathlib.Order.CompletePartialOrder
 import Mathlib.RingTheory.KrullDimension.Basic
 import Mathlib.RingTheory.Ideal.GoingUp
+import Mathlib.RingTheory.Ideal.KrullsHeightTheorem
 import Mathlib.RingTheory.Spectrum.Prime.Topology
 
 /-!
@@ -174,6 +176,38 @@ theorem topologicalKrullDim_eq_of_le_of_exists_ge
     topologicalKrullDim X = d :=
   le_antisymm (topologicalKrullDim_le_of_forall_ringKrullDim_stalk_le X d hle)
     (hz₀.trans (ringKrullDim_stalk_le_topologicalKrullDim X z₀))
+
+/-- The Krull dimension of a Noetherian local ring is bounded by the dimension
+of its cotangent space over the residue field. -/
+theorem ringKrullDim_le_finrank_cotangentSpace
+    (R : Type u) [CommRing R] [IsLocalRing R] [IsNoetherianRing R] :
+    ringKrullDim R ≤
+      ((Module.finrank (IsLocalRing.ResidueField R)
+        (IsLocalRing.CotangentSpace R) : ℕ) : WithBot ℕ∞) := by
+  rw [← IsLocalRing.spanFinrank_maximalIdeal_eq_finrank_cotangentSpace R]
+  exact ringKrullDim_le_spanFinrank_maximalIdeal R
+
+/-- At a point of a locally Noetherian scheme, the stalk dimension is bounded
+by the dimension of its cotangent space. -/
+theorem ringKrullDim_stalk_le_finrank_cotangentSpace
+    (X : Scheme.{u}) [IsLocallyNoetherian X] (z : X) :
+    ringKrullDim (X.presheaf.stalk z) ≤
+      ((Module.finrank (IsLocalRing.ResidueField (X.presheaf.stalk z))
+        (IsLocalRing.CotangentSpace (X.presheaf.stalk z)) : ℕ) :
+          WithBot ℕ∞) :=
+  ringKrullDim_le_finrank_cotangentSpace _
+
+/-- A uniform upper bound on cotangent-space dimensions bounds the dimension
+of a locally Noetherian scheme. -/
+theorem topologicalKrullDim_le_of_forall_finrank_cotangentSpace_le
+    (X : Scheme.{u}) [IsLocallyNoetherian X] (d : ℕ)
+    (h : ∀ z : X,
+      Module.finrank (IsLocalRing.ResidueField (X.presheaf.stalk z))
+        (IsLocalRing.CotangentSpace (X.presheaf.stalk z)) ≤ d) :
+    topologicalKrullDim X ≤ (d : WithBot ℕ∞) :=
+  topologicalKrullDim_le_of_forall_ringKrullDim_stalk_le X _ fun z =>
+    le_trans (ringKrullDim_stalk_le_finrank_cotangentSpace X z)
+      (by exact_mod_cast Nat.cast_le.mpr (h z))
 
 /-- An injective integral extension preserves Krull dimension. -/
 theorem ringKrullDim_eq_of_isIntegral_of_injective
