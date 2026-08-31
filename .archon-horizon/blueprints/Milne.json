@@ -852,7 +852,7 @@
     },
     "states": {
       "blocked": 124,
-      "closed": 215,
+      "closed": 217,
       "formalized_open": 0,
       "informal": 255,
       "ready": 138
@@ -896,6 +896,8 @@
       "MilneLib.IsFinite.of_isProper_of_faithfullyFlat_baseChange: Lean declaration is not referenced by any blueprint \\lean{...}",
       "MilneLib.IsFinite.of_isProper_of_finite_preimage_singleton: Lean declaration is not referenced by any blueprint \\lean{...}",
       "MilneLib.Isogeny.comp_of_finite: Lean declaration is not referenced by any blueprint \\lean{...}",
+      "MilneLib.Isogeny.comp_of_finite_residue_fibres: Lean declaration is not referenced by any blueprint \\lean{...}",
+      "MilneLib.Isogeny.comp_of_isAbelianVariety: Lean declaration is not referenced by any blueprint \\lean{...}",
       "MilneLib.Isogeny.comp_of_isIso_left: Lean declaration is not referenced by any blueprint \\lean{...}",
       "MilneLib.Isogeny.comp_of_isIso_right: Lean declaration is not referenced by any blueprint \\lean{...}",
       "MilneLib.Isogeny.exists_isFinite_morphismRestrict_of_closed_target: Lean declaration is not referenced by any blueprint \\lean{...}",
@@ -905,9 +907,7 @@
       "MilneLib.Isogeny.id: Lean declaration is not referenced by any blueprint \\lean{...}",
       "MilneLib.Isogeny.iff_isFinite_and_surjective_of_isAbelianVariety: Lean declaration is not referenced by any blueprint \\lean{...}",
       "MilneLib.Isogeny.iff_isFinite_and_surjective_of_isAbelianVariety_of_finite_residue_fibres: Lean declaration is not referenced by any blueprint \\lean{...}",
-      "MilneLib.Isogeny.iff_isFinite_and_surjective_of_isAbelianVariety_of_finite_set_fibres: Lean declaration is not referenced by any blueprint \\lean{...}",
-      "MilneLib.Isogeny.iff_surjective_of_finite: Lean declaration is not referenced by any blueprint \\lean{...}",
-      "MilneLib.Isogeny.isFinite_fiberToSpecResidueField: Lean declaration is not referenced by any blueprint \\lean{...}"
+      "MilneLib.Isogeny.iff_isFinite_and_surjective_of_isAbelianVariety_of_finite_set_fibres: Lean declaration is not referenced by any blueprint \\lean{...}"
     ]
   },
   "nodes": [
@@ -3958,7 +3958,7 @@
     },
     {
       "chapter": "Geometry of Abelian Varieties",
-      "comment_count": 5,
+      "comment_count": 7,
       "dep_count": 2,
       "descendant_count": 1,
       "group": "c103",
