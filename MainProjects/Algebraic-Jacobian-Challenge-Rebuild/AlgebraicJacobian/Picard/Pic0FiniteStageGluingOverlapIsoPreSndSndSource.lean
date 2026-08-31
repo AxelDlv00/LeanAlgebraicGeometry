@@ -25,6 +25,7 @@ variable [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
 namespace Pic0FiniteStageGluePackage
 
 set_option synthInstance.maxHeartbeats 3200000 in
+-- The source projection retains the glued chart pullback instance tower.
 set_option maxHeartbeats 12800000 in
 set_option backward.isDefEq.respectTransparency false in
 theorem gluingOverlapIso_pre_snd_snd_source
@@ -36,20 +37,12 @@ theorem gluingOverlapIso_pre_snd_snd_source
       (Scheme.Pullback.gluing P.glueData.openCover P.gluedMap
         (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k)))).f V U ≫
       (pullback.congrHom (glueData_ι_gluedMap C P V) rfl).hom ≫
-      pullback.snd
-        (Spec.map (CommRingCat.ofHom
-          (algebraMap P.N.1
-            (Pic0FiniteStageChartBaseChangeRing
-              C P.L P.n P.m P.relation P.M P.N V))))
+      pullback.snd (chartBaseChangeMap C P V)
         (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k))) =
     gluingOverlapIso_pre_snd_snd_common C P U V := by
   have hι_snd :
       (pullback.congrHom (glueData_ι_gluedMap C P V) rfl).hom ≫
-          pullback.snd
-            (Spec.map (CommRingCat.ofHom
-              (algebraMap P.N.1
-                (Pic0FiniteStageChartBaseChangeRing
-                  C P.L P.n P.m P.relation P.M P.N V))))
+          pullback.snd (chartBaseChangeMap C P V)
             (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k))) =
         pullback.snd (P.glueData.ι V ≫ P.gluedMap)
           (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k))) :=

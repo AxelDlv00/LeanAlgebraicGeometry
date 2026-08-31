@@ -25,6 +25,7 @@ variable [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
 namespace Pic0FiniteStageGluePackage
 
 set_option synthInstance.maxHeartbeats 3200000 in
+-- The target projection retains both pinned pullback instance towers.
 set_option maxHeartbeats 12800000 in
 set_option backward.isDefEq.respectTransparency false in
 theorem gluingOverlapIso_pre_snd_snd_target
@@ -35,36 +36,20 @@ theorem gluingOverlapIso_pre_snd_snd_target
       (pullback.congrHom
         (glueData_f_comp_inclusion_comp_gluedMap C P U V) rfl).hom ≫
       rightRestrictionBaseChangeMap C P U V ≫
-      pullback.snd
-        (Spec.map (CommRingCat.ofHom
-          (algebraMap P.N.1
-            (Pic0FiniteStageChartBaseChangeRing
-              C P.L P.n P.m P.relation P.M P.N V))))
+      pullback.snd (chartBaseChangeMap C P V)
         (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k))) =
     gluingOverlapIso_pre_snd_snd_common C P U V := by
   have hsnd :
       rightRestrictionBaseChangeMap C P U V ≫
-          pullback.snd
-            (Spec.map (CommRingCat.ofHom
-              (algebraMap P.N.1
-                (Pic0FiniteStageChartBaseChangeRing
-                  C P.L P.n P.m P.relation P.M P.N V))))
+          pullback.snd (chartBaseChangeMap C P V)
             (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k))) =
-        pullback.snd
-          (Spec.map (CommRingCat.ofHom
-            (algebraMap P.N.1
-              (Pic0FiniteStageOverlapBaseChangeRing
-                C P.L P.n P.m P.relation P.M P.N U V))))
+        pullback.snd (overlapBaseChangeMap C P U V)
           (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k))) :=
     rightRestrictionBaseChangeMap_snd (C := C) (P := P) (U := U) (V := V)
   have hcongr_snd :
       (pullback.congrHom
           (glueData_f_comp_inclusion_comp_gluedMap C P U V) rfl).hom ≫
-        pullback.snd
-          (Spec.map (CommRingCat.ofHom
-            (algebraMap P.N.1
-              (Pic0FiniteStageOverlapBaseChangeRing
-                C P.L P.n P.m P.relation P.M P.N U V))))
+        pullback.snd (overlapBaseChangeMap C P U V)
           (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k))) =
       pullback.snd
         (P.glueData.f U V ≫ P.glueData.ι U ≫ P.gluedMap)
@@ -75,11 +60,7 @@ theorem gluingOverlapIso_pre_snd_snd_target
     _ = (gluingOverlapFlatteningIso C P U V).hom ≫
         (pullback.congrHom
           (glueData_f_comp_inclusion_comp_gluedMap C P U V) rfl).hom ≫
-        pullback.snd
-          (Spec.map (CommRingCat.ofHom
-            (algebraMap P.N.1
-              (Pic0FiniteStageOverlapBaseChangeRing
-                C P.L P.n P.m P.relation P.M P.N U V))))
+        pullback.snd (overlapBaseChangeMap C P U V)
           (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k))) :=
       congrArg (fun q => (gluingOverlapFlatteningIso C P U V).hom ≫
         (pullback.congrHom
