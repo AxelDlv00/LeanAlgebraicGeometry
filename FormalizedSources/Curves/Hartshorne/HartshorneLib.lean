@@ -84,6 +84,7 @@ import HartshorneLib.Chapter4SmoothProperConsequences
 import HartshorneLib.Chapter4RiemannRochEuler
 import HartshorneLib.Chapter4LinearEquivalenceAPI
 import HartshorneLib.Chapter4SerreDuality
+import HartshorneLib.Chapter4CanonicalDegree
 
 /-!
 # HartshorneLib
