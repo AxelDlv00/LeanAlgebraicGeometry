@@ -155,6 +155,16 @@ theorem quotient_mk_isAddQuotientCoveringMap
   exact AddSubgroup.isAddQuotientCoveringMap_of_comm
     d.periodLattice.toAddSubgroup d.periodLattice_isDiscrete
 
+/-- The quotient projection is a covering map after forgetting its deck-group
+    structure. -/
+theorem quotient_mk_isCoveringMap
+    {X : Type*} [AddCommGroup X] [TopologicalSpace X] {g : ℕ}
+    (d : ComplexLatticeExponentialData X g) :
+    IsCoveringMap
+      (QuotientAddGroup.mk : GenusComplexVector g →
+        GenusComplexVector g ⧸ d.periodLattice.toAddSubgroup) :=
+  d.quotient_mk_isAddQuotientCoveringMap.isCoveringMap
+
 theorem quotientAddEquiv_mk_eq_iff
     {X : Type*} [AddCommGroup X] [TopologicalSpace X] {g : ℕ}
     (d : ComplexLatticeExponentialData X g)
@@ -222,6 +232,31 @@ theorem isOpenQuotientMap
   letI : CompactSpace X := d.targetCompactSpace
   exact isOpenQuotientMap_of_continuous_surjective_of_locallyCompact
     d.exponential d.surjective d.continuous
+
+/-- A continuous exponential with discrete kernel is a quotient covering map
+    once its target is a Hausdorff topological additive group. -/
+theorem exponential_isAddQuotientCoveringMap
+    {X : Type*} [AddCommGroup X] [TopologicalSpace X]
+    [IsTopologicalAddGroup X] [T2Space X] {g : ℕ}
+    (d : ComplexLatticeExponentialData X g) :
+    IsAddQuotientCoveringMap d.exponential d.periodLattice.toAddSubgroup := by
+  have hdisc : IsDiscrete
+      (d.exponential.ker : Set (GenusComplexVector g)) := by
+    rw [d.kernel]
+    exact d.periodLattice_isDiscrete
+  have h := d.isOpenQuotientMap.isQuotientMap
+    |>.isAddQuotientCoveringMap_of_isDiscrete_ker_addMonoidHom hdisc
+  rw [d.kernel] at h
+  exact h
+
+/-- The exponential itself is a topological covering map under the same
+    Hausdorff topological-group hypotheses. -/
+theorem exponential_isCoveringMap
+    {X : Type*} [AddCommGroup X] [TopologicalSpace X]
+    [IsTopologicalAddGroup X] [T2Space X] {g : ℕ}
+    (d : ComplexLatticeExponentialData X g) :
+    IsCoveringMap d.exponential :=
+  d.exponential_isAddQuotientCoveringMap.isCoveringMap
 
 /-- The arbitrary period quotient is homeomorphic to the target. -/
 noncomputable def quotientHomeomorph
