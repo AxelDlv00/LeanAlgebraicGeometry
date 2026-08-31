@@ -1,0 +1,1 @@
+{"markdown": "Finalization check passed for Hartshorne: no scoped durable changes remain after commit `0cb8618205`, and `fs-hartshorne` remains `running`.\n\nThe remaining dirty ledger paths belong to concurrent AJC/Stacks work and shared control-plane files, including `.gitignore`; I did not stage, revert, or otherwise modify them.\n", "recommendation": ""}

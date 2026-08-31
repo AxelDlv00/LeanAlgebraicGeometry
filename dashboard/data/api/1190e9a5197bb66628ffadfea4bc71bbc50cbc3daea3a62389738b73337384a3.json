@@ -1,0 +1,1 @@
+{"markdown": "Finalization check complete. The ledger has no uncommitted Hartshorne or Hartshorne graph/task paths; the latest scoped commits are `5c3fd6d92b`, `6d7a1f49b8`, and `413abe4bc1`. The remaining dirty paths are concurrent Stacks, AJCR, blueprint, and root metadata changes outside this project, so I left them untouched.\n", "recommendation": ""}
