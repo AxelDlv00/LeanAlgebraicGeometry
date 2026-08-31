@@ -14,6 +14,7 @@ import Mathlib.RingTheory.Ideal.GoingUp
 import Mathlib.RingTheory.Ideal.KrullsHeightTheorem
 import Mathlib.RingTheory.RegularLocalRing.Defs
 import Mathlib.RingTheory.Spectrum.Prime.Topology
+import MilneLib.GroupScheme
 
 /-!
 # Dimension infrastructure
@@ -240,6 +241,96 @@ theorem topologicalKrullDim_eq_of_forall_finrank_cotangentSpace_le_of_regular
   le_antisymm
     (topologicalKrullDim_le_of_forall_finrank_cotangentSpace_le X d h)
     (le_topologicalKrullDim_of_finrank_cotangentSpace X d z₀ hreg hz₀)
+
+/-! ### Isomorphism invariance of local dimension data
+
+The stalk map of a scheme isomorphism is a ring isomorphism.  We first record
+the corresponding maximal-ideal generator count, then convert it to cotangent
+dimension via the Noetherian Nakayama identity. -/
+
+/-- An isomorphism of local rings preserves the span finrank of the maximal ideal. -/
+theorem spanFinrank_maximalIdeal_eq_of_ringEquiv
+    {A B : Type u} [CommRing A] [CommRing B] [IsLocalRing A] [IsLocalRing B]
+    (e : A ≃+* B) :
+    (IsLocalRing.maximalIdeal A).spanFinrank =
+      (IsLocalRing.maximalIdeal B).spanFinrank := by
+  have hmap : (IsLocalRing.maximalIdeal A).map (e : A →+* B) =
+      IsLocalRing.maximalIdeal B := by
+    apply IsLocalRing.eq_maximalIdeal
+    exact (IsLocalRing.maximalIdeal.isMaximal A).map_bijective _ e.bijective
+  have h1 := Ideal.spanRank_map_le (e : A →+* B) (IsLocalRing.maximalIdeal A)
+  have h2 := Ideal.spanRank_map_le (e.symm : B →+* A)
+    ((IsLocalRing.maximalIdeal A).map (e : A →+* B))
+  rw [Ideal.map_map] at h2
+  rw [show ((e.symm : B →+* A).comp (e : A →+* B)) = RingHom.id A from by
+    ext a
+    simp, Ideal.map_id] at h2
+  rw [← hmap]
+  unfold Submodule.spanFinrank
+  rw [le_antisymm h2 h1]
+
+/-- The cotangent-space finrank is invariant under an isomorphism of local
+rings. -/
+theorem finrank_cotangentSpace_eq_of_ringEquiv
+    {A B : Type u} [CommRing A] [CommRing B] [IsLocalRing A] [IsLocalRing B]
+    [IsNoetherianRing A] [IsNoetherianRing B] (e : A ≃+* B) :
+    Module.finrank (IsLocalRing.ResidueField A)
+        (IsLocalRing.CotangentSpace A) =
+      Module.finrank (IsLocalRing.ResidueField B)
+        (IsLocalRing.CotangentSpace B) := by
+  rw [← IsLocalRing.spanFinrank_maximalIdeal_eq_finrank_cotangentSpace,
+    ← IsLocalRing.spanFinrank_maximalIdeal_eq_finrank_cotangentSpace]
+  exact spanFinrank_maximalIdeal_eq_of_ringEquiv e
+
+/-- Cotangent-space finrank is preserved by a scheme isomorphism, pointwise. -/
+theorem finrank_cotangentSpace_stalk_eq_of_isIso
+    {X Y : Scheme.{u}} [IsLocallyNoetherian X] [IsLocallyNoetherian Y]
+    (f : X ⟶ Y) [IsIso f] (x : X) :
+    Module.finrank (IsLocalRing.ResidueField (Y.presheaf.stalk (f.base x)))
+        (IsLocalRing.CotangentSpace (Y.presheaf.stalk (f.base x))) =
+      Module.finrank (IsLocalRing.ResidueField (X.presheaf.stalk x))
+        (IsLocalRing.CotangentSpace (X.presheaf.stalk x)) :=
+  finrank_cotangentSpace_eq_of_ringEquiv
+    ((asIso (f.stalkMap x)).commRingCatIsoToRingEquiv)
+
+/-- The Krull dimension of stalks is preserved by a scheme isomorphism. -/
+theorem ringKrullDim_stalk_eq_of_isIso
+    {X Y : Scheme.{u}} [IsLocallyNoetherian X] [IsLocallyNoetherian Y]
+    (f : X ⟶ Y) [IsIso f] (x : X) :
+    ringKrullDim (Y.presheaf.stalk (f.base x)) =
+      ringKrullDim (X.presheaf.stalk x) :=
+  ringKrullDim_eq_of_ringEquiv
+    ((asIso (f.stalkMap x)).commRingCatIsoToRingEquiv)
+
+namespace GroupVariety
+
+/-- A group-variety translation preserves the cotangent-space finrank at every
+point of a locally Noetherian underlying scheme. -/
+theorem finrank_cotangentSpace_eq_of_pointTranslation
+    {S : Scheme.{u}} (G : Over S) [GrpObj G]
+    [IsLocallyNoetherian G.left]
+    (x y : 𝟙_ (Over S) ⟶ G) (z : G.left) :
+    Module.finrank
+        (IsLocalRing.ResidueField
+          (G.left.presheaf.stalk ((pointTranslationIso G x y).hom.base z)))
+        (IsLocalRing.CotangentSpace
+          (G.left.presheaf.stalk ((pointTranslationIso G x y).hom.base z))) =
+      Module.finrank (IsLocalRing.ResidueField (G.left.presheaf.stalk z))
+        (IsLocalRing.CotangentSpace (G.left.presheaf.stalk z)) :=
+  finrank_cotangentSpace_stalk_eq_of_isIso
+    ((pointTranslationIso G x y).hom) z
+
+/-- A group-variety translation preserves the Krull dimension of local stalks. -/
+theorem ringKrullDim_stalk_eq_of_pointTranslation
+    {S : Scheme.{u}} (G : Over S) [GrpObj G]
+    [IsLocallyNoetherian G.left]
+    (x y : 𝟙_ (Over S) ⟶ G) (z : G.left) :
+    ringKrullDim
+        (G.left.presheaf.stalk ((pointTranslationIso G x y).hom.base z)) =
+      ringKrullDim (G.left.presheaf.stalk z) :=
+  ringKrullDim_stalk_eq_of_isIso ((pointTranslationIso G x y).hom) z
+
+end GroupVariety
 
 /-- An injective integral extension preserves Krull dimension. -/
 theorem ringKrullDim_eq_of_isIntegral_of_injective
