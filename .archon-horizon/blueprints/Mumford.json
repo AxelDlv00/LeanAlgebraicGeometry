@@ -734,10 +734,10 @@
       "\\uses": ""
     },
     "states": {
-      "blocked": 118,
-      "closed": 494,
+      "blocked": 117,
+      "closed": 505,
       "formalized_open": 0,
-      "informal": 216,
+      "informal": 215,
       "ready": 98
     },
     "warnings": [
@@ -3957,27 +3957,27 @@
     },
     {
       "chapter": "Algebraic Theory via Varieties",
-      "comment_count": 2,
+      "comment_count": 3,
       "dep_count": 0,
       "descendant_count": 2,
       "group": "c110",
       "has_sorry": false,
       "hgraph_id": "ed5f5726c302",
       "id": "mumford-lem-rigidity-form-I",
-      "lean_file": null,
-      "lean_name": null,
-      "lean_source": null,
-      "lean_status": "empty",
+      "lean_file": "MumfordLib/RigidityExistence.lean",
+      "lean_name": "Mumford.GroupScheme.rigidity_lemma_of_geometricallyIntegral",
+      "lean_source": "theorem rigidity_lemma_of_geometricallyIntegral\n    {X Y Z : Over (Spec (.of kbar))}\n    [IsProper X.hom]\n    [GeometricallyIntegral X.hom]\n    [GeometricallyIntegral Y.hom]\n    [LocallyOfFiniteType Y.hom]\n    [IsSeparated Z.hom]\n    (f : X \u2297 Y \u27f6 Z)\n    (y\u2080 : \ud835\udfd9_ (Over (Spec (.of kbar))) \u27f6 Y)\n    (z\u2080 : \ud835\udfd9_ (Over (Spec (.of kbar))) \u27f6 Z)\n    (hf : lift (\ud835\udfd9 X) (toUnit X \u226b y\u2080) \u226b f = toUnit X \u226b z\u2080) :\n    \u2203 g : Y \u27f6 Z, f = snd X Y \u226b g :=\n  (rigidity_lemma_unique_of_geometricallyIntegral f y\u2080 z\u2080 hf).exists",
+      "lean_status": "lean_ok",
       "level": "medium",
       "mathlib_ok": false,
       "order": 37,
-      "proved": false,
+      "proved": true,
       "rdep_count": 1,
       "review_count": 0,
       "sources": [
         "M:ch2:II.4"
       ],
-      "state": "ready",
+      "state": "closed",
       "statement": "Let $X$ be complete, $Y,Z$ varieties, and $f:X\\times Y\\to Z$ a morphism such\nthat $f(X\\times\\{y_0\\})=\\{z_0\\}$. Then $f=g\\circ p_2$ for a morphism\n$g:Y\\to Z$.",
       "title": "Rigidity Lemma, Form I",
       "type": "lemma",
@@ -4006,7 +4006,7 @@
       "sources": [
         "M:ch2:II.4"
       ],
-      "state": "blocked",
+      "state": "ready",
       "statement": "If $X,Y$ are abelian varieties and $f:X\\to Y$ is a morphism, then\n$f(x)=h(x)+a$ for a homomorphism $h$ and $a\\in Y$.",
       "title": "Morphisms are homomorphisms up to translation",
       "type": "corollary",

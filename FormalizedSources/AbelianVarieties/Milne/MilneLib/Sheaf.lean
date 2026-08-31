@@ -180,6 +180,25 @@ theorem SchemeModule.IsStalkwiseFinite.of_hasFiniteLocalGenerators
   exact SchemeModule.HasFiniteStalkGenerators.of_hasFiniteLocalGenerators F x
     (hgen x)
 
+/-- Local generators therefore have finite residue-field fibres pointwise. -/
+theorem SchemeModule.HasFiniteLocalGenerators.residueFieldTensor
+    {X : Scheme.{u}} (F : X.Modules) (x : X)
+    (hgen : SchemeModule.HasFiniteLocalGenerators F x) :
+    letI : Module (X.presheaf.stalk x)
+        (↑(TopCat.Presheaf.stalk F.val.presheaf x) : Type u) :=
+      schemeModuleStalkModule F x
+    Module.Finite (IsLocalRing.ResidueField (X.presheaf.stalk x))
+      (IsLocalRing.ResidueField (X.presheaf.stalk x) ⊗[X.presheaf.stalk x]
+        (↑(TopCat.Presheaf.stalk F.val.presheaf x) : Type u)) := by
+  letI : Module (X.presheaf.stalk x)
+      (↑(TopCat.Presheaf.stalk F.val.presheaf x) : Type u) :=
+    schemeModuleStalkModule F x
+  apply moduleFinite_schemeModuleStalk_residueTensor F x
+  obtain ⟨ι, hι, g, hg⟩ :=
+    SchemeModule.HasFiniteStalkGenerators.of_hasFiniteLocalGenerators F x hgen
+  letI : Fintype ι := hι
+  exact moduleFinite_of_finite_generating_family g hg
+
 /-- Stalkwise finiteness can be represented by a finite spanning family at
 each point. -/
 theorem SchemeModule.HasFiniteStalkGenerators.of_isStalkwiseFinite
