@@ -147,6 +147,14 @@ the map-theoretic part of that argument: it pulls the affine cover back along a 
 morphism, while leaving the Laurent module and four window conditions explicit.
 -/
 
+/-- Pulling back a cover preserves the top-open equality.  This named geometric fact is reused
+by concrete finite-map constructions, including the eventual projective-line charts. -/
+lemma preimage_sup_eq_top_of_sup_eq_top
+    {Y : Scheme.{u}} (π : X ⟶ Y) {V₀ V₁ : Y.Opens}
+    (hcov : V₀ ⊔ V₁ = ⊤) :
+    π ⁻¹ᵁ V₀ ⊔ π ⁻¹ᵁ V₁ = ⊤ := by
+  rw [← Scheme.Hom.preimage_sup, hcov, Scheme.Hom.preimage_top]
+
 theorem moduleFinite_hModule_one_of_isFinite_affineCover
     {Y : Scheme.{u}} (π : X ⟶ Y) [IsFinite π]
     (V₀ V₁ : Y.Opens) (hcov : V₀ ⊔ V₁ = ⊤)
@@ -174,8 +182,8 @@ theorem moduleFinite_hModule_one_of_isFinite_affineCover
     Module.Finite k
       (Sheaf.HModule (Opens.grothendieckTopology (X : TopCat)) k
         (X.moduleKSheaf k) 1) := by
-  have hpre : π ⁻¹ᵁ V₀ ⊔ π ⁻¹ᵁ V₁ = ⊤ := by
-    rw [← Scheme.Hom.preimage_sup, hcov, Scheme.Hom.preimage_top]
+  have hpre : π ⁻¹ᵁ V₀ ⊔ π ⁻¹ᵁ V₁ = ⊤ :=
+    preimage_sup_eq_top_of_sup_eq_top X π hcov
   exact moduleFinite_hModule_one_of_twoCover_of_affine k X
     (π ⁻¹ᵁ V₀) (π ⁻¹ᵁ V₁) hpre (hV₀.preimage π) (hV₁.preimage π)
     hσ₀ hσ₁ hσ₀loc hσ₁loc
