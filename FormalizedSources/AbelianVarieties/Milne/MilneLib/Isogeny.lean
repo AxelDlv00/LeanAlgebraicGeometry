@@ -1011,6 +1011,100 @@ theorem Isogeny.baseChange_of_finite
   change Isogeny (F.map f)
   exact Isogeny.of_surjective_of_finite (F.map f) inferInstance
 
+/- An isogeny remains an isogeny after arbitrary field base change.  The
+   kernel is transported first in the slice category, then through the
+   forgetful pullback comparison, and finally along the canonical unit
+   comparison for `Over.pullback`. -/
+theorem Isogeny.baseChange_of_isogeny
+    {L : Type u} [Field L]
+    {A B : Over (Spec (.of K))} [GrpObj A] [GrpObj B]
+    (f : A ⟶ B) [IsMonHom f]
+    (h : Isogeny f) (b : Spec (.of L) ⟶ Spec (.of K)) :
+    let F := Over.pullback b
+    letI : GrpObj (F.obj A) := Functor.grpObjObj
+    letI : GrpObj (F.obj B) := Functor.grpObjObj
+    Isogeny (F.map f) := by
+  let F := Over.pullback b
+  letI : GrpObj (F.obj A) := Functor.grpObjObj
+  letI : GrpObj (F.obj B) := Functor.grpObjObj
+  constructor
+  · exact MorphismProperty.overPullbackMap b f h.1
+  · have hk : IsFinite ((F.map (toUnit (isogenyKernelOver f))).left) := by
+      exact Isogeny.kernelOver_baseChange_isFinite f h b
+    have hunit : toUnit (isogenyKernelOver f) = pullback.snd f (η[B]) :=
+      toUnit_unique _ _
+    rw [hunit] at hk
+    let e := isogenyKernelOver_baseChangeIso f b
+    have he0 := congrArg Over.Hom.left
+      (isogenyKernelOver_baseChangeIso_hom_snd f b)
+    rw [Over.comp_left] at he0
+    have he :
+        e.hom.left ≫ (pullback.snd (F.map f) (F.map (η[B]))).left =
+          (F.map (pullback.snd f (η[B]))).left := by
+      simpa [e, F] using he0
+    have hfinOver :
+        IsFinite (pullback.snd (F.map f) (F.map (η[B]))).left := by
+      have hc := (MorphismProperty.cancel_left_of_respectsIso
+        (P := @IsFinite) e.hom.left
+          (pullback.snd (F.map f) (F.map (η[B]))).left)
+      apply hc.mp
+      rw [he]
+      simpa [F, isogenyKernelOver] using hk
+    let G := Over.forget (Spec (.of L))
+    let eG := PreservesPullback.iso G (F.map f) (F.map (η[B]))
+    have heG :
+        eG.hom ≫ pullback.snd (F.map f).left (F.map (η[B])).left =
+          G.map (pullback.snd (F.map f) (F.map (η[B]))) := by
+      exact pullbackComparison_comp_snd G (F.map f) (F.map (η[B]))
+    have hfin :
+        IsFinite (pullback.snd (F.map f).left (F.map (η[B])).left) := by
+      have hc := (MorphismProperty.cancel_left_of_respectsIso
+        (P := @IsFinite) eG.hom
+          (pullback.snd (F.map f).left (F.map (η[B])).left))
+      apply hc.mp
+      rw [heG, Over.forget_map]
+      exact hfinOver
+    have heta0 := congrArg Over.Hom.left
+      (Functor.obj.η_def (F := F) B)
+    have heta :
+        (η[F.obj B]).left =
+          (Functor.LaxMonoidal.ε F).left ≫ (F.map (η[B])).left := by
+      simpa [F] using heta0
+    let d := pullbackLeftPullbackSndIso
+      (F.map f).left (F.map (η[B])).left
+      (Functor.LaxMonoidal.ε F).left
+    have hpull :
+        IsFinite
+          (pullback.snd (C := Scheme)
+            (pullback.snd (F.map f).left (F.map (η[B])).left)
+            (Functor.LaxMonoidal.ε F).left) := by
+      exact MorphismProperty.pullback_snd _ _ hfin
+    have hd :
+        d.hom ≫
+            pullback.snd (C := Scheme)
+              ((F.map f).left)
+              ((Functor.LaxMonoidal.ε F).left ≫ (F.map (η[B])).left) =
+          pullback.snd (C := Scheme)
+            (pullback.snd (F.map f).left (F.map (η[B])).left)
+            (Functor.LaxMonoidal.ε F).left := by
+      exact pullbackLeftPullbackSndIso_hom_snd _ _ _
+    have hdesired :
+        IsFinite
+          (pullback.snd (C := Scheme)
+            ((F.map f).left)
+            ((Functor.LaxMonoidal.ε F).left ≫ (F.map (η[B])).left)) := by
+      have hc := (MorphismProperty.cancel_left_of_respectsIso
+        (P := @IsFinite) d.hom
+          (pullback.snd (C := Scheme)
+            ((F.map f).left)
+            ((Functor.LaxMonoidal.ε F).left ≫ (F.map (η[B])).left)))
+      apply hc.mp
+      rw [hd]
+      exact hpull
+    change IsFinite (pullback.snd (C := Scheme) (F.map f).left (η[F.obj B]).left)
+    rw [heta]
+    exact hdesired
+
 /- Over an algebraically closed base, the established finite-map theorem
    supplies the hypothesis required by `baseChange_of_finite`. -/
 theorem Isogeny.baseChange_of_isAbelianVariety
