@@ -113,6 +113,25 @@ theorem periodLattice_isDiscrete
   exact isDiscrete_iff_discreteTopology.mpr
     (inferInstance : DiscreteTopology d.periodLattice.toAddSubgroup)
 
+/- A discrete period subgroup is closed in the Hausdorff topological vector
+   group, so its additive quotient is Hausdorff as well. -/
+theorem periodLattice_isClosed
+    {X : Type*} [AddCommGroup X] [TopologicalSpace X] {g : ℕ}
+    (d : ComplexLatticeExponentialData X g) :
+    IsClosed (d.periodLattice.toAddSubgroup : Set (GenusComplexVector g)) := by
+  letI : DiscreteTopology d.periodLattice := d.periodLatticeDiscrete
+  exact AddSubgroup.isClosed_of_discrete
+
+/- The Hausdorff quotient statement is kept as a theorem (rather than a
+   global instance) because the lattice is use-site data. -/
+theorem quotient_isT2Space
+    {X : Type*} [AddCommGroup X] [TopologicalSpace X] {g : ℕ}
+    (d : ComplexLatticeExponentialData X g) :
+    T2Space (GenusComplexVector g ⧸ d.periodLattice.toAddSubgroup) := by
+  letI : IsClosed (d.periodLattice.toAddSubgroup : Set (GenusComplexVector g)) :=
+    d.periodLattice_isClosed
+  infer_instance
+
 /-- Translation by the period subgroup acts properly discontinuously on the
 complex vector space. -/
 theorem periodLattice_properlyDiscontinuousVAdd
@@ -247,6 +266,14 @@ noncomputable def quotientCompactSpace
     [DiscreteTopology L] [IsZLattice ℝ L] :
     CompactSpace (GenusComplexVector g ⧸ L.toAddSubgroup) :=
   (ofLattice g L).targetCompactSpace
+
+/- The canonical quotient by a full lattice is Hausdorff. -/
+@[reducible]
+noncomputable def quotientT2Space
+    (g : ℕ) (L : Submodule ℤ (GenusComplexVector g))
+    [DiscreteTopology L] [IsZLattice ℝ L] :
+    T2Space (GenusComplexVector g ⧸ L.toAddSubgroup) :=
+  (ofLattice g L).quotient_isT2Space
 
 @[simp]
 theorem ofLattice_exponential_apply
