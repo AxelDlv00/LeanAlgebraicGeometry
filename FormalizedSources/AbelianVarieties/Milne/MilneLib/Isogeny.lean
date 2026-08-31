@@ -842,6 +842,16 @@ theorem Isogeny.finite_kernel (f : A ⟶ B) [IsMonHom f] (h : Isogeny f) :
     IsFinite (isogenyKernelToBase f) :=
   h.2
 
+/- The finite kernel of an isogeny remains finite after arbitrary base change.
+   In particular, specializing `Z` to a field spectrum supplies the finite
+   geometric-kernel morphism used by residue-field fibre arguments. -/
+theorem Isogeny.kernel_baseChange_isFinite
+    (f : A ⟶ B) [IsMonHom f] (h : Isogeny f)
+    {Z : Scheme.{u}} (g : Z ⟶ Spec (.of K)) :
+    IsFinite (pullback.snd (isogenyKernelToBase f) g) := by
+  letI : IsFinite (isogenyKernelToBase f) := h.2
+  exact MorphismProperty.pullback_snd _ _ inferInstance
+
 /- The finite-flat-surjective condition from Milne's characterization implies
    the source-faithful isogeny predicate.  The flatness hypothesis is retained
    in the interface because it is part of the geometric characterization and
