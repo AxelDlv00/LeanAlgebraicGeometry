@@ -860,4 +860,47 @@ theorem Isogeny.kernel_isFinite_flat_surjective
   exact ⟨h.2, isogenyKernelToBase_flat_of_flat f,
     isogenyKernelToBase_surjective_of_surjective f⟩
 
+/- The finite-map converse can be descended from the algebraic closure.  The
+   explicit pullback fibre is the map obtained by pulling `f.left` back along
+   the faithfully flat cover of `B` induced by
+   `Spec (AlgebraicClosure K) → Spec K`. -/
+theorem Isogeny.of_surjective_of_algebraicClosure_baseChange
+    {K : Type u} [Field K]
+    {A B : Over (Spec (.of K))} [GrpObj A] [GrpObj B]
+    (hA : IsAbelianVariety A) (hB : IsAbelianVariety B)
+    (f : A ⟶ B) [IsMonHom f]
+    (hs : Surjective f.left)
+    (hf : IsFinite
+      (pullback.fst
+        (pullback.fst B.hom
+          (Spec.map (CommRingCat.ofHom <| algebraMap K (AlgebraicClosure K))))
+        f.left)) :
+    Isogeny f := by
+  let b : Spec (.of (AlgebraicClosure K)) ⟶ Spec (.of K) :=
+    Spec.map (CommRingCat.ofHom <| algebraMap K (AlgebraicClosure K))
+  let p : pullback B.hom b ⟶ B.left := pullback.fst B.hom b
+  have hff : (algebraMap K (AlgebraicClosure K)).FaithfullyFlat := by
+    rw [RingHom.faithfullyFlat_algebraMap_iff]
+    infer_instance
+  have hp : Flat b ∧ Surjective b := by
+    change Flat (Spec.map (CommRingCat.ofHom <| algebraMap K (AlgebraicClosure K))) ∧
+      Surjective (Spec.map (CommRingCat.ofHom <| algebraMap K (AlgebraicClosure K)))
+    rwa [flat_and_surjective_SpecMap_iff]
+  letI : Flat b := hp.1
+  letI : Surjective b := hp.2
+  letI : QuasiCompact b := inferInstance
+  letI : Flat p := by
+    dsimp [p]
+    infer_instance
+  letI : Surjective p := by
+    dsimp [p]
+    infer_instance
+  letI : QuasiCompact p := by
+    dsimp [p]
+    infer_instance
+  letI : IsProper f.left := isProper_left_of_isAbelianVariety hA hB f
+  letI : IsFinite f.left :=
+    IsFinite.of_isProper_of_faithfullyFlat_baseChange p f.left hf
+  exact Isogeny.of_surjective_of_finite f hs
+
 end MilneLib
