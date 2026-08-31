@@ -55,15 +55,6 @@ theorem pullback_congrHom_hom_snd
   subst g₂
   simp [pullback.congrHom, pullback.map]
 
-theorem pullback_congrHom_hom_snd_assoc
-    {X Y Z W : Scheme.{u}} {f₁ f₂ : X ⟶ Z} {g₁ g₂ : Y ⟶ Z}
-    (h₁ : f₁ = f₂) (h₂ : g₁ = g₂)
-    [HasPullback f₁ g₁] [HasPullback f₂ g₂]
-    (t : Y ⟶ W) :
-    (pullback.congrHom h₁ h₂).hom ≫ pullback.snd f₂ g₂ ≫ t =
-      pullback.snd f₁ g₁ ≫ t := by
-  rw [← Category.assoc, pullback_congrHom_hom_snd]
-
 variable {k : Type u} [Field k] (C : Over (Spec (.of k)))
 variable [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
   [GeometricallyIrreducible C.hom] [IsSepClosed k]
@@ -83,24 +74,6 @@ theorem glueData_f_comp_inclusion_comp_gluedMap
       overlapBaseChangeMap C P U V := by
   rw [glueData_f_pinned C P U V, glueData_ι_gluedMap C P U]
   exact restrictionSpecMap_comp_chartBaseChangeMap C P U V
-
-/-- The spectrum of the exact left restriction, followed by the chart's affine
-identification, is the affine-overlap identification. -/
-theorem exactRestrictionAlgHom_fromSpec
-    (U V : Pic0FiniteStageChartIndex C) :
-    Spec.map (CommRingCat.ofHom
-        (exactRestrictionAlgHom C U V).toRingHom) ≫
-        U.1.2.fromSpec =
-      (pic0FiniteStageAffineOverlap C U V).2.fromSpec := by
-  change Spec.map (CommRingCat.ofHom
-      (pic0FiniteStageRestrictionLeft C U V).toRingHom) ≫
-      U.1.2.fromSpec = _
-  change Spec.map
-      ((pic0_sepClosed_representableBy (C := C)).1.left.presheaf.map
-        (homOfLE (pic0FiniteStageAffineOverlap_le_left C U V)).op) ≫
-      U.1.2.fromSpec = _
-  exact U.1.2.map_fromSpec (pic0FiniteStageAffineOverlap C U V).2
-    (homOfLE (pic0FiniteStageAffineOverlap_le_left C U V)).op
 
 set_option synthInstance.maxHeartbeats 3200000 in
 -- The two projections reduce to the specialized flattening identities.
@@ -176,7 +149,6 @@ set_option synthInstance.maxHeartbeats 3200000 in
 set_option maxHeartbeats 12800000 in
 /-- An overlap in the base-changed finite-stage gluing is the corresponding
 overlap in the canonical gluing diagram of the exact Picard atlas. -/
-@[irreducible]
 noncomputable def gluingOverlapIso
     {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
     (P : Pic0FiniteStageGluePackage C F)
@@ -230,32 +202,31 @@ private theorem overlapBaseChangeIso_hom_atlas_f_ι
     _ = _ := overlapBaseChangeIso_hom_ι C P U V
 
 set_option synthInstance.maxHeartbeats 3200000 in
--- Package the stable-index naturality tail before entering the glued diagram.
+-- Seal the overlap comparison only after recording its stable projection law.
 set_option maxHeartbeats 12800000 in
 set_option backward.isDefEq.respectTransparency false in
-private theorem restrictionBaseChangeMap_fromSpec
+/-- The overlap comparison carries the exact atlas projection to the pinned
+finite-stage overlap projection. -/
+theorem gluingOverlapIso_hom_atlas_f_ι
     {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
     (P : Pic0FiniteStageGluePackage C F)
     (U V : Pic0FiniteStageChartIndex C) :
-    restrictionBaseChangeMap C P U V ≫
-          (chartRingBaseChangeIso C P U).hom ≫ U.1.2.fromSpec =
+    (gluingOverlapIso C P U V).hom ≫
+        ((pic0SepClosedAtlasGlueData C).f U V ≫ U.1.1.ι) =
+      (gluingOverlapFlatteningIso C P U V).hom ≫
+        (pullback.congrHom
+          (glueData_f_comp_inclusion_comp_gluedMap C P U V) rfl).hom ≫
       (overlapRingBaseChangeIso C P U V).hom ≫
         (pic0FiniteStageAffineOverlap C U V).2.fromSpec := by
-  calc
-    _ = (restrictionBaseChangeMap C P U V ≫
-        (chartRingBaseChangeIso C P U).hom) ≫ U.1.2.fromSpec :=
-      (Category.assoc _ _ _).symm
-    _ = ((overlapRingBaseChangeIso C P U V).hom ≫
-        Spec.map (CommRingCat.ofHom
-          (exactRestrictionAlgHom C U V).toRingHom)) ≫ U.1.2.fromSpec :=
-      congrArg (fun q => q ≫ U.1.2.fromSpec)
-        (restrictionBaseChangeMap_naturality C P U V)
-    _ = (overlapRingBaseChangeIso C P U V).hom ≫
-        (Spec.map (CommRingCat.ofHom
-          (exactRestrictionAlgHom C U V).toRingHom) ≫ U.1.2.fromSpec) :=
-      Category.assoc _ _ _
-    _ = _ := congrArg (fun q => (overlapRingBaseChangeIso C P U V).hom ≫ q)
-      (exactRestrictionAlgHom_fromSpec C U V)
+  unfold gluingOverlapIso
+  simpa only [Iso.trans_hom, Category.assoc] using
+    congrArg
+      (fun q => (gluingOverlapFlatteningIso C P U V).hom ≫
+        (pullback.congrHom
+          (glueData_f_comp_inclusion_comp_gluedMap C P U V) rfl).hom ≫ q)
+      (overlapBaseChangeIso_hom_atlas_f_ι C P U V)
+
+attribute [irreducible] gluingOverlapIso
 
 set_option synthInstance.maxHeartbeats 3200000 in
 -- Matching the complete glued multispan equality crosses several dependent pullbacks.
@@ -271,16 +242,38 @@ theorem gluingOverlapIso_fst
       (gluingOverlapIso C P U V).hom ≫
         (pic0SepClosedAtlasGlueData C).f U V := by
   apply (cancel_mono U.1.1.ι).1
-  simp only [gluingChartIso, Iso.trans_hom, Category.assoc]
-  rw [chartBaseChangeIso_hom_ι C P U]
-  rw [reassoc_of% gluingOverlapIso_pre_fst C P U V]
-  simp only [gluingOverlapIso, Iso.trans_hom, Category.assoc]
-  rw [restrictionBaseChangeMap_fromSpec C P U V]
-  exact congrArg
-    (fun q => (gluingOverlapFlatteningIso C P U V).hom ≫
-      (pullback.congrHom
-        (glueData_f_comp_inclusion_comp_gluedMap C P U V) rfl).hom ≫ q)
-    (overlapBaseChangeIso_hom_atlas_f_ι C P U V).symm
+  calc
+    _ = ((Scheme.Pullback.gluing P.glueData.openCover P.gluedMap
+          (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k)))).f U V ≫
+        (pullback.congrHom (glueData_ι_gluedMap C P U) rfl).hom) ≫
+        ((chartRingBaseChangeIso C P U).hom ≫ U.1.2.fromSpec) := by
+      simpa only [Category.assoc] using congrArg
+        (fun q =>
+          (Scheme.Pullback.gluing P.glueData.openCover P.gluedMap
+            (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k)))).f U V ≫ q)
+        (gluingChartIso_hom_ι C P U)
+    _ = ((gluingOverlapFlatteningIso C P U V).hom ≫
+          (pullback.congrHom
+            (glueData_f_comp_inclusion_comp_gluedMap C P U V) rfl).hom ≫
+          restrictionBaseChangeMap C P U V) ≫
+        ((chartRingBaseChangeIso C P U).hom ≫ U.1.2.fromSpec) := by
+      simpa only [Category.assoc] using congrArg
+        (fun q => q ≫
+          ((chartRingBaseChangeIso C P U).hom ≫ U.1.2.fromSpec))
+        (gluingOverlapIso_pre_fst C P U V)
+    _ = ((gluingOverlapFlatteningIso C P U V).hom ≫
+          (pullback.congrHom
+            (glueData_f_comp_inclusion_comp_gluedMap C P U V) rfl).hom) ≫
+        ((overlapRingBaseChangeIso C P U V).hom ≫
+          (pic0FiniteStageAffineOverlap C U V).2.fromSpec) := by
+      simpa only [Category.assoc] using congrArg
+        (fun q => ((gluingOverlapFlatteningIso C P U V).hom ≫
+          (pullback.congrHom
+            (glueData_f_comp_inclusion_comp_gluedMap C P U V) rfl).hom) ≫ q)
+        (restrictionBaseChangeMap_fromSpec C P U V)
+    _ = _ := by
+      simpa only [Category.assoc] using
+        (gluingOverlapIso_hom_atlas_f_ι C P U V).symm
 
 end Pic0FiniteStageGluePackage
 
