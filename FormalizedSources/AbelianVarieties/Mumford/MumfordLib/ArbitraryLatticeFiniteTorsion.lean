@@ -62,6 +62,19 @@ theorem quotientTorsion_card_of_uniformization
     (d.quotientTorsionAddEquiv_of_uniformization u hn).toEquiv]
   simp [Nat.card_fun, Nat.card_zmod, Nat.card_eq_fintype_card]
 
+/-- The arbitrary-lattice torsion cardinality in the usual positive-natural
+notation. -/
+theorem quotientTorsion_card_of_uniformization_natCast
+    {X : Type*} [AddCommGroup X] [TopologicalSpace X] {g n : ℕ}
+    (d : ComplexLatticeExponentialData X g)
+    (u : GenusTorusUniformization X g) (hn : 0 < n) :
+    Nat.card (zsmulTorsionSubgroup
+      (GenusComplexVector g ⧸ d.periodLattice.toAddSubgroup) (n : ℤ)) =
+      n ^ (2 * g) := by
+  have hne : (n : ℤ) ≠ 0 := by
+    exact_mod_cast (Nat.ne_of_gt hn)
+  simpa using (d.quotientTorsion_card_of_uniformization u hne)
+
 /-- The same hypotheses imply finiteness of every nonzero-integer torsion
 subgroup of the arbitrary lattice quotient. -/
 theorem quotientTorsion_finite_of_uniformization
