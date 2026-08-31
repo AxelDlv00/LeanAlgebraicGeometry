@@ -7,6 +7,14 @@ Authors: The Hartshorne Contributors
 import HartshorneLib.Chapter4P1FinitenessAPI
 import HartshorneLib.Chapter4TwoCoverFiniteness
 
+/-!
+# Finite-map cohomology on the projective line
+
+The canonical Laurent action on the overlap of the two standard charts is induced by a
+finite morphism to `P1`.  This file proves the resulting two-chart finiteness theorem,
+including the scalar compatibility and localization windows needed by the Cech ladder.
+-/
+
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
 
