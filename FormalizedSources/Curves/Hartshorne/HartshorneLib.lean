@@ -71,11 +71,13 @@ import HartshorneLib.Chapter4P1Structure
 import HartshorneLib.Chapter4P1Overlap
 import HartshorneLib.Chapter4P1FinitenessAPI
 import HartshorneLib.Chapter4P1Points
+import HartshorneLib.Chapter4P1Topology
 import HartshorneLib.Chapter4P1CoordinateAPI
 import HartshorneLib.Chapter4P1Geometry
 import HartshorneLib.Chapter4FiniteMapP1
 import HartshorneLib.Chapter4FiniteMapP1Producer
 import HartshorneLib.Chapter4MapToP1
+import HartshorneLib.Chapter4FiniteMapP1Existence
 import HartshorneLib.Chapter4ProductFormulaCohomology
 
 /-!
