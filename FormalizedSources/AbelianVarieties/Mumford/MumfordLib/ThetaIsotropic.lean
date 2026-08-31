@@ -36,6 +36,31 @@ noncomputable def commutatorPairingOrthogonal
     (E : ThetaExtension G S K) (H : AddSubgroup K) : AddSubgroup K :=
   (E.commutatorPairingRestriction H).ker
 
+/-- If the restricted commutator pairing is onto, its quotient by the
+    orthogonal subgroup is the corresponding character group. -/
+noncomputable def quotientOrthogonalAddEquivOfSurjectiveRestriction
+    (E : ThetaExtension G S K) (H : AddSubgroup K)
+    (hsurj : Function.Surjective (E.commutatorPairingRestriction H)) :
+    K ⧸ E.commutatorPairingOrthogonal H ≃+ (H →+ Additive S) := by
+  change K ⧸ (E.commutatorPairingRestriction H).ker ≃+
+      (H →+ Additive S)
+  exact QuotientAddGroup.quotientKerEquivOfSurjective
+    (E.commutatorPairingRestriction H) hsurj
+
+@[simp]
+theorem quotientOrthogonalAddEquivOfSurjectiveRestriction_mk
+    (E : ThetaExtension G S K) (H : AddSubgroup K)
+    (hsurj : Function.Surjective (E.commutatorPairingRestriction H))
+    (k : K) :
+    E.quotientOrthogonalAddEquivOfSurjectiveRestriction H hsurj
+      (QuotientAddGroup.mk' (E.commutatorPairingOrthogonal H) k) =
+      E.commutatorPairingRestriction H k := by
+  change (QuotientAddGroup.quotientKerEquivOfSurjective
+      (E.commutatorPairingRestriction H) hsurj)
+      (QuotientAddGroup.mk' (E.commutatorPairingRestriction H).ker k) =
+      E.commutatorPairingRestriction H k
+  rfl
+
 @[simp]
 theorem mem_commutatorPairingOrthogonal_iff
     (E : ThetaExtension G S K) (H : AddSubgroup K) (k : K) :
