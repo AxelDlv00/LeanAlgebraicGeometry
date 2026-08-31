@@ -13,6 +13,7 @@ import MumfordLib.ComplexModel
 import MumfordLib.ComplexUniformization
 import MumfordLib.ComplexUniformizationExistence
 import MumfordLib.ComplexLattice
+import MumfordLib.ArbitraryLatticeTorsion
 import MumfordLib.DivisionFiber
 import MumfordLib.RigidityCorollaries
 import MumfordLib.QuotientTopology
