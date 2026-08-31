@@ -912,6 +912,33 @@ variable {K : Type u} [Field K]
 def IsAbelianVariety (G : Over (Spec (.of K))) [GrpObj G] : Prop :=
   IsProper G.hom ∧ GeometricallyIntegral G.hom
 
+/- The defining geometric hypotheses expose the standard source properties
+   needed by dimension and residue-fibre arguments. -/
+theorem isIntegral_left_of_isAbelianVariety
+    (G : Over (Spec (.of K))) [GrpObj G] (hG : IsAbelianVariety G) :
+    IsIntegral G.left := by
+  letI : GeometricallyIntegral G.hom := hG.2
+  exact GeometricallyIntegral.isIntegral_of_subsingleton G.hom
+
+theorem isReduced_left_of_isAbelianVariety
+    (G : Over (Spec (.of K))) [GrpObj G] (hG : IsAbelianVariety G) :
+    IsReduced G.left := by
+  letI : IsIntegral G.left := isIntegral_left_of_isAbelianVariety G hG
+  infer_instance
+
+theorem locallyOfFiniteType_of_isAbelianVariety
+    (G : Over (Spec (.of K))) [GrpObj G] (hG : IsAbelianVariety G) :
+    LocallyOfFiniteType G.hom := by
+  letI : IsProper G.hom := hG.1
+  exact IsProper.toLocallyOfFiniteType
+
+theorem isLocallyNoetherian_left_of_isAbelianVariety
+    (G : Over (Spec (.of K))) [GrpObj G] (hG : IsAbelianVariety G) :
+    IsLocallyNoetherian G.left := by
+  letI : LocallyOfFiniteType G.hom :=
+    locallyOfFiniteType_of_isAbelianVariety G hG
+  exact LocallyOfFiniteType.isLocallyNoetherian G.hom
+
 /-- An abelian variety remains an abelian variety after base change along a
 morphism of field spectra.  The group structure on the pullback is the one
 transported by the pullback functor. -/
@@ -956,7 +983,8 @@ theorem smooth_of_isAbelianVariety
     Smooth G.hom := by
   letI : IsProper G.hom := hG.1
   letI : GeometricallyIntegral G.hom := hG.2
-  letI : LocallyOfFiniteType G.hom := IsProper.toLocallyOfFiniteType
+  letI : LocallyOfFiniteType G.hom :=
+    locallyOfFiniteType_of_isAbelianVariety G hG
   letI : GrpObj (Over.mk G.hom) := ‹GrpObj G›
   exact smooth_of_grpObj G.hom
 
