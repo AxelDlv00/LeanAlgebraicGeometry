@@ -6,6 +6,8 @@ Authors: The Milne Contributors
 
 import Mathlib.AlgebraicGeometry.Morphisms.Finite
 import Mathlib.AlgebraicGeometry.Morphisms.SchemeTheoreticallyDominant
+import Mathlib.AlgebraicGeometry.AffineSpace
+import Mathlib.Order.CompletePartialOrder
 import Mathlib.RingTheory.KrullDimension.Basic
 import Mathlib.RingTheory.Ideal.GoingUp
 import Mathlib.RingTheory.Spectrum.Prime.Topology
@@ -27,6 +29,151 @@ open CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj
 open AlgebraicGeometry
 
 namespace MilneLib
+
+/-- Passing to an open neighbourhood does not change the coheight of a point. -/
+theorem coheight_eq_of_isOpenEmbedding
+    {X : Type*} [TopologicalSpace X] {U : Set X} (hU : IsOpen U)
+    (z : X) (hz : z ∈ U) :
+    @Order.coheight X (specializationPreorder X) z =
+      @Order.coheight U (specializationPreorder U) ⟨z, hz⟩ := by
+  letI : Preorder X := specializationPreorder X
+  letI : Preorder U := specializationPreorder U
+  have hmono : Monotone (Subtype.val : U → X) :=
+    continuous_subtype_val.specialization_monotone
+  have hstrict : StrictMono (Subtype.val : U → X) := by
+    intro a b hab
+    refine ⟨hmono hab.le, fun h => ?_⟩
+    apply hab.not_ge
+    change a ⤳ b
+    exact (subtype_specializes_iff a b).mpr h
+  apply le_antisymm
+  · refine Order.coheight_le_iff'.mpr ?_
+    intro p hphead
+    have hmem : ∀ i, p i ∈ U := by
+      intro i
+      have hle : z ≤ p i := by
+        have := p.head_le i
+        rwa [hphead] at this
+      exact Specializes.mem_open (show p i ⤳ z from hle) hU hz
+    let q : LTSeries U :=
+      { length := p.length
+        toFun := fun i => ⟨p i, hmem i⟩
+        step := by
+          intro i
+          have hlt : p i.castSucc < p i.succ := p.step i
+          have hspec : p i.succ ⤳ p i.castSucc := hlt.le
+          have hsub : (⟨p i.succ, hmem _⟩ : U) ⤳ ⟨p i.castSucc, hmem _⟩ :=
+            (subtype_specializes_iff _ _).mpr hspec
+          refine ⟨hsub, fun hbad => ?_⟩
+          apply hlt.not_ge
+          exact (subtype_specializes_iff _ _).mp hbad }
+    have hqhead : q.head = ⟨z, hz⟩ := by
+      apply Subtype.ext
+      exact hphead
+    have hbound := Order.length_le_coheight
+      (x := (⟨z, hz⟩ : U)) (p := q) (by rw [hqhead])
+    simpa using hbound
+  · simpa using Order.coheight_le_coheight_apply_of_strictMono
+      (Subtype.val : U → X) hstrict ⟨z, hz⟩
+
+/-- Coheight in an affine scheme is height in its prime spectrum. -/
+theorem coheight_spec_eq_height_primeSpectrum
+    {R : CommRingCat} (p : Spec R) :
+    Order.coheight (α := Spec R) p =
+      Order.height (α := PrimeSpectrum R) ⟨p.asIdeal, p.isPrime⟩ := by
+  let e : Spec R ≃o (PrimeSpectrum R)ᵒᵈ :=
+    { toFun := fun q => OrderDual.toDual ⟨q.asIdeal, q.isPrime⟩
+      invFun := fun q => (OrderDual.ofDual q : PrimeSpectrum R)
+      left_inv := fun _ => rfl
+      right_inv := fun _ => rfl
+      map_rel_iff' := by
+        intro a b
+        exact (AlgebraicGeometry.AffineSpace.spec_le_iff R a b).symm }
+  have h : Order.coheight (α := (PrimeSpectrum R)ᵒᵈ) (e p) =
+      Order.coheight (α := Spec R) p :=
+    Order.coheight_orderIso e p
+  rw [← h]
+  rfl
+
+/-- The Krull dimension of a scheme stalk is the coheight of its point. -/
+theorem ringKrullDim_stalk_eq_coheight (X : Scheme.{u}) (z : X) :
+    ringKrullDim (X.presheaf.stalk z) = Order.coheight z := by
+  obtain ⟨U, hU, hzU, _⟩ :=
+    exists_isAffineOpen_mem_and_subset (X := X) (x := z) (U := ⊤) (by trivial)
+  set p : PrimeSpectrum Γ(X, U) := hU.primeIdealOf ⟨z, hzU⟩ with hp
+  letI : Algebra Γ(X, U) (X.presheaf.stalk z) :=
+    TopCat.Presheaf.algebra_section_stalk X.presheaf ⟨z, hzU⟩
+  haveI hloc : IsLocalization.AtPrime (X.presheaf.stalk z) p.asIdeal :=
+    hU.isLocalization_stalk ⟨z, hzU⟩
+  have hdim : ringKrullDim (X.presheaf.stalk z) =
+      (Order.height (α := PrimeSpectrum Γ(X, U)) p : WithBot ℕ∞) := by
+    rw [IsLocalization.AtPrime.ringKrullDim_eq_height
+          (R := Γ(X, U)) p.asIdeal (X.presheaf.stalk z),
+      PrimeSpectrum.height_eq_orderHeight p]
+  have hopen : Order.coheight (α := X) z =
+      Order.coheight (α := U.toScheme) ⟨z, hzU⟩ :=
+    coheight_eq_of_isOpenEmbedding (X := X) (U := U.1) U.isOpen z hzU
+  let hHomeo : U.toScheme ≃ₜ Spec Γ(X, U) :=
+    TopCat.homeoOfIso (Scheme.forgetToTop.mapIso hU.isoSpec)
+  let eOrder : U.toScheme ≃o Spec Γ(X, U) :=
+    { toEquiv := hHomeo.toEquiv
+      map_rel_iff' := by
+        intro a b
+        constructor
+        · intro h
+          have hsp : hHomeo b ⤳ hHomeo a := h
+          have hsp' := hsp.map hHomeo.symm.continuous
+          change hHomeo.symm (hHomeo b) ⤳ hHomeo.symm (hHomeo a) at hsp'
+          rw [hHomeo.symm_apply_apply, hHomeo.symm_apply_apply] at hsp'
+          exact (hsp' : a ≤ b)
+        · intro h
+          have hsp : b ⤳ a := h
+          exact (hsp.map hHomeo.continuous : hHomeo a ≤ hHomeo b) }
+  have hiso : Order.coheight (α := U.toScheme) ⟨z, hzU⟩ =
+      Order.coheight (α := Spec Γ(X, U)) (eOrder ⟨z, hzU⟩) :=
+    (Order.coheight_orderIso eOrder ⟨z, hzU⟩).symm
+  have heq : eOrder ⟨z, hzU⟩ = p := rfl
+  have haff : Order.coheight (α := Spec Γ(X, U)) p =
+      Order.height (α := PrimeSpectrum Γ(X, U))
+        ⟨p.asIdeal, p.isPrime⟩ :=
+    coheight_spec_eq_height_primeSpectrum p
+  have hp' : (⟨p.asIdeal, p.isPrime⟩ : PrimeSpectrum Γ(X, U)) = p := rfl
+  rw [hdim, hopen, hiso, heq, haff, hp']
+
+/-- The dimension of a scheme is the supremum of the dimensions of its stalks. -/
+theorem topologicalKrullDim_eq_iSup_ringKrullDim_stalk (X : Scheme.{u}) :
+    topologicalKrullDim X = ⨆ z : X, ringKrullDim (X.presheaf.stalk z) := by
+  have h : topologicalKrullDim X =
+      ⨆ z : X, (Order.coheight z : WithBot ℕ∞) := by
+    unfold topologicalKrullDim
+    rw [Order.krullDim_eq_of_orderIso (irreducibleSetEquivPoints (α := X))]
+    exact Order.krullDim_eq_iSup_coheight
+  rw [h]
+  exact iSup_congr fun z => (ringKrullDim_stalk_eq_coheight X z).symm
+
+/-- Uniform upper bounds on stalk dimensions bound the scheme dimension. -/
+theorem topologicalKrullDim_le_of_forall_ringKrullDim_stalk_le
+    (X : Scheme.{u}) (d : WithBot ℕ∞)
+    (h : ∀ z : X, ringKrullDim (X.presheaf.stalk z) ≤ d) :
+    topologicalKrullDim X ≤ d := by
+  rw [topologicalKrullDim_eq_iSup_ringKrullDim_stalk X]
+  exact iSup_le h
+
+/-- The dimension of any stalk is bounded by the dimension of the scheme. -/
+theorem ringKrullDim_stalk_le_topologicalKrullDim
+    (X : Scheme.{u}) (z : X) :
+    ringKrullDim (X.presheaf.stalk z) ≤ topologicalKrullDim X := by
+  rw [topologicalKrullDim_eq_iSup_ringKrullDim_stalk X]
+  exact le_iSup (fun z : X => ringKrullDim (X.presheaf.stalk z)) z
+
+/-- A uniform upper bound and a matching stalk witness determine dimension. -/
+theorem topologicalKrullDim_eq_of_le_of_exists_ge
+    (X : Scheme.{u}) (d : WithBot ℕ∞)
+    (hle : ∀ z : X, ringKrullDim (X.presheaf.stalk z) ≤ d)
+    (z₀ : X) (hz₀ : d ≤ ringKrullDim (X.presheaf.stalk z₀)) :
+    topologicalKrullDim X = d :=
+  le_antisymm (topologicalKrullDim_le_of_forall_ringKrullDim_stalk_le X d hle)
+    (hz₀.trans (ringKrullDim_stalk_le_topologicalKrullDim X z₀))
 
 /-- An injective integral extension preserves Krull dimension. -/
 theorem ringKrullDim_eq_of_isIntegral_of_injective
