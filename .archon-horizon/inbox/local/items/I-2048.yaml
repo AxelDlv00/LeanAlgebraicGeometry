@@ -1,13 +1,14 @@
 id: I-2048
 provider: local
 kind: issue
-body: 'Mumford analytic uniformization and blueprint linkage remain
+body: 'Mumford analytic uniformization and exact source linkage remain
 
 
-  Keep this issue open for two genuine residuals: (1) the analytic complex-Lie uniformization
-  existence theorem, and (2) approved minimal frozen-blueprint `\lean`/Form-I attachments
-  under I-2034. The torsion AddEquiv classifications, quotient transport APIs, and
-  source-level Fin (2 * g) index bridge are already resolved.'
+  Keep this issue open for the genuine analytic complex-Lie/holomorphic uniformization
+  existence theorem and remaining exact source attachments for uniformization and
+  torsion once checked declarations exist. The torsion AddEquiv and quotient APIs,
+  Fin (2 * g) bridge, and Form-I link are resolved (commit 855f202ed2); the current
+  interfaces remain explicitly conditional and do not prove existence.'
 labels:
 - agent-ready
 status: open
@@ -18,7 +19,7 @@ audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-08-27T10:50:24.219434+00:00'
-updated_at: '2026-08-31T05:26:12.192354+00:00'
+updated_at: '2026-08-31T09:54:27.713041+00:00'
 metadata:
   provenance:
     run: '0165'
