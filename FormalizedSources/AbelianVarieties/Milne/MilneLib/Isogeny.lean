@@ -870,6 +870,25 @@ theorem Isogeny.kernel_isFinite_flat_surjective
   exact ⟨h.2, isogenyKernelToBase_flat_of_flat f,
     isogenyKernelToBase_surjective_of_surjective f⟩
 
+/- A flat isogeny's kernel is finite, flat, and surjective over the base.  These
+   three properties are stable under pulling the kernel back along any scheme
+   over the base, which packages the geometric-fibre transport needed in the
+   finite-flat characterization. -/
+theorem Isogeny.kernel_baseChange_isFinite_flat_surjective
+    (f : A ⟶ B) [IsMonHom f] [Flat f.left] (h : Isogeny f)
+    {Z : Scheme.{u}} (g : Z ⟶ Spec (.of K)) :
+    IsFinite (pullback.snd (isogenyKernelToBase f) g) ∧
+      Flat (pullback.snd (isogenyKernelToBase f) g) ∧
+      Surjective (pullback.snd (isogenyKernelToBase f) g) := by
+  letI : IsFinite (isogenyKernelToBase f) := h.2
+  letI : Flat (isogenyKernelToBase f) := isogenyKernelToBase_flat_of_flat f
+  letI : Surjective (isogenyKernelToBase f) := by
+    letI : Surjective f.left := h.1
+    exact isogenyKernelToBase_surjective_of_surjective f
+  exact ⟨MorphismProperty.pullback_snd _ _ inferInstance,
+    MorphismProperty.pullback_snd _ _ inferInstance,
+    MorphismProperty.pullback_snd _ _ inferInstance⟩
+
 /- An isogeny whose underlying morphism is already known to be finite remains
    an isogeny after arbitrary base change of the field.  The finite and
    surjective hypotheses are transported by the `Over` pullback functor. -/
