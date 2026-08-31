@@ -189,6 +189,7 @@ theorem overlapAlgEquiv_awayToOverlapRight (z : Away 𝒜 (X 1)) :
   have hp : awayAlgEquiv k fin_one_ne_zero (polyToAway k 1 0 p) = p := by
     exact AlgHom.congr_fun (awayToPoly_comp_polyToAway k fin_one_ne_zero) p
   rw [hp]
+  clear hp
   induction p using Polynomial.induction_on' with
   | add f g hf hg => simp only [map_add, hf, hg]
   | monomial n a =>
