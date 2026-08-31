@@ -62,6 +62,16 @@ def ambientPeriodLatticeSubmodule
   d.periodLattice.comap
     (d.coordinate.toLinearEquiv.restrictScalars ℤ).toLinearMap
 
+/-- The named transported lattice inherits the discrete subtype topology from
+the stored standard-coordinate lattice. -/
+instance ambientPeriodLatticeSubmodule_discreteTopology
+    {V X : Type*} [NormedAddCommGroup V] [NormedSpace ℂ V]
+    [AddCommGroup X] [TopologicalSpace X] {g : ℕ}
+    (d : ComplexVectorLatticeExponentialData V X g) :
+    DiscreteTopology d.ambientPeriodLatticeSubmodule := by
+  letI : DiscreteTopology d.periodLattice := d.periodLatticeDiscrete
+  exact instDiscreteTopologySubtypeMemSubmoduleIntComap ℂ d.periodLattice d.coordinate
+
 /-- The period subgroup in the original tangent-space coordinates. -/
 def ambientPeriodLattice
     {V X : Type*} [NormedAddCommGroup V] [NormedSpace ℂ V]
@@ -263,6 +273,27 @@ theorem ambientPeriodLattice_finrank
     ZLattice.comap_equiv ℂ d.periodLattice d.coordinate.toLinearEquiv
   rw [← e.finrank_eq]
   exact d.toCanonical.periodLattice_finrank
+
+/-- The transported period lattice spans the real tangent space. -/
+theorem ambientPeriodLattice_isZLattice
+    {V X : Type*} [NormedAddCommGroup V] [NormedSpace ℂ V]
+    [AddCommGroup X] [TopologicalSpace X] {g : ℕ}
+    (d : ComplexVectorLatticeExponentialData V X g) :
+    IsZLattice ℝ d.ambientPeriodLatticeSubmodule := by
+  letI : DiscreteTopology d.periodLattice := d.periodLatticeDiscrete
+  letI : IsZLattice ℝ d.periodLattice := d.periodLatticeFull
+  let e : V ≃ₗ[ℝ] GenusComplexVector g :=
+    d.coordinate.toLinearEquiv.restrictScalars ℝ
+  let ce : V ≃L[ℝ] GenusComplexVector g :=
+    ContinuousLinearEquiv.mk e d.coordinate.continuous d.coordinate.symm.continuous
+  let L : Submodule ℤ V := ZLattice.comap ℝ d.periodLattice ce.toLinearMap
+  letI : DiscreteTopology L :=
+    instDiscreteTopologySubtypeMemSubmoduleIntComap ℝ d.periodLattice ce
+  have hL : IsZLattice ℝ L := instIsZLatticeComap ℝ d.periodLattice ce
+  have hEq : d.ambientPeriodLatticeSubmodule = L := by
+    ext v
+    simp [ambientPeriodLatticeSubmodule, L, ce, e, ZLattice.comap]
+  simpa only [hEq] using hL
 
 /-- Torsion cardinality for an arbitrary tangent-space lattice, once the target
 has a genus-torus uniformization. -/
