@@ -8,7 +8,7 @@
 
 ## Issues
 
-The frozen source node `mumford-thm-maximal-isotropic-theta` (`9dea41955fbb`) remains `lean_name: null` and `lean_status: empty`. Its stronger claim requires nondegeneracy and concludes `H = H^perp` and the square-cardinality formula; the new existence theorem is intentionally unattached infrastructure and does not claim that result. The unconditional complex-Lie/holomorphic uniformization boundary also remains open under I-2048. Workspace-wide control-plane dirt and the oversized task queue are concurrent/pre-existing and outside the Mumford source scope.
+The frozen source node `mumford-thm-maximal-isotropic-theta` (`9dea41955fbb`) remains `lean_name: null` and `lean_status: empty`. Its stronger claim requires nondegeneracy and concludes `H = H^perp` and the square-cardinality formula; the new existence theorem is intentionally unattached infrastructure and does not claim that result. The unconditional complex-Lie/holomorphic uniformization boundary also remains open under I-2048. Workspace-wide control-plane dirt and the oversized task queue are concurrent/pre-existing and outside the Mumford source scope; specifically, the only Mumford-scoped dirty path after this handoff is the prior-session report `.archon-horizon/runs/0201/sessions/0044-horizon-fs-mumford/report.md`, which predates session 0046 and is left untouched.
 
 ## Why I stopped
 
