@@ -253,6 +253,113 @@ theorem rigidity_constant_of_two_axes
       rw [← Category.assoc]
       rw [toUnit_unique (snd X Y ≫ toUnit Y) (toUnit (X ⊗ Y))]
 
+/- The two-axis rigidity statement descends from an algebraic closure.  The
+   hypotheses are deliberately stated on the original factors: properness of
+   `X` supplies its finite-type instance, while geometric integrality of both
+   factors gives the integral/reduced product after scalar extension. -/
+theorem rigidity_constant_of_two_axes_arbitraryField
+    {K : Type u} [Field K]
+    {X Y Z : Over (Spec (.of K))}
+    [IsProper X.hom]
+    [GeometricallyIntegral X.hom]
+    [GeometricallyIntegral Y.hom]
+    [LocallyOfFiniteType Y.hom]
+    [IsSeparated Z.hom]
+    (f : (X ⊗ Y) ⟶ Z)
+    (x₀ : 𝟙_ (Over (Spec (.of K))) ⟶ X)
+    (y₀ : 𝟙_ (Over (Spec (.of K))) ⟶ Y)
+    (z₀ : 𝟙_ (Over (Spec (.of K))) ⟶ Z)
+    (h₁ : lift (𝟙 X) (toUnit X ≫ y₀) ≫ f = toUnit X ≫ z₀)
+    (h₂ : lift (toUnit Y ≫ x₀) (𝟙 Y) ≫ f = toUnit Y ≫ z₀) :
+    f = toUnit (X ⊗ Y) ≫ z₀ := by
+  letI : LocallyOfFiniteType X.hom := IsProper.toLocallyOfFiniteType
+  let b := Spec.map (CommRingCat.ofHom <| algebraMap K (AlgebraicClosure K))
+  let F := Over.pullback b
+  let X' := F.obj X
+  let Y' := F.obj Y
+  let Z' := F.obj Z
+  let x₀' := Functor.LaxMonoidal.ε F ≫ F.map x₀
+  let y₀' := Functor.LaxMonoidal.ε F ≫ F.map y₀
+  let z₀' := Functor.LaxMonoidal.ε F ≫ F.map z₀
+  let fmap' := Functor.LaxMonoidal.μ F X Y ≫ F.map f
+  let s₁ := lift (𝟙 X) (toUnit X ≫ y₀)
+  let s₂ := lift (toUnit Y ≫ x₀) (𝟙 Y)
+  let s₁' := lift (𝟙 X') (toUnit X' ≫ y₀')
+  let s₂' := lift (toUnit Y' ≫ x₀') (𝟙 Y')
+  letI : IsProper X'.hom := by
+    change IsProper (Limits.pullback.snd X.hom b)
+    infer_instance
+  letI : GeometricallyIntegral X'.hom := by
+    change GeometricallyIntegral (Limits.pullback.snd X.hom b)
+    infer_instance
+  letI : GeometricallyIntegral Y'.hom := by
+    change GeometricallyIntegral (Limits.pullback.snd Y.hom b)
+    infer_instance
+  letI : LocallyOfFiniteType X'.hom := by
+    change LocallyOfFiniteType (Limits.pullback.snd X.hom b)
+    infer_instance
+  letI : LocallyOfFiniteType Y'.hom := by
+    change LocallyOfFiniteType (Limits.pullback.snd Y.hom b)
+    infer_instance
+  letI : IsSeparated Z'.hom := by
+    change IsSeparated (Limits.pullback.snd Z.hom b)
+    infer_instance
+  haveI : GeometricallyIrreducible (X' ⊗ Y').hom := by
+    rw [Over.tensorObj_hom]
+    exact GeometricallyIrreducible.comp (pullback.fst X'.hom Y'.hom) X'.hom
+  haveI : LocallyOfFiniteType (X' ⊗ Y').hom := by
+    rw [Over.tensorObj_hom]
+    exact AlgebraicGeometry.locallyOfFiniteType_comp
+      (pullback.fst X'.hom Y'.hom) X'.hom
+  letI : IsIntegral (X' ⊗ Y').left :=
+    isIntegral_tensorObj_left_of_geometricallyIntegral (X := X') (Y := Y')
+  haveI : IsReduced (X' ⊗ Y').left := inferInstance
+  have hy : toUnit X' ≫ y₀' = F.map (toUnit X ≫ y₀) := by
+    dsimp [X', y₀']
+    rw [Functor.Monoidal.toUnit_ε_assoc]
+    simp [← Functor.map_comp]
+  have hx : toUnit Y' ≫ x₀' = F.map (toUnit Y ≫ x₀) := by
+    dsimp [Y', x₀']
+    rw [Functor.Monoidal.toUnit_ε_assoc]
+    simp [← Functor.map_comp]
+  have hs₁ : s₁' ≫ Functor.LaxMonoidal.μ F X Y = F.map s₁ := by
+    dsimp [s₁', s₁, X', Y']
+    rw [show (𝟙 (F.obj X)) = F.map (𝟙 X) by simp, hy]
+    exact Functor.Monoidal.lift_μ F (𝟙 X) (toUnit X ≫ y₀)
+  have hs₂ : s₂' ≫ Functor.LaxMonoidal.μ F X Y = F.map s₂ := by
+    dsimp [s₂', s₂, X', Y']
+    rw [hx, show (𝟙 (F.obj Y)) = F.map (𝟙 Y) by simp]
+    exact Functor.Monoidal.lift_μ F (toUnit Y ≫ x₀) (𝟙 Y)
+  have h₁' : s₁' ≫ fmap' = toUnit X' ≫ z₀' := by
+    dsimp [fmap']
+    rw [← Category.assoc, hs₁, ← Functor.map_comp, h₁]
+    rw [Functor.map_comp]
+    dsimp [z₀', Z']
+    rw [Functor.Monoidal.toUnit_ε_assoc]
+  have h₂' : s₂' ≫ fmap' = toUnit Y' ≫ z₀' := by
+    dsimp [fmap']
+    rw [← Category.assoc, hs₂, ← Functor.map_comp, h₂]
+    rw [Functor.map_comp]
+    dsimp [z₀', Z']
+    rw [Functor.Monoidal.toUnit_ε_assoc]
+  have hu := rigidity_constant_of_two_axes fmap' x₀' y₀' z₀' h₁' h₂'
+  apply F.map_injective
+  apply (cancel_epi (Functor.LaxMonoidal.μ F X Y)).mp
+  dsimp [fmap'] at hu
+  rw [hu]
+  dsimp [z₀', X', Y']
+  rw [Functor.map_comp]
+  have hμunit :
+      Functor.LaxMonoidal.μ F X Y ≫ toUnit (F.obj (X ⊗ Y)) =
+        toUnit (F.obj X ⊗ F.obj Y) := by
+    exact toUnit_unique _ _
+  have hunit :
+      toUnit (F.obj X ⊗ F.obj Y) ≫ Functor.LaxMonoidal.ε F =
+        Functor.LaxMonoidal.μ F X Y ≫ F.map (toUnit (X ⊗ Y)) := by
+    rw [← hμunit]
+    simp only [Category.assoc, Functor.Monoidal.toUnit_ε]
+  simpa only [Category.assoc] using congrArg (fun q => q ≫ F.map z₀) hunit
+
 end RigidityChain
 
 
