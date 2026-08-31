@@ -138,11 +138,13 @@ $n_X^{-1}(0)$ at $0$, contradicting injectivity of $(dn_X)_0$.
 
 \begin{lemma}[Rigidity Lemma, Form I]
 \label{mumford-lem-rigidity-form-I}
+\lean{Mumford.GroupScheme.rigidity_lemma_of_geometricallyIntegral}
 \dcref{M:ch2:II.4}
 Let $X$ be complete, $Y,Z$ varieties, and $f:X\times Y\to Z$ a morphism such
 that $f(X\times\{y_0\})=\{z_0\}$. Then $f=g\circ p_2$ for a morphism
 $g:Y\to Z$.
 \source{mumford-abelian-varieties:page-0054}
+\leanok
 \end{lemma}
 \begin{proof}
 Choose $x_0\in X$ and set $g(y)=f(x_0,y)$. Let $U$ be an affine neighborhood
@@ -150,6 +152,7 @@ of $z_0$, $F=Z-U$, and $G=p_2(f^{-1}(F))$. Since $X$ is complete, $G$ is
 closed; since $y_0\notin G$, $V=Y-G$ is nonempty open. For $y\in V$, the
 complete variety $X\times\{y\}$ maps into affine $U$, hence to one point.
 Thus $f(x,y)=f(x_0,y)=g(p_2(x,y))$ on a nonempty open, and therefore everywhere.
+\leanok
 \end{proof}
 
 \begin{corollary}[Morphisms are homomorphisms up to translation]
