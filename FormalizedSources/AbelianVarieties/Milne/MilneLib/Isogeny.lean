@@ -957,6 +957,38 @@ theorem isogenyKernelOver_baseChangeIso_hom_snd
       (Over.pullback b).map (pullback.snd f (η[B])) := by
   exact pullbackComparison_comp_snd (Over.pullback b) f (η[B])
 
+/- The slice kernel has the same underlying finite morphism as the scheme
+   kernel, via the pullback comparison isomorphism for the forgetful functor. -/
+theorem Isogeny.kernelOver_isFinite
+    (f : A ⟶ B) [IsMonHom f] (h : Isogeny f) :
+    IsFinite (isogenyKernelOver f).hom := by
+  let G := Over.forget (Spec (.of K))
+  let e := PreservesPullback.iso G f (η[B])
+  have he : e.hom ≫ pullback.snd f.left (η[B].left) =
+      G.map (pullback.snd f (η[B])) := by
+    exact pullbackComparison_comp_snd G f (η[B])
+  have hproj : (pullback.snd f (η[B])).left = (isogenyKernelOver f).hom := by
+    change (pullback.snd f (η[B])).left = (pullback f (η[B])).hom
+    exact Over.w (pullback.snd f (η[B]))
+  have he' : e.hom ≫ pullback.snd f.left (η[B].left) =
+      (isogenyKernelOver f).hom := by
+    rw [he, Over.forget_map, hproj]
+  unfold Isogeny at h
+  change Surjective f.left ∧ IsFinite (pullback.snd f.left (η[B].left)) at h
+  rw [← he']
+  exact (MorphismProperty.cancel_left_of_respectsIso (P := @IsFinite) e.hom _).mpr h.2
+
+/- Finiteness of the slice kernel is preserved by arbitrary base change of the
+   field through the `Over.pullback` functor. -/
+theorem Isogeny.kernelOver_baseChange_isFinite
+    (f : A ⟶ B) [IsMonHom f] (h : Isogeny f)
+    {L : Type u} [Field L]
+    (b : Spec (.of L) ⟶ Spec (.of K)) :
+    IsFinite ((Over.pullback b).map (toUnit (isogenyKernelOver f))).left := by
+  have hbase : IsFinite (isogenyKernelOver f).hom :=
+    Isogeny.kernelOver_isFinite f h
+  exact MorphismProperty.overPullbackMap b (toUnit (isogenyKernelOver f)) hbase
+
 /- An isogeny whose underlying morphism is already known to be finite remains
    an isogeny after arbitrary base change of the field.  The finite and
    surjective hypotheses are transported by the `Over` pullback functor. -/
