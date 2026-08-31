@@ -54,13 +54,27 @@ structure ComplexVectorLatticeExponentialData
 
 namespace ComplexVectorLatticeExponentialData
 
+/-- The integral period lattice in the original tangent-space coordinates. -/
+def ambientPeriodLatticeSubmodule
+    {V X : Type*} [NormedAddCommGroup V] [NormedSpace ℂ V]
+    [AddCommGroup X] [TopologicalSpace X] {g : ℕ}
+    (d : ComplexVectorLatticeExponentialData V X g) : Submodule ℤ V :=
+  d.periodLattice.comap
+    (d.coordinate.toLinearEquiv.restrictScalars ℤ).toLinearMap
+
 /-- The period subgroup in the original tangent-space coordinates. -/
 def ambientPeriodLattice
     {V X : Type*} [NormedAddCommGroup V] [NormedSpace ℂ V]
     [AddCommGroup X] [TopologicalSpace X] {g : ℕ}
     (d : ComplexVectorLatticeExponentialData V X g) : AddSubgroup V :=
-  (d.periodLattice.comap
-    (d.coordinate.toLinearEquiv.restrictScalars ℤ).toLinearMap).toAddSubgroup
+  d.ambientPeriodLatticeSubmodule.toAddSubgroup
+
+theorem ambientPeriodLatticeSubmodule_toAddSubgroup
+    {V X : Type*} [NormedAddCommGroup V] [NormedSpace ℂ V]
+    [AddCommGroup X] [TopologicalSpace X] {g : ℕ}
+    (d : ComplexVectorLatticeExponentialData V X g) :
+    d.ambientPeriodLatticeSubmodule.toAddSubgroup = d.ambientPeriodLattice :=
+  rfl
 
 @[simp]
 theorem ambientPeriodLattice_mem_iff
@@ -68,7 +82,7 @@ theorem ambientPeriodLattice_mem_iff
     [AddCommGroup X] [TopologicalSpace X] {g : ℕ}
     (d : ComplexVectorLatticeExponentialData V X g) (v : V) :
     v ∈ d.ambientPeriodLattice ↔ d.coordinate v ∈ d.periodLattice := by
-  simp [ambientPeriodLattice]
+  simp [ambientPeriodLattice, ambientPeriodLatticeSubmodule]
 
 /-- The kernel field in terms of the named ambient period subgroup. -/
 theorem exponential_ker
@@ -237,6 +251,18 @@ def toCanonical
   surjective := d.canonicalExponential_surjective
   continuous := d.canonicalExponential_continuous
   kernel := d.canonicalExponential_kernel
+
+/-- The transported period lattice has integral rank twice the complex
+dimension of the tangent space. -/
+theorem ambientPeriodLattice_finrank
+    {V X : Type*} [NormedAddCommGroup V] [NormedSpace ℂ V]
+    [AddCommGroup X] [TopologicalSpace X] {g : ℕ}
+    (d : ComplexVectorLatticeExponentialData V X g) :
+    Module.finrank ℤ d.ambientPeriodLatticeSubmodule = 2 * g := by
+  let e : d.periodLattice ≃ₗ[ℤ] d.ambientPeriodLatticeSubmodule :=
+    ZLattice.comap_equiv ℂ d.periodLattice d.coordinate.toLinearEquiv
+  rw [← e.finrank_eq]
+  exact d.toCanonical.periodLattice_finrank
 
 /-- Torsion cardinality for an arbitrary tangent-space lattice, once the target
 has a genus-torus uniformization. -/
