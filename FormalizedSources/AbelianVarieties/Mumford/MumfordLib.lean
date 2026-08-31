@@ -14,6 +14,7 @@ import MumfordLib.ComplexUniformization
 import MumfordLib.ComplexUniformizationExistence
 import MumfordLib.ComplexLattice
 import MumfordLib.ComplexVectorLattice
+import MumfordLib.ComplexVectorLatticeTopology
 import MumfordLib.ArbitraryLatticeTorsion
 import MumfordLib.ArbitraryLatticeFiniteTorsion
 import MumfordLib.DivisionFiber
