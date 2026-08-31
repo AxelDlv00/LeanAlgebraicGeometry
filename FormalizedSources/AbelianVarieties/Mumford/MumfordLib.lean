@@ -19,6 +19,7 @@ import MumfordLib.ComplexVectorLatticeTopology
 import MumfordLib.ArbitraryLatticeTorsion
 import MumfordLib.ArbitraryLatticeFiniteTorsion
 import MumfordLib.DivisionFiber
+import MumfordLib.DivisionFiberTransport
 import MumfordLib.RigidityCorollaries
 import MumfordLib.QuotientTopology
 import MumfordLib.UniformizedTopology
