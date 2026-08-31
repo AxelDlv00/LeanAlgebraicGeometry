@@ -63,6 +63,7 @@ import HartshorneLib.Chapter4TwoLattice
 import HartshorneLib.Chapter4CechTwoCover
 import HartshorneLib.Chapter4TwoCoverFiniteness
 import HartshorneLib.Chapter4FiniteMapSections
+import HartshorneLib.Chapter4FiniteMapLaurent
 import HartshorneLib.Chapter4LaurentLadder
 import HartshorneLib.Chapter4P1Geometry
 import HartshorneLib.Chapter4ProductFormulaCohomology
