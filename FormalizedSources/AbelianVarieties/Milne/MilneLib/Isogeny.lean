@@ -892,6 +892,21 @@ theorem Isogeny.baseChange_of_finite
   change Isogeny (F.map f)
   exact Isogeny.of_surjective_of_finite (F.map f) inferInstance
 
+/- Over an algebraically closed base, the established finite-map theorem
+   supplies the hypothesis required by `baseChange_of_finite`. -/
+theorem Isogeny.baseChange_of_isAbelianVariety
+    {K L : Type u} [Field K] [IsAlgClosed K] [Field L]
+    {A B : Over (Spec (.of K))} [GrpObj A] [GrpObj B]
+    (hA : IsAbelianVariety A) (hB : IsAbelianVariety B)
+    (f : A ⟶ B) [IsMonHom f] (h : Isogeny f)
+    (b : Spec (.of L) ⟶ Spec (.of K)) :
+    let F := Over.pullback b
+    letI : GrpObj (F.obj A) := Functor.grpObjObj
+    letI : GrpObj (F.obj B) := Functor.grpObjObj
+    Isogeny (F.map f) := by
+  letI : IsFinite f.left := Isogeny.isFinite_of_isAbelianVariety hA hB f h
+  exact Isogeny.baseChange_of_finite f h b
+
 /- The finite-map converse can be descended from the algebraic closure.  The
    explicit pullback fibre is the map obtained by pulling `f.left` back along
    the faithfully flat cover of `B` induced by
