@@ -186,11 +186,18 @@ theorem overlapAlgEquiv_awayToOverlapRight (z : Away 𝒜 (X 1)) :
       Polynomial.aeval (LaurentPolynomial.T (-1) : LaurentPolynomial k)
         (awayAlgEquiv k fin_one_ne_zero z) := by
   obtain ⟨p, rfl⟩ := polyToAway_surjective k fin_one_ne_zero z
-  rw [awayAlgEquiv_polyToAway]
+  have hp : awayAlgEquiv k fin_one_ne_zero (polyToAway k 1 0 p) = p := by
+    exact AlgHom.congr_fun (awayToPoly_comp_polyToAway k fin_one_ne_zero) p
+  rw [hp]
   induction p using Polynomial.induction_on' with
   | add f g hf hg => simp only [map_add, hf, hg]
   | monomial n a =>
-    simp only [polyToAway_monomial, map_mul, map_pow,
+    have hmon : polyToAway k 1 0 (Polynomial.monomial n a) =
+        algebraMap k _ a * chartCoord k 1 0 ^ n := by
+      change Polynomial.aeval (chartCoord k 1 0) (Polynomial.monomial n a) = _
+      exact Polynomial.aeval_monomial _
+    rw [hmon]
+    simp only [map_mul, map_pow,
       overlapAlgEquiv_awayToOverlapRight_chartCoord, awayToOverlapRight_algebraMap,
       AlgEquiv.commutes, Polynomial.aeval_monomial]
 
