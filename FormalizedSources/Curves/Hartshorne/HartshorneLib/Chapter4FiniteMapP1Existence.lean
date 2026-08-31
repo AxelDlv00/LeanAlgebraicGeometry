@@ -6,6 +6,7 @@ Authors: The Hartshorne Contributors
 
 import HartshorneLib.Chapter1CurveStalks
 import HartshorneLib.Chapter4P1Points
+import HartshorneLib.Chapter4P1Topology
 import HartshorneLib.Chapter4MapToP1
 
 /-!
@@ -248,6 +249,26 @@ theorem exists_isFinite_isDominant_toP1_of_transcendental
       hclosedP1 zP1 hzP1
   letI : LocallyQuasiFinite π := hqf
   exact ⟨π, isFinite_toP1_of_locallyQuasiFinite f π hcomp, hdom, hcomp⟩
+
+/-- A smooth proper integral curve over a field admits a finite dominant map to `P1`.
+
+The transcendental function and the elementary point-topology certificates are supplied by
+the Hartshorne library itself; this is the source-facing entry point for the construction. -/
+theorem exists_isFinite_isDominant_toP1
+    [IsIntegral X] [IsProper f] [SmoothOfRelativeDimension 1 f] :
+    ∃ π : X ⟶ P1 k, IsFinite π ∧ IsDominant π ∧
+      π ≫ P1.structureMap k = f := by
+  letI : LocallyOfFiniteType (P1.structureMap k) := by
+    infer_instance
+  letI : IsSeparated (P1.structureMap k) := by
+    infer_instance
+  letI : Scheme.IsSeparated (P1 k) := by infer_instance
+  obtain ⟨f₀, hf₀⟩ := Hartshorne.SmoothOfRelativeDimension.exists_transcendental_functionField f
+  obtain ⟨zP1, hzP1⟩ := P1.exists_ne_genericPoint k
+  have hclosedP1 : ∀ y : P1 k, y ≠ genericPoint (P1 k) →
+      IsClosed ({y} : Set (P1 k)) := fun y hy => P1.isClosed_singleton_of_ne_genericPoint k hy
+  exact exists_isFinite_isDominant_toP1_of_transcendental f f₀ hf₀
+    hclosedP1 zP1 hzP1
 
 end Main
 
