@@ -50,6 +50,51 @@ theorem comp_multiplicationBy {X : Over (Spec (.of K))}
   rw [hp']
   simpa using (CategoryTheory.MonObj.comp_pow (𝟙 A : A ⟶ A) n a)
 
+/- The powers used to define multiplication-by-`n` inherit the expected
+   additive and compositional laws.  Keeping these laws at the categorical
+   level avoids choosing coordinates on the group scheme. -/
+@[simp]
+theorem multiplicationBy_zero :
+    multiplicationBy A 0 = (toUnit A ≫ η[A]) := by
+  change ((1 : Grp.mk A ⟶ Grp.mk A).hom.hom) = _
+  rw [CategoryTheory.Grp.Hom.hom_one]
+  rfl
+
+@[simp]
+theorem multiplicationBy_one :
+    multiplicationBy A 1 = 𝟙 A := by
+  change (((𝟙 (Grp.mk A) : Grp.mk A ⟶ Grp.mk A) ^ 1).hom.hom) = _
+  simp
+
+theorem multiplicationBy_add (m n : ℕ) :
+    multiplicationBy A (m + n) =
+      multiplicationBy A m * multiplicationBy A n := by
+  change ((((𝟙 (Grp.mk A) : Grp.mk A ⟶ Grp.mk A) ^ (m + n)).hom.hom)) =
+    ((((𝟙 (Grp.mk A) : Grp.mk A ⟶ Grp.mk A) ^ m).hom.hom) *
+      (((𝟙 (Grp.mk A) : Grp.mk A ⟶ Grp.mk A) ^ n).hom.hom))
+  have hp := congrArg (fun q : Grp.mk A ⟶ Grp.mk A => q.hom.hom)
+    (pow_add (𝟙 (Grp.mk A) : Grp.mk A ⟶ Grp.mk A) m n)
+  exact hp
+
+theorem multiplicationBy_comp (m n : ℕ) :
+    multiplicationBy A m ≫ multiplicationBy A n =
+      multiplicationBy A (m * n) := by
+  rw [comp_multiplicationBy]
+  let q : Grp.mk A ⟶ Grp.mk A :=
+    (𝟙 (Grp.mk A) : Grp.mk A ⟶ Grp.mk A) ^ m
+  have hp := CategoryTheory.Grp.Hom.hom_pow q n
+  have hp' := congrArg
+    (fun r : (Grp.toMon (Grp.mk A) ⟶ Grp.toMon (Grp.mk A)) => r.hom) hp
+  change ((((𝟙 (Grp.mk A) : Grp.mk A ⟶ Grp.mk A) ^ m).hom.hom) ^ n) =
+    (((𝟙 (Grp.mk A) : Grp.mk A ⟶ Grp.mk A) ^ (m * n)).hom.hom)
+  calc
+    ((((𝟙 (Grp.mk A) : Grp.mk A ⟶ Grp.mk A) ^ m).hom.hom) ^ n) =
+        (q.hom ^ n).hom := by simp [q]
+    _ = (q ^ n).hom.hom := hp'.symm
+    _ = (((𝟙 (Grp.mk A) : Grp.mk A ⟶ Grp.mk A) ^ (m * n)).hom.hom) := by
+      simpa [q] using (congrArg (fun r : Grp.mk A ⟶ Grp.mk A => r.hom.hom)
+        (pow_mul (𝟙 (Grp.mk A) : Grp.mk A ⟶ Grp.mk A) m n)).symm
+
 /-- The `n`-torsion group scheme, as the kernel fibre of multiplication-by-`n`.
 -/
 noncomputable def nTorsion (A : Over (Spec (.of K)))
