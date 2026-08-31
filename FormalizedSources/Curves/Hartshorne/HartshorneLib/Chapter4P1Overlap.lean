@@ -20,7 +20,8 @@ chart identifications, and the bundled chart package.
 * section-level versions of all of the above (`P1.chartSectionsEquiv₀/₁`,
   `P1.overlapSectionsEquiv`, `P1.overlapSectionsEquiv_res_left/right`);
 * the package `Hartshorne.LaurentChartPair` with canonical term
-  `AlgebraicGeometry.P1.laurentChartPair k`, and the span property `LaurentChartPair.exists_res_add_res`
+  `AlgebraicGeometry.P1.laurentChartPair k`, and the span property
+  `LaurentChartPair.exists_res_add_res`
   for any such package. This package is exactly what the two-lattice finiteness argument
   for `H¹(C, 𝒪_C)` consumes.
 -/
@@ -341,7 +342,8 @@ end P1
 whose overlap section ring is the Laurent polynomial ring, and such that the two restriction
 maps become `t ↦ T` and `t ↦ T⁻¹`.
 
-The canonical example is `AlgebraicGeometry.P1.laurentChartPair k` (the two standard charts). The Laurent span
+The canonical example is `AlgebraicGeometry.P1.laurentChartPair k` (the two standard charts).
+The Laurent span
 property `LaurentChartPair.exists_res_add_res` holds for any such pair; this package is
 exactly what the two-lattice finiteness argument for `H¹(C, 𝒪_C)` consumes. -/
 structure LaurentChartPair (k : Type u) [Field k] where
