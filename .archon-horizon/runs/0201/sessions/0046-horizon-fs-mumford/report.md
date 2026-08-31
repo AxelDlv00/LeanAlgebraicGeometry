@@ -3,6 +3,7 @@
 - Added `Mumford.ThetaExtension.exists_isMaximalIsotropic` in [ThetaIsotropic.lean](/home/axel/LeanAlgebraicGeometry-Horizon/FormalizedSources/AbelianVarieties/Mumford/MumfordLib/ThetaIsotropic.lean:274). For finite `K`, finite maximality of `AddSubgroup K` extends the bottom isotropic subgroup to a maximal isotropic witness; no nondegeneracy assumption is hidden in this auxiliary result. Source commit: `4a24851fca`.
 - Synchronized the configured frozen blueprint and `MumfordLib`; the graph is fresh at 814 nodes (598 Lean, 216 TeX), 169 edges, and `stale=0`. The generated snapshot is committed as `5c08f881b5`.
 - Post-edit LSP diagnostics, focused kernel check, and `lean_verify` pass with no warnings; the audit reports only Lean's standard axioms. Full `horizon check`/lake build passes all 3,655 jobs. No new `sorry`, `admit`, or project axiom was introduced.
+- An initial focused check from the workspace root used the member-project path and failed to resolve `MumfordLib`; rerunning from the Mumford project with `MumfordLib/ThetaIsotropic.lean` passed.
 - Ground and janitor checkpoints found the scoped commits clean. The task and I-2048 received concise handoff comments; no unread conversations remain.
 
 ## Issues
