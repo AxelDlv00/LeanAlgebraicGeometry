@@ -969,4 +969,180 @@ theorem Isogeny.of_surjective_of_algebraicClosure_baseChange
     IsFinite.of_isProper_of_faithfullyFlat_baseChange p f.left hf
   exact Isogeny.of_surjective_of_finite f hs
 
+/- Pullback-pasting transports finiteness of the map produced by the `Over`
+   pullback functor to the iterated pullback fibre used by the descent
+   criterion.  The explicit isomorphism keeps the categorical identifications
+   transparent to elaboration. -/
+theorem isFinite_overPullbackMap_to_fibre
+    {K : Type u} [Field K]
+    {A B : Over (Spec (.of K))} [GrpObj A] [GrpObj B]
+    (f : A ⟶ B) [IsMonHom f]
+    {L : Type u} [Field L]
+    (b : Spec (.of L) ⟶ Spec (.of K)) :
+    IsFinite ((Over.pullback b).map f).left →
+      IsFinite (pullback.fst (pullback.fst B.hom b) f.left) := by
+  intro hq
+  have hcond :
+      (pullback.fst A.hom b ≫ f.left) ≫ B.hom =
+        pullback.snd A.hom b ≫ b := by
+    rw [Category.assoc, CategoryTheory.Over.w f]
+    exact pullback.condition
+  let q : pullback A.hom b ⟶ pullback B.hom b :=
+    pullback.lift (pullback.fst A.hom b ≫ f.left) (pullback.snd A.hom b)
+      hcond
+  have hq' : IsFinite q := by
+    change IsFinite q at hq
+    exact hq
+  let p : pullback B.hom b ⟶ B.left := pullback.fst B.hom b
+  let e1 := pullbackRightPullbackFstIso B.hom b f.left
+  let e2 := pullbackSymmetry f.left p
+  let c : pullback A.hom b ≅ pullback (f.left ≫ B.hom) b :=
+    pullback.congrHom (Over.w f).symm rfl
+  let d := c ≪≫ e1.symm ≪≫ e2
+  have he2_fst : e2.hom ≫ pullback.fst p f.left = pullback.snd f.left p := by
+    simp [e2, p]
+  have he1_inv_snd_fst :
+      e1.inv ≫ pullback.snd f.left p ≫ pullback.fst B.hom b =
+        pullback.fst (f.left ≫ B.hom) b ≫ f.left := by
+    simp [e1, p]
+  have he1_inv_snd_snd :
+      e1.inv ≫ pullback.snd f.left p ≫ pullback.snd B.hom b =
+        pullback.snd (f.left ≫ B.hom) b := by
+    simp [e1, p]
+  have hc_fst :
+      c.hom ≫ pullback.fst (f.left ≫ B.hom) b = pullback.fst A.hom b := by
+    rw [pullback.congrHom_hom]
+    change pullback.lift (pullback.fst A.hom b) (pullback.snd A.hom b) _ ≫
+      pullback.fst (f.left ≫ B.hom) b = _
+    exact pullback.lift_fst _ _ _
+  have hc_snd :
+      c.hom ≫ pullback.snd (f.left ≫ B.hom) b = pullback.snd A.hom b := by
+    rw [pullback.congrHom_hom]
+    change pullback.lift (pullback.fst A.hom b) (pullback.snd A.hom b) _ ≫
+      pullback.snd (f.left ≫ B.hom) b = _
+    exact pullback.lift_snd _ _ _
+  have hm_fst :
+      q ≫ pullback.fst B.hom b = pullback.fst A.hom b ≫ f.left := by
+    dsimp [q]
+    exact pullback.lift_fst _ _ _
+  have hm_snd :
+      q ≫ pullback.snd B.hom b = pullback.snd A.hom b := by
+    dsimp [q]
+    exact pullback.lift_snd _ _ _
+  have he2_fst_assoc :
+      e2.hom ≫ pullback.fst p f.left ≫ pullback.fst B.hom b =
+        pullback.snd f.left p ≫ pullback.fst B.hom b := by
+    rw [← Category.assoc, he2_fst]
+  have he2_fst_assoc_snd :
+      e2.hom ≫ pullback.fst p f.left ≫ pullback.snd B.hom b =
+        pullback.snd f.left p ≫ pullback.snd B.hom b := by
+    rw [← Category.assoc, he2_fst]
+  have he : d.hom ≫ pullback.fst p f.left = q := by
+    apply pullback.hom_ext
+    · calc
+        d.hom ≫ pullback.fst p f.left ≫ pullback.fst B.hom b
+            = c.hom ≫ e1.inv ≫ e2.hom ≫ pullback.fst p f.left ≫
+                pullback.fst B.hom b := by
+                  simp [d, Iso.trans_hom, Category.assoc]
+        _ = c.hom ≫ e1.inv ≫ pullback.snd f.left p ≫
+              pullback.fst B.hom b := by rw [he2_fst_assoc]
+        _ = c.hom ≫ pullback.fst (f.left ≫ B.hom) b ≫ f.left := by
+              rw [he1_inv_snd_fst]
+        _ = pullback.fst A.hom b ≫ f.left := by
+              change (c.hom ≫ pullback.fst (f.left ≫ B.hom) b) ≫ f.left = _
+              rw [hc_fst]
+        _ = q ≫ pullback.fst B.hom b := by rw [← hm_fst]
+    · calc
+        d.hom ≫ pullback.fst p f.left ≫ pullback.snd B.hom b
+            = c.hom ≫ e1.inv ≫ e2.hom ≫ pullback.fst p f.left ≫
+                pullback.snd B.hom b := by
+                  simp [d, Iso.trans_hom, Category.assoc]
+        _ = c.hom ≫ e1.inv ≫ pullback.snd f.left p ≫
+              pullback.snd B.hom b := by rw [he2_fst_assoc_snd]
+        _ = c.hom ≫ pullback.snd (f.left ≫ B.hom) b := by
+              rw [he1_inv_snd_snd]
+        _ = pullback.snd A.hom b := by
+              rw [hc_snd]
+        _ = q ≫ pullback.snd B.hom b := by rw [← hm_snd]
+  apply (MorphismProperty.cancel_left_of_respectsIso (P := @IsFinite) d.hom
+    (pullback.fst p f.left)).mp
+  rw [he]
+  exact hq'
+
+/- Finiteness of an isogeny after algebraic-closure base change descends to
+   the original morphism.  This is the finite-map half of the geometric
+   isogeny criterion and does not require a separate surjectivity hypothesis. -/
+theorem finite_of_algebraicClosure_baseChange_isogeny
+    {K : Type u} [Field K]
+    {A B : Over (Spec (.of K))} [GrpObj A] [GrpObj B]
+    (hA : IsAbelianVariety A) (hB : IsAbelianVariety B)
+    (f : A ⟶ B) [IsMonHom f]
+    (hgeom :
+      let F := Over.pullback
+        (Spec.map (CommRingCat.ofHom <| algebraMap K (AlgebraicClosure K)))
+      letI : GrpObj (F.obj A) := Functor.grpObjObj
+      letI : GrpObj (F.obj B) := Functor.grpObjObj
+      Isogeny (F.map f)) :
+    IsFinite f.left := by
+  let b : Spec (.of (AlgebraicClosure K)) ⟶ Spec (.of K) :=
+    Spec.map (CommRingCat.ofHom <| algebraMap K (AlgebraicClosure K))
+  let F := Over.pullback b
+  letI : GrpObj (F.obj A) := Functor.grpObjObj
+  letI : GrpObj (F.obj B) := Functor.grpObjObj
+  have hgeom' : Isogeny (F.map f) := by
+    simpa [F, b] using hgeom
+  have hA' : IsAbelianVariety (F.obj A) := by
+    exact hA.baseChange b
+  have hB' : IsAbelianVariety (F.obj B) := by
+    exact hB.baseChange b
+  letI : IsFinite (F.map f).left :=
+    Isogeny.isFinite_of_isAbelianVariety hA' hB' (F.map f) hgeom'
+  have hf : IsFinite
+      (pullback.fst (pullback.fst B.hom b) f.left) := by
+    exact isFinite_overPullbackMap_to_fibre f b
+      (inferInstance : IsFinite (F.map f).left)
+  let p : pullback B.hom b ⟶ B.left := pullback.fst B.hom b
+  have hff : (algebraMap K (AlgebraicClosure K)).FaithfullyFlat := by
+    rw [RingHom.faithfullyFlat_algebraMap_iff]
+    infer_instance
+  have hp : Flat b ∧ Surjective b := by
+    change Flat (Spec.map (CommRingCat.ofHom <| algebraMap K (AlgebraicClosure K))) ∧
+      Surjective (Spec.map (CommRingCat.ofHom <| algebraMap K (AlgebraicClosure K)))
+    rwa [flat_and_surjective_SpecMap_iff]
+  letI : Flat b := hp.1
+  letI : Surjective b := hp.2
+  letI : QuasiCompact b := inferInstance
+  letI : Flat p := by
+    dsimp [p]
+    infer_instance
+  letI : Surjective p := by
+    dsimp [p]
+    infer_instance
+  letI : QuasiCompact p := by
+    dsimp [p]
+    infer_instance
+  letI : IsProper f.left := isProper_left_of_isAbelianVariety hA hB f
+  exact IsFinite.of_isProper_of_faithfullyFlat_baseChange p f.left hf
+
+/- A geometric isogeny certificate over the algebraic closure supplies the
+   finite pullback required by the faithfully-flat descent theorem above.  The
+   surjectivity assumption is kept explicit: descent of surjectivity is a
+   separate property of the underlying morphism in the current API. -/
+theorem Isogeny.of_surjective_of_algebraicClosure_baseChange_isogeny
+    {K : Type u} [Field K]
+    {A B : Over (Spec (.of K))} [GrpObj A] [GrpObj B]
+    (hA : IsAbelianVariety A) (hB : IsAbelianVariety B)
+    (f : A ⟶ B) [IsMonHom f]
+    (hs : Surjective f.left)
+    (hgeom :
+      let F := Over.pullback
+        (Spec.map (CommRingCat.ofHom <| algebraMap K (AlgebraicClosure K)))
+      letI : GrpObj (F.obj A) := Functor.grpObjObj
+      letI : GrpObj (F.obj B) := Functor.grpObjObj
+      Isogeny (F.map f)) :
+    Isogeny f := by
+  letI : IsFinite f.left :=
+    finite_of_algebraicClosure_baseChange_isogeny hA hB f hgeom
+  exact Isogeny.of_surjective_of_finite f hs
+
 end MilneLib
