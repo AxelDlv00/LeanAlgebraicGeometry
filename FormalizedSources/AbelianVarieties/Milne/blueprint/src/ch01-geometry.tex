@@ -24,7 +24,8 @@ MilneLib.GroupVariety.pointTranslationIso_hom, MilneLib.GroupVariety.pointTransl
 MilneLib.GroupVariety.pointTranslationIso_self, MilneLib.GroupVariety.pointTranslationIso_symm,
 MilneLib.GroupVariety.pointTranslationIso_trans,
 MilneLib.GroupVariety.pointTranslationIso_hom_comp, MilneLib.IsAbelianVariety,
-MilneLib.isCommMonObj_of_isAbelianVariety}
+MilneLib.isCommMonObj_of_isAbelianVariety,
+MilneLib.smooth_of_isAbelianVariety}
 A group variety is a variety equipped with regular multiplication, inverse,
 and identity maps satisfying the group diagrams after geometric base change.
 Translations are isomorphisms.  A complete connected group variety is an
@@ -803,7 +804,8 @@ to $A$, so a positive multiple gives a projective embedding over $k$.
 
 \dcref{MI:ch1:7}
 \lean{MilneLib.isogenyKernel, MilneLib.isogenyKernelToBase, MilneLib.Isogeny,
-MilneLib.Isogeny.surjective, MilneLib.Isogeny.finite_kernel}
+MilneLib.Isogeny.surjective, MilneLib.Isogeny.finite_kernel,
+MilneLib.Isogeny.kernel_baseChange_isFinite}
 The kernel of a homomorphism $\alpha:A\to B$ of abelian varieties is the fibre
 over $0$ in the sense of algebraic spaces.  The homomorphism $\alpha$ is an
 isogeny if it is surjective and has finite kernel.  Its degree is its degree as
@@ -1622,6 +1624,9 @@ $\mathcal O_W\otimes_R M\to M$.
 \label{lem:milne-5-11}
 
 \dcref{MI:ch1:5.11}
+\lean{MilneLib.moduleFinite_residueFieldTensor,
+MilneLib.moduleFinite_schemeModuleStalk_residueTensor,
+MilneLib.SchemeModule.IsStalkwiseFinite.residueFieldTensor}
 \uses{lem:milne-5-8}
 Let $\alpha:M\to N$ be a homomorphism of $R$-modules, with $N$ finitely
 generated.  If for every maximal ideal $\mathfrak m$ the induced map
