@@ -95,6 +95,7 @@ import HartshorneLib.Chapter4GenusBridge
 import HartshorneLib.Chapter4RiemannInequality
 import HartshorneLib.Chapter4RiemannConsequences
 import HartshorneLib.Chapter4Nonspecial
+import HartshorneLib.Chapter4LinearSystemCriteria
 
 /-!
 # HartshorneLib
