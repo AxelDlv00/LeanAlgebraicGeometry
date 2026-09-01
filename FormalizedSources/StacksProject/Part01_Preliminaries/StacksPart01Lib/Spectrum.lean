@@ -25,6 +25,11 @@ theorem spectrum_isEmpty_iff_subsingleton {R : Type*} [CommSemiring R] :
     IsEmpty (PrimeSpectrum R) ↔ Subsingleton R := by
   exact PrimeSpectrum.isEmpty_iff_subsingleton
 
+/-- Every nontrivial ring has a maximal ideal (Stacks, Tag 00E0). -/
+theorem maximal_ideal_exists {R : Type*} [CommSemiring R] [Nontrivial R] :
+    ∃ M : Ideal R, M.IsMaximal := by
+  exact Ideal.exists_maximal R
+
 /-- A basic open is empty exactly when its defining element is nilpotent. -/
 theorem standardOpen_eq_bot_iff_isNilpotent {R : Type*} [CommSemiring R] (f : R) :
     PrimeSpectrum.basicOpen f = ⊥ ↔ IsNilpotent f := by
