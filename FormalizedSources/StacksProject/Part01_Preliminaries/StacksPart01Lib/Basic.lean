@@ -6,6 +6,7 @@ Authors: The StacksPart01Lib Contributors
 
 import StacksPart01Lib.Topology
 import StacksPart01Lib.Spectrum
+import StacksPart01Lib.SpectrumExtras
 import StacksPart01Lib.SpecClosed
 import StacksPart01Lib.Categories
 import StacksPart01Lib.SetTheory
@@ -17,6 +18,7 @@ import StacksPart01Lib.Nilradical
 import StacksPart01Lib.Localization
 import StacksPart01Lib.LocalizationExtras
 import StacksPart01Lib.CommutativeAlgebra
+import StacksPart01Lib.Charpoly
 import StacksPart01Lib.FiniteModule
 import StacksPart01Lib.FiniteType
 import StacksPart01Lib.FiniteTypeExtras
