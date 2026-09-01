@@ -7,6 +7,7 @@ Authors: The StacksPart01Lib Contributors
 import Mathlib.Algebra.Module.LocalizedModule.Exact
 import Mathlib.Algebra.Module.LocalizedModule.Submodule
 import Mathlib.RingTheory.Localization.Finiteness
+import Mathlib.RingTheory.Localization.BaseChange
 
 /-!
 # Localization of modules
@@ -20,8 +21,36 @@ universal-property arguments.
 namespace StacksPart01
 
 open Function IsLocalizedModule
+open scoped TensorProduct
 
 variable {R : Type*} [CommSemiring R]
+
+/-!
+The canonical tensor description of a localized module is the formulation used
+in Stacks, Tag 00DK.  Mathlib provides the inverse orientation (from the
+localized module to the tensor product); the wrapper below presents the map in
+the direction used by the source.
+-/
+noncomputable def tensorLocalizationEquiv
+    (S : Submonoid R) (M : Type*) [AddCommMonoid M] [Module R M] :
+    Localization S ⊗[R] M ≃ₗ[Localization S] LocalizedModule S M :=
+  (LocalizedModule.equivTensorProduct S M).symm
+
+/- The map sends a fraction tensor to the corresponding localized numerator. -/
+@[simp]
+theorem tensorLocalizationEquiv_tmul
+    (S : Submonoid R) (M : Type*) [AddCommMonoid M] [Module R M]
+    (r : R) (s : S) (m : M) :
+    tensorLocalizationEquiv S M (Localization.mk r s ⊗ₜ[R] m) =
+      r • LocalizedModule.mk m s := by
+  exact LocalizedModule.equivTensorProduct_symm_apply_tmul S m r s
+
+@[simp]
+theorem tensorLocalizationEquiv_one_tmul
+    (S : Submonoid R) (M : Type*) [AddCommMonoid M] [Module R M]
+    (m : M) :
+    tensorLocalizationEquiv S M (1 ⊗ₜ[R] m) = LocalizedModule.mk m 1 := by
+  exact LocalizedModule.equivTensorProduct_symm_apply_tmul_one S m
 
 /-!
 The canonical localization map sends an element to the fraction with
