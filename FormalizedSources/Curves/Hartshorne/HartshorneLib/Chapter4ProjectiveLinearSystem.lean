@@ -71,6 +71,8 @@ predicate; callers must provide the target dimension, map, and equation.
 structure ProjectiveMapCertificate (D : CurveDivisor k X) where
   /-- The dimension of the projective target. -/
   n : ℕ
+  /-- The target dimension agrees with the complete linear-system dimension. -/
+  target_dimension : (n : ℤ) = linearSystemDimension D
   /-- The underlying scheme morphism to the chosen projective target. -/
   map : X.left ⟶ projectiveSpace k n
   /-- The map is a morphism over `Spec k`. -/
@@ -80,10 +82,15 @@ namespace ProjectiveMapCertificate
 
 /-- Package an explicitly supplied over-`Spec k` morphism. -/
 def of_map (D : CurveDivisor k X) (n : ℕ)
+    (target_dimension : (n : ℤ) = linearSystemDimension D)
     (map : X.left ⟶ projectiveSpace k n)
     (map_over : map ≫ projectiveSpaceStructureMap k n = X.hom) :
     ProjectiveMapCertificate D :=
-  ⟨n, map, map_over⟩
+  ⟨n, target_dimension, map, map_over⟩
+
+@[simp] theorem target_dimension_eq (c : ProjectiveMapCertificate D) :
+    (c.n : ℤ) = linearSystemDimension D :=
+  c.target_dimension
 
 @[simp] theorem map_over_eq (c : ProjectiveMapCertificate D) :
     c.map ≫ projectiveSpaceStructureMap k c.n = X.hom :=
