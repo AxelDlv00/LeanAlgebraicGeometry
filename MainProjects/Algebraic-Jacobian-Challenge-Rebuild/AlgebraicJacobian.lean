@@ -552,6 +552,7 @@ import AlgebraicJacobian.Picard.Pic0RepresentabilityPullbacks
 import AlgebraicJacobian.Picard.Pic0RepresentabilityDescentData
 import AlgebraicJacobian.Picard.Pic0GaloisAction
 import AlgebraicJacobian.Picard.JacobianDataAbel
+import AlgebraicJacobian.Picard.JacobianDataCanonical
 import AlgebraicJacobian.Picard.JacobianDataBaseChange
 import AlgebraicJacobian.Picard.JacobianDataBaseChangeAbel
 import AlgebraicJacobian.Picard.JacobianDataBaseChangeAbelCore
