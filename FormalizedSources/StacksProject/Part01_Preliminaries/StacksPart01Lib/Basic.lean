@@ -21,6 +21,7 @@ import StacksPart01Lib.Localization
 import StacksPart01Lib.LocalizationExtras
 import StacksPart01Lib.CommutativeAlgebra
 import StacksPart01Lib.Charpoly
+import StacksPart01Lib.CharpolyModule
 import StacksPart01Lib.FiniteModule
 import StacksPart01Lib.FiniteType
 import StacksPart01Lib.FiniteTypeExtras
