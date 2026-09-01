@@ -104,6 +104,15 @@ theorem quotientLocalBranchAt_symm_continuousOn
   rw [d.quotientLocalBranchAt_symm]
   exact QuotientAddGroup.continuous_mk.continuousOn
 
+/-- The local quotient branch covers its entire open target. -/
+theorem quotientLocalBranchAt_image_source_eq_target
+    {V X : Type*} [NormedAddCommGroup V] [NormedSpace ℂ V]
+    [AddCommGroup X] [TopologicalSpace X] {g : ℕ}
+    (d : ComplexVectorLatticeExponentialData V X g) (v : V) :
+    d.quotientLocalBranchAt v '' (d.quotientLocalBranchAt v).source =
+      (d.quotientLocalBranchAt v).target :=
+  (d.quotientLocalBranchAt v).image_source_eq_target
+
 end ComplexVectorLatticeExponentialData
 
 end

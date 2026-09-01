@@ -48,6 +48,17 @@ theorem exponential_source_mem
     rw [d.quotientHomeomorph_symm_exponential]
     exact d.quotientLocalBranchAt_quotient_mk_mem_source v
 
+/-- The source of a transported branch is the inverse image of the quotient
+    branch source under the quotient homeomorphism. -/
+theorem exponentialBranch_source_eq_preimage
+    {V X : Type*} [NormedAddCommGroup V] [NormedSpace ℂ V]
+    [AddCommGroup X] [TopologicalSpace X] [T2Space X] [ContinuousAdd X]
+    {g : ℕ} (d : ComplexVectorLatticeExponentialData V X g) (v : V) :
+    (d.exponentialBranch v).source =
+      d.quotientHomeomorph.symm ⁻¹' (d.quotientLocalBranchAt v).source := by
+  rw [exponentialBranch, OpenPartialHomeomorph.trans_source]
+  simp
+
 @[simp]
 theorem exponential_apply_exponential
     {V X : Type*} [NormedAddCommGroup V] [NormedSpace ℂ V]
@@ -59,6 +70,36 @@ theorem exponential_apply_exponential
     (d.quotientHomeomorph.symm (d.exponential v)) = v
   rw [d.quotientHomeomorph_symm_exponential]
   exact d.quotientLocalBranchAt_apply_quotient_mk v
+
+/-- The target of a transported branch is the target of the quotient branch. -/
+theorem exponentialBranch_target_eq_quotientLocalBranchAt_target
+    {V X : Type*} [NormedAddCommGroup V] [NormedSpace ℂ V]
+    [AddCommGroup X] [TopologicalSpace X] [T2Space X] [ContinuousAdd X]
+    {g : ℕ} (d : ComplexVectorLatticeExponentialData V X g) (v : V) :
+    (d.exponentialBranch v).target =
+      (d.quotientLocalBranchAt v).target := by
+  rw [exponentialBranch, OpenPartialHomeomorph.trans_target]
+  simp
+
+/-- The selected representative belongs to the target of its exponential
+    branch. -/
+theorem exponentialBranch_mem_target
+    {V X : Type*} [NormedAddCommGroup V] [NormedSpace ℂ V]
+    [AddCommGroup X] [TopologicalSpace X] [T2Space X] [ContinuousAdd X]
+    {g : ℕ} (d : ComplexVectorLatticeExponentialData V X g) (v : V) :
+    v ∈ (d.exponentialBranch v).target := by
+  have h := (d.exponentialBranch v).map_source
+    (d.exponential_source_mem v)
+  simpa using h
+
+/-- The transported branch covers its open target. -/
+theorem exponentialBranch_image_source_eq_target
+    {V X : Type*} [NormedAddCommGroup V] [NormedSpace ℂ V]
+    [AddCommGroup X] [TopologicalSpace X] [T2Space X] [ContinuousAdd X]
+    {g : ℕ} (d : ComplexVectorLatticeExponentialData V X g) (v : V) :
+    d.exponentialBranch v '' (d.exponentialBranch v).source =
+      (d.exponentialBranch v).target :=
+  (d.exponentialBranch v).image_source_eq_target
 
 /-- On a branch target, the inverse branch recovers the original exponential. -/
 theorem exponential_symm_apply_eq_exponential
@@ -155,6 +196,43 @@ theorem exponentialBranch_sub_mem_ambientPeriodLattice
       (d.quotientLocalBranchAt w).source := hxw.2
   have hdiff := d.quotientLocalBranchAt_sub_mem_ambientPeriodLattice v w hqv hqw
   simpa [exponentialBranch, OpenPartialHomeomorph.trans_apply] using hdiff
+
+/-- Surjectivity makes the transported branch sources cover the target. -/
+theorem exists_exponentialBranch_source
+    {V X : Type*} [NormedAddCommGroup V] [NormedSpace ℂ V]
+    [AddCommGroup X] [TopologicalSpace X] [T2Space X] [ContinuousAdd X]
+    {g : ℕ} (d : ComplexVectorLatticeExponentialData V X g) (x : X) :
+    ∃ v : V, x ∈ (d.exponentialBranch v).source := by
+  obtain ⟨v, hv⟩ := d.surjective x
+  refine ⟨v, ?_⟩
+  rw [← hv]
+  exact d.exponential_source_mem v
+
+/-- Every point has a branch representative that inverts the exponential at
+    that point. -/
+theorem exists_exponentialBranch_apply_eq
+    {V X : Type*} [NormedAddCommGroup V] [NormedSpace ℂ V]
+    [AddCommGroup X] [TopologicalSpace X] [T2Space X] [ContinuousAdd X]
+    {g : ℕ} (d : ComplexVectorLatticeExponentialData V X g) (x : X) :
+    ∃ v : V, x ∈ (d.exponentialBranch v).source ∧
+      d.exponentialBranch v x = v := by
+  obtain ⟨v, hv⟩ := d.surjective x
+  refine ⟨v, ?_, ?_⟩
+  · rw [← hv]
+    exact d.exponential_source_mem v
+  · rw [← hv]
+    exact d.exponential_apply_exponential v
+
+/-- The exponential branch sources form an open cover of the target. -/
+theorem exponentialBranch_source_iUnion_eq_univ
+    {V X : Type*} [NormedAddCommGroup V] [NormedSpace ℂ V]
+    [AddCommGroup X] [TopologicalSpace X] [T2Space X] [ContinuousAdd X]
+    {g : ℕ} (d : ComplexVectorLatticeExponentialData V X g) :
+    (⋃ v : V, (d.exponentialBranch v).source) = Set.univ := by
+  apply Set.eq_univ_of_forall
+  intro x
+  obtain ⟨v, hx⟩ := d.exists_exponentialBranch_source x
+  exact Set.mem_iUnion.2 ⟨v, hx⟩
 
 end ComplexVectorLatticeExponentialData
 
