@@ -87,6 +87,7 @@ import HartshorneLib.Chapter4SectionBound
 import HartshorneLib.Chapter4SectionDrop
 import HartshorneLib.Chapter4SmoothProperDevissage
 import HartshorneLib.Chapter4LinearEquivalenceCohomology
+import HartshorneLib.Chapter4DegreeZero
 import HartshorneLib.Chapter4LinearEquivalenceAPI
 import HartshorneLib.Chapter4SerreDuality
 import HartshorneLib.Chapter4CanonicalDegree
