@@ -14,6 +14,7 @@ import MilneLib.Tensor
 import MilneLib.Sheaf
 import MilneLib.OverSheaf
 import MilneLib.Dimension
+import MilneLib.BasicLemmas
 
 /-!
 # MilneLib
