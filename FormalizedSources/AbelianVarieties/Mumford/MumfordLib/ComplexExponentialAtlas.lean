@@ -97,6 +97,22 @@ theorem exponential_apply_exponential_apply
   rw [← d.exponential_symm_apply_eq_exponential v hxt]
   exact (d.exponentialBranch v).left_inv hx
 
+/- The transported branch and its inverse are continuous on their respective
+   open sets. -/
+theorem exponentialBranch_continuousOn
+    {V X : Type*} [NormedAddCommGroup V] [NormedSpace ℂ V]
+    [AddCommGroup X] [TopologicalSpace X] [T2Space X] [ContinuousAdd X]
+    {g : ℕ} (d : ComplexVectorLatticeExponentialData V X g) (v : V) :
+    ContinuousOn (d.exponentialBranch v) (d.exponentialBranch v).source :=
+  (d.exponentialBranch v).continuousOn
+
+theorem exponentialBranch_symm_continuousOn
+    {V X : Type*} [NormedAddCommGroup V] [NormedSpace ℂ V]
+    [AddCommGroup X] [TopologicalSpace X] [T2Space X] [ContinuousAdd X]
+    {g : ℕ} (d : ComplexVectorLatticeExponentialData V X g) (v : V) :
+    ContinuousOn (d.exponentialBranch v).symm (d.exponentialBranch v).target :=
+  (d.exponentialBranch v).symm.continuousOn
+
 /-- Two local quotient representatives differ by an ambient period. -/
 theorem quotientLocalBranchAt_sub_mem_ambientPeriodLattice
     {V X : Type*} [NormedAddCommGroup V] [NormedSpace ℂ V]
@@ -120,6 +136,25 @@ theorem quotientLocalBranchAt_sub_mem_ambientPeriodLattice
   exact congrArg d.quotientAddEquiv
     ((d.quotient_mk_apply_quotientLocalBranchAt v hqv).trans
       (d.quotient_mk_apply_quotientLocalBranchAt w hqw).symm)
+
+/- Branches that are simultaneously defined at a point differ by an ambient
+   period. -/
+theorem exponentialBranch_sub_mem_ambientPeriodLattice
+    {V X : Type*} [NormedAddCommGroup V] [NormedSpace ℂ V]
+    [AddCommGroup X] [TopologicalSpace X] [T2Space X] [ContinuousAdd X]
+    {g : ℕ} (d : ComplexVectorLatticeExponentialData V X g)
+    (v w : V) {x : X}
+    (hxv : x ∈ (d.exponentialBranch v).source)
+    (hxw : x ∈ (d.exponentialBranch w).source) :
+    d.exponentialBranch v x - d.exponentialBranch w x ∈
+      d.ambientPeriodLattice := by
+  rw [exponentialBranch, OpenPartialHomeomorph.trans_source] at hxv hxw
+  have hqv : d.quotientHomeomorph.symm x ∈
+      (d.quotientLocalBranchAt v).source := hxv.2
+  have hqw : d.quotientHomeomorph.symm x ∈
+      (d.quotientLocalBranchAt w).source := hxw.2
+  have hdiff := d.quotientLocalBranchAt_sub_mem_ambientPeriodLattice v w hqv hqw
+  simpa [exponentialBranch, OpenPartialHomeomorph.trans_apply] using hdiff
 
 end ComplexVectorLatticeExponentialData
 
