@@ -2,13 +2,12 @@ id: AJCR.review-plan.p7-galois-descent.universal
 title: Universal Picard element and equivalence descent
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: 'Two independent done inputs are pinned below: the finite-stage universal
-  atlas class/restrictions and one common finite relPic stage. The remaining math
-  leaves are glue-equivalence descent and the binder-free Yoneda natural equivalence
-  on P.gluedOver. They may use the certified glued comparison once available, but
-  the common-stage proof itself is not blocked by the base-change build; the old reviewer
-  owner has no live process.'
-status: done
+summary: 'Target: assemble the finite-stage universal atlas class/restrictions and
+  one common finite relPic stage into a natural equivalence on P.gluedOver. The
+  certified glued comparison is now available, but neither the glue-equivalence
+  descent nor a binder-free Yoneda equivalence/RepresentableBy producer exists;
+  this remains a mathematical descent gap.'
+status: blocked
 kind: proof
 priority: urgent
 depends_on:
@@ -23,7 +22,7 @@ metadata:
   created_at: '2026-08-18T06:11:56.225176+00:00'
   parent: AJCR.review-plan.p7-galois-descent
   milestone: AJCR.review-plan
-  updated_at: '2026-08-27T21:43:58.961738+00:00'
+  updated_at: '2026-09-01T17:37:30.124870+00:00'
   pinned_commits:
   - 7fabbbdedd
   - 340206c19e

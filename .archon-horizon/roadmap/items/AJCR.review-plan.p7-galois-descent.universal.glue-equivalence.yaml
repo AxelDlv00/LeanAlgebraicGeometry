@@ -8,7 +8,7 @@ summary: 'Infrastructure leaf: descend and reconcile the chart/overlap universal
   to universal.yoneda; it is not itself the final RepresentableBy certificate. No
   producer declaration exists; this is a mathematical descent gap after the cache
   gate.'
-status: done
+status: blocked
 kind: proof
 priority: urgent
 depends_on: []
@@ -31,4 +31,4 @@ metadata:
     projects: Algebraic-Jacobian-Challenge-Rebuild,Algebraic-Jacobian-Challenge
   parent: AJCR.review-plan.p7-galois-descent.universal
   milestone: AJCR.review-plan
-  updated_at: '2026-08-24T15:26:52.395289+00:00'
+  updated_at: '2026-09-01T17:36:56.741033+00:00'

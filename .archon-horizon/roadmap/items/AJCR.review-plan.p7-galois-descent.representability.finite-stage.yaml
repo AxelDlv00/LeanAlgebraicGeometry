@@ -10,7 +10,7 @@ summary: 'Target: (pic0TypeFunctor ((baseChange K P.N.1).obj C)).RepresentableBy
   this certificate; this is a mathematical blocker after compile certification. The
   parent representability gate is for later original-field assembly and does not reorder
   this child.'
-status: done
+status: blocked
 kind: proof
 priority: urgent
 depends_on: []
@@ -33,4 +33,4 @@ metadata:
     projects: Algebraic-Jacobian-Challenge-Rebuild,Algebraic-Jacobian-Challenge
   parent: AJCR.review-plan.p7-galois-descent.universal.yoneda
   milestone: AJCR.review-plan
-  updated_at: '2026-08-24T15:26:52.395140+00:00'
+  updated_at: '2026-09-01T17:29:03.951611+00:00'

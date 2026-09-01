@@ -7,7 +7,7 @@ summary: 'Target: for every test object T over Spec k, construct the natural equ
   and the exact carrier fixed. Dependency: universal.glue-equivalence. The repository
   has no Scheme fpqc-stack shortcut or existing binder-free homEquiv producer; this
   is a mathematical blocker, not a source-cache issue.'
-status: done
+status: blocked
 kind: proof
 priority: urgent
 depends_on: []
@@ -30,4 +30,4 @@ metadata:
     projects: Algebraic-Jacobian-Challenge-Rebuild,Algebraic-Jacobian-Challenge
   parent: AJCR.review-plan.p7-galois-descent.universal.glue-equivalence
   milestone: AJCR.review-plan
-  updated_at: '2026-08-24T15:26:52.395421+00:00'
+  updated_at: '2026-09-01T17:35:05.849863+00:00'

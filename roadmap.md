@@ -39,8 +39,8 @@ the codebase, but new work is organized only by the following phases.
 | Item | Status |
 | --- | --- |
 | Finite-stage affine atlas and `Scheme.GlueData` | done |
-| Global glued-scheme base-change isomorphism and critical-root certification | blocked |
-| Universal Picard element, natural equivalence, and finite-stage representative | done |
+| Global glued-scheme base-change isomorphism and critical-root certification | done |
+| Universal Picard element, natural equivalence, and finite-stage representative | blocked |
 | Original-field filtered-colimit bridge for `Pic^0` | pending |
 | Stable affine cover for the exact glued carrier | blocked |
 | Assemble and consume original-field `pic0_representableBy` | blocked |
