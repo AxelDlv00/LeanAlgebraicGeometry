@@ -16,6 +16,7 @@ import StacksPart01Lib.ZariskiExtras
 import StacksPart01Lib.ZariskiUnion
 import StacksPart01Lib.ZariskiComplement
 import StacksPart01Lib.IdealTheory
+import StacksPart01Lib.ChineseRemainder
 import StacksPart01Lib.Nilradical
 import StacksPart01Lib.Localization
 import StacksPart01Lib.LocalizationExtras
