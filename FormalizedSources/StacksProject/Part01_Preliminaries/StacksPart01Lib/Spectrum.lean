@@ -194,6 +194,15 @@ theorem isClosed_zeroLocus {R : Type*} [CommSemiring R] (s : Set R) :
     IsClosed (PrimeSpectrum.zeroLocus s) := by
   exact PrimeSpectrum.isClosed_zeroLocus s
 
+/-- A clopen subset of an affine spectrum is a unique idempotent standard open
+(Stacks, Tag 00EE). -/
+theorem existsUnique_idempotent_basicOpen_eq_of_isClopen
+    {R : Type*} [CommRing R] {U : Set (PrimeSpectrum R)}
+    (hU : IsClopen U) :
+    ∃! e : R, IsIdempotentElem e ∧
+      U = (PrimeSpectrum.basicOpen e : Set (PrimeSpectrum R)) := by
+  exact PrimeSpectrum.existsUnique_idempotent_basicOpen_eq_of_isClopen hU
+
 /-- A point outside a closed zero locus has a standard-open neighbourhood
 disjoint from that zero locus (Stacks, Tag 00E0). -/
 theorem exists_standardOpen_disjoint_zeroLocus {R : Type*} [CommSemiring R]
