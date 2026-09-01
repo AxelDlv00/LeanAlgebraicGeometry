@@ -1508,6 +1508,21 @@ theorem Isogeny.finrank_eq_const_of_flat
     (irreducibleSpace_of_isIntegral B.left).connectedSpace.toPreconnectedSpace
   exact (Scheme.Hom.isLocallyConstant_finrank f.left).eq_const b
 
+/- For a finite flat homomorphism, the isogeny condition is equivalent to
+   positivity of the finite-flat rank.  This packages Mathlib's rank/surjectivity
+   criterion together with the finite-map kernel lemma above. -/
+theorem Isogeny.iff_one_le_finrank_of_finite_flat
+    {K : Type u} [Field K]
+    {A B : Over (Spec (.of K))} [GrpObj A] [GrpObj B]
+    (f : A ⟶ B) [IsMonHom f] [IsFinite f.left] [Flat f.left] :
+    Isogeny f ↔ 1 ≤ Scheme.Hom.finrank f.left := by
+  constructor
+  · intro h
+    exact (Scheme.Hom.one_le_finrank_iff_surjective (f := f.left)).2 h.1
+  · intro h
+    apply Isogeny.of_surjective_of_finite f
+    exact (Scheme.Hom.one_le_finrank_iff_surjective (f := f.left)).1 h
+
 /- Isogenies between abelian varieties over an arbitrary field are closed under
    composition.  The arbitrary-field finite-map theorem supplies exactly the
    two instances required by the generic composition lemma. -/
