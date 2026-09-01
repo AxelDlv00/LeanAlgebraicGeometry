@@ -380,6 +380,45 @@ theorem isRegularLocalRing_stalk_iff_of_pointTranslation
       IsRegularLocalRing (G.left.presheaf.stalk z) :=
   isRegularLocalRing_stalk_iff_of_isIso ((pointTranslationIso G x y).hom) z
 
+section AlgebraicallyClosed
+
+variable {K : Type u} [Field K] [IsAlgClosed K]
+
+/-- Closed points of an abelian variety over an algebraically closed field have
+the same cotangent-space finrank.  The two points are promoted to rational
+sections and joined by the corresponding group translation. -/
+theorem finrank_cotangentSpace_eq_of_closedPoints
+    {G : Over (Spec (.of K))} [GrpObj G]
+    (hG : IsAbelianVariety G)
+    {x z : G.left} (hx : IsClosed {x}) (hz : IsClosed {z}) :
+    Module.finrank
+        (IsLocalRing.ResidueField (G.left.presheaf.stalk z))
+        (IsLocalRing.CotangentSpace (G.left.presheaf.stalk z)) =
+    Module.finrank
+        (IsLocalRing.ResidueField (G.left.presheaf.stalk x))
+        (IsLocalRing.CotangentSpace (G.left.presheaf.stalk x)) := by
+  letI : LocallyOfFiniteType G.hom :=
+    locallyOfFiniteType_of_isAbelianVariety G hG
+  letI : IsLocallyNoetherian G.left :=
+    isLocallyNoetherian_left_of_isAbelianVariety G hG
+  let px : Spec (.of K) ⟶ G.left := pointOfClosedPoint G.hom x hx
+  have hpx : px ≫ G.hom = 𝟙 _ := pointOfClosedPoint_comp G.hom x hx
+  let xhat : 𝟙_ (Over (Spec (.of K))) ⟶ G := Over.homMk px hpx
+  have hxhat : xhat.left (IsLocalRing.closedPoint K) = x := by
+    exact pointOfClosedPoint_apply G.hom x hx _
+  let pz : Spec (.of K) ⟶ G.left := pointOfClosedPoint G.hom z hz
+  have hpz : pz ≫ G.hom = 𝟙 _ := pointOfClosedPoint_comp G.hom z hz
+  let zhat : 𝟙_ (Over (Spec (.of K))) ⟶ G := Over.homMk pz hpz
+  have hzhat : zhat.left (IsLocalRing.closedPoint K) = z := by
+    exact pointOfClosedPoint_apply G.hom z hz _
+  have h := finrank_cotangentSpace_eq_of_pointTranslation G xhat zhat x
+  have htranslate : (pointTranslationIso G xhat zhat).hom.base x = z := by
+    rw [← hxhat, pointTranslationIso_hom_apply, hzhat]
+  rw [htranslate] at h
+  exact h
+
+end AlgebraicallyClosed
+
 end GroupVariety
 
 /-- An injective integral extension preserves Krull dimension. -/
