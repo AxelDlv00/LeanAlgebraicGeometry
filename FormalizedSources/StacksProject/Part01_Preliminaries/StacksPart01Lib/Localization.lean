@@ -205,4 +205,16 @@ theorem localizedModule_finite_of_isLocalized
     Module.Finite Rₚ Mₚ := by
   exact Module.Finite.of_isLocalizedModule S f
 
+/-- The ring-level universal property of localization (Stacks, Tag 00CP). -/
+theorem existsUnique_localization_lift
+    {A B : Type*} [CommSemiring A] [CommSemiring B]
+    (S : Submonoid A) (f : A →+* B)
+    (hf : ∀ s : S, IsUnit (f s)) :
+    ∃! g : Localization S →+* B,
+      g.comp (algebraMap A (Localization S)) = f := by
+  refine ⟨IsLocalization.lift hf, IsLocalization.lift_comp hf, ?_⟩
+  intro g hg
+  exact (IsLocalization.lift_unique (S := Localization S) hf
+    (RingHom.congr_fun hg)).symm
+
 end StacksPart01
