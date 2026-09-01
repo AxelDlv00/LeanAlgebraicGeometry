@@ -5,6 +5,7 @@ Authors: The Milne Contributors
 -/
 
 import Mathlib.AlgebraicGeometry.Group.Abelian
+import Mathlib.AlgebraicGeometry.Morphisms.FlatRank
 import MilneLib.Dimension
 import MilneLib.GroupScheme
 import MilneLib.LocalProperties
@@ -1484,6 +1485,28 @@ theorem Isogeny.topologicalKrullDim_eq_of_isAbelianVariety_of_arbitraryField
   letI : IsFinite f.left :=
     Isogeny.isFinite_of_isAbelianVariety_of_arbitraryField hA hB f h
   exact Isogeny.topologicalKrullDim_eq_of_isFinite hA hB f h
+
+/- A flat isogeny has constant finite rank over the integral target.  This is
+   the rank-theoretic part of Milne's finite-flat characterization; the
+   flatness assumption remains explicit until a geometric miracle-flatness
+   theorem is formalized. -/
+theorem Isogeny.finrank_eq_const_of_flat
+    {K : Type u} [Field K]
+    {A B : Over (Spec (.of K))} [GrpObj A] [GrpObj B]
+    (hA : IsAbelianVariety A) (hB : IsAbelianVariety B)
+    (f : A ⟶ B) [IsMonHom f] [Flat f.left] (h : Isogeny f)
+    (b : B.left) :
+    Scheme.Hom.finrank f.left =
+      Function.const B.left (Scheme.Hom.finrank f.left b) := by
+  letI : IsFinite f.left :=
+    Isogeny.isFinite_of_isAbelianVariety_of_arbitraryField hA hB f h
+  letI : IsLocallyNoetherian B.left :=
+    isLocallyNoetherian_left_of_isAbelianVariety B hB
+  letI : LocallyOfFinitePresentation f.left := inferInstance
+  letI : IsIntegral B.left := isIntegral_left_of_isAbelianVariety B hB
+  letI : PreconnectedSpace B.left :=
+    (irreducibleSpace_of_isIntegral B.left).connectedSpace.toPreconnectedSpace
+  exact (Scheme.Hom.isLocallyConstant_finrank f.left).eq_const b
 
 /- Isogenies between abelian varieties over an arbitrary field are closed under
    composition.  The arbitrary-field finite-map theorem supplies exactly the
