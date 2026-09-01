@@ -5,6 +5,7 @@ Authors: The Milne Contributors
 -/
 
 import Mathlib.AlgebraicGeometry.Group.Abelian
+import MilneLib.Dimension
 import MilneLib.GroupScheme
 import MilneLib.LocalProperties
 
@@ -710,6 +711,31 @@ theorem Isogeny.isFinite_of_isAbelianVariety
     (Scheme.Hom.quasiFiniteLocus_eq_top_iff (f := f.left)).mp htop
   letI : LocallyQuasiFinite f.left := hLQF
   exact IsFinite.of_isProper_of_locallyQuasiFinite f.left
+
+/- A finite isogeny between abelian varieties preserves the dimension of the
+   underlying schemes.  The separate finiteness hypothesis keeps this result
+   available over arbitrary fields; the algebraically closed specialization
+   below supplies it from the source-faithful isogeny predicate. -/
+theorem Isogeny.topologicalKrullDim_eq_of_isFinite
+    {K : Type u} [Field K]
+    {A B : Over (Spec (.of K))} [GrpObj A] [GrpObj B]
+    (_hA : IsAbelianVariety A) (hB : IsAbelianVariety B)
+    (f : A ⟶ B) [IsMonHom f] (h : Isogeny f) [IsFinite f.left] :
+    topologicalKrullDim A.left = topologicalKrullDim B.left := by
+  letI : Surjective f.left := h.1
+  letI : IsReduced B.left := isReduced_left_of_isAbelianVariety B hB
+  exact topologicalKrullDim_eq_of_isFinite_surjective f.left
+
+/- Over an algebraically closed field, finiteness of the underlying map is
+   supplied by the proper finite-fibre argument already proved above. -/
+theorem Isogeny.topologicalKrullDim_eq_of_isAbelianVariety
+    {K : Type u} [Field K] [IsAlgClosed K]
+    {A B : Over (Spec (.of K))} [GrpObj A] [GrpObj B]
+    (hA : IsAbelianVariety A) (hB : IsAbelianVariety B)
+    (f : A ⟶ B) [IsMonHom f] (h : Isogeny f) :
+    topologicalKrullDim A.left = topologicalKrullDim B.left := by
+  letI : IsFinite f.left := Isogeny.isFinite_of_isAbelianVariety hA hB f h
+  exact Isogeny.topologicalKrullDim_eq_of_isFinite hA hB f h
 
 /- Once the source and intermediate abelian varieties are known to be
    proper over an algebraically closed field, the preceding theorem supplies
