@@ -55,6 +55,14 @@ private theorem finite_addSubgroup_eq_of_le_of_natCard_eq
   rw [← hv]
   exact i.property
 
+/-- Every subgroup is contained in its double commutator orthogonal. -/
+theorem le_commutatorPairingOrthogonal_orthogonal
+    (E : ThetaExtension G S K) (H : AddSubgroup K) :
+    H ≤ E.commutatorPairingOrthogonal
+      (E.commutatorPairingOrthogonal H) := by
+  exact (E.le_commutatorPairingOrthogonal_iff H
+    (E.commutatorPairingOrthogonal H)).2 le_rfl
+
 /-- A finite skew pairing has double orthogonal equal to the original subgroup
 when both restricted pairing maps realize all characters and finite character
 cardinality is preserved. -/
@@ -96,6 +104,45 @@ theorem commutatorPairingOrthogonal_orthogonal_eq_of_surjective_restrictions
     exact (E.le_commutatorPairingOrthogonal_iff H P).2 le_rfl
   have heq : H = Q := finite_addSubgroup_eq_of_le_of_natCard_eq hle hcard
   exact heq.symm
+
+/-- Under finite character duality, nondegeneracy supplies the two
+restriction-surjectivity hypotheses needed for double orthogonality. -/
+theorem commutatorPairingOrthogonal_orthogonal_eq_of_isNondegenerate
+    (E : ThetaExtension G S K) (H : AddSubgroup K) [Finite K]
+    [Finite (K →+ Additive S)] [DivisibleBy (Additive S) ℤ]
+    (hcard : Nat.card K = Nat.card (K →+ Additive S))
+    (hE : E.IsNondegenerate)
+    (hdualH : Nat.card (H →+ Additive S) = Nat.card H)
+    (hdualHperp :
+      Nat.card
+          (E.commutatorPairingOrthogonal H →+ Additive S) =
+        Nat.card (E.commutatorPairingOrthogonal H)) :
+    E.commutatorPairingOrthogonal
+        (E.commutatorPairingOrthogonal H) = H := by
+  exact E.commutatorPairingOrthogonal_orthogonal_eq_of_surjective_restrictions H
+    (E.commutatorPairingRestriction_surjective_of_isNondegenerate H hcard hE)
+    (E.commutatorPairingRestriction_surjective_of_isNondegenerate
+      (E.commutatorPairingOrthogonal H) hcard hE)
+    hdualH hdualHperp
+
+/-- If the character group of a finite subgroup has the expected order, the
+nondegenerate pairing gives the order of its orthogonal complement directly. -/
+theorem natCard_eq_orthogonal_mul_subgroup_of_isNondegenerate
+    (E : ThetaExtension G S K) (H : AddSubgroup K) [Finite K]
+    [Finite (K →+ Additive S)] [DivisibleBy (Additive S) ℤ]
+    (hcard : Nat.card K = Nat.card (K →+ Additive S))
+    (hE : E.IsNondegenerate)
+    (hdualH : Nat.card (H →+ Additive S) = Nat.card H) :
+    Nat.card K =
+      Nat.card (E.commutatorPairingOrthogonal H) * Nat.card H := by
+  calc
+    Nat.card K =
+        Nat.card (E.commutatorPairingOrthogonal H) *
+          Nat.card (H →+ Additive S) :=
+      E.natCard_eq_orthogonal_mul_character_of_surjective_restriction H
+        (E.commutatorPairingRestriction_surjective_of_isNondegenerate H hcard hE)
+    _ = Nat.card (E.commutatorPairingOrthogonal H) * Nat.card H := by
+      rw [hdualH]
 
 /- Nondegeneracy supplies the restriction-surjectivity premise in the
    maximal-isotropic cardinality formula.  The character-cardinality equality

@@ -146,6 +146,37 @@ theorem quotient_isT2Space
     d.ambientPeriodLattice_isClosed
   infer_instance
 
+/- The canonical projection of the tangent space onto its lattice quotient is
+   a covering map.  The statement is kept conditional on the certificate's
+   lattice data, so it does not introduce a global topology instance. -/
+theorem quotient_mk_isAddQuotientCoveringMap
+    {V X : Type*} [NormedAddCommGroup V] [NormedSpace ℂ V]
+    [AddCommGroup X] [TopologicalSpace X] {g : ℕ}
+    (d : ComplexVectorLatticeExponentialData V X g) :
+    IsAddQuotientCoveringMap
+      (QuotientAddGroup.mk : V → V ⧸ d.ambientPeriodLattice)
+      d.ambientPeriodLattice := by
+  exact AddSubgroup.isAddQuotientCoveringMap_of_comm
+    d.ambientPeriodLattice d.ambientPeriodLattice_isDiscrete
+
+/-- The ambient lattice quotient projection is a covering map. -/
+theorem quotient_mk_isCoveringMap
+    {V X : Type*} [NormedAddCommGroup V] [NormedSpace ℂ V]
+    [AddCommGroup X] [TopologicalSpace X] {g : ℕ}
+    (d : ComplexVectorLatticeExponentialData V X g) :
+    IsCoveringMap
+      (QuotientAddGroup.mk : V → V ⧸ d.ambientPeriodLattice) :=
+  d.quotient_mk_isAddQuotientCoveringMap.isCoveringMap
+
+/-- A covering projection is a local homeomorphism. -/
+theorem quotient_mk_isLocalHomeomorph
+    {V X : Type*} [NormedAddCommGroup V] [NormedSpace ℂ V]
+    [AddCommGroup X] [TopologicalSpace X] {g : ℕ}
+    (d : ComplexVectorLatticeExponentialData V X g) :
+    IsLocalHomeomorph
+      (QuotientAddGroup.mk : V → V ⧸ d.ambientPeriodLattice) :=
+  d.quotient_mk_isCoveringMap.isLocalHomeomorph
+
 /-- A continuous full-lattice exponential has compact target. -/
 theorem target_isCompact
     {V X : Type*} [NormedAddCommGroup V] [NormedSpace ℂ V]
@@ -240,6 +271,33 @@ theorem quotientHomeomorph_eq_quotientAddEquiv
       (QuotientAddGroup.mk' d.ambientPeriodLattice v) =
     d.quotientAddEquiv (QuotientAddGroup.mk' d.ambientPeriodLattice v)
   rw [d.quotientHomeomorph_mk, d.quotientAddEquiv_mk]
+
+/-- The arbitrary tangent quotient is topologically identified with the
+canonical standard-coordinate quotient. -/
+noncomputable def quotientCoordinateHomeomorph
+    {V X : Type*} [NormedAddCommGroup V] [NormedSpace ℂ V]
+    [AddCommGroup X] [TopologicalSpace X] [T2Space X] [ContinuousAdd X]
+    {g : ℕ} (d : ComplexVectorLatticeExponentialData V X g) :
+    (V ⧸ d.ambientPeriodLattice) ≃ₜ
+      (GenusComplexVector g ⧸ d.periodLattice.toAddSubgroup) :=
+  d.quotientHomeomorph.trans d.toCanonical.quotientHomeomorph.symm
+
+@[simp]
+theorem quotientCoordinateHomeomorph_mk
+    {V X : Type*} [NormedAddCommGroup V] [NormedSpace ℂ V]
+    [AddCommGroup X] [TopologicalSpace X] [T2Space X] [ContinuousAdd X]
+    {g : ℕ} (d : ComplexVectorLatticeExponentialData V X g) (v : V) :
+    d.quotientCoordinateHomeomorph
+      (QuotientAddGroup.mk' d.ambientPeriodLattice v) =
+      QuotientAddGroup.mk' d.periodLattice.toAddSubgroup (d.coordinate v) := by
+  change d.toCanonical.quotientHomeomorph.symm
+      (d.quotientHomeomorph
+        (QuotientAddGroup.mk' d.ambientPeriodLattice v)) = _
+  rw [d.quotientHomeomorph_mk]
+  have hcoord : d.canonicalExponential (d.coordinate v) = d.exponential v := by
+    simp [canonicalExponential]
+  rw [← hcoord]
+  exact d.toCanonical.quotientHomeomorph_symm_exponential (d.coordinate v)
 
 /-- The arbitrary tangent-space exponential is a covering map when the target
 is a Hausdorff topological additive group. -/
