@@ -7,6 +7,7 @@ Authors: The StacksPart01Lib Contributors
 import StacksPart01Lib.Topology
 import StacksPart01Lib.Spectrum
 import StacksPart01Lib.SpectrumExtras
+import StacksPart01Lib.SpectrumIrreducible
 import StacksPart01Lib.SpecClosed
 import StacksPart01Lib.Categories
 import StacksPart01Lib.SetTheory
