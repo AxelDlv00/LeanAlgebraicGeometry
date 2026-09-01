@@ -93,6 +93,7 @@ import HartshorneLib.Chapter4SerreDuality
 import HartshorneLib.Chapter4CanonicalDegree
 import HartshorneLib.Chapter4GenusBridge
 import HartshorneLib.Chapter4RiemannInequality
+import HartshorneLib.Chapter4RiemannConsequences
 
 /-!
 # HartshorneLib
