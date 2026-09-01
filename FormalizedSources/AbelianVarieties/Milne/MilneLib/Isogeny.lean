@@ -1522,6 +1522,22 @@ theorem Isogeny.finrank_eq_const_of_flat
     (irreducibleSpace_of_isIntegral B.left).connectedSpace.toPreconnectedSpace
   exact (Scheme.Hom.isLocallyConstant_finrank f.left).eq_const b
 
+/- For abelian varieties, positivity of a finite-flat rank gives
+   surjectivity and hence preserves the underlying Krull dimension.  The
+   finite and flat hypotheses remain explicit so this wrapper does not assert
+   unconditional flatness. -/
+theorem Isogeny.topologicalKrullDim_eq_of_finite_flat_of_one_le_finrank
+    {K : Type u} [Field K]
+    {A B : Over (Spec (.of K))} [GrpObj A] [GrpObj B]
+    (_hA : IsAbelianVariety A) (hB : IsAbelianVariety B)
+    (f : A ⟶ B) [IsMonHom f] [IsFinite f.left] [Flat f.left]
+    (hfin : 1 ≤ Scheme.Hom.finrank f.left) :
+    topologicalKrullDim A.left = topologicalKrullDim B.left := by
+  letI : Surjective f.left :=
+    (Scheme.Hom.one_le_finrank_iff_surjective (f := f.left)).mp hfin
+  letI : IsReduced B.left := isReduced_left_of_isAbelianVariety B hB
+  exact topologicalKrullDim_eq_of_isFinite_surjective f.left
+
 /- For a finite flat homomorphism, the isogeny condition is equivalent to
    positivity of the finite-flat rank.  This packages Mathlib's rank/surjectivity
    criterion together with the finite-map kernel lemma above. -/
