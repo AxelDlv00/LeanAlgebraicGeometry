@@ -85,4 +85,34 @@ theorem exists_ideal_quotient_equiv_sup_span
     (f.quotKerEquivOfSurjective hf).trans e
   exact ⟨LinearMap.ker f, ⟨e₀.symm⟩⟩
 
+/- A finite cyclic filtration relation records finite stages and the ideal
+quotient appearing at each successive step. -/
+inductive CyclicFiltration {R M : Type*} [CommRing R] [AddCommGroup M]
+    [Module R M] : Submodule R M → Submodule R M → Prop where
+  | refl {N : Submodule R M} (hN : N.FG) :
+      CyclicFiltration N N
+  | step {N P Q : Submodule R M} (h : CyclicFiltration N P)
+      (hQ : Q.FG) (hPQ : P ≤ Q) {I : Ideal R}
+      (e : ((↥Q) ⧸ Submodule.comap Q.subtype P) ≃ₗ[R] (R ⧸ I)) :
+      CyclicFiltration N Q
+
+/-- A finite module admits a finite filtration by finitely generated
+submodules whose successive quotients are cyclic (Stacks, Tag 00KZ). -/
+theorem finite_module_cyclic_filtration
+    {R M : Type*} [CommRing R] [AddCommGroup M] [Module R M]
+    [Module.Finite R M] :
+    CyclicFiltration (⊥ : Submodule R M) (⊤ : Submodule R M) := by
+  let motive : ∀ N : Submodule R M, N.FG → Prop :=
+    fun N _ => CyclicFiltration (⊥ : Submodule R M) N
+  apply Submodule.fg_sup_span_induction (motive := motive)
+  · exact CyclicFiltration.refl Submodule.fg_bot
+  · intro N x hN ih
+    have hstep : CyclicFiltration (⊥ : Submodule R M) ((R ∙ x) ⊔ N) := by
+      obtain ⟨I, hI⟩ := exists_ideal_quotient_equiv_sup_span N x
+      rcases hI with ⟨e⟩
+      refine CyclicFiltration.step ih ?_ le_sup_right e
+      exact (Submodule.fg_span_singleton x).sup hN
+    simpa [sup_comm] using hstep
+  · exact Module.Finite.fg_top
+
 end StacksPart01
