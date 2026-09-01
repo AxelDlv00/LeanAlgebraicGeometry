@@ -76,7 +76,7 @@ theorem exists_finset_standardOpen_cover {R : Type*} [CommSemiring R]
     (hcover : (PrimeSpectrum.basicOpen g : Set (PrimeSpectrum R)) ⊆
       ⋃ i, (PrimeSpectrum.basicOpen (f i) : Set (PrimeSpectrum R))) :
     ∃ s : Finset ι,
-    (PrimeSpectrum.basicOpen g : Set (PrimeSpectrum R)) ⊆
+      (PrimeSpectrum.basicOpen g : Set (PrimeSpectrum R)) ⊆
         ⋃ i ∈ s, (PrimeSpectrum.basicOpen (f i) : Set (PrimeSpectrum R)) := by
   exact (PrimeSpectrum.isCompact_basicOpen g).elim_finite_subcover
     (fun i => (PrimeSpectrum.basicOpen (f i) : Set (PrimeSpectrum R)))
