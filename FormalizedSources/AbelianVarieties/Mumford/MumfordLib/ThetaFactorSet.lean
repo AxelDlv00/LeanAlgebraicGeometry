@@ -158,6 +158,24 @@ theorem factorSet_cocycle (k l m : K) :
 noncomputable def sectionCoordinates (p : S × K) : G :=
   E.includeScalar p.1 * E.normalizedQuotientLift p.2
 
+/-! The chosen section gives unique scalar/quotient coordinates. -/
+
+theorem sectionCoordinates_injective :
+    Function.Injective E.sectionCoordinates := by
+  intro p q h
+  rcases p with ⟨s, k⟩
+  rcases q with ⟨t, l⟩
+  change E.includeScalar s * E.normalizedQuotientLift k =
+    E.includeScalar t * E.normalizedQuotientLift l at h
+  have hquot := congrArg E.quotient h
+  have hkl : k = l := by
+    simpa using hquot
+  subst l
+  have hscalar : E.includeScalar s = E.includeScalar t := by
+    exact mul_right_cancel h
+  have hst : s = t := E.includeScalar_injective hscalar
+  simp [hst]
+
 /-- The group law in scalar-section coordinates is twisted by the factor set. -/
 theorem sectionCoordinates_mul (s t : S) (k l : K) :
     E.sectionCoordinates (s, k) * E.sectionCoordinates (t, l) =
