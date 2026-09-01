@@ -173,4 +173,44 @@ noncomputable def spec_quotient_homeomorph {R : Type*} [CommRing R] (I : Ideal R
     exact congrArg Subtype.val hp
   exact hEmb.toHomeomorphOfSurjective hsurj
 
+/-! ### Further affine-spectrum topological interfaces -/
+
+/-- The spectrum of a product is the disjoint union of the two spectra
+(Stacks, Tag 00ED). -/
+noncomputable def spec_product_homeomorph
+    {R S : Type*} [CommSemiring R] [CommSemiring S] :
+    (PrimeSpectrum R ⊕ PrimeSpectrum S) ≃ₜ PrimeSpectrum (R × S) :=
+  PrimeSpectrum.primeSpectrumProdHomeo.symm
+
+/-- Closed subsets of an affine spectrum are precisely zero loci of ideals
+(Stacks, Tag 00E0). -/
+theorem isClosed_iff_zeroLocus_ideal {R : Type*} [CommSemiring R]
+    (Z : Set (PrimeSpectrum R)) :
+    IsClosed Z ↔ ∃ I : Ideal R, Z = PrimeSpectrum.zeroLocus (I : Set R) := by
+  exact PrimeSpectrum.isClosed_iff_zeroLocus_ideal Z
+
+/-- Every zero locus in an affine spectrum is closed. -/
+theorem isClosed_zeroLocus {R : Type*} [CommSemiring R] (s : Set R) :
+    IsClosed (PrimeSpectrum.zeroLocus s) := by
+  exact PrimeSpectrum.isClosed_zeroLocus s
+
+/-- A point outside a closed zero locus has a standard-open neighbourhood
+disjoint from that zero locus (Stacks, Tag 00E0). -/
+theorem exists_standardOpen_disjoint_zeroLocus {R : Type*} [CommSemiring R]
+    {I : Ideal R} {p : PrimeSpectrum R}
+    (hp : p ∉ PrimeSpectrum.zeroLocus (I : Set R)) :
+    ∃ f : R, f ∈ I ∧ f ∉ p.asIdeal ∧
+      Disjoint (PrimeSpectrum.basicOpen f : Set (PrimeSpectrum R))
+        (PrimeSpectrum.zeroLocus (I : Set R)) := by
+  have hnot : ¬ (I : Set R) ⊆ p.asIdeal := by
+    simpa only [PrimeSpectrum.mem_zeroLocus] using hp
+  obtain ⟨f, hfI, hfp⟩ := Set.not_subset.mp hnot
+  refine ⟨f, hfI, hfp, ?_⟩
+  rw [Set.disjoint_left]
+  intro q hqopen hqzero
+  have hqnot : f ∉ q.asIdeal := (PrimeSpectrum.mem_basicOpen f q).mp hqopen
+  have hqI : f ∈ q.asIdeal :=
+    (PrimeSpectrum.mem_zeroLocus q (I : Set R)).mp hqzero hfI
+  exact hqnot hqI
+
 end StacksPart01
