@@ -792,6 +792,20 @@ theorem Isogeny.isFinite_fiberToSpecResidueField
   exact CategoryTheory.MorphismProperty.pullback_snd _ _
     (inferInstance : IsFinite f.left)
 
+/- A finite scheme morphism has finite fibres after base change to any target
+   residue field.  This generic form is the fibre input used by the
+   arbitrary-field isogeny criteria; the abelian-variety wrapper above keeps
+   the source-facing theorem convenient when its geometric hypotheses are
+   already in scope. -/
+theorem Isogeny.isFinite_fiberToSpecResidueField_of_isFinite
+    {K : Type u} [Field K]
+    {A B : Over (Spec (.of K))} [GrpObj A] [GrpObj B]
+    (f : A ⟶ B) [IsMonHom f] [IsFinite f.left] (y : B.left) :
+    IsFinite (f.left.fiberToSpecResidueField y) := by
+  change IsFinite (pullback.snd f.left (B.left.fromSpecResidueField y))
+  exact CategoryTheory.MorphismProperty.pullback_snd _ _
+    (inferInstance : IsFinite f.left)
+
 /- Properness upgrades globally finite set-theoretic fibres to a finite
    underlying morphism.  This is the scheme-theoretic criterion used by the
    abelian-variety specializations below, and remains valid for any proper
