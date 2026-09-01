@@ -126,6 +126,17 @@ theorem ambientPeriodLattice_isDiscrete
     d.ambientPeriodLattice_discreteTopology
   exact isDiscrete_iff_discreteTopology.mpr inferInstance
 
+/-- Translation by the ambient period subgroup acts properly discontinuously
+on the tangent space. -/
+theorem ambientPeriodLattice_properlyDiscontinuousVAdd
+    {V X : Type*} [NormedAddCommGroup V] [NormedSpace ℂ V]
+    [AddCommGroup X] [TopologicalSpace X] {g : ℕ}
+    (d : ComplexVectorLatticeExponentialData V X g) :
+    ProperlyDiscontinuousVAdd d.ambientPeriodLattice V := by
+  apply AddSubgroup.properlyDiscontinuousVAdd_of_tendsto_cofinite
+  exact AddSubgroup.tendsto_coe_cofinite_of_discrete
+    d.ambientPeriodLattice d.ambientPeriodLattice_isDiscrete
+
 /-- A transported full lattice is closed in the ambient normed group. -/
 theorem ambientPeriodLattice_isClosed
     {V X : Type*} [NormedAddCommGroup V] [NormedSpace ℂ V]
@@ -176,6 +187,29 @@ theorem quotient_mk_isLocalHomeomorph
     IsLocalHomeomorph
       (QuotientAddGroup.mk : V → V ⧸ d.ambientPeriodLattice) :=
   d.quotient_mk_isCoveringMap.isLocalHomeomorph
+
+/-- The ambient period lattice induces a charted-space structure on the
+arbitrary tangent-space quotient. -/
+@[reducible]
+noncomputable def quotientChartedSpace
+    {V X : Type*} [NormedAddCommGroup V] [NormedSpace ℂ V]
+    [AddCommGroup X] [TopologicalSpace X] {g : ℕ}
+    (d : ComplexVectorLatticeExponentialData V X g) :
+    ChartedSpace V (V ⧸ d.ambientPeriodLattice) := by
+  letI : FiniteDimensional ℂ V :=
+    FiniteDimensional.of_injective d.coordinate.toLinearEquiv.toLinearMap
+      d.coordinate.injective
+  letI : ProperlyDiscontinuousVAdd d.ambientPeriodLattice V :=
+    d.ambientPeriodLattice_properlyDiscontinuousVAdd
+  letI : ProperlyDiscontinuousVAdd d.ambientPeriodLattice.op V := by
+    exact AddSubgroup.properlyDiscontinuousVAdd_opposite_of_tendsto_cofinite
+      d.ambientPeriodLattice
+      (AddSubgroup.tendsto_coe_cofinite_of_discrete
+        d.ambientPeriodLattice d.ambientPeriodLattice_isDiscrete)
+  letI : IsCancelVAdd d.ambientPeriodLattice.op V :=
+    (AddSubgroup.isAddQuotientCoveringMap
+      d.ambientPeriodLattice d.ambientPeriodLattice_isDiscrete).isCancelVAdd
+  exact AddAction.instChartedSpaceQuotient
 
 /-- A continuous full-lattice exponential has compact target. -/
 theorem target_isCompact
@@ -298,6 +332,24 @@ theorem quotientCoordinateHomeomorph_mk
     simp [canonicalExponential]
   rw [← hcoord]
   exact d.toCanonical.quotientHomeomorph_symm_exponential (d.coordinate v)
+
+/-- The coordinate quotient homeomorphism has the same underlying map as the
+coordinate additive equivalence. -/
+theorem quotientCoordinateHomeomorph_eq_quotientCoordinateAddEquiv
+    {V X : Type*} [NormedAddCommGroup V] [NormedSpace ℂ V]
+    [AddCommGroup X] [TopologicalSpace X] [T2Space X] [ContinuousAdd X]
+    {g : ℕ} (d : ComplexVectorLatticeExponentialData V X g)
+    (q : V ⧸ d.ambientPeriodLattice) :
+    d.quotientCoordinateHomeomorph q =
+      d.quotientCoordinateAddEquiv q := by
+  refine QuotientAddGroup.induction_on q ?_
+  intro v
+  change d.quotientCoordinateHomeomorph
+      (QuotientAddGroup.mk' d.ambientPeriodLattice v) =
+    d.quotientCoordinateAddEquiv
+      (QuotientAddGroup.mk' d.ambientPeriodLattice v)
+  rw [d.quotientCoordinateHomeomorph_mk,
+    d.quotientCoordinateAddEquiv_mk]
 
 /-- The arbitrary tangent-space exponential is a covering map when the target
 is a Hausdorff topological additive group. -/
