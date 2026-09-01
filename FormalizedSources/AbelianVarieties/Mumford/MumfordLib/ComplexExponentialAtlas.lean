@@ -234,6 +234,107 @@ theorem exponentialBranch_source_iUnion_eq_univ
   obtain ⟨v, hx⟩ := d.exists_exponentialBranch_source x
   exact Set.mem_iUnion.2 ⟨v, hx⟩
 
+/- The overlap transition between two transported inverse branches.  Its
+   source consists precisely of those tangent representatives whose image
+   under the first branch lands in the second branch source. -/
+noncomputable def exponentialBranchTransition
+    {V X : Type*} [NormedAddCommGroup V] [NormedSpace ℂ V]
+    [AddCommGroup X] [TopologicalSpace X] [T2Space X] [ContinuousAdd X]
+    {g : ℕ} (d : ComplexVectorLatticeExponentialData V X g) (v w : V) :
+    OpenPartialHomeomorph V V :=
+  (d.exponentialBranch v).symm.trans (d.exponentialBranch w)
+
+@[simp]
+theorem exponentialBranchTransition_apply
+    {V X : Type*} [NormedAddCommGroup V] [NormedSpace ℂ V]
+    [AddCommGroup X] [TopologicalSpace X] [T2Space X] [ContinuousAdd X]
+    {g : ℕ} (d : ComplexVectorLatticeExponentialData V X g) (v w : V)
+    (y : V) :
+    d.exponentialBranchTransition v w y =
+      d.exponentialBranch w ((d.exponentialBranch v).symm y) := by
+  rw [exponentialBranchTransition, OpenPartialHomeomorph.trans_apply]
+
+theorem exponentialBranchTransition_source_isOpen
+    {V X : Type*} [NormedAddCommGroup V] [NormedSpace ℂ V]
+    [AddCommGroup X] [TopologicalSpace X] [T2Space X] [ContinuousAdd X]
+    {g : ℕ} (d : ComplexVectorLatticeExponentialData V X g) (v w : V) :
+    IsOpen (d.exponentialBranchTransition v w).source := by
+  exact (d.exponentialBranchTransition v w).open_source
+
+theorem exponentialBranchTransition_target_isOpen
+    {V X : Type*} [NormedAddCommGroup V] [NormedSpace ℂ V]
+    [AddCommGroup X] [TopologicalSpace X] [T2Space X] [ContinuousAdd X]
+    {g : ℕ} (d : ComplexVectorLatticeExponentialData V X g) (v w : V) :
+    IsOpen (d.exponentialBranchTransition v w).target := by
+  exact (d.exponentialBranchTransition v w).open_target
+
+/- On an overlap, the transition is translation by a period (the sign is
+   immaterial for membership in the additive period subgroup). -/
+theorem exponentialBranchTransition_sub_mem_ambientPeriodLattice
+    {V X : Type*} [NormedAddCommGroup V] [NormedSpace ℂ V]
+    [AddCommGroup X] [TopologicalSpace X] [T2Space X] [ContinuousAdd X]
+    {g : ℕ} (d : ComplexVectorLatticeExponentialData V X g) (v w : V)
+    {y : V} (hy : y ∈ (d.exponentialBranchTransition v w).source) :
+    d.exponentialBranchTransition v w y - y ∈ d.ambientPeriodLattice := by
+  rw [exponentialBranchTransition, OpenPartialHomeomorph.trans_source] at hy
+  have hyv : y ∈ (d.exponentialBranch v).target := hy.1
+  let x : X := (d.exponentialBranch v).symm y
+  have hxv : x ∈ (d.exponentialBranch v).source :=
+    (d.exponentialBranch v).map_target hyv
+  have hxw : x ∈ (d.exponentialBranch w).source := hy.2
+  have hdiff := d.exponentialBranch_sub_mem_ambientPeriodLattice v w hxv hxw
+  have hrv : d.exponentialBranch v x = y :=
+    (d.exponentialBranch v).right_inv hyv
+  change d.exponentialBranch w x - y ∈ d.ambientPeriodLattice
+  simpa only [hrv, neg_sub] using (neg_mem hdiff)
+
+/- The period-valued form is convenient when treating overlap maps as deck
+   translations rather than merely comparing their differences. -/
+theorem exponentialBranchTransition_exists_period
+    {V X : Type*} [NormedAddCommGroup V] [NormedSpace ℂ V]
+    [AddCommGroup X] [TopologicalSpace X] [T2Space X] [ContinuousAdd X]
+    {g : ℕ} (d : ComplexVectorLatticeExponentialData V X g) (v w : V)
+    {y : V} (hy : y ∈ (d.exponentialBranchTransition v w).source) :
+    ∃ period : d.ambientPeriodLattice,
+      d.exponentialBranchTransition v w y = y + (period : V) := by
+  have hdiff := d.exponentialBranchTransition_sub_mem_ambientPeriodLattice v w hy
+  refine ⟨⟨d.exponentialBranchTransition v w y - y, hdiff⟩, ?_⟩
+  change d.exponentialBranchTransition v w y =
+    y + (d.exponentialBranchTransition v w y - y)
+  exact (add_sub_cancel y (d.exponentialBranchTransition v w y)).symm
+
+theorem exponentialBranchTransition_self_apply
+    {V X : Type*} [NormedAddCommGroup V] [NormedSpace ℂ V]
+    [AddCommGroup X] [TopologicalSpace X] [T2Space X] [ContinuousAdd X]
+    {g : ℕ} (d : ComplexVectorLatticeExponentialData V X g) (v : V)
+    {y : V} (hy : y ∈ (d.exponentialBranchTransition v v).source) :
+    d.exponentialBranchTransition v v y = y := by
+  rw [exponentialBranchTransition, OpenPartialHomeomorph.trans_source] at hy
+  rw [exponentialBranchTransition, OpenPartialHomeomorph.trans_apply]
+  exact (d.exponentialBranch v).right_inv hy.1
+
+/- Every overlap transition preserves the exponential, as expected for a
+   deck transformation of the quotient map. -/
+theorem exponentialBranchTransition_exponential_eq
+    {V X : Type*} [NormedAddCommGroup V] [NormedSpace ℂ V]
+    [AddCommGroup X] [TopologicalSpace X] [T2Space X] [ContinuousAdd X]
+    {g : ℕ} (d : ComplexVectorLatticeExponentialData V X g) (v w : V)
+    {y : V} (hy : y ∈ (d.exponentialBranchTransition v w).source) :
+    d.exponential (d.exponentialBranchTransition v w y) = d.exponential y := by
+  rw [d.exponentialBranchTransition_apply v w y]
+  have hyv : y ∈ (d.exponentialBranch v).target := by
+    rw [exponentialBranchTransition, OpenPartialHomeomorph.trans_source] at hy
+    exact hy.1
+  let x : X := (d.exponentialBranch v).symm y
+  have hxw : x ∈ (d.exponentialBranch w).source := by
+    rw [exponentialBranchTransition, OpenPartialHomeomorph.trans_source] at hy
+    exact hy.2
+  have hleft : d.exponential (d.exponentialBranch w x) = x :=
+    d.exponential_apply_exponential_apply w hxw
+  have hright : d.exponential y = x := by
+    exact (d.exponential_symm_apply_eq_exponential v hyv).symm
+  rw [hleft, hright]
+
 end ComplexVectorLatticeExponentialData
 
 end
