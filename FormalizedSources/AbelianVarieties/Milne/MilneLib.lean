@@ -16,6 +16,7 @@ import MilneLib.OverSheaf
 import MilneLib.Dimension
 import MilneLib.DimensionCorollaries
 import MilneLib.BasicLemmas
+import MilneLib.FibreCorollaries
 
 /-!
 # MilneLib
