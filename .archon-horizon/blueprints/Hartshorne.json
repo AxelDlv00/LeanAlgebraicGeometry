@@ -984,7 +984,7 @@
     },
     "states": {
       "blocked": 144,
-      "closed": 1000,
+      "closed": 1037,
       "formalized_open": 3,
       "informal": 485,
       "ready": 342
@@ -4322,7 +4322,7 @@
     },
     {
       "chapter": "Curves",
-      "comment_count": 1,
+      "comment_count": 2,
       "dep_count": 0,
       "descendant_count": 0,
       "group": "ch:Curves",
@@ -4351,7 +4351,7 @@
     },
     {
       "chapter": "Curves",
-      "comment_count": 0,
+      "comment_count": 1,
       "dep_count": 0,
       "descendant_count": 0,
       "group": "ch:Curves",
@@ -4612,7 +4612,7 @@
     },
     {
       "chapter": "Curves",
-      "comment_count": 0,
+      "comment_count": 2,
       "dep_count": 1,
       "descendant_count": 1,
       "group": "c124",
