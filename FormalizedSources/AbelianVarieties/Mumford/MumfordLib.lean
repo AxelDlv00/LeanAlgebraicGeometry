@@ -17,6 +17,7 @@ import MumfordLib.ComplexLattice
 import MumfordLib.ComplexVectorLattice
 import MumfordLib.ComplexTangentDimension
 import MumfordLib.ComplexVectorLatticeTopology
+import MumfordLib.ComplexQuotientAtlas
 import MumfordLib.ArbitraryLatticeTorsion
 import MumfordLib.ArbitraryLatticeFiniteTorsion
 import MumfordLib.DivisionFiber
