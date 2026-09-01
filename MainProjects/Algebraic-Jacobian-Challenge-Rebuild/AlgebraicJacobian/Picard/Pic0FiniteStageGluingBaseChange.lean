@@ -45,6 +45,21 @@ noncomputable def baseChangeGluingIso
     ⟨_, Scheme.Pullback.gluedIsLimit P.presentation.glueData.openCover P.presentation.map
       (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k)))⟩
 
+set_option maxHeartbeats 12800000 in
+/-- The canonical gluing-to-pullback isomorphism preserves the second projection. -/
+theorem baseChangeGluingIso_hom_p2
+    {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
+    (P : Pic0FiniteStageGluePackage C F) :
+    (baseChangeGluingIso C P).hom ≫
+        Scheme.Pullback.p2 P.presentation.glueData.openCover P.presentation.map
+          (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k))) =
+      pullback.snd P.presentation.map
+        (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k))) := by
+  exact limit.isoLimitCone_hom_π
+    ⟨_, Scheme.Pullback.gluedIsLimit P.presentation.glueData.openCover
+      P.presentation.map (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k)))⟩
+    WalkingCospan.right
+
 set_option synthInstance.maxHeartbeats 3200000 in
 -- The chart comparison elaborates the package's dependent scalar towers.
 set_option maxHeartbeats 12800000 in
