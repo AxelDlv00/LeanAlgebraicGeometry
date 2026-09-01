@@ -31,6 +31,18 @@ theorem zeroLocus_mul {R : Type*} [CommSemiring R] (I J : Ideal R) :
       PrimeSpectrum.zeroLocus (↑I : Set R) ∪ PrimeSpectrum.zeroLocus (↑J : Set R) := by
   exact PrimeSpectrum.zeroLocus_mul I J
 
+/-- The zero locus of an intersection of ideals is the union of their zero
+loci (Stacks, Tag `00E0`, part (9)). -/
+theorem zeroLocus_inf {R : Type*} [CommSemiring R] (I J : Ideal R) :
+    PrimeSpectrum.zeroLocus (↑(I ⊓ J) : Set R) =
+      PrimeSpectrum.zeroLocus (↑I : Set R) ∪ PrimeSpectrum.zeroLocus (↑J : Set R) := by
+  exact PrimeSpectrum.zeroLocus_inf I J
+
+/-- The zero locus of the zero ideal is the whole spectrum. -/
+theorem zeroLocus_bot {R : Type*} [CommSemiring R] :
+    PrimeSpectrum.zeroLocus (↑(⊥ : Ideal R) : Set R) = Set.univ := by
+  exact PrimeSpectrum.zeroLocus_bot
+
 /-- The zero locus of a sum of ideals is the intersection of their zero loci
 (Stacks, Tag 00E0). -/
 theorem zeroLocus_sup {R : Type*} [CommSemiring R] (I J : Ideal R) :
