@@ -932,6 +932,18 @@ theorem locallyOfFiniteType_of_isAbelianVariety
   letI : IsProper G.hom := hG.1
   exact IsProper.toLocallyOfFiniteType
 
+/-- The underlying scheme of an abelian variety over a field is Jacobson.
+
+The properness hypothesis supplies local finite type, and the spectrum of a
+field is Jacobson; Mathlib's finite-type descent then transfers the property
+to the total space. -/
+theorem jacobsonSpace_left_of_isAbelianVariety
+    (G : Over (Spec (.of K))) [GrpObj G] (hG : IsAbelianVariety G) :
+    JacobsonSpace G.left := by
+  letI : LocallyOfFiniteType G.hom :=
+    locallyOfFiniteType_of_isAbelianVariety G hG
+  exact LocallyOfFiniteType.jacobsonSpace G.hom
+
 theorem isLocallyNoetherian_left_of_isAbelianVariety
     (G : Over (Spec (.of K))) [GrpObj G] (hG : IsAbelianVariety G) :
     IsLocallyNoetherian G.left := by

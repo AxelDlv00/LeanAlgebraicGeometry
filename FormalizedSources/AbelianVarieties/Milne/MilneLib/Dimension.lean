@@ -421,6 +421,33 @@ end AlgebraicallyClosed
 
 end GroupVariety
 
+/-! Jacobson spaces provide the closed specializations used by the global
+dimension argument.  We keep this topological producer separate from the
+cotangent-rank comparison, which needs additional geometric input. -/
+
+/-- Every point of a Jacobson space has a closed specialization. -/
+theorem exists_closed_specialization_of_jacobsonSpace
+    {X : Type u} [TopologicalSpace X] [JacobsonSpace X]
+    (x : X) : ∃ y : X, IsClosed ({y} : Set X) ∧ x ⤳ y := by
+  have hloc : IsLocallyClosed (closure ({x} : Set X)) :=
+    isClosed_closure.isLocallyClosed
+  obtain ⟨y, hy, hyc⟩ := nonempty_inter_closedPoints
+    (Z := closure ({x} : Set X)) (Set.singleton_nonempty x).closure hloc
+  refine ⟨y, hyc, ?_⟩
+  exact specializes_iff_mem_closure.mpr hy
+
+/-- Every point of an abelian variety over a field specializes to a closed
+point.  This is the finite-type/Jacobson producer needed by later dimension
+arguments. -/
+theorem exists_closed_specialization_of_isAbelianVariety
+    {K : Type u} [Field K]
+    {G : Over (Spec (.of K))} [GrpObj G]
+    (hG : IsAbelianVariety G) (x : G.left) :
+    ∃ y : G.left, IsClosed ({y} : Set G.left) ∧ x ⤳ y := by
+  letI : JacobsonSpace G.left :=
+    jacobsonSpace_left_of_isAbelianVariety G hG
+  exact exists_closed_specialization_of_jacobsonSpace x
+
 /-! A global dimension consumer for the translation-invariant cotangent rank.
 
 The specialization bound in the statement is the geometric input left to a
