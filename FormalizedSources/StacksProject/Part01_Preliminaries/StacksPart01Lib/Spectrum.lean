@@ -109,6 +109,27 @@ theorem standardOpen_quasiCompact {R : Type*} [CommSemiring R] (f : R) :
     IsQuasiCompact (PrimeSpectrum.basicOpen f : Set (PrimeSpectrum R)) := by
   exact PrimeSpectrum.isCompact_basicOpen f
 
+/-- The spectrum of a localization is homeomorphic to the subspace of prime
+ideals disjoint from the localized submonoid (Stacks, Tag 00E3). -/
+noncomputable def spec_localization_homeomorph
+    {R S : Type*} [CommSemiring R] [CommSemiring S] [Algebra R S]
+    (M : Submonoid R) [IsLocalization M S] :
+    PrimeSpectrum S ≃ₜ
+      {p : PrimeSpectrum R // Disjoint (M : Set R) p.asIdeal} := by
+  let h := PrimeSpectrum.localization_comap_isEmbedding S M
+  exact h.toHomeomorph.trans
+    (Homeomorph.setCongr (PrimeSpectrum.localization_comap_range S M))
+
+/-- Under `spec_localization_homeomorph`, a prime is sent to its inverse image
+along the localization map. -/
+@[simp]
+theorem spec_localization_homeomorph_apply
+    {R S : Type*} [CommSemiring R] [CommSemiring S] [Algebra R S]
+    (M : Submonoid R) [IsLocalization M S] (p : PrimeSpectrum S) :
+    (spec_localization_homeomorph M p : PrimeSpectrum R) =
+      PrimeSpectrum.comap (algebraMap R S) p := by
+  rfl
+
 /-- The spectrum of a localization away from `f` is the standard open `D(f)`
 (Stacks, Tag 00E4). -/
 noncomputable def standardOpen_homeomorph {R : Type*} [CommSemiring R] (f : R) :
