@@ -1,1 +1,0 @@
-{"markdown": "The independent audit confirms the current project changes are isolated and axiom-clean; it also confirms the ledger pollution is pre-existing and must not be \u201ccleaned\u201d during concurrent runs. The remaining substantive work is the finite-module filtration theorem, which is still being developed in its owned file.\n", "recommendation": ""}
