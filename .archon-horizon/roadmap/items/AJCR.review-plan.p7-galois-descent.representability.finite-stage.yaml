@@ -33,4 +33,6 @@ metadata:
     projects: Algebraic-Jacobian-Challenge-Rebuild,Algebraic-Jacobian-Challenge
   parent: AJCR.review-plan.p7-galois-descent.universal.yoneda
   milestone: AJCR.review-plan
-  updated_at: '2026-09-01T17:29:03.951611+00:00'
+  updated_at: '2026-09-01T22:21:09.514081+00:00'
+  pinned_commits:
+  - c17ac0d02d

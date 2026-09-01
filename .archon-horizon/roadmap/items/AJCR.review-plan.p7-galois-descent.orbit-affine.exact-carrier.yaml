@@ -33,4 +33,6 @@ metadata:
     projects: Algebraic-Jacobian-Challenge-Rebuild,Algebraic-Jacobian-Challenge
   parent: AJCR.review-plan.p7-galois-descent.orbit-affine
   milestone: AJCR.review-plan
-  updated_at: '2026-08-23T03:01:19.395112+00:00'
+  updated_at: '2026-09-01T22:21:10.864066+00:00'
+  pinned_commits:
+  - e9c497805b

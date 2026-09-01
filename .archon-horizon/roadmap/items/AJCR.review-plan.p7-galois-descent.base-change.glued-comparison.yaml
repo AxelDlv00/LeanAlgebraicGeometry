@@ -27,6 +27,7 @@ metadata:
     projects: Algebraic-Jacobian-Challenge-Rebuild,Algebraic-Jacobian-Challenge
   parent: AJCR.review-plan.p7-galois-descent.base-change.snd
   milestone: AJCR.review-plan
-  updated_at: '2026-08-31T16:49:53.943798+00:00'
+  updated_at: '2026-09-01T22:21:07.925253+00:00'
   pinned_commits:
+  - c17ac0d02d
   - 8ff1d6a6d3
