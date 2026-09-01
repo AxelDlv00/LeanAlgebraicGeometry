@@ -302,6 +302,29 @@ theorem ringKrullDim_stalk_eq_of_isIso
   ringKrullDim_eq_of_ringEquiv
     ((asIso (f.stalkMap x)).commRingCatIsoToRingEquiv)
 
+/-- An isomorphism of schemes preserves the global topological Krull dimension.
+
+The pointwise stalk comparison is enough after expressing the dimension as the
+supremum of stalk dimensions.  The reverse inequality uses the inverse scheme
+isomorphism, avoiding any choice of a pointwise inverse for the underlying
+homeomorphism.
+-/
+theorem topologicalKrullDim_eq_of_isIso
+    {X Y : Scheme.{u}} (f : X ⟶ Y) [IsIso f] :
+    topologicalKrullDim X = topologicalKrullDim Y := by
+  rw [topologicalKrullDim_eq_iSup_ringKrullDim_stalk X,
+      topologicalKrullDim_eq_iSup_ringKrullDim_stalk Y]
+  apply le_antisymm
+  · apply iSup_le
+    intro x
+    rw [← ringKrullDim_stalk_eq_of_isIso f x]
+    exact le_iSup (fun y : Y => ringKrullDim (Y.presheaf.stalk y)) (f.base x)
+  · apply iSup_le
+    intro y
+    have hxy := ringKrullDim_stalk_eq_of_isIso (inv f) y
+    rw [← hxy]
+    exact le_iSup (fun x : X => ringKrullDim (X.presheaf.stalk x)) ((inv f).base y)
+
 /-! Regularity is likewise invariant under the stalk isomorphism.  This is
 useful when a dimension argument supplies regularity at one translated point. -/
 
