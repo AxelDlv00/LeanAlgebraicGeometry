@@ -465,6 +465,44 @@ theorem quotient_isConnected
   exact isConnected_univ
 
 end ComplexLatticeExponentialData
+
+namespace ComplexTorusUniformization
+
+/-- A complex uniformization witness with continuous inverse supplies the
+full-lattice exponential certificate used by the topological interface. -/
+def toComplexLatticeExponentialData
+    {X : Type*} [AddCommGroup X] [TopologicalSpace X] {g : ℕ}
+    (u : ComplexTorusUniformization X g)
+    (hcont_symm : Continuous u.equiv.symm) :
+    ComplexLatticeExponentialData X g where
+  periodLattice := complexPeriodLatticeSubmodule g
+  periodLatticeDiscrete := inferInstance
+  periodLatticeFull := inferInstance
+  exponential := u.exponential
+  surjective := u.exponential_surjective
+  continuous := u.exponential_continuous hcont_symm
+  kernel := by
+    rw [u.exponential_ker]
+    exact (complexPeriodLatticeSubmodule_toAddSubgroup g).symm
+
+@[simp]
+theorem toComplexLatticeExponentialData_exponential_apply
+    {X : Type*} [AddCommGroup X] [TopologicalSpace X] {g : ℕ}
+    (u : ComplexTorusUniformization X g)
+    (hcont_symm : Continuous u.equiv.symm) (z : GenusComplexVector g) :
+    (u.toComplexLatticeExponentialData hcont_symm).exponential z = u.exponential z :=
+  rfl
+
+@[simp]
+theorem toComplexLatticeExponentialData_periodLattice
+    {X : Type*} [AddCommGroup X] [TopologicalSpace X] {g : ℕ}
+    (u : ComplexTorusUniformization X g)
+    (hcont_symm : Continuous u.equiv.symm) :
+    (u.toComplexLatticeExponentialData hcont_symm).periodLattice.toAddSubgroup =
+      complexPeriodLattice g :=
+  complexPeriodLatticeSubmodule_toAddSubgroup g
+
+end ComplexTorusUniformization
 end
 end Uniformization
 end Mumford
