@@ -26,6 +26,7 @@ import MumfordLib.QuotientTopology
 import MumfordLib.UniformizedTopology
 import MumfordLib.TranslationTopology
 import MumfordLib.Theta
+import MumfordLib.ThetaFactorSet
 import MumfordLib.ThetaNondegenerate
 import MumfordLib.ThetaIsotropic
 import MumfordLib.ThetaDuality
