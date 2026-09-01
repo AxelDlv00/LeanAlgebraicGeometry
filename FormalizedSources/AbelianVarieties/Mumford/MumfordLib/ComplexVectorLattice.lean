@@ -142,6 +142,36 @@ theorem quotient_mk_mem_zsmulTorsion_iff
   exact PeriodLatticeQuotient.quotient_mk_mem_zsmulTorsion_iff
     d.ambientPeriodLattice n v
 
+@[simp]
+theorem exponential_eq_zero_iff_mem_ambientPeriodLattice
+    {V X : Type*} [NormedAddCommGroup V] [NormedSpace ℂ V]
+    [AddCommGroup X] [TopologicalSpace X] {g : ℕ}
+    (d : ComplexVectorLatticeExponentialData V X g) (v : V) :
+    d.exponential v = 0 ↔ v ∈ d.ambientPeriodLattice := by
+  rw [← AddMonoidHom.mem_ker, d.exponential_ker]
+
+/- Two tangent representatives have the same exponential image exactly when
+   their difference is an ambient period.  This is the coordinate-free form
+   of the quotient representative criterion and is useful on overlaps of
+   local exponential branches. -/
+theorem exponential_eq_iff_sub_mem_ambientPeriodLattice
+    {V X : Type*} [NormedAddCommGroup V] [NormedSpace ℂ V]
+    [AddCommGroup X] [TopologicalSpace X] {g : ℕ}
+    (d : ComplexVectorLatticeExponentialData V X g) (v w : V) :
+    d.exponential v = d.exponential w ↔
+      v - w ∈ d.ambientPeriodLattice := by
+  constructor
+  · intro h
+    have hz : d.exponential (v - w) = 0 := by
+      rw [map_sub, h, sub_self]
+    exact d.exponential_eq_zero_iff_mem_ambientPeriodLattice (v - w) |>.1 hz
+  · intro h
+    have hz : d.exponential (v - w) = 0 :=
+      d.exponential_eq_zero_iff_mem_ambientPeriodLattice (v - w) |>.2 h
+    have heq : d.exponential v - d.exponential w = 0 := by
+      simpa only [map_sub] using hz
+    exact sub_eq_zero.mp heq
+
 /-- Signed-integer torsion in the arbitrary tangent quotient, transported
     through its exponential and a chosen genus-torus uniformization. -/
 noncomputable def quotientTorsionAddEquiv_of_uniformization
