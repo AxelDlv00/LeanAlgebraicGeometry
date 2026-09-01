@@ -97,6 +97,7 @@ import HartshorneLib.Chapter4RiemannConsequences
 import HartshorneLib.Chapter4Nonspecial
 import HartshorneLib.Chapter4LinearSystemCriteria
 import HartshorneLib.Chapter4Ampleness
+import HartshorneLib.Chapter4LinearSystemDimension
 
 /-!
 # HartshorneLib
