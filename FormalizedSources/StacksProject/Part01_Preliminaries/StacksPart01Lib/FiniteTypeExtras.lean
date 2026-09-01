@@ -5,6 +5,7 @@ Authors: The StacksPart01Lib Contributors
 -/
 
 import Mathlib.RingTheory.FiniteType
+import Mathlib.RingTheory.IntegralClosure.IsIntegralClosure.Basic
 
 /-!
 # StacksPart01Lib.FiniteTypeExtras
@@ -38,5 +39,29 @@ theorem ringHom_finite_of_comp {R S T : Type*} [CommRing R] [CommRing S]
     [CommRing T] (f : R →+* S) (g : S →+* T)
     (h : (g.comp f).Finite) : g.Finite := by
   exact RingHom.Finite.of_comp_finite h
+
+/-! ### Integral ring maps
+
+The finite/integral comparison and transitivity statements below package the
+basic extension lemmas from Tags `00GK`, `00GN`, and `02JJ`.
+-/
+
+/-- A finite ring homomorphism is integral (Stacks, Tag `00GK`). -/
+theorem ringHom_isIntegral_of_finite {R S : Type*} [CommRing R] [CommRing S]
+    (f : R →+* S) (hf : f.Finite) : f.IsIntegral := by
+  exact RingHom.IsIntegral.of_finite hf
+
+/-- Integral ring maps are stable under composition (Stacks, Tag `00GN`). -/
+theorem ringHom_isIntegral_comp {R S T : Type*} [CommRing R] [CommRing S]
+    [CommRing T] (f : R →+* S) (g : S →+* T) (hf : f.IsIntegral)
+    (hg : g.IsIntegral) : (g.comp f).IsIntegral := by
+  exact hf.trans f g hg
+
+/-- A ring map is finite iff it is integral and of finite type
+(Stacks, Tag `02JJ`). -/
+theorem ringHom_finite_iff_isIntegral_and_finiteType
+    {R S : Type*} [CommRing R] [CommRing S] (f : R →+* S) :
+    f.Finite ↔ f.IsIntegral ∧ f.FiniteType := by
+  exact RingHom.finite_iff_isIntegral_and_finiteType
 
 end StacksPart01Lib

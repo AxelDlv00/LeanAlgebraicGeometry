@@ -229,6 +229,55 @@ theorem isClosed_zeroLocus {R : Type*} [CommSemiring R] (s : Set R) :
     IsClosed (PrimeSpectrum.zeroLocus s) := by
   exact PrimeSpectrum.isClosed_zeroLocus s
 
+/-! ### Functorial closed loci and specialization -/
+
+/-- A surjective ring map induces a closed embedding on affine spectra
+(Stacks, Tag 00E5). -/
+theorem spectrum_comap_isClosedEmbedding_of_surjective
+    {R S : Type*} [CommRing R] [CommRing S]
+    (f : R →+* S) (hf : Function.Surjective f) :
+    IsClosedEmbedding (PrimeSpectrum.comap f) := by
+  exact PrimeSpectrum.isClosedEmbedding_comap_of_surjective S f hf
+
+/-- The image of the spectrum map of a surjection is the zero locus of its
+kernel (Stacks, Tag 00E5). -/
+theorem spectrum_comap_range_of_surjective
+    {R S : Type*} [CommRing R] [CommRing S]
+    (f : R →+* S) (hf : Function.Surjective f) :
+    Set.range (PrimeSpectrum.comap f) =
+      PrimeSpectrum.zeroLocus (RingHom.ker f : Set R) := by
+  exact range_comap_of_surjective S f hf
+
+/-- A surjective spectrum map transports closed loci by ideal comap. -/
+theorem spectrum_comap_image_zeroLocus_of_surjective
+    {R S : Type*} [CommRing R] [CommRing S]
+    (f : R →+* S) (hf : Function.Surjective f) (I : Ideal S) :
+    PrimeSpectrum.comap f '' PrimeSpectrum.zeroLocus (I : Set S) =
+      PrimeSpectrum.zeroLocus (Ideal.comap f I : Set R) := by
+  exact image_comap_zeroLocus_eq_zeroLocus_comap S f hf I
+
+/-- Inclusion of affine zero loci is characterized by radical containment. -/
+theorem spectrum_zeroLocus_subset_iff_radical_le
+    {R : Type*} [CommSemiring R] (I J : Ideal R) :
+    PrimeSpectrum.zeroLocus (I : Set R) ⊆
+        PrimeSpectrum.zeroLocus (J : Set R) ↔ J ≤ I.radical := by
+  exact PrimeSpectrum.zeroLocus_subset_zeroLocus_iff I J
+
+/-- The spectrum map is dense exactly when its kernel is nilpotent. -/
+theorem spectrum_comap_denseRange_iff_ker_le_nilradical
+    {R S : Type*} [CommSemiring R] [CommSemiring S] (f : R →+* S) :
+    DenseRange (PrimeSpectrum.comap f) ↔
+      RingHom.ker f ≤ nilradical R := by
+  exact PrimeSpectrum.denseRange_comap_iff_ker_le_nilRadical f
+
+/-- The closure of a subset of an affine spectrum is the zero locus of its
+vanishing ideal. -/
+theorem spectrum_zeroLocus_vanishingIdeal_eq_closure
+    {R : Type*} [CommSemiring R] (t : Set (PrimeSpectrum R)) :
+    PrimeSpectrum.zeroLocus (PrimeSpectrum.vanishingIdeal t : Set R) =
+      closure t := by
+  exact PrimeSpectrum.zeroLocus_vanishingIdeal_eq_closure t
+
 /-- A clopen subset of an affine spectrum is a unique idempotent standard open
 (Stacks, Tag 00EE). -/
 theorem existsUnique_idempotent_basicOpen_eq_of_isClopen
