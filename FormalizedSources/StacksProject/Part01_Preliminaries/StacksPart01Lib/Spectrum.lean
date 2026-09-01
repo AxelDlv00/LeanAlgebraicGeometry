@@ -145,6 +145,16 @@ noncomputable def standardOpen_homeomorph {R : Type*} [CommSemiring R] (f : R) :
     (Homeomorph.setCongr
       (PrimeSpectrum.localization_away_comap_range (Localization.Away f) f))
 
+/-- Under the standard-open homeomorphism, a prime is sent to its inverse
+image along the localization map (Stacks, Tag 00E4). -/
+@[simp]
+theorem standardOpen_homeomorph_apply
+    {R : Type*} [CommSemiring R] (f : R)
+    (p : PrimeSpectrum (Localization.Away f)) :
+    (standardOpen_homeomorph f p : PrimeSpectrum R) =
+      PrimeSpectrum.comap (algebraMap R (Localization.Away f)) p := by
+  rfl
+
 /-- The spectrum of a quotient is homeomorphic to the corresponding closed
 zero locus (Stacks, Tag 00E5). -/
 noncomputable def spec_quotient_homeomorph {R : Type*} [CommRing R] (I : Ideal R) :
@@ -186,6 +196,26 @@ noncomputable def spec_product_homeomorph
     {R S : Type*} [CommSemiring R] [CommSemiring S] :
     (PrimeSpectrum R ⊕ PrimeSpectrum S) ≃ₜ PrimeSpectrum (R × S) :=
   PrimeSpectrum.primeSpectrumProdHomeo.symm
+
+/-- The left component of the product-spectrum homeomorphism is induced by
+the first projection (Stacks, Tag 00ED). -/
+@[simp]
+theorem spec_product_homeomorph_inl
+    {R S : Type*} [CommSemiring R] [CommSemiring S]
+    (p : PrimeSpectrum R) :
+    spec_product_homeomorph (R := R) (S := S) (Sum.inl p) =
+      PrimeSpectrum.comap (RingHom.fst R S) p := by
+  exact PrimeSpectrum.primeSpectrumProd_symm_inl p
+
+/-- The right component of the product-spectrum homeomorphism is induced by
+the second projection (Stacks, Tag 00ED). -/
+@[simp]
+theorem spec_product_homeomorph_inr
+    {R S : Type*} [CommSemiring R] [CommSemiring S]
+    (p : PrimeSpectrum S) :
+    spec_product_homeomorph (R := R) (S := S) (Sum.inr p) =
+      PrimeSpectrum.comap (RingHom.snd R S) p := by
+  exact PrimeSpectrum.primeSpectrumProd_symm_inr p
 
 /-- Closed subsets of an affine spectrum are precisely zero loci of ideals
 (Stacks, Tag 00E0). -/
