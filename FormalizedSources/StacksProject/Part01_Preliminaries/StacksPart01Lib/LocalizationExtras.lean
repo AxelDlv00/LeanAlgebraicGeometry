@@ -66,6 +66,23 @@ theorem localization_map_eq_zero_iff
       ∃ m : M, (m : R) * r = 0 := by
   exact IsLocalization.map_eq_zero_iff M (Localization M) r
 
+/-- In the localization away from `f`, an element vanishes exactly when a
+power of `f` annihilates it (Stacks, Tag 00CQ). -/
+theorem localization_away_map_eq_zero_iff
+    {R : Type*} [CommSemiring R] (f r : R) :
+    algebraMap R (Localization.Away f) r = 0 ↔
+      ∃ n : ℕ, f ^ n * r = 0 := by
+  rw [localization_map_eq_zero_iff (Submonoid.powers f) r]
+  constructor
+  · rintro ⟨m, hm⟩
+    rcases (Submonoid.mem_powers_iff (m : R) f).mp m.property with ⟨n, hn⟩
+    refine ⟨n, ?_⟩
+    exact hn.symm ▸ hm
+  · rintro ⟨n, hn⟩
+    have hmem : f ^ n ∈ Submonoid.powers f :=
+      (Submonoid.mem_powers_iff (f ^ n) f).mpr ⟨n, rfl⟩
+    exact ⟨⟨f ^ n, hmem⟩, hn⟩
+
 /-- A canonical localization fraction is zero exactly when some denominator
 kills its numerator (Stacks, Tag 00CQ). -/
 theorem localization_mk'_eq_zero_iff
