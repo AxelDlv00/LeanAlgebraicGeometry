@@ -421,6 +421,47 @@ end AlgebraicallyClosed
 
 end GroupVariety
 
+/-! A global dimension consumer for the translation-invariant cotangent rank.
+
+The specialization bound in the statement is the geometric input left to a
+separate finite-type/Jacobson argument: every point is bounded by a closed
+specialization.  The theorem then packages the abelian-variety translation
+invariance proved above with the general cotangent-space dimension criterion.
+-/
+
+/-- If every point is bounded by a closed specialization, then a regular point
+of an algebraically closed abelian variety whose cotangent space has rank `d`
+determines the global Krull dimension. -/
+theorem topologicalKrullDim_eq_of_closed_specialization_finrank
+    {K : Type u} [Field K] [IsAlgClosed K]
+    {G : Over (Spec (.of K))} [GrpObj G]
+    (hG : IsAbelianVariety G) (d : ℕ) (x₀ : G.left)
+    (hx₀ : IsClosed ({x₀} : Set G.left))
+    (hreg : IsRegularLocalRing (G.left.presheaf.stalk x₀))
+    (hfin : Module.finrank (IsLocalRing.ResidueField
+      (G.left.presheaf.stalk x₀))
+      (IsLocalRing.CotangentSpace (G.left.presheaf.stalk x₀)) = d)
+    (hbound : ∀ z : G.left, ∃ c : G.left,
+      IsClosed ({c} : Set G.left) ∧
+        Module.finrank (IsLocalRing.ResidueField
+          (G.left.presheaf.stalk z))
+          (IsLocalRing.CotangentSpace (G.left.presheaf.stalk z)) ≤
+        Module.finrank (IsLocalRing.ResidueField
+          (G.left.presheaf.stalk c))
+          (IsLocalRing.CotangentSpace (G.left.presheaf.stalk c))) :
+    topologicalKrullDim G.left = (d : WithBot ℕ∞) := by
+  letI : LocallyOfFiniteType G.hom :=
+    locallyOfFiniteType_of_isAbelianVariety G hG
+  letI : IsLocallyNoetherian G.left :=
+    isLocallyNoetherian_left_of_isAbelianVariety G hG
+  refine topologicalKrullDim_eq_of_forall_finrank_cotangentSpace_le_of_regular
+    G.left d ?_ x₀ hreg hfin
+  intro z
+  obtain ⟨c, hc, hzc⟩ := hbound z
+  have hz := GroupVariety.finrank_cotangentSpace_eq_of_closedPoints
+    (G := G) hG hx₀ hc
+  exact hzc.trans (le_of_eq (hz.trans hfin))
+
 /-- An injective integral extension preserves Krull dimension. -/
 theorem ringKrullDim_eq_of_isIntegral_of_injective
     {R : Type u} {S : Type v} [CommRing R] [CommRing S]
