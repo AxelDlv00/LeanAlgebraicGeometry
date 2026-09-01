@@ -5,6 +5,8 @@ Authors: The StacksPart01Lib Contributors
 -/
 
 import Mathlib.RingTheory.Finiteness.Basic
+import Mathlib.RingTheory.Finiteness.ModuleFinitePresentation
+import Mathlib.RingTheory.TensorProduct.Finite
 import Mathlib.LinearAlgebra.Isomorphisms
 
 /-!
@@ -39,6 +41,44 @@ theorem finite_module_iff_of_finite_extension
   · intro h
     letI : Module.Finite S M := h
     exact Module.Finite.trans S M
+
+/-- A tensor product of two finite modules is finite (Stacks, Tag 05G5). -/
+theorem finite_module_tensorProduct
+    {R M N : Type*} [CommSemiring R] [AddCommMonoid M] [AddCommMonoid N]
+    [Module R M] [Module R N] [Module.Finite R M] [Module.Finite R N] :
+    Module.Finite R (TensorProduct R M N) := by
+  infer_instance
+
+/-- Base change of a finite module is finite over the base-change algebra
+(Stacks, Tag 05G5). -/
+theorem finite_module_baseChange
+    {R A M : Type*} [CommSemiring R] [Semiring A] [Algebra R A]
+    [AddCommMonoid M] [Module R M] [Module.Finite R M] :
+    Module.Finite A (TensorProduct R A M) := by
+  exact Module.Finite.base_change R A M
+
+/-- A finite product of finite modules is finite. -/
+theorem finite_module_pi
+    {R ι : Type*} [Semiring R] [Finite ι]
+    {M : ι → Type*} [(i : ι) → AddCommMonoid (M i)]
+    [(i : ι) → Module R (M i)] [(i : ι) → Module.Finite R (M i)] :
+    Module.Finite R ((i : ι) → M i) := by
+  exact Module.Finite.pi
+
+/-- Quotients of finite modules by submodules are finite. -/
+theorem finite_module_quotient
+    {R M : Type*} [Ring R] [AddCommGroup M] [Module R M]
+    [Module.Finite R M] (N : Submodule R M) :
+    Module.Finite R (M ⧸ N) := by
+  exact Module.Finite.quotient R N
+
+/-- For a finite algebra, module finite presentation is equivalent to algebra
+finite presentation. -/
+theorem finite_presentation_iff_algebra_finitePresentation
+    {R S : Type*} [CommRing R] [CommRing S] [Algebra R S]
+    [Module.Finite R S] :
+    Module.FinitePresentation R S ↔ Algebra.FinitePresentation R S := by
+  exact Module.FinitePresentation.iff_finitePresentation_of_finite R S
 
 /-- A cyclic module is linearly equivalent to the quotient of its scalar ring
 by an ideal.  The ideal is the kernel of the map sending a scalar to its

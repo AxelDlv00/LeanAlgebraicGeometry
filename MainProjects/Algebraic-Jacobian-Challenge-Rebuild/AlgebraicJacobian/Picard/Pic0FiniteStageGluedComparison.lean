@@ -301,7 +301,7 @@ private theorem gluingGluedInv_hom
     _ = (pic0SepClosedAtlasGlueData C).ι U ≫ 𝟙 _ := by simp
 
 set_option synthInstance.maxHeartbeats 3200000 in
--- The record stores opaque inverse laws instead of their dependent proof terms.
+-- The record seals inverse laws instead of retaining their dependent proof terms.
 set_option maxHeartbeats 12800000 in
 set_option backward.isDefEq.respectTransparency false in
 /-- The glued base-changed finite-stage atlas is the canonical exact Picard atlas glue. -/
@@ -323,6 +323,130 @@ private noncomputable def exactAtlasFromGluedIso :
     (pic0_sepClosed_representableBy (C := C)).1.left
   exact asIso (pic0SepClosedAtlasOpenCover C).fromGlued
 
+set_option maxHeartbeats 12800000 in
+/-- On each chart, the exact-atlas comparison is the chosen open immersion. -/
+private theorem exactAtlasFromGluedIso_hom_ι
+    (U : Pic0FiniteStageChartIndex C) :
+    (pic0SepClosedAtlasGlueData C).ι U ≫
+        (exactAtlasFromGluedIso C).hom = U.1.1.ι := by
+  change (pic0SepClosedAtlasOpenCover C).gluedCover.ι U ≫
+      (pic0SepClosedAtlasOpenCover C).fromGlued =
+        (pic0SepClosedAtlasOpenCover C).f U
+  exact Scheme.Cover.ι_fromGlued _ _
+
+set_option maxHeartbeats 12800000 in
+/-- The chosen affine-chart spectrum map preserves the structure map to the
+separably closed base field. -/
+private theorem pic0SepClosedChart_fromSpec_structureMap
+    (U : Pic0FiniteStageChartIndex C) :
+    U.1.2.fromSpec ≫
+        (pic0_sepClosed_representableBy (C := C)).1.hom =
+      Spec.map (CommRingCat.ofHom
+        (algebraMap k (Pic0FiniteStageRing C (Sum.inl U)))) := by
+  exact Over.w (Over.fromSpecAffine
+    (pic0_sepClosed_representableBy (C := C)).1 U.1)
+
+set_option synthInstance.maxHeartbeats 3200000 in
+-- This projection crosses the pinned chart scalar-extension comparison.
+set_option maxHeartbeats 12800000 in
+set_option backward.isDefEq.respectTransparency false in
+/-- The pinned chart comparison preserves the structure map to the separably
+closed base field. -/
+private theorem gluingChartIso_hom_structureMap
+    {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
+    (P : Pic0FiniteStageGluePackage C F)
+    (U : Pic0FiniteStageChartIndex C) :
+    (gluingChartIso C P U).hom ≫ U.1.1.ι ≫
+        (pic0_sepClosed_representableBy (C := C)).1.hom =
+      pullback.snd (P.glueData.ι U ≫ P.gluedMap)
+        (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k))) := by
+  calc
+    _ = (pullback.congrHom (glueData_ι_gluedMap C P U) rfl).hom ≫
+          (chartRingBaseChangeIso C P U).hom ≫
+            U.1.2.fromSpec ≫
+              (pic0_sepClosed_representableBy (C := C)).1.hom := by
+      simpa only [Category.assoc] using congrArg
+        (fun q => q ≫ (pic0_sepClosed_representableBy (C := C)).1.hom)
+        (gluingChartIso_hom_ι C P U)
+    _ = (pullback.congrHom (glueData_ι_gluedMap C P U) rfl).hom ≫
+          (chartRingBaseChangeIso C P U).hom ≫
+            Spec.map (CommRingCat.ofHom
+              (algebraMap k (Pic0FiniteStageRing C (Sum.inl U)))) := by
+      simpa only [Category.assoc] using congrArg
+        (fun q => (pullback.congrHom (glueData_ι_gluedMap C P U) rfl).hom ≫
+          (chartRingBaseChangeIso C P U).hom ≫ q)
+        (pic0SepClosedChart_fromSpec_structureMap C U)
+    _ = (pullback.congrHom (glueData_ι_gluedMap C P U) rfl).hom ≫
+          pullback.snd (chartBaseChangeMap C P U)
+            (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k))) := by
+      simpa only [Category.assoc] using congrArg
+        (fun q => (pullback.congrHom (glueData_ι_gluedMap C P U) rfl).hom ≫ q)
+        (chartRingBaseChangeIso_hom_structureMap C P U)
+    _ = _ := by
+      rw [pullback_congrHom_hom_snd (glueData_ι_gluedMap C P U) rfl]
+
+set_option synthInstance.maxHeartbeats 3200000 in
+-- Keep the local gluing projection separate from the global cover extensionality.
+set_option maxHeartbeats 12800000 in
+set_option backward.isDefEq.respectTransparency false in
+/-- The second pullback projection is the restriction of the glued projection
+to a base-changed finite-stage chart. -/
+private theorem pullback_snd_eq_baseChangedGlueData_ι_p2
+    {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
+    (P : Pic0FiniteStageGluePackage C F)
+    (U : Pic0FiniteStageChartIndex C) :
+    pullback.snd (P.glueData.ι U ≫ P.gluedMap)
+        (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k))) =
+      (baseChangedGlueData C P).ι U ≫
+        Scheme.Pullback.p2 P.glueData.openCover P.gluedMap
+          (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k))) := by
+  rw [Scheme.Pullback.gluing_ι, Scheme.Pullback.p2,
+    Multicoequalizer.π_desc]
+  rfl
+
+set_option synthInstance.maxHeartbeats 3200000 in
+-- Globalize the chart projection without unfolding the glued inverse laws.
+set_option maxHeartbeats 12800000 in
+set_option backward.isDefEq.respectTransparency false in
+/-- The global glued comparison, followed by the exact-atlas comparison,
+preserves the map to the separably closed base. -/
+private theorem gluingGluedIso_hom_structureMap
+    {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
+    (P : Pic0FiniteStageGluePackage C F) :
+    (gluingGluedIso C P).hom ≫
+        (exactAtlasFromGluedIso C).hom ≫
+          (pic0_sepClosed_representableBy (C := C)).1.hom =
+      Scheme.Pullback.p2 P.glueData.openCover P.gluedMap
+        (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k))) := by
+  refine Scheme.Cover.hom_ext (baseChangedGlueData C P).openCover _ _ ?_
+  intro U
+  calc
+    (baseChangedGlueData C P).ι U ≫
+        ((gluingGluedIso C P).hom ≫
+          (exactAtlasFromGluedIso C).hom ≫
+            (pic0_sepClosed_representableBy (C := C)).1.hom) =
+      (gluingChartIso C P U).hom ≫
+        (pic0SepClosedAtlasGlueData C).ι U ≫
+          (exactAtlasFromGluedIso C).hom ≫
+            (pic0_sepClosed_representableBy (C := C)).1.hom := by
+      simpa only [gluingGluedIso, Category.assoc] using
+        congrArg (fun q => q ≫ (exactAtlasFromGluedIso C).hom ≫
+          (pic0_sepClosed_representableBy (C := C)).1.hom)
+          (gluingGluedHom_ι C P U)
+    _ = (gluingChartIso C P U).hom ≫ U.1.1.ι ≫
+          (pic0_sepClosed_representableBy (C := C)).1.hom := by
+      simpa only [Category.assoc] using congrArg
+        (fun q => (gluingChartIso C P U).hom ≫ q ≫
+          (pic0_sepClosed_representableBy (C := C)).1.hom)
+        (exactAtlasFromGluedIso_hom_ι C U)
+    _ = pullback.snd (P.glueData.ι U ≫ P.gluedMap)
+          (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k))) :=
+      gluingChartIso_hom_structureMap C P U
+    _ = (baseChangedGlueData C P).ι U ≫
+        Scheme.Pullback.p2 P.glueData.openCover P.gluedMap
+          (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k))) :=
+      pullback_snd_eq_baseChangedGlueData_ι_p2 C P U
+
 set_option synthInstance.maxHeartbeats 3200000 in
 -- Compose the three large glued isomorphisms without unfolding their implementations.
 set_option maxHeartbeats 12800000 in
@@ -337,6 +461,39 @@ noncomputable def finiteStageBaseChangeIso
   baseChangeGluingIso C P ≪≫
     gluingGluedIso C P ≪≫
       exactAtlasFromGluedIso C
+
+set_option synthInstance.maxHeartbeats 3200000 in
+-- Keep the final proof at the three named global comparison boundaries.
+set_option maxHeartbeats 12800000 in
+set_option backward.isDefEq.respectTransparency false in
+/-- The finite-stage comparison is an isomorphism over the separably closed
+base field. -/
+theorem finiteStageBaseChangeIso_hom_structureMap
+    {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
+    (P : Pic0FiniteStageGluePackage C F) :
+    (finiteStageBaseChangeIso C P).hom ≫
+        (pic0_sepClosed_representableBy (C := C)).1.hom =
+      pullback.snd P.gluedMap
+        (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k))) := by
+  calc
+    _ = (baseChangeGluingIso C P).hom ≫
+        ((gluingGluedIso C P).hom ≫
+          (exactAtlasFromGluedIso C).hom ≫
+            (pic0_sepClosed_representableBy (C := C)).1.hom) := by
+      simp only [finiteStageBaseChangeIso, Iso.trans_hom, Category.assoc]
+    _ = (baseChangeGluingIso C P).hom ≫
+        Scheme.Pullback.p2 P.glueData.openCover P.gluedMap
+          (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k))) :=
+      congrArg (fun q => (baseChangeGluingIso C P).hom ≫ q)
+        (gluingGluedIso_hom_structureMap C P)
+    _ = pullback.snd P.gluedMap
+          (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k))) := by
+      change (baseChangeGluingIso C P).hom ≫
+          Scheme.Pullback.p2 P.presentation.glueData.openCover P.presentation.map
+            (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k))) =
+        pullback.snd P.presentation.map
+          (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k)))
+      exact baseChangeGluingIso_hom_p2 C P
 
 end Pic0FiniteStageGluePackage
 

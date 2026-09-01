@@ -5,6 +5,7 @@ Authors: The StacksPart01Lib Contributors
 -/
 
 import Mathlib.RingTheory.Localization.Basic
+import Mathlib.RingTheory.LocalProperties.Basic
 import Mathlib.RingTheory.Etale.Basic
 
 /-!
@@ -72,5 +73,48 @@ theorem localization_mk'_eq_zero_iff
     IsLocalization.mk' (Localization M) x s = 0 ↔
       ∃ m : M, (m : R) * x = 0 := by
   exact IsLocalization.mk'_eq_zero_iff x s
+
+/-! ### Localized ideals and submodules
+
+These identities express extension of ideals/submodules along a localization,
+including compatibility with finite intersections and generated submodules.
+-/
+
+theorem ideal_localized_eq_map
+    {R S : Type*} [CommSemiring R] [CommSemiring S] [Algebra R S]
+    (M : Submonoid R) [IsLocalization M S] (I : Ideal R) :
+    Submodule.localized' S M (Algebra.linearMap R S) I =
+      I.map (algebraMap R S) := by
+  exact Ideal.localized'_eq_map S M I
+
+theorem submodule_localized_inf
+    {R S M N : Type*} [CommSemiring R] [CommSemiring S]
+    [AddCommMonoid M] [AddCommMonoid N] [Module R M] [Module R N]
+    [Algebra R S] [Module S N] [IsScalarTower R S N]
+    (p : Submonoid R) [IsLocalization p S] (f : M →ₗ[R] N)
+    [IsLocalizedModule p f] (N₁ N₂ : Submodule R M) :
+    Submodule.localized' S p f (N₁ ⊓ N₂) =
+      Submodule.localized' S p f N₁ ⊓ Submodule.localized' S p f N₂ := by
+  exact Submodule.localized'_inf S p f N₁ N₂
+
+theorem submodule_localized_iSup
+    {R S M N ι : Type*} [CommSemiring R] [CommSemiring S]
+    [AddCommMonoid M] [AddCommMonoid N] [Module R M] [Module R N]
+    [Algebra R S] [Module S N] [IsScalarTower R S N]
+    (p : Submonoid R) [IsLocalization p S] (f : M →ₗ[R] N)
+    [IsLocalizedModule p f] (N₁ : ι → Submodule R M) :
+    Submodule.localized' S p f (⨆ i, N₁ i) =
+      ⨆ i, Submodule.localized' S p f (N₁ i) := by
+  exact Submodule.localized'_iSup S p f N₁
+
+theorem submodule_localized_span
+    {R S M N : Type*} [CommSemiring R] [CommSemiring S]
+    [AddCommMonoid M] [AddCommMonoid N] [Module R M] [Module R N]
+    [Algebra R S] [Module S N] [IsScalarTower R S N]
+    (p : Submonoid R) [IsLocalization p S] (f : M →ₗ[R] N)
+    [IsLocalizedModule p f] (s : Set M) :
+    Submodule.localized' S p f (Submodule.span R s) =
+      Submodule.span S (f '' s) := by
+  exact Submodule.localized'_span S p f s
 
 end StacksPart01
