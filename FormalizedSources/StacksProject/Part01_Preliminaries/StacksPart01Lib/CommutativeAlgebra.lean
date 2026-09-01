@@ -11,6 +11,7 @@ import Mathlib.RingTheory.Artinian.Module
 import Mathlib.RingTheory.Ideal.Maps
 import Mathlib.RingTheory.Finiteness.Ideal
 import Mathlib.RingTheory.Localization.Submodule
+import Mathlib.RingTheory.Noetherian.Nilpotent
 
 /-!
 # StacksPart01Lib.CommutativeAlgebra
@@ -198,5 +199,18 @@ theorem noetherian_ideal_power_subset
     ∃ n : ℕ, J ^ n ≤ I := by
   exact Ideal.exists_pow_le_of_le_radical_of_fg hJI
     (Ideal.fg_of_isNoetherianRing J)
+
+/-- In a Noetherian ring, an ideal is nilpotent exactly when each of its
+elements is nilpotent (Stacks, Tag 00IM). -/
+theorem noetherian_locallyNilpotent_iff_nilpotent
+    {R : Type*} [CommSemiring R] [IsNoetherianRing R] (I : Ideal R) :
+    (∀ x ∈ I, IsNilpotent x) ↔ IsNilpotent I := by
+  rw [Ideal.FG.isNilpotent_iff_le_nilradical
+    (Ideal.fg_of_isNoetherianRing I)]
+  constructor
+  · intro h x hx
+    exact mem_nilradical.mpr (h x hx)
+  · intro h x hx
+    exact mem_nilradical.mp (h hx)
 
 end StacksPart01
