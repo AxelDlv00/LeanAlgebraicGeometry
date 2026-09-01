@@ -5,12 +5,13 @@ Authors: The StacksPart01Lib Contributors
 -/
 
 import Mathlib.RingTheory.Finiteness.Basic
+import Mathlib.LinearAlgebra.Isomorphisms
 
 /-!
-# Finiteness under change of scalars
+# Finite and cyclic modules
 
 The finiteness lemmas in this file package the scalar-tower arguments used in
-the Stacks Project's discussion of finite modules (Tags 0560 and 00GJ).
+the Stacks Project's discussion of finite modules (Tags 0560, 00GJ, and 00KZ).
 -/
 
 namespace StacksPart01
@@ -38,5 +39,17 @@ theorem finite_module_iff_of_finite_extension
   · intro h
     letI : Module.Finite S M := h
     exact Module.Finite.trans S M
+
+/-- A cyclic module is linearly equivalent to the quotient of its scalar ring
+by an ideal.  The ideal is the kernel of the map sending a scalar to its
+multiple of the chosen generator. -/
+theorem exists_ideal_quotient_equiv_of_cyclic
+    {R M : Type*} [CommRing R] [AddCommGroup M] [Module R M]
+    (h : ∃ m : M, Function.Surjective
+      (LinearMap.toSpanSingleton R M m)) :
+    ∃ I : Ideal R, Nonempty ((R ⧸ I) ≃ₗ[R] M) := by
+  obtain ⟨m, hm⟩ := h
+  let f := LinearMap.toSpanSingleton R M m
+  exact ⟨LinearMap.ker f, ⟨f.quotKerEquivOfSurjective hm⟩⟩
 
 end StacksPart01
