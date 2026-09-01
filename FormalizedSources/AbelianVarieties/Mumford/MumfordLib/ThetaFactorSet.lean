@@ -227,5 +227,86 @@ theorem commutatorPairing_eq_factorSet_div (k l : K) :
     E.normalizedQuotientLift E.quotientHom_normalizedQuotientLift
     E.factorSet E.normalizedQuotientLift_mul k l
 
+/-- Every set-theoretic quotient section differs from the normalized chosen
+section by a scalar. -/
+theorem exists_sectionScalar
+    (σ : K → G)
+    (hσ : ∀ k, E.quotientHom (σ k) = Multiplicative.ofAdd k)
+    (k : K) :
+    ∃ c : S, σ k = E.includeScalar c * E.normalizedQuotientLift k := by
+  have hk : σ k * (E.normalizedQuotientLift k)⁻¹ ∈ E.quotientHom.ker := by
+    rw [MonoidHom.mem_ker, map_mul, map_inv, hσ,
+      E.quotientHom_normalizedQuotientLift]
+    simp
+  obtain ⟨c, hc⟩ :=
+    (E.mem_quotientHom_ker_iff
+      (σ k * (E.normalizedQuotientLift k)⁻¹)).mp hk
+  refine ⟨c, ?_⟩
+  calc
+    σ k = (σ k * (E.normalizedQuotientLift k)⁻¹) *
+        E.normalizedQuotientLift k := by simp
+    _ = E.includeScalar c * E.normalizedQuotientLift k := by rw [← hc]
+
+/-- The scalar one-cochain comparing a quotient section with the normalized
+chosen section. -/
+noncomputable def sectionScalar
+    (σ : K → G)
+    (hσ : ∀ k, E.quotientHom (σ k) = Multiplicative.ofAdd k)
+    (k : K) : S :=
+  Classical.choose (E.exists_sectionScalar σ hσ k)
+
+theorem section_eq_includeScalar_sectionScalar_mul
+    (σ : K → G)
+    (hσ : ∀ k, E.quotientHom (σ k) = Multiplicative.ofAdd k)
+    (k : K) :
+    σ k = E.includeScalar (E.sectionScalar σ hσ k) *
+      E.normalizedQuotientLift k :=
+  Classical.choose_spec (E.exists_sectionScalar σ hσ k)
+
+/-- Changing the quotient section changes its factor set by the coboundary of
+the scalar comparison cochain. -/
+theorem factorSet_change_of_section
+    (σ : K → G)
+    (hσ : ∀ k, E.quotientHom (σ k) = Multiplicative.ofAdd k)
+    (f : K → K → S)
+    (hf : ∀ k l, σ k * σ l = E.includeScalar (f k l) * σ (k + l))
+    (k l : K) :
+    f k l =
+      E.sectionScalar σ hσ k * E.sectionScalar σ hσ l *
+        E.factorSet k l * (E.sectionScalar σ hσ (k + l))⁻¹ := by
+  let c : K → S := E.sectionScalar σ hσ
+  have hc (a : K) :
+      σ a = E.includeScalar (c a) * E.normalizedQuotientLift a :=
+    E.section_eq_includeScalar_sectionScalar_mul σ hσ a
+  have hscalar :
+      f k l * c (k + l) = c k * c l * E.factorSet k l := by
+    apply E.includeScalar_injective
+    apply mul_right_cancel (b := E.normalizedQuotientLift (k + l))
+    calc
+      E.includeScalar (f k l * c (k + l)) *
+          E.normalizedQuotientLift (k + l) =
+        E.includeScalar (f k l) *
+          (E.includeScalar (c (k + l)) *
+            E.normalizedQuotientLift (k + l)) := by
+              rw [map_mul, mul_assoc]
+      _ = E.includeScalar (f k l) * σ (k + l) :=
+        congrArg (fun x : G => E.includeScalar (f k l) * x)
+          (hc (k + l)).symm
+      _ = σ k * σ l := (hf k l).symm
+      _ = E.sectionCoordinates (c k, k) *
+          E.sectionCoordinates (c l, l) := by
+            rw [hc k, hc l]
+            rfl
+      _ = E.sectionCoordinates
+          (c k * c l * E.factorSet k l, k + l) :=
+        E.sectionCoordinates_mul (c k) (c l) k l
+      _ = E.includeScalar (c k * c l * E.factorSet k l) *
+          E.normalizedQuotientLift (k + l) := rfl
+  change f k l = c k * c l * E.factorSet k l * (c (k + l))⁻¹
+  calc
+    f k l = (f k l * c (k + l)) * (c (k + l))⁻¹ := by simp
+    _ = (c k * c l * E.factorSet k l) * (c (k + l))⁻¹ := by
+      rw [hscalar]
+
 end ThetaExtension
 end Mumford
