@@ -852,7 +852,7 @@
     },
     "states": {
       "blocked": 124,
-      "closed": 273,
+      "closed": 301,
       "formalized_open": 0,
       "informal": 254,
       "ready": 138
@@ -866,6 +866,8 @@
       "MilneLib.GroupVariety.exists_hom_comp_pointTranslation_of_isAbelianVariety: Lean declaration is not referenced by any blueprint \\lean{...}",
       "MilneLib.GroupVariety.factor_through_snd_unique: Lean declaration is not referenced by any blueprint \\lean{...}",
       "MilneLib.GroupVariety.factors_through_snd_iff: Lean declaration is not referenced by any blueprint \\lean{...}",
+      "MilneLib.GroupVariety.finrank_cotangentSpace_eq_of_closedPoints: Lean declaration is not referenced by any blueprint \\lean{...}",
+      "MilneLib.GroupVariety.finrank_cotangentSpace_eq_of_pointTranslation: Lean declaration is not referenced by any blueprint \\lean{...}",
       "MilneLib.GroupVariety.hom_additive_decomp_axis_unique: Lean declaration is not referenced by any blueprint \\lean{...}",
       "MilneLib.GroupVariety.hom_additive_decomp_of_rigidity: Lean declaration is not referenced by any blueprint \\lean{...}",
       "MilneLib.GroupVariety.hom_additive_decomp_of_rigidity_arbitraryField: Lean declaration is not referenced by any blueprint \\lean{...}",
@@ -878,6 +880,7 @@
       "MilneLib.GroupVariety.isMonHom_of_pointed_of_isAbelianVariety_arbitraryField: Lean declaration is not referenced by any blueprint \\lean{...}",
       "MilneLib.GroupVariety.isReduced_stalk_iff_of_isOpenImmersion: Lean declaration is not referenced by any blueprint \\lean{...}",
       "MilneLib.GroupVariety.isReduced_stalk_pointTranslationIso_iff: Lean declaration is not referenced by any blueprint \\lean{...}",
+      "MilneLib.GroupVariety.isRegularLocalRing_stalk_iff_of_pointTranslation: Lean declaration is not referenced by any blueprint \\lean{...}",
       "MilneLib.GroupVariety.mem_smoothLocus_iff_of_comp_eq: Lean declaration is not referenced by any blueprint \\lean{...}",
       "MilneLib.GroupVariety.morphism_eq_of_eqAt_closedPoints: Lean declaration is not referenced by any blueprint \\lean{...}",
       "MilneLib.GroupVariety.pointTranslationIso_hom_apply: Lean declaration is not referenced by any blueprint \\lean{...}",
@@ -892,6 +895,7 @@
       "MilneLib.GroupVariety.rigidity_eqOn_saturated_open_to_affine: Lean declaration is not referenced by any blueprint \\lean{...}",
       "MilneLib.GroupVariety.rigidity_lemma: Lean declaration is not referenced by any blueprint \\lean{...}",
       "MilneLib.GroupVariety.rigidity_snd_lift: Lean declaration is not referenced by any blueprint \\lean{...}",
+      "MilneLib.GroupVariety.ringKrullDim_stalk_eq_of_pointTranslation: Lean declaration is not referenced by any blueprint \\lean{...}",
       "MilneLib.GroupVariety.snd_left_isClosedMap: Lean declaration is not referenced by any blueprint \\lean{...}",
       "MilneLib.IsAbelianVariety.baseChange: Lean declaration is not referenced by any blueprint \\lean{...}",
       "MilneLib.IsFinite.of_isProper_of_faithfullyFlat_baseChange: Lean declaration is not referenced by any blueprint \\lean{...}",
@@ -903,11 +907,7 @@
       "MilneLib.Isogeny.comp_of_finite_residue_fibres: Lean declaration is not referenced by any blueprint \\lean{...}",
       "MilneLib.Isogeny.comp_of_isAbelianVariety: Lean declaration is not referenced by any blueprint \\lean{...}",
       "MilneLib.Isogeny.comp_of_isAbelianVariety_of_arbitraryField: Lean declaration is not referenced by any blueprint \\lean{...}",
-      "MilneLib.Isogeny.comp_of_isIso_left: Lean declaration is not referenced by any blueprint \\lean{...}",
-      "MilneLib.Isogeny.comp_of_isIso_right: Lean declaration is not referenced by any blueprint \\lean{...}",
-      "MilneLib.Isogeny.exists_isFinite_morphismRestrict_of_closed_target: Lean declaration is not referenced by any blueprint \\lean{...}",
-      "MilneLib.Isogeny.finite_fibre_of_section: Lean declaration is not referenced by any blueprint \\lean{...}",
-      "MilneLib.Isogeny.finite_preimage_singleton_of_closed_point: Lean declaration is not referenced by any blueprint \\lean{...}"
+      "MilneLib.Isogeny.comp_of_isIso_left: Lean declaration is not referenced by any blueprint \\lean{...}"
     ]
   },
   "nodes": [
@@ -3900,7 +3900,7 @@
     },
     {
       "chapter": "Geometry of Abelian Varieties",
-      "comment_count": 0,
+      "comment_count": 1,
       "dep_count": 2,
       "descendant_count": 5,
       "group": "c103",
@@ -3929,7 +3929,7 @@
     },
     {
       "chapter": "Geometry of Abelian Varieties",
-      "comment_count": 5,
+      "comment_count": 6,
       "dep_count": 0,
       "descendant_count": 23,
       "group": "c109",
@@ -3958,7 +3958,7 @@
     },
     {
       "chapter": "Geometry of Abelian Varieties",
-      "comment_count": 17,
+      "comment_count": 19,
       "dep_count": 2,
       "descendant_count": 1,
       "group": "c103",
