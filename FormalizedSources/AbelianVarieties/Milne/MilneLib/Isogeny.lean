@@ -1590,4 +1590,139 @@ theorem Isogeny.of_surjective_of_algebraicClosure_baseChange_isogeny
     finite_of_algebraicClosure_baseChange_isogeny hA hB f hgeom
   exact Isogeny.of_surjective_of_finite f hs
 
+/- Faithfully flat base change detects flatness for ring homomorphisms. -/
+theorem flat_codescendsAlong_faithfullyFlat :
+    RingHom.CodescendsAlong RingHom.Flat RingHom.FaithfullyFlat := by
+  refine .mk _ RingHom.Flat.respectsIso fun R S T _ _ _ _ _ h h' => ?_
+  rw [RingHom.flat_algebraMap_iff] at h' ⊢
+  rw [RingHom.faithfullyFlat_algebraMap_iff] at h
+  exact Module.Flat.of_flat_tensorProduct R T S
+
+/- Flatness of a morphism descends from its pullback along a faithfully flat
+   quasi-compact cover of the base. -/
+theorem flat_of_overPullback_of_faithfullyFlat
+    {S T : Scheme} {A B : Over S}
+    (b : T ⟶ S) [Surjective b] [Flat b] [QuasiCompact b]
+    (f : A ⟶ B)
+    (h : Flat ((CategoryTheory.Over.pullback b).map f).left) : Flat f.left := by
+  letI : DescendsAlong @Flat (@Surjective ⊓ @Flat ⊓ @QuasiCompact) := by
+    exact HasRingHomProperty.descendsAlong_flat flat_codescendsAlong_faithfullyFlat
+  let p : pullback B.hom b ⟶ B.left := pullback.fst B.hom b
+  let q : pullback A.hom b ⟶ pullback B.hom b :=
+    pullback.lift (pullback.fst A.hom b ≫ f.left) (pullback.snd A.hom b)
+      (by
+        rw [Category.assoc, CategoryTheory.Over.w f]
+        exact pullback.condition)
+  have hq : Flat q := by
+    change Flat q at h
+    exact h
+  let e1 := pullbackRightPullbackFstIso B.hom b f.left
+  let e2 := pullbackSymmetry f.left p
+  let c : pullback A.hom b ≅ pullback (f.left ≫ B.hom) b :=
+    pullback.congrHom (CategoryTheory.Over.w f).symm rfl
+  let d := c ≪≫ e1.symm ≪≫ e2
+  have he2_fst : e2.hom ≫ pullback.fst p f.left = pullback.snd f.left p := by
+    simp [e2, p]
+  have he1_inv_snd_fst :
+      e1.inv ≫ pullback.snd f.left p ≫ pullback.fst B.hom b =
+        pullback.fst (f.left ≫ B.hom) b ≫ f.left := by
+    simp [e1, p]
+  have he1_inv_snd_snd :
+      e1.inv ≫ pullback.snd f.left p ≫ pullback.snd B.hom b =
+        pullback.snd (f.left ≫ B.hom) b := by
+    simp [e1, p]
+  have hc_fst :
+      c.hom ≫ pullback.fst (f.left ≫ B.hom) b = pullback.fst A.hom b := by
+    rw [pullback.congrHom_hom]
+    change pullback.lift (pullback.fst A.hom b) (pullback.snd A.hom b) _ ≫
+      pullback.fst (f.left ≫ B.hom) b = _
+    exact pullback.lift_fst _ _ _
+  have hc_snd :
+      c.hom ≫ pullback.snd (f.left ≫ B.hom) b = pullback.snd A.hom b := by
+    rw [pullback.congrHom_hom]
+    change pullback.lift (pullback.fst A.hom b) (pullback.snd A.hom b) _ ≫
+      pullback.snd (f.left ≫ B.hom) b = _
+    exact pullback.lift_snd _ _ _
+  have hm_fst :
+      q ≫ pullback.fst B.hom b = pullback.fst A.hom b ≫ f.left := by
+    dsimp [q]
+    exact pullback.lift_fst _ _ _
+  have hm_snd :
+      q ≫ pullback.snd B.hom b = pullback.snd A.hom b := by
+    dsimp [q]
+    exact pullback.lift_snd _ _ _
+  have he2_fst_assoc :
+      e2.hom ≫ pullback.fst p f.left ≫ pullback.fst B.hom b =
+        pullback.snd f.left p ≫ pullback.fst B.hom b := by
+    rw [← Category.assoc, he2_fst]
+  have he2_fst_assoc_snd :
+      e2.hom ≫ pullback.fst p f.left ≫ pullback.snd B.hom b =
+        pullback.snd f.left p ≫ pullback.snd B.hom b := by
+    rw [← Category.assoc, he2_fst]
+  have he : d.hom ≫ pullback.fst p f.left = q := by
+    apply pullback.hom_ext
+    · calc
+        d.hom ≫ pullback.fst p f.left ≫ pullback.fst B.hom b
+            = c.hom ≫ e1.inv ≫ e2.hom ≫ pullback.fst p f.left ≫
+                pullback.fst B.hom b := by
+                  simp [d, Iso.trans_hom, Category.assoc]
+        _ = c.hom ≫ e1.inv ≫ pullback.snd f.left p ≫
+              pullback.fst B.hom b := by rw [he2_fst_assoc]
+        _ = c.hom ≫ pullback.fst (f.left ≫ B.hom) b ≫ f.left := by
+              rw [he1_inv_snd_fst]
+        _ = pullback.fst A.hom b ≫ f.left := by
+              change (c.hom ≫ pullback.fst (f.left ≫ B.hom) b) ≫ f.left = _
+              rw [hc_fst]
+        _ = q ≫ pullback.fst B.hom b := by rw [← hm_fst]
+    · calc
+        d.hom ≫ pullback.fst p f.left ≫ pullback.snd B.hom b
+            = c.hom ≫ e1.inv ≫ e2.hom ≫ pullback.fst p f.left ≫
+                pullback.snd B.hom b := by
+                  simp [d, Iso.trans_hom, Category.assoc]
+        _ = c.hom ≫ e1.inv ≫ pullback.snd f.left p ≫
+              pullback.snd B.hom b := by rw [he2_fst_assoc_snd]
+        _ = c.hom ≫ pullback.snd (f.left ≫ B.hom) b := by
+              rw [he1_inv_snd_snd]
+        _ = pullback.snd A.hom b := by
+              rw [hc_snd]
+        _ = q ≫ pullback.snd B.hom b := by rw [← hm_snd]
+  have hpull : Flat (pullback.fst p f.left) := by
+    apply (MorphismProperty.cancel_left_of_respectsIso (P := @Flat)
+      d.hom (pullback.fst p f.left)).mp
+    rw [he]
+    exact hq
+  exact MorphismProperty.of_pullback_fst_of_descendsAlong
+    (P := @Flat) (Q := @Surjective ⊓ @Flat ⊓ @QuasiCompact)
+    (f := p) (g := f.left)
+    ⟨⟨inferInstance, inferInstance⟩, inferInstance⟩
+    hpull
+
+/- The algebraic-closure pullback is faithfully flat, so geometric flatness
+   implies flatness over the original field. -/
+theorem flat_of_algebraicClosure_baseChange
+    {K : Type u} [Field K]
+    {A B : Over (Spec (.of K))} [GrpObj A] [GrpObj B]
+    (f : A ⟶ B) [IsMonHom f]
+    (hgeom :
+      let F := CategoryTheory.Over.pullback
+        (Spec.map (CommRingCat.ofHom <| algebraMap K (AlgebraicClosure K)))
+      letI : GrpObj (F.obj A) := Functor.grpObjObj
+      letI : GrpObj (F.obj B) := Functor.grpObjObj
+      Flat (F.map f).left) : Flat f.left := by
+  let b : Spec (.of (AlgebraicClosure K)) ⟶ Spec (.of K) :=
+    Spec.map (CommRingCat.ofHom <| algebraMap K (AlgebraicClosure K))
+  let F := CategoryTheory.Over.pullback b
+  have hgeom' : Flat (F.map f).left := by
+    simpa [F, b] using hgeom
+  letI : Flat b := by
+    dsimp [b]
+    infer_instance
+  letI : Surjective b := by
+    dsimp [b]
+    infer_instance
+  letI : QuasiCompact b := by
+    dsimp [b]
+    infer_instance
+  exact flat_of_overPullback_of_faithfullyFlat b f hgeom'
+
 end MilneLib
