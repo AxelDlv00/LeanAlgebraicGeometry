@@ -29,6 +29,7 @@ import MumfordLib.Theta
 import MumfordLib.ThetaNondegenerate
 import MumfordLib.ThetaIsotropic
 import MumfordLib.ThetaDuality
+import MumfordLib.ThetaComplexDuality
 
 /-!
 # MumfordLib
