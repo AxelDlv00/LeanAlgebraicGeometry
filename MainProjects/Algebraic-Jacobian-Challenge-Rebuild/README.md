@@ -126,6 +126,14 @@ committed binder-free producer and the same-carrier capstone.
 `Pic0FiniteStageUniversalClass.lean` is committed in `7fabbbdedd` and remains a consumed
 universal-class prerequisite, not a `RepresentableBy` producer.
 
+### Current implementation checkpoint (2026-09-01)
+
+The stabilized finite-stage cone now exports verified affine, gluing, and pinned-chart
+structure-map projections (`affineBaseChangeIso_hom_structureMap`,
+`baseChangeGluingIso_hom_p2`, and `chartRingBaseChangeIso_hom_structureMap`). These are
+compatibility laws for the existing comparison maps; they do not yet supply the exact-carrier,
+binder-free `RepresentableBy` producer required by the acceptance chain.
+
 ## Sources
 
 The shared workspace-root [`references/`](../../references/) library (indexed by
