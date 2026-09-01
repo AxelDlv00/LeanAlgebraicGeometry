@@ -101,6 +101,34 @@ theorem standardOpen_isUnit_of_subset {R : Type*} [CommSemiring R]
   exact (PrimeSpectrum.basicOpen_le_basicOpen_iff_algebraMap_isUnit
     (S := Localization.Away g) (f := g) (g := f)).mp hsub
 
+/-- A ring map whose map on affine spectra is surjective detects units
+(Stacks, Tag 0B7C). -/
+theorem isUnit_iff_of_surjective_spectrum
+    {R S : Type*} [CommSemiring R] [CommSemiring S]
+    (f : R →+* S) (hsurj : Function.Surjective (PrimeSpectrum.comap f)) (x : R) :
+    IsUnit x ↔ IsUnit (f x) := by
+  constructor
+  · exact fun hx => hx.map f
+  · intro hx
+    apply (standardOpen_eq_univ_iff_isUnit x).mp
+    apply Set.eq_univ_iff_forall.mpr
+    intro p
+    obtain ⟨q, hq⟩ := hsurj p
+    have hqopen : q ∈ (PrimeSpectrum.basicOpen (f x) : Set (PrimeSpectrum S)) :=
+      (standardOpen_eq_univ_iff_isUnit (f x)).mpr hx ▸ Set.mem_univ q
+    have hpre : (PrimeSpectrum.comap f) ⁻¹'
+        (PrimeSpectrum.basicOpen x : Set (PrimeSpectrum R)) =
+        (PrimeSpectrum.basicOpen (f x) : Set (PrimeSpectrum S)) :=
+      spectrum_comap_preimage_standardOpen f x
+    have hp : PrimeSpectrum.comap f q ∈
+        (PrimeSpectrum.basicOpen x : Set (PrimeSpectrum R)) := by
+      have hqpre : q ∈ (PrimeSpectrum.comap f) ⁻¹'
+          (PrimeSpectrum.basicOpen x : Set (PrimeSpectrum R)) := by
+        rw [hpre]
+        exact hqopen
+      exact hqpre
+    simpa [hq] using hp
+
 end Zariski
 
 end StacksPart01
