@@ -14,6 +14,7 @@ import StacksPart01Lib.SetTheory
 import StacksPart01Lib.Zariski
 import StacksPart01Lib.ZariskiExtras
 import StacksPart01Lib.ZariskiUnion
+import StacksPart01Lib.ZariskiComplement
 import StacksPart01Lib.IdealTheory
 import StacksPart01Lib.Nilradical
 import StacksPart01Lib.Localization
