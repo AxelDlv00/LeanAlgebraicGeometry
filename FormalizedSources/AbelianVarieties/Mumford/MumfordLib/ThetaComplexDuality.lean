@@ -80,6 +80,38 @@ noncomputable def complexCharacterFintype
   letI : Fintype A := Fintype.ofFinite A
   exact Fintype.ofEquiv A (complexCharacterAddEquiv A).symm.toEquiv
 
+/-- A nondegenerate finite complex theta pairing realizes every character of
+each subgroup. -/
+theorem commutatorPairingRestriction_surjective_complex
+    {G : Type u} {K : Type w} [Group G] [AddCommGroup K]
+    (E : ThetaExtension G ℂˣ K) (H : AddSubgroup K) [Finite K]
+    (hE : E.IsNondegenerate) :
+    Function.Surjective (E.commutatorPairingRestriction H) := by
+  letI : DivisibleBy (Additive ℂˣ) ℤ := complexUnitsDivisibleByInt
+  letI : Fintype (K →+ Additive ℂˣ) := complexCharacterFintype K
+  exact E.commutatorPairingRestriction_surjective_of_isNondegenerate H
+    (natCard_complexCharacter_eq K).symm hE
+
+/-- A maximal isotropic quotient is the complex character group of the
+maximal isotropic subgroup. -/
+noncomputable def quotientMaximalIsotropicAddEquiv_complex
+    {G : Type u} {K : Type w} [Group G] [AddCommGroup K]
+    (E : ThetaExtension G ℂˣ K) (H : AddSubgroup K) [Finite K]
+    (hmax : E.IsMaximalIsotropic H) (hE : E.IsNondegenerate) :
+    K ⧸ H ≃+ (H →+ Additive ℂˣ) :=
+  E.quotientMaximalIsotropicAddEquiv H hmax
+    (E.commutatorPairingRestriction_surjective_complex H hE)
+
+/-- Complex character self-duality identifies a maximal isotropic quotient
+with the maximal isotropic subgroup itself. -/
+noncomputable def quotientMaximalIsotropicSelfAddEquiv_complex
+    {G : Type u} {K : Type w} [Group G] [AddCommGroup K]
+    (E : ThetaExtension G ℂˣ K) (H : AddSubgroup K) [Finite K]
+    (hmax : E.IsMaximalIsotropic H) (hE : E.IsNondegenerate) :
+    K ⧸ H ≃+ H :=
+  (E.quotientMaximalIsotropicAddEquiv_complex H hmax hE).trans
+    (complexCharacterAddEquiv H)
+
 /-- For a finite nondegenerate complex theta pairing, taking the commutator
 orthogonal twice recovers the original subgroup. -/
 theorem commutatorPairingOrthogonal_orthogonal_eq_complex
@@ -121,6 +153,18 @@ theorem natCard_eq_square_of_isMaximalIsotropic_complex
   exact E.natCard_eq_square_of_isMaximalIsotropic_of_isNondegenerate H
     hmax (natCard_complexCharacter_eq K).symm hE
     (natCard_complexCharacter_eq H)
+
+/-- Every finite nondegenerate complex theta quotient has a maximal isotropic
+subgroup whose order realizes the square-order formula. -/
+theorem exists_isMaximalIsotropic_natCard_eq_square_complex
+    {G : Type u} {K : Type w} [Group G] [AddCommGroup K]
+    (E : ThetaExtension G ℂˣ K) [Finite K]
+    (hE : E.IsNondegenerate) :
+    ∃ H : AddSubgroup K,
+      E.IsMaximalIsotropic H ∧ Nat.card K = Nat.card H ^ 2 := by
+  obtain ⟨H, hmax⟩ := E.exists_isMaximalIsotropic
+  exact ⟨H, hmax,
+    E.natCard_eq_square_of_isMaximalIsotropic_complex H hmax hE⟩
 
 end ThetaExtension
 end Mumford
