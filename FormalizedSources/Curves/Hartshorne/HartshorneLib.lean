@@ -94,6 +94,7 @@ import HartshorneLib.Chapter4CanonicalDegree
 import HartshorneLib.Chapter4GenusBridge
 import HartshorneLib.Chapter4RiemannInequality
 import HartshorneLib.Chapter4RiemannConsequences
+import HartshorneLib.Chapter4Nonspecial
 
 /-!
 # HartshorneLib
