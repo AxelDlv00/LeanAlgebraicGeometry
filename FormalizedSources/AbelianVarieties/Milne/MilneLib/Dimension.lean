@@ -428,4 +428,72 @@ theorem topologicalKrullDim_eq_of_isFinite_surjective_of_isAffineTarget
   exact ringKrullDim_eq_of_isIntegral_of_injective
     (f.appTop).hom f.finite_appTop.to_isIntegral (f.app_injective ⊤)
 
+/-- Restricting a surjective scheme morphism to an open subscheme of its
+target remains surjective. -/
+theorem surjective_morphismRestrict
+    {X Y : Scheme.{u}} (f : X ⟶ Y) [Surjective f] (U : Y.Opens) :
+    Surjective (f ∣_ U) := by
+  constructor
+  intro y
+  obtain ⟨x, hx⟩ := f.surjective (U.ι y)
+  refine ⟨⟨x, ?_⟩, ?_⟩
+  · change f x ∈ U
+    rw [hx]
+    exact y.2
+  · apply Subtype.ext
+    rw [morphismRestrict_base_coe]
+    exact hx
+
+/-- The dimension of a scheme is the supremum of the dimensions of the
+members of any open cover. -/
+theorem topologicalKrullDim_eq_iSup_of_iSup_eq_top
+    {I : Type v} (X : Scheme.{u}) (U : I → X.Opens)
+    (hU : ⨆ i, U i = ⊤) :
+    topologicalKrullDim X =
+      ⨆ i, topologicalKrullDim (U i).toScheme := by
+  apply le_antisymm
+  · rw [topologicalKrullDim_eq_iSup_ringKrullDim_stalk X]
+    apply iSup_le
+    intro x
+    obtain ⟨i, hxi⟩ := TopologicalSpace.Opens.mem_iSup.mp
+      (hU.ge (Set.mem_univ x))
+    let xU : (U i).toScheme := ⟨x, hxi⟩
+    have hstalk :
+        ringKrullDim (X.presheaf.stalk ((U i).ι xU)) =
+          ringKrullDim ((U i).toScheme.presheaf.stalk xU) :=
+      ringKrullDim_eq_of_ringEquiv
+        ((asIso ((U i).ι.stalkMap xU)).commRingCatIsoToRingEquiv)
+    calc
+      ringKrullDim (X.presheaf.stalk x) =
+          ringKrullDim (X.presheaf.stalk ((U i).ι xU)) := by rfl
+      _ = ringKrullDim ((U i).toScheme.presheaf.stalk xU) := hstalk
+      _ ≤ topologicalKrullDim (U i).toScheme :=
+        ringKrullDim_stalk_le_topologicalKrullDim (U i).toScheme xU
+      _ ≤ ⨆ i, topologicalKrullDim (U i).toScheme :=
+        le_iSup (fun i ↦ topologicalKrullDim (U i).toScheme) i
+  · apply iSup_le
+    intro i
+    exact topologicalKrullDim_subspace_le X (U i)
+
+/-- A finite surjective morphism to a reduced scheme preserves Krull
+dimension. -/
+theorem topologicalKrullDim_eq_of_isFinite_surjective
+    {X Y : Scheme.{u}} (f : X ⟶ Y)
+    [IsFinite f] [Surjective f] [IsReduced Y] :
+    topologicalKrullDim X = topologicalKrullDim Y := by
+  rw [topologicalKrullDim_eq_iSup_of_iSup_eq_top X
+      (fun U : Y.affineOpens ↦ f ⁻¹ᵁ (U : Y.Opens))
+      (f.iSup_preimage_eq_top (iSup_affineOpens_eq_top Y))]
+  rw [topologicalKrullDim_eq_iSup_of_iSup_eq_top Y
+      (fun U : Y.affineOpens ↦ (U : Y.Opens))
+      (iSup_affineOpens_eq_top Y)]
+  apply iSup_congr
+  intro U
+  letI : Surjective (f ∣_ (U : Y.Opens)) :=
+    surjective_morphismRestrict f (U : Y.Opens)
+  haveI : IsReduced (U : Y.Opens).toScheme :=
+    isReduced_of_isOpenImmersion U.1.ι
+  exact topologicalKrullDim_eq_of_isFinite_surjective_of_isAffineTarget
+    (f ∣_ (U : Y.Opens))
+
 end MilneLib
