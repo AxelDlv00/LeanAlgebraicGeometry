@@ -17,6 +17,14 @@ namespace StacksPart01
 
 open TensorProduct
 
+/-- A square matrix satisfies its characteristic polynomial
+(Stacks, Tag 00DX). -/
+theorem matrix_charpoly_aeval_eq_zero
+    {R : Type*} [CommRing R] {n : ℕ}
+    (A : Matrix (Fin n) (Fin n) R) :
+    Polynomial.aeval A A.charpoly = 0 := by
+  exact Matrix.aeval_self_charpoly A
+
 /-- For a finite free `R`-algebra, multiplication by `f` is nilpotent after
 base change to the residue field at a prime ideal `I` exactly when every
 non-leading coefficient of its characteristic polynomial lies in `I`
