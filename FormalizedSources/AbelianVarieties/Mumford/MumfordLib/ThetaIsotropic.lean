@@ -5,6 +5,7 @@ Authors: The Mumford Contributors
 -/
 
 import MumfordLib.Theta
+import Mathlib.Algebra.Category.Grp.Injective
 import Mathlib.GroupTheory.Coset.Card
 import Mathlib.SetTheory.Cardinal.NatCard
 
@@ -30,6 +31,36 @@ noncomputable def commutatorPairingRestriction
     (E : ThetaExtension G S K) (H : AddSubgroup K) :
     K →+ (H →+ Additive S) :=
   (AddMonoidHom.compHom' H.subtype).comp E.commutatorPairingBihom
+
+/-- A divisible character group lets a globally surjective commutator pairing
+restrict surjectively to every subgroup. -/
+theorem commutatorPairingRestriction_surjective_of_divisible
+    (E : ThetaExtension G S K) (H : AddSubgroup K)
+    [DivisibleBy (Additive S) ℤ]
+    (hpair : Function.Surjective E.commutatorPairingBihom) :
+    Function.Surjective (E.commutatorPairingRestriction H) := by
+  let hext : Function.Surjective
+      (AddMonoidHom.compHom' H.subtype :
+        (K →+ Additive S) →+ (H →+ Additive S)) := by
+    intro chi
+    obtain ⟨psi, hpsi⟩ :=
+      (Module.Baer.of_divisible (Additive S)).extension_property_addMonoidHom
+        H.subtype H.subtype_injective chi
+    exact ⟨psi, hpsi⟩
+  intro chi
+  obtain ⟨psi, hpsi⟩ := hext chi
+  obtain ⟨k, hk⟩ := hpair psi
+  refine ⟨k, ?_⟩
+  ext h
+  have h1 := congrArg (fun f : K →+ Additive S => f (h : K)) hk
+  have h2 := congrArg (fun f : H →+ Additive S => f h) hpsi
+  change Additive.ofMul (E.commutatorPairing k (h : K)) = chi h
+  change E.commutatorPairingBihom k (h : K) = psi (h : K) at h1
+  change (H.subtype.compHom' psi) h = chi h at h2
+  calc
+    Additive.ofMul (E.commutatorPairing k (h : K)) = psi (h : K) := by
+      simpa only [E.commutatorPairingBihom_apply] using h1
+    _ = chi h := by simpa using h2
 
 /-- The commutator orthogonal of a subgroup. -/
 noncomputable def commutatorPairingOrthogonal
