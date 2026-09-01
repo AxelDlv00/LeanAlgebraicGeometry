@@ -1471,6 +1471,20 @@ theorem Isogeny.isFinite_of_isAbelianVariety_of_arbitraryField
   exact finite_of_algebraicClosure_baseChange_isogeny hA hB f (by
     simpa [F, b] using hgeom)
 
+/- The arbitrary-field finiteness descent immediately transports the global
+   Krull dimension across an isogeny.  This is the dimension leg of Milne's
+   characterization, separated from the still-open projectivity/flatness
+   arguments. -/
+theorem Isogeny.topologicalKrullDim_eq_of_isAbelianVariety_of_arbitraryField
+    {K : Type u} [Field K]
+    {A B : Over (Spec (.of K))} [GrpObj A] [GrpObj B]
+    (hA : IsAbelianVariety A) (hB : IsAbelianVariety B)
+    (f : A ⟶ B) [IsMonHom f] (h : Isogeny f) :
+    topologicalKrullDim A.left = topologicalKrullDim B.left := by
+  letI : IsFinite f.left :=
+    Isogeny.isFinite_of_isAbelianVariety_of_arbitraryField hA hB f h
+  exact Isogeny.topologicalKrullDim_eq_of_isFinite hA hB f h
+
 /- Isogenies between abelian varieties over an arbitrary field are closed under
    composition.  The arbitrary-field finite-map theorem supplies exactly the
    two instances required by the generic composition lemma. -/
