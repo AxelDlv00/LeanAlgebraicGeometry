@@ -82,6 +82,28 @@ theorem quotient_mk_apply_quotientLocalBranchAt
         (d.quotientLocalBranchAt v q) = q := by
   exact d.quotient_mk_isLocalHomeomorph.apply_localInverseAt_of_mem hq
 
+/- The local inverse branch is continuous on its open source.  Naming this
+   restriction keeps later atlas arguments independent of the implementation
+   of `localInverseAt`. -/
+theorem quotientLocalBranchAt_continuousOn
+    {V X : Type*} [NormedAddCommGroup V] [NormedSpace ℂ V]
+    [AddCommGroup X] [TopologicalSpace X] {g : ℕ}
+    (d : ComplexVectorLatticeExponentialData V X g) (v : V) :
+    ContinuousOn (d.quotientLocalBranchAt v)
+      (d.quotientLocalBranchAt v).source :=
+  (d.quotientLocalBranchAt v).continuousOn
+
+/- The inverse branch, viewed on its target, is the quotient projection and is
+   therefore continuous there as well. -/
+theorem quotientLocalBranchAt_symm_continuousOn
+    {V X : Type*} [NormedAddCommGroup V] [NormedSpace ℂ V]
+    [AddCommGroup X] [TopologicalSpace X] {g : ℕ}
+    (d : ComplexVectorLatticeExponentialData V X g) (v : V) :
+    ContinuousOn (d.quotientLocalBranchAt v).symm
+      (d.quotientLocalBranchAt v).target := by
+  rw [d.quotientLocalBranchAt_symm]
+  exact QuotientAddGroup.continuous_mk.continuousOn
+
 end ComplexVectorLatticeExponentialData
 
 end
