@@ -76,11 +76,30 @@ theorem exists_finset_standardOpen_cover {R : Type*} [CommSemiring R]
     (hcover : (PrimeSpectrum.basicOpen g : Set (PrimeSpectrum R)) ⊆
       ⋃ i, (PrimeSpectrum.basicOpen (f i) : Set (PrimeSpectrum R))) :
     ∃ s : Finset ι,
-      (PrimeSpectrum.basicOpen g : Set (PrimeSpectrum R)) ⊆
+    (PrimeSpectrum.basicOpen g : Set (PrimeSpectrum R)) ⊆
         ⋃ i ∈ s, (PrimeSpectrum.basicOpen (f i) : Set (PrimeSpectrum R)) := by
   exact (PrimeSpectrum.isCompact_basicOpen g).elim_finite_subcover
     (fun i => (PrimeSpectrum.basicOpen (f i) : Set (PrimeSpectrum R)))
     (fun i => PrimeSpectrum.isOpen_basicOpen) hcover
+
+/-- The containment `D(g) ⊆ D(f)` is equivalent to a power of `g` being a
+multiple of `f` (Stacks, Tag 01HS(1)(b)). -/
+theorem standardOpen_subset_iff_exists_pow_eq_mul {R : Type*} [CommSemiring R]
+    {f g : R} (hsub : PrimeSpectrum.basicOpen g ≤ PrimeSpectrum.basicOpen f) :
+    ∃ n : ℕ, ∃ a : R, g ^ n = a * f := by
+  have h' := (PrimeSpectrum.basicOpen_le_basicOpen_iff g f).mp hsub
+  rw [Ideal.mem_radical_iff] at h'
+  obtain ⟨n, hn⟩ := h'
+  obtain ⟨a, ha⟩ := Ideal.mem_span_singleton'.mp hn
+  exact ⟨n, a, by simpa [mul_comm] using ha.symm⟩
+
+/-- The defining element of a larger standard open is a unit in the
+localization at a smaller standard open. -/
+theorem standardOpen_isUnit_of_subset {R : Type*} [CommSemiring R]
+    {f g : R} (hsub : PrimeSpectrum.basicOpen g ≤ PrimeSpectrum.basicOpen f) :
+    IsUnit (algebraMap R (Localization.Away g) f) := by
+  exact (PrimeSpectrum.basicOpen_le_basicOpen_iff_algebraMap_isUnit
+    (S := Localization.Away g) (f := g) (g := f)).mp hsub
 
 end Zariski
 
