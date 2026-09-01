@@ -5,6 +5,7 @@ Authors: The StacksPart01Lib Contributors
 -/
 
 import Mathlib.RingTheory.Localization.Basic
+import Mathlib.RingTheory.Etale.Basic
 
 /-!
 # The zero localization criterion
@@ -22,5 +23,11 @@ theorem localization_subsingleton_iff
     (M : Submonoid R) [Algebra R S] [IsLocalization M S] :
     Subsingleton S ↔ 0 ∈ M := by
   exact IsLocalization.subsingleton_iff
+
+/-- The canonical map into a localization is formally etale (Stacks, Tag 04EG). -/
+theorem localization_formallyEtale
+    {R : Type*} [CommRing R] (M : Submonoid R) :
+    Algebra.FormallyEtale R (Localization M) := by
+  exact Algebra.FormallyEtale.of_isLocalization M
 
 end StacksPart01
