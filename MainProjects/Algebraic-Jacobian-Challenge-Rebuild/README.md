@@ -139,6 +139,9 @@ object to the separably closed field. This is a post-base-change result, not the
 `pic0RepresentableBy_finiteStageGlue` over the field of definition: descent of the universal
 Picard class and its Yoneda equivalence on the same carrier is still absent, followed by the
 finite-in-affine/Galois and original-field `PicRepDatum`/`JacobianData` handoff to `Challenge`.
+The companion `Pic0FiniteStageStableGeometry.lean` now exports unconditional stable-package
+`locallyOfFiniteType_gluedMap` and `quasiCompact_gluedMap` instances; it supplies the geometric
+inputs for later descent but does not itself prove orbit affineness or projectivity.
 
 ## Sources
 
