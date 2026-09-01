@@ -100,6 +100,7 @@ import HartshorneLib.Chapter4Ampleness
 import HartshorneLib.Chapter4LinearSystemDimension
 import HartshorneLib.Chapter4LinearSystemInvariance
 import HartshorneLib.Chapter4ProjectiveLinearSystem
+import HartshorneLib.Chapter4ProjectiveMapProducer
 
 /-!
 # HartshorneLib
