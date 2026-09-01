@@ -5,6 +5,7 @@ Authors: The Mumford Contributors
 -/
 
 import MumfordLib.ThetaIsotropic
+import MumfordLib.ThetaNondegenerate
 import Mathlib.SetTheory.Cardinal.NatCard
 
 /-!
@@ -25,6 +26,18 @@ namespace ThetaExtension
 
 variable {G : Type u} {S : Type v} {K : Type w}
   [Group G] [CommGroup S] [AddCommGroup K]
+
+/-- For finite self-dual theta quotients, nondegeneracy and divisibility make
+the commutator pairing surjective after restriction to every subgroup. -/
+theorem commutatorPairingRestriction_surjective_of_isNondegenerate
+    (E : ThetaExtension G S K) (H : AddSubgroup K)
+    [Finite K] [Finite (K →+ Additive S)]
+    [DivisibleBy (Additive S) ℤ]
+    (hcard : Nat.card K = Nat.card (K →+ Additive S))
+    (hE : E.IsNondegenerate) :
+    Function.Surjective (E.commutatorPairingRestriction H) := by
+  exact E.commutatorPairingRestriction_surjective_of_divisible H
+    (E.commutatorPairingBihom_bijective_of_isNondegenerate hcard hE).2
 
 /-- Finite additive subgroups with an inclusion and equal cardinalities coincide. -/
 private theorem finite_addSubgroup_eq_of_le_of_natCard_eq
