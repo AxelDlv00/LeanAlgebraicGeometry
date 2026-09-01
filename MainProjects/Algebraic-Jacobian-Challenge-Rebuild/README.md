@@ -126,13 +126,19 @@ committed binder-free producer and the same-carrier capstone.
 `Pic0FiniteStageUniversalClass.lean` is committed in `7fabbbdedd` and remains a consumed
 universal-class prerequisite, not a `RepresentableBy` producer.
 
-### Current implementation checkpoint (2026-09-01)
+### Current implementation checkpoint (2026-09-02)
 
-The stabilized finite-stage cone now exports verified affine, gluing, and pinned-chart
-structure-map projections (`affineBaseChangeIso_hom_structureMap`,
-`baseChangeGluingIso_hom_p2`, and `chartRingBaseChangeIso_hom_structureMap`). These are
-compatibility laws for the existing comparison maps; they do not yet supply the exact-carrier,
-binder-free `RepresentableBy` producer required by the acceptance chain.
+The stabilized finite-stage cone now exports the verified affine, gluing, pinned-chart, and
+global structure-map projections (`affineBaseChangeIso_hom_structureMap`,
+`baseChangeGluingIso_hom_p2`, `chartRingBaseChangeIso_hom_structureMap`, and
+`finiteStageBaseChangeIso_hom_structureMap`). The latter promotes the glued comparison to an
+isomorphism in `Over (Spec k)`. `Pic0FiniteStageBaseChangedRepresentable.lean` consequently
+provides `finiteStageBaseChangeOverIso` and the binder-free
+`pic0RepresentableBy_finiteStageBaseChange` for the scalar extension of a finite-stage glued
+object to the separably closed field. This is a post-base-change result, not the required
+`pic0RepresentableBy_finiteStageGlue` over the field of definition: descent of the universal
+Picard class and its Yoneda equivalence on the same carrier is still absent, followed by the
+finite-in-affine/Galois and original-field `PicRepDatum`/`JacobianData` handoff to `Challenge`.
 
 ## Sources
 
