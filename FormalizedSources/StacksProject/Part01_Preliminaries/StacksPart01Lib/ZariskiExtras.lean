@@ -61,6 +61,27 @@ theorem standardOpen_eq_univ_iff_isUnit {R : Type*} [CommSemiring R] (f : R) :
     intro hf
     exact x.isPrime.ne_top (x.asIdeal.eq_top_of_isUnit_mem hf hu)
 
+/-- The intersection of two standard opens can be written with the product
+of their defining elements (Stacks, Tag `00E0`). -/
+theorem standardOpen_inter_set {R : Type*} [CommSemiring R] (f g : R) :
+    (PrimeSpectrum.basicOpen f : Set (PrimeSpectrum R)) ∩
+        (PrimeSpectrum.basicOpen g : Set (PrimeSpectrum R)) =
+      (PrimeSpectrum.basicOpen (f * g) : Set (PrimeSpectrum R)) := by
+  rw [standardOpen_mul_set]
+
+/-- A standard-open cover of a standard open admits a finite refinement
+(Stacks, Tags `00E8` and `04PM`). -/
+theorem exists_finset_standardOpen_cover {R : Type*} [CommSemiring R]
+    {ι : Type*} (g : R) (f : ι → R)
+    (hcover : (PrimeSpectrum.basicOpen g : Set (PrimeSpectrum R)) ⊆
+      ⋃ i, (PrimeSpectrum.basicOpen (f i) : Set (PrimeSpectrum R))) :
+    ∃ s : Finset ι,
+      (PrimeSpectrum.basicOpen g : Set (PrimeSpectrum R)) ⊆
+        ⋃ i ∈ s, (PrimeSpectrum.basicOpen (f i) : Set (PrimeSpectrum R)) := by
+  exact (PrimeSpectrum.isCompact_basicOpen g).elim_finite_subcover
+    (fun i => (PrimeSpectrum.basicOpen (f i) : Set (PrimeSpectrum R)))
+    (fun i => PrimeSpectrum.isOpen_basicOpen) hcover
+
 end Zariski
 
 end StacksPart01
