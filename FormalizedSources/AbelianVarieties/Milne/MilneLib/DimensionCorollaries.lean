@@ -7,6 +7,13 @@ Authors: The Milne Contributors
 import MilneLib.Dimension
 import MilneLib.BasicLemmas
 
+/-!
+# Dimension corollaries
+
+Small consequences of the dimension infrastructure used by the isogeny
+specializations.
+-/
+
 open AlgebraicGeometry
 
 namespace MilneLib
