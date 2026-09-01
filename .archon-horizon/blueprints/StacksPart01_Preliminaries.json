@@ -21591,7 +21591,7 @@
     },
     "states": {
       "blocked": 2516,
-      "closed": 178,
+      "closed": 190,
       "formalized_open": 0,
       "informal": 5501,
       "ready": 2985
@@ -21612,6 +21612,7 @@
       "StacksPart01.Zariski.standardOpen_iSup_eq_top_iff: Lean declaration is not referenced by any blueprint \\lean{...}",
       "StacksPart01.Zariski.standardOpen_iUnion_eq_compl_zeroLocus_range: Lean declaration is not referenced by any blueprint \\lean{...}",
       "StacksPart01.Zariski.standardOpen_inter_set: Lean declaration is not referenced by any blueprint \\lean{...}",
+      "StacksPart01.Zariski.standardOpen_inter_zeroLocus_empty: Lean declaration is not referenced by any blueprint \\lean{...}",
       "StacksPart01.Zariski.standardOpen_isTopologicalBasis: Lean declaration is not referenced by any blueprint \\lean{...}",
       "StacksPart01.Zariski.standardOpen_isUnit_of_subset: Lean declaration is not referenced by any blueprint \\lean{...}",
       "StacksPart01.Zariski.standardOpen_mul_set: Lean declaration is not referenced by any blueprint \\lean{...}",
@@ -21622,6 +21623,13 @@
       "StacksPart01.artinian_finite_maximal_ideals: Lean declaration is not referenced by any blueprint \\lean{...}",
       "StacksPart01.characteristic_polynomial_prime: Lean declaration is not referenced by any blueprint \\lean{...}",
       "StacksPart01.charpoly: Lean declaration is not referenced by any blueprint \\lean{...}",
+      "StacksPart01.charpoly_module: Lean declaration is not referenced by any blueprint \\lean{...}",
+      "StacksPart01.charpoly_module_ideal: Lean declaration is not referenced by any blueprint \\lean{...}",
+      "StacksPart01.chinese_remainder: Lean declaration is not referenced by any blueprint \\lean{...}",
+      "StacksPart01.chinese_remainder_inf_eq_prod: Lean declaration is not referenced by any blueprint \\lean{...}",
+      "StacksPart01.chinese_remainder_maximal: Lean declaration is not referenced by any blueprint \\lean{...}",
+      "StacksPart01.chinese_remainder_prod: Lean declaration is not referenced by any blueprint \\lean{...}",
+      "StacksPart01.chinese_remainder_two: Lean declaration is not referenced by any blueprint \\lean{...}",
       "StacksPart01.closed_subset_of_quasiCompact_space: Lean declaration is not referenced by any blueprint \\lean{...}",
       "StacksPart01.closed_subset_quasiCompact: Lean declaration is not referenced by any blueprint \\lean{...}",
       "StacksPart01.compactSpace_of_subbase: Lean declaration is not referenced by any blueprint \\lean{...}",
@@ -21638,15 +21646,7 @@
       "StacksPart01.finite_over_subring: Lean declaration is not referenced by any blueprint \\lean{...}",
       "StacksPart01.hausdorff_iff_closed_diagonal: Lean declaration is not referenced by any blueprint \\lean{...}",
       "StacksPart01.iInter_nonempty_of_closed_finite_intersections: Lean declaration is not referenced by any blueprint \\lean{...}",
-      "StacksPart01.ideal_le_radical: Lean declaration is not referenced by any blueprint \\lean{...}",
-      "StacksPart01.image_quasiCompact: Lean declaration is not referenced by any blueprint \\lean{...}",
-      "StacksPart01.image_retrocompact: Lean declaration is not referenced by any blueprint \\lean{...}",
-      "StacksPart01.irreducible_closed_eq_zeroLocus_prime: Lean declaration is not referenced by any blueprint \\lean{...}",
-      "StacksPart01.isClosed_fiberProductSet: Lean declaration is not referenced by any blueprint \\lean{...}",
-      "StacksPart01.isClosed_graph: Lean declaration is not referenced by any blueprint \\lean{...}",
-      "StacksPart01.isClosed_iff_zeroLocus_ideal: Lean declaration is not referenced by any blueprint \\lean{...}",
-      "StacksPart01.isClosed_section_image: Lean declaration is not referenced by any blueprint \\lean{...}",
-      "StacksPart01.isClosed_zeroLocus: Lean declaration is not referenced by any blueprint \\lean{...}"
+      "StacksPart01.ideal_le_radical: Lean declaration is not referenced by any blueprint \\lean{...}"
     ]
   },
   "nodes": [
