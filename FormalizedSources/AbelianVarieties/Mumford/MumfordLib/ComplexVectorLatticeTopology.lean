@@ -264,6 +264,15 @@ theorem exponential_isCoveringMap
     IsCoveringMap d.exponential :=
   d.exponential_isAddQuotientCoveringMap.isCoveringMap
 
+/- A covering map supplies the local-homeomorphism interface needed by the
+   quotient charts, without asserting any additional holomorphic structure. -/
+theorem exponential_isLocalHomeomorph
+    {V X : Type*} [NormedAddCommGroup V] [NormedSpace ℂ V]
+    [AddCommGroup X] [TopologicalSpace X] [IsTopologicalAddGroup X] [T2Space X]
+    {g : ℕ} (d : ComplexVectorLatticeExponentialData V X g) :
+    IsLocalHomeomorph d.exponential :=
+  d.exponential_isCoveringMap.isLocalHomeomorph
+
 end ComplexVectorLatticeExponentialData
 
 end

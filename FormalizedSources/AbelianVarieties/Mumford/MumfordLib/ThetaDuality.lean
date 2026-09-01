@@ -97,5 +97,20 @@ theorem commutatorPairingOrthogonal_orthogonal_eq_of_surjective_restrictions
   have heq : H = Q := finite_addSubgroup_eq_of_le_of_natCard_eq hle hcard
   exact heq.symm
 
+/- Nondegeneracy supplies the restriction-surjectivity premise in the
+   maximal-isotropic cardinality formula.  The character-cardinality equality
+   remains explicit because it depends on the chosen coefficient group. -/
+theorem natCard_eq_square_of_isMaximalIsotropic_of_isNondegenerate
+    (E : ThetaExtension G S K) (H : AddSubgroup K) [Finite K]
+    [Finite (K →+ Additive S)] [DivisibleBy (Additive S) ℤ]
+    (hmax : E.IsMaximalIsotropic H)
+    (hcard : Nat.card K = Nat.card (K →+ Additive S))
+    (hE : E.IsNondegenerate)
+    (hdual : Nat.card (H →+ Additive S) = Nat.card H) :
+    Nat.card K = Nat.card H ^ 2 := by
+  exact E.natCard_eq_square_of_isMaximalIsotropic H hmax
+    (E.commutatorPairingRestriction_surjective_of_isNondegenerate H hcard hE)
+    hdual
+
 end ThetaExtension
 end Mumford
