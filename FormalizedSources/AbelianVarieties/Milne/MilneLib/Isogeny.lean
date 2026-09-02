@@ -762,6 +762,30 @@ theorem Isogeny.topologicalKrullDim_eq_of_isAbelianVariety
   letI : IsFinite f.left := Isogeny.isFinite_of_isAbelianVariety hA hB f h
   exact Isogeny.topologicalKrullDim_eq_of_isFinite hA hB f h
 
+/- Over an algebraically closed field, equality of dimensions supplies the
+   surjectivity missing from a homomorphism with finite kernel. -/
+theorem Isogeny.of_topologicalKrullDim_eq_of_finite_kernel
+    {K : Type u} [Field K] [IsAlgClosed K]
+    {A B : Over (Spec (.of K))} [GrpObj A] [GrpObj B]
+    (hA : IsAbelianVariety A) (hB : IsAbelianVariety B)
+    (f : A ⟶ B) [IsMonHom f]
+    (hker : IsFinite (isogenyKernelToBase f))
+    (hdim : topologicalKrullDim A.left =
+      topologicalKrullDim B.left) :
+    Isogeny f := by
+  letI : IsFinite f.left :=
+    isFinite_of_isAbelianVariety_of_finite_kernel hA hB f hker
+  letI : IsIntegral A.left :=
+    isIntegral_left_of_isAbelianVariety A hA
+  letI : IsIntegral B.left :=
+    isIntegral_left_of_isAbelianVariety B hB
+  letI : IrreducibleSpace A.left :=
+    irreducibleSpace_of_isIntegral A.left
+  letI : IrreducibleSpace B.left :=
+    irreducibleSpace_of_isIntegral B.left
+  exact ⟨surjective_of_isFinite_of_topologicalKrullDim_eq f.left
+    (topologicalKrullDim_lt_top_of_isAbelianVariety hB) hdim, hker⟩
+
 /- Once the source and intermediate abelian varieties are known to be
    proper over an algebraically closed field, the preceding theorem supplies
    the finite-map instances needed by the general composition result.  This

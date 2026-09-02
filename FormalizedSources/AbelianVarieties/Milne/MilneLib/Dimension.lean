@@ -503,6 +503,31 @@ theorem topologicalKrullDim_eq_ringKrullDim_stalk_of_isAbelianVariety
   · exact le_iSup
       (fun z : G.left ↦ ringKrullDim (G.left.presheaf.stalk z)) x₀
 
+/-- An abelian variety over an algebraically closed field has finite
+topological Krull dimension. -/
+theorem topologicalKrullDim_lt_top_of_isAbelianVariety
+    {K : Type u} [Field K] [IsAlgClosed K]
+    {G : Over (Spec (.of K))} [GrpObj G]
+    (hG : IsAbelianVariety G) :
+    topologicalKrullDim G.left < ⊤ := by
+  letI : Nonempty ((𝟙_ (Over (Spec (.of K)))).left) :=
+    ⟨IsLocalRing.closedPoint K⟩
+  letI : Subsingleton ((𝟙_ (Over (Spec (.of K)))).left) := by
+    rw [Over.tensorUnit_left]
+    infer_instance
+  let x₀ : G.left := η[G].left (IsLocalRing.closedPoint K)
+  have hx₀ : IsClosed ({x₀} : Set G.left) := by
+    rw [← Set.range_eq_singleton (f := η[G].left) (fun x ↦ by
+      change η[G].left x = η[G].left (IsLocalRing.closedPoint K)
+      congr 1
+      exact Subsingleton.elim _ _)]
+    exact η[G].left.isClosedMap.isClosed_range
+  letI : IsLocallyNoetherian G.left :=
+    isLocallyNoetherian_left_of_isAbelianVariety G hG
+  rw [topologicalKrullDim_eq_ringKrullDim_stalk_of_isAbelianVariety
+    hG x₀ hx₀]
+  exact ringKrullDim_lt_top
+
 /-! A global dimension consumer for the translation-invariant cotangent rank.
 
 The specialization bound in the statement is the geometric input left to a
@@ -543,6 +568,76 @@ theorem topologicalKrullDim_eq_of_closed_specialization_finrank
   have hz := GroupVariety.finrank_cotangentSpace_eq_of_closedPoints
     (G := G) hG hx₀ hc
   exact hzc.trans (le_of_eq (hz.trans hfin))
+
+/-- A non-surjective closed embedding between irreducible spaces strictly
+lowers finite topological Krull dimension. -/
+theorem topologicalKrullDim_lt_of_isClosedEmbedding
+    {X : Type u} {Y : Type v} [TopologicalSpace X] [TopologicalSpace Y]
+    [IrreducibleSpace X] [IrreducibleSpace Y]
+    {f : X → Y} (hf : Topology.IsClosedEmbedding f)
+    (hnot : ¬ Function.Surjective f)
+    (hfinite : topologicalKrullDim Y < ⊤) :
+    topologicalKrullDim X < topologicalKrullDim Y := by
+  letI : OrderTop (TopologicalSpace.IrreducibleCloseds X) :=
+    { top := ⟨Set.univ, IrreducibleSpace.isIrreducible_univ X, isClosed_univ⟩
+      le_top := fun _ ↦ Set.subset_univ _ }
+  letI : OrderTop (TopologicalSpace.IrreducibleCloseds Y) :=
+    { top := ⟨Set.univ, IrreducibleSpace.isIrreducible_univ Y, isClosed_univ⟩
+      le_top := fun _ ↦ Set.subset_univ _ }
+  let Z : TopologicalSpace.IrreducibleCloseds Y :=
+    TopologicalSpace.IrreducibleCloseds.map f hf.continuous ⊤
+  let g : TopologicalSpace.IrreducibleCloseds X → Set.Iic Z :=
+    fun T ↦ ⟨TopologicalSpace.IrreducibleCloseds.map f hf.continuous T,
+      TopologicalSpace.IrreducibleCloseds.map_mono hf.continuous le_top⟩
+  have hg : StrictMono g := by
+    intro A B hAB
+    change TopologicalSpace.IrreducibleCloseds.map f hf.continuous A <
+      TopologicalSpace.IrreducibleCloseds.map f hf.continuous B
+    exact TopologicalSpace.IrreducibleCloseds.map_strictMono_of_isInducing
+      hf.isInducing hAB
+  have hdim_le :
+      topologicalKrullDim X ≤ (Order.height Z : WithBot ℕ∞) := by
+    change Order.krullDim (TopologicalSpace.IrreducibleCloseds X) ≤
+      (Order.height Z : WithBot ℕ∞)
+    rw [Order.height_eq_krullDim_Iic]
+    exact Order.krullDim_le_of_strictMono g hg
+  have hZlt : Z <
+      (⊤ : TopologicalSpace.IrreducibleCloseds Y) := by
+    refine lt_top_iff_ne_top.mpr ?_
+    intro hZ
+    apply hnot
+    rw [← Set.range_eq_univ]
+    have hcoe : (Z : Set Y) = Set.univ := congrArg SetLike.coe hZ
+    change closure (f ''
+      ((⊤ : TopologicalSpace.IrreducibleCloseds X) : Set X)) =
+        Set.univ at hcoe
+    have htopX :
+        ((⊤ : TopologicalSpace.IrreducibleCloseds X) : Set X) =
+          Set.univ := rfl
+    rw [htopX, Set.image_univ, hf.isClosed_range.closure_eq] at hcoe
+    exact hcoe
+  have hheight_finite : Order.height Z < ⊤ := by
+    apply WithBot.coe_lt_coe.mp
+    have hle : (Order.height Z : WithBot ℕ∞) ≤
+        topologicalKrullDim Y :=
+      Order.height_le_krullDim Z
+    simpa only [WithBot.coe_top] using hle.trans_lt hfinite
+  have hheight_lt :
+      (Order.height Z : WithBot ℕ∞) <
+        (Order.height
+          (⊤ : TopologicalSpace.IrreducibleCloseds Y) : WithBot ℕ∞) :=
+    WithBot.coe_lt_coe.mpr
+      (Order.height_strictMono hZlt hheight_finite)
+  calc
+    topologicalKrullDim X ≤ (Order.height Z : WithBot ℕ∞) := hdim_le
+    _ < (Order.height
+        (⊤ : TopologicalSpace.IrreducibleCloseds Y) : WithBot ℕ∞) :=
+      hheight_lt
+    _ = topologicalKrullDim Y := by
+      change (Order.height
+        (⊤ : TopologicalSpace.IrreducibleCloseds Y) : WithBot ℕ∞) =
+          Order.krullDim (TopologicalSpace.IrreducibleCloseds Y)
+      simp
 
 /-- An injective integral extension preserves Krull dimension. -/
 theorem ringKrullDim_eq_of_isIntegral_of_injective
@@ -592,16 +687,13 @@ theorem ringKrullDim_eq_of_isIntegral_of_injective
       (fun q : PrimeSpectrum S =>
         (Order.coheight q : WithBot ℕ∞)) q
 
-/-- A finite surjective morphism to an affine reduced scheme preserves
-Krull dimension.  Finiteness makes the source affine, so the assertion is
-reduced to the integral injective map on global sections. -/
-theorem topologicalKrullDim_eq_of_isFinite_surjective_of_isAffineTarget
+/-- A finite scheme-theoretically dominant morphism to an affine scheme
+preserves Krull dimension. -/
+theorem topologicalKrullDim_eq_of_isFinite_of_isSchemeTheoreticallyDominant_of_isAffineTarget
     {X Y : Scheme.{u}} [IsAffine Y]
-    (f : X ⟶ Y) [IsFinite f] [Surjective f] [IsReduced Y] :
+    (f : X ⟶ Y) [IsFinite f] [IsSchemeTheoreticallyDominant f] :
     topologicalKrullDim X = topologicalKrullDim Y := by
   letI : IsAffine X := isAffine_of_isAffineHom f
-  letI : IsSchemeTheoreticallyDominant f :=
-    IsSchemeTheoreticallyDominant.of_isDominant f
   rw [IsHomeomorph.topologicalKrullDim_eq X.isoSpec.hom
         X.isoSpec.hom.homeomorph.isHomeomorph,
       IsHomeomorph.topologicalKrullDim_eq Y.isoSpec.hom
@@ -612,6 +704,17 @@ theorem topologicalKrullDim_eq_of_isFinite_surjective_of_isAffineTarget
       PrimeSpectrum.topologicalKrullDim_eq_ringKrullDim]
   exact ringKrullDim_eq_of_isIntegral_of_injective
     (f.appTop).hom f.finite_appTop.to_isIntegral (f.app_injective ⊤)
+
+/-- A finite surjective morphism to an affine reduced scheme preserves
+Krull dimension. -/
+theorem topologicalKrullDim_eq_of_isFinite_surjective_of_isAffineTarget
+    {X Y : Scheme.{u}} [IsAffine Y]
+    (f : X ⟶ Y) [IsFinite f] [Surjective f] [IsReduced Y] :
+    topologicalKrullDim X = topologicalKrullDim Y := by
+  letI : IsSchemeTheoreticallyDominant f :=
+    IsSchemeTheoreticallyDominant.of_isDominant f
+  exact
+    topologicalKrullDim_eq_of_isFinite_of_isSchemeTheoreticallyDominant_of_isAffineTarget f
 
 /-- Restricting a surjective scheme morphism to an open subscheme of its
 target remains surjective. -/
@@ -660,12 +763,13 @@ theorem topologicalKrullDim_eq_iSup_of_iSup_eq_top
     intro i
     exact topologicalKrullDim_subspace_le X (U i)
 
-/-- A finite surjective morphism to a reduced scheme preserves Krull
+/-- A finite scheme-theoretically dominant morphism preserves Krull
 dimension. -/
-theorem topologicalKrullDim_eq_of_isFinite_surjective
+theorem topologicalKrullDim_eq_of_isFinite_of_isSchemeTheoreticallyDominant
     {X Y : Scheme.{u}} (f : X ⟶ Y)
-    [IsFinite f] [Surjective f] [IsReduced Y] :
+    [IsFinite f] [IsSchemeTheoreticallyDominant f] :
     topologicalKrullDim X = topologicalKrullDim Y := by
+  letI : Surjective f := inferInstance
   rw [topologicalKrullDim_eq_iSup_of_iSup_eq_top X
       (fun U : Y.affineOpens ↦ f ⁻¹ᵁ (U : Y.Opens))
       (f.iSup_preimage_eq_top (iSup_affineOpens_eq_top Y))]
@@ -674,11 +778,74 @@ theorem topologicalKrullDim_eq_of_isFinite_surjective
       (iSup_affineOpens_eq_top Y)]
   apply iSup_congr
   intro U
-  letI : Surjective (f ∣_ (U : Y.Opens)) :=
-    surjective_morphismRestrict f (U : Y.Opens)
-  haveI : IsReduced (U : Y.Opens).toScheme :=
-    isReduced_of_isOpenImmersion U.1.ι
-  exact topologicalKrullDim_eq_of_isFinite_surjective_of_isAffineTarget
+  letI : IsSchemeTheoreticallyDominant (f ∣_ (U : Y.Opens)) :=
+    IsSchemeTheoreticallyDominant.of_isPullback
+      (isPullback_morphismRestrict f (U : Y.Opens)).flip
+  exact
+    topologicalKrullDim_eq_of_isFinite_of_isSchemeTheoreticallyDominant_of_isAffineTarget
     (f ∣_ (U : Y.Opens))
+
+/-- A finite surjective morphism to a reduced scheme preserves Krull
+dimension. -/
+theorem topologicalKrullDim_eq_of_isFinite_surjective
+    {X Y : Scheme.{u}} (f : X ⟶ Y)
+    [IsFinite f] [Surjective f] [IsReduced Y] :
+    topologicalKrullDim X = topologicalKrullDim Y := by
+  letI : IsSchemeTheoreticallyDominant f :=
+    IsSchemeTheoreticallyDominant.of_isDominant f
+  exact topologicalKrullDim_eq_of_isFinite_of_isSchemeTheoreticallyDominant f
+
+/-- The factor map to the scheme-theoretic image is
+scheme-theoretically dominant. -/
+theorem isSchemeTheoreticallyDominant_toImage
+    {X Y : Scheme.{u}} (f : X ⟶ Y) [QuasiCompact f] :
+    IsSchemeTheoreticallyDominant f.toImage := by
+  rw [isSchemeTheoreticallyDominant_iff]
+  refine Scheme.IdealSheafData.ext_of_iSup_eq_top
+    (fun U : Y.affineOpens ↦
+      ⟨f.imageι ⁻¹ᵁ U.1, U.2.preimage f.imageι⟩)
+    (TopologicalSpace.IsOpenCover.comap
+      (iSup_affineOpens_eq_top Y) f.imageι.base.hom) ?_
+  intro U
+  simp only [Scheme.Hom.ker_apply,
+    Scheme.IdealSheafData.ideal_bot, Pi.bot_apply]
+  rw [← RingHom.injective_iff_ker_eq_bot]
+  exact f.toImage_app_injective U
+
+/-- A finite morphism between irreducible schemes of equal finite dimension
+is surjective. -/
+theorem surjective_of_isFinite_of_topologicalKrullDim_eq
+    {X Y : Scheme.{u}} [IrreducibleSpace X] [IrreducibleSpace Y]
+    (f : X ⟶ Y) [IsFinite f]
+    (hfinite : topologicalKrullDim Y < ⊤)
+    (hdim : topologicalKrullDim X = topologicalKrullDim Y) :
+    Surjective f := by
+  letI : IsFinite f.toImage := by
+    letI : IsFinite (f.toImage ≫ f.imageι) := by
+      rw [f.toImage_imageι]
+      infer_instance
+    exact IsFinite.of_comp f.toImage f.imageι
+  letI : IsSchemeTheoreticallyDominant f.toImage :=
+    isSchemeTheoreticallyDominant_toImage f
+  letI : Surjective f.toImage := inferInstance
+  letI : IrreducibleSpace f.image :=
+    f.toImage.surjective.irreducibleSpace f.toImage.continuous
+  constructor
+  by_contra hnot
+  have himageι_not : ¬ Function.Surjective f.imageι := by
+    intro himageι
+    apply hnot
+    have hcomp := himageι.comp f.toImage.surjective
+    simpa only [← TopCat.coe_comp, ← Scheme.Hom.comp_base,
+      f.toImage_imageι] using hcomp
+  have himage_lt :
+      topologicalKrullDim f.image < topologicalKrullDim Y :=
+    topologicalKrullDim_lt_of_isClosedEmbedding
+      f.imageι.isClosedEmbedding himageι_not hfinite
+  have htoImage :
+      topologicalKrullDim X = topologicalKrullDim f.image :=
+    topologicalKrullDim_eq_of_isFinite_of_isSchemeTheoreticallyDominant
+      f.toImage
+  exact (ne_of_lt himage_lt) (htoImage.symm.trans hdim)
 
 end MilneLib
