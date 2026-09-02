@@ -71,6 +71,8 @@ noncomputable def map
       (MvPolynomial.homogeneousSubmodule (Fin (n + 1)) k)
       (MvPolynomial.aeval data.sections).toRingHom data.irrelevant_span
 
+omit [IsAlgClosed k] [IsIntegral X.left] [SmoothOfRelativeDimension 1 X.hom]
+  [IsProper X.hom] in
 /-- The map from global sections is over the base field. -/
 @[reassoc (attr := simp)] theorem map_over
     {n : ℕ} (data : GlobalSectionsProjectiveMapData (k := k) (X := X) n) :
