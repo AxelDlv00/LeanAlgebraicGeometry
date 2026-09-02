@@ -17,6 +17,51 @@ namespace AlgebraicGeometry.DatG0
 
 noncomputable section
 
+set_option synthInstance.maxHeartbeats 100000 in
+-- The dependent tensor signature needs a deeper search than the project default.
+set_option maxSynthPendingDepth 16 in
+/-- The canonical square from a finite tensor stage to the full tensor product is a
+pushout square. -/
+theorem tensorStageMap_isPushout
+    {F K B : Type u} [Field F] [Field K] [Algebra F K]
+    [Algebra.IsAlgebraic F K] [CommRing B] [Algebra F B]
+    (M : FinSubext F K) :
+    let iota : M.1 ⊗[F] B →ₐ[F] K ⊗[F] B :=
+      Algebra.TensorProduct.map M.1.val (AlgHom.id F B)
+    letI : Algebra (M.1 ⊗[F] B) (K ⊗[F] B) :=
+      iota.toRingHom.toAlgebra
+    letI : IsScalarTower M.1 (M.1 ⊗[F] B) (K ⊗[F] B) :=
+      @IsScalarTower.of_algebraMap_eq M.1 (M.1 ⊗[F] B) (K ⊗[F] B)
+        inferInstance inferInstance inferInstance inferInstance inferInstance inferInstance
+        (fun a => by
+          change (a : K) ⊗ₜ[F] (1 : B) = iota (a ⊗ₜ[F] (1 : B))
+          simp [iota])
+    Algebra.IsPushout M.1 K (M.1 ⊗[F] B) (K ⊗[F] B) := by
+  dsimp only
+  let iota : M.1 ⊗[F] B →ₐ[F] K ⊗[F] B :=
+    Algebra.TensorProduct.map M.1.val (AlgHom.id F B)
+  letI : Algebra (M.1 ⊗[F] B) (K ⊗[F] B) :=
+    iota.toRingHom.toAlgebra
+  haveI : IsScalarTower M.1 (M.1 ⊗[F] B) (K ⊗[F] B) :=
+    @IsScalarTower.of_algebraMap_eq M.1 (M.1 ⊗[F] B) (K ⊗[F] B)
+      inferInstance inferInstance inferInstance inferInstance inferInstance inferInstance
+      (fun a => by
+        change (a : K) ⊗ₜ[F] (1 : B) = iota (a ⊗ₜ[F] (1 : B))
+        simp [iota])
+  let cancel := Algebra.TensorProduct.cancelBaseChange F M.1 K K B
+  exact
+    ⟨IsBaseChange.of_equiv cancel.toLinearEquiv fun x => by
+      induction x using TensorProduct.induction_on with
+      | zero => simp
+      | tmul m b =>
+          change cancel (1 ⊗ₜ[M.1] (m ⊗ₜ[F] b)) = iota (m ⊗ₜ[F] b)
+          rw [show cancel = Algebra.TensorProduct.cancelBaseChange F M.1 K K B from rfl,
+            Algebra.TensorProduct.cancelBaseChange_tmul]
+          simp [iota, Algebra.smul_def]
+      | add x y hx hy =>
+          simpa only [TensorProduct.tmul_add, map_add] using
+            congrArg₂ (fun a b => a + b) hx hy⟩
+
 /-- The canonical map from a finite tensor stage is faithfully flat. -/
 theorem tensorStageMap_faithfullyFlat
     {F K B : Type u} [Field F] [Field K] [Algebra F K]
@@ -38,19 +83,8 @@ theorem tensorStageMap_faithfullyFlat
       (fun a => by
         change (a : K) ⊗ₜ[F] (1 : B) = iota (a ⊗ₜ[F] (1 : B))
         simp [iota])
-  let cancel := Algebra.TensorProduct.cancelBaseChange F M.1 K K B
   letI : Algebra.IsPushout M.1 K (M.1 ⊗[F] B) (K ⊗[F] B) :=
-    ⟨IsBaseChange.of_equiv cancel.toLinearEquiv fun x => by
-      induction x using TensorProduct.induction_on with
-      | zero => simp
-      | tmul m b =>
-          change cancel (1 ⊗ₜ[M.1] (m ⊗ₜ[F] b)) = iota (m ⊗ₜ[F] b)
-          rw [show cancel = Algebra.TensorProduct.cancelBaseChange F M.1 K K B from rfl,
-            Algebra.TensorProduct.cancelBaseChange_tmul]
-          simp [iota, Algebra.smul_def]
-      | add x y hx hy =>
-          simpa only [TensorProduct.tmul_add, map_add] using
-            congrArg₂ (fun a b => a + b) hx hy⟩
+    tensorStageMap_isPushout (B := B) M
   rw [← RingHom.faithfullyFlat_algebraMap_iff]
   apply RingHom.FaithfullyFlat.isStableUnderBaseChange M.1 K
     (M.1 ⊗[F] B) (K ⊗[F] B)

@@ -50,6 +50,7 @@ import AlgebraicJacobian.Picard.FinitePresentationAlgebraMapTripleReflection
 import AlgebraicJacobian.Picard.FinitePresentationAlgebraMapModels
 import AlgebraicJacobian.Picard.PicEtFiniteStageCover
 import AlgebraicJacobian.Picard.PicEtTensorStageCover
+import AlgebraicJacobian.Picard.PicEtTensorStageCarrier
 import AlgebraicJacobian.Picard.PicEtAffTensorStage
 import AlgebraicJacobian.Picard.CechPicFiniteStage
 import AlgebraicJacobian.Picard.RelPicFiniteStage
