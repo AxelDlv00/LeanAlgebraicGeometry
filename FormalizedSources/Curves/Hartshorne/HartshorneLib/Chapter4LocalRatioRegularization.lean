@@ -55,6 +55,36 @@ noncomputable def of_zeroBound
         intro i
         simpa [localStructureValue] using hs i }
 
+/-- The exact local denominator-order condition supplies the zero-divisor
+section bounds needed by `of_zeroBound`. -/
+noncomputable def of_denominatorOrderEq
+    (a : LocalRatioCoordinateData D n)
+    (hden : ∀ (x : X.left) (hx : x ≠ genericPoint X.left),
+      x ∈ a.chart.U →
+      orderAt X.hom hx
+          (a.sections a.denominator_index : X.left.functionField) =
+        divisorBound D hx) :
+    LocalRatioRegularization a := by
+  apply LocalRatioRegularization.of_zeroBound a
+  intro i
+  rw [mem_divisorSections_of_nonempty a.chart.nonempty]
+  intro x hx hxU
+  rw [divisorBound_zero hx]
+  change orderAt X.hom hx
+    ((a.sections i : X.left.functionField) /
+      (a.sections a.denominator_index : X.left.functionField)) ≤ 1
+  rw [Valuation.map_div]
+  have hnum : orderAt X.hom hx (a.sections i : X.left.functionField) ≤
+      divisorBound D hx := by
+    exact (mem_divisorSections_of_nonempty a.chart.nonempty).mp
+      (a.sections i).property x hx hxU
+  have hle : orderAt X.hom hx (a.sections i : X.left.functionField) ≤
+      orderAt X.hom hx
+        (a.sections a.denominator_index : X.left.functionField) := by
+    rw [hden x hx hxU]
+    exact hnum
+  exact div_le_one_of_le₀ hle bot_le
+
 @[simp] theorem of_zeroBound_value
     (hbound : ∀ i, a.coordinate i ∈
       divisorSections (X := X) (0 : CurveDivisor k X) a.chart.U)
