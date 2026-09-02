@@ -16,7 +16,9 @@ additional geometric data.  This file records that missing bridge explicitly:
 a supplied globalization of the basis sections, together with the irrelevant-
 ideal generation certificate, produces the existing projective-map datum.
 No regularity, gluing, or base-point-freeness assertion is hidden in a
-definition.
+definition.  For a nontrivial complete linear system on a proper curve this
+globalization is too restrictive: the genuine construction uses local ratios
+of divisor sections and glues the resulting projective-coordinate maps.
 -/
 
 set_option autoImplicit false
@@ -50,6 +52,16 @@ noncomputable def divisorH0Value (D : CurveDivisor k X)
   divisorVal
     (CategoryTheory.Sheaf.HModule.linearEquiv₀
       (isTerminalTop : IsTerminal (⊤ : X.left.Opens)) (divisorSheaf D) s)
+
+/-- Degree-zero divisor-sheaf cohomology classes are determined by their
+rational-function values. -/
+theorem divisorH0Value_injective (D : CurveDivisor k X) :
+    Function.Injective (divisorH0Value D) := by
+  intro s t h
+  apply (CategoryTheory.Sheaf.HModule.linearEquiv₀
+    (isTerminalTop : IsTerminal (⊤ : X.left.Opens)) (divisorSheaf D)).injective
+  apply divisorSection_ext
+  exact h
 
 /-- The rational-function value of a global structure-sheaf section. -/
 noncomputable def structureH0Value (s : Γ(X.left, ⊤)) : X.left.functionField :=
@@ -87,6 +99,16 @@ namespace DivisorSectionGlobalization
     (r : k) (s : CurveDivisorSectionSpace D) :
     g.toGlobal (r • s) = r • g.toGlobal s := by
   exact g.toGlobal.map_smul r s
+
+/-- A value-preserving globalization is necessarily injective.  Thus the
+global structure-sheaf section space must be large enough to contain the whole
+divisor-section space; this exposes why local ratios are needed in the usual
+positive-degree construction. -/
+theorem toGlobal_injective (g : DivisorSectionGlobalization D) :
+    Function.Injective g.toGlobal := by
+  intro s t h
+  apply divisorH0Value_injective D
+  rw [← g.value_eq s, ← g.value_eq t, h]
 
 end DivisorSectionGlobalization
 
