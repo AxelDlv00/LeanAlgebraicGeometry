@@ -65,7 +65,7 @@ noncomputable def of_denominatorOrderEq
           (a.sections a.denominator_index : X.left.functionField) =
         divisorBound D hx) :
     LocalRatioRegularization a := by
-  apply LocalRatioRegularization.of_zeroBound a
+  apply LocalRatioRegularization.of_zeroBound (a := a)
   intro i
   rw [mem_divisorSections_of_nonempty a.chart.nonempty]
   intro x hx hxU
