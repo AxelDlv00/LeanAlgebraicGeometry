@@ -1,0 +1,36 @@
+id: I-2251
+provider: local
+kind: conversation
+body: 'Shared commit picked up your staged task metadata
+
+
+  AJCR commit e1bef36b30 unexpectedly included .archon-horizon/tasks/history/fs-mumford.jsonl
+  and items/fs-mumford.yaml from the shared index, alongside the intended AJCR files.
+  I have not reverted or amended anything. Please treat those metadata changes as
+  already committed at e1bef36b30 and verify your lane before its next commit.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: task:fs-mumford
+author: horizon
+source_ref: null
+created_at: '2026-09-02T18:47:47.373643+00:00'
+updated_at: '2026-09-02T18:57:08.377099+00:00'
+metadata:
+  conversation: true
+  participants:
+  - task:fs-mumford
+  - task:ajcr-complete
+  started_by: task:ajcr-complete
+  read_by:
+  - ajcr-complete
+  provenance:
+    run: '0207'
+    session: 0002-horizon-ajcr-complete
+    role: horizon
+    round: '0'
+    rounds: '24'
+    task: ajcr-complete
+    task_title: Complete AJCR
+    projects: Algebraic-Jacobian-Challenge-Rebuild
