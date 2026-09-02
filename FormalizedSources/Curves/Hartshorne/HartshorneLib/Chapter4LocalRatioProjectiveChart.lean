@@ -14,9 +14,10 @@ An honest regularization of divisor-section ratios on a nonempty open gives
 structure-sheaf sections on the corresponding open subscheme.  The selected
 denominator is normalized to `1`, so the irrelevant ideal condition required by
 `Proj.fromOfGlobalSections` follows internally.  This module constructs the
-resulting projective morphism over `Spec k`.  Compatibility between different
-denominator charts, including the preimage-of-basic-open statement, remains the
-separate restriction and gluing step.
+resulting projective morphism over `Spec k`.  The preimage of each projective
+basic open is identified with the corresponding basic open in the chart.
+Compatibility between different denominator charts remains the separate
+restriction and gluing step.
 -/
 
 set_option autoImplicit false
@@ -110,9 +111,35 @@ noncomputable def chartMap (r : LocalRatioRegularization a) :
     r.chartMap ≫ projectiveSpaceStructureMap k n = a.chart.U.ι ≫ X.hom := by
   exact r.projectiveMapData.map_over
 
-/- The corresponding preimage-of-basic-open statement is deliberately left
-  for the restriction/gluing phase: unfolding the generic `Proj` preimage
-  theorem here makes elaboration depend on the full glued-map implementation. -/
+/-- The projective chart map pulls a homogeneous coordinate basic open back to
+the matching basic open of the local chart. -/
+theorem chartMap_preimage_basicOpen
+    (r : LocalRatioRegularization a) (i : Fin (n + 1)) :
+    r.chartMap ⁻¹ᵁ
+        Proj.basicOpen
+          (MvPolynomial.homogeneousSubmodule (Fin (n + 1)) k)
+          (MvPolynomial.X i) =
+      a.chart.U.toScheme.basicOpen (r.chartSection i) := by
+  have hXi : MvPolynomial.X i ∈
+      MvPolynomial.homogeneousSubmodule (Fin (n + 1)) k 1 :=
+    (MvPolynomial.mem_homogeneousSubmodule _ _).mpr
+      (MvPolynomial.isHomogeneous_X k i)
+  change (Proj.fromOfGlobalSections
+      (MvPolynomial.homogeneousSubmodule (Fin (n + 1)) k)
+      (MvPolynomial.aeval r.chartSection).toRingHom _ ⁻¹ᵁ
+        Proj.basicOpen
+          (MvPolynomial.homogeneousSubmodule (Fin (n + 1)) k)
+          (MvPolynomial.X i) = _
+  exact Proj.fromOfGlobalSections_preimage_basicOpen _ _ _ one_pos hXi
+
+@[simp] theorem chartMap_preimage_basicOpen_denominator
+    (r : LocalRatioRegularization a) :
+    r.chartMap ⁻¹ᵁ
+        Proj.basicOpen
+          (MvPolynomial.homogeneousSubmodule (Fin (n + 1)) k)
+          (MvPolynomial.X a.denominator_index) = ⊤ := by
+  rw [chartMap_preimage_basicOpen]
+  simp [chartSection_denominator_eq_one]
 
 end LocalRatioRegularization
 
