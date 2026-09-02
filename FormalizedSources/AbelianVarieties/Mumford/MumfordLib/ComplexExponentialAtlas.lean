@@ -268,8 +268,8 @@ theorem exponentialBranchTransition_target_isOpen
     IsOpen (d.exponentialBranchTransition v w).target := by
   exact (d.exponentialBranchTransition v w).open_target
 
-/- On an overlap, the transition is translation by a period (the sign is
-   immaterial for membership in the additive period subgroup). -/
+/- On an overlap, the transition has pointwise difference in the period
+   subgroup (the sign is immaterial for membership in that subgroup). -/
 theorem exponentialBranchTransition_sub_mem_ambientPeriodLattice
     {V X : Type*} [NormedAddCommGroup V] [NormedSpace ℂ V]
     [AddCommGroup X] [TopologicalSpace X] [T2Space X] [ContinuousAdd X]
