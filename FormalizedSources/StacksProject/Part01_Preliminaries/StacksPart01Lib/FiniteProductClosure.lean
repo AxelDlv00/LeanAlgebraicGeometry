@@ -73,4 +73,84 @@ theorem integralClosure_piMap_toSubring
   intro x
   exact mem_integralClosure_piMap_iff f x
 
+/-- A finite dependent product extension is integrally closed exactly when
+each component extension is integrally closed. -/
+theorem isIntegrallyClosedIn_piMap_iff
+    {ι : Type*} {R S : ι → Type*} [Finite ι]
+    [∀ i, CommRing (R i)] [∀ i, CommRing (S i)]
+    (f : ∀ i, R i →+* S i) :
+    @IsIntegrallyClosedIn (∀ i, R i) (∀ i, S i) _ _ (RingHom.piMap f).toAlgebra ↔
+      ∀ i, @IsIntegrallyClosedIn (R i) (S i) _ _ (f i).toAlgebra := by
+  classical
+  rw [@isIntegrallyClosedIn_iff (∀ i, R i) _ (∀ i, S i) _
+      (RingHom.piMap f).toAlgebra]
+  constructor
+  · intro h i
+    rw [@isIntegrallyClosedIn_iff (R i) _ (S i) _ (f i).toAlgebra]
+    letI : Algebra (R i) (S i) := (f i).toAlgebra
+    constructor
+    · intro a b hab
+      let aa : ∀ j, R j := Function.update (fun _ => 0) i a
+      let bb : ∀ j, R j := Function.update (fun _ => 0) i b
+      have hmap : RingHom.piMap f aa = RingHom.piMap f bb := by
+        ext j
+        by_cases hji : j = i
+        · subst j
+          change f i (aa i) = f i (bb i)
+          simpa [aa, bb, RingHom.algebraMap_toAlgebra] using hab
+        · simp [RingHom.piMap, aa, bb, hji]
+      have hcoord := congrArg (fun z => z i) (h.1 hmap)
+      simpa [aa, bb] using hcoord
+    · intro a ha
+      change (f i).IsIntegralElem a at ha
+      let z : ∀ j, S j := Function.update (fun _ => 0) i a
+      have hcomp : ∀ j, (f j).IsIntegralElem (z j) := by
+        intro j
+        by_cases hji : j = i
+        · subst j
+          simpa [z] using ha
+        · simpa [z, hji] using (RingHom.isIntegralElem_zero (f j))
+      letI : Algebra (∀ j, R j) (∀ j, S j) := (RingHom.piMap f).toAlgebra
+      have hz : IsIntegral (∀ j, R j) z := by
+        change (RingHom.piMap f).IsIntegralElem z
+        exact (isIntegralElem_piMap_iff f z).mpr hcomp
+      obtain ⟨x, hx⟩ := h.2 hz
+      refine ⟨x i, ?_⟩
+      change f i (x i) = a
+      have hcoord := congrArg (fun z => z i) hx
+      change (RingHom.piMap f) x i = z i at hcoord
+      simpa [RingHom.piMap, z] using hcoord
+  · intro h
+    have hc : ∀ i, Function.Injective (f i) ∧
+        ∀ {x : S i}, (f i).IsIntegralElem x → ∃ y, f i y = x := by
+      intro i
+      letI : Algebra (R i) (S i) := (f i).toAlgebra
+      have hi := (@isIntegrallyClosedIn_iff (R i) _ (S i) _ (f i).toAlgebra).mp (h i)
+      constructor
+      · intro a b hab
+        apply hi.1
+        simpa only [RingHom.algebraMap_toAlgebra] using hab
+      · intro x hx
+        have hx' : IsIntegral (R i) x := hx
+        obtain ⟨y, hy⟩ := hi.2 hx'
+        refine ⟨y, ?_⟩
+        simpa only [RingHom.algebraMap_toAlgebra] using hy
+    constructor
+    · intro a b hab
+      have hab' : (RingHom.piMap f) a = (RingHom.piMap f) b := by
+        simpa only [RingHom.algebraMap_toAlgebra] using hab
+      funext i
+      apply (hc i).1
+      exact congrArg (fun z => z i) hab'
+    · intro x hx
+      letI : Algebra (∀ j, R j) (∀ j, S j) := (RingHom.piMap f).toAlgebra
+      change (RingHom.piMap f).IsIntegralElem x at hx
+      have hxi : ∀ i, (f i).IsIntegralElem (x i) :=
+        (isIntegralElem_piMap_iff f x).mp hx
+      choose y hy using fun i => (hc i).2 (hxi i)
+      refine ⟨y, ?_⟩
+      change (RingHom.piMap f) y = x
+      funext i
+      exact hy i
+
 end StacksPart01
