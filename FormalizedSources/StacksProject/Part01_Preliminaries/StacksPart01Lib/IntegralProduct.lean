@@ -69,4 +69,37 @@ theorem isIntegralElem_prodMap_iff
     exact integralElem_comp_surjective_iff (RingHom.snd R₁ R₂) hsnd f₂
   rw [show f₁.prodMap f₂ = RingHom.prod g₁ g₂ by ext r <;> rfl, hpair, h₁, h₂]
 
+/-! The map-level form packages the elementwise product criterion. -/
+
+/-- A componentwise product map is integral exactly when both components are. -/
+theorem ringHom_isIntegral_prodMap_iff
+    {R₁ R₂ S₁ S₂ : Type*}
+    [CommRing R₁] [CommRing R₂] [CommRing S₁] [CommRing S₂]
+    (f₁ : R₁ →+* S₁) (f₂ : R₂ →+* S₂) :
+    (f₁.prodMap f₂).IsIntegral ↔ f₁.IsIntegral ∧ f₂.IsIntegral := by
+  constructor
+  · intro h
+    constructor
+    · intro x
+      exact ((isIntegralElem_prodMap_iff f₁ f₂ x 0).mp (h (x, 0))).1
+    · intro y
+      exact ((isIntegralElem_prodMap_iff f₁ f₂ 0 y).mp (h (0, y))).2
+  · rintro ⟨h₁, h₂⟩ x
+    exact (isIntegralElem_prodMap_iff f₁ f₂ x.1 x.2).mpr ⟨h₁ x.1, h₂ x.2⟩
+
+/-! [Stacks tag 0CY9] -/
+
+/-- Membership in the integral closure of a binary product is componentwise. -/
+theorem mem_integralClosure_prodMap_iff
+    {R₁ R₂ S₁ S₂ : Type*}
+    [CommRing R₁] [CommRing R₂] [CommRing S₁] [CommRing S₂]
+    (f₁ : R₁ →+* S₁) (f₂ : R₂ →+* S₂) (x : S₁ × S₂) :
+    x ∈ @integralClosure (R₁ × R₂) (S₁ × S₂) _ _ (f₁.prodMap f₂).toAlgebra ↔
+      x.1 ∈ @integralClosure R₁ S₁ _ _ f₁.toAlgebra ∧
+        x.2 ∈ @integralClosure R₂ S₂ _ _ f₂.toAlgebra := by
+  rw [@mem_integralClosure_iff (R₁ × R₂) (S₁ × S₂) _ _ (f₁.prodMap f₂).toAlgebra,
+    @mem_integralClosure_iff R₁ S₁ _ _ f₁.toAlgebra,
+    @mem_integralClosure_iff R₂ S₂ _ _ f₂.toAlgebra]
+  exact isIntegralElem_prodMap_iff f₁ f₂ x.1 x.2
+
 end StacksPart01
