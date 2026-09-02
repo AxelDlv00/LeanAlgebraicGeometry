@@ -19,7 +19,9 @@ of every conjugation map equal to the identity.  This file proves the
 local-to-global generation step in Mumford's argument and records the missing
 Lie exponential input explicitly.  The resulting Lie-group theorems are
 conditional interfaces: they do not assert the existence of an exponential
-for an arbitrary Lie group.
+for an arbitrary Lie group.  The coordinate space `E` is intentionally kept
+general here; specializing it to the source's finite-dimensional complex
+tangent model is a separate source-fidelity obligation.
 -/
 
 set_option autoImplicit false
@@ -100,8 +102,9 @@ theorem isMulCommutative_of_central_generators
     exact Set.mem_univ y
   exact hc y hy
 
-/-- In a preconnected topological group, a subset containing an identity
-neighborhood topologically generates the whole group. -/
+/-- In a preconnected group with separately continuous multiplication, a subset
+containing an identity neighborhood algebraically generates the whole group;
+the neighborhood makes its subgroup closure open. -/
 theorem subgroup_closure_eq_top_of_one_mem_interior
     {G : Type*} [Group G] [TopologicalSpace G] [SeparatelyContinuousMul G]
     [PreconnectedSpace G] {s : Set G}
@@ -124,8 +127,8 @@ theorem subgroup_closure_eq_top_of_one_mem_interior
     exact Set.mem_univ x
   exact hx
 
-/-- An identity neighborhood of central elements forces a preconnected
-topological group to be commutative. -/
+/-- An identity neighborhood of central elements forces a preconnected group
+with separately continuous multiplication to be commutative. -/
 theorem isMulCommutative_of_central_nhds
     {G : Type*} [Group G] [TopologicalSpace G] [SeparatelyContinuousMul G]
     [PreconnectedSpace G] {s : Set G}
