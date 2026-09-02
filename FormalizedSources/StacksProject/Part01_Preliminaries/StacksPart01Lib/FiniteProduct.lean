@@ -23,6 +23,14 @@ universe u v w
 open scoped BigOperators
 open Polynomial
 
+/-- The product of a family of ring maps with possibly different source rings.
+The component map is composed with the corresponding projection from the
+product source. -/
+def _root_.RingHom.piMap {ι : Type*} {R S : ι → Type*}
+    [∀ i, NonAssocSemiring (R i)] [∀ i, NonAssocSemiring (S i)]
+    (f : ∀ i, R i →+* S i) : (∀ i, R i) →+* (∀ i, S i) :=
+  RingHom.pi (fun i => (f i).comp (Pi.evalRingHom R i))
+
 /-- A finite dependent product of integral algebras is integral. -/
 theorem algebra_isIntegral_pi_of_finite
     {R : Type u} [CommRing R] {ι : Type v} [Finite ι]
@@ -163,5 +171,71 @@ theorem ringHom_isIntegral_pi_iff
     apply (isIntegral_pi_iff S y).mpr
     intro i
     exact h i (y i)
+
+/-! [Stacks tag 0CY8] in its genuinely varying-base form. -/
+
+/-- For finite families of component maps with different source rings, an
+element of the product is integral over the product source exactly when each
+component is integral over its own source. -/
+theorem isIntegralElem_piMap_iff
+    {ι : Type v} {R S : ι → Type*} [Finite ι]
+    [∀ i, CommRing (R i)] [∀ i, CommRing (S i)]
+    (f : ∀ i, R i →+* S i) (x : ∀ i, S i) :
+    (RingHom.piMap f).IsIntegralElem x ↔
+      ∀ i, (f i).IsIntegralElem (x i) := by
+  classical
+  letI := Fintype.ofFinite ι
+  let g : (∀ i, R i) →+* (∀ i, S i) := RingHom.piMap f
+  letI : ∀ i, Algebra (∀ j, R j) (S i) := fun i =>
+    ((f i).comp (Pi.evalRingHom R i)).toAlgebra
+  letI : Algebra (∀ i, R i) (∀ i, S i) := g.toAlgebra
+  have hcommon :
+      IsIntegral (∀ i, R i) x ↔
+        ∀ i, IsIntegral (∀ j, R j) (x i) :=
+    isIntegral_pi_iff S x
+  have hmap :
+      g.IsIntegralElem x ↔
+        ∀ i, ((f i).comp (Pi.evalRingHom R i)).IsIntegralElem (x i) := by
+    change IsIntegral (∀ i, R i) x ↔
+      ∀ i, IsIntegral (∀ j, R j) (x i)
+    exact hcommon
+  rw [show RingHom.piMap f = g by rfl, hmap]
+  constructor
+  · intro h i
+    have hproj : Function.Surjective (Pi.evalRingHom R i) := by
+      intro r
+      exact ⟨fun j => if hij : j = i then hij ▸ r else 0, by simp⟩
+    exact (integralElem_comp_surjective_iff (Pi.evalRingHom R i) hproj (f i)).mp (h i)
+  · intro h i
+    have hproj : Function.Surjective (Pi.evalRingHom R i) := by
+      intro r
+      exact ⟨fun j => if hij : j = i then hij ▸ r else 0, by simp⟩
+    exact (integralElem_comp_surjective_iff (Pi.evalRingHom R i) hproj (f i)).mpr (h i)
+
+/-- Alias with the shorter criterion name used for the binary product API. -/
+theorem isIntegralElem_pi_iff
+    {ι : Type v} {R S : ι → Type*} [Finite ι]
+    [∀ i, CommRing (R i)] [∀ i, CommRing (S i)]
+    (f : ∀ i, R i →+* S i) (x : ∀ i, S i) :
+    (RingHom.piMap f).IsIntegralElem x ↔
+      ∀ i, (f i).IsIntegralElem (x i) :=
+  isIntegralElem_piMap_iff f x
+
+/-- The corresponding map-level varying-base criterion. -/
+theorem ringHom_isIntegral_piMap_iff
+    {ι : Type v} {R S : ι → Type*} [Finite ι]
+    [∀ i, CommRing (R i)] [∀ i, CommRing (S i)]
+    (f : ∀ i, R i →+* S i) :
+    (RingHom.piMap f).IsIntegral ↔ ∀ i, (f i).IsIntegral := by
+  classical
+  letI := Fintype.ofFinite ι
+  constructor
+  · intro h i x
+    let y : ∀ j, S j := fun j => if hij : j = i then hij ▸ x else 0
+    simpa [y] using (isIntegralElem_piMap_iff f y).mp (h y) i
+  · intro h x
+    apply (isIntegralElem_piMap_iff f x).mpr
+    intro i
+    exact h i (x i)
 
 end StacksPart01
