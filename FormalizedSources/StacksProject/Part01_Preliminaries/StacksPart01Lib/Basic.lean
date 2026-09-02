@@ -35,6 +35,7 @@ import StacksPart01Lib.Normal
 import StacksPart01Lib.NormalLocalization
 import StacksPart01Lib.IntegralProduct
 import StacksPart01Lib.FiniteProduct
+import StacksPart01Lib.FiniteProductClosure
 import StacksPart01Lib.NoetherianSpectrum
 
 /-!
