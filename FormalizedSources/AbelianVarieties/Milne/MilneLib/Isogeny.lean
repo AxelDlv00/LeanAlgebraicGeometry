@@ -1626,6 +1626,32 @@ theorem Isogeny.topologicalKrullDim_eq_of_isAbelianVariety_of_arbitraryField
     Isogeny.isFinite_of_isAbelianVariety_of_arbitraryField hA hB f h
   exact Isogeny.topologicalKrullDim_eq_of_isFinite hA hB f h
 
+/- Over an arbitrary field, finite-kernel plus equal dimension gives an
+   isogeny.  Finiteness of the underlying map comes from algebraic-closure
+   descent, while the global target-dimension bound comes from a finite affine
+   cover of the proper target. -/
+theorem Isogeny.of_topologicalKrullDim_eq_of_finite_kernel_of_arbitraryField
+    {K : Type u} [Field K]
+    {A B : Over (Spec (.of K))} [GrpObj A] [GrpObj B]
+    (hA : IsAbelianVariety A) (hB : IsAbelianVariety B)
+    (f : A ⟶ B) [IsMonHom f]
+    (hker : IsFinite (isogenyKernelToBase f))
+    (hdim : topologicalKrullDim A.left = topologicalKrullDim B.left) :
+    Isogeny f := by
+  letI : IsFinite f.left :=
+    isFinite_of_isAbelianVariety_of_finite_kernel_of_arbitraryField hA hB f hker
+  letI : IsIntegral A.left :=
+    isIntegral_left_of_isAbelianVariety A hA
+  letI : IsIntegral B.left :=
+    isIntegral_left_of_isAbelianVariety B hB
+  letI : IrreducibleSpace A.left :=
+    irreducibleSpace_of_isIntegral A.left
+  letI : IrreducibleSpace B.left :=
+    irreducibleSpace_of_isIntegral B.left
+  exact ⟨surjective_of_isFinite_of_topologicalKrullDim_eq f.left
+    (topologicalKrullDim_lt_top_of_isAbelianVariety_of_arbitraryField hB)
+    hdim, hker⟩
+
 /- A flat isogeny has constant finite rank over the integral target.  This is
    the rank-theoretic part of Milne's finite-flat characterization; the
    flatness assumption remains explicit until a geometric miracle-flatness

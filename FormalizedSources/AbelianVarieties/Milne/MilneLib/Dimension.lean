@@ -10,6 +10,7 @@ import Mathlib.AlgebraicGeometry.AffineSpace
 import Mathlib.Algebra.Module.SpanRankOperations
 import Mathlib.Order.CompletePartialOrder
 import Mathlib.RingTheory.KrullDimension.Basic
+import Mathlib.RingTheory.KrullDimension.Polynomial
 import Mathlib.RingTheory.Ideal.GoingUp
 import Mathlib.RingTheory.Ideal.KrullsHeightTheorem
 import Mathlib.RingTheory.RegularLocalRing.Defs
@@ -687,6 +688,75 @@ theorem ringKrullDim_eq_of_isIntegral_of_injective
       (fun q : PrimeSpectrum S =>
         (Order.coheight q : WithBot ℕ∞)) q
 
+/- A finite polynomial presentation bounds the Krull dimension of a
+   finite-type algebra over a field.  The ring-map formulation keeps the
+   induced algebra structure explicit, avoiding a global choice of algebra
+   instances for scheme sections. -/
+theorem ringKrullDim_lt_top_of_ringHom_finiteType
+    (k R : Type*) [Field k] [CommRing R]
+    (φ : k →+* R) (hφ : φ.FiniteType) :
+    ringKrullDim R < ⊤ := by
+  letI : Algebra k R := φ.toAlgebra
+  have hfinite : Algebra.FiniteType k R := hφ
+  obtain ⟨n, f, hf⟩ :=
+    Algebra.FiniteType.iff_quotient_mvPolynomial''.mp hfinite
+  refine (ringKrullDim_le_of_surjective f.toRingHom hf).trans_lt ?_
+  rw [MvPolynomial.ringKrullDim_of_isNoetherianRing,
+    ringKrullDim_eq_zero_of_field]
+  simp only [zero_add, Nat.card_fin]
+  change ((n : ℕ∞) : WithBot ℕ∞) < ((⊤ : ℕ∞) : WithBot ℕ∞)
+  exact WithBot.coe_lt_coe.mpr (ENat.coe_lt_top n)
+
+/- The affine adapter exposes the preceding ring bound at the scheme level.
+   The finite-type ring map is explicit because a bare affine scheme does not
+   carry a canonical field-algebra instance. -/
+theorem topologicalKrullDim_lt_top_of_isAffine_of_ringHom_finiteType
+    {k : Type u} [Field k] {X : Scheme.{u}} [IsAffine X]
+    (φ : k →+* Γ(X, ⊤)) (hφ : φ.FiniteType) :
+    topologicalKrullDim X < ⊤ := by
+  rw [IsHomeomorph.topologicalKrullDim_eq X.isoSpec.hom
+      X.isoSpec.hom.homeomorph.isHomeomorph]
+  change topologicalKrullDim (PrimeSpectrum Γ(X, ⊤)) < ⊤
+  rw [PrimeSpectrum.topologicalKrullDim_eq_ringKrullDim]
+  exact ringKrullDim_lt_top_of_ringHom_finiteType k (Γ(X, ⊤)) φ hφ
+
+/- An affine scheme locally of finite type over a field has finite dimension.
+   The finite-type ring map is obtained from its structure morphism on global
+   sections, after transporting through the standard sections-of-Spec
+   isomorphism. -/
+theorem topologicalKrullDim_lt_top_of_isAffine_of_locallyOfFiniteType_to_field
+    {k : Type u} [Field k] {X : Scheme.{u}} [IsAffine X]
+    (f : X ⟶ Spec (.of k)) [LocallyOfFiniteType f] :
+    topologicalKrullDim X < ⊤ := by
+  let φ : k →+* Γ(X, ⊤) :=
+    ((Scheme.ΓSpecIso (.of k)).inv ≫ f.appTop).hom
+  apply topologicalKrullDim_lt_top_of_isAffine_of_ringHom_finiteType φ
+  exact RingHom.FiniteType.comp
+    (HasRingHomProperty.appTop @LocallyOfFiniteType f inferInstance)
+    (RingHom.FiniteType.of_surjective _
+      (((ConcreteCategory.isIso_iff_bijective
+        (Scheme.ΓSpecIso (.of k)).inv).mp inferInstance).surjective))
+
+/- A supremum of finitely many finite extended natural numbers is finite.
+   This is the order-theoretic step in passing from affine charts to a
+   quasi-compact scheme. -/
+theorem iSup_lt_top_of_finite
+    {I : Type*} [Finite I] (f : I → WithBot ℕ∞)
+    (h : ∀ i, f i < ⊤) :
+    (⨆ i, f i) < ⊤ := by
+  classical
+  letI := Fintype.ofFinite I
+  by_cases hne : Nonempty I
+  · let s := (Finset.univ : Finset I)
+    have hs : s.Nonempty := Finset.univ_nonempty
+    obtain ⟨i, _, hmax⟩ := Finset.sup_mem_of_nonempty (f := f) hs
+    have heq : (⨆ i, f i) = s.sup f := by
+      simp [s, Finset.sup_eq_iSup]
+    rw [heq, ← hmax]
+    exact h i
+  · letI : IsEmpty I := not_nonempty_iff.mp hne
+    simp
+
 /-- A finite scheme-theoretically dominant morphism to an affine scheme
 preserves Krull dimension. -/
 theorem topologicalKrullDim_eq_of_isFinite_of_isSchemeTheoreticallyDominant_of_isAffineTarget
@@ -762,6 +832,30 @@ theorem topologicalKrullDim_eq_iSup_of_iSup_eq_top
   · apply iSup_le
     intro i
     exact topologicalKrullDim_subspace_le X (U i)
+
+/- An abelian variety over any field has finite topological Krull dimension.
+   Properness gives a finite affine subcover, and local finite type over the
+   field bounds each affine chart by the preceding ring-theoretic producer. -/
+theorem topologicalKrullDim_lt_top_of_isAbelianVariety_of_arbitraryField
+    {K : Type u} [Field K]
+    {G : Over (Spec (.of K))} [GrpObj G]
+    (hG : IsAbelianVariety G) :
+    topologicalKrullDim G.left < ⊤ := by
+  letI : IsProper G.hom := hG.1
+  letI : CompactSpace G.left :=
+    (quasiCompact_iff_compactSpace G.hom).mp inferInstance
+  let 𝒰 := G.left.affineCover.finiteSubcover
+  rw [topologicalKrullDim_eq_iSup_of_iSup_eq_top G.left
+    (fun i : 𝒰.I₀ => (𝒰.f i).opensRange) 𝒰.iSup_opensRange]
+  apply iSup_lt_top_of_finite
+  intro i
+  letI : IsAffine ((𝒰.f i).opensRange).toScheme :=
+    isAffineOpen_opensRange (𝒰.f i)
+  haveI : LocallyOfFiniteType (((𝒰.f i).opensRange).ι ≫ G.hom) :=
+    inferInstance
+  exact
+    topologicalKrullDim_lt_top_of_isAffine_of_locallyOfFiniteType_to_field
+      (((𝒰.f i).opensRange).ι ≫ G.hom)
 
 /-- A finite scheme-theoretically dominant morphism preserves Krull
 dimension. -/
