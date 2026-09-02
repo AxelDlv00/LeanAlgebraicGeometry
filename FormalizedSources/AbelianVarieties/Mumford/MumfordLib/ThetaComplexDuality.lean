@@ -154,6 +154,27 @@ theorem natCard_eq_square_of_isMaximalIsotropic_complex
     hmax (natCard_complexCharacter_eq K).symm hE
     (natCard_complexCharacter_eq H)
 
+/- An isotropic subgroup embeds into its orthogonal, so its square order is
+   bounded by the order of the ambient finite nondegenerate quotient. -/
+theorem natCard_sq_le_of_isIsotropic_complex
+    {G : Type u} {K : Type w} [Group G] [AddCommGroup K]
+    (E : ThetaExtension G ℂˣ K) (H : AddSubgroup K) [Finite K]
+    (hiso : E.IsIsotropic H) (hE : E.IsNondegenerate) :
+    Nat.card H ^ 2 ≤ Nat.card K := by
+  have hle : Nat.card H ≤ Nat.card (E.commutatorPairingOrthogonal H) := by
+    let f : H ↪ E.commutatorPairingOrthogonal H :=
+      ⟨(fun h => ⟨(h : K), hiso h.property⟩), by
+        intro a b hab
+        exact Subtype.ext
+          (congrArg (fun x : E.commutatorPairingOrthogonal H => (x : K)) hab)⟩
+    exact Finite.card_le_of_embedding f
+  have hmul := Nat.mul_le_mul_right (Nat.card H) hle
+  have hcard := E.natCard_eq_orthogonal_mul_subgroup_complex H hE
+  calc
+    Nat.card H ^ 2 = Nat.card H * Nat.card H := by rw [pow_two]
+    _ ≤ Nat.card (E.commutatorPairingOrthogonal H) * Nat.card H := hmul
+    _ = Nat.card K := hcard.symm
+
 /-- Every finite nondegenerate complex theta quotient has a maximal isotropic
 subgroup whose order realizes the square-order formula. -/
 theorem exists_isMaximalIsotropic_natCard_eq_square_complex
