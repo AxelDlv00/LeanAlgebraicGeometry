@@ -105,6 +105,7 @@ import HartshorneLib.Chapter4DivisorSectionCoordinates
 import HartshorneLib.Chapter4GlobalizationBoundary
 import HartshorneLib.Chapter4LocalRatioCoordinates
 import HartshorneLib.Chapter4LocalRatioRegularization
+import HartshorneLib.Chapter4LocalRatioCocycle
 
 /-!
 # HartshorneLib
