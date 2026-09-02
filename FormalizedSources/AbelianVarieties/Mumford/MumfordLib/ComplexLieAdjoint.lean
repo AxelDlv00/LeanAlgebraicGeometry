@@ -56,6 +56,7 @@ theorem complexLieConjugation_eq_mulAut_conj (x : G) :
   funext y
   simp [complexLieConjugation, MulAut.conj_apply]
 
+omit [TopologicalSpace G] in
 theorem complexLieConjugation_mul (x y : G) :
     complexLieConjugation (x * y) =
       complexLieConjugation x ∘ complexLieConjugation y := by
