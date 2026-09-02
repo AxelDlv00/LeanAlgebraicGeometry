@@ -30,9 +30,11 @@ import StacksPart01Lib.FiniteBaseChange
 import StacksPart01Lib.Artinian
 import StacksPart01Lib.Integral
 import StacksPart01Lib.GoingUp
+import StacksPart01Lib.ResidueField
 import StacksPart01Lib.Normal
 import StacksPart01Lib.NormalLocalization
 import StacksPart01Lib.IntegralProduct
+import StacksPart01Lib.FiniteProduct
 import StacksPart01Lib.NoetherianSpectrum
 
 /-!
