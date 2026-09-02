@@ -45,6 +45,24 @@ theorem integralElem_of_comp
     g.IsIntegralElem x := by
   exact RingHom.IsIntegralElem.of_comp hx
 
+/-! ### Cancellation in towers -/
+
+/-- If a composite ring map is integral, then its second factor is integral
+(Stacks, Tag 02JM). -/
+theorem ringHom_isIntegral_of_comp
+    {R S T : Type*} [CommRing R] [CommRing S] [CommRing T]
+    (f : R →+* S) (g : S →+* T)
+    (h : (g.comp f).IsIntegral) : g.IsIntegral := by
+  exact RingHom.IsIntegral.tower_top f g h
+
+/-- If the second map is injective and a composite is integral, then the first
+map is integral. -/
+theorem ringHom_isIntegral_of_comp_injective
+    {R S T : Type*} [CommRing R] [CommRing S] [CommRing T]
+    (f : R →+* S) (g : S →+* T) (hg : Function.Injective g)
+    (h : (g.comp f).IsIntegral) : f.IsIntegral := by
+  exact RingHom.IsIntegral.tower_bot f g hg h
+
 /-! ### Towers and integral closures -/
 
 /-- Integrality is transitive in an algebra tower. -/
