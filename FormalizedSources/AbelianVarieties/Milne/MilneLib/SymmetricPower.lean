@@ -427,6 +427,63 @@ theorem map_comp (DV : SymmetricPowerData V n)
   rw [← Category.assoc, DV.projection_comp_map, Category.assoc,
     DW.projection_comp_map, ← Category.assoc, relativePowerMap_comp]
 
+/-- Two supplied quotient data for the same relative power are canonically
+isomorphic by their universal properties. -/
+noncomputable def canonicalIso {S : Scheme.{u}} {V : Over S} {n : ℕ}
+    (D E : SymmetricPowerData V n) : D.carrier ≅ E.carrier where
+  hom := D.factor E.projection E.projection_symmetric
+  inv := E.factor D.projection D.projection_symmetric
+  hom_inv_id := by
+    have h₁ :
+        D.projection ≫
+            (D.factor E.projection E.projection_symmetric ≫
+              E.factor D.projection D.projection_symmetric) =
+          D.projection := by
+      rw [← Category.assoc, D.projection_comp_factor,
+        E.projection_comp_factor]
+    have h₂ : D.projection ≫ (𝟙 D.carrier) = D.projection :=
+      Category.comp_id _
+    exact
+      (D.factor_unique D.projection D.projection_symmetric _ h₁).trans
+        (D.factor_unique D.projection D.projection_symmetric _ h₂).symm
+  inv_hom_id := by
+    have h₁ :
+        E.projection ≫
+            (E.factor D.projection D.projection_symmetric ≫
+              D.factor E.projection E.projection_symmetric) =
+          E.projection := by
+      rw [← Category.assoc, E.projection_comp_factor,
+        D.projection_comp_factor]
+    have h₂ : E.projection ≫ (𝟙 E.carrier) = E.projection :=
+      Category.comp_id _
+    exact
+      (E.factor_unique E.projection E.projection_symmetric _ h₁).trans
+        (E.factor_unique E.projection E.projection_symmetric _ h₂).symm
+
+@[simp]
+theorem projection_comp_canonicalIso_hom
+    {S : Scheme.{u}} {V : Over S} {n : ℕ}
+    (D E : SymmetricPowerData V n) :
+    D.projection ≫ (canonicalIso D E).hom = E.projection := by
+  exact D.projection_comp_factor E.projection E.projection_symmetric
+
+@[simp]
+theorem projection_comp_canonicalIso_inv
+    {S : Scheme.{u}} {V : Over S} {n : ℕ}
+    (D E : SymmetricPowerData V n) :
+    E.projection ≫ (canonicalIso D E).inv = D.projection := by
+  exact E.projection_comp_factor D.projection D.projection_symmetric
+
+theorem canonicalIso_hom_unique
+    {S : Scheme.{u}} {V : Over S} {n : ℕ}
+    (D E : SymmetricPowerData V n) (u : D.carrier ⟶ E.carrier)
+    (hu : D.projection ≫ u = E.projection) :
+    u = (canonicalIso D E).hom := by
+  calc
+    u = D.factor E.projection E.projection_symmetric :=
+      D.factor_unique E.projection E.projection_symmetric u hu
+    _ = (canonicalIso D E).hom := rfl
+
 end SymmetricPowerData
 
 end Functoriality
