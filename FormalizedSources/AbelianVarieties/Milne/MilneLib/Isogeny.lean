@@ -1039,8 +1039,9 @@ theorem isogenyKernelOver_baseChangeIso_hom_snd
 
 /- The slice kernel has the same underlying finite morphism as the scheme
    kernel, via the pullback comparison isomorphism for the forgetful functor. -/
-theorem Isogeny.kernelOver_isFinite
-    (f : A ⟶ B) [IsMonHom f] (h : Isogeny f) :
+omit [GrpObj A] in
+theorem isogenyKernelOver_isFinite_of_finite_kernel
+    (f : A ⟶ B) (hker : IsFinite (isogenyKernelToBase f)) :
     IsFinite (isogenyKernelOver f).hom := by
   let G := Over.forget (Spec (.of K))
   let e := PreservesPullback.iso G f (η[B])
@@ -1053,27 +1054,39 @@ theorem Isogeny.kernelOver_isFinite
   have he' : e.hom ≫ pullback.snd f.left (η[B].left) =
       (isogenyKernelOver f).hom := by
     rw [he, Over.forget_map, hproj]
-  unfold Isogeny at h
-  change Surjective f.left ∧ IsFinite (pullback.snd f.left (η[B].left)) at h
   rw [← he']
-  exact (MorphismProperty.cancel_left_of_respectsIso (P := @IsFinite) e.hom _).mpr h.2
+  exact (MorphismProperty.cancel_left_of_respectsIso (P := @IsFinite) e.hom _).mpr hker
+
+theorem Isogeny.kernelOver_isFinite
+    (f : A ⟶ B) [IsMonHom f] (h : Isogeny f) :
+    IsFinite (isogenyKernelOver f).hom :=
+  isogenyKernelOver_isFinite_of_finite_kernel f h.2
 
 /- Finiteness of the slice kernel is preserved by arbitrary base change of the
    field through the `Over.pullback` functor. -/
-theorem Isogeny.kernelOver_baseChange_isFinite
-    (f : A ⟶ B) [IsMonHom f] (h : Isogeny f)
+omit [GrpObj A] in
+theorem isogenyKernelOver_baseChange_isFinite_of_finite_kernel
+    (f : A ⟶ B) (hker : IsFinite (isogenyKernelToBase f))
     {L : Type u} [Field L]
     (b : Spec (.of L) ⟶ Spec (.of K)) :
     IsFinite ((Over.pullback b).map (toUnit (isogenyKernelOver f))).left := by
   have hbase : IsFinite (isogenyKernelOver f).hom :=
-    Isogeny.kernelOver_isFinite f h
+    isogenyKernelOver_isFinite_of_finite_kernel f hker
   exact MorphismProperty.overPullbackMap b (toUnit (isogenyKernelOver f)) hbase
+
+theorem Isogeny.kernelOver_baseChange_isFinite
+    (f : A ⟶ B) [IsMonHom f] (h : Isogeny f)
+    {L : Type u} [Field L]
+    (b : Spec (.of L) ⟶ Spec (.of K)) :
+    IsFinite ((Over.pullback b).map (toUnit (isogenyKernelOver f))).left :=
+  isogenyKernelOver_baseChange_isFinite_of_finite_kernel f h.2 b
 
 /- The slice-level kernel pullback can be exposed directly as a finite
    morphism.  This is the concrete target-side fibre used by consumers that
    need the pulled-back identity section rather than the `toUnit` carrier. -/
-theorem Isogeny.kernelOver_baseChange_pullback_isFinite
-    (f : A ⟶ B) [IsMonHom f] (h : Isogeny f)
+omit [GrpObj A] in
+theorem isogenyKernelOver_baseChange_pullback_isFinite_of_finite_kernel
+    (f : A ⟶ B) (hker : IsFinite (isogenyKernelToBase f))
     {L : Type u} [Field L]
     (b : Spec (.of L) ⟶ Spec (.of K)) :
     IsFinite
@@ -1081,7 +1094,7 @@ theorem Isogeny.kernelOver_baseChange_pullback_isFinite
         ((Over.pullback b).map (η[B]))).left := by
   let F := Over.pullback b
   have hk : IsFinite ((F.map (toUnit (isogenyKernelOver f))).left) := by
-    exact Isogeny.kernelOver_baseChange_isFinite f h b
+    exact isogenyKernelOver_baseChange_isFinite_of_finite_kernel f hker b
   have hunit : toUnit (isogenyKernelOver f) = pullback.snd f (η[B]) :=
     toUnit_unique _ _
   rw [hunit] at hk
@@ -1102,6 +1115,87 @@ theorem Isogeny.kernelOver_baseChange_pullback_isFinite
     rw [he]
     simpa [F, isogenyKernelOver] using hk
   simpa [F] using hfinOver
+
+theorem Isogeny.kernelOver_baseChange_pullback_isFinite
+    (f : A ⟶ B) [IsMonHom f] (h : Isogeny f)
+    {L : Type u} [Field L]
+    (b : Spec (.of L) ⟶ Spec (.of K)) :
+    IsFinite
+      (pullback.snd ((Over.pullback b).map f)
+        ((Over.pullback b).map (η[B]))).left :=
+  isogenyKernelOver_baseChange_pullback_isFinite_of_finite_kernel f h.2 b
+
+/- A finite kernel stays finite as the kernel of the base-changed homomorphism.
+   The two pullback comparisons account for the slice pullback and for the lax
+   monoidal unit of `Over.pullback`. -/
+omit [GrpObj A] in
+theorem isogenyKernelToBase_baseChange_isFinite_of_finite_kernel
+    {L : Type u} [Field L]
+    (f : A ⟶ B) (hker : IsFinite (isogenyKernelToBase f))
+    (b : Spec (.of L) ⟶ Spec (.of K)) :
+    let F := Over.pullback b
+    letI : GrpObj (F.obj B) := Functor.grpObjObj
+    IsFinite (isogenyKernelToBase (F.map f)) := by
+  let F := Over.pullback b
+  letI : GrpObj (F.obj B) := Functor.grpObjObj
+  have hfinOver :
+      IsFinite (pullback.snd (F.map f) (F.map (η[B]))).left := by
+    simpa [F] using
+      isogenyKernelOver_baseChange_pullback_isFinite_of_finite_kernel f hker b
+  let G := Over.forget (Spec (.of L))
+  let eG := PreservesPullback.iso G (F.map f) (F.map (η[B]))
+  have heG :
+      eG.hom ≫ pullback.snd (F.map f).left (F.map (η[B])).left =
+        G.map (pullback.snd (F.map f) (F.map (η[B]))) := by
+    exact pullbackComparison_comp_snd G (F.map f) (F.map (η[B]))
+  have hfin :
+      IsFinite (pullback.snd (F.map f).left (F.map (η[B])).left) := by
+    have hc := (MorphismProperty.cancel_left_of_respectsIso
+      (P := @IsFinite) eG.hom
+        (pullback.snd (F.map f).left (F.map (η[B])).left))
+    apply hc.mp
+    rw [heG, Over.forget_map]
+    exact hfinOver
+  have heta0 := congrArg Over.Hom.left
+    (Functor.obj.η_def (F := F) B)
+  have heta :
+      (η[F.obj B]).left =
+        (Functor.LaxMonoidal.ε F).left ≫ (F.map (η[B])).left := by
+    exact heta0
+  let d := pullbackLeftPullbackSndIso
+    (F.map f).left (F.map (η[B])).left
+    (Functor.LaxMonoidal.ε F).left
+  have hpull :
+      IsFinite
+        (pullback.snd (C := Scheme)
+          (pullback.snd (F.map f).left (F.map (η[B])).left)
+          (Functor.LaxMonoidal.ε F).left) := by
+    exact MorphismProperty.pullback_snd _ _ hfin
+  have hd :
+      d.hom ≫
+          pullback.snd (C := Scheme)
+            ((F.map f).left)
+            ((Functor.LaxMonoidal.ε F).left ≫ (F.map (η[B])).left) =
+        pullback.snd (C := Scheme)
+          (pullback.snd (F.map f).left (F.map (η[B])).left)
+          (Functor.LaxMonoidal.ε F).left := by
+    exact pullbackLeftPullbackSndIso_hom_snd _ _ _
+  have hdesired :
+      IsFinite
+        (pullback.snd (C := Scheme)
+          ((F.map f).left)
+          ((Functor.LaxMonoidal.ε F).left ≫ (F.map (η[B])).left)) := by
+    have hc := (MorphismProperty.cancel_left_of_respectsIso
+      (P := @IsFinite) d.hom
+        (pullback.snd (C := Scheme)
+          ((F.map f).left)
+          ((Functor.LaxMonoidal.ε F).left ≫ (F.map (η[B])).left)))
+    apply hc.mp
+    rw [hd]
+    exact hpull
+  change IsFinite (pullback.snd (C := Scheme) (F.map f).left (η[F.obj B]).left)
+  rw [heta]
+  exact hdesired
 
 /- An isogeny whose underlying morphism is already known to be finite remains
    an isogeny after arbitrary base change of the field.  The finite and
@@ -1143,63 +1237,7 @@ theorem Isogeny.baseChange_of_isogeny
   letI : GrpObj (F.obj B) := Functor.grpObjObj
   constructor
   · exact MorphismProperty.overPullbackMap b f h.1
-  · have hfinOver :
-        IsFinite (pullback.snd (F.map f) (F.map (η[B]))).left := by
-      simpa [F] using Isogeny.kernelOver_baseChange_pullback_isFinite f h b
-    let G := Over.forget (Spec (.of L))
-    let eG := PreservesPullback.iso G (F.map f) (F.map (η[B]))
-    have heG :
-        eG.hom ≫ pullback.snd (F.map f).left (F.map (η[B])).left =
-          G.map (pullback.snd (F.map f) (F.map (η[B]))) := by
-      exact pullbackComparison_comp_snd G (F.map f) (F.map (η[B]))
-    have hfin :
-        IsFinite (pullback.snd (F.map f).left (F.map (η[B])).left) := by
-      have hc := (MorphismProperty.cancel_left_of_respectsIso
-        (P := @IsFinite) eG.hom
-          (pullback.snd (F.map f).left (F.map (η[B])).left))
-      apply hc.mp
-      rw [heG, Over.forget_map]
-      exact hfinOver
-    have heta0 := congrArg Over.Hom.left
-      (Functor.obj.η_def (F := F) B)
-    have heta :
-        (η[F.obj B]).left =
-          (Functor.LaxMonoidal.ε F).left ≫ (F.map (η[B])).left := by
-      exact heta0
-    let d := pullbackLeftPullbackSndIso
-      (F.map f).left (F.map (η[B])).left
-      (Functor.LaxMonoidal.ε F).left
-    have hpull :
-        IsFinite
-          (pullback.snd (C := Scheme)
-            (pullback.snd (F.map f).left (F.map (η[B])).left)
-            (Functor.LaxMonoidal.ε F).left) := by
-      exact MorphismProperty.pullback_snd _ _ hfin
-    have hd :
-        d.hom ≫
-            pullback.snd (C := Scheme)
-              ((F.map f).left)
-              ((Functor.LaxMonoidal.ε F).left ≫ (F.map (η[B])).left) =
-          pullback.snd (C := Scheme)
-            (pullback.snd (F.map f).left (F.map (η[B])).left)
-            (Functor.LaxMonoidal.ε F).left := by
-      exact pullbackLeftPullbackSndIso_hom_snd _ _ _
-    have hdesired :
-        IsFinite
-          (pullback.snd (C := Scheme)
-            ((F.map f).left)
-            ((Functor.LaxMonoidal.ε F).left ≫ (F.map (η[B])).left)) := by
-      have hc := (MorphismProperty.cancel_left_of_respectsIso
-        (P := @IsFinite) d.hom
-          (pullback.snd (C := Scheme)
-            ((F.map f).left)
-            ((Functor.LaxMonoidal.ε F).left ≫ (F.map (η[B])).left)))
-      apply hc.mp
-      rw [hd]
-      exact hpull
-    change IsFinite (pullback.snd (C := Scheme) (F.map f).left (η[F.obj B]).left)
-    rw [heta]
-    exact hdesired
+  · exact isogenyKernelToBase_baseChange_isFinite_of_finite_kernel f h.2 b
 
 /- Over an algebraically closed base, the established finite-map theorem
    supplies the hypothesis required by `baseChange_of_finite`. -/
@@ -1359,6 +1397,55 @@ theorem isFinite_overPullbackMap_to_fibre
   rw [he]
   exact hq'
 
+/- A finite kernel forces a homomorphism of abelian varieties to be finite over
+   an arbitrary field.  After base change to the algebraic closure, the
+   algebraically closed theorem applies; finiteness then descends along the
+   canonical faithfully flat cover. -/
+theorem isFinite_of_isAbelianVariety_of_finite_kernel_of_arbitraryField
+    {K : Type u} [Field K]
+    {A B : Over (Spec (.of K))} [GrpObj A] [GrpObj B]
+    (hA : IsAbelianVariety A) (hB : IsAbelianVariety B)
+    (f : A ⟶ B) [IsMonHom f]
+    (hker : IsFinite (isogenyKernelToBase f)) :
+    IsFinite f.left := by
+  let b : Spec (.of (AlgebraicClosure K)) ⟶ Spec (.of K) :=
+    Spec.map (CommRingCat.ofHom <| algebraMap K (AlgebraicClosure K))
+  let F := Over.pullback b
+  letI : GrpObj (F.obj A) := Functor.grpObjObj
+  letI : GrpObj (F.obj B) := Functor.grpObjObj
+  have hker' : IsFinite (isogenyKernelToBase (F.map f)) := by
+    exact isogenyKernelToBase_baseChange_isFinite_of_finite_kernel f hker b
+  have hA' : IsAbelianVariety (F.obj A) := hA.baseChange b
+  have hB' : IsAbelianVariety (F.obj B) := hB.baseChange b
+  letI : IsFinite (F.map f).left :=
+    isFinite_of_isAbelianVariety_of_finite_kernel hA' hB' (F.map f) hker'
+  have hf : IsFinite
+      (pullback.fst (pullback.fst B.hom b) f.left) := by
+    exact isFinite_overPullbackMap_to_fibre f b
+      (inferInstance : IsFinite (F.map f).left)
+  let p : pullback B.hom b ⟶ B.left := pullback.fst B.hom b
+  have hff : (algebraMap K (AlgebraicClosure K)).FaithfullyFlat := by
+    rw [RingHom.faithfullyFlat_algebraMap_iff]
+    infer_instance
+  have hp : Flat b ∧ Surjective b := by
+    change Flat (Spec.map (CommRingCat.ofHom <| algebraMap K (AlgebraicClosure K))) ∧
+      Surjective (Spec.map (CommRingCat.ofHom <| algebraMap K (AlgebraicClosure K)))
+    rwa [flat_and_surjective_SpecMap_iff]
+  letI : Flat b := hp.1
+  letI : Surjective b := hp.2
+  letI : QuasiCompact b := inferInstance
+  letI : Flat p := by
+    dsimp [p]
+    infer_instance
+  letI : Surjective p := by
+    dsimp [p]
+    infer_instance
+  letI : QuasiCompact p := by
+    dsimp [p]
+    infer_instance
+  letI : IsProper f.left := isProper_left_of_isAbelianVariety hA hB f
+  exact IsFinite.of_isProper_of_faithfullyFlat_baseChange p f.left hf
+
 /- Finiteness of an isogeny after algebraic-closure base change descends to
    the original morphism.  This is the finite-map half of the geometric
    isogeny criterion and does not require a separate surjectivity hypothesis. -/
@@ -1491,24 +1578,15 @@ theorem Isogeny.of_algebraicClosure_baseChange_isogeny
     (surjective_of_algebraicClosure_baseChange_isogeny f hgeom)
 
 /- An isogeny between abelian varieties over any field has finite underlying
-   morphism.  Base change to the algebraic closure supplies the algebraically
-   closed finite-map theorem, while `baseChange_of_isogeny` supplies its
-   geometric isogeny certificate. -/
+   morphism.  Its finite-kernel component feeds directly into the stronger
+   arbitrary-field finite-kernel theorem above. -/
 theorem Isogeny.isFinite_of_isAbelianVariety_of_arbitraryField
     {K : Type u} [Field K]
     {A B : Over (Spec (.of K))} [GrpObj A] [GrpObj B]
     (hA : IsAbelianVariety A) (hB : IsAbelianVariety B)
     (f : A ⟶ B) [IsMonHom f] (h : Isogeny f) :
-    IsFinite f.left := by
-  let b : Spec (.of (AlgebraicClosure K)) ⟶ Spec (.of K) :=
-    Spec.map (CommRingCat.ofHom <| algebraMap K (AlgebraicClosure K))
-  let F := Over.pullback b
-  letI : GrpObj (F.obj A) := Functor.grpObjObj
-  letI : GrpObj (F.obj B) := Functor.grpObjObj
-  have hgeom : Isogeny (F.map f) := by
-    exact Isogeny.baseChange_of_isogeny f h b
-  exact finite_of_algebraicClosure_baseChange_isogeny hA hB f (by
-    simpa [F, b] using hgeom)
+    IsFinite f.left :=
+  isFinite_of_isAbelianVariety_of_finite_kernel_of_arbitraryField hA hB f h.2
 
 /- The arbitrary-field finiteness descent immediately transports the global
    Krull dimension across an isogeny.  This is the dimension leg of Milne's
