@@ -11,8 +11,9 @@ import HartshorneLib.Chapter4DivisorSectionCoordinates
 
 This file records the local algebra behind the usual projective-coordinate
 construction.  A denominator is required to be nonzero in the function field;
-all regularity and gluing information is supplied as certificate data rather
-than inferred from a divisor section.
+regularity is supplied as certificate data, while restriction compatibility
+and overlap transition identities are derived from the underlying global
+divisor sections.
 -/
 
 set_option autoImplicit false
@@ -207,6 +208,33 @@ structure LocalRatioCoordinateData (D : CurveDivisor k X) (n : ℕ) where
 
 namespace LocalRatioCoordinateData
 
+/-- Restrict a global family of divisor sections to a nonempty chart, retaining
+a chosen section whose function-field value is nonzero as denominator. -/
+noncomputable def ofGlobalSections
+    (sections : Fin (n + 1) → divisorSections D ⊤)
+    (chart : LocalRatioOpen X) (denominatorIndex : Fin (n + 1))
+    (hdenominator :
+      (sections denominatorIndex : X.left.functionField) ≠ 0) :
+    LocalRatioCoordinateData D n where
+  chart := chart
+  sections i := divisorSectionsRes D
+    (show chart.U ≤ ⊤ from le_top) (sections i)
+  denominator_index := denominatorIndex
+  denominator_value_ne_zero := by
+    rw [divisorSectionsRes_coe
+      (show chart.U ≤ ⊤ from le_top) chart.nonempty]
+    exact hdenominator
+
+@[simp] theorem ofGlobalSections_section_value
+    (sections : Fin (n + 1) → divisorSections D ⊤)
+    (chart : LocalRatioOpen X) (denominatorIndex i : Fin (n + 1))
+    (hdenominator :
+      (sections denominatorIndex : X.left.functionField) ≠ 0) :
+    ((ofGlobalSections sections chart denominatorIndex hdenominator).sections i :
+      X.left.functionField) = (sections i : X.left.functionField) := by
+  exact divisorSectionsRes_coe
+    (show chart.U ≤ ⊤ from le_top) chart.nonempty (sections i)
+
 /-- The ratio datum represented by one coordinate of a family. -/
 def ratioAt (a : LocalRatioCoordinateData D n) (i : Fin (n + 1)) :
     LocalDivisorSectionRatio D :=
@@ -224,6 +252,20 @@ noncomputable def coordinate (a : LocalRatioCoordinateData D n)
     (i : Fin (n + 1)) :
     a.coordinate i = (a.ratioAt i).ratio :=
   rfl
+
+@[simp] theorem ofGlobalSections_coordinate
+    (sections : Fin (n + 1) → divisorSections D ⊤)
+    (chart : LocalRatioOpen X) (denominatorIndex i : Fin (n + 1))
+    (hdenominator :
+      (sections denominatorIndex : X.left.functionField) ≠ 0) :
+    (ofGlobalSections sections chart denominatorIndex hdenominator).coordinate i =
+      (sections i : X.left.functionField) /
+        (sections denominatorIndex : X.left.functionField) := by
+  change ((ofGlobalSections sections chart denominatorIndex hdenominator).sections i :
+      X.left.functionField) /
+    ((ofGlobalSections sections chart denominatorIndex hdenominator).sections
+      denominatorIndex : X.left.functionField) = _
+  rw [ofGlobalSections_section_value, ofGlobalSections_section_value]
 
 @[simp] theorem coordinate_denominator (a : LocalRatioCoordinateData D n) :
     a.coordinate a.denominator_index = 1 := by
@@ -247,6 +289,19 @@ when all of their divisor sections have the same function-field values. -/
 def SameSectionValues (a b : LocalRatioCoordinateData D n) : Prop :=
   ∀ i, (a.sections i : X.left.functionField) =
     (b.sections i : X.left.functionField)
+
+/-- Restrictions of one global divisor-section family to any two nonempty
+charts represent the same homogeneous sections. -/
+theorem ofGlobalSections_sameSectionValues
+    (sections : Fin (n + 1) → divisorSections D ⊤)
+    (aChart bChart : LocalRatioOpen X)
+    (aDenominator bDenominator : Fin (n + 1))
+    (ha : (sections aDenominator : X.left.functionField) ≠ 0)
+    (hb : (sections bDenominator : X.left.functionField) ≠ 0) :
+    (ofGlobalSections sections aChart aDenominator ha).SameSectionValues
+      (ofGlobalSections sections bChart bDenominator hb) := by
+  intro i
+  rw [ofGlobalSections_section_value, ofGlobalSections_section_value]
 
 @[refl] theorem sameSectionValues_refl (a : LocalRatioCoordinateData D n) :
     a.SameSectionValues a := fun _ => rfl
