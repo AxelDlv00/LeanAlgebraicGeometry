@@ -659,14 +659,15 @@ theorem Isogeny.exists_isFinite_morphismRestrict_of_closed_target
   exact exists_isFinite_morphismRestrict_of_finite_preimage_singleton f.left y
     (Isogeny.finite_preimage_singleton_of_closed_target hA hB f h hy)
 
-/- The finite neighbourhoods at closed points cover the quasi-finite locus.
-   Jacobson density therefore upgrades closed-target fibre finiteness to global
-   local quasi-finiteness; properness then gives a finite underlying map. -/
-theorem Isogeny.isFinite_of_isAbelianVariety
+/- A finite kernel makes the fibre through every closed source point finite.
+   The resulting finite neighbourhoods cover the quasi-finite locus; Jacobson
+   density and properness then make the entire underlying map finite. -/
+theorem isFinite_of_isAbelianVariety_of_finite_kernel
     {K : Type u} [Field K] [IsAlgClosed K]
     {A B : Over (Spec (.of K))} [GrpObj A] [GrpObj B]
     (hA : IsAbelianVariety A) (hB : IsAbelianVariety B)
-    (f : A ⟶ B) [IsMonHom f] (h : Isogeny f) : IsFinite f.left := by
+    (f : A ⟶ B) [IsMonHom f]
+    (hker : IsFinite (isogenyKernelToBase f)) : IsFinite f.left := by
   letI : IsProper A.hom := hA.1
   letI : IsProper B.hom := hB.1
   letI : LocallyOfFiniteType A.hom := inferInstance
@@ -678,6 +679,10 @@ theorem Isogeny.isFinite_of_isAbelianVariety
     infer_instance
   letI : LocallyOfFiniteType f.left := locallyOfFiniteType_of_comp f.left B.hom
   letI : IsProper f.left := isProper_left_of_isAbelianVariety hA hB f
+  letI : IsFinite (isogenyKernelToBase f) := hker
+  have hidentity :
+      (f.left ⁻¹' {(η[B].left).base (IsLocalRing.closedPoint K)}).Finite :=
+    isogenyKernel_identity_fibre_finite_of_isFinite f
   have htop : f.left.quasiFiniteLocus = ⊤ := by
     apply top_unique
     intro z hz
@@ -687,10 +692,20 @@ theorem Isogeny.isFinite_of_isAbelianVariety
     obtain ⟨x, hxcomp, hxclosed⟩ := nonempty_inter_closedPoints hcomp
       f.left.quasiFiniteLocus.isOpen.isClosed_compl.isLocallyClosed
     have hxclosed' : IsClosed {x} := mem_closedPoints_iff.mp hxclosed
-    have hmap := Scheme.Hom.closePoints_subset_preimage_closedPoints f.left hxclosed'
-    have hy : IsClosed {f.left x} := mem_closedPoints_iff.mp hmap
+    let px : Spec (.of K) ⟶ A.left := pointOfClosedPoint A.hom x hxclosed'
+    have hpx : px ≫ A.hom = 𝟙 _ := pointOfClosedPoint_comp A.hom x hxclosed'
+    let xhat : 𝟙_ (Over (Spec (.of K))) ⟶ A := Over.homMk px hpx
+    have hxhat : xhat.left (IsLocalRing.closedPoint K) = x := by
+      exact pointOfClosedPoint_apply A.hom x hxclosed' _
+    have hfib := isogeny_fibre_finite_of_section f xhat hidentity
+    have htarget :
+        ((xhat ≫ f).left).base (IsLocalRing.closedPoint K) = f.left x := by
+      change f.left (xhat.left (IsLocalRing.closedPoint K)) = f.left x
+      rw [hxhat]
+    rw [htarget] at hfib
     obtain ⟨V, hyV, hfin⟩ :=
-      Isogeny.exists_isFinite_morphismRestrict_of_closed_target hA hB f h hy
+      exists_isFinite_morphismRestrict_of_finite_preimage_singleton f.left
+        (f.left x) hfib
     letI : IsFinite (f.left ∣_ V) := hfin
     let xV : (f.left ⁻¹ᵁ V).toScheme := ⟨x, hyV⟩
     have hxV : (f.left ∣_ V).QuasiFiniteAt xV := by
@@ -712,6 +727,15 @@ theorem Isogeny.isFinite_of_isAbelianVariety
     (Scheme.Hom.quasiFiniteLocus_eq_top_iff (f := f.left)).mp htop
   letI : LocallyQuasiFinite f.left := hLQF
   exact IsFinite.of_isProper_of_locallyQuasiFinite f.left
+
+/- For an isogeny, the preceding theorem supplies finiteness without using the
+   surjectivity component of the predicate. -/
+theorem Isogeny.isFinite_of_isAbelianVariety
+    {K : Type u} [Field K] [IsAlgClosed K]
+    {A B : Over (Spec (.of K))} [GrpObj A] [GrpObj B]
+    (hA : IsAbelianVariety A) (hB : IsAbelianVariety B)
+    (f : A ⟶ B) [IsMonHom f] (h : Isogeny f) : IsFinite f.left := by
+  exact isFinite_of_isAbelianVariety_of_finite_kernel hA hB f h.2
 
 /- A finite isogeny between abelian varieties preserves the dimension of the
    underlying schemes.  The separate finiteness hypothesis keeps this result
