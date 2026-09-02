@@ -222,6 +222,17 @@ theorem quotientAddEquiv_mk_eq_iff
       simpa only [map_sub] using hz
     exact sub_eq_zero.mp heq
 
+/-- Two tangent representatives have the same exponential image exactly when
+their difference is a period.  This is the pointwise fibre description of the
+quotient certificate, independent of any chosen quotient representative. -/
+theorem exponential_eq_iff_sub_mem_periodLattice
+    {X : Type*} [AddCommGroup X] [TopologicalSpace X] {g : ℕ}
+    (d : ComplexLatticeExponentialData X g)
+    (z w : GenusComplexVector g) :
+    d.exponential z = d.exponential w ↔ z - w ∈ d.periodLattice := by
+  rw [← d.quotientAddEquiv_mk, ← d.quotientAddEquiv_mk]
+  rw [d.quotientAddEquiv_mk_eq_iff]
+
 /-- A continuous exponential with a full lattice kernel has compact range. -/
 theorem target_isCompact
     {X : Type*} [AddCommGroup X] [TopologicalSpace X] {g : ℕ}
@@ -358,6 +369,30 @@ theorem quotientHomeomorph_eq_quotientAddEquiv
       (QuotientAddGroup.mk' d.periodLattice.toAddSubgroup z) =
     d.quotientAddEquiv (QuotientAddGroup.mk' d.periodLattice.toAddSubgroup z)
   rw [d.quotientHomeomorph_mk, d.quotientAddEquiv_mk]
+
+/-- The quotient identification is simultaneously an additive equivalence and
+a homeomorphism.  Keeping this bundled bridge lets analytic consumers
+transport both algebraic and topological structure in one step. -/
+noncomputable def quotientContinuousAddEquiv
+    {X : Type*} [AddCommGroup X] [TopologicalSpace X]
+    [T2Space X] [ContinuousAdd X] {g : ℕ}
+    (d : ComplexLatticeExponentialData X g) :
+    (GenusComplexVector g ⧸ d.periodLattice.toAddSubgroup) ≃ₜ+ X := by
+  apply ContinuousAddEquiv.mk' d.quotientHomeomorph
+  intro q r
+  rw [d.quotientHomeomorph_eq_quotientAddEquiv,
+    d.quotientHomeomorph_eq_quotientAddEquiv,
+    d.quotientHomeomorph_eq_quotientAddEquiv]
+  exact d.quotientAddEquiv.map_add q r
+
+@[simp]
+theorem quotientContinuousAddEquiv_apply
+    {X : Type*} [AddCommGroup X] [TopologicalSpace X]
+    [T2Space X] [ContinuousAdd X] {g : ℕ}
+    (d : ComplexLatticeExponentialData X g)
+    (q : GenusComplexVector g ⧸ d.periodLattice.toAddSubgroup) :
+    d.quotientContinuousAddEquiv q = d.quotientHomeomorph q :=
+  rfl
 
 /- The canonical complex-coordinate exponential is a concrete instance of the
    full-lattice certificate.  Keeping this witness explicit makes the lattice
