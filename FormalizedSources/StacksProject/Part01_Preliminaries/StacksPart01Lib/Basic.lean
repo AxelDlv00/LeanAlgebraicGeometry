@@ -29,6 +29,7 @@ import StacksPart01Lib.FiniteTypeExtras
 import StacksPart01Lib.FiniteBaseChange
 import StacksPart01Lib.Artinian
 import StacksPart01Lib.Integral
+import StacksPart01Lib.GoingUp
 
 /-!
 # StacksPart01Lib.Basic
