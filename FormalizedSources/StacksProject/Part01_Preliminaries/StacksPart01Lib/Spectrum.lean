@@ -263,7 +263,8 @@ theorem spectrum_zeroLocus_subset_iff_radical_le
         PrimeSpectrum.zeroLocus (J : Set R) ↔ J ≤ I.radical := by
   exact PrimeSpectrum.zeroLocus_subset_zeroLocus_iff I J
 
-/-- The spectrum map is dense exactly when its kernel is nilpotent. -/
+/-- The spectrum map is dense exactly when its kernel is contained in the
+nilradical. -/
 theorem spectrum_comap_denseRange_iff_ker_le_nilradical
     {R S : Type*} [CommSemiring R] [CommSemiring S] (f : R →+* S) :
     DenseRange (PrimeSpectrum.comap f) ↔
