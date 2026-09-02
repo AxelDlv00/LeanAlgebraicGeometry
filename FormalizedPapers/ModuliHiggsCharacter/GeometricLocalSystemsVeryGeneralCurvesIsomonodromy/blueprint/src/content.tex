@@ -3,71 +3,25 @@
 \chapter*{About This Blueprint}
 \label{geometric-local-systems-general-curves-isomonodromy-about}
 
-This project follows \emph{Geometric local systems on very general curves and isomonodromy} by Aaron Landesman; Daniel Litt (2023). The
-retrieved source is archived under
-\href{../../../../../references/geometric-local-systems-general-curves-isomonodromy/}{\texttt{geometric-local-systems-general-curves-isomonodromy}} and is indexed in
-the workspace reference manifest. The corresponding preprint is
-\href{https://arxiv.org/abs/2202.00039}{arXiv:2202.00039}.
+This blueprint reproduces the complete mathematical body of \emph{Geometric local systems on very general curves and isomonodromy}
+from the retrieved source bundle \texttt{geometric-local-systems-general-curves-isomonodromy}. The source archive and extracted
+TeX are indexed in the workspace manifest; see \href{../../../../../references/geometric-local-systems-general-curves-isomonodromy/}
+{\texttt{geometric-local-systems-general-curves-isomonodromy}} and \href{https://arxiv.org/abs/2202.00039}{the arXiv record}.
 
-A pointed hyperbolic curve carries parabolic bundles and regular-singular flat connections. Very general curves and integral local systems are considered together with their Hodge-theoretic realizations. Parabolic stability, Atiyah and parabolic Atiyah bundles, deformation cohomology, Harder--Narasimhan estimates, and isomonodromy constrain geometric local systems.
+Each chapter file below corresponds to one source-level section (with a
+front-matter chapter when needed). The source text is retained verbatim apart
+from replacing section headings by blueprint chapters, expanding
+\texttt{\\input} inclusions, and adding \texttt{\source}/\texttt{\notready}
+provenance annotations to source nodes. The provenance remark at the start of
+each chapter is marked \notready because no Lean declaration has yet been
+checked for that source material.
 
-This blueprint is an independently worded, source-faithful mathematical
-outline of the paper's definitions, constructions, and principal results. It
-should be read alongside the original source; the source anchor on each node
-points to the complete extracted TeX. Statements are intentionally marked
-\notready until a matching Lean declaration and proof have been added.
-
-\chapter{Foundations and setup}
-\label{chap:geometric-local-systems-general-curves-isomonodromy-foundations}
-
-\section{Standing hypotheses}
-\label{sec:geometric-local-systems-general-curves-isomonodromy-standing}
-
-A pointed hyperbolic curve carries parabolic bundles and regular-singular flat connections. Very general curves and integral local systems are considered together with their Hodge-theoretic realizations.
-
-\begin{convention}[Standing hypotheses]
-\label{geometric-local-systems-general-curves-isomonodromy-setup}
-\source{geometric-local-systems-general-curves-isomonodromy}
-The objects and hypotheses described above are in force throughout the
-formalization of this paper.
-\notready
-\end{convention}
-
-\chapter{Constructions and proof architecture}
-\label{chap:geometric-local-systems-general-curves-isomonodromy-method}
-
-\section{Geometric and cohomological method}
-\label{sec:geometric-local-systems-general-curves-isomonodromy-method}
-
-Parabolic stability, Atiyah and parabolic Atiyah bundles, deformation cohomology, Harder--Narasimhan estimates, and isomonodromy constrain geometric local systems. The formalization should preserve these intermediate constructions
-as separate dependency nodes before addressing the principal result.
-
-\begin{definition}[Parabolic Atiyah deformation object]
-\label{geometric-local-systems-general-curves-isomonodromy-central-object}
-\source{geometric-local-systems-general-curves-isomonodromy}
-The central object is the parabolic Atiyah and deformation package of a regular-singular flat bundle on a pointed curve, which detects isomonodromic and Hodge-theoretic deformations.
-\uses{geometric-local-systems-general-curves-isomonodromy-setup}
-\notready
-\end{definition}
-
-\chapter{Principal results}
-\label{chap:geometric-local-systems-general-curves-isomonodromy-results}
-
-\section{Main theorem or conjecture}
-\label{sec:geometric-local-systems-general-curves-isomonodromy-results}
-
-\begin{theorem}[Rank lower bound for geometric local systems]
-\label{geometric-local-systems-general-curves-isomonodromy-main}
-\source{geometric-local-systems-general-curves-isomonodromy}
-\uses{geometric-local-systems-general-curves-isomonodromy-setup}
-An infinite-monodromy integral local system underlying a polarizable variation of Hodge structure on an analytically very general genus-$g$ pointed curve has rank at least $2\sqrt{g+1}$.
-\notready
-\end{theorem}
-
-\begin{theorem}[Small-rank isomonodromy]
-\label{geometric-local-systems-general-curves-isomonodromy-secondary}
-\source{geometric-local-systems-general-curves-isomonodromy}
-\uses{geometric-local-systems-general-curves-isomonodromy-main}
-A regular-singular flat bundle of rank less than $2\sqrt{g+1}$ whose isomonodromic deformation underlies a polarizable variation of Hodge structure has unitary monodromy.
-\notready
-\end{theorem}
+\input{ch00-abstract-and-front-matter}
+\input{ch01-introduction}
+\input{ch02-background-on-parabolic-bundles}
+\input{ch03-background-on-atiyah-bundles-and-isomonodromic-deformations}
+\input{ch04-hodge-theoretic-preliminaries}
+\input{ch05-variations-of-hodge-structure-and-the-kodaira-parshin-trick}
+\input{ch06-analysis-of-harder-narasimhan-filtration}
+\input{ch07-variations-of-hodge-structure-on-an-analytically-general-curve}
+\input{ch08-questions}

@@ -3,71 +3,27 @@
 \chapter*{About This Blueprint}
 \label{uniformity-mordell-lang-curves-about}
 
-This project follows \emph{Uniformity in Mordell--Lang for curves} by Vesselin Dimitrov; Ziyang Gao; Philipp Habegger (2021). The
-retrieved source is archived under
-\href{../../../../../references/uniformity-mordell-lang-curves/}{\texttt{uniformity-mordell-lang-curves}} and is indexed in
-the workspace reference manifest. The corresponding preprint is
-\href{https://arxiv.org/abs/2001.10276}{arXiv:2001.10276}.
+This blueprint reproduces the complete mathematical body of \emph{Uniformity in Mordell--Lang for curves}
+from the retrieved source bundle \texttt{uniformity-mordell-lang-curves}. The source archive and extracted
+TeX are indexed in the workspace manifest; see \href{../../../../../references/uniformity-mordell-lang-curves/}
+{\texttt{uniformity-mordell-lang-curves}} and \href{https://arxiv.org/abs/2001.10276}{the arXiv record}.
 
-Let $C$ be a smooth curve of genus at least two over a number field, embedded in its Jacobian. The Betti map and the associated height functions measure non-degeneracy in families of abelian varieties. A Vojta--Mumford height inequality is combined with intersection theory, a counting argument for large points, and lower bounds for canonical heights of small points.
+Each chapter file below corresponds to one source-level section (with a
+front-matter chapter when needed). The source text is retained verbatim apart
+from replacing section headings by blueprint chapters, expanding
+\texttt{\\input} inclusions, and adding \texttt{\source}/\texttt{\notready}
+provenance annotations to source nodes. The provenance remark at the start of
+each chapter is marked \notready because no Lean declaration has yet been
+checked for that source material.
 
-This blueprint is an independently worded, source-faithful mathematical
-outline of the paper's definitions, constructions, and principal results. It
-should be read alongside the original source; the source anchor on each node
-points to the complete extracted TeX. Statements are intentionally marked
-\notready until a matching Lean declaration and proof have been added.
-
-\chapter{Foundations and setup}
-\label{chap:uniformity-mordell-lang-curves-foundations}
-
-\section{Standing hypotheses}
-\label{sec:uniformity-mordell-lang-curves-standing}
-
-Let $C$ be a smooth curve of genus at least two over a number field, embedded in its Jacobian. The Betti map and the associated height functions measure non-degeneracy in families of abelian varieties.
-
-\begin{convention}[Standing hypotheses]
-\label{uniformity-mordell-lang-curves-setup}
-\source{uniformity-mordell-lang-curves}
-The objects and hypotheses described above are in force throughout the
-formalization of this paper.
-\notready
-\end{convention}
-
-\chapter{Constructions and proof architecture}
-\label{chap:uniformity-mordell-lang-curves-method}
-
-\section{Geometric and cohomological method}
-\label{sec:uniformity-mordell-lang-curves-method}
-
-A Vojta--Mumford height inequality is combined with intersection theory, a counting argument for large points, and lower bounds for canonical heights of small points. The formalization should preserve these intermediate constructions
-as separate dependency nodes before addressing the principal result.
-
-\begin{definition}[Betti map and non-degenerate locus]
-\label{uniformity-mordell-lang-curves-central-object}
-\source{uniformity-mordell-lang-curves}
-The central object is the Betti map of an abelian scheme together with the non-degenerate locus of a subvariety, which supports the canonical-height and Mordell--Lang estimates.
-\uses{uniformity-mordell-lang-curves-setup}
-\notready
-\end{definition}
-
-\chapter{Principal results}
-\label{chap:uniformity-mordell-lang-curves-results}
-
-\section{Main theorem or conjecture}
-\label{sec:uniformity-mordell-lang-curves-results}
-
-\begin{theorem}[Height inequality for non-degenerate subvarieties]
-\label{uniformity-mordell-lang-curves-main}
-\source{uniformity-mordell-lang-curves}
-\uses{uniformity-mordell-lang-curves-setup}
-A non-degenerate subvariety of an abelian scheme dominating its base satisfies a lower bound $\widehat h(P)\geq c_1h(\pi(P))-c_2$ on a dense open subset, for positive constants $c_1$ and $c_2$.
-\notready
-\end{theorem}
-
-\begin{theorem}[Uniform bound for rational points]
-\label{uniformity-mordell-lang-curves-secondary}
-\source{uniformity-mordell-lang-curves}
-\uses{uniformity-mordell-lang-curves-main}
-For fixed genus $g\geq2$ and degree bound $d$, there is a constant $c(g,d)\geq1$ such that every genus-$g$ curve over a number field of degree at most $d$ satisfies $\#C(F)\leq c(g,d)^{1+\operatorname{rank}J(C)(F)}$.
-\notready
-\end{theorem}
+\input{ch00-abstract-and-front-matter}
+\input{ch01-introduction}
+\input{ch02-betti-map-and-betti-form}
+\input{ch03-setup-and-notation-for-the-height-inequality}
+\input{ch04-intersection-theory-and-height-inequality-on-the-total-space}
+\input{ch05-proof-of-the-height-inequality-theorem-thmhtinequality}
+\input{ch06-preparation-for-counting-points}
+\input{ch07-n-e-ron-tate-distance-between-points-on-curves}
+\input{ch08-proof-of-theorems-thmbdratintro-thmbdfinrank-and-thm-bdtorintronf}
+\input{ch09-the-silverman-tate-theorem-revisited}
+\input{ch10-full-version-of-theorem-thmhtinequality}

@@ -3,71 +3,26 @@
 \chapter*{About This Blueprint}
 \label{riemann-roch-polynomials-hyperkahler-fourfolds-about}
 
-This project follows \emph{Computing Riemann--Roch polynomials and classifying hyper-Kähler fourfolds} by Olivier Debarre; Daniel Huybrechts; Emanuele Macrì; Claire Voisin (2023). The
-retrieved source is archived under
-\href{../../../../../references/riemann-roch-polynomials-hyperkahler-fourfolds/}{\texttt{riemann-roch-polynomials-hyperkahler-fourfolds}} and is indexed in
-the workspace reference manifest. The corresponding preprint is
-\href{https://arxiv.org/abs/2201.08152}{arXiv:2201.08152}.
+This blueprint reproduces the complete mathematical body of \emph{Computing Riemann--Roch polynomials and classifying hyper-Kähler fourfolds}
+from the retrieved source bundle \texttt{riemann-roch-polynomials-hyperkahler-fourfolds}. The source archive and extracted
+TeX are indexed in the workspace manifest; see \href{../../../../../references/riemann-roch-polynomials-hyperkahler-fourfolds/}
+{\texttt{riemann-roch-polynomials-hyperkahler-fourfolds}} and \href{https://arxiv.org/abs/2201.08152}{the arXiv record}.
 
-Let $X$ be a hyper-Kähler fourfold with Beauville--Bogomolov--Fujiki form and Fujiki constant. Nef isotropic classes and Lagrangian fibrations control its divisor cones. The proof computes the Huybrechts--Riemann--Roch polynomial, analyzes nef cones and divisorial contractions, and applies the SYZ conjecture in dimension four.
+Each chapter file below corresponds to one source-level section (with a
+front-matter chapter when needed). The source text is retained verbatim apart
+from replacing section headings by blueprint chapters, expanding
+\texttt{\\input} inclusions, and adding \texttt{\source}/\texttt{\notready}
+provenance annotations to source nodes. The provenance remark at the start of
+each chapter is marked \notready because no Lean declaration has yet been
+checked for that source material.
 
-This blueprint is an independently worded, source-faithful mathematical
-outline of the paper's definitions, constructions, and principal results. It
-should be read alongside the original source; the source anchor on each node
-points to the complete extracted TeX. Statements are intentionally marked
-\notready until a matching Lean declaration and proof have been added.
-
-\chapter{Foundations and setup}
-\label{chap:riemann-roch-polynomials-hyperkahler-fourfolds-foundations}
-
-\section{Standing hypotheses}
-\label{sec:riemann-roch-polynomials-hyperkahler-fourfolds-standing}
-
-Let $X$ be a hyper-Kähler fourfold with Beauville--Bogomolov--Fujiki form and Fujiki constant. Nef isotropic classes and Lagrangian fibrations control its divisor cones.
-
-\begin{convention}[Standing hypotheses]
-\label{riemann-roch-polynomials-hyperkahler-fourfolds-setup}
-\source{riemann-roch-polynomials-hyperkahler-fourfolds}
-The objects and hypotheses described above are in force throughout the
-formalization of this paper.
-\notready
-\end{convention}
-
-\chapter{Constructions and proof architecture}
-\label{chap:riemann-roch-polynomials-hyperkahler-fourfolds-method}
-
-\section{Geometric and cohomological method}
-\label{sec:riemann-roch-polynomials-hyperkahler-fourfolds-method}
-
-The proof computes the Huybrechts--Riemann--Roch polynomial, analyzes nef cones and divisorial contractions, and applies the SYZ conjecture in dimension four. The formalization should preserve these intermediate constructions
-as separate dependency nodes before addressing the principal result.
-
-\begin{definition}[Beauville--Bogomolov form and Fujiki data]
-\label{riemann-roch-polynomials-hyperkahler-fourfolds-central-object}
-\source{riemann-roch-polynomials-hyperkahler-fourfolds}
-The central numerical object is the Beauville--Bogomolov--Fujiki quadratic form on $H^2(X)$, together with the Fujiki constant and the Huybrechts--Riemann--Roch polynomial determined from it.
-\uses{riemann-roch-polynomials-hyperkahler-fourfolds-setup}
-\notready
-\end{definition}
-
-\chapter{Principal results}
-\label{chap:riemann-roch-polynomials-hyperkahler-fourfolds-results}
-
-\section{Main theorem or conjecture}
-\label{sec:riemann-roch-polynomials-hyperkahler-fourfolds-results}
-
-\begin{theorem}[Riemann--Roch polynomial]
-\label{riemann-roch-polynomials-hyperkahler-fourfolds-main}
-\source{riemann-roch-polynomials-hyperkahler-fourfolds}
-\uses{riemann-roch-polynomials-hyperkahler-fourfolds-setup}
-If classes $\ell,m\in H^2(X,\mathbb Z)$ satisfy $\int_X\ell^4=0$ and $\int_X\ell^2m^2=2$, then the Huybrechts--Riemann--Roch polynomial and the Fujiki, Hodge, and Chern numbers are those of the Hilbert square of a K3 surface.
-\notready
-\end{theorem}
-
-\begin{theorem}[Classification of the fourfold]
-\label{riemann-roch-polynomials-hyperkahler-fourfolds-secondary}
-\source{riemann-roch-polynomials-hyperkahler-fourfolds}
-\uses{riemann-roch-polynomials-hyperkahler-fourfolds-main}
-Under the same hypotheses, $X$ is of $\mathrm{K3}^{[2]}$ deformation type and a suitable nef isotropic line bundle induces a Lagrangian fibration to $\mathbb P^2$.
-\notready
-\end{theorem}
+\input{ch00-abstract-and-front-matter}
+\input{ch01-introduction}
+\input{ch02-review-of-hyper-k-ahler-manifolds}
+\input{ch03-lagrangian-fibrations}
+\input{ch04-conjecture-conjnum-for-hyper-k-ahler-fourfolds}
+\input{ch05-on-the-syz-conjecture-in-dimension-4}
+\input{ch06-the-case-of-two-nef-isotropic-classes}
+\input{ch07-the-divisorial-contraction-case}
+\input{ch08-proofs-of-the-main-theorems}
+\input{ch09-further-results}

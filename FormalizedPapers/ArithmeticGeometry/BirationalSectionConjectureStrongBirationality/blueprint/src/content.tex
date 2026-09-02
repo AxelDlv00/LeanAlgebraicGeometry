@@ -3,71 +3,24 @@
 \chapter*{About This Blueprint}
 \label{birational-section-conjecture-strong-birationality-about}
 
-This project follows \emph{On the birational section conjecture with strong birationality assumptions} by Giulio Bresciani (2023). The
-retrieved source is archived under
-\href{../../../../../references/birational-section-conjecture-strong-birationality/}{\texttt{birational-section-conjecture-strong-birationality}} and is indexed in
-the workspace reference manifest. The corresponding preprint is
-\href{https://arxiv.org/abs/2108.13397}{arXiv:2108.13397}.
+This blueprint reproduces the complete mathematical body of \emph{On the birational section conjecture with strong birationality assumptions}
+from the retrieved source bundle \texttt{birational-section-conjecture-strong-birationality}. The source archive and extracted
+TeX are indexed in the workspace manifest; see \href{../../../../../references/birational-section-conjecture-strong-birationality/}
+{\texttt{birational-section-conjecture-strong-birationality}} and \href{https://arxiv.org/abs/2108.13397}{the arXiv record}.
 
-For a family of curves, étale fundamental gerbes and their relative sections encode geometric and arithmetic points. A Galois section is called $t$-birationally liftable when it admits the required gerbe-theoretic specialization diagrams. The argument controls specialization of ramified sections, lifting of $t$-birational sections, reduction to number fields, and the comparison of fundamental gerbes with fundamental groups.
+Each chapter file below corresponds to one source-level section (with a
+front-matter chapter when needed). The source text is retained verbatim apart
+from replacing section headings by blueprint chapters, expanding
+\texttt{\\input} inclusions, and adding \texttt{\source}/\texttt{\notready}
+provenance annotations to source nodes. The provenance remark at the start of
+each chapter is marked \notready because no Lean declaration has yet been
+checked for that source material.
 
-This blueprint is an independently worded, source-faithful mathematical
-outline of the paper's definitions, constructions, and principal results. It
-should be read alongside the original source; the source anchor on each node
-points to the complete extracted TeX. Statements are intentionally marked
-\notready until a matching Lean declaration and proof have been added.
-
-\chapter{Foundations and setup}
-\label{chap:birational-section-conjecture-strong-birationality-foundations}
-
-\section{Standing hypotheses}
-\label{sec:birational-section-conjecture-strong-birationality-standing}
-
-For a family of curves, étale fundamental gerbes and their relative sections encode geometric and arithmetic points. A Galois section is called $t$-birationally liftable when it admits the required gerbe-theoretic specialization diagrams.
-
-\begin{convention}[Standing hypotheses]
-\label{birational-section-conjecture-strong-birationality-setup}
-\source{birational-section-conjecture-strong-birationality}
-The objects and hypotheses described above are in force throughout the
-formalization of this paper.
-\notready
-\end{convention}
-
-\chapter{Constructions and proof architecture}
-\label{chap:birational-section-conjecture-strong-birationality-method}
-
-\section{Geometric and cohomological method}
-\label{sec:birational-section-conjecture-strong-birationality-method}
-
-The argument controls specialization of ramified sections, lifting of $t$-birational sections, reduction to number fields, and the comparison of fundamental gerbes with fundamental groups. The formalization should preserve these intermediate constructions
-as separate dependency nodes before addressing the principal result.
-
-\begin{definition}[t-birational Galois section]
-\label{birational-section-conjecture-strong-birationality-central-object}
-\source{birational-section-conjecture-strong-birationality}
-The central object is a section of the fundamental gerbe of a curve that is $t$-birationally liftable, so its specializations fit the required diagrams over the base.
-\uses{birational-section-conjecture-strong-birationality-setup}
-\notready
-\end{definition}
-
-\chapter{Principal results}
-\label{chap:birational-section-conjecture-strong-birationality-results}
-
-\section{Main theorem or conjecture}
-\label{sec:birational-section-conjecture-strong-birationality-results}
-
-\begin{theorem}[Strong birational section implication]
-\label{birational-section-conjecture-strong-birationality-main}
-\source{birational-section-conjecture-strong-birationality}
-\uses{birational-section-conjecture-strong-birationality-setup}
-Under the strong birationality assumptions of the paper, the specialization and lifting properties of $t$-birational Galois sections imply the stated birational section conjecture.
-\notready
-\end{theorem}
-
-\begin{corollary}[Section-conjecture consequence]
-\label{birational-section-conjecture-strong-birationality-secondary}
-\source{birational-section-conjecture-strong-birationality}
-\uses{birational-section-conjecture-strong-birationality-main}
-For the families and fields covered by the hypotheses, the resulting birational sections arise from the corresponding arithmetic points.
-\notready
-\end{corollary}
+\input{ch00-abstract-and-front-matter}
+\input{ch01-introduction}
+\input{ch02-etale-fundamental-gerbes}
+\input{ch03-non-unique-specializations-of-ramified-galois-sections}
+\input{ch04-properties-of-t-birationally-liftable-galois-sections}
+\input{ch05-the-main-argument}
+\input{ch06-reduction-to-number-fields}
+\input{ch07-proof-of-the-main-theorems}

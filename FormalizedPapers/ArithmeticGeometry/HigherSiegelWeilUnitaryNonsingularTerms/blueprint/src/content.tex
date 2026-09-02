@@ -3,71 +3,29 @@
 \chapter*{About This Blueprint}
 \label{higher-siegel-weil-unitary-nonsingular-terms-about}
 
-This project follows \emph{Higher Siegel--Weil formula for unitary groups: the non-singular terms} by Tony Feng; Zhiwei Yun; Wei Zhang (2023). The
-retrieved source is archived under
-\href{../../../../../references/higher-siegel-weil-unitary-nonsingular-terms/}{\texttt{higher-siegel-weil-unitary-nonsingular-terms}} and is indexed in
-the workspace reference manifest. The corresponding preprint is
-\href{https://arxiv.org/abs/2103.11514}{arXiv:2103.11514}.
+This blueprint reproduces the complete mathematical body of \emph{Higher Siegel--Weil formula for unitary groups: the non-singular terms}
+from the retrieved source bundle \texttt{higher-siegel-weil-unitary-nonsingular-terms}. The source archive and extracted
+TeX are indexed in the workspace manifest; see \href{../../../../../references/higher-siegel-weil-unitary-nonsingular-terms/}
+{\texttt{higher-siegel-weil-unitary-nonsingular-terms}} and \href{https://arxiv.org/abs/2103.11514}{the arXiv record}.
 
-Let $X'/X$ be the fixed double cover of curves, let $\mathcal E$ be a rank-$n$ vector bundle on $X'$, and let $a:\mathcal E\to\sigma^*\mathcal E^\vee$ be an injective Hermitian map. Unitary shtuka stacks, special cycles, virtual fundamental classes, Hermitian Springer theory, and local density formulas identify geometric cycle degrees with Fourier coefficients of Eisenstein series.
+Each chapter file below corresponds to one source-level section (with a
+front-matter chapter when needed). The source text is retained verbatim apart
+from replacing section headings by blueprint chapters, expanding
+\texttt{\\input} inclusions, and adding \texttt{\source}/\texttt{\notready}
+provenance annotations to source nodes. The provenance remark at the start of
+each chapter is marked \notready because no Lean declaration has yet been
+checked for that source material.
 
-This blueprint is an independently worded, source-faithful mathematical
-outline of the paper's definitions, constructions, and principal results. It
-should be read alongside the original source; the source anchor on each node
-points to the complete extracted TeX. Statements are intentionally marked
-\notready until a matching Lean declaration and proof have been added.
-
-\chapter{Foundations and setup}
-\label{chap:higher-siegel-weil-unitary-nonsingular-terms-foundations}
-
-\section{Standing hypotheses}
-\label{sec:higher-siegel-weil-unitary-nonsingular-terms-standing}
-
-Let $X'/X$ be the fixed double cover of curves, let $\mathcal E$ be a rank-$n$ vector bundle on $X'$, and let $a:\mathcal E\to\sigma^*\mathcal E^\vee$ be an injective Hermitian map.
-
-\begin{convention}[Standing hypotheses]
-\label{higher-siegel-weil-unitary-nonsingular-terms-setup}
-\source{higher-siegel-weil-unitary-nonsingular-terms}
-The objects and hypotheses described above are in force throughout the
-formalization of this paper.
-\notready
-\end{convention}
-
-\chapter{Constructions and proof architecture}
-\label{chap:higher-siegel-weil-unitary-nonsingular-terms-method}
-
-\section{Geometric and cohomological method}
-\label{sec:higher-siegel-weil-unitary-nonsingular-terms-method}
-
-Unitary shtuka stacks, special cycles, virtual fundamental classes, Hermitian Springer theory, and local density formulas identify geometric cycle degrees with Fourier coefficients of Eisenstein series. The formalization should preserve these intermediate constructions
-as separate dependency nodes before addressing the principal result.
-
-\begin{definition}[Unitary special cycle]
-\label{higher-siegel-weil-unitary-nonsingular-terms-central-object}
-\source{higher-siegel-weil-unitary-nonsingular-terms}
-For a Hermitian map $a$, the central cycle is the non-singular special cycle on the unitary shtuka stack, equipped with its virtual fundamental class and degree.
-\uses{higher-siegel-weil-unitary-nonsingular-terms-setup}
-\notready
-\end{definition}
-
-\chapter{Principal results}
-\label{chap:higher-siegel-weil-unitary-nonsingular-terms-results}
-
-\section{Main theorem or conjecture}
-\label{sec:higher-siegel-weil-unitary-nonsingular-terms-results}
-
-\begin{theorem}[Higher Siegel--Weil identity]
-\label{higher-siegel-weil-unitary-nonsingular-terms-main}
-\source{higher-siegel-weil-unitary-nonsingular-terms}
-\uses{higher-siegel-weil-unitary-nonsingular-terms-setup}
-For every $r\geq0$, the $r$-th derivative at the central point of the normalized non-singular Fourier coefficient of the Siegel--Eisenstein series equals the degree of the corresponding special cycle.
-\notready
-\end{theorem}
-
-\begin{proposition}[Virtual special-cycle class]
-\label{higher-siegel-weil-unitary-nonsingular-terms-secondary}
-\source{higher-siegel-weil-unitary-nonsingular-terms}
-\uses{higher-siegel-weil-unitary-nonsingular-terms-main}
-For an injective Hermitian map of equal-rank bundles, the special-cycle stack carries a proper virtual zero-cycle whose degree enters the higher derivative formula.
-\notready
-\end{proposition}
+\input{ch00-abstract-and-front-matter}
+\input{ch01-introduction}
+\input{ch02-fourier-coefficients-of-eisenstein-series}
+\input{ch03-springer-theory-for-torsion-coherent-sheaves}
+\input{ch04-springer-theory-for-hermitian-torsion-sheaves}
+\input{ch05-geometrization-of-local-densities}
+\input{ch06-moduli-of-hermitian-shtukas}
+\input{ch07-special-cycles-basic-properties}
+\input{ch08-hitchin-type-moduli-spaces}
+\input{ch09-special-cycles-of-corank-one}
+\input{ch10-comparison-of-two-cycle-classes}
+\input{ch11-local-intersection-number-and-trace-formula}
+\input{ch12-matching-of-sheaves}

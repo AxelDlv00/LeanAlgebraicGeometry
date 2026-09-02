@@ -3,71 +3,24 @@
 \chapter*{About This Blueprint}
 \label{pw-conjecture-gl-n-about}
 
-This project follows \emph{The P=W conjecture for GL_n} by Davesh Maulik; Junliang Shen (2024). The
-retrieved source is archived under
-\href{../../../../../references/pw-conjecture-gl-n/}{\texttt{pw-conjecture-gl-n}} and is indexed in
-the workspace reference manifest. The corresponding preprint is
-\href{https://arxiv.org/abs/2209.02568}{arXiv:2209.02568}.
+This blueprint reproduces the complete mathematical body of \emph{The P=W conjecture for GL_n}
+from the retrieved source bundle \texttt{pw-conjecture-gl-n}. The source archive and extracted
+TeX are indexed in the workspace manifest; see \href{../../../../../references/pw-conjecture-gl-n/}
+{\texttt{pw-conjecture-gl-n}} and \href{https://arxiv.org/abs/2209.02568}{the arXiv record}.
 
-For a smooth curve and coprime degree/rank, the Dolbeault moduli space of Higgs bundles and the Betti character variety have identified cohomology. The Hitchin map defines the perverse filtration and the character variety carries a weight filtration. Strong perversity of Chern classes, vanishing cycles, twisted Hitchin systems, support theorems, and global Springer theory reduce the comparison to a finite sequence of geometric steps.
+Each chapter file below corresponds to one source-level section (with a
+front-matter chapter when needed). The source text is retained verbatim apart
+from replacing section headings by blueprint chapters, expanding
+\texttt{\\input} inclusions, and adding \texttt{\source}/\texttt{\notready}
+provenance annotations to source nodes. The provenance remark at the start of
+each chapter is marked \notready because no Lean declaration has yet been
+checked for that source material.
 
-This blueprint is an independently worded, source-faithful mathematical
-outline of the paper's definitions, constructions, and principal results. It
-should be read alongside the original source; the source anchor on each node
-points to the complete extracted TeX. Statements are intentionally marked
-\notready until a matching Lean declaration and proof have been added.
-
-\chapter{Foundations and setup}
-\label{chap:pw-conjecture-gl-n-foundations}
-
-\section{Standing hypotheses}
-\label{sec:pw-conjecture-gl-n-standing}
-
-For a smooth curve and coprime degree/rank, the Dolbeault moduli space of Higgs bundles and the Betti character variety have identified cohomology. The Hitchin map defines the perverse filtration and the character variety carries a weight filtration.
-
-\begin{convention}[Standing hypotheses]
-\label{pw-conjecture-gl-n-setup}
-\source{pw-conjecture-gl-n}
-The objects and hypotheses described above are in force throughout the
-formalization of this paper.
-\notready
-\end{convention}
-
-\chapter{Constructions and proof architecture}
-\label{chap:pw-conjecture-gl-n-method}
-
-\section{Geometric and cohomological method}
-\label{sec:pw-conjecture-gl-n-method}
-
-Strong perversity of Chern classes, vanishing cycles, twisted Hitchin systems, support theorems, and global Springer theory reduce the comparison to a finite sequence of geometric steps. The formalization should preserve these intermediate constructions
-as separate dependency nodes before addressing the principal result.
-
-\begin{definition}[P=W filtration comparison]
-\label{pw-conjecture-gl-n-central-object}
-\source{pw-conjecture-gl-n}
-The central statement compares the perverse filtration from the $\mathrm{GL}_n$ Hitchin fibration on the Dolbeault moduli space with the weight filtration on the Betti character variety.
-\uses{pw-conjecture-gl-n-setup}
-\notready
-\end{definition}
-
-\chapter{Principal results}
-\label{chap:pw-conjecture-gl-n-results}
-
-\section{Main theorem or conjecture}
-\label{sec:pw-conjecture-gl-n-results}
-
-\begin{conjecture}[P=W for $\mathrm{GL}_n$]
-\label{pw-conjecture-gl-n-main}
-\source{pw-conjecture-gl-n}
-\uses{pw-conjecture-gl-n-setup}
-For all cohomological degrees and perversity indices, the perverse filtration on the Dolbeault side equals the even and odd weight filtrations on the Betti side: $P_kH^m=W_{2k}H^m=W_{2k+1}H^m$.
-\notready
-\end{conjecture}
-
-\begin{theorem}[Proof of P=W]
-\label{pw-conjecture-gl-n-secondary}
-\source{pw-conjecture-gl-n}
-\uses{pw-conjecture-gl-n-main}
-The P=W conjecture for the twisted $\mathrm{GL}_n$ Hitchin system holds.
-\notready
-\end{theorem}
+\input{ch00-abstract-and-front-matter}
+\input{ch01-introduction}
+\input{ch02-perverse-filtrations-and-vanishing-cycles}
+\input{ch03-strong-perversity-for-chern-classes}
+\input{ch04-global-springer-theory}
+\input{ch05-parabolic-support-theorem}
+\input{ch06-splittings-of-perverse-filtrations}
+\input{ch07-topology-of-hitchin-fibrations}

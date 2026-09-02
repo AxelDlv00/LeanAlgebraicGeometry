@@ -11,9 +11,10 @@ Original PDFs, e-print archives, and extracted TeX remain in the shared
 [`references/manifest.yaml`](../references/manifest.yaml).
 
 All project and reference names use descriptive titles/slugs. MR identifiers
-are cross-references only. Blueprint nodes are source-anchored and currently
-`\notready`; this is an honest starting point for selecting Lean theorem
-slices and building their dependency cones.
+are cross-references only. Each project's blueprint is a complete
+source-derived paper body, split into one TeX chapter file per source section.
+Its source-backed mathematical nodes are currently `\notready`; this records
+that the content still needs translation into checked Lean declarations.
 
 ## Categories
 

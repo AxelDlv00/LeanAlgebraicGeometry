@@ -3,71 +3,21 @@
 \chapter*{About This Blueprint}
 \label{universal-secant-bundles-syzygies-canonical-curves-about}
 
-This project follows \emph{Universal secant bundles and syzygies of canonical curves} by Michael Kemeny (2020). The
-retrieved source is archived under
-\href{../../../../../references/universal-secant-bundles-syzygies-canonical-curves/}{\texttt{universal-secant-bundles-syzygies-canonical-curves}} and is indexed in
-the workspace reference manifest. The corresponding preprint is
-\href{https://arxiv.org/abs/2003.05849}{arXiv:2003.05849}.
+This blueprint reproduces the complete mathematical body of \emph{Universal secant bundles and syzygies of canonical curves}
+from the retrieved source bundle \texttt{universal-secant-bundles-syzygies-canonical-curves}. The source archive and extracted
+TeX are indexed in the workspace manifest; see \href{../../../../../references/universal-secant-bundles-syzygies-canonical-curves/}
+{\texttt{universal-secant-bundles-syzygies-canonical-curves}} and \href{https://arxiv.org/abs/2003.05849}{the arXiv record}.
 
-For a polarized K3 surface or a canonical curve, Koszul cohomology is the middle cohomology of the usual three-term exterior-multiplication complex. Lazarsfeld--Mukai bundles and their universal secant constructions provide the geometric input. The argument uses kernel bundles, Hilbert schemes, and cohomology of tautological bundles. A universal secant bundle turns the required syzygy vanishing into an injectivity statement for a natural cohomology map.
+Each chapter file below corresponds to one source-level section (with a
+front-matter chapter when needed). The source text is retained verbatim apart
+from replacing section headings by blueprint chapters, expanding
+\texttt{\\input} inclusions, and adding \texttt{\source}/\texttt{\notready}
+provenance annotations to source nodes. The provenance remark at the start of
+each chapter is marked \notready because no Lean declaration has yet been
+checked for that source material.
 
-This blueprint is an independently worded, source-faithful mathematical
-outline of the paper's definitions, constructions, and principal results. It
-should be read alongside the original source; the source anchor on each node
-points to the complete extracted TeX. Statements are intentionally marked
-\notready until a matching Lean declaration and proof have been added.
-
-\chapter{Foundations and setup}
-\label{chap:universal-secant-bundles-syzygies-canonical-curves-foundations}
-
-\section{Standing hypotheses}
-\label{sec:universal-secant-bundles-syzygies-canonical-curves-standing}
-
-For a polarized K3 surface or a canonical curve, Koszul cohomology is the middle cohomology of the usual three-term exterior-multiplication complex. Lazarsfeld--Mukai bundles and their universal secant constructions provide the geometric input.
-
-\begin{convention}[Standing hypotheses]
-\label{universal-secant-bundles-syzygies-canonical-curves-setup}
-\source{universal-secant-bundles-syzygies-canonical-curves}
-The objects and hypotheses described above are in force throughout the
-formalization of this paper.
-\notready
-\end{convention}
-
-\chapter{Constructions and proof architecture}
-\label{chap:universal-secant-bundles-syzygies-canonical-curves-method}
-
-\section{Geometric and cohomological method}
-\label{sec:universal-secant-bundles-syzygies-canonical-curves-method}
-
-The argument uses kernel bundles, Hilbert schemes, and cohomology of tautological bundles. A universal secant bundle turns the required syzygy vanishing into an injectivity statement for a natural cohomology map. The formalization should preserve these intermediate constructions
-as separate dependency nodes before addressing the principal result.
-
-\begin{definition}[Universal secant bundle]
-\label{universal-secant-bundles-syzygies-canonical-curves-central-object}
-\source{universal-secant-bundles-syzygies-canonical-curves}
-For a globally generated line bundle $L$ on a curve, the universal secant bundle on the symmetric product records the evaluation spaces of length-$d$ subschemes and controls the associated syzygy spaces.
-\uses{universal-secant-bundles-syzygies-canonical-curves-setup}
-\notready
-\end{definition}
-
-\chapter{Principal results}
-\label{chap:universal-secant-bundles-syzygies-canonical-curves-results}
-
-\section{Main theorem or conjecture}
-\label{sec:universal-secant-bundles-syzygies-canonical-curves-results}
-
-\begin{theorem}[Generic Green vanishing]
-\label{universal-secant-bundles-syzygies-canonical-curves-main}
-\source{universal-secant-bundles-syzygies-canonical-curves}
-\uses{universal-secant-bundles-syzygies-canonical-curves-setup}
-If $C$ is a general complex curve of genus $g=2k$ or $g=2k+1$, then $K_{k,1}(C,\omega_C)=0$.
-\notready
-\end{theorem}
-
-\begin{theorem}[The extremal syzygy space on a K3 surface]
-\label{universal-secant-bundles-syzygies-canonical-curves-secondary}
-\source{universal-secant-bundles-syzygies-canonical-curves}
-\uses{universal-secant-bundles-syzygies-canonical-curves-main}
-Let $(X,L)$ be a Picard-rank-one polarized K3 surface of even genus $2k$. The extremal syzygy space is identified with a symmetric power of the space of sections of the Lazarsfeld--Mukai bundle, via the Veronese map supplied by universal secant bundles.
-\notready
-\end{theorem}
+\input{ch00-abstract-and-front-matter}
+\input{ch01-introduction}
+\input{ch02-voisin-s-theorem-in-even-genus}
+\input{ch03-the-geometric-syzygy-conjecture}
+\input{ch04-voisin-s-theorem-in-odd-genus}

@@ -3,71 +3,22 @@
 \chapter*{About This Blueprint}
 \label{bounds-stalks-perverse-sheaves-characteristic-p-shende-about}
 
-This project follows \emph{Bounds for the stalks of perverse sheaves in characteristic p and a conjecture of Shende and Tsimerman} by Will Sawin (2020). The
-retrieved source is archived under
-\href{../../../../../references/bounds-stalks-perverse-sheaves-characteristic-p-shende/}{\texttt{bounds-stalks-perverse-sheaves-characteristic-p-shende}} and is indexed in
-the workspace reference manifest. The corresponding preprint is
-\href{https://arxiv.org/abs/1907.04850}{arXiv:1907.04850}.
+This blueprint reproduces the complete mathematical body of \emph{Bounds for the stalks of perverse sheaves in characteristic p and a conjecture of Shende and Tsimerman}
+from the retrieved source bundle \texttt{bounds-stalks-perverse-sheaves-characteristic-p-shende}. The source archive and extracted
+TeX are indexed in the workspace manifest; see \href{../../../../../references/bounds-stalks-perverse-sheaves-characteristic-p-shende/}
+{\texttt{bounds-stalks-perverse-sheaves-characteristic-p-shende}} and \href{https://arxiv.org/abs/1907.04850}{the arXiv record}.
 
-Let $X$ be smooth over a perfect field and let $K$ be a perverse sheaf of finite coefficients with the coefficient prime invertible on the base. The characteristic cycle of $K$ carries polar multiplicities at points of $X$. The paper compares equivalent descriptions of polar multiplicity and applies the resulting local estimate to intersection complexes on Jacobians and to equidistribution questions for vector bundles on the projective line.
+Each chapter file below corresponds to one source-level section (with a
+front-matter chapter when needed). The source text is retained verbatim apart
+from replacing section headings by blueprint chapters, expanding
+\texttt{\\input} inclusions, and adding \texttt{\source}/\texttt{\notready}
+provenance annotations to source nodes. The provenance remark at the start of
+each chapter is marked \notready because no Lean declaration has yet been
+checked for that source material.
 
-This blueprint is an independently worded, source-faithful mathematical
-outline of the paper's definitions, constructions, and principal results. It
-should be read alongside the original source; the source anchor on each node
-points to the complete extracted TeX. Statements are intentionally marked
-\notready until a matching Lean declaration and proof have been added.
-
-\chapter{Foundations and setup}
-\label{chap:bounds-stalks-perverse-sheaves-characteristic-p-shende-foundations}
-
-\section{Standing hypotheses}
-\label{sec:bounds-stalks-perverse-sheaves-characteristic-p-shende-standing}
-
-Let $X$ be smooth over a perfect field and let $K$ be a perverse sheaf of finite coefficients with the coefficient prime invertible on the base. The characteristic cycle of $K$ carries polar multiplicities at points of $X$.
-
-\begin{convention}[Standing hypotheses]
-\label{bounds-stalks-perverse-sheaves-characteristic-p-shende-setup}
-\source{bounds-stalks-perverse-sheaves-characteristic-p-shende}
-The objects and hypotheses described above are in force throughout the
-formalization of this paper.
-\notready
-\end{convention}
-
-\chapter{Constructions and proof architecture}
-\label{chap:bounds-stalks-perverse-sheaves-characteristic-p-shende-method}
-
-\section{Geometric and cohomological method}
-\label{sec:bounds-stalks-perverse-sheaves-characteristic-p-shende-method}
-
-The paper compares equivalent descriptions of polar multiplicity and applies the resulting local estimate to intersection complexes on Jacobians and to equidistribution questions for vector bundles on the projective line. The formalization should preserve these intermediate constructions
-as separate dependency nodes before addressing the principal result.
-
-\begin{definition}[Polar multiplicity of a characteristic cycle]
-\label{bounds-stalks-perverse-sheaves-characteristic-p-shende-central-object}
-\source{bounds-stalks-perverse-sheaves-characteristic-p-shende}
-The central local invariant is the polar multiplicity attached to a point and a degree of the characteristic cycle of a perverse sheaf; it is the quantity that bounds stalk cohomology.
-\uses{bounds-stalks-perverse-sheaves-characteristic-p-shende-setup}
-\notready
-\end{definition}
-
-\chapter{Principal results}
-\label{chap:bounds-stalks-perverse-sheaves-characteristic-p-shende-results}
-
-\section{Main theorem or conjecture}
-\label{sec:bounds-stalks-perverse-sheaves-characteristic-p-shende-results}
-
-\begin{theorem}[Stalk bound by polar multiplicity]
-\label{bounds-stalks-perverse-sheaves-characteristic-p-shende-main}
-\source{bounds-stalks-perverse-sheaves-characteristic-p-shende}
-\uses{bounds-stalks-perverse-sheaves-characteristic-p-shende-setup}
-For every point $x$ and integer $i$, the dimension of the stalk cohomology $\mathcal H^{-i}(K)_x$ is at most the $i$-th polar multiplicity of the characteristic cycle of $K$ at $x$.
-\notready
-\end{theorem}
-
-\begin{theorem}[Betti bound for theta intersections]
-\label{bounds-stalks-perverse-sheaves-characteristic-p-shende-secondary}
-\source{bounds-stalks-perverse-sheaves-characteristic-p-shende}
-\uses{bounds-stalks-perverse-sheaves-characteristic-p-shende-main}
-For a genus-$g$ curve and the indicated intersections of theta divisors in its Jacobian, the total ℓ-adic Betti number is bounded by $28^g/16+4\cdot 8^g+2\cdot 4^g$.
-\notready
-\end{theorem}
+\input{ch00-abstract-and-front-matter}
+\input{ch01-introduction}
+\input{ch02-terminology}
+\input{ch03-equivalences-between-definitions-of-the-polar-multiplicity}
+\input{ch04-a-bound-for-betti-numbers}
+\input{ch05-application-to-a-conjecture-of-shende-and-tsimerman}

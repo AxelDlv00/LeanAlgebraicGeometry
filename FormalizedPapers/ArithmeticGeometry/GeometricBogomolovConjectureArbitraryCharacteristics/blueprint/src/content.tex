@@ -3,71 +3,22 @@
 \chapter*{About This Blueprint}
 \label{geometric-bogomolov-conjecture-arbitrary-characteristics-about}
 
-This project follows \emph{Geometric Bogomolov conjecture in arbitrary characteristics} by Junyi Xie; Xinyi Yuan (2022). The
-retrieved source is archived under
-\href{../../../../../references/geometric-bogomolov-conjecture-arbitrary-characteristics/}{\texttt{geometric-bogomolov-conjecture-arbitrary-characteristics}} and is indexed in
-the workspace reference manifest. The corresponding preprint is
-\href{https://arxiv.org/abs/2108.09722}{arXiv:2108.09722}.
+This blueprint reproduces the complete mathematical body of \emph{Geometric Bogomolov conjecture in arbitrary characteristics}
+from the retrieved source bundle \texttt{geometric-bogomolov-conjecture-arbitrary-characteristics}. The source archive and extracted
+TeX are indexed in the workspace manifest; see \href{../../../../../references/geometric-bogomolov-conjecture-arbitrary-characteristics/}
+{\texttt{geometric-bogomolov-conjecture-arbitrary-characteristics}} and \href{https://arxiv.org/abs/2108.09722}{the arXiv record}.
 
-Let $K/k$ be a finitely generated extension of algebraically closed fields and let $A/K$ be an abelian variety equipped with its canonical height. A subvariety is special when it is built from the trace and a torsion subvariety. Integral models, canonical heights, small points, Bertini arguments, and reductions in transcendence degree establish the function-field analogue of Bogomolov in arbitrary characteristic.
+Each chapter file below corresponds to one source-level section (with a
+front-matter chapter when needed). The source text is retained verbatim apart
+from replacing section headings by blueprint chapters, expanding
+\texttt{\\input} inclusions, and adding \texttt{\source}/\texttt{\notready}
+provenance annotations to source nodes. The provenance remark at the start of
+each chapter is marked \notready because no Lean declaration has yet been
+checked for that source material.
 
-This blueprint is an independently worded, source-faithful mathematical
-outline of the paper's definitions, constructions, and principal results. It
-should be read alongside the original source; the source anchor on each node
-points to the complete extracted TeX. Statements are intentionally marked
-\notready until a matching Lean declaration and proof have been added.
-
-\chapter{Foundations and setup}
-\label{chap:geometric-bogomolov-conjecture-arbitrary-characteristics-foundations}
-
-\section{Standing hypotheses}
-\label{sec:geometric-bogomolov-conjecture-arbitrary-characteristics-standing}
-
-Let $K/k$ be a finitely generated extension of algebraically closed fields and let $A/K$ be an abelian variety equipped with its canonical height. A subvariety is special when it is built from the trace and a torsion subvariety.
-
-\begin{convention}[Standing hypotheses]
-\label{geometric-bogomolov-conjecture-arbitrary-characteristics-setup}
-\source{geometric-bogomolov-conjecture-arbitrary-characteristics}
-The objects and hypotheses described above are in force throughout the
-formalization of this paper.
-\notready
-\end{convention}
-
-\chapter{Constructions and proof architecture}
-\label{chap:geometric-bogomolov-conjecture-arbitrary-characteristics-method}
-
-\section{Geometric and cohomological method}
-\label{sec:geometric-bogomolov-conjecture-arbitrary-characteristics-method}
-
-Integral models, canonical heights, small points, Bertini arguments, and reductions in transcendence degree establish the function-field analogue of Bogomolov in arbitrary characteristic. The formalization should preserve these intermediate constructions
-as separate dependency nodes before addressing the principal result.
-
-\begin{definition}[Special subvariety and small-point locus]
-\label{geometric-bogomolov-conjecture-arbitrary-characteristics-central-object}
-\source{geometric-bogomolov-conjecture-arbitrary-characteristics}
-A subvariety of $A_{\overline K}$ is central when it is special, meaning obtained from the $\overline K/k$-trace and a torsion translate; the opposing condition is density of points of arbitrarily small canonical height.
-\uses{geometric-bogomolov-conjecture-arbitrary-characteristics-setup}
-\notready
-\end{definition}
-
-\chapter{Principal results}
-\label{chap:geometric-bogomolov-conjecture-arbitrary-characteristics-results}
-
-\section{Main theorem or conjecture}
-\label{sec:geometric-bogomolov-conjecture-arbitrary-characteristics-results}
-
-\begin{theorem}[Geometric Bogomolov]
-\label{geometric-bogomolov-conjecture-arbitrary-characteristics-main}
-\source{geometric-bogomolov-conjecture-arbitrary-characteristics}
-\uses{geometric-bogomolov-conjecture-arbitrary-characteristics-setup}
-If a closed subvariety of $A_{\overline K}$ contains a dense set of small points, then it is special.
-\notready
-\end{theorem}
-
-\begin{theorem}[Special-subvariety criterion]
-\label{geometric-bogomolov-conjecture-arbitrary-characteristics-secondary}
-\source{geometric-bogomolov-conjecture-arbitrary-characteristics}
-\uses{geometric-bogomolov-conjecture-arbitrary-characteristics-main}
-The canonical-height and trace constructions identify the special subvarieties as precisely the loci for which arbitrarily small points can be Zariski dense.
-\notready
-\end{theorem}
+\input{ch00-abstract-and-front-matter}
+\input{ch01-introduction}
+\input{ch02-non-proper-intersections}
+\input{ch03-lowering-the-transcendence-degree}
+\input{ch04-line-bundles-over-abelian-schemes}
+\input{ch05-proof-of-the-geometric-bogomolov-conjecture}
