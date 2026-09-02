@@ -6,6 +6,7 @@ Authors: The StacksPart01Lib Contributors
 
 import Mathlib.RingTheory.FiniteType
 import Mathlib.RingTheory.IntegralClosure.IsIntegralClosure.Basic
+import Mathlib.RingTheory.Finiteness.ModuleFinitePresentation
 
 /-!
 # StacksPart01Lib.FiniteTypeExtras
@@ -25,6 +26,16 @@ is the first assertion of the Stacks Project's finite-to-finite-type lemma
 theorem ringHom_finiteType_of_finite {R S : Type*} [CommRing R] [CommRing S]
     (f : R →+* S) (hf : f.Finite) : f.FiniteType := by
   exact RingHom.FiniteType.of_finite hf
+
+/-- A finite presentation as a module gives a finite presentation of the
+associated algebra map (Stacks, Tag `0D46`). -/
+theorem algebraMap_finitePresentation_of_module_finitePresentation
+    {R S : Type*} [CommRing R] [CommRing S] [Algebra R S]
+    (h : Module.FinitePresentation R S) :
+    (algebraMap R S).FinitePresentation := by
+  rw [RingHom.finitePresentation_algebraMap]
+  letI : Module.FinitePresentation R S := h
+  infer_instance
 
 /-- Finite ring maps are stable under composition
 (Stacks, Tag `00GL`). -/
