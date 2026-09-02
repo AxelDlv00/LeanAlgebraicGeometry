@@ -7,11 +7,13 @@ Authors: The Hartshorne Contributors
 import HartshorneLib.Chapter4LocalRatioCoordinates
 
 /-!
-# Hartshorne IV.3.1: cocycles for local ratio regularizations
+# Hartshorne IV.3.1: triple-overlap identities for local ratios
 
 The coordinate file proves the pairwise transition identity.  This module
 packages the functorial restriction step on a triple intersection and derives
-the resulting denominator cocycle and three-step transport formula.
+an indexed transition factorization and a genuine three-chart transport
+formula.  Constructing the covering charts and their projective morphisms
+remains separate.
 -/
 
 set_option autoImplicit false
@@ -155,9 +157,14 @@ theorem transition_mul_inverse
     (r.restricted_regularized_eq_transition_mul s h
       a.denominator_index).symm
 
-/-- The direct denominator transition on a triple overlap is the product of
-the two successive transitions through the middle chart. -/
-theorem triple_transition_cocycle
+/-- On a triple overlap, the transition selected by a third chart's denominator
+index factors through the middle chart.
+
+Only `a` and `b` are asserted to represent the same section family here; `c`
+supplies the common open and coordinate index.  The three-family compatibility
+used by projective gluing is recorded by `triple_regularized_transport` below.
+-/
+theorem triple_indexed_transition_factorization
     {b c : LocalRatioCoordinateData D n}
     (r : LocalRatioRegularization a) (s : LocalRatioRegularization b)
     (h : a.SameSectionValues b) :

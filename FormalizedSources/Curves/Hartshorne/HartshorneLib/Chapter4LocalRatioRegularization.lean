@@ -8,12 +8,13 @@ import HartshorneLib.Chapter4LocalRatioCoordinates
 import HartshorneLib.Chapter4DivisorSheafZero
 
 /-!
-# Hartshorne IV.3.1: regularizing local ratios
+# Hartshorne IV.3.1: conditional regularization bridges
 
 The coordinate API keeps regularity as explicit data.  For the zero divisor,
 the divisor sheaf comparison supplies that data whenever each rational
 coordinate lies in the zero-divisor section module.  This file packages the
-resulting generic-germ representatives and records their uniqueness.
+resulting generic-germ representatives and records their uniqueness.  It does
+not construct the denominator open or prove its exact-order hypothesis.
 -/
 
 set_option autoImplicit false
@@ -55,8 +56,12 @@ noncomputable def of_zeroBound
         intro i
         simpa [localStructureValue] using hs i }
 
-/-- The exact local denominator-order condition supplies the zero-divisor
-section bounds needed by `of_zeroBound`. -/
+/-- Assuming the exact local denominator-order condition, derive the
+zero-divisor section bounds needed by `of_zeroBound`.
+
+This is a conditional bridge: constructing a denominator chart on which
+`hden` holds remains a separate geometric step.
+-/
 noncomputable def of_denominatorOrderEq
     (a : LocalRatioCoordinateData D n)
     (hden : ∀ (x : X.left) (hx : x ≠ genericPoint X.left),
