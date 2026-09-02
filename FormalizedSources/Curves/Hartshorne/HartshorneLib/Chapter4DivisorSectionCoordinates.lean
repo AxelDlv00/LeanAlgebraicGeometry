@@ -192,6 +192,32 @@ theorem coordinate_value_eq_divisorH0Value
       divisorH0Value D (data.basis i) := by
   rw [data.coordinates_eq_globalization i, data.globalization.value_eq]
 
+/-- A value-preserving globalization carries the chosen divisor-section basis
+to a linearly independent family of global coordinates. -/
+theorem coordinates_linearIndependent
+    {n : ℕ} (data : DivisorSectionCoordinateData D n) :
+    LinearIndependent k data.coordinates := by
+  have hker : data.globalization.toGlobal.ker = ⊥ :=
+    LinearMap.ker_eq_bot_of_injective data.globalization.toGlobal_injective
+  have hli :
+      LinearIndependent k
+        (data.globalization.toGlobal ∘ data.basis) :=
+    (Module.Basis.linearIndependent data.basis).map'
+      data.globalization.toGlobal hker
+  have hcoord :
+      (data.globalization.toGlobal ∘ data.basis) = data.coordinates := by
+    funext i
+    simpa only [Function.comp_apply] using
+      (data.coordinates_eq_globalization i).symm
+  rw [← hcoord]
+  exact hli
+
+/-- Every coordinate in a value-preserving globalization is nonzero. -/
+theorem coordinates_ne_zero
+    {n : ℕ} (data : DivisorSectionCoordinateData D n) (i : Fin (n + 1)) :
+    data.coordinates i ≠ 0 :=
+  (data.coordinates_linearIndependent).ne_zero i
+
 /-- Forget the divisor-section bookkeeping and expose the existing global-section
 `Proj` input. -/
 def toGlobalSectionsProjectiveMapData
