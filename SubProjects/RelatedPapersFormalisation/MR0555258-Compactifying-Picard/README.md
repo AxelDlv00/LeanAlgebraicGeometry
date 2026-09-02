@@ -1,11 +1,15 @@
-# Mr0555258 Compactifying Picard
+# Compactifying the Picard Scheme
 
 <!-- archon:readme -->
 <!-- Claude fills in the prose sections below. Keep the section headers. -->
 
 ## Project
 
-<!-- One paragraph: what is being formalized and why. -->
+This package formalizes the base-change and tensor/sheaf technology used in
+Altman--Kleiman's *Compactifying the Picard Scheme*.  The source is indexed as
+`MR0555258-compactifying-picard` in the related-paper catalog; the legacy
+directory and Lean namespace are retained for compatibility with existing
+blueprint and graph links.
 
 ## References
 

@@ -1,0 +1,156 @@
+# Related algebraic-geometry papers discovered from the author's publication page.
+#
+# MR identifiers are cross-references only.  Reference directories and future
+# Lean projects use the descriptive slugs below, so that the workspace remains
+# readable without consulting MathSciNet.
+schema_version: 1
+
+categories:
+  - id: abelian-varieties-and-motives
+    title: Abelian varieties and motives
+  - id: curves-and-linear-series
+    title: Curves, Brill--Noether theory, and linear series
+  - id: sheaves-and-cohomology
+    title: Sheaves, cohomology, and intersection theory
+  - id: arithmetic-and-number-theory
+    title: Arithmetic geometry and number theory
+  - id: moduli-higgs-and-character-varieties
+    title: Moduli, Higgs bundles, and character varieties
+  - id: surfaces-birational-and-hyperkahler
+    title: Surfaces, birational geometry, and hyper-Kähler varieties
+
+# `project: candidate` means that a package should be created only after a
+# source-backed formalization slice and its dependencies have been selected.
+# This avoids a forest of empty Lean packages while keeping the intended
+# project boundary explicit.
+papers:
+  - slug: standard-conjectures-abelian-fourfolds
+    title: Standard conjectures for abelian fourfolds
+    mr: MR4199442
+    category: abelian-varieties-and-motives
+    project: candidate
+  - slug: universal-secant-bundles-syzygies-canonical-curves
+    title: Universal secant bundles and syzygies of canonical curves
+    mr: MR4213770
+    category: curves-and-linear-series
+    project: candidate
+  - slug: bounds-stalks-perverse-sheaves-characteristic-p-shende
+    title: Bounds for the stalks of perverse sheaves in characteristic p and a conjecture of Shende and Tsimerman
+    mr: MR4228499
+    category: sheaves-and-cohomology
+    project: candidate
+  - slug: refined-brill-noether-theory-hurwitz-spaces
+    title: A refined Brill--Noether theory over Hurwitz spaces
+    mr: MR4258055
+    category: curves-and-linear-series
+    project: candidate
+  - slug: uniformity-mordell-lang-curves
+    title: Uniformity in Mordell--Lang for curves
+    mr: MR4276287
+    category: arithmetic-and-number-theory
+    project: candidate
+  - slug: anticyclotomic-iwasawa-rational-elliptic-eisenstein
+    title: On the anticyclotomic Iwasawa theory of rational elliptic curves at Eisenstein primes
+    mr: MR4372220
+    category: arithmetic-and-number-theory
+    project: candidate
+  - slug: very-stable-higgs-bundles-equivariant-multiplicity-mirror-symmetry
+    title: Very stable Higgs bundles, equivariant multiplicity and mirror symmetry
+    mr: MR4411733
+    category: moduli-higgs-and-character-varieties
+    project: candidate
+  - slug: rigid-local-systems-multiplicative-eigenvalue-problem
+    title: Rigid local systems and the multiplicative eigenvalue problem
+    mr: MR4413746
+    category: moduli-higgs-and-character-varieties
+    project: candidate
+  - slug: squarefree-values-polynomial-discriminants
+    title: Squarefree values of polynomial discriminants I
+    mr: MR4419629
+    category: arithmetic-and-number-theory
+    project: candidate
+  - slug: intersection-complexes-unramified-l-factors
+    title: Intersection complexes and unramified L-factors
+    mr: MR4433079
+    category: sheaves-and-cohomology
+    project: candidate
+  - slug: hitchin-fibrations-abelian-surfaces-pw
+    title: Hitchin fibrations, abelian surfaces, and the P=W conjecture
+    mr: MR4433080
+    category: moduli-higgs-and-character-varieties
+    project: candidate
+  - slug: geometric-bogomolov-conjecture-arbitrary-characteristics
+    title: Geometric Bogomolov conjecture in arbitrary characteristics
+    mr: MR4448992
+    category: arithmetic-and-number-theory
+    project: candidate
+  - slug: universal-p-adic-gross-zagier-formula
+    title: The universal p-adic Gross--Zagier formula
+    mr: MR4493324
+    category: arithmetic-and-number-theory
+    project: candidate
+  - slug: no-enriques-surface-over-the-integers
+    title: There is no Enriques surface over the integers
+    mr: MR4513142
+    category: surfaces-birational-and-hyperkahler
+    project: candidate
+  - slug: tates-thesis-de-rham-setting
+    title: Tate's thesis in the de Rham Setting
+    mr: MR4583777
+    category: arithmetic-and-number-theory
+    project: candidate
+  - slug: pixtons-formula-abel-jacobi-picard-stack
+    title: Pixton's formula and Abel--Jacobi theory on the Picard stack
+    mr: MR4628606
+    category: curves-and-linear-series
+    project: candidate
+  - slug: riemann-roch-polynomials-hyperkahler-fourfolds
+    title: Computing Riemann--Roch polynomials and classifying hyper-Kähler fourfolds
+    mr: MR4654610
+    category: surfaces-birational-and-hyperkahler
+    project: candidate
+  - slug: chabauty-coleman-bound-surfaces
+    title: A Chabauty--Coleman bound for surfaces
+    mr: MR4665779
+    category: arithmetic-and-number-theory
+    project: candidate
+  - slug: purity-flat-cohomology
+    title: Purity for flat cohomology
+    mr: MR4681144
+    category: sheaves-and-cohomology
+    project: candidate
+  - slug: motivic-invariants-birational-maps
+    title: Motivic invariants of birational maps
+    mr: MR4681148
+    category: surfaces-birational-and-hyperkahler
+    project: candidate
+  - slug: birational-section-conjecture-strong-birationality
+    title: On the birational section conjecture with strong birationality assumptions
+    mr: MR4688702
+    category: arithmetic-and-number-theory
+    project: candidate
+  - slug: higher-siegel-weil-unitary-nonsingular-terms
+    title: 'Higher Siegel--Weil formula for unitary groups: the non-singular terms'
+    mr: MR4689373
+    category: arithmetic-and-number-theory
+    project: candidate
+  - slug: virasoro-constraints-moduli-sheaves-vertex-algebras
+    title: Virasoro constraints for moduli of sheaves and vertex algebras
+    mr: MR4712868
+    category: moduli-higgs-and-character-varieties
+    project: candidate
+  - slug: canonical-representations-surface-groups
+    title: Canonical representations of surface groups
+    mr: MR4717077
+    category: moduli-higgs-and-character-varieties
+    project: candidate
+  - slug: geometric-local-systems-general-curves-isomonodromy
+    title: Geometric local systems on very general curves and isomonodromy
+    mr: MR4736527
+    category: moduli-higgs-and-character-varieties
+    project: candidate
+  - slug: pw-conjecture-gl-n
+    title: The P=W conjecture for GL_n
+    mr: MR4792069
+    category: moduli-higgs-and-character-varieties
+    project: candidate
