@@ -91,4 +91,24 @@ theorem exists_algebraMap_eq_of_integral
     ∃ y : R, algebraMap R A y = x := by
   exact IsIntegrallyClosedIn.algebraMap_eq_of_integral hx
 
+/-! ### Integral closure and localization -/
+
+/-- The integral closure commutes with localization (Stacks, Tag `0307`).
+
+The `IsLocalization` conclusion records the canonical localized-ring model,
+which is the type-correct Lean form of the source's equality of subrings. -/
+theorem integralClosure_isLocalization
+    {R S Rm Sm : Type*} [CommRing R] [CommRing S] [Algebra R S]
+    [CommRing Rm] [CommRing Sm] [Algebra R Rm] [Algebra S Sm]
+    [Algebra Rm Sm] [Algebra R Sm] [IsScalarTower R S Sm]
+    [IsScalarTower R Rm Sm] (M : Submonoid R)
+    [IsLocalization M Rm]
+    [IsLocalization (Algebra.algebraMapSubmonoid S M) Sm]
+    [Algebra (integralClosure R S) (integralClosure Rm Sm)]
+    [IsScalarTower (integralClosure R S) (integralClosure Rm Sm) Sm]
+    [IsScalarTower R (integralClosure R S) (integralClosure Rm Sm)] :
+    IsLocalization (Algebra.algebraMapSubmonoid (integralClosure R S) M)
+      (integralClosure Rm Sm) := by
+  exact IsLocalization.integralClosure (S := S) (Rf := Rm) (Sf := Sm) M
+
 end StacksPart01
