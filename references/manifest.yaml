@@ -222,9 +222,279 @@ references:
       - { path: mumford-abelian-varieties/tex/page-0064.tex, format: tex }
       - { path: mumford-abelian-varieties/tex/page-0065.tex, format: tex }
       - { path: mumford-abelian-varieties/tex/page-0066.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0012.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0013.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0014.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0015.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0016.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0017.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0018.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0019.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0020.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0021.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0022.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0023.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0024.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0025.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0026.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0027.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0028.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0029.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0030.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0031.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0032.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0033.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0034.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0035.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0036.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0037.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0038.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0039.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0040.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0041.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0042.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0043.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0044.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0045.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0046.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0047.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0048.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0049.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0050.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0051.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0052.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0053.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0056.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0067.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0068.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0069.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0070.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0071.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0072.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0073.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0074.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0075.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0076.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0077.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0078.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0079.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0080.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0081.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0082.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0083.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0084.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0085.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0086.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0087.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0088.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0089.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0090.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0091.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0092.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0093.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0094.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0095.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0096.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0097.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0098.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0099.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0100.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0101.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0102.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0103.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0104.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0105.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0106.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0107.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0108.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0109.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0110.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0111.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0112.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0113.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0114.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0115.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0116.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0117.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0118.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0119.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0120.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0121.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0122.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0123.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0124.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0125.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0126.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0127.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0128.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0129.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0130.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0131.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0132.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0133.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0134.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0135.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0136.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0137.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0138.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0139.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0140.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0141.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0142.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0143.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0144.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0145.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0146.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0147.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0148.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0149.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0150.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0151.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0152.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0153.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0154.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0155.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0156.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0157.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0158.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0159.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0160.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0161.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0162.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0163.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0164.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0165.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0166.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0167.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0168.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0169.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0170.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0171.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0172.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0173.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0174.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0175.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0176.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0177.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0178.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0179.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0180.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0181.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0182.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0183.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0184.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0185.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0186.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0187.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0188.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0189.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0190.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0191.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0192.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0193.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0194.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0195.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0196.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0197.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0198.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0199.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0200.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0201.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0202.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0203.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0204.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0205.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0206.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0207.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0208.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0209.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0210.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0211.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0212.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0213.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0214.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0215.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0216.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0217.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0218.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0219.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0220.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0221.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0222.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0223.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0224.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0225.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0226.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0227.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0228.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0229.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0230.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0231.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0232.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0233.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0234.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0235.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0236.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0237.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0238.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0239.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0240.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0241.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0242.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0243.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0244.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0245.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0246.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0247.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0248.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0249.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0250.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0251.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0252.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0253.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0254.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0255.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0256.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0257.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0258.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0259.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0260.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0261.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0262.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0263.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0264.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0265.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0266.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0267.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0268.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0269.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0270.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0271.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0272.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0273.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0274.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0275.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0276.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0277.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0278.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0279.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0280.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0281.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0282.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0283.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0284.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0285.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0286.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0287.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0288.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0289.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0290.tex, format: tex }
     read: >-
       Scanned PDF, no text layer; page_offset: book page N -> PDF page N+11
-      (body). Pages 54-55 (book pp. 43-44, Section II.4) transcribed 2026-07-11
+      (body). Pages 12-53, 56, and 67-290 (book pp. 1-269), together with
+      the retained pages 54-55 and 57-66, were transcribed 2026-08-26/2026-07
+      via vision from rendered pages (no OCR), one self-contained LaTeX file per
+      page under mumford-abelian-varieties/tex/. Pages 54-55 (book pp. 43-44, Section II.4) were initially transcribed 2026-07-11
       via vision from rendered pages (PyMuPDF render, no OCR): the RIGIDITY
       LEMMA (Form I) with its affine-neighbourhood + closed-bad-locus proof
       (affine open U around z_0, F = Z - U, G = p_2(f^{-1}(F)) closed since X
@@ -719,3 +989,367 @@ references:
       places/valuations/divisors foundations; the adelic RR proof is in
       papaioannou-algebraic-rr / cff-curves-function-fields / vater-weil-differentials.
     topics: [function-fields, valuations, places, divisors, class-group, genus, hyperelliptic]
+
+  - slug: standard-conjectures-abelian-fourfolds
+    title: "Standard conjectures for abelian fourfolds"
+    authors: [Giuseppe Ancona]
+    year: 2020
+    source: "arXiv:1806.03216 (MR4199442); DOI: 10.1007/s00222-020-00990-7"
+    retrieved: 2026-09-02
+    status: ok
+    files:
+      - { path: standard-conjectures-abelian-fourfolds/standard-conjectures-abelian-fourfolds.pdf, format: pdf }
+      - { path: standard-conjectures-abelian-fourfolds/standard-conjectures-abelian-fourfolds.tar.gz, format: targz }
+      - { path: standard-conjectures-abelian-fourfolds/src/fourfolds_2020.tex, format: tex }
+    read: "Read extracted arXiv TeX; PDF and e-print source retained. Cite as standard-conjectures-abelian-fourfolds."
+    topics: [abelian-varieties, standard-conjectures, motives]
+
+  - slug: universal-secant-bundles-syzygies-canonical-curves
+    title: "Universal secant bundles and syzygies of canonical curves"
+    authors: [Michael Kemeny]
+    year: 2020
+    source: "arXiv:2003.05849 (MR4213770); DOI: 10.1007/s00222-020-01001-5"
+    retrieved: 2026-09-02
+    status: ok
+    files:
+      - { path: universal-secant-bundles-syzygies-canonical-curves/universal-secant-bundles-syzygies-canonical-curves.pdf, format: pdf }
+      - { path: universal-secant-bundles-syzygies-canonical-curves/universal-secant-bundles-syzygies-canonical-curves.tar.gz, format: targz }
+      - { path: universal-secant-bundles-syzygies-canonical-curves/src/source.tex, format: tex }
+    read: "Read extracted arXiv TeX; PDF and e-print source retained. Cite as universal-secant-bundles-syzygies-canonical-curves."
+    topics: [curves, syzygies, secant-bundles, Brill-Noether]
+
+  - slug: bounds-stalks-perverse-sheaves-characteristic-p-shende
+    title: "Bounds for the stalks of perverse sheaves in characteristic p and a conjecture of Shende and Tsimerman"
+    authors: [Will Sawin]
+    year: 2020
+    source: "arXiv:1907.04850 (MR4228499); DOI: 10.1007/s00222-020-01006-0"
+    retrieved: 2026-09-02
+    status: ok
+    files:
+      - { path: bounds-stalks-perverse-sheaves-characteristic-p-shende/bounds-stalks-perverse-sheaves-characteristic-p-shende.pdf, format: pdf }
+      - { path: bounds-stalks-perverse-sheaves-characteristic-p-shende/bounds-stalks-perverse-sheaves-characteristic-p-shende.tar.gz, format: targz }
+      - { path: bounds-stalks-perverse-sheaves-characteristic-p-shende/src/MasseyFormulaRevised.tex, format: tex }
+    read: "Read extracted arXiv TeX; PDF and e-print source retained. Cite as bounds-stalks-perverse-sheaves-characteristic-p-shende."
+    topics: [perverse-sheaves, characteristic-p, l-adic-cohomology]
+
+  - slug: refined-brill-noether-theory-hurwitz-spaces
+    title: "A refined Brill--Noether theory over Hurwitz spaces"
+    authors: [Hannah K. Larson]
+    year: 2020
+    source: "arXiv:1907.08597 (MR4258055); DOI: 10.1007/s00222-020-01023-z"
+    retrieved: 2026-09-02
+    status: ok
+    files:
+      - { path: refined-brill-noether-theory-hurwitz-spaces/refined-brill-noether-theory-hurwitz-spaces.pdf, format: pdf }
+      - { path: refined-brill-noether-theory-hurwitz-spaces/refined-brill-noether-theory-hurwitz-spaces.tar.gz, format: targz }
+      - { path: refined-brill-noether-theory-hurwitz-spaces/src/source.tex, format: tex }
+    read: "Read extracted arXiv TeX; PDF and e-print source retained. Cite as refined-brill-noether-theory-hurwitz-spaces."
+    topics: [curves, Brill-Noether, Hurwitz-spaces, linear-series]
+
+  - slug: uniformity-mordell-lang-curves
+    title: "Uniformity in Mordell--Lang for curves"
+    authors: [Vesselin Dimitrov, Ziyang Gao, Philipp Habegger]
+    year: 2021
+    source: "arXiv:2001.10276 (MR4276287); DOI: 10.4007/annals.2021.194.1.4"
+    retrieved: 2026-09-02
+    status: ok
+    files:
+      - { path: uniformity-mordell-lang-curves/uniformity-mordell-lang-curves.pdf, format: pdf }
+      - { path: uniformity-mordell-lang-curves/uniformity-mordell-lang-curves.tar.gz, format: targz }
+      - { path: uniformity-mordell-lang-curves/src/main.tex, format: tex }
+    read: "Read extracted arXiv TeX; PDF and e-print source retained. Cite as uniformity-mordell-lang-curves."
+    topics: [Mordell-Lang, curves, arithmetic-geometry]
+
+  - slug: anticyclotomic-iwasawa-rational-elliptic-eisenstein
+    title: "On the anticyclotomic Iwasawa theory of rational elliptic curves at Eisenstein primes"
+    authors: [Francesc Castella, Giada Grossi, Jaehoon Lee, Christopher Skinner]
+    year: 2021
+    source: "arXiv:2008.02571 (MR4372220); DOI: 10.1007/s00222-021-01072-y"
+    retrieved: 2026-09-02
+    status: ok
+    files:
+      - { path: anticyclotomic-iwasawa-rational-elliptic-eisenstein/anticyclotomic-iwasawa-rational-elliptic-eisenstein.pdf, format: pdf }
+      - { path: anticyclotomic-iwasawa-rational-elliptic-eisenstein/anticyclotomic-iwasawa-rational-elliptic-eisenstein.tar.gz, format: targz }
+      - { path: anticyclotomic-iwasawa-rational-elliptic-eisenstein/src/Eisenstein.tex, format: tex }
+    read: "Read extracted arXiv TeX; PDF and e-print source retained. Cite as anticyclotomic-iwasawa-rational-elliptic-eisenstein."
+    topics: [Iwasawa-theory, elliptic-curves, Eisenstein-primes]
+
+  - slug: very-stable-higgs-bundles-equivariant-multiplicity-mirror-symmetry
+    title: "Very stable Higgs bundles, equivariant multiplicity and mirror symmetry"
+    authors: [Tamás Hausel, Nigel Hitchin]
+    year: 2022
+    source: "arXiv:2101.08583 (MR4411733); DOI: 10.1007/s00222-021-01093-7"
+    retrieved: 2026-09-02
+    status: ok
+    files:
+      - { path: very-stable-higgs-bundles-equivariant-multiplicity-mirror-symmetry/very-stable-higgs-bundles-equivariant-multiplicity-mirror-symmetry.pdf, format: pdf }
+      - { path: very-stable-higgs-bundles-equivariant-multiplicity-mirror-symmetry/very-stable-higgs-bundles-equivariant-multiplicity-mirror-symmetry.tar.gz, format: targz }
+      - { path: very-stable-higgs-bundles-equivariant-multiplicity-mirror-symmetry/src/source.tex, format: tex }
+    read: "Read extracted arXiv TeX; PDF and e-print source retained. Cite as very-stable-higgs-bundles-equivariant-multiplicity-mirror-symmetry."
+    topics: [Higgs-bundles, mirror-symmetry, moduli-spaces]
+
+  - slug: rigid-local-systems-multiplicative-eigenvalue-problem
+    title: "Rigid local systems and the multiplicative eigenvalue problem"
+    authors: [Prakash Belkale]
+    year: 2022
+    source: "arXiv:2005.12457 (MR4413746); DOI: 10.4007/annals.2022.195.3.3"
+    retrieved: 2026-09-02
+    status: ok
+    files:
+      - { path: rigid-local-systems-multiplicative-eigenvalue-problem/rigid-local-systems-multiplicative-eigenvalue-problem.pdf, format: pdf }
+      - { path: rigid-local-systems-multiplicative-eigenvalue-problem/rigid-local-systems-multiplicative-eigenvalue-problem.tar.gz, format: targz }
+      - { path: rigid-local-systems-multiplicative-eigenvalue-problem/src/source.tex, format: tex }
+    read: "Read extracted arXiv TeX; PDF and e-print source retained. Cite as rigid-local-systems-multiplicative-eigenvalue-problem."
+    topics: [rigid-local-systems, eigenvalue-problem, flag-varieties]
+
+  - slug: squarefree-values-polynomial-discriminants
+    title: "Squarefree values of polynomial discriminants I"
+    authors: [Manjul Bhargava, Arul Shankar, Xiaoheng Wang]
+    year: 2022
+    source: "arXiv:1611.09806 (MR4419629); DOI: 10.1007/s00222-022-01098-w"
+    retrieved: 2026-09-02
+    status: ok
+    files:
+      - { path: squarefree-values-polynomial-discriminants/squarefree-values-polynomial-discriminants.pdf, format: pdf }
+      - { path: squarefree-values-polynomial-discriminants/squarefree-values-polynomial-discriminants.tar.gz, format: targz }
+      - { path: squarefree-values-polynomial-discriminants/src/source.tex, format: tex }
+    read: "Read extracted arXiv TeX; PDF and e-print source retained. Cite as squarefree-values-polynomial-discriminants."
+    topics: [number-theory, polynomial-discriminants, squarefree-values]
+
+  - slug: intersection-complexes-unramified-l-factors
+    title: "Intersection complexes and unramified L-factors"
+    authors: [Yiannis Sakellaridis, Jonathan Wang]
+    year: 2020
+    source: "arXiv:2009.03943 (MR4433079); DOI: 10.1090/JAMS/990"
+    retrieved: 2026-09-02
+    status: ok
+    files:
+      - { path: intersection-complexes-unramified-l-factors/intersection-complexes-unramified-l-factors.pdf, format: pdf }
+      - { path: intersection-complexes-unramified-l-factors/intersection-complexes-unramified-l-factors.tar.gz, format: targz }
+      - { path: intersection-complexes-unramified-l-factors/src/sphericalL.tex, format: tex }
+    read: "Read extracted arXiv TeX; PDF and e-print source retained. Cite as intersection-complexes-unramified-l-factors."
+    topics: [perverse-sheaves, L-functions, spherical-varieties]
+
+  - slug: hitchin-fibrations-abelian-surfaces-pw
+    title: "Hitchin fibrations, abelian surfaces, and the P=W conjecture"
+    authors: [Mark de Cataldo, Davesh Maulik, Junliang Shen]
+    year: 2021
+    source: "arXiv:1909.11885 (MR4433080); DOI: 10.1090/jams/989"
+    retrieved: 2026-09-02
+    status: ok
+    files:
+      - { path: hitchin-fibrations-abelian-surfaces-pw/hitchin-fibrations-abelian-surfaces-pw.pdf, format: pdf }
+      - { path: hitchin-fibrations-abelian-surfaces-pw/hitchin-fibrations-abelian-surfaces-pw.tar.gz, format: targz }
+      - { path: hitchin-fibrations-abelian-surfaces-pw/src/source.tex, format: tex }
+    read: "Read extracted arXiv TeX; PDF and e-print source retained. Cite as hitchin-fibrations-abelian-surfaces-pw."
+    topics: [Hitchin-fibrations, P=W, abelian-surfaces]
+
+  - slug: geometric-bogomolov-conjecture-arbitrary-characteristics
+    title: "Geometric Bogomolov conjecture in arbitrary characteristics"
+    authors: [Junyi Xie, Xinyi Yuan]
+    year: 2022
+    source: "arXiv:2108.09722 (MR4448992); DOI: 10.1007/s00222-022-01112-1"
+    retrieved: 2026-09-02
+    status: ok
+    files:
+      - { path: geometric-bogomolov-conjecture-arbitrary-characteristics/geometric-bogomolov-conjecture-arbitrary-characteristics.pdf, format: pdf }
+      - { path: geometric-bogomolov-conjecture-arbitrary-characteristics/geometric-bogomolov-conjecture-arbitrary-characteristics.tar.gz, format: targz }
+      - { path: geometric-bogomolov-conjecture-arbitrary-characteristics/src/gbccharp20210819.tex, format: tex }
+    read: "Read extracted arXiv TeX; PDF and e-print source retained. Cite as geometric-bogomolov-conjecture-arbitrary-characteristics."
+    topics: [Bogomolov-conjecture, arithmetic-geometry, function-fields]
+
+  - slug: universal-p-adic-gross-zagier-formula
+    title: "The universal p-adic Gross--Zagier formula"
+    authors: [Daniel Disegni]
+    year: 2022
+    source: "arXiv:2001.00045 (MR4493324); DOI: 10.1007/s00222-022-01133-w"
+    retrieved: 2026-09-02
+    status: ok
+    files:
+      - { path: universal-p-adic-gross-zagier-formula/universal-p-adic-gross-zagier-formula.pdf, format: pdf }
+      - { path: universal-p-adic-gross-zagier-formula/universal-p-adic-gross-zagier-formula.tar.gz, format: targz }
+      - { path: universal-p-adic-gross-zagier-formula/src/univ-corr-arxiv.tex, format: tex }
+    read: "Read extracted arXiv TeX; PDF and e-print source retained. Cite as universal-p-adic-gross-zagier-formula."
+    topics: [Gross-Zagier, p-adic-heights, Iwasawa-theory]
+
+  - slug: no-enriques-surface-over-the-integers
+    title: "There is no Enriques surface over the integers"
+    authors: [Stefan Schröer]
+    year: 2023
+    source: "arXiv:2004.07025 (MR4513142); DOI: 10.4007/annals.2023.197.1.1"
+    retrieved: 2026-09-02
+    status: ok
+    files:
+      - { path: no-enriques-surface-over-the-integers/no-enriques-surface-over-the-integers.pdf, format: pdf }
+      - { path: no-enriques-surface-over-the-integers/no-enriques-surface-over-the-integers.tar.gz, format: targz }
+      - { path: no-enriques-surface-over-the-integers/src/source.tex, format: tex }
+    read: "Read extracted arXiv TeX; PDF and e-print source retained. Cite as no-enriques-surface-over-the-integers."
+    topics: [Enriques-surfaces, arithmetic-surfaces, algebraic-geometry]
+
+  - slug: tates-thesis-de-rham-setting
+    title: "Tate's thesis in the de Rham Setting"
+    authors: [Justin Hilburn, Sam Raskin]
+    year: 2021
+    source: "arXiv:2107.11325 (MR4583777); DOI: 10.1090/JAMS/1010"
+    retrieved: 2026-09-02
+    status: ok
+    files:
+      - { path: tates-thesis-de-rham-setting/tates-thesis-de-rham-setting.pdf, format: pdf }
+      - { path: tates-thesis-de-rham-setting/tates-thesis-de-rham-setting.tar.gz, format: targz }
+      - { path: tates-thesis-de-rham-setting/src/tate.tex, format: tex }
+    read: "Read extracted arXiv TeX; PDF and e-print source retained. Cite as tates-thesis-de-rham-setting."
+    topics: [Tate-thesis, de-Rham-cohomology, p-adic-geometry]
+
+  - slug: pixtons-formula-abel-jacobi-picard-stack
+    title: "Pixton's formula and Abel--Jacobi theory on the Picard stack"
+    authors: [Younghan Bae, David Holmes, Rahul Pandharipande, Johannes Schmitt, Rosa Schwarz]
+    year: 2023
+    source: "arXiv:2004.08676 (MR4628606); DOI: 10.4310/acta.2023.v230.n2.a1"
+    retrieved: 2026-09-02
+    status: ok
+    files:
+      - { path: pixtons-formula-abel-jacobi-picard-stack/pixtons-formula-abel-jacobi-picard-stack.pdf, format: pdf }
+      - { path: pixtons-formula-abel-jacobi-picard-stack/pixtons-formula-abel-jacobi-picard-stack.tar.gz, format: targz }
+      - { path: pixtons-formula-abel-jacobi-picard-stack/src/source.tex, format: tex }
+    read: "Read extracted arXiv TeX; PDF and e-print source retained. Cite as pixtons-formula-abel-jacobi-picard-stack."
+    topics: [Picard-stacks, Abel-Jacobi, tautological-relations, moduli-of-curves]
+
+  - slug: riemann-roch-polynomials-hyperkahler-fourfolds
+    title: "Computing Riemann--Roch polynomials and classifying hyper-Kähler fourfolds"
+    authors: [Olivier Debarre, Daniel Huybrechts, Emanuele Macrì, Claire Voisin]
+    year: 2023
+    source: "arXiv:2201.08152 (MR4654610); DOI: 10.1090/jams/1016"
+    retrieved: 2026-09-02
+    status: ok
+    files:
+      - { path: riemann-roch-polynomials-hyperkahler-fourfolds/riemann-roch-polynomials-hyperkahler-fourfolds.pdf, format: pdf }
+      - { path: riemann-roch-polynomials-hyperkahler-fourfolds/riemann-roch-polynomials-hyperkahler-fourfolds.tar.gz, format: targz }
+      - { path: riemann-roch-polynomials-hyperkahler-fourfolds/src/source.tex, format: tex }
+    read: "Read extracted arXiv TeX; PDF and e-print source retained. Cite as riemann-roch-polynomials-hyperkahler-fourfolds."
+    topics: [hyper-Kahler, Riemann-Roch, fourfolds]
+
+  - slug: chabauty-coleman-bound-surfaces
+    title: "A Chabauty--Coleman bound for surfaces"
+    authors: [Jerson Caro, Hector Pasten]
+    year: 2023
+    source: "arXiv:2102.01055 (MR4665779); DOI: 10.1007/s00222-023-01217-1"
+    retrieved: 2026-09-02
+    status: ok
+    files:
+      - { path: chabauty-coleman-bound-surfaces/chabauty-coleman-bound-surfaces.pdf, format: pdf }
+      - { path: chabauty-coleman-bound-surfaces/chabauty-coleman-bound-surfaces.tar.gz, format: targz }
+      - { path: chabauty-coleman-bound-surfaces/src/source.tex, format: tex }
+    read: "Read extracted arXiv TeX; PDF and e-print source retained. Cite as chabauty-coleman-bound-surfaces."
+    topics: [Chabauty-Coleman, rational-points, arithmetic-geometry]
+
+  - slug: purity-flat-cohomology
+    title: "Purity for flat cohomology"
+    authors: [Kęstutis Česnavičius, Peter Scholze]
+    year: 2024
+    source: "arXiv:1912.10932 (MR4681144); DOI: 10.4007/annals.2024.199.1.2"
+    retrieved: 2026-09-02
+    status: ok
+    files:
+      - { path: purity-flat-cohomology/purity-flat-cohomology.pdf, format: pdf }
+      - { path: purity-flat-cohomology/purity-flat-cohomology.tar.gz, format: targz }
+      - { path: purity-flat-cohomology/src/flat-purity.tex, format: tex }
+    read: "Read extracted arXiv TeX; PDF and e-print source retained. Cite as purity-flat-cohomology."
+    topics: [flat-cohomology, purity, perfectoid-rings]
+
+  - slug: motivic-invariants-birational-maps
+    title: "Motivic invariants of birational maps"
+    authors: [Hsueh-Yung Lin, Evgeny Shinder]
+    year: 2024
+    source: "arXiv:2207.07389 (MR4681148); DOI: 10.4007/annals.2024.199.1.6"
+    retrieved: 2026-09-02
+    status: ok
+    files:
+      - { path: motivic-invariants-birational-maps/motivic-invariants-birational-maps.pdf, format: pdf }
+      - { path: motivic-invariants-birational-maps/motivic-invariants-birational-maps.tar.gz, format: targz }
+      - { path: motivic-invariants-birational-maps/src/cremona-paper.tex, format: tex }
+    read: "Read extracted arXiv TeX; PDF and e-print source retained. Cite as motivic-invariants-birational-maps."
+    topics: [birational-geometry, motivic-invariants, Grothendieck-ring]
+
+  - slug: birational-section-conjecture-strong-birationality
+    title: "On the birational section conjecture with strong birationality assumptions"
+    authors: [Giulio Bresciani]
+    year: 2023
+    source: "arXiv:2108.13397 (MR4688702); DOI: 10.1007/s00222-023-01220-6"
+    retrieved: 2026-09-02
+    status: ok
+    files:
+      - { path: birational-section-conjecture-strong-birationality/birational-section-conjecture-strong-birationality.pdf, format: pdf }
+      - { path: birational-section-conjecture-strong-birationality/birational-section-conjecture-strong-birationality.tar.gz, format: targz }
+      - { path: birational-section-conjecture-strong-birationality/src/tbir.tex, format: tex }
+    read: "Read extracted arXiv TeX; PDF and e-print source retained. Cite as birational-section-conjecture-strong-birationality."
+    topics: [birational-section-conjecture, anabelian-geometry, Galois-groups]
+
+  - slug: higher-siegel-weil-unitary-nonsingular-terms
+    title: "Higher Siegel--Weil formula for unitary groups: the non-singular terms"
+    authors: [Tony Feng, Zhiwei Yun, Wei Zhang]
+    year: 2023
+    source: "arXiv:2103.11514 (MR4689373); DOI: 10.1007/s00222-023-01228-y"
+    retrieved: 2026-09-02
+    status: ok
+    files:
+      - { path: higher-siegel-weil-unitary-nonsingular-terms/higher-siegel-weil-unitary-nonsingular-terms.pdf, format: pdf }
+      - { path: higher-siegel-weil-unitary-nonsingular-terms/higher-siegel-weil-unitary-nonsingular-terms.tar.gz, format: targz }
+      - { path: higher-siegel-weil-unitary-nonsingular-terms/src/FYZ-HigherSiegelWeil.tex, format: tex }
+    read: "Read extracted arXiv TeX; PDF and e-print source retained. Cite as higher-siegel-weil-unitary-nonsingular-terms."
+    topics: [Siegel-Weil, unitary-groups, shtukas, arithmetic-geometry]
+
+  - slug: virasoro-constraints-moduli-sheaves-vertex-algebras
+    title: "Virasoro constraints for moduli of sheaves and vertex algebras"
+    authors: [Arkadij Bojko, Woonam Lim, Miguel Moreira]
+    year: 2024
+    source: "arXiv:2210.05266 (MR4712868); DOI: 10.1007/s00222-024-01245-5"
+    retrieved: 2026-09-02
+    status: ok
+    files:
+      - { path: virasoro-constraints-moduli-sheaves-vertex-algebras/virasoro-constraints-moduli-sheaves-vertex-algebras.pdf, format: pdf }
+      - { path: virasoro-constraints-moduli-sheaves-vertex-algebras/virasoro-constraints-moduli-sheaves-vertex-algebras.tar.gz, format: targz }
+      - { path: virasoro-constraints-moduli-sheaves-vertex-algebras/src/main.tex, format: tex }
+    read: "Read extracted arXiv TeX; PDF and e-print source retained. Cite as virasoro-constraints-moduli-sheaves-vertex-algebras."
+    topics: [moduli-of-sheaves, Virasoro-algebras, vertex-algebras]
+
+  - slug: canonical-representations-surface-groups
+    title: "Canonical representations of surface groups"
+    authors: [Aaron Landesman, Daniel Litt]
+    year: 2024
+    source: "arXiv:2205.15352 (MR4717077); DOI: 10.4007/annals.2024.199.2.6"
+    retrieved: 2026-09-02
+    status: ok
+    files:
+      - { path: canonical-representations-surface-groups/canonical-representations-surface-groups.pdf, format: pdf }
+      - { path: canonical-representations-surface-groups/canonical-representations-surface-groups.tar.gz, format: targz }
+      - { path: canonical-representations-surface-groups/src/character-variety.tex, format: tex }
+    read: "Read extracted arXiv TeX; PDF and e-print source retained. Cite as canonical-representations-surface-groups."
+    topics: [surface-groups, character-varieties, mapping-class-groups]
+
+  - slug: geometric-local-systems-general-curves-isomonodromy
+    title: "Geometric local systems on very general curves and isomonodromy"
+    authors: [Aaron Landesman, Daniel Litt]
+    year: 2023
+    source: "arXiv:2202.00039 (MR4736527); DOI: 10.1090/jams/1038"
+    retrieved: 2026-09-02
+    status: ok
+    files:
+      - { path: geometric-local-systems-general-curves-isomonodromy/geometric-local-systems-general-curves-isomonodromy.pdf, format: pdf }
+      - { path: geometric-local-systems-general-curves-isomonodromy/geometric-local-systems-general-curves-isomonodromy.tar.gz, format: targz }
+      - { path: geometric-local-systems-general-curves-isomonodromy/src/isomonodromy-stability-hodge-theory.tex, format: tex }
+    read: "Read extracted arXiv TeX; PDF and e-print source retained. Cite as geometric-local-systems-general-curves-isomonodromy."
+    topics: [local-systems, isomonodromy, curves, Hodge-theory]
+
+  - slug: pw-conjecture-gl-n
+    title: "The P=W conjecture for GL_n"
+    authors: [Davesh Maulik, Junliang Shen]
+    year: 2024
+    source: "arXiv:2209.02568 (MR4792069); DOI: 10.4007/annals.2024.200.2.3"
+    retrieved: 2026-09-02
+    status: ok
+    files:
+      - { path: pw-conjecture-gl-n/pw-conjecture-gl-n.pdf, format: pdf }
+      - { path: pw-conjecture-gl-n/pw-conjecture-gl-n.tar.gz, format: targz }
+      - { path: pw-conjecture-gl-n/src/source.tex, format: tex }
+    read: "Read extracted arXiv TeX; PDF and e-print source retained. Cite as pw-conjecture-gl-n."
+    topics: [P=W, Hitchin-fibrations, Higgs-bundles, character-varieties]

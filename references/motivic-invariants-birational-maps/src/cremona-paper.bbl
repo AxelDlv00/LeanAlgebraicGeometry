@@ -1,0 +1,392 @@
+\begin{thebibliography}{10}
+
+\bibitem{WF}
+Dan Abramovich, Kalle Karu, Kenji Matsuki, and Jaros{\l}aw W{\l}odarczyk.
+\newblock Torification and factorization of birational maps.
+\newblock {\em J. Amer. Math. Soc.}, 15(3):531--572, 2002.
+
+\bibitem{AchterCMVial}
+Jeffrey~D. Achter, Sebastian Casalaina-Martin, and Charles Vial.
+\newblock On descending cohomology geometrically.
+\newblock {\em Compos. Math.}, 153(7):1446--1478, 2017.
+
+\bibitem{AchterCMVial-2}
+Jeffrey~D. Achter, Sebastian Casalaina-Martin, and Charles Vial.
+\newblock Distinguished models of intermediate {J}acobians.
+\newblock {\em J. Inst. Math. Jussieu}, 19(3):891--918, 2020.
+
+\bibitem{HSbis}
+Sylvy Anscombe and Franziska Jahnke.
+\newblock The model theory of cohen rings.
+\newblock arXiv:1904.08297, 2019.
+
+\bibitem{SGA3}
+Michael Artin, Jean-Etienne Bertin, Michel Demazure, Alexander Grothendieck,
+  Pierre Gabriel, Michel Raynaud, and Jean-Pierre Serre.
+\newblock {\em Sch\'emas en groupes}.
+\newblock S\'eminaire de G\'eom\'etrie Alg\'ebrique de l'Institut des Hautes
+  \'Etudes Scientifiques. Institut des Hautes \'Etudes Scientifiques, Paris,
+  1963/1966.
+
+\bibitem{BenoistWittenbergPerf}
+Olivier Benoist and Olivier Wittenberg.
+\newblock The {C}lemens-{G}riffiths method over non-closed fields.
+\newblock {\em Algebr. Geom.}, 7(6):696--721, 2020.
+
+\bibitem{Bernardara-Cremona}
+Marcello Bernardara.
+\newblock Categorical dimension of birational transformations and filtrations
+  of {C}remona groups.
+\newblock {\em J. Math. Soc. Japan}, 73(3):861--883, 2021.
+
+\bibitem{BCDP}
+J\'{e}r\'{e}my Blanc, Ivan Cheltsov, Alexander Duncan, and Yuri Prokhorov.
+\newblock Birational self-maps of threefolds of (un)-bounded genus or gonality.
+\newblock {\em Amer. J. Math.}, 144(2):575--597, 2022.
+
+\bibitem{BLZ}
+J\'{e}r\'{e}my Blanc, St\'{e}phane Lamy, and Susanna Zimmermann.
+\newblock Quotients of higher-dimensional {C}remona groups.
+\newblock {\em Acta Math.}, 226(2):211--318, 2021.
+
+\bibitem{BSY}
+J\'{e}r\'{e}my Blanc, Julia Schneider, and Egor Yasinsky.
+\newblock Birational maps of {S}everi--{B}rauer surfaces, with applications to
+  {C}remona groups of higher rank.
+\newblock arXiv:2211.17123, 2022.
+
+\bibitem{MR4136435}
+J\'{e}r\'{e}my Blanc and Egor Yasinsky.
+\newblock Quotients of groups of birational transformations of cubic del
+  {P}ezzo fibrations.
+\newblock {\em J. \'{E}c. polytech. Math.}, 7:1089--1112, 2020.
+
+\bibitem{Borisov}
+Lev~A. Borisov.
+\newblock The class of the affine line is a zero divisor in the {G}rothendieck
+  ring.
+\newblock {\em J. Algebraic Geom.}, 27(2):203--209, 2018.
+
+\bibitem{Cantat-Cremona}
+Serge Cantat.
+\newblock The {C}remona group.
+\newblock In {\em Algebraic geometry: {S}alt {L}ake {C}ity 2015}, volume~97 of
+  {\em Proc. Sympos. Pure Math.}, pages 101--142. Amer. Math. Soc., Providence,
+  RI, 2018.
+
+\bibitem{Cantat-Cornulier}
+Serge Cantat and Yves de~Cornulier.
+\newblock Commensurating actions of birational groups and groups of
+  pseudo-automorphisms.
+\newblock {\em J. \'{E}c. polytech. Math.}, 6:767--809, 2019.
+
+\bibitem{MR3037611}
+Serge Cantat and St\'{e}phane Lamy.
+\newblock Normal subgroups in the {C}remona group.
+\newblock {\em Acta Math.}, 210(1):31--94, 2013.
+\newblock With an appendix by Yves de Cornulier.
+
+\bibitem{CastelnuovoCr2}
+Guido Castelnuovo.
+\newblock Le transformazioni generatrici del gruppo \emph{Cremoniano} nel
+  piano.
+\newblock {\em Torino Atti}, 36:861--874, 1901.
+
+\bibitem{CheltsovCremona}
+Ivan~A. Chel'tsov.
+\newblock Regularization of birational automorphisms.
+\newblock {\em Mat. Zametki}, 76(2):286--299, 2004.
+
+\bibitem{ClarkLacy}
+Pete~L. Clark and Allan Lacy.
+\newblock There are genus one curves of every index over every infinite,
+  finitely generated field.
+\newblock {\em J. Reine Angew. Math.}, 749:65--86, 2019.
+
+\bibitem{Crauder-Katz}
+Bruce Crauder and Sheldon Katz.
+\newblock Cremona transformations with smooth irreducible fundamental locus.
+\newblock {\em American Journal of Mathematics}, 111(2):289--307, 1989.
+
+\bibitem{DanilovDecomp}
+Vladimir~I. Danilov.
+\newblock Decomposition of some birational morphisms.
+\newblock {\em Izv. Akad. Nauk SSSR Ser. Mat.}, 44(2):465--477, 480, 1980.
+
+\bibitem{DebarrePAV}
+Olivier Debarre.
+\newblock Polarisations sur les vari\'{e}t\'{e}s ab\'{e}liennes produits.
+\newblock {\em C. R. Acad. Sci. Paris S\'{e}r. I Math.}, 323(6):631--635, 1996.
+
+\bibitem{Deserti}
+Julie D\'eserti.
+\newblock Cremona maps and involutions.
+\newblock arXiv:1708.01569, 2017.
+
+\bibitem{Fisher-quintics}
+Tom Fisher.
+\newblock Pfaffian presentations of elliptic normal curves.
+\newblock {\em Trans. Amer. Math. Soc.}, 362(5):2525--2540, 2010.
+
+\bibitem{MR2445111}
+Michael~D. Fried and Moshe Jarden.
+\newblock {\em Field arithmetic}, volume~11 of {\em Ergebnisse der Mathematik
+  und ihrer Grenzgebiete. 3. Folge. A Series of Modern Surveys in Mathematics
+  [Results in Mathematics and Related Areas. 3rd Series. A Series of Modern
+  Surveys in Mathematics]}.
+\newblock Springer-Verlag, Berlin, third edition, 2008.
+\newblock Revised by Jarden.
+
+\bibitem{Frumkin-Cremona}
+M.~A. Frumkin.
+\newblock A filtration in the three-dimensional {C}remona group.
+\newblock {\em Mat. Sb. (N.S.)}, 90(132):196--213, 325, 1973.
+
+\bibitem{Fulton}
+William Fulton.
+\newblock {\em Intersection theory}, volume~2 of {\em {Ergebnisse der
+  Mathematik und ihrer Grenzgebiete. 3. Folge.}}
+\newblock {Springer-Verlag}, Berlin, {Second} edition, 1998.
+
+\bibitem{HassettLai}
+Brendan Hassett and Kuan-Wen Lai.
+\newblock Cremona transformations and derived equivalences of {K}3 surfaces.
+\newblock {\em Compos. Math.}, 154(7):1508--1533, 2018.
+
+\bibitem{HassettTschinkelCycle}
+Brendan Hassett and Yuri Tschinkel.
+\newblock Cycle class maps and birational invariants.
+\newblock {\em Comm. Pure Appl. Math.}, 74(12):2675--2698, 2021.
+
+\bibitem{MO-Shnidman}
+Ari~Shnidman (https://mathoverflow.net/users/949/ari shnidman).
+\newblock Degree five genus one curves without rational points?
+\newblock MathOverflow.
+\newblock URL:https://mathoverflow.net/q/377231 (version: 2020-11-23).
+
+\bibitem{HuybK3book}
+D.~Huybrechts.
+\newblock {\em Lectures on {K}3 surfaces}, volume 158 of {\em Cambridge Studies
+  in Advanced Mathematics}.
+\newblock Cambridge University Press, Cambridge, 2016.
+
+\bibitem{IMOUG2}
+Atsushi Ito, Makoto Miura, Shinnosuke Okawa, and Kazushi Ueda.
+\newblock The class of the affine line is a zero divisor in the {G}rothendieck
+  ring: via {$G_2$}-{G}rassmannians.
+\newblock {\em J. Algebraic Geom.}, 28(2):245--250, 2019.
+
+\bibitem{jordan2016unique}
+Bruce~W. Jordan, Allan~G. Keeton, and Bjorn Poonen.
+\newblock Unique factorization of principally polarized abelian varieties,
+  2016.
+
+\bibitem{JouanolouBertini}
+Jean-Pierre Jouanolou.
+\newblock {\em Th\'{e}or\`emes de {B}ertini et applications}, volume~42 of {\em
+  Progress in Mathematics}.
+\newblock Birkh\"{a}user Boston, Inc., Boston, MA, 1983.
+
+\bibitem{Kock}
+Bernhard K\"{o}ck.
+\newblock Chow motif and higher {C}how theory of {$G/P$}.
+\newblock {\em Manuscripta Math.}, 70(4):363--372, 1991.
+
+\bibitem{KollarSingMMP}
+J.~Koll{\'a}r.
+\newblock {\em Singularities of the minimal model program}, volume 200 of {\em
+  Cambridge Tracts in Mathematics}.
+\newblock Cambridge University Press, Cambridge, 2013.
+\newblock With a collaboration of S{\'a}ndor Kov{\'a}cs.
+
+\bibitem{Kollarrat}
+J\'{a}nos Koll\'{a}r.
+\newblock {\em Rational curves on algebraic varieties}, volume~32 of {\em
+  Ergebnisse der Mathematik und ihrer Grenzgebiete. 3. Folge. A Series of
+  Modern Surveys in Mathematics [Results in Mathematics and Related Areas. 3rd
+  Series. A Series of Modern Surveys in Mathematics]}.
+\newblock Springer-Verlag, Berlin, 1996.
+
+\bibitem{KollarRes}
+J\'{a}nos Koll\'{a}r.
+\newblock {\em Lectures on resolution of singularities}, volume 166 of {\em
+  Annals of Mathematics Studies}.
+\newblock Princeton University Press, Princeton, NJ, 2007.
+
+\bibitem{KollarMori}
+János Koll{\'a}r and Shigefumi Mori.
+\newblock {\em Birational geometry of algebraic varieties}, volume 134 of {\em
+  Cambridge Tracts in Mathematics}.
+\newblock Cambridge University Press, Cambridge, 1998.
+\newblock With the collaboration of C. H. Clemens and A. Corti, Translated from
+  the 1998 Japanese original.
+
+\bibitem{KontsevichTschinkel}
+Maxim Kontsevich and Yuri Tschinkel.
+\newblock Specialization of birational types.
+\newblock {\em Invent. Math.}, 217(2):415--432, 2019.
+
+\bibitem{Kraft}
+Hanspeter Kraft.
+\newblock Regularization of rational group actions.
+\newblock arXiv:1808.08729, 2018.
+
+\bibitem{KuPrRatFano3}
+Alexander Kuznetsov and Yuri Prokhorov.
+\newblock Rationality of {F}ano threefolds over non-closed fields.
+\newblock arXiv:1911.08949, 2019.
+
+\bibitem{KuznetsovShinder}
+Alexander Kuznetsov and Evgeny Shinder.
+\newblock Grothendieck ring of varieties, {D}- and {L}-equivalence, and
+  families of quadrics.
+\newblock {\em Selecta Math. (N.S.)}, 24(4):3475--3500, 2018.
+
+\bibitem{Lamy-Cremona}
+St\'{e}phane Lamy.
+\newblock On the genus of birational maps between threefolds.
+\newblock In {\em Automorphisms in birational and affine geometry}, volume~79
+  of {\em Springer Proc. Math. Stat.}, pages 141--147. Springer, Cham, 2014.
+
+\bibitem{LamySchneider}
+Stéphane Lamy and Julia Schneider.
+\newblock Generating the plane {C}remona groups by involutions.
+\newblock arXiv:2110.02851, 2021.
+
+\bibitem{Lang-Tate}
+Serge Lang and John Tate.
+\newblock Principal homogeneous spaces over abelian varieties.
+\newblock {\em Amer. J. Math.}, 80:659--684, 1958.
+
+\bibitem{LarsenLunts}
+Michael Larsen and Valery~A. Lunts.
+\newblock Motivic measures and stable birational geometry.
+\newblock {\em Mosc. Math. J.}, 3(1):85--95, 259, 2003.
+
+\bibitem{SerreTorelli}
+Kristin Lauter.
+\newblock Geometric methods for improving the upper bounds on the number of
+  rational points on algebraic curves over finite fields.
+\newblock {\em J. Algebraic Geom.}, 10(1):19--36, 2001.
+\newblock With an appendix in French by J.-P. Serre.
+
+\bibitem{LSZ20}
+Hsueh-Yung Lin, Evgeny Shinder, and Susanna Zimmermann.
+\newblock Factorization centers in dimension two and the {G}rothendieck ring of
+  varieties.
+\newblock arXiv:2012.04806, 2020.
+
+\bibitem{LiuSebag}
+Qing Liu and Julien Sebag.
+\newblock The {G}rothendieck ring of varieties and piecewise isomorphisms.
+\newblock {\em Math. Z.}, 265(2):321--342, 2010.
+
+\bibitem{MR3533276}
+Anne Lonjou.
+\newblock Non simplicit\'{e} du groupe de {C}remona sur tout corps.
+\newblock {\em Ann. Inst. Fourier (Grenoble)}, 66(5):2021--2046, 2016.
+
+\bibitem{Lonjou-Urech}
+Anne Lonjou and Christian Urech.
+\newblock Actions of {C}remona groups on {${\rm CAT}(0)$} cube complexes.
+\newblock {\em Duke Math. J.}, 170(17):3703--3743, 2021.
+
+\bibitem{MilneAlgGp}
+James~S. Milne.
+\newblock {\em Algebraic groups}, volume 170 of {\em Cambridge Studies in
+  Advanced Mathematics}.
+\newblock Cambridge University Press, Cambridge, 2017.
+\newblock The theory of group schemes of finite type over a field.
+
+\bibitem{Mori-Mukai}
+Shigefumi Mori and Shigeru Mukai.
+\newblock Classification of {F}ano {$3$}-folds with {$B_2\geq 2$}. {I}.
+\newblock In {\em Algebraic and topological theories ({K}inosaki, 1984)}, pages
+  496--545. Kinokuniya, Tokyo, 1986.
+
+\bibitem{MukaiK31820}
+Shigeru Mukai.
+\newblock Polarized {$K3$} surfaces of genus {$18$} and {$20$}.
+\newblock In {\em Complex projective geometry ({T}rieste, 1989/{B}ergen,
+  1989)}, volume 179 of {\em London Math. Soc. Lecture Note Ser.}, pages
+  264--276. Cambridge Univ. Press, Cambridge, 1992.
+
+\bibitem{NicaiseShinder}
+Johannes Nicaise and Evgeny Shinder.
+\newblock The motivic nearby fiber and degeneration of stable rationality.
+\newblock {\em Invent. Math.}, 217(2):377--413, 2019.
+
+\bibitem{zbMATH02722071}
+Max Noether.
+\newblock Ueber {F}l\"achen, welche {S}chaaren rationaler {C}urven besitzen.
+\newblock {\em Math. Ann.}, 3:161--226, 1870.
+
+\bibitem{OguisoFM}
+Keiji Oguiso.
+\newblock K3 surfaces via almost-primes.
+\newblock {\em Math. Res. Lett.}, 9(1):47--63, 2002.
+
+\bibitem{HudsonPan}
+Ivan Pan.
+\newblock Une remarque sur la g\'{e}n\'{e}ration du groupe de {C}remona.
+\newblock {\em Bol. Soc. Brasil. Mat. (N.S.)}, 30(1):95--98, 1999.
+
+\bibitem{RamRam}
+S.~Ramanan and A.~Ramanathan.
+\newblock Projective normality of flag varieties and {S}chubert varieties.
+\newblock {\em Invent. Math.}, 79(2):217--224, 1985.
+
+\bibitem{RaynaudAmple}
+Michel Raynaud.
+\newblock {\em Faisceaux amples sur les sch\'{e}mas en groupes et les espaces
+  homog\`enes}.
+\newblock Lecture Notes in Mathematics, Vol. 119. Springer-Verlag, Berlin-New
+  York, 1970.
+
+\bibitem{MR977778}
+Ei-ichi Sato.
+\newblock A variety which contains a {${\bf P}^1$}-fiber space as an ample
+  divisor.
+\newblock In {\em Algebraic geometry and commutative algebra, {V}ol. {II}},
+  pages 665--691. Kinokuniya, Tokyo, 1988.
+
+\bibitem{HasseSchmidt}
+Friedrich~K. Schmidt and Helmut Hasse.
+\newblock Die {S}truktur diskret bewerteter {K}\"{o}rper.
+\newblock {\em J. Reine Angew. Math.}, 170:4--63, 1934.
+
+\bibitem{ShinderZhang}
+Evgeny Shinder and Ziyu Zhang.
+\newblock L-equivalence for degree five elliptic curves, elliptic fibrations
+  and {K}3 surfaces.
+\newblock {\em BLMS (to appear)}, 2019.
+
+\bibitem{Shramov-SB}
+Constantin Shramov.
+\newblock Finite groups acting on {S}everi-{B}rauer surfaces.
+\newblock {\em Eur. J. Math.}, 7(2):591--612, 2021.
+
+\bibitem{SilvermanAEC}
+Joseph~H. Silverman.
+\newblock {\em The arithmetic of elliptic curves}, volume 106 of {\em Graduate
+  Texts in Mathematics}.
+\newblock Springer-Verlag, New York, 1992.
+\newblock Corrected reprint of the 1986 original.
+
+\bibitem{stacks-project}
+The {Stacks Project Authors}.
+\newblock \textit{Stacks Project}.
+\newblock \url{http://stacks.math.columbia.edu}, 2018.
+
+\bibitem{Terasoma}
+Tomohide Terasoma.
+\newblock Complete intersections with middle {P}icard number {$1$} defined over
+  {${\bf Q}$}.
+\newblock {\em Math. Z.}, 189(2):289--296, 1985.
+
+\bibitem{Zakharevich}
+Inna Zakharevich.
+\newblock The annihilator of the {L}efschetz motive.
+\newblock {\em Duke Math. J.}, 166(11):1989--2022, 2017.
+
+\end{thebibliography}

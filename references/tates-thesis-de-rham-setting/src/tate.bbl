@@ -1,0 +1,382 @@
+\newcommand{\etalchar}[1]{$^{#1}$}
+\begin{thebibliography}{BLPW2}
+
+\bibitem[AG]{arinkin-gaitsgory}
+Dima Arinkin and Dennis Gaitsgory.
+\newblock {Singular support of coherent sheaves and the geometric Langlands
+  conjecture}.
+\newblock {\em Selecta Mathematica}, 21(1):1--199, 2015.
+
+\bibitem[BD]{chiral}
+Sasha Beilinson and Vladimir Drinfeld.
+\newblock {\em Chiral algebras}, volume~51 of {\em American Mathematical
+  Society Colloquium Publications}.
+\newblock American Mathematical Society, Providence, RI, 2004.
+
+\bibitem[Ber]{dario-*/!}
+Dario Beraldo.
+\newblock Loop group actions on categories and whittaker invariants.
+\newblock {\em Advances in Mathematics}, 322:565--636, 2017.
+
+\bibitem[BF]{bf-notes}
+Alexander Braverman and Michael Finkelberg.
+\newblock {Coulomb branches of $3$-dimensional gauge theories and related
+  structures}.
+\newblock In {\em Geometric Representation Theory and Gauge Theory}, pages
+  1--52. Springer, 2019.
+
+\bibitem[BFGT]{bfgt}
+Alexander Braverman, Michael Finkelberg, Victor Ginzburg, and Roman Travkin.
+\newblock {Mirabolic Satake equivalence and supergroups}.
+\newblock {\em arXiv preprint arXiv:1909.11492}, 2019.
+
+\bibitem[BFN1]{bfn}
+Alexander Braverman, Michael Finkelberg, and Hiraku Nakajima.
+\newblock {Towards a mathematical definition of Coulomb branches of $3
+  $-dimensional $\sN = 4$ gauge theories, II}.
+\newblock {\em Advances in Theoretical and Mathematical Physics},
+  22(5):1071--1147, 2018.
+
+\bibitem[BFN2]{bfn-slices}
+Alexander Braverman, Michael Finkelberg, and Hiraku Nakajima.
+\newblock {Coulomb branches of $3d$ $\sN = 4$ quiver gauge theories and slices
+  in the affine Grassmannian}.
+\newblock {\em Advances in Theoretical and Mathematical Physics},
+  23(1):75--166, 2019.
+
+\bibitem[BFN3]{bfn-ring}
+Alexander Braverman, Michael Finkelberg, and Hiraku Nakajima.
+\newblock {Ring objects in the equivariant derived Satake category arising from
+  Coulomb branches}.
+\newblock {\em Advances in Theoretical and Mathematical Physics},
+  23(2):253--344, 2019.
+
+\bibitem[BFT]{bft}
+Alexander Braverman, Michael Finkelberg, and Roman Travkin.
+\newblock {Orthosymplectic Satake equivalence}.
+\newblock {\em arXiv preprint arXiv:1912.01930}, 2019.
+
+\bibitem[BGI{\etalchar{+}}]{sga-6}
+P~Berthelot, A~Grothendieck, L~Illusie, et~al.
+\newblock {Th{\'e}orie des intersections et th{\'e}oreme de Riemann--Roch,
+  s{\'e}minaire de g{\'e}om{\'e}trie alg{\'e}brique du Bois-Marie 1966--1967
+  (SGA 6)}.
+\newblock {\em Lecture Notes in Math}, 225, 1971.
+
+\bibitem[BHL]{bhatt-hl}
+Bhargav Bhatt and Daniel Halpern-Leistner.
+\newblock Tannaka duality revisited.
+\newblock {\em Advances in Mathematics}, 316:576--612, 2017.
+
+\bibitem[BLPW1]{blpw-hypertoric}
+Tom Braden, Anthony Licata, Nicholas Proudfoot, and Ben Webster.
+\newblock {Hypertoric category $\sO$}.
+\newblock {\em Advances in Mathematics}, 231(3-4):1487--1545, 2012.
+
+\bibitem[BLPW2]{blpw}
+Tom Braden, Anthony Licata, Nicholas Proudfoot, and Ben Webster.
+\newblock {Quantizations of conical symplectic resolutions II: category $\sO$
+  and symplectic duality}.
+\newblock {\em Ast{\'e}risque}, 384:75--179, 2016.
+
+\bibitem[BPW]{bpw}
+Tom Braden, Nicholas Proudfoot, and Ben Webster.
+\newblock {Quantizations of conical symplectic resolutions I: local and global
+  structure}.
+\newblock {\em Ast{\'e}risque}, 384:1--73, 2016.
+
+\bibitem[But]{butson-thesis-i}
+Dylan Butson.
+\newblock {Equivariant localization in factorization homology and applications
+  in mathematical physics I: Foundations}.
+\newblock {\em arXiv preprint arXiv:2011.14988}, 2020.
+
+\bibitem[BZ]{bz-talk}
+David Ben-Zvi.
+\newblock Electric-magnetic duality between periods and $l$-functions.
+\newblock Talk at Western Hemisphere Colloquium on Geometry and Physics,
+  available at \url{https://www.youtube.com/watch?v=exf7wsHjPbU}, 2021.
+
+\bibitem[BZGN]{char-field-thry}
+David Ben-Zvi, Sam Gunningham, and David Nadler.
+\newblock {The character field theory and homology of character varieties}.
+\newblock {\em Mathematical Research Letters}, 26(5):1313--1342, 2019.
+
+\bibitem[BZN]{loop-spaces-and-connections}
+David Ben-Zvi and David Nadler.
+\newblock {Loop spaces and connections}.
+\newblock {\em Journal of Topology}, 5(2):377--430, 2012.
+
+\bibitem[CC]{cc}
+Carlos Contou-Carr{\`e}re.
+\newblock {Jacobienne locale d'une courbe formelle relative}.
+\newblock {\em Rendiconti del Seminario Matematico della Universit{\`a} di
+  Padova}, 130:1--106, 2013.
+
+\bibitem[CCG]{ccg}
+Kevin Costello, Thomas Creutzig, and Davide Gaiotto.
+\newblock {Higgs and Coulomb branches from vertex operator algebras}.
+\newblock {\em Journal of High Energy Physics}, 2019(3):1--50, 2019.
+
+\bibitem[CDG]{cdg}
+Kevin Costello, Tudor Dimofte, and Davide Gaiotto.
+\newblock {Boundary chiral algebras and holomorphic twists}.
+\newblock {\em arXiv preprint arXiv:2005.00083}, 2020.
+
+\bibitem[CG1]{voa-3d}
+Kevin Costello and Davide Gaiotto.
+\newblock {Vertex Operator Algebras and $3d$ $\sN = 4$ gauge theories}.
+\newblock {\em Journal of High Energy Physics}, 2019(5):1--39, 2019.
+
+\bibitem[CG2]{costello-gwilliam-i}
+Kevin Costello and Owen Gwilliam.
+\newblock {\em {Factorization Algebras in Quantum Field Theory: Volume 1}},
+  volume~31.
+\newblock Cambridge University Press, 2016.
+
+\bibitem[Cos1]{costello-ss-2-4}
+Kevin Costello.
+\newblock {Notes on supersymmetric and holomorphic field theories in dimensions
+  2 and 4}.
+\newblock {\em Pure and Applied Mathematics Quarterly}, 9(1):73--165, 2013.
+
+\bibitem[Cos2]{costello-x-talks}
+Kevin Costello.
+\newblock Factorization algebras associated to the $(2,0)$ theory.
+\newblock Series of four talks, all of which are available on YouTube. The
+  first two are available at \url{https://www.youtube.com/watch?v=cdlvhIMO-zQ}
+  \url{https://www.youtube.com/watch?v=euWxJmIQs8E}, 2014.
+
+\bibitem[CS]{costello-scheimbauer}
+Kevin Costello and Claudia Scheimbauer.
+\newblock {Lectures on mathematical aspects of (twisted) supersymmetric gauge
+  theories}.
+\newblock In {\em Mathematical aspects of quantum field theories}, pages
+  57--87. Springer, 2015.
+
+\bibitem[DGGH]{dggh}
+Tudor Dimofte, Niklas Garner, Michael Geracie, and Justin Hilburn.
+\newblock Mirror symmetry and line operators.
+\newblock {\em Journal of High Energy Physics}, 2020(2):1--150, 2020.
+
+\bibitem[Dim]{tudor-talk}
+Tudor Dimofte.
+\newblock {Categories of line operators in $3d$ $\sN = 4$ gauge theories}.
+\newblock Talk at Perimeter Institute, available at
+  \url{https://pirsa.org/index.php/18100103}, 2018.
+
+\bibitem[ES]{elliott-safronov}
+Chris Elliott and Pavel Safronov.
+\newblock Topological twists of supersymmetric algebras of observables.
+\newblock {\em Communications in Mathematical Physics}, 371(2):727--786, 2019.
+
+\bibitem[ESW]{esw}
+Chris Elliott, Pavel Safronov, and Brian~R Williams.
+\newblock {A Taxonomy of Twists of Supersymmetric Yang--Mills Theory}.
+\newblock {\em arXiv preprint arXiv:2002.10517}, 2020.
+
+\bibitem[EY]{elliott-yoo}
+Chris Elliott and Philsang Yoo.
+\newblock {Geometric Langlands twists of $ \sN= 4$ gauge theory from derived
+  algebraic geometry}.
+\newblock {\em Adv. Theor. Math. Phys.}, 22:615--708, 2018.
+
+\bibitem[Gai1]{gaiotto-s}
+Davide Gaiotto.
+\newblock {$S$-duality of boundary conditions and the Geometric Langlands
+  program}.
+\newblock In {\em Proc. Symp. Pure Math}, volume~98, page 139, 2018.
+
+\bibitem[Gai2]{quantum-langlands-summary}
+Dennis Gaitsgory.
+\newblock {Quantum Langlands correspondence}.
+\newblock {\em arXiv preprint arXiv:1601.05279}, 2007.
+
+\bibitem[Gai3]{dennis-dag}
+Dennis Gaitsgory.
+\newblock Stacks.
+\newblock {\em Available at \url{http://www.math.harvard.edu/~gaitsgde/GL}},
+  2012.
+
+\bibitem[Gai4]{dennis-punctured-disc}
+Dennis Gaitsgory.
+\newblock {Opers (Day VI, Talk 1)}.
+\newblock Available at
+  \url{https://sites.google.com/site/geometriclanglands2014/notes}. Unpublished
+  conference notes, 2014.
+
+\bibitem[GJS]{goward-smith}
+Russell~A Goward~Jr and Karen~E Smith.
+\newblock The jet scheme of a monomial scheme.
+\newblock {\em Communications in Algebra}, 34(5):1591--1598, 2006.
+
+\bibitem[GR1]{crystals}
+Dennis Gaitsgory and Nick Rozenblyum.
+\newblock {Crystals and D-modules}.
+\newblock {\em Pure and Applied Mathematics Quarterly}, 10(1):57--154, 2014.
+
+\bibitem[GR2]{grbook}
+Dennis Gaitsgory and Nick Rozenblyum.
+\newblock {\em A study in derived algebraic geometry}.
+\newblock American Mathematical Soc., 2017.
+
+\bibitem[GW]{gaiotto-witten}
+Davide Gaiotto and Edward Witten.
+\newblock {$S$-duality of boundary conditions in $\sN = 4$ super Yang-Mills
+  theory}.
+\newblock {\em Advances in Theoretical and Mathematical Physics},
+  13(3):721--896, 2009.
+
+\bibitem[Hil]{jh-talk}
+Justin Hilburn.
+\newblock {Symplectic duality and geometric Langlands duality}.
+\newblock Talk at IH\'ES, available at
+  \url{https://www.youtube.com/watch?v=ogDHRjegRXU}, 2019.
+
+\bibitem[HW]{hanany-witten}
+Amihay Hanany and Edward Witten.
+\newblock {Type $IIB$ superstrings, BPS monopoles, and three-dimensional gauge
+  dynamics}.
+\newblock {\em Nuclear Physics B}, 492(1-2):152--190, 1997.
+
+\bibitem[IS]{intriligator-seiberg}
+Kenneth Intriligator and Nathan Seiberg.
+\newblock Mirror symmetry in three dimensional gauge theories.
+\newblock {\em Physics Letters B}, 387(3):513--519, 1996.
+
+\bibitem[KRS]{krs}
+Anton Kapustin, Lev Rozansky, and Natalia Saulina.
+\newblock {Three-dimensional topological field theory and symplectic algebraic
+  geometry I}.
+\newblock {\em Nuclear Physics B}, 816(3):295--355, 2009.
+
+\bibitem[KSV]{ksv}
+Anton Kapustin, Kevin Setter, and Ketan Vyas.
+\newblock {Surface operators in four-dimensional topological gauge theory and
+  Langlands duality}.
+\newblock {\em arXiv preprint arXiv:1002.0385}, 2010.
+
+\bibitem[KW]{kapustin-witten}
+Anton Kapustin and Edward Witten.
+\newblock {Electric-magnetic duality and the geometric Langlands program}.
+\newblock {\em Communications in Number Theory and Physics}, 1(1):1--236, 2007.
+
+\bibitem[Lur1]{htt}
+Jacob Lurie.
+\newblock {\em {Higher Topos Theory}}, volume 189.
+\newblock Princeton University Press, 2009.
+
+\bibitem[Lur2]{lurie-tft}
+Jacob Lurie.
+\newblock On the classification of topological field theories.
+\newblock {\em Current developments in mathematics}, 2008:129--280, 2009.
+
+\bibitem[Lur3]{higheralgebra}
+Jacob Lurie.
+\newblock Higher algebra.
+\newblock Available at
+  \url{http://math.harvard.edu/~lurie/papers/HigherAlgebra.pdf}, 2012.
+
+\bibitem[Lur4]{sag}
+Jacob Lurie.
+\newblock {Spectral algebraic geometry}.
+\newblock 2016.
+\newblock Preprint, available at
+  \url{www.math.harvard.edu/~lurie/papers/SAG-rootfile. pdf}.
+
+\bibitem[Nak]{nakajima-coulomb}
+Hiraku Nakajima.
+\newblock {Towards a mathematical definition of Coulomb branches of
+  $3$-dimensional $\sN = 4$ gauge theories, I}.
+\newblock {\em Advances in Theoretical and Mathematical Physics},
+  20(3):595--669, 2016.
+
+\bibitem[Ras1]{indep-cat}
+Sam Raskin.
+\newblock {Factorization II (Day III, Talk 1)}.
+\newblock Available at
+  \url{https://sites.google.com/site/geometriclanglands2014/notes}. Unpublished
+  conference notes, 2014.
+
+\bibitem[Ras2]{chiralcats}
+Sam Raskin.
+\newblock {Chiral categories}.
+\newblock Available at
+  \url{https://web.ma.utexas.edu/users/sraskin/chiralcats.pdf}, 2015.
+
+\bibitem[Ras3]{dmod}
+Sam Raskin.
+\newblock {$D$-modules on infinite dimensional varieties}.
+\newblock Available at \url{https://web.ma.utexas.edu/users/sraskin/dmod.pdf},
+  2015.
+
+\bibitem[Ras4]{locsys}
+Sam Raskin.
+\newblock {On the notion of spectral decomposition in local geometric
+  Langlands}.
+\newblock Available at \url{math.utexas.edu/~sraskin/locsys.pdf}., 2015.
+
+\bibitem[Ras5]{cpsii}
+Sam Raskin.
+\newblock {Chiral principal series categories II: the factorizable Whittaker
+  category}.
+\newblock Available at \url{https://web.ma.utexas.edu/users/sraskin/cpsii.pdf},
+  2016.
+
+\bibitem[Ras6]{whit}
+Sam Raskin.
+\newblock {$\sW$-algebras and Whittaker categories}.
+\newblock Available at \url{https://web.ma.utexas.edu/users/sraskin/whit.pdf},
+  2016.
+
+\bibitem[Ras7]{methods}
+Sam Raskin.
+\newblock {Homological methods in semi-infinite contexts}.
+\newblock Available at
+  \url{https://web.ma.utexas.edu/users/sraskin/topalg.pdf}, 2019.
+
+\bibitem[RW]{rozansky-witten}
+Lev Rozansky and Edward Witten.
+\newblock {Hyper-K{\"a}hler geometry and invariants of three-manifolds}.
+\newblock {\em Selecta Mathematica}, 3(3):401--458, 1997.
+
+\bibitem[SV]{sakellaridis-venkatesh}
+Yiannis Sakellaridis and Akshay Venkatesh.
+\newblock Periods and harmonic analysis on spherical varieties.
+\newblock {\em Asterisque}, 2017(396):1--370, 2017.
+
+\bibitem[Tat]{tate-thesis}
+John~T Tate.
+\newblock {Fourier analysis in number fields, and Hecke's zeta-functions}.
+\newblock In {\em Algebraic Number Theory (Proc. Instructional Conf., Brighton,
+  1965)}, pages 305--347, 1967.
+
+\bibitem[Tel]{teleman-icm}
+Constantin Teleman.
+\newblock {Gauge theory and mirror symmetry}.
+\newblock In {\em Proceedings of the {I}nternational {C}ongress of
+  {M}athematicians---{S}eoul 2014. {V}ol. {II}}, pages 1309--1332. Kyung Moon
+  Sa, Seoul, 2014.
+
+\bibitem[Wan]{wang-table}
+Jonathan Wang.
+\newblock {Examples of Relative Duality}.
+\newblock \url{https://www.jonathanpwang.com/notes/RelativeDualitydb.html}.
+
+\bibitem[Wei]{tate-thesis-weil}
+Andr{\'e} Weil.
+\newblock Fonction z{\^e}ta et distributions.
+\newblock {\em S{\'e}minaire Bourbaki}, 9(312):523--531, 1966.
+
+\bibitem[Yoo]{phil-talk}
+Philsang Yoo.
+\newblock {Symplectic duality and geometric Langlands duality}.
+\newblock Talk at IH\'ES, available at
+  \url{https://www.youtube.com/watch?v=IoK6vtB3XJA}, 2019.
+
+\bibitem[Yue]{yuen}
+Cornelia Yuen.
+\newblock Multiplicity of jet schemes of monomial schemes.
+\newblock {\em arXiv preprint math/0607638}, 2006.
+
+\end{thebibliography}

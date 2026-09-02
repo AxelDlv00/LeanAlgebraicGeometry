@@ -1,0 +1,309 @@
+\begin{thebibliography}{BKLOS19}
+
+\bibitem[BBV16]{pBSDbert}
+Andrea Berti, Massimo Bertolini, and Rodolfo Venerucci.
+\newblock Congruences between modular forms and the {B}irch and
+  {S}winnerton-{D}yer conjecture.
+\newblock In {\em Elliptic curves, modular forms and {I}wasawa theory}, volume
+  188 of {\em Springer Proc. Math. Stat.}, pages 1--31. Springer, Cham, 2016.
+
+\bibitem[BCK21]{BCK}
+A.~Burungale, F.~Castella, and C.-H. Kim.
+\newblock A proof of {P}errin-{R}iou's {H}eegner point main conjecture.
+\newblock {\em Algebra Number Theory, to appear}, 2021.
+\newblock \href{https://arxiv.org/abs/1908.09512}{arXiv:1908.09512}.
+
+\bibitem[BDP13]{BDP}
+Massimo Bertolini, Henri Darmon, and Kartik Prasanna.
+\newblock Generalized {H}eegner cycles and {$p$}-adic {R}ankin {$L$}-series.
+\newblock {\em Duke Math. J.}, 162(6):1033--1148, 2013.
+\newblock With an appendix by Brian Conrad.
+
+\bibitem[Ber95]{bertolini}
+Massimo Bertolini.
+\newblock Selmer groups and {H}eegner points in anticyclotomic {$\bold
+  Z_p$}-extensions.
+\newblock {\em Compositio Math.}, 99(2):153--182, 1995.
+
+\bibitem[BKLOS19]{BKLS}
+Manjul Bhargava, Zev Klagsbrun, Robert~J. Lemke~Oliver, and Ari Shnidman.
+\newblock 3-isogeny {S}elmer groups and ranks of abelian varieties in quadratic
+  twist families over a number field.
+\newblock {\em Duke Math. J.}, 168(15):2951--2989, 2019.
+
+\bibitem[BPS18]{pBSDbps}
+K{\^{a}}zim B{\"{u}}y{\"{u}}kboduk, Robert Pollack, and Shu Sasaki.
+\newblock $p$-adic {G}ross-{Z}agier formula at critical slope and a conjecture
+  of {P}errin-{R}iou.
+\newblock 2018.
+\newblock preprint, \href{https://arxiv.org/abs/1811.08216}{arXiv:1811.08216}.
+
+\bibitem[Bra11]{brakocevic}
+Miljan Brako\v{c}evi\'{c}.
+\newblock Anticyclotomic {$p$}-adic {$L$}-function of central critical
+  {R}ankin-{S}elberg {$L$}-value.
+\newblock {\em Int. Math. Res. Not. IMRN}, (21):4967--5018, 2011.
+
+\bibitem[BT20]{CMpconverse}
+Ashay~A. Burungale and Ye~Tian.
+\newblock {$p$}-converse to a theorem of {G}ross--{Z}agier, {K}olyvagin and
+  {R}ubin.
+\newblock {\em Invent. Math.}, 220(1):211--253, 2020.
+
+\bibitem[Cas13]{castella-PhD}
+Francesc Castella.
+\newblock {\em On the $p$-adic variation of {H}eegner points}.
+\newblock 2013.
+\newblock Thesis (Ph.D.)--McGill University.
+
+\bibitem[Cas17]{castellaheights}
+Francesc Castella.
+\newblock {$p$}-adic heights of {H}eegner points and {B}eilinson-{F}lach
+  classes.
+\newblock {\em J. Lond. Math. Soc. (2)}, 96(1):156--180, 2017.
+
+\bibitem[Cas18]{castella}
+Francesc Castella.
+\newblock On the {$p$}-part of the {B}irch-{S}winnerton-{D}yer formula for
+  multiplicative primes.
+\newblock {\em Camb. J. Math.}, 6(1):1--23, 2018.
+
+\bibitem[CCL18]{CCL}
+Li~Cai, Yihua Chen, and Yu~Liu.
+\newblock Heegner points on modular curves.
+\newblock {\em Trans. Amer. Math. Soc.}, 370(5):3721--3743, 2018.
+
+\bibitem[CG96]{coates-greenberg}
+J.~Coates and R.~Greenberg.
+\newblock Kummer theory for abelian varieties over local fields.
+\newblock {\em Invent. Math.}, 124(1-3):129--174, 1996.
+
+\bibitem[CH18]{cas-hsieh1}
+Francesc Castella and Ming-Lun Hsieh.
+\newblock Heegner cycles and p-adic {L}-functions.
+\newblock {\em Math. Ann.}, 370(1-2):567--628, 2018.
+
+\bibitem[CLTZ15]{CLTZ}
+John Coates, Yongxiong Li, Ye~Tian, and Shuai Zhai.
+\newblock Quadratic twists of elliptic curves.
+\newblock {\em Proc. Lond. Math. Soc. (3)}, 110(2):357--394, 2015.
+
+\bibitem[Cor02]{cornut}
+Christophe Cornut.
+\newblock Mazur's conjecture on higher {H}eegner points.
+\newblock {\em Invent. Math.}, 148(3):495--523, 2002.
+
+\bibitem[Edi92]{edixhoven-weight}
+Bas Edixhoven.
+\newblock The weight in {S}erre's conjectures on modular forms.
+\newblock {\em Invent. Math.}, 109(3):563--594, 1992.
+
+\bibitem[FH95]{twist}
+Solomon Friedberg and Jeffrey Hoffstein.
+\newblock Nonvanishing theorems for automorphic {$L$}-functions on {${\rm
+  GL}(2)$}.
+\newblock {\em Ann. of Math. (2)}, 142(2):385--423, 1995.
+
+\bibitem[Gol79]{goldfeld}
+Dorian Goldfeld.
+\newblock Conjectures on elliptic curves over quadratic fields.
+\newblock In {\em Number theory, {C}arbondale 1979 ({P}roc. {S}outhern
+  {I}llinois {C}onf., {S}outhern {I}llinois {U}niv., {C}arbondale, {I}ll.,
+  1979)}, volume 751 of {\em Lecture Notes in Math.}, pages 108--118. Springer,
+  Berlin, 1979.
+
+\bibitem[Gre77]{greenberg-nagoya}
+Ralph Greenberg.
+\newblock On {$p$}-adic {$L$}-functions and cyclotomic fields. {II}.
+\newblock {\em Nagoya Math. J.}, 67:139--158, 1977.
+
+\bibitem[Gre89]{greenberg-iwasawa}
+Ralph Greenberg.
+\newblock Iwasawa theory for {$p$}-adic representations.
+\newblock In {\em Algebraic number theory}, volume~17 of {\em Adv. Stud. Pure
+  Math.}, pages 97--137. Academic Press, Boston, MA, 1989.
+
+\bibitem[Gre94]{greenberg-motives}
+Ralph Greenberg.
+\newblock Iwasawa theory and {$p$}-adic deformations of motives.
+\newblock In {\em Motives ({S}eattle, {WA}, 1991)}, volume~55 of {\em Proc.
+  Sympos. Pure Math.}, pages 193--223. Amer. Math. Soc., Providence, RI, 1994.
+
+\bibitem[Gre99]{greenberg-cetraro}
+Ralph Greenberg.
+\newblock Iwasawa theory for elliptic curves.
+\newblock In {\em Arithmetic theory of elliptic curves ({C}etraro, 1997)},
+  volume 1716 of {\em Lecture Notes in Math.}, pages 51--144. Springer, Berlin,
+  1999.
+
+\bibitem[GV00]{greenvats}
+Ralph Greenberg and Vinayak Vatsal.
+\newblock On the {I}wasawa invariants of elliptic curves.
+\newblock {\em Invent. Math.}, 142(1):17--63, 2000.
+
+\bibitem[GZ86]{grosszagier}
+Benedict~H. Gross and Don~B. Zagier.
+\newblock Heegner points and derivatives of {$L$}-series.
+\newblock {\em Invent. Math.}, 84(2):225--320, 1986.
+
+\bibitem[Hid93]{hida-blue}
+Haruzo Hida.
+\newblock {\em Elementary theory of {$L$}-functions and {E}isenstein series},
+  volume~26 of {\em London Mathematical Society Student Texts}.
+\newblock Cambridge University Press, Cambridge, 1993.
+
+\bibitem[Hid10]{hidamu=0}
+H.~Hida.
+\newblock The {I}wasawa {$\mu$}-invariant of {$p$}-adic {H}ecke
+  {$L$}-functions.
+\newblock {\em Ann. of Math. (2)}, 172(1):41--137, 2010.
+
+\bibitem[How04a]{howard}
+Benjamin Howard.
+\newblock The {H}eegner point {K}olyvagin system.
+\newblock {\em Compos. Math.}, 140(6):1439--1472, 2004.
+
+\bibitem[How04b]{howard-gl2-type}
+Benjamin Howard.
+\newblock Iwasawa theory of {H}eegner points on abelian varieties of
+  {$\mathrm{GL}_2$} type.
+\newblock {\em Duke Mathematical Journal}, 124(1):1--45, 2004.
+
+\bibitem[How05]{howard-GZ}
+Benjamin Howard.
+\newblock The {I}wasawa theoretic {G}ross-{Z}agier theorem.
+\newblock {\em Compos. Math.}, 141(4):811--846, 2005.
+
+\bibitem[HT93]{hidatilouineI}
+H.~Hida and J.~Tilouine.
+\newblock Anti-cyclotomic {K}atz {$p$}-adic {$L$}-functions and congruence
+  modules.
+\newblock {\em Ann. Sci. \'{E}cole Norm. Sup. (4)}, 26(2):189--259, 1993.
+
+\bibitem[JSW17]{jsw}
+Dimitar Jetchev, Christopher Skinner, and Xin Wan.
+\newblock The {B}irch and {S}winnerton-{D}yer formula for elliptic curves of
+  analytic rank one.
+\newblock {\em Camb. J. Math.}, 5(3):369--434, 2017.
+
+\bibitem[Kat78]{katz}
+Nicholas~M. Katz.
+\newblock {$p$}-adic {$L$}-functions for {CM} fields.
+\newblock {\em Invent. Math.}, 49(3):199--297, 1978.
+
+\bibitem[Kat04]{kato-euler-systems}
+Kazuya Kato.
+\newblock {$p$}-adic {H}odge theory and values of zeta functions of modular
+  forms.
+\newblock {\em Ast\'{e}risque}, 295:117--290, 2004.
+
+\bibitem[KL19]{kriz-li}
+Daniel Kriz and Chao Li.
+\newblock Goldfeld's conjecture and congruences between {H}eegner points.
+\newblock {\em Forum Math. Sigma}, 7:e15, 80, 2019.
+
+\bibitem[Kol88]{kolyvagin-mw-sha}
+Victor Kolyvagin.
+\newblock The {M}ordell-{W}eil and {S}hafarevich-{T}ate groups for {W}eil
+  elliptic curves ({R}ussian).
+\newblock {\em Izvestiya {A}kademii {N}auk {SSSR}. {S}eriya
+  {M}atematicheskaya}, 52(6):1154--1180, 1327, 1988.
+\newblock translation in {M}athematics of the {USSR}-{I}zvestiya \textbf{33}
+  (1989), no.~3, 473--499.
+
+\bibitem[Kri16]{kriz}
+Daniel Kriz.
+\newblock Generalized {H}eegner cycles at {E}isenstein primes and the {K}atz
+  {$p$}-adic {$L$}-{\it function}.
+\newblock {\em Algebra Number Theory}, 10(2):309--374, 2016.
+
+\bibitem[Maz78]{mazur}
+B.~Mazur.
+\newblock Rational isogenies of prime degree (with an appendix by {D}.
+  {G}oldfeld).
+\newblock {\em Invent. Math.}, 44(2):129--162, 1978.
+
+\bibitem[McC91]{mccallum}
+William~G. McCallum.
+\newblock Kolyvagin's work on {S}hafarevich-{T}ate groups.
+\newblock In {\em {$L$}-functions and arithmetic ({D}urham, 1989)}, volume 153
+  of {\em London Math. Soc. Lecture Note Ser.}, pages 295--316. Cambridge Univ.
+  Press, Cambridge, 1991.
+
+\bibitem[Mon96]{monsky}
+P.~Monsky.
+\newblock Generalizing the {B}irch-{S}tephens theorem. {I}. {M}odular curves.
+\newblock {\em Math. Z.}, 221(3):415--420, 1996.
+
+\bibitem[MR04]{mazrub}
+Barry Mazur and Karl Rubin.
+\newblock Kolyvagin systems.
+\newblock {\em Mem. Amer. Math. Soc.}, 168(799):viii+96, 2004.
+
+\bibitem[Nek07]{nekovar}
+Jan Nekov\'{a}\v{r}.
+\newblock The {E}uler system method for {CM} points on {S}himura curves.
+\newblock In {\em {$L$}-functions and {G}alois representations}, volume 320 of
+  {\em London Math. Soc. Lecture Note Ser.}, pages 471--547. Cambridge Univ.
+  Press, Cambridge, 2007.
+
+\bibitem[PR87]{perrinriou}
+Bernadette Perrin-Riou.
+\newblock Fonctions {$L$} {$p$}-adiques, th\'{e}orie d'{I}wasawa et points de
+  {H}eegner.
+\newblock {\em Bull. Soc. Math. France}, 115(4):399--456, 1987.
+
+\bibitem[PW11]{pollack2011anticyclotomic}
+Robert Pollack and Tom Weston.
+\newblock On anticyclotomic {$\mu$}-invariants of modular forms.
+\newblock {\em Compos. Math.}, 147(5):1353--1381, 2011.
+
+\bibitem[Rub91]{rubinmainconj}
+Karl Rubin.
+\newblock The ``main conjectures'' of {I}wasawa theory for imaginary quadratic
+  fields.
+\newblock {\em Invent. Math.}, 103(1):25--68, 1991.
+
+\bibitem[Ski20]{pCONVskinner}
+Christopher Skinner.
+\newblock A converse to a theorem of {G}ross, {Z}agier, and {K}olyvagin.
+\newblock {\em Ann. of Math. (2)}, 191(2):329--354, 2020.
+
+\bibitem[SU14]{skinner-urban}
+Christopher Skinner and Eric Urban.
+\newblock The {I}wasawa main conjectures for {$\rm GL_2$}.
+\newblock {\em Invent. Math.}, 195(1):1--277, 2014.
+
+\bibitem[SZ14]{skinner-zhang}
+Christopher Skinner and Wei Zhang.
+\newblock Indivisibility of {H}eegner points in the multiplicative case.
+\newblock 2014.
+\newblock preprint, \href{https://arxiv.org/abs/1407.1099}{arXiv:1407.1099}.
+
+\bibitem[Tia14]{tian}
+Ye~Tian.
+\newblock Congruent numbers and {H}eegner points.
+\newblock {\em Camb. J. Math.}, 2(1):117--161, 2014.
+
+\bibitem[Vat03]{vatsal}
+V.~Vatsal.
+\newblock Special values of anticyclotomic {$L$}-functions.
+\newblock {\em Duke Math. J.}, 116(2):219--261, 2003.
+
+\bibitem[Ven16]{pCONVvenerucci}
+Rodolfo Venerucci.
+\newblock On the {$p$}-converse of the {K}olyvagin-{G}ross-{Z}agier theorem.
+\newblock {\em Comment. Math. Helv.}, 91(3):397--444, 2016.
+
+\bibitem[Wan21]{wan-heegner}
+Xin Wan.
+\newblock Heegner {P}oint {K}olyvagin {S}ystem and {I}wasawa {M}ain
+  {C}onjecture.
+\newblock {\em Acta Math. Sin. (Engl. Ser.)}, 37(1):104--120, 2021.
+
+\bibitem[Zha14]{wei-zhang}
+Wei Zhang.
+\newblock Selmer groups and the indivisibility of {H}eegner points.
+\newblock {\em Camb. J. Math.}, 2(2):191--253, 2014.
+
+\end{thebibliography}

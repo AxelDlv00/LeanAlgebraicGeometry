@@ -1,0 +1,623 @@
+\begin{thebibliography}{BGMW17}
+
+\bibitem[AHL19]{arapura2019vanishing}
+Donu Arapura, Feng Hao, and Hongshan Li.
+\newblock Vanishing theorems for parabolic {H}iggs bundles.
+\newblock {\em Mathematical Research Letters}, 26(5):1251--1279, 2019.
+
+\bibitem[AK02]{andreev2002transformations}
+FV~Andreev and AV~Kitaev.
+\newblock Transformations ${RS}_4^2 (3)$ of the ranks $\leq 4$ and algebraic
+  solutions of the sixth {P}ainlev{\'e} equation.
+\newblock {\em Communications in Mathematical Physics}, 228(1):151--176, 2002.
+
+\bibitem[And74]{anderson:exactness-properties}
+Michael~P. Anderson.
+\newblock Exactness properties of profinite completion functors.
+\newblock {\em Topology}, 13:229--239, 1974.
+
+\bibitem[AS16]{aramayona2016rigidity}
+Javier Aramayona and Juan Souto.
+\newblock Rigidity phenomena in the mapping class group.
+\newblock {\em Handbook of Teichm{\"u}ller theory}, 6:131--165, 2016.
+
+\bibitem[BGMW17]{biswas2017surface}
+Indranil Biswas, Subhojoy Gupta, Mahan Mj, and Junho~Peter Whang.
+\newblock Surface group representations in ${SL}_2(\mathbb{C})$ with finite
+  mapping class orbits.
+\newblock {\em arXiv preprint arXiv:1707.00071v4}, 2017.
+
+\bibitem[BGS16]{bourgainGS:announcement}
+Jean Bourgain, Alexander Gamburd, and Peter Sarnak.
+\newblock Markoff triples and strong approximation.
+\newblock {\em C. R. Math. Acad. Sci. Paris}, 354(2):131--135, 2016.
+
+\bibitem[BKMS18]{biswas2018representations}
+Indranil Biswas, Thomas Koberda, Mahan Mj, and Ramanujan Santharoubane.
+\newblock Representations of surface groups with finite mapping class group
+  orbits.
+\newblock {\em New York J. Math}, 24:241--250, 2018.
+
+\bibitem[BKP19]{baumeister-kielak-pierro}
+Barbara Baumeister, Dawid Kielak, and Emilio Pierro.
+\newblock On the smallest non-abelian quotient of {${\rm Aut}(F_n)$}.
+\newblock {\em Proc. Lond. Math. Soc. (3)}, 118(6):1547--1591, 2019.
+
+\bibitem[Boa05]{boalch2005klein}
+Philip Boalch.
+\newblock From {K}lein to {P}ainlev\'{e} via {F}ourier, {L}aplace and {J}imbo.
+\newblock {\em Proc. London Math. Soc. (3)}, 90(1):167--208, 2005.
+
+\bibitem[Boa06]{boalch2006fifty}
+Philip Boalch.
+\newblock The fifty-two icosahedral solutions to {P}ainlev\'{e} {VI}.
+\newblock {\em J. Reine Angew. Math.}, 596:183--214, 2006.
+
+\bibitem[Boa07a]{boalch2007higher}
+Philip Boalch.
+\newblock Higher genus icosahedral {P}ainlev\'{e} curves.
+\newblock {\em Funkcial. Ekvac.}, 50(1):19--32, 2007.
+
+\bibitem[Boa07b]{boalchsome}
+Philip Boalch.
+\newblock Some explicit solutions to the {R}iemann-{H}ilbert problem.
+\newblock In {\em Differential equations and quantum groups}, volume~9 of {\em
+  IRMA Lect. Math. Theor. Phys.}, pages 85--112. Eur. Math. Soc., Z\"{u}rich,
+  2007.
+
+\bibitem[Boa10]{boalch2007towards}
+Philip Boalch.
+\newblock Towards a non-linear {S}chwarz's list.
+\newblock In {\em The many facets of geometry}, pages 210--236. Oxford Univ.
+  Press, Oxford, 2010.
+
+\bibitem[Bur05]{burnside1905criteria}
+William Burnside.
+\newblock On criteria for the finiteness of the order of a group of linear
+  substitutions.
+\newblock {\em Proceedings of the London Mathematical Society}, 2(1):435--440,
+  1905.
+
+\bibitem[BY96]{bodenY:moduli-spaces-of-parabolic-higgs-bundles}
+Hans~U. Boden and K\^{o}ji Yokogawa.
+\newblock Moduli spaces of parabolic {H}iggs bundles and parabolic {$K(D)$}
+  pairs over smooth curves. {I}.
+\newblock {\em Internat. J. Math.}, 7(5):573--598, 1996.
+
+\bibitem[CH19]{CH:isomonodromic}
+Ga{\"e}l Cousin and Viktoria Heu.
+\newblock Algebraic isomonodromic deformations and the mapping class group.
+\newblock {\em Journal of the Institute of Mathematics of Jussieu}, pages
+  1--49, 2019.
+
+\bibitem[CL09]{cantat2009holomorphic}
+Serge Cantat and Frank Loray.
+\newblock Dynamics on character varieties and {M}algrange irreducibility of
+  {P}ainlev\'{e} {VI} equation.
+\newblock {\em Ann. Inst. Fourier (Grenoble)}, 59(7):2927--2978, 2009.
+
+\bibitem[CM18]{calligaris2018finite}
+Pierpaolo Calligaris and Marta Mazzocco.
+\newblock Finite orbits of the pure braid group on the monodromy of the
+  2-variable {G}arnier system.
+\newblock {\em Journal of Integrable Systems}, 3(1):xyy005, 2018.
+
+\bibitem[CO05]{cornelissen2005problems}
+Gunther Cornelissen and Frans Oort.
+\newblock Problems from the workshop on automorphisms of curves ({L}eiden,
+  {A}ugust, 2004).
+\newblock {\em Rendiconti del Seminario Matematico della Universit{\`a} di
+  Padova}, 113:129--177, 2005.
+
+\bibitem[CR66]{curtis1966representation}
+Charles~W Curtis and Irving Reiner.
+\newblock {\em Representation theory of finite groups and associative
+  algebras}, volume 356.
+\newblock American Mathematical Soc., 1966.
+
+\bibitem[Deb01]{debarre:higher-dimensional}
+Olivier Debarre.
+\newblock {\em Higher-dimensional algebraic geometry}.
+\newblock Universitext. Springer-Verlag, New York, 2001.
+
+\bibitem[Del70]{deligne:regular-singular}
+Pierre Deligne.
+\newblock {\em \'{E}quations diff\'{e}rentielles \`a points singuliers
+  r\'{e}guliers}.
+\newblock Lecture Notes in Mathematics, Vol. 163. Springer-Verlag, Berlin-New
+  York, 1970.
+
+\bibitem[Dia13]{diarra2013construction}
+Karamoko Diarra.
+\newblock Construction et classification de certaines solutions alg{\'e}briques
+  des syst{\`e}mes de {G}arnier.
+\newblock {\em Bulletin of the Brazilian Mathematical Society, New Series},
+  44(1):129--154, 2013.
+
+\bibitem[dJ01]{de2001conjecture}
+Aise~Johan de~Jong.
+\newblock A conjecture on arithmetic fundamental groups.
+\newblock {\em Israel Journal of Mathematics}, 121(1):61--84, 2001.
+
+\bibitem[DL15]{diarra2015ramified}
+Karamoko Diarra and Frank Loray.
+\newblock Ramified covers and tame isomonodromic solutions on curves.
+\newblock {\em Tranactions of the Moscow Mathematical Society}, 76(2):219--236,
+  2015.
+
+\bibitem[DM00]{dubrovin2000monodromy}
+B.~Dubrovin and M.~Mazzocco.
+\newblock Monodromy of certain {P}ainlev\'{e}-{VI} transcendents and reflection
+  groups.
+\newblock {\em Invent. Math.}, 141(1):55--147, 2000.
+
+\bibitem[Dor01]{doran:isomonodromic}
+Charles~F. Doran.
+\newblock Algebraic and geometric isomonodromic deformations.
+\newblock {\em J. Differential Geom.}, 59(1):33--85, 2001.
+
+\bibitem[Dub96]{dubrovin1996geometry}
+Boris Dubrovin.
+\newblock Geometry of 2d topological field theories.
+\newblock {\em Integrable systems and quantum groups}, pages 120--348, 1996.
+
+\bibitem[EG18]{esnault2018cohomologically}
+H{\'e}l{\`e}ne Esnault and Michael Groechenig.
+\newblock Cohomologically rigid local systems and integrality.
+\newblock {\em Selecta Mathematica}, 24(5):4279--4292, 2018.
+
+\bibitem[EH16]{eisenbudH:3264-&-all-that}
+David Eisenbud and Joe Harris.
+\newblock {\em 3264 and all that---a second course in algebraic geometry}.
+\newblock Cambridge University Press, Cambridge, 2016.
+
+\bibitem[EK20]{esnault2020arithmetic}
+H{\'e}l{\`e}ne Esnault and Moritz Kerz.
+\newblock Arithmetic subspaces of moduli spaces of rank one local systems.
+\newblock {\em Cambridge Journal of Mathematics}, 8(3):453--478, 2020.
+
+\bibitem[EM16]{eardley2016inverse}
+Timothy Eardley and Jayanta Manoharmayum.
+\newblock The inverse deformation problem.
+\newblock {\em Compositio Mathematica}, 152(8):1725--1739, 2016.
+
+\bibitem[FH91]{fultonH:representation-theory}
+William Fulton and Joe Harris.
+\newblock {\em Representation theory}, volume 129 of {\em Graduate Texts in
+  Mathematics}.
+\newblock Springer-Verlag, New York, 1991.
+\newblock A first course, Readings in Mathematics.
+
+\bibitem[FH13]{franksH:triviality}
+John Franks and Michael Handel.
+\newblock Triviality of some representations of {${\rm MCG}(S_g)$} in
+  {$GL(n,\Bbb C)$}, {${\rm Diff}(S^2)$} and {${\rm Homeo}(\Bbb T^2)$}.
+\newblock {\em Proc. Amer. Math. Soc.}, 141(9):2951--2962, 2013.
+
+\bibitem[FH17]{farb2017moving}
+Benson Farb and Sebastian Hensel.
+\newblock Moving homology classes in finite covers of graphs.
+\newblock {\em Israel Journal of Mathematics}, 220(2):605--615, 2017.
+
+\bibitem[FLM01]{farbLM:rank-1-phenomena}
+Benson Farb, Alexander Lubotzky, and Yair Minsky.
+\newblock Rank-1 phenomena for mapping class groups.
+\newblock {\em Duke Math. J.}, 106(3):581--597, 2001.
+
+\bibitem[FM12]{farbM:a-primer}
+Benson Farb and Dan Margalit.
+\newblock {\em A primer on mapping class groups}, volume~49 of {\em Princeton
+  Mathematical Series}.
+\newblock Princeton University Press, Princeton, NJ, 2012.
+
+\bibitem[Fun11]{funar:two-questions}
+Louis Funar.
+\newblock Two questions on mapping class groups.
+\newblock {\em Proc. Amer. Math. Soc.}, 139(1):375--382, 2011.
+
+\bibitem[Gai07]{gaitsgory2007jong}
+Dennis Gaitsgory.
+\newblock On de {J}ong's conjecture.
+\newblock {\em Israel Journal of Mathematics}, 157(1):155--191, 2007.
+
+\bibitem[Gam10]{gambier:on-the-differential-equations-of-second-order}
+B.~Gambier.
+\newblock Sur les \'{e}quations diff\'{e}rentielles du second ordre et du
+  premier degr\'{e} dont l'int\'{e}grale g\'{e}n\'{e}rale est a points
+  critiques fixes.
+\newblock {\em Acta Math.}, 33(1):1--55, 1910.
+
+\bibitem[Gir16a]{girand2016algebraic}
+Arnaud Girand.
+\newblock Algebraic isomonodromic deformations of the five punctured sphere
+  arising from quintic plane curves.
+\newblock {\em arXiv preprint arXiv:1612.01168v1}, 2016.
+
+\bibitem[Gir16b]{girand:a-new-two-parameter-family}
+Arnaud Girand.
+\newblock A new two-parameter family of isomonodromic deformations over the
+  five punctured sphere.
+\newblock {\em Bull. Soc. Math. France}, 144(2):339--368, 2016.
+
+\bibitem[GL09]{grunewald2009linear}
+Fritz Grunewald and Alexander Lubotzky.
+\newblock Linear representations of the automorphism group of a free group.
+\newblock {\em Geometric and Functional Analysis}, 18(5):1564--1608, 2009.
+
+\bibitem[GLLM15]{grunewald2015arithmetic}
+Fritz Grunewald, Michael Larsen, Alexander Lubotzky, and Justin Malestein.
+\newblock Arithmetic quotients of the mapping class group.
+\newblock {\em Geometric and Functional Analysis}, 25(5):1493--1542, 2015.
+
+\bibitem[Gol06]{goldmanmapping}
+William~M. Goldman.
+\newblock Mapping class group dynamics on surface group representations.
+\newblock In {\em Problems on mapping class groups and related topics},
+  volume~74 of {\em Proc. Sympos. Pure Math.}, pages 189--214. Amer. Math.
+  Soc., Providence, RI, 2006.
+
+\bibitem[GR71]{sga1}
+A.~Grothendieck and M.~Raynaud.
+\newblock {\em Rev\^etements \'etales et groupe fondamental}.
+\newblock Springer-Verlag, Berlin-New York, 1971.
+\newblock S{\'e}minaire de G{\'e}om{\'e}trie Alg{\'e}brique du Bois Marie
+  1960--1961 (SGA 1).
+
+\bibitem[Hit95]{hitchin1996poncelet}
+N.~J. Hitchin.
+\newblock Poncelet polygons and the {P}ainlev\'{e} equations.
+\newblock In {\em Geometry and analysis ({B}ombay, 1992)}, pages 151--185. Tata
+  Inst. Fund. Res., Bombay, 1995.
+
+\bibitem[Hit03]{hitchin2003lecture}
+Nigel Hitchin.
+\newblock A lecture on the octahedron.
+\newblock {\em Bull. London Math. Soc.}, 35(5):577--600, 2003.
+
+\bibitem[Iva06]{Ivanov:problems}
+Nikolai~V. Ivanov.
+\newblock Fifteen problems about the mapping class groups.
+\newblock In {\em Problems on mapping class groups and related topics},
+  volume~74 of {\em Proc. Sympos. Pure Math.}, pages 71--80. Amer. Math. Soc.,
+  Providence, RI, 2006.
+
+\bibitem[Jor78]{jordan1878memoire}
+M~Camille Jordan.
+\newblock M{\'e}moire sur les {\'e}quations diff{\'e}rentielles lin{\'e}aires
+  {\`a} int{\'e}grale alg{\'e}brique.
+\newblock {\em Journal f{\"u}r die reine und angewandte Mathematik (Crelles
+  Journal)}, 1878(84):89--215, 1878.
+
+\bibitem[Kas15]{kasahara2015visualization}
+Yasushi Kasahara.
+\newblock On visualization of the linearity problem for mapping class groups of
+  surfaces.
+\newblock {\em Geometriae Dedicata}, 176(1):295--304, 2015.
+
+\bibitem[Kat72]{katz:pcurvature-and-hodge}
+Nicholas~M Katz.
+\newblock Algebraic solutions of differential equations (p-curvature and the
+  {H}odge filtration).
+\newblock {\em Inventiones mathematicae}, 18(1-2):1--118, 1972.
+
+\bibitem[Kat96]{katz2016rigid}
+Nicholas~M. Katz.
+\newblock {\em Rigid local systems}, volume 139 of {\em Annals of Mathematics
+  Studies}.
+\newblock Princeton University Press, Princeton, NJ, 1996.
+
+\bibitem[Kir97]{Kirby:problems}
+Problems in low-dimensional topology.
+\newblock In Rob Kirby, editor, {\em Geometric topology ({A}thens, {GA},
+  1993)}, volume~2 of {\em AMS/IP Stud. Adv. Math.}, pages 35--473. Amer. Math.
+  Soc., Providence, RI, 1997.
+
+\bibitem[Kit05]{kitaev2006grothendieck}
+A.~V. Kitaev.
+\newblock Grothendieck's dessins d'enfants, their deformations, and algebraic
+  solutions of the sixth {P}ainlev\'{e} and {G}auss hypergeometric equations.
+\newblock {\em Algebra i Analiz}, 17(1):224--275, 2005.
+
+\bibitem[Kit06]{kitaev2005remarks}
+Alexander~V. Kitaev.
+\newblock Remarks towards a classification of {$RS_4^2(3)$}-transformations and
+  algebraic solutions of the sixth {P}ainlev\'{e} equation.
+\newblock 14:199--227, 2006.
+
+\bibitem[Kor02]{korkmaz:low-dimensional-linear-representations}
+Mustafa Korkmaz.
+\newblock Low-dimensional homology groups of mapping class groups: a survey.
+\newblock {\em Turkish J. Math.}, 26(1):101--114, 2002.
+
+\bibitem[KP20a]{kielak-pierro}
+Dawid Kielak and Emilio Pierro.
+\newblock On the smallest non-trivial quotients of mapping class groups.
+\newblock {\em Groups Geom. Dyn.}, 14(2):489--512, 2020.
+
+\bibitem[KP20b]{klevdalP:g-rigid-local-systems-are-integral}
+Christian Klevdal and Stefan Patrikis.
+\newblock G-rigid local systems are integral.
+\newblock {\em arXiv preprint arXiv:2009.07350v2}, 2020.
+
+\bibitem[Kra00]{krammer2000braid}
+Daan Krammer.
+\newblock The braid group {$B_4$} is linear.
+\newblock {\em Invent. Math.}, 142(3):451--486, 2000.
+
+\bibitem[KS16]{koberda2016quotients}
+Thomas Koberda and Ramanujan Santharoubane.
+\newblock Quotients of surface groups and homology of finite covers via quantum
+  representations.
+\newblock {\em Inventiones mathematicae}, 206(2):269--292, 2016.
+
+\bibitem[KS18a]{koberda2018irreducibility}
+Thomas Koberda and Ramanujan Santharoubane.
+\newblock Irreducibility of quantum representations of mapping class groups
+  with boundary.
+\newblock {\em Quantum Topology}, 9(4):633--641, 2018.
+
+\bibitem[KS18b]{koberda2018representation}
+Thomas Koberda and Ramanujan Santharoubane.
+\newblock A representation theoretic characterization of simple closed curves
+  on a surface.
+\newblock {\em Mathematical Research Letters}, 25(5):1485--1496, 2018.
+
+\bibitem[Kup11]{kuperberg2011denseness}
+Greg Kuperberg.
+\newblock Denseness and {Z}ariski denseness of {J}ones braid representations.
+\newblock {\em Geom. Topol.}, 15(1):11--39, 2011.
+
+\bibitem[Lit21]{litt2021arithmetic}
+Daniel Litt.
+\newblock Arithmetic representations of fundamental groups, {II}: {F}initeness.
+\newblock {\em Duke Math. J.}, 170(8):1851--1897, 2021.
+
+\bibitem[LL19]{lawrence2019representations}
+Brian Lawrence and Daniel Litt.
+\newblock Representations of surface groups with universally finite mapping
+  class group orbit.
+\newblock {\em arXiv preprint arXiv:1907.03941v3}, 2019.
+
+\bibitem[LL22]{LL:geometric-local-systems}
+Aaron Landesman and Daniel Litt.
+\newblock Geometric local systems on very general curves and isomonodromy.
+\newblock {\em arXiv preprint arXiv:2202.00039v2}, 2022.
+
+\bibitem[LLSS20]{li2020surface}
+Wanlin Li, Daniel Litt, Nick Salter, and Padmavathi Srinivasan.
+\newblock Surface bundles and the section conjecture.
+\newblock {\em arXiv preprint arXiv:2010.07331v1}, 2020.
+
+\bibitem[Loo97]{looijenga:prym-representations}
+Eduard Looijenga.
+\newblock Prym representations of mapping class groups.
+\newblock {\em Geom. Dedicata}, 64(1):69--83, 1997.
+
+\bibitem[Loo15]{looiejenga:AG}
+Eduard Looijenga.
+\newblock Some algebraic geometry related to the mapping class group.
+\newblock {\em Oberwolfach Reports}, 2015.
+
+\bibitem[Loo21]{looijenga2021arithmetic}
+Eduard Looijenga.
+\newblock Arithmetic representations of mapping class groups.
+\newblock {\em arXiv preprint arXiv:2108.12791v1}, 2021.
+
+\bibitem[LT14]{lisovyy2014algebraic}
+Oleg Lisovyy and Yuriy Tykhyy.
+\newblock Algebraic solutions of the sixth {P}ainlev\'{e} equation.
+\newblock {\em J. Geom. Phys.}, 85:124--163, 2014.
+
+\bibitem[Mah99]{mahoux:itroduction-to-the-theory-of-isomonodromic-deformations}
+Gilbert Mahoux.
+\newblock Introduction to the theory of isomonodromic deformations of linear
+  ordinary differential equations with rational coefficients.
+\newblock In {\em The {P}ainlev\'{e} property}, CRM Ser. Math. Phys., pages
+  35--76. Springer, New York, 1999.
+
+\bibitem[Mar]{markovic}
+Vladimir Markovi{\'c}.
+\newblock Unramified correspondences and virtual properties of mapping class
+  groups.
+\newblock \url{http://people.maths.ox.ac.uk/~markovic/M-mod.pdf}.
+
+\bibitem[Maz97]{mazur1997introduction}
+Barry Mazur.
+\newblock An introduction to the deformation theory of {G}alois
+  representations.
+\newblock {\em Modular forms and {F}ermat's last theorem}, pages 243--311,
+  1997.
+
+\bibitem[Mic06]{michel-hurwitz}
+J.~Michel.
+\newblock Hurwitz action on tuples of {E}uclidean reflections.
+\newblock {\em J. Algebra}, 295(1):289--292, 2006.
+
+\bibitem[MKS04]{magnusKS:combinatorial-group-theory}
+Wilhelm Magnus, Abraham Karrass, and Donald Solitar.
+\newblock {\em Combinatorial group theory}.
+\newblock Dover Publications, Inc., Mineola, NY, second edition, 2004.
+\newblock Presentations of groups in terms of generators and relations.
+
+\bibitem[Moc06]{mochizuki2006kobayashi}
+Takuro Mochizuki.
+\newblock Kobayashi-{H}itchin correspondence for tame harmonic bundles and an
+  application.
+\newblock {\em Ast\'{e}risque}, (309):viii+117, 2006.
+
+\bibitem[Mor89]{morita1989families}
+Shigeyuki Morita.
+\newblock Families of {J}acobian manifolds and characteristic classes of
+  surface bundles. {I}.
+\newblock {\em Ann. Inst. Fourier (Grenoble)}, 39(3):777--810, 1989.
+
+\bibitem[Mor93]{morita1993extension}
+Shigeyuki Morita.
+\newblock The extension of {J}ohnson's homomorphism from the {T}orelli group to
+  the mapping class group.
+\newblock {\em Invent. Math.}, 111(1):197--224, 1993.
+
+\bibitem[MS80]{mehta1980moduli}
+Vikram~Bhagvandas Mehta and Conjeevaram~Srirangachari Seshadri.
+\newblock Moduli of vector bundles on curves with parabolic structures.
+\newblock {\em Mathematische Annalen}, 248(3):205--239, 1980.
+
+\bibitem[MT]{markovic2}
+Vladimir Markovi{\'c} and Ognjen To{\v s}i{\'c}.
+\newblock The second variation of the {H}odge norm and higher {P}rym
+  representations.
+\newblock \url{https://people.maths.ox.ac.uk/~markovic/MT-hodge.pdf}.
+
+\bibitem[Nie24]{nielsen:die-isomorphismengruppe}
+Jakob Nielsen.
+\newblock Die {I}somorphismengruppe der freien {G}ruppen.
+\newblock {\em Math. Ann.}, 91(3-4):169--209, 1924.
+
+\bibitem[Pai02]{painleve:on-the-differential-equations-of-sectond-order}
+P.~Painlev\'{e}.
+\newblock Sur les \'{e}quations diff\'{e}rentielles du second ordre et d'ordre
+  sup\'{e}rieur dont l'int\'{e}grale g\'{e}n\'{e}rale est uniforme.
+\newblock {\em Acta Math.}, 25(1):1--85, 1902.
+
+\bibitem[PdJ95]{pikaart-dejong}
+M.~Pikaart and A.~J. de~Jong.
+\newblock Moduli of curves with non-abelian level structure.
+\newblock In {\em The moduli space of curves ({T}exel {I}sland, 1994)}, volume
+  129 of {\em Progr. Math.}, pages 483--509. Birkh\"{a}user Boston, Boston, MA,
+  1995.
+
+\bibitem[Pet20]{petrov2020geometrically}
+Alexander Petrov.
+\newblock Geometrically irreducible $ p $-adic local systems are de {R}ham up
+  to a twist.
+\newblock {\em arXiv preprint arXiv:2012.13372v3}, 2020.
+
+\bibitem[PR00]{potapchik2000low}
+A.~Potapchik and A.~Rapinchuk.
+\newblock Low-dimensional linear representations of {${\rm Aut}\,F_n,\ n\geq
+  3$}.
+\newblock {\em Trans. Amer. Math. Soc.}, 352(3):1437--1451, 2000.
+
+\bibitem[PS08]{peters2008mixed}
+Chris A.~M. Peters and Joseph H.~M. Steenbrink.
+\newblock {\em Mixed {H}odge structures}, volume~52 of {\em Ergebnisse der
+  Mathematik und ihrer Grenzgebiete. 3. Folge. A Series of Modern Surveys in
+  Mathematics [Results in Mathematics and Related Areas. 3rd Series. A Series
+  of Modern Surveys in Mathematics]}.
+\newblock Springer-Verlag, Berlin, 2008.
+
+\bibitem[PW13]{putmanW:abelian-quotients}
+Andrew Putman and Ben Wieland.
+\newblock Abelian quotients of subgroups of the mappings class group and higher
+  {P}rym representations.
+\newblock {\em J. Lond. Math. Soc. (2)}, 88(1):79--96, 2013.
+
+\bibitem[PX00]{previte2000topological}
+Joseph~P. Previte and Eugene~Z. Xia.
+\newblock Topological dynamics on moduli spaces. {I}.
+\newblock {\em Pacific J. Math.}, 193(2):397--417, 2000.
+
+\bibitem[PX02]{previte2002topological}
+Joseph~P. Previte and Eugene~Z. Xia.
+\newblock Topological dynamics on moduli spaces. {II}.
+\newblock {\em Trans. Amer. Math. Soc.}, 354(6):2475--2494, 2002.
+
+\bibitem[Rie57]{riemann1857beitrage}
+Bernhard Riemann.
+\newblock {\em Beitr{\"a}ge zur Theorie der durch die Gauss' sche Reihe F
+  ([alpha],[beta],[gamma],[chi]) darstellbaren Functionen}.
+\newblock Verlag der Dieterichschen Buchhandlung, 1857.
+
+\bibitem[Sai88]{saito1988modules}
+Morihiko Saito.
+\newblock Modules de {H}odge polarisables.
+\newblock {\em Publ. Res. Inst. Math. Sci.}, 24(6):849--995 (1989), 1988.
+
+\bibitem[Sai90]{saito1990mixed}
+Morihiko Saito.
+\newblock Mixed {H}odge modules.
+\newblock {\em Publ. Res. Inst. Math. Sci.}, 26(2):221--333, 1990.
+
+\bibitem[Sch73]{schwarz1873ueber}
+H.~A. Schwarz.
+\newblock Ueber diejenigen {F}\"{a}lle, in welchen die {G}aussische
+  hypergeometrische {R}eihe eine algebraische {F}unction ihres vierten
+  {E}lementes darstellt.
+\newblock {\em J. Reine Angew. Math.}, 75:292--335, 1873.
+
+\bibitem[Sch19]{schnell2014overview}
+Christian Schnell.
+\newblock An overview of {M}orihiko {S}aito's theory of mixed {H}odge modules.
+\newblock In {\em Representation theory, automorphic forms \& complex
+  geometry}, pages 27--80. Int. Press, Somerville, MA, [2019] \copyright 2019.
+
+\bibitem[SGA73]{SGA4}
+{\em Th\'{e}orie des topos et cohomologie \'{e}tale des sch\'{e}mas. {T}ome 3}.
+\newblock Lecture Notes in Mathematics, Vol. 305. Springer-Verlag, Berlin-New
+  York, 1973.
+\newblock S\'{e}minaire de G\'{e}om\'{e}trie Alg\'{e}brique du Bois-Marie
+  1963--1964 (SGA 4), Dirig\'{e} par M. Artin, A. Grothendieck et J. L.
+  Verdier. Avec la collaboration de P. Deligne et B. Saint-Donat.
+
+\bibitem[Sik12]{sikora2012character}
+Adam Sikora.
+\newblock Character varieties.
+\newblock {\em Transactions of the American Mathematical Society},
+  364(10):5173--5208, 2012.
+
+\bibitem[Sim90]{simpson1990harmonic}
+Carlos~T Simpson.
+\newblock Harmonic bundles on noncompact curves.
+\newblock {\em Journal of the American Mathematical Society}, 3(3):713--770,
+  1990.
+
+\bibitem[Sim92]{simpson1992higgs}
+Carlos~T Simpson.
+\newblock Higgs bundles and local systems.
+\newblock {\em Publications Math{\'e}matiques de l'IH{\'E}S}, 75:5--95, 1992.
+
+\bibitem[Sin10]{sinz:thesis}
+Justin~Conrad Sinz.
+\newblock {\em Some results in representation dynamics}.
+\newblock ProQuest LLC, Ann Arbor, MI, 2010.
+\newblock Thesis (Ph.D.)--The University of Chicago.
+
+\bibitem[{Sta}]{stacks-project}
+The {Stacks Project Authors}.
+\newblock {\itshape Stacks Project}.
+\newblock \url{http://stacks.math.columbia.edu}.
+
+\bibitem[SZ85]{steenbrink1985variation}
+Joseph Steenbrink and Steven Zucker.
+\newblock Variation of mixed {H}odge structure. {I}.
+\newblock {\em Invent. Math.}, 80(3):489--542, 1985.
+
+\bibitem[Tim87]{timmerscheidt:mixed-hodge-structure-for-unitary}
+Klaus Timmerscheidt.
+\newblock Mixed {H}odge theory for unitary local systems.
+\newblock {\em J. Reine Angew. Math.}, 379:152--171, 1987.
+
+\bibitem[Vak]{vakil:foundations-of-algebraic-geometry-2017}
+Ravi Vakil.
+\newblock {\itshape MATH 216: Foundations of Algebraic Geometry}.
+\newblock Available at \url{http://math.stanford.edu/~vakil/216blog/} November
+  18, 2017 version.
+
+\bibitem[Voi07]{Voisin:hodgeTheory}
+Claire Voisin.
+\newblock {\em Hodge theory and complex algebraic geometry. {I}}, volume~76 of
+  {\em Cambridge Studies in Advanced Mathematics}.
+\newblock Cambridge University Press, Cambridge, english edition, 2007.
+\newblock Translated from the French by Leila Schneps.
+
+\bibitem[Wat89]{waterhouse:two-generators}
+William~C. Waterhouse.
+\newblock Two generators for the general linear groups over finite fields.
+\newblock {\em Linear and Multilinear Algebra}, 24(4):227--230, 1989.
+
+\bibitem[Wew98]{wewers:thesis}
+Stefan Wewers.
+\newblock {\em Construction of Hurwitz spaces}.
+\newblock IEM, 1998.
+
+\end{thebibliography}

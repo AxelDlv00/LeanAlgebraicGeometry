@@ -1,0 +1,337 @@
+\def\cprime{$'$}
+\begin{thebibliography}{AHPL16}
+
+\bibitem[AHPL16]{AHP}
+Giuseppe Ancona, Annette Huber, and Simon Pepin~Lehalleur.
+\newblock On the relative motive of a commutative group scheme.
+\newblock {\em Algebr. Geom.}, 3(2):150--178, 2016.
+
+\bibitem[AK02]{AK}
+Yves Andr{\'e} and Bruno Kahn.
+\newblock Nilpotence, radicaux et structures mono\"\i dales.
+\newblock {\em Rend. Sem. Mat. Univ. Padova}, 108:107--291, 2002.
+\newblock With an appendix by Peter O'Sullivan.
+
+\bibitem[Anc16]{Ober}
+Giuseppe Ancona.
+\newblock On the {S}tandard {C}onjecture of {H}odge type for abelian varieties.
+\newblock {\em Oberwolfach Reports 31/2016}, pages 1771--1773, 2016.
+
+\bibitem[Ancar]{Ascona}
+Giuseppe Ancona.
+\newblock Conservativity of realization functors on motives of abelian type
+  over finite fields.
+\newblock {\em Proceedings of "Motives and Complex Multiplication"}, Fres\'an,
+  Jetchev, Jossen and Pink editors, to appear.
+
+\bibitem[And04]{Andmot}
+Yves Andr{\'e}.
+\newblock {\em Une introduction aux motifs (motifs purs, motifs mixtes,
+  p\'eriodes)}, volume~17 of {\em Panoramas et Synth\`eses [Panoramas and
+  Syntheses]}.
+\newblock Soci\'et\'e Math\'ematique de France, Paris, 2004.
+
+\bibitem[BC09]{BC}
+Olivier Brinon and Brian Conrad.
+\newblock {CMI} summer school notes on $p$-adic hodge theory.
+\newblock {\em Notes available on
+  http://math.stanford.edu/~conrad/papers/notes.pdf}, 2009.
+
+\bibitem[Bea14]{Beauville}
+Arnaud Beauville.
+\newblock Some surfaces with maximal {P}icard number.
+\newblock {\em J. \'Ec. polytech. Math.}, 1:101--116, 2014.
+
+\bibitem[BLP18]{BLP}
+Gilberto Bini, Robert Laterveer, and Gianluca Pacienza.
+\newblock Voisin's conjecture for zero--cycles on {C}alabi--{Y}au varieties and
+  their mirrors.
+\newblock {\em to appear in Adv. Geom.}, 2018.
+
+\bibitem[BO83]{BertOgus}
+Pierre Berthelot and Arthur Ogus.
+\newblock {$F$}-isocrystals and de {R}ham cohomology. {I}.
+\newblock {\em Invent. Math.}, 72(2):159--199, 1983.
+
+\bibitem[Bro38]{Brono}
+Jacob Bronowski.
+\newblock Curves {W}hose {G}rade is {N}ot {P}ositive in the {T}heory of the
+  {B}ase.
+\newblock {\em J. London Math. Soc.}, 13(2):86--90, 1938.
+
+\bibitem[CF00]{CF}
+Pierre Colmez and Jean-Marc Fontaine.
+\newblock Construction des repr\'esentations {$p$}-adiques semi-stables.
+\newblock {\em Invent. Math.}, 140(1):1--43, 2000.
+
+\bibitem[Clo99]{Clozel}
+Laurent Clozel.
+\newblock Equivalence num\'erique et \'equivalence cohomologique pour les
+  vari\'et\'es ab\'eliennes sur les corps finis.
+\newblock {\em Ann. of Math. (2)}, 150(1):151--163, 1999.
+
+\bibitem[Col02]{Colmez}
+Pierre Colmez.
+\newblock Espaces de {B}anach de dimension finie.
+\newblock {\em J. Inst. Math. Jussieu}, 1(3):331--439, 2002.
+
+\bibitem[DM91]{DeMu}
+Christopher Deninger and Jacob Murre.
+\newblock Motivic decomposition of abelian schemes and the {F}ourier transform.
+\newblock {\em J. Reine Angew. Math.}, 422:201--219, 1991.
+
+\bibitem[DN18]{NiziFred}
+Fr\'ed\'eric D\'eglise and Wies\l{awa} Nizio\l.
+\newblock On {$p$}-adic absolute {H}odge cohomology and syntomic coefficients.
+  {I}.
+\newblock {\em Comment. Math. Helv.}, 93(1):71--131, 2018.
+
+\bibitem[Fal89]{Falt}
+Gerd Faltings.
+\newblock Crystalline cohomology and {$p$}-adic {G}alois-representations.
+\newblock In {\em Algebraic analysis, geometry, and number theory ({B}altimore,
+  {MD}, 1988)}, pages 25--80. Johns Hopkins Univ. Press, Baltimore, MD, 1989.
+
+\bibitem[FM87]{FontMess}
+Jean-Marc Fontaine and William Messing.
+\newblock {$p$}-adic periods and {$p$}-adic \'etale cohomology.
+\newblock In {\em Current trends in arithmetical algebraic geometry ({A}rcata,
+  {C}alif., 1985)}, volume~67 of {\em Contemp. Math.}, pages 179--207. Amer.
+  Math. Soc., Providence, RI, 1987.
+
+\bibitem[Fon82]{Fonfon}
+Jean-Marc Fontaine.
+\newblock Sur certains types de repr\'esentations {$p$}-adiques du groupe de
+  {G}alois d'un corps local; construction d'un anneau de {B}arsotti-{T}ate.
+\newblock {\em Ann. of Math. (2)}, 115(3):529--577, 1982.
+
+\bibitem[Fon94]{Fontp}
+Jean-Marc Fontaine.
+\newblock Le corps des p\'eriodes {$p$}-adiques.
+\newblock {\em Ast\'erisque}, (223):59--111, 1994.
+\newblock With an appendix by Pierre Colmez, P\'eriodes $p$-adiques
+  (Bures-sur-Yvette, 1988).
+
+\bibitem[Gro58]{Grothseg}
+Alexander Grothendieck.
+\newblock Sur une note de {M}attuck-{T}ate.
+\newblock {\em J. Reine Angew. Math.}, 200:208--215, 1958.
+
+\bibitem[Gro69]{GrothSC}
+Alexander Grothendieck.
+\newblock Standard conjectures on algebraic cycles.
+\newblock In {\em Algebraic {G}eometry ({I}nternat. {C}olloq., {T}ata {I}nst.
+  {F}und. {R}es., {B}ombay, 1968)}, pages 193--199. Oxford Univ. Press, London,
+  1969.
+
+\bibitem[GS94]{soule}
+Henri Gillet and Christophe Soul\'e.
+\newblock Arithmetic analogs of the standard conjectures.
+\newblock In {\em Motives ({S}eattle, {WA}, 1991)}, volume~55 of {\em Proc.
+  Sympos. Pure Math.}, pages 129--140. Amer. Math. Soc., Providence, RI, 1994.
+
+\bibitem[HK94]{HyodoKato}
+Osamu Hyodo and Kazuya Kato.
+\newblock Semi-stable reduction and crystalline cohomology with logarithmic
+  poles.
+\newblock {\em Ast\'{e}risque}, (223):221--268, 1994.
+\newblock P\'{e}riodes $p$-adiques (Bures-sur-Yvette, 1988).
+
+\bibitem[Hod33]{Hodge}
+William V.~D. Hodge.
+\newblock The {G}eometric {G}enus of a {S}urface as a {T}opological
+  {I}nvariant.
+\newblock {\em J. London Math. Soc.}, 8(4):312--319, 1933.
+
+\bibitem[Hon68]{Honda}
+Taira Honda.
+\newblock Isogeny classes of abelian varieties over finite fields.
+\newblock {\em J. Math. Soc. Japan}, 20:83--95, 1968.
+
+\bibitem[IR82]{Ireland}
+Kenneth~F. Ireland and Michael~I. Rosen.
+\newblock {\em A classical introduction to modern number theory}, volume~84 of
+  {\em Graduate Texts in Mathematics}.
+\newblock Springer-Verlag, New York-Berlin, 1982.
+\newblock Revised edition of {{\i}t Elements of number theory}.
+
+\bibitem[Jan92]{Jann}
+Uwe Jannsen.
+\newblock Motives, numerical equivalence, and semi-simplicity.
+\newblock {\em Invent. Math.}, 107(3):447--452, 1992.
+
+\bibitem[Jan07]{jannsen}
+Uwe Jannsen.
+\newblock On finite-dimensional motives and {M}urre's conjecture.
+\newblock In {\em Algebraic cycles and motives. {V}ol. 2}, volume 344 of {\em
+  London Math. Soc. Lecture Note Ser.}, pages 112--142. Cambridge Univ. Press,
+  Cambridge, 2007.
+
+\bibitem[Kin98]{Ki}
+Guido Kings.
+\newblock Higher regulators, {H}ilbert modular surfaces, and special values of
+  {$L$}-functions.
+\newblock {\em Duke Math. J.}, 92(1):61--127, 1998.
+
+\bibitem[Kle68]{GKL}
+Steven Kleiman.
+\newblock Algebraic cycles and the {W}eil conjectures.
+\newblock In {\em Dix espos\'es sur la cohomologie des sch\'emas}, pages
+  359--386. North-Holland, Amsterdam, 1968.
+
+\bibitem[KM00]{Kunz3}
+Klaus K{\"u}nnemann and Vincent Maillot.
+\newblock Th\'eor\`emes de {L}efschetz et de {H}odge arithm\'etiques pour les
+  vari\'et\'es admettant une d\'ecomposition cellulaire.
+\newblock In {\em Regulators in analysis, geometry and number theory}, volume
+  171 of {\em Progr. Math.}, pages 197--205. Birkh\"auser Boston, Boston, MA,
+  2000.
+
+\bibitem[KT01]{Kresch}
+Andrew Kresch and Harry Tamvakis.
+\newblock Standard conjectures for the arithmetic {G}rassmannian {$G(2,N)$} and
+  {R}acah polynomials.
+\newblock {\em Duke Math. J.}, 110(2):359--376, 2001.
+
+\bibitem[K{\"u}n93]{Ku2}
+Klaus K{\"u}nnemann.
+\newblock A {L}efschetz decomposition for chow motives of abelian schemes.
+\newblock {\em Invent. Math.}, 113(4):85--102, 1993.
+
+\bibitem[K{\"u}n94]{Ku1}
+Klaus K{\"u}nnemann.
+\newblock On the {C}how motive of an abelian scheme.
+\newblock In {\em Motives}, volume 55.1 of {\em Proceedings of Symposia in pure
+  mathematics}, pages 189--205. American mathematical society, 1994.
+
+\bibitem[K{\"u}n95]{Kunz1}
+Klaus K{\"u}nnemann.
+\newblock Some remarks on the arithmetic {H}odge index conjecture.
+\newblock {\em Compositio Math.}, 99(2):109--128, 1995.
+
+\bibitem[K{\"u}n98]{Kunz2}
+Klaus K{\"u}nnemann.
+\newblock The {K}\"ahler identity for bigraded {H}odge-{L}efschetz modules and
+  its application in non-{A}rchimedean {A}rakelov geometry.
+\newblock {\em J. Algebraic Geom.}, 7(4):651--672, 1998.
+
+\bibitem[Lie68]{Lieb}
+David~I. Lieberman.
+\newblock Numerical and homological equivalence of algebraic cycles on {H}odge
+  manifolds.
+\newblock {\em Amer. J. Math.}, 90:366--374, 1968.
+
+\bibitem[LO74]{LeOo}
+Hendrik~W. Lenstra, Jr. and Frans Oort.
+\newblock Simple abelian varieties having a prescribed formal isogeny type.
+\newblock {\em J. Pure Appl. Algebra}, 4:47--53, 1974.
+
+\bibitem[LR87]{LRSC}
+Robert Langlands and Michael Rapoport.
+\newblock Shimuravariet\"aten und {G}erben.
+\newblock {\em J. Reine Angew. Math.}, 378:113--220, 1987.
+
+\bibitem[Mat57]{matsu}
+Teruhisa Matsusaka.
+\newblock The criteria for algebraic equivalence and the torsion group.
+\newblock {\em Amer. J. Math.}, 79:53--66, 1957.
+
+\bibitem[Mil99]{Milnelef}
+James~Stuart Milne.
+\newblock Lefschetz classes on abelian varieties.
+\newblock {\em Duke Math. J.}, 96(3):639--675, 1999.
+
+\bibitem[Mil02]{pola}
+James~Stuart Milne.
+\newblock Polarizations and {G}rothendieck's standard conjectures.
+\newblock {\em Ann. of Math. (2)}, 155(2):599--610, 2002.
+
+\bibitem[MT58]{Mattuck}
+Arthur Mattuck and John Tate.
+\newblock On the inequality of {C}astelnuovo-{S}everi.
+\newblock {\em Abh. Math. Sem. Univ. Hamburg}, 22:295--299, 1958.
+
+\bibitem[Mum08]{MumfordTata}
+David Mumford.
+\newblock {\em Abelian varieties}, volume~5 of {\em Tata Institute of
+  Fundamental Research Studies in Mathematics}.
+\newblock Published for the Tata Institute of Fundamental Research, Bombay,
+  2008.
+\newblock With appendices by C. P. Ramanujam and Yuri Manin, Corrected reprint
+  of the second (1974) edition.
+
+\bibitem[MZ95]{MooZa}
+Ben J.~J. Moonen and Yuri Zarhin.
+\newblock Hodge classes and {T}ate classes on simple abelian fourfolds.
+\newblock {\em Duke Math. J.}, 77(3):553--581, 1995.
+
+\bibitem[Niz09]{Niziol}
+Wies\l{awa} Nizio\l.
+\newblock On uniqueness of {$p$}-adic period morphisms.
+\newblock {\em Pure Appl. Math. Q.}, 5(1):163--212, 2009.
+
+\bibitem[O'S11]{OS2}
+Peter O'Sullivan.
+\newblock Algebraic cycles on an abelian variety.
+\newblock {\em J. Reine Angew. Math.}, 654:1--81, 2011.
+
+\bibitem[Sai]{mSaito}
+Morihiko Saito.
+\newblock Monodromy filtration and positivity.
+\newblock {\em preprint available at https://arxiv.org/pdf/math/0006162.pdf},
+  pages 1--19.
+
+\bibitem[Seg37]{Segre}
+Beniamino Segre.
+\newblock Intorno ad un teorema di {H}odge sulla teoria della base per le curve
+  di una superficie algebrica.
+\newblock {\em Ann. Mat. Pura Appl.}, 16(1):157--163, 1937.
+
+\bibitem[Ser77]{cours}
+Jean-Pierre Serre.
+\newblock {\em Cours d'arithm\'etique}.
+\newblock Presses Universitaires de France, Paris, 1977.
+\newblock Deuxi\`eme \'edition revue et corrig\'ee, Le Math\'ematicien, No. 2.
+
+\bibitem[Shi71]{goro}
+Goro Shimura.
+\newblock {\em Introduction to the arithmetic theory of automorphic functions}.
+\newblock Publications of the Mathematical Society of Japan, No. 11. Iwanami
+  Shoten, Publishers, Tokyo; Princeton University Press, Princeton, N.J., 1971.
+\newblock Kan{\^o} Memorial Lectures, No. 1.
+
+\bibitem[Shi79]{ShioC}
+Tetsuji Shioda.
+\newblock The {H}odge conjecture for {F}ermat varieties.
+\newblock {\em Math. Ann.}, 245(2):175--184, 1979.
+
+\bibitem[SK79]{ShioF}
+Tetsuji Shioda and Toshiyuki Katsura.
+\newblock On {F}ermat varieties.
+\newblock {\em T\^ohoku Math. J. (2)}, 31(1):97--115, 1979.
+
+\bibitem[SR72]{Rivano}
+Neantro Saavedra~Rivano.
+\newblock Cat\'egories tannakiennes.
+\newblock {\em Bull. Soc. Math. France}, 100:417--430, 1972.
+
+\bibitem[Tat66]{Tate}
+John Tate.
+\newblock Endomorphisms of abelian varieties over finite fields.
+\newblock {\em Invent. Math.}, 2:134--144, 1966.
+
+\bibitem[Tat71]{TateBour}
+John Tate.
+\newblock Classes d'isog\'enie des vari\'et\'es ab\'eliennes sur un corps fini
+  (d'apr\`es {T}. {H}onda).
+\newblock In {\em S\'eminaire {B}ourbaki. {V}ol. 1968/69: {E}xpos\'es
+  347--363}, volume 175 of {\em Lecture Notes in Math.}, pages Exp.\ No.\ 352,
+  95--110. Springer, Berlin, 1971.
+
+\bibitem[Zar15]{Zah}
+Yuri Zarhin.
+\newblock Eigenvalues of {F}robenius endomorphisms of abelian varieties of low
+  dimension.
+\newblock {\em J. Pure Appl. Algebra}, 219(6):2076--2098, 2015.
+
+\end{thebibliography}
