@@ -329,4 +329,106 @@ end SymmetricPowerData
 
 end Degenerate
 
+/-! ## Functoriality of the quotient interface -/
+
+section Functoriality
+
+variable {S : Scheme.{u}} {V W X : Over S} {n : ℕ}
+
+/-- The map on relative powers induced by a morphism over the base. -/
+noncomputable def relativePowerMap (f : V ⟶ W) (n : ℕ) :
+    relativePower V n ⟶ relativePower W n :=
+  CategoryTheory.Limits.Pi.map (fun _ : Fin n => f)
+
+@[simp]
+theorem relativePowerMap_comp_projection (f : V ⟶ W) (n : ℕ) (i : Fin n) :
+    relativePowerMap f n ≫ Pi.π (fun _ : Fin n => W) i =
+      Pi.π (fun _ : Fin n => V) i ≫ f := by
+  simp [relativePowerMap]
+
+theorem relativePowerMap_id (V : Over S) (n : ℕ) :
+    relativePowerMap (𝟙 V) n = 𝟙 (relativePower V n) := by
+  apply Pi.hom_ext
+  intro i
+  simp [relativePowerMap]
+
+theorem relativePowerMap_comp (f : V ⟶ W) (g : W ⟶ X) (n : ℕ) :
+    relativePowerMap (f ≫ g) n =
+      relativePowerMap f n ≫ relativePowerMap g n := by
+  apply Pi.hom_ext
+  intro i
+  simp [relativePowerMap, Category.assoc]
+
+/-- Relative power maps commute with the permutation action. -/
+theorem relativePowerMap_perm_naturality (f : V ⟶ W) (n : ℕ)
+    (σ : Equiv.Perm (Fin n)) :
+    relativePowerMap f n ≫ permute W n σ =
+      permute V n σ ≫ relativePowerMap f n := by
+  apply Pi.hom_ext
+  intro i
+  simp [relativePowerMap, Category.assoc]
+
+/-- Precomposing a symmetric morphism with a relative power map remains
+symmetric. -/
+theorem isSymmetric_comp_relativePowerMap (f : V ⟶ W) (h : relativePower W n ⟶ X)
+    (hsym : IsSymmetric W n h) :
+    IsSymmetric V n (relativePowerMap f n ≫ h) := by
+  intro σ
+  rw [← Category.assoc, ← relativePowerMap_perm_naturality,
+    Category.assoc, hsym]
+
+namespace SymmetricPowerData
+
+/-- The morphism of relative symmetric powers induced by a map over `S`.
+Both quotient universal properties are explicit inputs; no quotient existence
+instance is inferred here. -/
+noncomputable def map (DV : SymmetricPowerData V n)
+    (DW : SymmetricPowerData W n) (f : V ⟶ W) :
+    DV.carrier ⟶ DW.carrier :=
+  DV.factor (relativePowerMap f n ≫ DW.projection)
+    (isSymmetric_comp_relativePowerMap f DW.projection
+      DW.projection_symmetric)
+
+@[reassoc (attr := simp)]
+theorem projection_comp_map (DV : SymmetricPowerData V n)
+    (DW : SymmetricPowerData W n) (f : V ⟶ W) :
+    DV.projection ≫ DV.map DW f =
+      relativePowerMap f n ≫ DW.projection :=
+  DV.projection_comp_factor _ _
+
+theorem map_id (DV : SymmetricPowerData V n) :
+    DV.map DV (𝟙 V) = 𝟙 DV.carrier := by
+  change DV.factor (relativePowerMap (𝟙 V) n ≫ DV.projection)
+      (isSymmetric_comp_relativePowerMap (𝟙 V) DV.projection
+        DV.projection_symmetric) = 𝟙 DV.carrier
+  symm
+  apply DV.factor_unique
+    (relativePowerMap (𝟙 V) n ≫ DV.projection)
+    (isSymmetric_comp_relativePowerMap (𝟙 V) DV.projection
+      DV.projection_symmetric)
+    (𝟙 DV.carrier)
+  rw [Category.comp_id, relativePowerMap_id]
+  simp
+
+theorem map_comp (DV : SymmetricPowerData V n)
+    (DW : SymmetricPowerData W n) (DX : SymmetricPowerData X n)
+    (f : V ⟶ W) (g : W ⟶ X) :
+    DV.map DX (f ≫ g) = DV.map DW f ≫ DW.map DX g := by
+  change DV.factor (relativePowerMap (f ≫ g) n ≫ DX.projection)
+      (isSymmetric_comp_relativePowerMap (f ≫ g) DX.projection
+        DX.projection_symmetric) =
+    DV.map DW f ≫ DW.map DX g
+  symm
+  apply DV.factor_unique
+    (relativePowerMap (f ≫ g) n ≫ DX.projection)
+    (isSymmetric_comp_relativePowerMap (f ≫ g) DX.projection
+      DX.projection_symmetric)
+    (DV.map DW f ≫ DW.map DX g)
+  rw [← Category.assoc, DV.projection_comp_map, Category.assoc,
+    DW.projection_comp_map, ← Category.assoc, relativePowerMap_comp]
+
+end SymmetricPowerData
+
+end Functoriality
+
 end MilneLib
