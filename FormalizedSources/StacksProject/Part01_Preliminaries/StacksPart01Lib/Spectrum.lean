@@ -256,6 +256,14 @@ theorem spectrum_comap_image_zeroLocus_of_surjective
       PrimeSpectrum.zeroLocus (Ideal.comap f I : Set R) := by
   exact image_comap_zeroLocus_eq_zeroLocus_comap S f hf I
 
+/-- An injective integral ring map induces a surjective map on prime spectra
+(Stacks, Tag `00GQ`). -/
+theorem spectrum_comap_surjective_of_isIntegral
+    {R S : Type*} [CommRing R] [CommRing S]
+    (f : R →+* S) (hf : f.IsIntegral) (hinj : Function.Injective f) :
+    Function.Surjective (PrimeSpectrum.comap f) := by
+  exact hf.comap_surjective hinj
+
 /-- Inclusion of affine zero loci is characterized by radical containment. -/
 theorem spectrum_zeroLocus_subset_iff_radical_le
     {R : Type*} [CommSemiring R] (I J : Ideal R) :
