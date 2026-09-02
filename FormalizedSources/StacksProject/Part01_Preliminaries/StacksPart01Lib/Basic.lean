@@ -30,6 +30,7 @@ import StacksPart01Lib.FiniteBaseChange
 import StacksPart01Lib.Artinian
 import StacksPart01Lib.Integral
 import StacksPart01Lib.GoingUp
+import StacksPart01Lib.Normal
 
 /-!
 # StacksPart01Lib.Basic
