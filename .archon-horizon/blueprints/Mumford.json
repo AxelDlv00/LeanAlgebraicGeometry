@@ -699,12 +699,24 @@
     },
     "states": {
       "blocked": 116,
-      "closed": 741,
+      "closed": 753,
       "formalized_open": 0,
       "informal": 212,
       "ready": 96
     },
     "warnings": [
+      "Mumford.Analytic.ComplexLieExponentialData: Lean declaration is not referenced by any blueprint \\lean{...}",
+      "Mumford.Analytic.ComplexLieExponentialData.exponential_zero_apply: Lean declaration is not referenced by any blueprint \\lean{...}",
+      "Mumford.Analytic.complexLieAdjoint: Lean declaration is not referenced by any blueprint \\lean{...}",
+      "Mumford.Analytic.complexLieAdjoint_eq_id: Lean declaration is not referenced by any blueprint \\lean{...}",
+      "Mumford.Analytic.complexLieAdjoint_mdifferentiable: Lean declaration is not referenced by any blueprint \\lean{...}",
+      "Mumford.Analytic.complexLieAdjoint_one: Lean declaration is not referenced by any blueprint \\lean{...}",
+      "Mumford.Analytic.complexLieConjugation: Lean declaration is not referenced by any blueprint \\lean{...}",
+      "Mumford.Analytic.complexLieConjugation_eq_self_of_exponential: Lean declaration is not referenced by any blueprint \\lean{...}",
+      "Mumford.Analytic.complexLieConjugation_one: Lean declaration is not referenced by any blueprint \\lean{...}",
+      "Mumford.Analytic.complexLieConjugation_one_eq_id: Lean declaration is not referenced by any blueprint \\lean{...}",
+      "Mumford.Analytic.complexLieGroup_isMulCommutative_of_exponential: Lean declaration is not referenced by any blueprint \\lean{...}",
+      "Mumford.Analytic.isMulCommutative_of_central_generators: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Mumford.GroupScheme.PointedHom: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Mumford.GroupScheme.comp_mulRight_hom: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Mumford.GroupScheme.comp_mulRight_inv: Lean declaration is not referenced by any blueprint \\lean{...}",
@@ -742,19 +754,7 @@
       "Mumford.GroupScheme.pointTranslationIso_self: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Mumford.GroupScheme.pointTranslationIso_symm: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Mumford.GroupScheme.pointTranslationIso_trans: Lean declaration is not referenced by any blueprint \\lean{...}",
-      "Mumford.GroupScheme.pointTranslation_decomposition_unique: Lean declaration is not referenced by any blueprint \\lean{...}",
-      "Mumford.GroupScheme.pointTranslation_self: Lean declaration is not referenced by any blueprint \\lean{...}",
-      "Mumford.GroupScheme.pointTranslation_symm: Lean declaration is not referenced by any blueprint \\lean{...}",
-      "Mumford.GroupScheme.pointTranslation_trans: Lean declaration is not referenced by any blueprint \\lean{...}",
-      "Mumford.GroupScheme.pointedProductHomEquiv: Lean declaration is not referenced by any blueprint \\lean{...}",
-      "Mumford.GroupScheme.pointsFunctor: Lean declaration is not referenced by any blueprint \\lean{...}",
-      "Mumford.GroupScheme.pointsFunctor_representable: Lean declaration is not referenced by any blueprint \\lean{...}",
-      "Mumford.GroupScheme.pointsYoneda: Lean declaration is not referenced by any blueprint \\lean{...}",
-      "Mumford.GroupScheme.pointsYoneda_fullyFaithful: Lean declaration is not referenced by any blueprint \\lean{...}",
-      "Mumford.GroupScheme.rigidity_constant_of_two_axes: Lean declaration is not referenced by any blueprint \\lean{...}",
-      "Mumford.GroupScheme.rigidity_constant_of_two_axes_arbitraryField: Lean declaration is not referenced by any blueprint \\lean{...}",
-      "Mumford.GroupScheme.rigidity_core: Lean declaration is not referenced by any blueprint \\lean{...}",
-      "Mumford.GroupScheme.rigidity_eqAt_closedPoint_of_proper_into_affine: Lean declaration is not referenced by any blueprint \\lean{...}"
+      "Mumford.GroupScheme.pointTranslation_decomposition_unique: Lean declaration is not referenced by any blueprint \\lean{...}"
     ]
   },
   "nodes": [
@@ -4791,7 +4791,7 @@
     },
     {
       "chapter": "Analytic Theory",
-      "comment_count": 0,
+      "comment_count": 2,
       "dep_count": 0,
       "descendant_count": 2,
       "group": "c140",
