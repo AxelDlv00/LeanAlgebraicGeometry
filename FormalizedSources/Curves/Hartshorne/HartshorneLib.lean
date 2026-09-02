@@ -104,6 +104,7 @@ import HartshorneLib.Chapter4ProjectiveMapProducer
 import HartshorneLib.Chapter4DivisorSectionCoordinates
 import HartshorneLib.Chapter4GlobalizationBoundary
 import HartshorneLib.Chapter4LocalRatioCoordinates
+import HartshorneLib.Chapter4LocalRatioRegularization
 
 /-!
 # HartshorneLib
