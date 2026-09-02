@@ -32,6 +32,7 @@ import StacksPart01Lib.Integral
 import StacksPart01Lib.GoingUp
 import StacksPart01Lib.Normal
 import StacksPart01Lib.NormalLocalization
+import StacksPart01Lib.IntegralProduct
 
 /-!
 # StacksPart01Lib.Basic
