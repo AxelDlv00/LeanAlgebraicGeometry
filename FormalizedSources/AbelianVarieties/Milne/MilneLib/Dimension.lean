@@ -144,6 +144,15 @@ theorem ringKrullDim_stalk_eq_coheight (X : Scheme.{u}) (z : X) :
   have hp' : (⟨p.asIdeal, p.isPrime⟩ : PrimeSpectrum Γ(X, U)) = p := rfl
   rw [hdim, hopen, hiso, heq, haff, hp']
 
+/-- The dimension of a local ring can only increase under specialization. -/
+theorem ringKrullDim_stalk_le_of_specializes
+    (X : Scheme.{u}) {x y : X} (hxy : x ⤳ y) :
+    ringKrullDim (X.presheaf.stalk x) ≤
+      ringKrullDim (X.presheaf.stalk y) := by
+  rw [ringKrullDim_stalk_eq_coheight, ringKrullDim_stalk_eq_coheight]
+  exact_mod_cast Order.coheight_anti
+    ((Scheme.le_iff_specializes).mpr hxy)
+
 /-- The dimension of a scheme is the supremum of the dimensions of its stalks. -/
 theorem topologicalKrullDim_eq_iSup_ringKrullDim_stalk (X : Scheme.{u}) :
     topologicalKrullDim X = ⨆ z : X, ringKrullDim (X.presheaf.stalk z) := by
@@ -417,6 +426,32 @@ theorem finrank_cotangentSpace_eq_of_closedPoints
   rw [htranslate] at h
   exact h
 
+/-- Closed points of an abelian variety over an algebraically closed field have
+the same local Krull dimension. -/
+theorem ringKrullDim_stalk_eq_of_closedPoints
+    {G : Over (Spec (.of K))} [GrpObj G]
+    (hG : IsAbelianVariety G)
+    {x z : G.left} (hx : IsClosed {x}) (hz : IsClosed {z}) :
+    ringKrullDim (G.left.presheaf.stalk z) =
+      ringKrullDim (G.left.presheaf.stalk x) := by
+  letI : LocallyOfFiniteType G.hom :=
+    locallyOfFiniteType_of_isAbelianVariety G hG
+  let px : Spec (.of K) ⟶ G.left := pointOfClosedPoint G.hom x hx
+  have hpx : px ≫ G.hom = 𝟙 _ := pointOfClosedPoint_comp G.hom x hx
+  let xhat : 𝟙_ (Over (Spec (.of K))) ⟶ G := Over.homMk px hpx
+  have hxhat : xhat.left (IsLocalRing.closedPoint K) = x := by
+    exact pointOfClosedPoint_apply G.hom x hx _
+  let pz : Spec (.of K) ⟶ G.left := pointOfClosedPoint G.hom z hz
+  have hpz : pz ≫ G.hom = 𝟙 _ := pointOfClosedPoint_comp G.hom z hz
+  let zhat : 𝟙_ (Over (Spec (.of K))) ⟶ G := Over.homMk pz hpz
+  have hzhat : zhat.left (IsLocalRing.closedPoint K) = z := by
+    exact pointOfClosedPoint_apply G.hom z hz _
+  have h := ringKrullDim_stalk_eq_of_pointTranslation G xhat zhat x
+  have htranslate : (pointTranslationIso G xhat zhat).hom.base x = z := by
+    rw [← hxhat, pointTranslationIso_hom_apply, hzhat]
+  rw [htranslate] at h
+  exact h
+
 end AlgebraicallyClosed
 
 end GroupVariety
@@ -447,6 +482,26 @@ theorem exists_closed_specialization_of_isAbelianVariety
   letI : JacobsonSpace G.left :=
     jacobsonSpace_left_of_isAbelianVariety G hG
   exact exists_closed_specialization_of_jacobsonSpace x
+
+/-- Over an algebraically closed field, the global dimension of an abelian
+variety is the Krull dimension of the local ring at any closed point. -/
+theorem topologicalKrullDim_eq_ringKrullDim_stalk_of_isAbelianVariety
+    {K : Type u} [Field K] [IsAlgClosed K]
+    {G : Over (Spec (.of K))} [GrpObj G]
+    (hG : IsAbelianVariety G) (x₀ : G.left)
+    (hx₀ : IsClosed ({x₀} : Set G.left)) :
+    topologicalKrullDim G.left =
+      ringKrullDim (G.left.presheaf.stalk x₀) := by
+  rw [topologicalKrullDim_eq_iSup_ringKrullDim_stalk]
+  apply le_antisymm
+  · apply iSup_le
+    intro z
+    obtain ⟨c, hc, hzc⟩ :=
+      exists_closed_specialization_of_isAbelianVariety hG z
+    exact (ringKrullDim_stalk_le_of_specializes G.left hzc).trans_eq
+      (GroupVariety.ringKrullDim_stalk_eq_of_closedPoints hG hx₀ hc)
+  · exact le_iSup
+      (fun z : G.left ↦ ringKrullDim (G.left.presheaf.stalk z)) x₀
 
 /-! A global dimension consumer for the translation-invariant cotangent rank.
 
