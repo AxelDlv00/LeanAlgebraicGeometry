@@ -593,6 +593,7 @@ import AlgebraicJacobian.Picard.Pic0ChartPlusFibreTower
 import AlgebraicJacobian.Picard.Pic0ChartLocusPlusFibre
 import AlgebraicJacobian.Picard.DegreeZeroBaseField
 import AlgebraicJacobian.Picard.Pic0EtaleDegreeZero
+import AlgebraicJacobian.Picard.Pic0FaithfullyFlatDegreeZero
 import AlgebraicJacobian.Picard.Pic0AffineEtaleDescent
 import AlgebraicJacobian.Picard.Pic0SigmaEtaleSheaf
 import AlgebraicJacobian.Picard.DegreeAtBaseField
