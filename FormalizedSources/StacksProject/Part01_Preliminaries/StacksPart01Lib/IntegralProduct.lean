@@ -102,4 +102,70 @@ theorem mem_integralClosure_prodMap_iff
     @mem_integralClosure_iff R₂ S₂ _ _ f₂.toAlgebra]
   exact isIntegralElem_prodMap_iff f₁ f₂ x.1 x.2
 
+/-- The integral closure for a binary product map is the product of the two
+component integral closures, viewed as subrings. -/
+theorem integralClosure_prodMap_toSubring
+    {R₁ R₂ S₁ S₂ : Type*}
+    [CommRing R₁] [CommRing R₂] [CommRing S₁] [CommRing S₂]
+    (f₁ : R₁ →+* S₁) (f₂ : R₂ →+* S₂) :
+    @Subalgebra.toSubring (R₁ × R₂) (S₁ × S₂) _ _
+        (f₁.prodMap f₂).toAlgebra
+        (@integralClosure (R₁ × R₂) (S₁ × S₂) _ _ (f₁.prodMap f₂).toAlgebra) =
+      (@Subalgebra.toSubring R₁ S₁ _ _ f₁.toAlgebra
+          (@integralClosure R₁ S₁ _ _ f₁.toAlgebra)).prod
+        (@Subalgebra.toSubring R₂ S₂ _ _ f₂.toAlgebra
+          (@integralClosure R₂ S₂ _ _ f₂.toAlgebra)) := by
+  apply Subring.ext
+  intro x
+  exact mem_integralClosure_prodMap_iff f₁ f₂ x
+
+/-- A binary product extension is integrally closed exactly when both
+component extensions are integrally closed. -/
+theorem isIntegrallyClosedIn_prodMap_iff
+    {R₁ R₂ S₁ S₂ : Type*}
+    [CommRing R₁] [CommRing R₂] [CommRing S₁] [CommRing S₂]
+    (f₁ : R₁ →+* S₁) (f₂ : R₂ →+* S₂) :
+    @IsIntegrallyClosedIn (R₁ × R₂) (S₁ × S₂) _ _ (f₁.prodMap f₂).toAlgebra ↔
+      @IsIntegrallyClosedIn R₁ S₁ _ _ f₁.toAlgebra ∧
+        @IsIntegrallyClosedIn R₂ S₂ _ _ f₂.toAlgebra := by
+  rw [@isIntegrallyClosedIn_iff (R₁ × R₂) _ (S₁ × S₂) _ (f₁.prodMap f₂).toAlgebra,
+    @isIntegrallyClosedIn_iff R₁ _ S₁ _ f₁.toAlgebra,
+    @isIntegrallyClosedIn_iff R₂ _ S₂ _ f₂.toAlgebra]
+  constructor
+  · rintro ⟨hinj, hclosed⟩
+    constructor
+    · constructor
+      · intro x y hxy
+        have hprod : f₁.prodMap f₂ (x, 0) = f₁.prodMap f₂ (y, 0) := by
+          exact Prod.ext hxy rfl
+        exact congrArg Prod.fst (hinj hprod)
+      · intro x hx
+        have hprod : (f₁.prodMap f₂).IsIntegralElem (x, 0) :=
+          (isIntegralElem_prodMap_iff f₁ f₂ x 0).mpr
+            ⟨hx, RingHom.isIntegralElem_zero f₂⟩
+        obtain ⟨y, hy⟩ := hclosed hprod
+        exact ⟨y.1, congrArg Prod.fst hy⟩
+    · constructor
+      · intro x y hxy
+        have hprod : f₁.prodMap f₂ (0, x) = f₁.prodMap f₂ (0, y) := by
+          exact Prod.ext rfl hxy
+        exact congrArg Prod.snd (hinj hprod)
+      · intro x hx
+        have hprod : (f₁.prodMap f₂).IsIntegralElem (0, x) :=
+          (isIntegralElem_prodMap_iff f₁ f₂ 0 x).mpr
+            ⟨RingHom.isIntegralElem_zero f₁, hx⟩
+        obtain ⟨y, hy⟩ := hclosed hprod
+        exact ⟨y.2, congrArg Prod.snd hy⟩
+  · rintro ⟨⟨hinj₁, hclosed₁⟩, ⟨hinj₂, hclosed₂⟩⟩
+    constructor
+    · intro x y hxy
+      apply Prod.ext
+      · exact hinj₁ (congrArg Prod.fst hxy)
+      · exact hinj₂ (congrArg Prod.snd hxy)
+    · intro x hx
+      have hcomponents := (isIntegralElem_prodMap_iff f₁ f₂ x.1 x.2).mp hx
+      obtain ⟨y₁, hy₁⟩ := hclosed₁ hcomponents.1
+      obtain ⟨y₂, hy₂⟩ := hclosed₂ hcomponents.2
+      exact ⟨(y₁, y₂), Prod.ext hy₁ hy₂⟩
+
 end StacksPart01
