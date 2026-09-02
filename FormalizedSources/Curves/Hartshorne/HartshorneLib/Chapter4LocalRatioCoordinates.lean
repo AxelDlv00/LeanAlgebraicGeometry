@@ -81,6 +81,28 @@ omit [IsAlgClosed k] [SmoothOfRelativeDimension 1 X.hom] [IsProper X.hom] in
       (X.left.presheaf.germ W.U (genericPoint X.left) W.generic_mem).hom s :=
   rfl
 
+omit [IsAlgClosed k] [SmoothOfRelativeDimension 1 X.hom] [IsProper X.hom] in
+/-- A regular function on a nonempty open of an integral scheme is determined
+by its generic-point value. -/
+theorem localStructureValue_injective (W : LocalRatioOpen X) :
+    Function.Injective (localStructureValue W) := by
+  intro s t h
+  apply AlgebraicGeometry.germ_injective_of_isIntegral
+    (X := X.left) (genericPoint X.left) W.generic_mem
+  exact h
+
+omit [IsAlgClosed k] [SmoothOfRelativeDimension 1 X.hom] [IsProper X.hom] in
+@[simp] theorem localStructureValue_one (W : LocalRatioOpen X) :
+    localStructureValue W (1 : Γ(X.left, W.U)) = 1 := by
+  simp [localStructureValue]
+
+omit [IsAlgClosed k] [SmoothOfRelativeDimension 1 X.hom] [IsProper X.hom] in
+@[simp] theorem localStructureValue_mul (W : LocalRatioOpen X)
+    (s t : Γ(X.left, W.U)) :
+    localStructureValue W (s * t) =
+      localStructureValue W s * localStructureValue W t := by
+  simp [localStructureValue]
+
 /-! ### A numerator, denominator, and their function-field ratio -/
 
 /-- Two sections of `𝒪(D)` on a nonempty open, with an explicitly nonzero
@@ -220,6 +242,52 @@ noncomputable def coordinate (a : LocalRatioCoordinateData D n)
       (a.sections a.denominator_index : X.left.functionField) :=
   rfl
 
+/-- Two local coordinate data represent the same homogeneous section family
+when all of their divisor sections have the same function-field values. -/
+def SameSectionValues (a b : LocalRatioCoordinateData D n) : Prop :=
+  ∀ i, (a.sections i : X.left.functionField) =
+    (b.sections i : X.left.functionField)
+
+@[refl] theorem sameSectionValues_refl (a : LocalRatioCoordinateData D n) :
+    a.SameSectionValues a := fun _ => rfl
+
+@[symm] theorem SameSectionValues.symm {a b : LocalRatioCoordinateData D n}
+    (h : a.SameSectionValues b) : b.SameSectionValues a :=
+  fun i => (h i).symm
+
+/-- On two charts representing the same homogeneous sections, normalized
+coordinates differ by the ratio of the two denominator coordinates. -/
+theorem coordinate_transition (a b : LocalRatioCoordinateData D n)
+    (h : a.SameSectionValues b) (i : Fin (n + 1)) :
+    a.coordinate i =
+      a.coordinate b.denominator_index * b.coordinate i := by
+  change (a.sections i : X.left.functionField) /
+      (a.sections a.denominator_index : X.left.functionField) =
+    ((a.sections b.denominator_index : X.left.functionField) /
+        (a.sections a.denominator_index : X.left.functionField)) *
+      ((b.sections i : X.left.functionField) /
+        (b.sections b.denominator_index : X.left.functionField))
+  rw [h i, h b.denominator_index]
+  field_simp [a.denominator_value_ne_zero, b.denominator_value_ne_zero]
+
+/-- The transition ratios in opposite directions multiply to one. -/
+theorem transition_mul_transition (a b : LocalRatioCoordinateData D n)
+    (h : a.SameSectionValues b) :
+    a.coordinate b.denominator_index *
+        b.coordinate a.denominator_index = 1 := by
+  calc
+    a.coordinate b.denominator_index *
+        b.coordinate a.denominator_index =
+      a.coordinate a.denominator_index :=
+        (a.coordinate_transition b h a.denominator_index).symm
+    _ = 1 := a.coordinate_denominator
+
+/-- Two nonempty local-ratio charts have nonempty intersection: both contain
+the generic point. -/
+theorem chart_inf_nonempty (a b : LocalRatioCoordinateData D n) :
+    ((a.chart.U ⊓ b.chart.U : X.left.Opens) : Set X.left).Nonempty := by
+  exact ⟨genericPoint X.left, a.chart.generic_mem, b.chart.generic_mem⟩
+
 end LocalRatioCoordinateData
 
 /-- A supplied regularization of local ratios by honest structure-sheaf
@@ -227,30 +295,31 @@ sections.  Restriction compatibility is automatic from functoriality of germs;
 only the actual regularity and value comparison are supplied as data. -/
 structure LocalRatioRegularization
     (a : LocalRatioCoordinateData D n) where
-  /-- The function-field coordinates being regularized. -/
-  c : Fin (n + 1) → X.left.functionField
-  /-- Each coordinate is the ratio of the corresponding divisor sections. -/
-  c_eq_ratio : ∀ i, c i = a.coordinate i
   /-- Structure-sheaf sections representing the coordinates on the chart. -/
   regularized : Fin (n + 1) → Γ(X.left, a.chart.U)
-  /-- The generic-point values of the regularized sections. -/
+  /-- The generic-point values are the corresponding divisor-section ratios. -/
   regularized_value_eq : ∀ i,
-    localStructureValue a.chart (regularized i) = c i
-  /-- Explicit normalization of the distinguished coordinate. -/
-  normalized : c a.denominator_index = 1
+    localStructureValue a.chart (regularized i) = a.coordinate i
 
 namespace LocalRatioRegularization
 
 variable {a : LocalRatioCoordinateData D n}
 
-@[simp] theorem normalized_eq (r : LocalRatioRegularization a) :
-    r.c a.denominator_index = 1 :=
-  r.normalized
+theorem regularized_denominator_eq_one (r : LocalRatioRegularization a) :
+    r.regularized a.denominator_index = 1 := by
+  apply AlgebraicGeometry.germ_injective_of_isIntegral
+    (X := X.left) (genericPoint X.left)
+    a.chart.generic_mem
+  change localStructureValue a.chart
+      (r.regularized a.denominator_index) =
+    localStructureValue a.chart (1 : Γ(X.left, a.chart.U))
+  rw [r.regularized_value_eq, a.coordinate_denominator]
+  exact (localStructureValue_one a.chart).symm
 
 theorem regularized_value_eq_ratio (r : LocalRatioRegularization a)
     (i : Fin (n + 1)) :
     localStructureValue a.chart (r.regularized i) = a.coordinate i := by
-  rw [r.regularized_value_eq i, r.c_eq_ratio i]
+  exact r.regularized_value_eq i
 
 /-- Taking the generic-point value commutes with restriction to a smaller
 nonempty open.  This is presheaf functoriality, not additional regularization
@@ -270,8 +339,75 @@ theorem restricted_value_eq (r : LocalRatioRegularization a)
     (hV : (V : Set X.left).Nonempty) (i : Fin (n + 1)) :
     localStructureValue (LocalRatioOpen.of_nonempty V hV)
       ((X.left.presheaf.map (homOfLE hVU).op).hom (r.regularized i)) =
-      r.c i := by
+      a.coordinate i := by
   rw [r.localStructureValue_restrict hVU hV i, r.regularized_value_eq i]
+
+/-- Regularized coordinates for the same homogeneous section family satisfy
+the expected transition equation on the overlap of their charts. -/
+theorem restricted_regularized_eq_transition_mul
+    {b : LocalRatioCoordinateData D n}
+    (r : LocalRatioRegularization a) (s : LocalRatioRegularization b)
+    (h : a.SameSectionValues b) (i : Fin (n + 1)) :
+    (X.left.presheaf.map
+      (homOfLE (show a.chart.U ⊓ b.chart.U ≤ a.chart.U from inf_le_left)).op).hom
+        (r.regularized i) =
+      (X.left.presheaf.map
+        (homOfLE (show a.chart.U ⊓ b.chart.U ≤ a.chart.U from inf_le_left)).op).hom
+          (r.regularized b.denominator_index) *
+        (X.left.presheaf.map
+          (homOfLE (show a.chart.U ⊓ b.chart.U ≤ b.chart.U from inf_le_right)).op).hom
+          (s.regularized i) := by
+  have hV := a.chart_inf_nonempty b
+  apply localStructureValue_injective
+    (LocalRatioOpen.of_nonempty (a.chart.U ⊓ b.chart.U) hV)
+  calc
+    localStructureValue (LocalRatioOpen.of_nonempty
+        (a.chart.U ⊓ b.chart.U) hV)
+        ((X.left.presheaf.map
+          (homOfLE (show a.chart.U ⊓ b.chart.U ≤ a.chart.U from inf_le_left)).op).hom
+            (r.regularized i)) =
+      a.coordinate i := r.restricted_value_eq inf_le_left hV i
+    _ = a.coordinate b.denominator_index * b.coordinate i :=
+      a.coordinate_transition b h i
+    _ = localStructureValue (LocalRatioOpen.of_nonempty
+          (a.chart.U ⊓ b.chart.U) hV)
+          ((X.left.presheaf.map
+            (homOfLE (show a.chart.U ⊓ b.chart.U ≤ a.chart.U from inf_le_left)).op).hom
+              (r.regularized b.denominator_index)) *
+        localStructureValue (LocalRatioOpen.of_nonempty
+          (a.chart.U ⊓ b.chart.U) hV)
+          ((X.left.presheaf.map
+            (homOfLE (show a.chart.U ⊓ b.chart.U ≤ b.chart.U from inf_le_right)).op).hom
+              (s.regularized i)) := by
+        rw [r.restricted_value_eq inf_le_left hV b.denominator_index,
+          s.restricted_value_eq inf_le_right hV i]
+    _ = localStructureValue (LocalRatioOpen.of_nonempty
+          (a.chart.U ⊓ b.chart.U) hV)
+          ((X.left.presheaf.map
+            (homOfLE (show a.chart.U ⊓ b.chart.U ≤ a.chart.U from inf_le_left)).op).hom
+              (r.regularized b.denominator_index) *
+            (X.left.presheaf.map
+            (homOfLE (show a.chart.U ⊓ b.chart.U ≤ b.chart.U from inf_le_right)).op).hom
+              (s.regularized i)) :=
+        (localStructureValue_mul (LocalRatioOpen.of_nonempty
+          (a.chart.U ⊓ b.chart.U) hV) _ _).symm
+
+/-- The transition section on an overlap is a unit; the opposite normalized
+coordinate is an explicit inverse. -/
+theorem restricted_transition_isUnit
+    {b : LocalRatioCoordinateData D n}
+    (r : LocalRatioRegularization a) (s : LocalRatioRegularization b)
+    (h : a.SameSectionValues b) :
+    IsUnit ((X.left.presheaf.map
+      (homOfLE (show a.chart.U ⊓ b.chart.U ≤ a.chart.U from inf_le_left)).op).hom
+        (r.regularized b.denominator_index)) := by
+  apply IsUnit.of_mul_eq_one
+    ((X.left.presheaf.map
+      (homOfLE (show a.chart.U ⊓ b.chart.U ≤ b.chart.U from inf_le_right)).op).hom
+        (s.regularized a.denominator_index))
+  simpa [r.regularized_denominator_eq_one] using
+    (r.restricted_regularized_eq_transition_mul s h
+      a.denominator_index).symm
 
 end LocalRatioRegularization
 
