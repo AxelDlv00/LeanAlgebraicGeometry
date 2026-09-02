@@ -7,7 +7,7 @@
 
 This package formalizes the base-change and tensor/sheaf technology used in
 Altman--Kleiman's *Compactifying the Picard Scheme*.  The source is indexed as
-`MR0555258-compactifying-picard` in the related-paper catalog; the legacy
+`MR0555258-compactifying-picard` in the root reference manifest; the legacy
 directory and Lean namespace are retained for compatibility with existing
 blueprint and graph links.
 
