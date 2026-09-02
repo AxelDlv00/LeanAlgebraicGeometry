@@ -33,6 +33,7 @@ import StacksPart01Lib.GoingUp
 import StacksPart01Lib.Normal
 import StacksPart01Lib.NormalLocalization
 import StacksPart01Lib.IntegralProduct
+import StacksPart01Lib.NoetherianSpectrum
 
 /-!
 # StacksPart01Lib.Basic
