@@ -42,6 +42,7 @@ Each project follows the established source-project conventions:
 - `hgraph/config.yaml` points to the blueprint and leaves the Lean list empty
   until a real library is added.
 
-The current batch is a blueprint scaffold, not a claim that any of the 26
-papers has already been formalized. Promote nodes to `\leanok` only after
-kernel-checked Lean declarations and complete proofs exist.
+The current batch is a complete source-derived blueprint corpus, not a claim
+that any of the 26 papers has already been formalized in Lean. Promote nodes
+to `\leanok` only after kernel-checked Lean declarations and complete proofs
+exist.
