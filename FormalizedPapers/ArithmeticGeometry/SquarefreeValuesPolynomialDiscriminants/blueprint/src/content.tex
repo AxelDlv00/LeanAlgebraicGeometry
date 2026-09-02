@@ -1,0 +1,76 @@
+\input{macros}
+
+\chapter*{About This Blueprint}
+\label{squarefree-values-polynomial-discriminants-about}
+
+This project follows \emph{Squarefree values of polynomial discriminants I} by Manjul Bhargava; Arul Shankar; Xiaoheng Wang (2022). The
+retrieved source is archived under
+\href{../../../../../references/squarefree-values-polynomial-discriminants/}{\texttt{squarefree-values-polynomial-discriminants}} and is indexed in
+the workspace reference manifest. The corresponding preprint is
+\href{https://arxiv.org/abs/1611.09806}{arXiv:1611.09806}.
+
+Order monic integer polynomials by the height $H(f)=\max\{|a_1|,|a_2|^{1/2},\ldots,|a_n|^{1/n}\}$ and write $\Delta(f)$ for the polynomial discriminant. Invariant theory for orthogonal representations, parametrization of integral orbits, and uniformity estimates count reducible and irreducible forms in the required height regions.
+
+This blueprint is an independently worded, source-faithful mathematical
+outline of the paper's definitions, constructions, and principal results. It
+should be read alongside the original source; the source anchor on each node
+points to the complete extracted TeX. Statements are intentionally marked
+\notready until a matching Lean declaration and proof have been added.
+
+\chapter{Foundations and setup}
+\label{chap:squarefree-values-polynomial-discriminants-foundations}
+
+\section{Standing hypotheses}
+\label{sec:squarefree-values-polynomial-discriminants-standing}
+
+Order monic integer polynomials by the height $H(f)=\max\{|a_1|,|a_2|^{1/2},\ldots,|a_n|^{1/n}\}$ and write $\Delta(f)$ for the polynomial discriminant.
+
+\begin{convention}[Standing hypotheses]
+\label{squarefree-values-polynomial-discriminants-setup}
+\source{squarefree-values-polynomial-discriminants}
+The objects and hypotheses described above are in force throughout the
+formalization of this paper.
+\notready
+\end{convention}
+
+\chapter{Constructions and proof architecture}
+\label{chap:squarefree-values-polynomial-discriminants-method}
+
+\section{Geometric and cohomological method}
+\label{sec:squarefree-values-polynomial-discriminants-method}
+
+Invariant theory for orthogonal representations, parametrization of integral orbits, and uniformity estimates count reducible and irreducible forms in the required height regions. The formalization should preserve these intermediate constructions
+as separate dependency nodes before addressing the principal result.
+
+\begin{definition}[Central object of the paper]
+\label{squarefree-values-polynomial-discriminants-central-object}
+\source{squarefree-values-polynomial-discriminants}
+The central moduli, cycle, representation, height, or filtration object
+introduced in the paper is taken with the hypotheses in the standing
+convention.
+\uses{squarefree-values-polynomial-discriminants-setup}
+\notready
+\end{definition}
+
+\chapter{Principal results}
+\label{chap:squarefree-values-polynomial-discriminants-results}
+
+\section{Main theorem or conjecture}
+\label{sec:squarefree-values-polynomial-discriminants-results}
+
+\begin{theorem}[Squarefree discriminant density]
+\label{squarefree-values-polynomial-discriminants-main}
+\source{squarefree-values-polynomial-discriminants}
+\uses{squarefree-values-polynomial-discriminants-setup}
+For every degree $n\geq1$, the density of monic integer polynomials whose discriminant is squarefree exists and is a positive constant $\lambda_n$.
+\notready
+\end{theorem}
+
+\begin{theorem}[Monogenicity density]
+\label{squarefree-values-polynomial-discriminants-secondary}
+\source{squarefree-values-polynomial-discriminants}
+\uses{squarefree-values-polynomial-discriminants-main}
+For $n>1$, the density of monic integer polynomials for which $\mathbb Z[x]/(f)$ is the full ring of integers of its fraction field is $\zeta(2)^{-1}$.
+\notready
+\end{theorem}
+

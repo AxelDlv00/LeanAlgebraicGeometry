@@ -1,0 +1,76 @@
+\input{macros}
+
+\chapter*{About This Blueprint}
+\label{canonical-representations-surface-groups-about}
+
+This project follows \emph{Canonical representations of surface groups} by Aaron Landesman; Daniel Litt (2024). The
+retrieved source is archived under
+\href{../../../../../references/canonical-representations-surface-groups/}{\texttt{canonical-representations-surface-groups}} and is indexed in
+the workspace reference manifest. The corresponding preprint is
+\href{https://arxiv.org/abs/2205.15352}{arXiv:2205.15352}.
+
+Let $\Sigma_{g,n}$ be a punctured genus-$g$ surface and consider representations of its fundamental group into $\mathrm{GL}_r(\mathbb C)$, with the mapping class group acting on their character variety. The proof combines unitary and semisimple cases, mapping-class-group rigidity, cohomological vanishing, and arithmetic consequences for local systems on moduli of curves.
+
+This blueprint is an independently worded, source-faithful mathematical
+outline of the paper's definitions, constructions, and principal results. It
+should be read alongside the original source; the source anchor on each node
+points to the complete extracted TeX. Statements are intentionally marked
+\notready until a matching Lean declaration and proof have been added.
+
+\chapter{Foundations and setup}
+\label{chap:canonical-representations-surface-groups-foundations}
+
+\section{Standing hypotheses}
+\label{sec:canonical-representations-surface-groups-standing}
+
+Let $\Sigma_{g,n}$ be a punctured genus-$g$ surface and consider representations of its fundamental group into $\mathrm{GL}_r(\mathbb C)$, with the mapping class group acting on their character variety.
+
+\begin{convention}[Standing hypotheses]
+\label{canonical-representations-surface-groups-setup}
+\source{canonical-representations-surface-groups}
+The objects and hypotheses described above are in force throughout the
+formalization of this paper.
+\notready
+\end{convention}
+
+\chapter{Constructions and proof architecture}
+\label{chap:canonical-representations-surface-groups-method}
+
+\section{Geometric and cohomological method}
+\label{sec:canonical-representations-surface-groups-method}
+
+The proof combines unitary and semisimple cases, mapping-class-group rigidity, cohomological vanishing, and arithmetic consequences for local systems on moduli of curves. The formalization should preserve these intermediate constructions
+as separate dependency nodes before addressing the principal result.
+
+\begin{definition}[Central object of the paper]
+\label{canonical-representations-surface-groups-central-object}
+\source{canonical-representations-surface-groups}
+The central moduli, cycle, representation, height, or filtration object
+introduced in the paper is taken with the hypotheses in the standing
+convention.
+\uses{canonical-representations-surface-groups-setup}
+\notready
+\end{definition}
+
+\chapter{Principal results}
+\label{chap:canonical-representations-surface-groups-results}
+
+\section{Main theorem or conjecture}
+\label{sec:canonical-representations-surface-groups-results}
+
+\begin{theorem}[Finite image for small-rank MCG-finite representations]
+\label{canonical-representations-surface-groups-main}
+\source{canonical-representations-surface-groups}
+\uses{canonical-representations-surface-groups-setup}
+If a representation of $\pi_1(\Sigma_{g,n})$ has finite mapping-class-group orbit and rank $r<\sqrt{g+1}$, then its image is finite.
+\notready
+\end{theorem}
+
+\begin{theorem}[Putman--Wieland range]
+\label{canonical-representations-surface-groups-secondary}
+\source{canonical-representations-surface-groups}
+\uses{canonical-representations-surface-groups-main}
+For $g\geq2$, $n\geq0$, and a finite group $H$ with $\#H<g^2$, the Putman--Wieland conjecture holds for $(g,n,H)$.
+\notready
+\end{theorem}
+

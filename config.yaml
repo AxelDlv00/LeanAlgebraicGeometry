@@ -217,6 +217,84 @@ projects:
       - '**/GFDL-1.2.txt'
       - '**/stacks-my.bib'
       declarations: []
+  StandardConjecturesAbelianFourfolds:
+    path: FormalizedPapers/AbelianVarietiesAndMotives/StandardConjecturesAbelianFourfolds
+    type: blueprint
+  UniversalSecantBundlesSyzygiesCanonicalCurves:
+    path: FormalizedPapers/CurvesAndLinearSeries/UniversalSecantBundlesSyzygiesCanonicalCurves
+    type: blueprint
+  BoundsStalksPerverseSheavesCharacteristicPShende:
+    path: FormalizedPapers/SheavesAndCohomology/BoundsStalksPerverseSheavesCharacteristicPShende
+    type: blueprint
+  RefinedBrillNoetherTheoryHurwitzSpaces:
+    path: FormalizedPapers/CurvesAndLinearSeries/RefinedBrillNoetherTheoryHurwitzSpaces
+    type: blueprint
+  UniformityMordellLangCurves:
+    path: FormalizedPapers/ArithmeticGeometry/UniformityMordellLangCurves
+    type: blueprint
+  AnticyclotomicIwasawaRationalEllipticEisenstein:
+    path: FormalizedPapers/ArithmeticGeometry/AnticyclotomicIwasawaRationalEllipticEisenstein
+    type: blueprint
+  VeryStableHiggsBundlesEquivariantMultiplicityMirrorSymmetry:
+    path: FormalizedPapers/ModuliHiggsCharacter/VeryStableHiggsBundlesEquivariantMultiplicityMirrorSymmetry
+    type: blueprint
+  RigidLocalSystemsMultiplicativeEigenvalueProblem:
+    path: FormalizedPapers/ModuliHiggsCharacter/RigidLocalSystemsMultiplicativeEigenvalueProblem
+    type: blueprint
+  SquarefreeValuesPolynomialDiscriminants:
+    path: FormalizedPapers/ArithmeticGeometry/SquarefreeValuesPolynomialDiscriminants
+    type: blueprint
+  IntersectionComplexesUnramifiedLFactors:
+    path: FormalizedPapers/SheavesAndCohomology/IntersectionComplexesUnramifiedLFactors
+    type: blueprint
+  HitchinFibrationsAbelianSurfacesPW:
+    path: FormalizedPapers/ModuliHiggsCharacter/HitchinFibrationsAbelianSurfacesPW
+    type: blueprint
+  GeometricBogomolovConjectureArbitraryCharacteristics:
+    path: FormalizedPapers/ArithmeticGeometry/GeometricBogomolovConjectureArbitraryCharacteristics
+    type: blueprint
+  UniversalPAdicGrossZagierFormula:
+    path: FormalizedPapers/ArithmeticGeometry/UniversalPAdicGrossZagierFormula
+    type: blueprint
+  NoEnriquesSurfaceOverTheIntegers:
+    path: FormalizedPapers/SurfacesBirationalHyperkahler/NoEnriquesSurfaceOverTheIntegers
+    type: blueprint
+  TatesThesisDeRhamSetting:
+    path: FormalizedPapers/ArithmeticGeometry/TatesThesisDeRhamSetting
+    type: blueprint
+  PixtonsFormulaAbelJacobiPicardStack:
+    path: FormalizedPapers/CurvesAndLinearSeries/PixtonsFormulaAbelJacobiPicardStack
+    type: blueprint
+  RiemannRochPolynomialsHyperkahlerFourfolds:
+    path: FormalizedPapers/SurfacesBirationalHyperkahler/RiemannRochPolynomialsHyperkahlerFourfolds
+    type: blueprint
+  ChabautyColemanBoundSurfaces:
+    path: FormalizedPapers/ArithmeticGeometry/ChabautyColemanBoundSurfaces
+    type: blueprint
+  PurityFlatCohomology:
+    path: FormalizedPapers/SheavesAndCohomology/PurityFlatCohomology
+    type: blueprint
+  MotivicInvariantsBirationalMaps:
+    path: FormalizedPapers/SurfacesBirationalHyperkahler/MotivicInvariantsBirationalMaps
+    type: blueprint
+  BirationalSectionConjectureStrongBirationality:
+    path: FormalizedPapers/ArithmeticGeometry/BirationalSectionConjectureStrongBirationality
+    type: blueprint
+  HigherSiegelWeilUnitaryNonsingularTerms:
+    path: FormalizedPapers/ArithmeticGeometry/HigherSiegelWeilUnitaryNonsingularTerms
+    type: blueprint
+  VirasoroConstraintsModuliSheavesVertexAlgebras:
+    path: FormalizedPapers/ModuliHiggsCharacter/VirasoroConstraintsModuliSheavesVertexAlgebras
+    type: blueprint
+  CanonicalRepresentationsSurfaceGroups:
+    path: FormalizedPapers/ModuliHiggsCharacter/CanonicalRepresentationsSurfaceGroups
+    type: blueprint
+  GeometricLocalSystemsVeryGeneralCurvesIsomonodromy:
+    path: FormalizedPapers/ModuliHiggsCharacter/GeometricLocalSystemsVeryGeneralCurvesIsomonodromy
+    type: blueprint
+  PWConjectureGLN:
+    path: FormalizedPapers/ModuliHiggsCharacter/PWConjectureGLN
+    type: blueprint
 freeze:
   files:
   - FormalizedSources/StacksProject/convert_stacks_chapter.py

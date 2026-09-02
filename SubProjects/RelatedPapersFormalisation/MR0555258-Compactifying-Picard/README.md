@@ -1,39 +1,12 @@
 # Compactifying the Picard Scheme
 
 <!-- archon:readme -->
-<!-- Claude fills in the prose sections below. Keep the section headers. -->
 
 ## Project
 
-This package formalizes the base-change and tensor/sheaf technology used in
-Altman--Kleiman's *Compactifying the Picard Scheme*.  The source is indexed as
-`MR0555258-compactifying-picard` in the root reference manifest; the legacy
-directory and Lean namespace are retained for compatibility with existing
-blueprint and graph links.
-
-## References
-
-See [`references/summary.md`](references/summary.md) for a description of each source.
-
-## Structure
-
-- `MR0555258CompactifyingPicard/` — main Lean source
-- `blueprint/` — leanblueprint source (build with `leanblueprint pdf` and `leanblueprint web`)
-- `references/` — PDFs, papers, and informal notes backing the formalization
-- `archon-protected.yaml` — declarations agents must not modify
-- `.archon/` — agent state (not committed)
-
-## How to build
-
-```bash
-lake exe cache get   # download Mathlib olean cache
-lake build           # compile the project
-```
-
-## How to run the formalization loop
-
-```bash
-archon loop .
-```
-
-This launches the plan → prove → review loop and opens a dashboard.
+This legacy package formalizes the base-change and tensor/sheaf technology used
+in Altman--Kleiman's *Compactifying the Picard Scheme*. Its source remains
+indexed as `MR0555258-compactifying-picard` in the root reference manifest.
+The package predates `FormalizedPapers/`; its legacy directory and Lean
+namespace are retained for compatibility with existing blueprint and graph
+links.

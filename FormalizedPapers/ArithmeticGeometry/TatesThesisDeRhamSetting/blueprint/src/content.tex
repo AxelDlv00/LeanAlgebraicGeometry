@@ -1,0 +1,76 @@
+\input{macros}
+
+\chapter*{About This Blueprint}
+\label{tates-thesis-de-rham-setting-about}
+
+This project follows \emph{Tate's thesis in the de Rham Setting} by Justin Hilburn; Sam Raskin (2021). The
+retrieved source is archived under
+\href{../../../../../references/tates-thesis-de-rham-setting/}{\texttt{tates-thesis-de-rham-setting}} and is indexed in
+the workspace reference manifest. The corresponding preprint is
+\href{https://arxiv.org/abs/2107.11325}{arXiv:2107.11325}.
+
+Over a field of characteristic zero, let $\mathcal Y$ be the moduli space of rank-one de Rham local systems on the punctured disc with a flat section, and let $\mathcal L\mathbb A^1$ denote the algebraic loop space. The construction uses ind-coherent sheaves, $D$-modules on loop spaces, positive-loop descent, and the Beilinson--Drinfeld local class-field-theory action.
+
+This blueprint is an independently worded, source-faithful mathematical
+outline of the paper's definitions, constructions, and principal results. It
+should be read alongside the original source; the source anchor on each node
+points to the complete extracted TeX. Statements are intentionally marked
+\notready until a matching Lean declaration and proof have been added.
+
+\chapter{Foundations and setup}
+\label{chap:tates-thesis-de-rham-setting-foundations}
+
+\section{Standing hypotheses}
+\label{sec:tates-thesis-de-rham-setting-standing}
+
+Over a field of characteristic zero, let $\mathcal Y$ be the moduli space of rank-one de Rham local systems on the punctured disc with a flat section, and let $\mathcal L\mathbb A^1$ denote the algebraic loop space.
+
+\begin{convention}[Standing hypotheses]
+\label{tates-thesis-de-rham-setting-setup}
+\source{tates-thesis-de-rham-setting}
+The objects and hypotheses described above are in force throughout the
+formalization of this paper.
+\notready
+\end{convention}
+
+\chapter{Constructions and proof architecture}
+\label{chap:tates-thesis-de-rham-setting-method}
+
+\section{Geometric and cohomological method}
+\label{sec:tates-thesis-de-rham-setting-method}
+
+The construction uses ind-coherent sheaves, $D$-modules on loop spaces, positive-loop descent, and the Beilinson--Drinfeld local class-field-theory action. The formalization should preserve these intermediate constructions
+as separate dependency nodes before addressing the principal result.
+
+\begin{definition}[Central object of the paper]
+\label{tates-thesis-de-rham-setting-central-object}
+\source{tates-thesis-de-rham-setting}
+The central moduli, cycle, representation, height, or filtration object
+introduced in the paper is taken with the hypotheses in the standing
+convention.
+\uses{tates-thesis-de-rham-setting-setup}
+\notready
+\end{definition}
+
+\chapter{Principal results}
+\label{chap:tates-thesis-de-rham-setting-results}
+
+\section{Main theorem or conjecture}
+\label{sec:tates-thesis-de-rham-setting-results}
+
+\begin{theorem}[Tate equivalence in the de Rham setting]
+\label{tates-thesis-de-rham-setting-main}
+\source{tates-thesis-de-rham-setting}
+\uses{tates-thesis-de-rham-setting-setup}
+There is a canonical equivalence of DG categories $D^!(\mathcal L\mathbb A^1)\simeq\operatorname{IndCoh}^*(\mathcal Y)$, compatible with the local geometric class-field-theory action.
+\notready
+\end{theorem}
+
+\begin{theorem}[Uniqueness and module compatibility]
+\label{tates-thesis-de-rham-setting-secondary}
+\source{tates-thesis-de-rham-setting}
+\uses{tates-thesis-de-rham-setting-main}
+The equivalence is uniquely characterized as an equivalence of $D^*(\mathcal L\mathbb G_m)$-module categories whose restriction to positive loops agrees with the constructed local functor.
+\notready
+\end{theorem}
+

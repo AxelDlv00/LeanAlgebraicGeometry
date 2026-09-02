@@ -1,0 +1,76 @@
+\input{macros}
+
+\chapter*{About This Blueprint}
+\label{pixtons-formula-abel-jacobi-picard-stack-about}
+
+This project follows \emph{Pixton's formula and Abel--Jacobi theory on the Picard stack} by Younghan Bae; David Holmes; Rahul Pandharipande; Johannes Schmitt; Rosa Schwarz (2023). The
+retrieved source is archived under
+\href{../../../../../references/pixtons-formula-abel-jacobi-picard-stack/}{\texttt{pixtons-formula-abel-jacobi-picard-stack}} and is indexed in
+the workspace reference manifest. The corresponding preprint is
+\href{https://arxiv.org/abs/2004.08676}{arXiv:2004.08676}.
+
+For pointed prestable curves and an integer weighting $A$ with total degree $d$, the Abel--Jacobi construction defines twisted double ramification cycles on the universal Picard stack. Prestable graphs, tautological psi classes, mod-$r$ weightings, and compactified Abel--Jacobi maps yield a graph-sum expression and its vanishing and closure properties.
+
+This blueprint is an independently worded, source-faithful mathematical
+outline of the paper's definitions, constructions, and principal results. It
+should be read alongside the original source; the source anchor on each node
+points to the complete extracted TeX. Statements are intentionally marked
+\notready until a matching Lean declaration and proof have been added.
+
+\chapter{Foundations and setup}
+\label{chap:pixtons-formula-abel-jacobi-picard-stack-foundations}
+
+\section{Standing hypotheses}
+\label{sec:pixtons-formula-abel-jacobi-picard-stack-standing}
+
+For pointed prestable curves and an integer weighting $A$ with total degree $d$, the Abel--Jacobi construction defines twisted double ramification cycles on the universal Picard stack.
+
+\begin{convention}[Standing hypotheses]
+\label{pixtons-formula-abel-jacobi-picard-stack-setup}
+\source{pixtons-formula-abel-jacobi-picard-stack}
+The objects and hypotheses described above are in force throughout the
+formalization of this paper.
+\notready
+\end{convention}
+
+\chapter{Constructions and proof architecture}
+\label{chap:pixtons-formula-abel-jacobi-picard-stack-method}
+
+\section{Geometric and cohomological method}
+\label{sec:pixtons-formula-abel-jacobi-picard-stack-method}
+
+Prestable graphs, tautological psi classes, mod-$r$ weightings, and compactified Abel--Jacobi maps yield a graph-sum expression and its vanishing and closure properties. The formalization should preserve these intermediate constructions
+as separate dependency nodes before addressing the principal result.
+
+\begin{definition}[Central object of the paper]
+\label{pixtons-formula-abel-jacobi-picard-stack-central-object}
+\source{pixtons-formula-abel-jacobi-picard-stack}
+The central moduli, cycle, representation, height, or filtration object
+introduced in the paper is taken with the hypotheses in the standing
+convention.
+\uses{pixtons-formula-abel-jacobi-picard-stack-setup}
+\notready
+\end{definition}
+
+\chapter{Principal results}
+\label{chap:pixtons-formula-abel-jacobi-picard-stack-results}
+
+\section{Main theorem or conjecture}
+\label{sec:pixtons-formula-abel-jacobi-picard-stack-results}
+
+\begin{theorem}[Universal twisted double ramification cycle]
+\label{pixtons-formula-abel-jacobi-picard-stack-main}
+\source{pixtons-formula-abel-jacobi-picard-stack}
+\uses{pixtons-formula-abel-jacobi-picard-stack-setup}
+Logarithmic compactification of the Abel--Jacobi map produces a universal twisted double ramification cycle on the universal Picard stack, compatible with the usual cycle on the moduli space of pointed curves.
+\notready
+\end{theorem}
+
+\begin{proposition}[Polynomiality of Pixton coefficients]
+\label{pixtons-formula-abel-jacobi-picard-stack-secondary}
+\source{pixtons-formula-abel-jacobi-picard-stack}
+\uses{pixtons-formula-abel-jacobi-picard-stack-main}
+For fixed genus, degree, weighting, and decorated graph, the coefficient in Pixton's tautological class is polynomial in the auxiliary integer parameter for all sufficiently large values.
+\notready
+\end{proposition}
+

@@ -1,0 +1,76 @@
+\input{macros}
+
+\chapter*{About This Blueprint}
+\label{universal-p-adic-gross-zagier-formula-about}
+
+This project follows \emph{The universal p-adic Gross--Zagier formula} by Daniel Disegni (2022). The
+retrieved source is archived under
+\href{../../../../../references/universal-p-adic-gross-zagier-formula/}{\texttt{universal-p-adic-gross-zagier-formula}} and is indexed in
+the workspace reference manifest. The corresponding preprint is
+\href{https://arxiv.org/abs/2001.00045}{arXiv:2001.00045}.
+
+The setup contains Hilbert modular forms, unitary Shimura varieties, Heegner cycles, Bloch--Kato Selmer groups, and $p$-adic height pairings varying in Hida families. Local toric periods and multiplicity one construct the global pairing; universal Heegner classes and sheaves on eigenvarieties interpolate the classical data.
+
+This blueprint is an independently worded, source-faithful mathematical
+outline of the paper's definitions, constructions, and principal results. It
+should be read alongside the original source; the source anchor on each node
+points to the complete extracted TeX. Statements are intentionally marked
+\notready until a matching Lean declaration and proof have been added.
+
+\chapter{Foundations and setup}
+\label{chap:universal-p-adic-gross-zagier-formula-foundations}
+
+\section{Standing hypotheses}
+\label{sec:universal-p-adic-gross-zagier-formula-standing}
+
+The setup contains Hilbert modular forms, unitary Shimura varieties, Heegner cycles, Bloch--Kato Selmer groups, and $p$-adic height pairings varying in Hida families.
+
+\begin{convention}[Standing hypotheses]
+\label{universal-p-adic-gross-zagier-formula-setup}
+\source{universal-p-adic-gross-zagier-formula}
+The objects and hypotheses described above are in force throughout the
+formalization of this paper.
+\notready
+\end{convention}
+
+\chapter{Constructions and proof architecture}
+\label{chap:universal-p-adic-gross-zagier-formula-method}
+
+\section{Geometric and cohomological method}
+\label{sec:universal-p-adic-gross-zagier-formula-method}
+
+Local toric periods and multiplicity one construct the global pairing; universal Heegner classes and sheaves on eigenvarieties interpolate the classical data. The formalization should preserve these intermediate constructions
+as separate dependency nodes before addressing the principal result.
+
+\begin{definition}[Central object of the paper]
+\label{universal-p-adic-gross-zagier-formula-central-object}
+\source{universal-p-adic-gross-zagier-formula}
+The central moduli, cycle, representation, height, or filtration object
+introduced in the paper is taken with the hypotheses in the standing
+convention.
+\uses{universal-p-adic-gross-zagier-formula-setup}
+\notready
+\end{definition}
+
+\chapter{Principal results}
+\label{chap:universal-p-adic-gross-zagier-formula-results}
+
+\section{Main theorem or conjecture}
+\label{sec:universal-p-adic-gross-zagier-formula-results}
+
+\begin{theorem}[Universal p-adic Gross--Zagier identity]
+\label{universal-p-adic-gross-zagier-formula-main}
+\source{universal-p-adic-gross-zagier-formula}
+\uses{universal-p-adic-gross-zagier-formula-setup}
+The derivative of the universal $p$-adic $L$-function at the central critical point equals the universal $p$-adic height pairing of the corresponding Heegner classes, with the normalization specified in the paper.
+\notready
+\end{theorem}
+
+\begin{corollary}[Classical specialization]
+\label{universal-p-adic-gross-zagier-formula-secondary}
+\source{universal-p-adic-gross-zagier-formula}
+\uses{universal-p-adic-gross-zagier-formula-main}
+Specializing the universal identity at a classical automorphic point recovers the corresponding $p$-adic Gross--Zagier formula.
+\notready
+\end{corollary}
+

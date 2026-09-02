@@ -1,0 +1,76 @@
+\input{macros}
+
+\chapter*{About This Blueprint}
+\label{standard-conjectures-abelian-fourfolds-about}
+
+This project follows \emph{Standard conjectures for abelian fourfolds} by Giuseppe Ancona (2020). The
+retrieved source is archived under
+\href{../../../../../references/standard-conjectures-abelian-fourfolds/}{\texttt{standard-conjectures-abelian-fourfolds}} and is indexed in
+the workspace reference manifest. The corresponding preprint is
+\href{https://arxiv.org/abs/1806.03216}{arXiv:1806.03216}.
+
+We work with an abelian variety over a field, its algebraic cycles modulo numerical equivalence, and the intersection pairings induced by a polarization. The fourfold case is the central dimension. The paper decomposes the motive of an abelian variety, analyzes Lefschetz and Hodge--Riemann pairings, and compares Betti, ℓ-adic, and $p$-adic realizations through CM structures and quadratic forms.
+
+This blueprint is an independently worded, source-faithful mathematical
+outline of the paper's definitions, constructions, and principal results. It
+should be read alongside the original source; the source anchor on each node
+points to the complete extracted TeX. Statements are intentionally marked
+\notready until a matching Lean declaration and proof have been added.
+
+\chapter{Foundations and setup}
+\label{chap:standard-conjectures-abelian-fourfolds-foundations}
+
+\section{Standing hypotheses}
+\label{sec:standard-conjectures-abelian-fourfolds-standing}
+
+We work with an abelian variety over a field, its algebraic cycles modulo numerical equivalence, and the intersection pairings induced by a polarization. The fourfold case is the central dimension.
+
+\begin{convention}[Standing hypotheses]
+\label{standard-conjectures-abelian-fourfolds-setup}
+\source{standard-conjectures-abelian-fourfolds}
+The objects and hypotheses described above are in force throughout the
+formalization of this paper.
+\notready
+\end{convention}
+
+\chapter{Constructions and proof architecture}
+\label{chap:standard-conjectures-abelian-fourfolds-method}
+
+\section{Geometric and cohomological method}
+\label{sec:standard-conjectures-abelian-fourfolds-method}
+
+The paper decomposes the motive of an abelian variety, analyzes Lefschetz and Hodge--Riemann pairings, and compares Betti, ℓ-adic, and $p$-adic realizations through CM structures and quadratic forms. The formalization should preserve these intermediate constructions
+as separate dependency nodes before addressing the principal result.
+
+\begin{definition}[Central object of the paper]
+\label{standard-conjectures-abelian-fourfolds-central-object}
+\source{standard-conjectures-abelian-fourfolds}
+The central moduli, cycle, representation, height, or filtration object
+introduced in the paper is taken with the hypotheses in the standing
+convention.
+\uses{standard-conjectures-abelian-fourfolds-setup}
+\notready
+\end{definition}
+
+\chapter{Principal results}
+\label{chap:standard-conjectures-abelian-fourfolds-results}
+
+\section{Main theorem or conjecture}
+\label{sec:standard-conjectures-abelian-fourfolds-results}
+
+\begin{theorem}[Hodge standard conjecture in dimension four]
+\label{standard-conjectures-abelian-fourfolds-main}
+\source{standard-conjectures-abelian-fourfolds}
+\uses{standard-conjectures-abelian-fourfolds-setup}
+The standard conjecture of Hodge type holds for abelian fourfolds over fields of positive characteristic.
+\notready
+\end{theorem}
+
+\begin{theorem}[Numerical and ℓ-adic homological equivalence]
+\label{standard-conjectures-abelian-fourfolds-secondary}
+\source{standard-conjectures-abelian-fourfolds}
+\uses{standard-conjectures-abelian-fourfolds-main}
+For an abelian fourfold, numerical equivalence agrees with ℓ-adic homological equivalence for infinitely many prime numbers \(\ell\).
+\notready
+\end{theorem}
+

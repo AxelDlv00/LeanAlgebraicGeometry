@@ -1,0 +1,76 @@
+\input{macros}
+
+\chapter*{About This Blueprint}
+\label{intersection-complexes-unramified-l-factors-about}
+
+This project follows \emph{Intersection complexes and unramified L-factors} by Yiannis Sakellaridis; Jonathan Wang (2020). The
+retrieved source is archived under
+\href{../../../../../references/intersection-complexes-unramified-l-factors/}{\texttt{intersection-complexes-unramified-l-factors}} and is indexed in
+the workspace reference manifest. The corresponding preprint is
+\href{https://arxiv.org/abs/2009.03943}{arXiv:2009.03943}.
+
+Let $X$ be a spherical variety over a non-archimedean local field, with its arc space, invariant-theoretic Cartan cone, and intersection-complex function. The paper studies arc-space asymptotics, semi-infinite orbit dimensions, canonical affine closures, and Springer-theoretic perverse sheaves to compare IC pushforwards with unramified local factors.
+
+This blueprint is an independently worded, source-faithful mathematical
+outline of the paper's definitions, constructions, and principal results. It
+should be read alongside the original source; the source anchor on each node
+points to the complete extracted TeX. Statements are intentionally marked
+\notready until a matching Lean declaration and proof have been added.
+
+\chapter{Foundations and setup}
+\label{chap:intersection-complexes-unramified-l-factors-foundations}
+
+\section{Standing hypotheses}
+\label{sec:intersection-complexes-unramified-l-factors-standing}
+
+Let $X$ be a spherical variety over a non-archimedean local field, with its arc space, invariant-theoretic Cartan cone, and intersection-complex function.
+
+\begin{convention}[Standing hypotheses]
+\label{intersection-complexes-unramified-l-factors-setup}
+\source{intersection-complexes-unramified-l-factors}
+The objects and hypotheses described above are in force throughout the
+formalization of this paper.
+\notready
+\end{convention}
+
+\chapter{Constructions and proof architecture}
+\label{chap:intersection-complexes-unramified-l-factors-method}
+
+\section{Geometric and cohomological method}
+\label{sec:intersection-complexes-unramified-l-factors-method}
+
+The paper studies arc-space asymptotics, semi-infinite orbit dimensions, canonical affine closures, and Springer-theoretic perverse sheaves to compare IC pushforwards with unramified local factors. The formalization should preserve these intermediate constructions
+as separate dependency nodes before addressing the principal result.
+
+\begin{definition}[Central object of the paper]
+\label{intersection-complexes-unramified-l-factors-central-object}
+\source{intersection-complexes-unramified-l-factors}
+The central moduli, cycle, representation, height, or filtration object
+introduced in the paper is taken with the hypotheses in the standing
+convention.
+\uses{intersection-complexes-unramified-l-factors-setup}
+\notready
+\end{definition}
+
+\chapter{Principal results}
+\label{chap:intersection-complexes-unramified-l-factors-results}
+
+\section{Main theorem or conjecture}
+\label{sec:intersection-complexes-unramified-l-factors-results}
+
+\begin{conjecture}[IC pushforward and the L-group]
+\label{intersection-complexes-unramified-l-factors-main}
+\source{intersection-complexes-unramified-l-factors}
+\uses{intersection-complexes-unramified-l-factors-setup}
+The normalized pushforward of the intersection-complex function is described by the character of a symplectic $L$-group representation whose weights are determined by the spherical variety.
+\notready
+\end{conjecture}
+
+\begin{theorem}[Affine-closure construction]
+\label{intersection-complexes-unramified-l-factors-secondary}
+\source{intersection-complexes-unramified-l-factors}
+\uses{intersection-complexes-unramified-l-factors-main}
+For the affine-closure class of spherical varieties satisfying the stated freeness and dual-group hypotheses, the representation governing the normalized IC pushforward exists with the prescribed weight and Frobenius properties.
+\notready
+\end{theorem}
+

@@ -1,0 +1,76 @@
+\input{macros}
+
+\chapter*{About This Blueprint}
+\label{chabauty-coleman-bound-surfaces-about}
+
+This project follows \emph{A Chabauty--Coleman bound for surfaces} by Jerson Caro; Hector Pasten (2023). The
+retrieved source is archived under
+\href{../../../../../references/chabauty-coleman-bound-surfaces/}{\texttt{chabauty-coleman-bound-surfaces}} and is indexed in
+the workspace reference manifest. The corresponding preprint is
+\href{https://arxiv.org/abs/2102.01055}{arXiv:2102.01055}.
+
+Let a smooth geometrically irreducible projective surface lie in an abelian variety over $\mathbb Q_p$ with good reduction. A finitely generated subgroup of rank at most one has a compact $p$-adic closure. Overdetermined differential integrality, normalization branches, local point counting, and canonical genus bounds extend Chabauty--Coleman arguments beyond curves.
+
+This blueprint is an independently worded, source-faithful mathematical
+outline of the paper's definitions, constructions, and principal results. It
+should be read alongside the original source; the source anchor on each node
+points to the complete extracted TeX. Statements are intentionally marked
+\notready until a matching Lean declaration and proof have been added.
+
+\chapter{Foundations and setup}
+\label{chap:chabauty-coleman-bound-surfaces-foundations}
+
+\section{Standing hypotheses}
+\label{sec:chabauty-coleman-bound-surfaces-standing}
+
+Let a smooth geometrically irreducible projective surface lie in an abelian variety over $\mathbb Q_p$ with good reduction. A finitely generated subgroup of rank at most one has a compact $p$-adic closure.
+
+\begin{convention}[Standing hypotheses]
+\label{chabauty-coleman-bound-surfaces-setup}
+\source{chabauty-coleman-bound-surfaces}
+The objects and hypotheses described above are in force throughout the
+formalization of this paper.
+\notready
+\end{convention}
+
+\chapter{Constructions and proof architecture}
+\label{chap:chabauty-coleman-bound-surfaces-method}
+
+\section{Geometric and cohomological method}
+\label{sec:chabauty-coleman-bound-surfaces-method}
+
+Overdetermined differential integrality, normalization branches, local point counting, and canonical genus bounds extend Chabauty--Coleman arguments beyond curves. The formalization should preserve these intermediate constructions
+as separate dependency nodes before addressing the principal result.
+
+\begin{definition}[Central object of the paper]
+\label{chabauty-coleman-bound-surfaces-central-object}
+\source{chabauty-coleman-bound-surfaces}
+The central moduli, cycle, representation, height, or filtration object
+introduced in the paper is taken with the hypotheses in the standing
+convention.
+\uses{chabauty-coleman-bound-surfaces-setup}
+\notready
+\end{definition}
+
+\chapter{Principal results}
+\label{chap:chabauty-coleman-bound-surfaces-results}
+
+\section{Main theorem or conjecture}
+\label{sec:chabauty-coleman-bound-surfaces-results}
+
+\begin{theorem}[Surface Chabauty--Coleman bound]
+\label{chabauty-coleman-bound-surfaces-main}
+\source{chabauty-coleman-bound-surfaces}
+\uses{chabauty-coleman-bound-surfaces-setup}
+Under the stated good-reduction, rank, and numerical hypotheses, the set of $p$-adic points of the surface in the subgroup closure is bounded by the special-fiber point count plus the explicit Chern-number term given in the paper.
+\notready
+\end{theorem}
+
+\begin{theorem}[Rational-point bound over $\mathbb Q$]
+\label{chabauty-coleman-bound-surfaces-secondary}
+\source{chabauty-coleman-bound-surfaces}
+\uses{chabauty-coleman-bound-surfaces-main}
+For a surface of general type in an abelian threefold satisfying the reduction hypotheses and rank at most one, the number of rational points obeys the explicit bound of the paper.
+\notready
+\end{theorem}
+

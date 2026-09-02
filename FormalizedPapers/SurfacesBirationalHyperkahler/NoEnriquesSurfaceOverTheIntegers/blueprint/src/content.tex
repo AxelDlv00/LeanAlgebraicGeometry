@@ -1,0 +1,76 @@
+\input{macros}
+
+\chapter*{About This Blueprint}
+\label{no-enriques-surface-over-the-integers-about}
+
+This project follows \emph{There is no Enriques surface over the integers} by Stefan Schröer (2023). The
+retrieved source is archived under
+\href{../../../../../references/no-enriques-surface-over-the-integers/}{\texttt{no-enriques-surface-over-the-integers}} and is indexed in
+the workspace reference manifest. The corresponding preprint is
+\href{https://arxiv.org/abs/2004.07025}{arXiv:2004.07025}.
+
+An Enriques surface is studied through its numerical-class local system, elliptic and Jacobian fibrations, and contractions of surface families over arithmetic bases. The proof combines the classification of singular fibers, monodromy of numerical classes, finite-field point counts, and a systematic elimination of all possible fiber configurations.
+
+This blueprint is an independently worded, source-faithful mathematical
+outline of the paper's definitions, constructions, and principal results. It
+should be read alongside the original source; the source anchor on each node
+points to the complete extracted TeX. Statements are intentionally marked
+\notready until a matching Lean declaration and proof have been added.
+
+\chapter{Foundations and setup}
+\label{chap:no-enriques-surface-over-the-integers-foundations}
+
+\section{Standing hypotheses}
+\label{sec:no-enriques-surface-over-the-integers-standing}
+
+An Enriques surface is studied through its numerical-class local system, elliptic and Jacobian fibrations, and contractions of surface families over arithmetic bases.
+
+\begin{convention}[Standing hypotheses]
+\label{no-enriques-surface-over-the-integers-setup}
+\source{no-enriques-surface-over-the-integers}
+The objects and hypotheses described above are in force throughout the
+formalization of this paper.
+\notready
+\end{convention}
+
+\chapter{Constructions and proof architecture}
+\label{chap:no-enriques-surface-over-the-integers-method}
+
+\section{Geometric and cohomological method}
+\label{sec:no-enriques-surface-over-the-integers-method}
+
+The proof combines the classification of singular fibers, monodromy of numerical classes, finite-field point counts, and a systematic elimination of all possible fiber configurations. The formalization should preserve these intermediate constructions
+as separate dependency nodes before addressing the principal result.
+
+\begin{definition}[Central object of the paper]
+\label{no-enriques-surface-over-the-integers-central-object}
+\source{no-enriques-surface-over-the-integers}
+The central moduli, cycle, representation, height, or filtration object
+introduced in the paper is taken with the hypotheses in the standing
+convention.
+\uses{no-enriques-surface-over-the-integers-setup}
+\notready
+\end{definition}
+
+\chapter{Principal results}
+\label{chap:no-enriques-surface-over-the-integers-results}
+
+\section{Main theorem or conjecture}
+\label{sec:no-enriques-surface-over-the-integers-results}
+
+\begin{theorem}[Nonexistence over the integers]
+\label{no-enriques-surface-over-the-integers-main}
+\source{no-enriques-surface-over-the-integers}
+\uses{no-enriques-surface-over-the-integers-setup}
+There is no Enriques surface over $\operatorname{Spec}\mathbb Z$.
+\notready
+\end{theorem}
+
+\begin{proposition}[Numerical local-system rigidity]
+\label{no-enriques-surface-over-the-integers-secondary}
+\source{no-enriques-surface-over-the-integers}
+\uses{no-enriques-surface-over-the-integers-main}
+For a one-dimensional base, constancy of the numerical-class local system is equivalent to the induced graph map on fiber configurations being an isomorphism.
+\notready
+\end{proposition}
+

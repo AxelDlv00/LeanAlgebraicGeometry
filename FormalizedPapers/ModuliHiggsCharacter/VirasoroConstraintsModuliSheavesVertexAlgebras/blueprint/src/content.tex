@@ -1,0 +1,76 @@
+\input{macros}
+
+\chapter*{About This Blueprint}
+\label{virasoro-constraints-moduli-sheaves-vertex-algebras-about}
+
+This project follows \emph{Virasoro constraints for moduli of sheaves and vertex algebras} by Arkadij Bojko; Woonam Lim; Miguel Moreira (2024). The
+retrieved source is archived under
+\href{../../../../../references/virasoro-constraints-moduli-sheaves-vertex-algebras/}{\texttt{virasoro-constraints-moduli-sheaves-vertex-algebras}} and is indexed in
+the workspace reference manifest. The corresponding preprint is
+\href{https://arxiv.org/abs/2210.05266}{arXiv:2210.05266}.
+
+Let $M$ be a moduli space of sheaves on a smooth projective surface and $P$ a moduli space of stable pairs, with their virtual classes and descendent algebras. A Joyce vertex algebra, universal sheaves, descendent operators, and conformal/Virasoro elements organize the tautological insertions and reduce constraints to rank-reduction identities.
+
+This blueprint is an independently worded, source-faithful mathematical
+outline of the paper's definitions, constructions, and principal results. It
+should be read alongside the original source; the source anchor on each node
+points to the complete extracted TeX. Statements are intentionally marked
+\notready until a matching Lean declaration and proof have been added.
+
+\chapter{Foundations and setup}
+\label{chap:virasoro-constraints-moduli-sheaves-vertex-algebras-foundations}
+
+\section{Standing hypotheses}
+\label{sec:virasoro-constraints-moduli-sheaves-vertex-algebras-standing}
+
+Let $M$ be a moduli space of sheaves on a smooth projective surface and $P$ a moduli space of stable pairs, with their virtual classes and descendent algebras.
+
+\begin{convention}[Standing hypotheses]
+\label{virasoro-constraints-moduli-sheaves-vertex-algebras-setup}
+\source{virasoro-constraints-moduli-sheaves-vertex-algebras}
+The objects and hypotheses described above are in force throughout the
+formalization of this paper.
+\notready
+\end{convention}
+
+\chapter{Constructions and proof architecture}
+\label{chap:virasoro-constraints-moduli-sheaves-vertex-algebras-method}
+
+\section{Geometric and cohomological method}
+\label{sec:virasoro-constraints-moduli-sheaves-vertex-algebras-method}
+
+A Joyce vertex algebra, universal sheaves, descendent operators, and conformal/Virasoro elements organize the tautological insertions and reduce constraints to rank-reduction identities. The formalization should preserve these intermediate constructions
+as separate dependency nodes before addressing the principal result.
+
+\begin{definition}[Central object of the paper]
+\label{virasoro-constraints-moduli-sheaves-vertex-algebras-central-object}
+\source{virasoro-constraints-moduli-sheaves-vertex-algebras}
+The central moduli, cycle, representation, height, or filtration object
+introduced in the paper is taken with the hypotheses in the standing
+convention.
+\uses{virasoro-constraints-moduli-sheaves-vertex-algebras-setup}
+\notready
+\end{definition}
+
+\chapter{Principal results}
+\label{chap:virasoro-constraints-moduli-sheaves-vertex-algebras-results}
+
+\section{Main theorem or conjecture}
+\label{sec:virasoro-constraints-moduli-sheaves-vertex-algebras-results}
+
+\begin{conjecture}[Virasoro constraints for sheaves]
+\label{virasoro-constraints-moduli-sheaves-vertex-algebras-main}
+\source{virasoro-constraints-moduli-sheaves-vertex-algebras}
+\uses{virasoro-constraints-moduli-sheaves-vertex-algebras-setup}
+For every descendent $D$ in the sheaf descendent algebra, integration of the Virasoro transform over the virtual class of $M$ vanishes.
+\notready
+\end{conjecture}
+
+\begin{conjecture}[Virasoro constraints for pairs]
+\label{virasoro-constraints-moduli-sheaves-vertex-algebras-secondary}
+\source{virasoro-constraints-moduli-sheaves-vertex-algebras}
+\uses{virasoro-constraints-moduli-sheaves-vertex-algebras-main}
+For every nonnegative Virasoro index and every descendent $D$, the corresponding Virasoro insertion integrates to zero over the virtual class of the stable-pair moduli space.
+\notready
+\end{conjecture}
+

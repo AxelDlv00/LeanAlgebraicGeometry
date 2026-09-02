@@ -1,0 +1,76 @@
+\input{macros}
+
+\chapter*{About This Blueprint}
+\label{purity-flat-cohomology-about}
+
+This project follows \emph{Purity for flat cohomology} by Kęstutis Česnavičius; Peter Scholze (2024). The
+retrieved source is archived under
+\href{../../../../../references/purity-flat-cohomology/}{\texttt{purity-flat-cohomology}} and is indexed in
+the workspace reference manifest. The corresponding preprint is
+\href{https://arxiv.org/abs/1912.10932}{arXiv:1912.10932}.
+
+The paper studies flat and étale cohomology with finite locally free coefficients on schemes and rings, including the characteristic-primary and prime-to-characteristic cases. Arc and $I$-complete arc hyperdescent, perfectoid geometry, crystalline and prismatic Dieudonné theory, and devissage reduce purity to local algebraic and cohomological inputs.
+
+This blueprint is an independently worded, source-faithful mathematical
+outline of the paper's definitions, constructions, and principal results. It
+should be read alongside the original source; the source anchor on each node
+points to the complete extracted TeX. Statements are intentionally marked
+\notready until a matching Lean declaration and proof have been added.
+
+\chapter{Foundations and setup}
+\label{chap:purity-flat-cohomology-foundations}
+
+\section{Standing hypotheses}
+\label{sec:purity-flat-cohomology-standing}
+
+The paper studies flat and étale cohomology with finite locally free coefficients on schemes and rings, including the characteristic-primary and prime-to-characteristic cases.
+
+\begin{convention}[Standing hypotheses]
+\label{purity-flat-cohomology-setup}
+\source{purity-flat-cohomology}
+The objects and hypotheses described above are in force throughout the
+formalization of this paper.
+\notready
+\end{convention}
+
+\chapter{Constructions and proof architecture}
+\label{chap:purity-flat-cohomology-method}
+
+\section{Geometric and cohomological method}
+\label{sec:purity-flat-cohomology-method}
+
+Arc and $I$-complete arc hyperdescent, perfectoid geometry, crystalline and prismatic Dieudonné theory, and devissage reduce purity to local algebraic and cohomological inputs. The formalization should preserve these intermediate constructions
+as separate dependency nodes before addressing the principal result.
+
+\begin{definition}[Central object of the paper]
+\label{purity-flat-cohomology-central-object}
+\source{purity-flat-cohomology}
+The central moduli, cycle, representation, height, or filtration object
+introduced in the paper is taken with the hypotheses in the standing
+convention.
+\uses{purity-flat-cohomology-setup}
+\notready
+\end{definition}
+
+\chapter{Principal results}
+\label{chap:purity-flat-cohomology-results}
+
+\section{Main theorem or conjecture}
+\label{sec:purity-flat-cohomology-results}
+
+\begin{theorem}[Absolute cohomological purity]
+\label{purity-flat-cohomology-main}
+\source{purity-flat-cohomology}
+\uses{purity-flat-cohomology-setup}
+For a regular immersion of the stated codimension and finite flat coefficients, flat cohomology satisfies the absolute cohomological purity isomorphism formulated in the paper.
+\notready
+\end{theorem}
+
+\begin{theorem}[Arc hyperdescent]
+\label{purity-flat-cohomology-secondary}
+\source{purity-flat-cohomology}
+\uses{purity-flat-cohomology-main}
+For torsion étale sheaves, derived étale cohomology and the completed punctured-spectrum variants satisfy hyperdescent in the relevant arc topologies.
+\notready
+\end{theorem}
+

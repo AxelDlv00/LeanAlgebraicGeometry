@@ -1,0 +1,76 @@
+\input{macros}
+
+\chapter*{About This Blueprint}
+\label{refined-brill-noether-theory-hurwitz-spaces-about}
+
+This project follows \emph{A refined Brill--Noether theory over Hurwitz spaces} by Hannah K. Larson (2020). The
+retrieved source is archived under
+\href{../../../../../references/refined-brill-noether-theory-hurwitz-spaces/}{\texttt{refined-brill-noether-theory-hurwitz-spaces}} and is indexed in
+the workspace reference manifest. The corresponding preprint is
+\href{https://arxiv.org/abs/1907.08597}{arXiv:1907.08597}.
+
+Fix a general degree-$k$ cover $f:C\to\mathbb P^1$ and a degree-$d$ line bundle on $C$. Splitting loci record the possible degrees of the summands of the pushforward bundle $f_*L$. Degeneration to balanced covers and determinantal calculations give expected codimension, smoothness, and universal cycle classes for refined splitting loci over Hurwitz spaces.
+
+This blueprint is an independently worded, source-faithful mathematical
+outline of the paper's definitions, constructions, and principal results. It
+should be read alongside the original source; the source anchor on each node
+points to the complete extracted TeX. Statements are intentionally marked
+\notready until a matching Lean declaration and proof have been added.
+
+\chapter{Foundations and setup}
+\label{chap:refined-brill-noether-theory-hurwitz-spaces-foundations}
+
+\section{Standing hypotheses}
+\label{sec:refined-brill-noether-theory-hurwitz-spaces-standing}
+
+Fix a general degree-$k$ cover $f:C\to\mathbb P^1$ and a degree-$d$ line bundle on $C$. Splitting loci record the possible degrees of the summands of the pushforward bundle $f_*L$.
+
+\begin{convention}[Standing hypotheses]
+\label{refined-brill-noether-theory-hurwitz-spaces-setup}
+\source{refined-brill-noether-theory-hurwitz-spaces}
+The objects and hypotheses described above are in force throughout the
+formalization of this paper.
+\notready
+\end{convention}
+
+\chapter{Constructions and proof architecture}
+\label{chap:refined-brill-noether-theory-hurwitz-spaces-method}
+
+\section{Geometric and cohomological method}
+\label{sec:refined-brill-noether-theory-hurwitz-spaces-method}
+
+Degeneration to balanced covers and determinantal calculations give expected codimension, smoothness, and universal cycle classes for refined splitting loci over Hurwitz spaces. The formalization should preserve these intermediate constructions
+as separate dependency nodes before addressing the principal result.
+
+\begin{definition}[Central object of the paper]
+\label{refined-brill-noether-theory-hurwitz-spaces-central-object}
+\source{refined-brill-noether-theory-hurwitz-spaces}
+The central moduli, cycle, representation, height, or filtration object
+introduced in the paper is taken with the hypotheses in the standing
+convention.
+\uses{refined-brill-noether-theory-hurwitz-spaces-setup}
+\notready
+\end{definition}
+
+\chapter{Principal results}
+\label{chap:refined-brill-noether-theory-hurwitz-spaces-results}
+
+\section{Main theorem or conjecture}
+\label{sec:refined-brill-noether-theory-hurwitz-spaces-results}
+
+\begin{theorem}[Smoothness and dimension of refined splitting loci]
+\label{refined-brill-noether-theory-hurwitz-spaces-main}
+\source{refined-brill-noether-theory-hurwitz-spaces}
+\uses{refined-brill-noether-theory-hurwitz-spaces-setup}
+For a general degree-$k$, genus-$g$ cover and splitting vector $\vec e$, the refined splitting locus is smooth of pure dimension $g-u(\vec e)$ when $u(\vec e)\leq g$, and is empty when $u(\vec e)>g$.
+\notready
+\end{theorem}
+
+\begin{proposition}[Universal class of a splitting locus]
+\label{refined-brill-noether-theory-hurwitz-spaces-secondary}
+\source{refined-brill-noether-theory-hurwitz-spaces}
+\uses{refined-brill-noether-theory-hurwitz-spaces-main}
+When the expected codimension is attained, the class of the universal refined splitting locus is given by a universal polynomial in the Chern classes of the relevant pushforwards.
+\notready
+\end{proposition}
+

@@ -1,0 +1,76 @@
+\input{macros}
+
+\chapter*{About This Blueprint}
+\label{very-stable-higgs-bundles-equivariant-multiplicity-mirror-symmetry-about}
+
+This project follows \emph{Very stable Higgs bundles, equivariant multiplicity and mirror symmetry} by Tamás Hausel; Nigel Hitchin (2022). The
+retrieved source is archived under
+\href{../../../../../references/very-stable-higgs-bundles-equivariant-multiplicity-mirror-symmetry/}{\texttt{very-stable-higgs-bundles-equivariant-multiplicity-mirror-symmetry}} and is indexed in
+the workspace reference manifest. The corresponding preprint is
+\href{https://arxiv.org/abs/2101.08583}{arXiv:2101.08583}.
+
+Let $\mathcal M$ be the moduli space of stable Higgs bundles on a smooth curve with its scaling action and Hitchin fibration. The upward flow from a fixed point and the nilpotent cone encode the notion of very stability. Białynicki--Birula decompositions, Hecke transformations, and equivariant intersection multiplicities describe upward and downward flows and their mirror-symmetry interpretation.
+
+This blueprint is an independently worded, source-faithful mathematical
+outline of the paper's definitions, constructions, and principal results. It
+should be read alongside the original source; the source anchor on each node
+points to the complete extracted TeX. Statements are intentionally marked
+\notready until a matching Lean declaration and proof have been added.
+
+\chapter{Foundations and setup}
+\label{chap:very-stable-higgs-bundles-equivariant-multiplicity-mirror-symmetry-foundations}
+
+\section{Standing hypotheses}
+\label{sec:very-stable-higgs-bundles-equivariant-multiplicity-mirror-symmetry-standing}
+
+Let $\mathcal M$ be the moduli space of stable Higgs bundles on a smooth curve with its scaling action and Hitchin fibration. The upward flow from a fixed point and the nilpotent cone encode the notion of very stability.
+
+\begin{convention}[Standing hypotheses]
+\label{very-stable-higgs-bundles-equivariant-multiplicity-mirror-symmetry-setup}
+\source{very-stable-higgs-bundles-equivariant-multiplicity-mirror-symmetry}
+The objects and hypotheses described above are in force throughout the
+formalization of this paper.
+\notready
+\end{convention}
+
+\chapter{Constructions and proof architecture}
+\label{chap:very-stable-higgs-bundles-equivariant-multiplicity-mirror-symmetry-method}
+
+\section{Geometric and cohomological method}
+\label{sec:very-stable-higgs-bundles-equivariant-multiplicity-mirror-symmetry-method}
+
+Białynicki--Birula decompositions, Hecke transformations, and equivariant intersection multiplicities describe upward and downward flows and their mirror-symmetry interpretation. The formalization should preserve these intermediate constructions
+as separate dependency nodes before addressing the principal result.
+
+\begin{definition}[Central object of the paper]
+\label{very-stable-higgs-bundles-equivariant-multiplicity-mirror-symmetry-central-object}
+\source{very-stable-higgs-bundles-equivariant-multiplicity-mirror-symmetry}
+The central moduli, cycle, representation, height, or filtration object
+introduced in the paper is taken with the hypotheses in the standing
+convention.
+\uses{very-stable-higgs-bundles-equivariant-multiplicity-mirror-symmetry-setup}
+\notready
+\end{definition}
+
+\chapter{Principal results}
+\label{chap:very-stable-higgs-bundles-equivariant-multiplicity-mirror-symmetry-results}
+
+\section{Main theorem or conjecture}
+\label{sec:very-stable-higgs-bundles-equivariant-multiplicity-mirror-symmetry-results}
+
+\begin{theorem}[Closed upward flows]
+\label{very-stable-higgs-bundles-equivariant-multiplicity-mirror-symmetry-main}
+\source{very-stable-higgs-bundles-equivariant-multiplicity-mirror-symmetry}
+\uses{very-stable-higgs-bundles-equivariant-multiplicity-mirror-symmetry-setup}
+A stable fixed Higgs bundle is very stable if and only if its upward Białynicki--Birula flow is closed in the Higgs moduli space.
+\notready
+\end{theorem}
+
+\begin{theorem}[Ranked chain criterion]
+\label{very-stable-higgs-bundles-equivariant-multiplicity-mirror-symmetry-secondary}
+\source{very-stable-higgs-bundles-equivariant-multiplicity-mirror-symmetry}
+\uses{very-stable-higgs-bundles-equivariant-multiplicity-mirror-symmetry-main}
+For a stable Higgs bundle whose underlying bundle is a chain of line bundles, very stability is equivalent to the composite Higgs section having no repeated zero.
+\notready
+\end{theorem}
+
