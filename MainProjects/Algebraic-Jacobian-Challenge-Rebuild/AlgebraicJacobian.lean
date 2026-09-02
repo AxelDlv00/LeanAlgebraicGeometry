@@ -114,6 +114,7 @@ import AlgebraicJacobian.Picard.DescentClassRepBuild
 import AlgebraicJacobian.Picard.CechKernelGlue
 import AlgebraicJacobian.Picard.EtaleSeparatednessClose
 import AlgebraicJacobian.Picard.CechKernelLemma
+import AlgebraicJacobian.Picard.RelPicFaithfullyFlatInjective
 import AlgebraicJacobian.Picard.PicEtSections
 import AlgebraicJacobian.Picard.PicEt
 import AlgebraicJacobian.Picard.RelPicCoverInjective
