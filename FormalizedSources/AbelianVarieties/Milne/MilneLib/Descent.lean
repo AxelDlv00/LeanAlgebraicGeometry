@@ -13,8 +13,8 @@ import Mathlib.LinearAlgebra.FiniteDimensional.Basic
 
 This file isolates the algebraic input used by descent arguments in Milne's
 discussion of Jacobians.  The faithfully-flat finiteness theorems are imported
-from Mathlib and exposed with source-oriented names.  `ModuleDescentDatum`
-records the action-side part of a descent datum and its invariant submodule;
+from Mathlib and exposed with source-oriented names.  `LinearActionDatum`
+records an action-side input and its invariant submodule;
 effectivity for quasi-projective schemes and coherent sheaves is intentionally
 left as a separate geometric obligation.
 -/
@@ -109,25 +109,25 @@ theorem algebraFinitePresentation_tensorProduct_iff_faithfullyFlat
     exact algebraFinitePresentation_of_faithfullyFlat_tensorProduct
       (R := R) (S := S) (T := T)
 
-/-! ## The invariant part of an action-side descent datum -/
+/-! ## Invariants of a linear action -/
 
-/-- An action-side linear descent datum.  The maps are required to satisfy
-the unit and multiplication laws; scalar twisting and effectiveness are
+/-- An `R`-linear monoid action recorded without installing a global action.
+Scalar twisting and effectiveness, which are required for Galois descent, are
 additional structure and are deliberately not inferred here. -/
-structure ModuleDescentDatum
+structure LinearActionDatum
     (R M G : Type*) [Semiring R] [AddCommMonoid M] [Module R M]
     [Monoid G] where
   action : G → M →ₗ[R] M
   action_one : ∀ m, action 1 m = m
   action_mul : ∀ (g h : G) (m : M), action (g * h) m = action g (action h m)
 
-namespace ModuleDescentDatum
+namespace LinearActionDatum
 
 variable {R M G : Type*} [Semiring R] [AddCommMonoid M] [Module R M]
   [Monoid G]
 
-/-- Elements fixed by every map in a descent datum. -/
-def invariants (D : ModuleDescentDatum R M G) : Submodule R M where
+/-- Elements fixed by every map in a linear action datum. -/
+def invariants (D : LinearActionDatum R M G) : Submodule R M where
   carrier := {m | ∀ g, D.action g m = m}
   zero_mem' := by
     intro g
@@ -140,15 +140,15 @@ def invariants (D : ModuleDescentDatum R M G) : Submodule R M where
     rw [(D.action g).map_smul, hx g]
 
 @[simp]
-theorem mem_invariants_iff (D : ModuleDescentDatum R M G) (m : M) :
+theorem mem_invariants_iff (D : LinearActionDatum R M G) (m : M) :
     m ∈ D.invariants ↔ ∀ g, D.action g m = m :=
   Iff.rfl
 
-theorem action_one_apply (D : ModuleDescentDatum R M G) (m : M) :
+theorem action_one_apply (D : LinearActionDatum R M G) (m : M) :
     D.action 1 m = m :=
   D.action_one m
 
-theorem action_mul_apply (D : ModuleDescentDatum R M G)
+theorem action_mul_apply (D : LinearActionDatum R M G)
     (g h : G) (m : M) :
     D.action (g * h) m = D.action g (D.action h m) :=
   D.action_mul g h m
@@ -157,7 +157,7 @@ theorem action_mul_apply (D : ModuleDescentDatum R M G)
 submodule. -/
 def factorThroughInvariants
     {N : Type*} [AddCommMonoid N] [Module R N]
-    (D : ModuleDescentDatum R M G) (f : N →ₗ[R] M)
+    (D : LinearActionDatum R M G) (f : N →ₗ[R] M)
     (hf : ∀ n g, D.action g (f n) = f n) :
     N →ₗ[R] D.invariants :=
   { toFun := fun n => ⟨f n, hf n⟩
@@ -173,7 +173,7 @@ def factorThroughInvariants
 @[simp]
 theorem subtype_comp_factorThroughInvariants
     {N : Type*} [AddCommMonoid N] [Module R N]
-    (D : ModuleDescentDatum R M G) (f : N →ₗ[R] M)
+    (D : LinearActionDatum R M G) (f : N →ₗ[R] M)
     (hf : ∀ n g, D.action g (f n) = f n) :
     (D.invariants.subtype).comp (D.factorThroughInvariants f hf) = f := by
   ext n
@@ -181,7 +181,7 @@ theorem subtype_comp_factorThroughInvariants
 
 theorem factorThroughInvariants_unique
     {N : Type*} [AddCommMonoid N] [Module R N]
-    (D : ModuleDescentDatum R M G) (f : N →ₗ[R] M)
+    (D : LinearActionDatum R M G) (f : N →ₗ[R] M)
     (hf : ∀ n g, D.action g (f n) = f n)
     (u : N →ₗ[R] D.invariants)
     (hu : (D.invariants.subtype).comp u = f) :
@@ -194,7 +194,7 @@ This is the finiteness statement available before an effective geometric
 descent theorem is supplied. -/
 theorem invariants_finite
     {R M G : Type*} [Ring R] [AddCommGroup M] [Module R M] [Monoid G]
-    (D : ModuleDescentDatum R M G)
+    (D : LinearActionDatum R M G)
     [IsNoetherianRing R] [Module.Finite R M] :
     Module.Finite R D.invariants := by
   letI : IsNoetherian R M := isNoetherian_of_isNoetherianRing_of_finite R M
@@ -202,7 +202,7 @@ theorem invariants_finite
 
 /-- The trivial action has all of `M` as its invariant part. -/
 def trivial (R M G : Type*) [Semiring R] [AddCommMonoid M] [Module R M]
-    [Monoid G] : ModuleDescentDatum R M G where
+    [Monoid G] : LinearActionDatum R M G where
   action _ := LinearMap.id
   action_one := by
     intro m
@@ -220,6 +220,6 @@ theorem trivial_invariants (R M G : Type*) [Semiring R] [AddCommMonoid M]
   · intro m _ g
     rfl
 
-end ModuleDescentDatum
+end LinearActionDatum
 
 end MilneLib
