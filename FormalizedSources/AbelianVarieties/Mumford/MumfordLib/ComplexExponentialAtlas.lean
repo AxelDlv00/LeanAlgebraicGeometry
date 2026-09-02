@@ -335,6 +335,100 @@ theorem exponentialBranchTransition_exponential_eq
     exact (d.exponential_symm_apply_eq_exponential v hyv).symm
   rw [hleft, hright]
 
+/- The overlap maps inherit the local-homeomorphism structure of their two
+   constituent branches. -/
+theorem exponentialBranchTransition_continuousOn
+    {V X : Type*} [NormedAddCommGroup V] [NormedSpace ℂ V]
+    [AddCommGroup X] [TopologicalSpace X] [T2Space X] [ContinuousAdd X]
+    {g : ℕ} (d : ComplexVectorLatticeExponentialData V X g) (v w : V) :
+    ContinuousOn (d.exponentialBranchTransition v w)
+      (d.exponentialBranchTransition v w).source :=
+  (d.exponentialBranchTransition v w).continuousOn
+
+theorem exponentialBranchTransition_symm_continuousOn
+    {V X : Type*} [NormedAddCommGroup V] [NormedSpace ℂ V]
+    [AddCommGroup X] [TopologicalSpace X] [T2Space X] [ContinuousAdd X]
+    {g : ℕ} (d : ComplexVectorLatticeExponentialData V X g) (v w : V) :
+    ContinuousOn (d.exponentialBranchTransition v w).symm
+      (d.exponentialBranchTransition v w).target :=
+  (d.exponentialBranchTransition v w).continuousOn_symm
+
+theorem exponentialBranchTransition_image_source_eq_target
+    {V X : Type*} [NormedAddCommGroup V] [NormedSpace ℂ V]
+    [AddCommGroup X] [TopologicalSpace X] [T2Space X] [ContinuousAdd X]
+    {g : ℕ} (d : ComplexVectorLatticeExponentialData V X g) (v w : V) :
+    d.exponentialBranchTransition v w ''
+        (d.exponentialBranchTransition v w).source =
+      (d.exponentialBranchTransition v w).target :=
+  (d.exponentialBranchTransition v w).image_source_eq_target
+
+/- Exchanging the two branch labels reverses the transition. -/
+@[simp]
+theorem exponentialBranchTransition_symm_eq
+    {V X : Type*} [NormedAddCommGroup V] [NormedSpace ℂ V]
+    [AddCommGroup X] [TopologicalSpace X] [T2Space X] [ContinuousAdd X]
+    {g : ℕ} (d : ComplexVectorLatticeExponentialData V X g) (v w : V) :
+    (d.exponentialBranchTransition v w).symm =
+      d.exponentialBranchTransition w v := by
+  rw [exponentialBranchTransition,
+    OpenPartialHomeomorph.trans_symm_eq_symm_trans_symm]
+  rfl
+
+/- The transition maps satisfy the usual Cech cocycle law whenever the two
+   successive transitions are defined.  The explicit source hypotheses keep
+   the statement honest for partial homeomorphisms. -/
+theorem exponentialBranchTransition_cocycle
+    {V X : Type*} [NormedAddCommGroup V] [NormedSpace ℂ V]
+    [AddCommGroup X] [TopologicalSpace X] [T2Space X] [ContinuousAdd X]
+    {g : ℕ} (d : ComplexVectorLatticeExponentialData V X g)
+    (v w u : V) {y : V}
+    (hyvw : y ∈ (d.exponentialBranchTransition v w).source)
+    (hwyu : d.exponentialBranchTransition v w y ∈
+      (d.exponentialBranchTransition w u).source) :
+    y ∈ (d.exponentialBranchTransition v u).source ∧
+      d.exponentialBranchTransition v u y =
+        d.exponentialBranchTransition w u
+          (d.exponentialBranchTransition v w y) := by
+  have hyvw' := hyvw
+  rw [exponentialBranchTransition, OpenPartialHomeomorph.trans_source] at hyvw'
+  have hvtarget : y ∈ (d.exponentialBranch v).target := by
+    simpa only [OpenPartialHomeomorph.symm_source] using hyvw'.1
+  let x : X := (d.exponentialBranch v).symm y
+  have hxw : x ∈ (d.exponentialBranch w).source := by
+    exact hyvw'.2
+  have htw : d.exponentialBranchTransition v w y =
+      d.exponentialBranch w x := by
+    change d.exponentialBranch w
+      ((d.exponentialBranch v).symm y) = d.exponentialBranch w x
+    rfl
+  have hwyu' := hwyu
+  rw [exponentialBranchTransition, OpenPartialHomeomorph.trans_source] at hwyu'
+  have hxu : x ∈ (d.exponentialBranch u).source := by
+    have hz := hwyu'.2
+    change (d.exponentialBranch w).symm
+      (d.exponentialBranchTransition v w y) ∈
+        (d.exponentialBranch u).source at hz
+    rw [htw, (d.exponentialBranch w).left_inv hxw] at hz
+    exact hz
+  have hyv_u : y ∈ (d.exponentialBranchTransition v u).source := by
+    rw [exponentialBranchTransition, OpenPartialHomeomorph.trans_source]
+    exact ⟨hvtarget, hxu⟩
+  refine ⟨hyv_u, ?_⟩
+  have htv_u : d.exponentialBranchTransition v u y =
+      d.exponentialBranch u x := by
+    change d.exponentialBranch u
+      ((d.exponentialBranch v).symm y) = d.exponentialBranch u x
+    rfl
+  have htw_u : d.exponentialBranchTransition w u
+      (d.exponentialBranchTransition v w y) =
+      d.exponentialBranch u x := by
+    change d.exponentialBranch u
+      ((d.exponentialBranch w).symm
+        (d.exponentialBranchTransition v w y)) =
+      d.exponentialBranch u x
+    rw [htw, (d.exponentialBranch w).left_inv hxw]
+  exact htv_u.trans htw_u.symm
+
 end ComplexVectorLatticeExponentialData
 
 end
