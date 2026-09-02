@@ -60,4 +60,23 @@ theorem finiteGeneration_of_finite_quotients_and_pairing
       ring
     simp [hparallelogram]
 
+/-- The source-shaped form of Mumford's formal finite-generation criterion.
+
+Mumford obtains a symmetric pairing from the preceding height construction.
+The symmetry hypothesis is retained here so that the declaration matches that
+statement, although the stronger auxiliary theorem above shows that its
+antisymmetric part does not affect the diagonal height argument.
+-/
+theorem finiteGeneration_of_finite_quotients_and_symmetric_pairing
+    {Γ : Type*} [AddCommGroup Γ]
+    (pairing : Γ →+ Γ →+ ℝ)
+    (_hsymm : ∀ x y : Γ, pairing x y = pairing y x)
+    (hquotient : ∀ n : ℕ, 1 < n →
+      (nsmulAddMonoidHom n : Γ →+ Γ).range.FiniteIndex)
+    (hnonneg : ∀ x : Γ, 0 ≤ pairing x x)
+    (hfinite : ∀ C : ℝ, 0 < C →
+      {x : Γ | pairing x x < C}.Finite) :
+    AddGroup.FG Γ :=
+  finiteGeneration_of_finite_quotients_and_pairing pairing hquotient hnonneg hfinite
+
 end Mumford
