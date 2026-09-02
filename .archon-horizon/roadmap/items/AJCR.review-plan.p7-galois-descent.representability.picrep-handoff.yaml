@@ -6,7 +6,7 @@ summary: 'Declarations: picRepDatum_finiteStageGaloisDescent_of_isProjective and
   Dependencies: representability.galois-consumer and orbit-affine.exact-carrier. Pic0FiniteGaloisJacobianData.olean
   is present; the wrappers remain conditional and must consume the same finite-stage
   representation without choosing a second universal class.'
-status: pending
+status: blocked
 kind: proof
 priority: urgent
 depends_on: []
@@ -29,4 +29,4 @@ metadata:
     projects: Algebraic-Jacobian-Challenge-Rebuild,Algebraic-Jacobian-Challenge
   parent: AJCR.review-plan.p7-galois-descent.representability
   milestone: AJCR.review-plan
-  updated_at: '2026-08-23T02:47:30.574456+00:00'
+  updated_at: '2026-09-01T23:16:41.847689+00:00'
