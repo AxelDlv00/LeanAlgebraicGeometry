@@ -111,4 +111,31 @@ theorem integralClosure_isLocalization
       (integralClosure Rm Sm) := by
   exact IsLocalization.integralClosure (S := S) (Rf := Rm) (Sf := Sm) M
 
+/-! ### Transitivity of integral closure -/
+
+/-- Taking the integral closure first in an intermediate ring and then in the
+top ring produces an integral closure over the original base
+(Stacks, Tag `0308`). -/
+theorem integralClosure_transitive
+    {A B C : Type*} [CommRing A] [CommRing B] [CommRing C]
+    [Algebra A B] [Algebra B C] [Algebra A C] [IsScalarTower A B C] :
+    IsIntegralClosure
+      (integralClosure (integralClosure A B) C) A C := by
+  constructor
+  · exact Subtype.coe_injective
+  · intro x
+    exact (show IsIntegral A x ↔ IsIntegral (integralClosure A B) x from
+      ⟨fun hx => hx.tower_top, fun hx => isIntegral_trans x hx⟩).trans
+        IsIntegralClosure.isIntegral_iff
+
+/-- The iterated and direct integral closures have the same underlying subring
+of the top ring (Stacks, Tag `0308`). -/
+theorem integralClosure_transitive_toSubring
+    {A B C : Type*} [CommRing A] [CommRing B] [CommRing C]
+    [Algebra A B] [Algebra B C] [Algebra A C] [IsScalarTower A B C] :
+    (integralClosure (integralClosure A B) C).toSubring =
+      (integralClosure A C).toSubring := by
+  ext x
+  exact ⟨fun hx => isIntegral_trans x hx, fun hx => hx.tower_top⟩
+
 end StacksPart01
