@@ -111,6 +111,59 @@ theorem integralClosure_isLocalization
       (integralClosure Rm Sm) := by
   exact IsLocalization.integralClosure (S := S) (Rf := Rm) (Sf := Sm) M
 
+/-- An element is integral over the base ring exactly when its image is
+integral after localization at every prime of the base
+(Stacks, Tag `034K`). -/
+theorem isIntegral_iff_isIntegral_localizationAtPrime
+    {R S : Type*} [CommRing R] [CommRing S] [Algebra R S] (x : S) :
+    IsIntegral R x ↔ ∀ p : PrimeSpectrum R,
+      IsIntegral (Localization.AtPrime p.asIdeal)
+        (algebraMap S
+          (Localization (Algebra.algebraMapSubmonoid S p.asIdeal.primeCompl)) x) := by
+  constructor
+  · intro hx p
+    obtain ⟨q, hq, hqx⟩ := hx
+    change (algebraMap (Localization.AtPrime p.asIdeal)
+      (Localization (Algebra.algebraMapSubmonoid S p.asIdeal.primeCompl))).IsIntegralElem _
+    rw [localizationAlgebraMap_def]
+    apply is_integral_localization_at_leadingCoeff q hqx
+    simp [hq.leadingCoeff]
+  · intro hlocal
+    let t : Set R := {r | IsIntegral R (r • x)}
+    have ht : Ideal.span t = ⊤ := by
+      by_contra hne
+      obtain ⟨P, hPmax, hspanP⟩ := Ideal.ne_top_iff_exists_maximal.mp hne
+      letI : P.IsMaximal := hPmax
+      letI : P.IsPrime := hPmax.isPrime
+      let Rp := Localization.AtPrime P
+      let Sp := Localization (Algebra.algebraMapSubmonoid S P.primeCompl)
+      have hp : IsIntegral Rp (algebraMap S Sp x) := by
+        simpa only [Rp, Sp] using
+          hlocal (⟨P, inferInstance⟩ : PrimeSpectrum R)
+      obtain ⟨m, hm⟩ := IsIntegral.exists_multiple_integral_of_isLocalization
+        (M := P.primeCompl) (algebraMap S Sp x) hp
+      have hm' : IsIntegral R (algebraMap S Sp ((m : R) • x)) := by
+        have heq : algebraMap S Sp ((m : R) • x) =
+            (m : R) • algebraMap S Sp x := by
+          simp only [Algebra.smul_def, map_mul,
+            ← IsScalarTower.algebraMap_apply R S Sp]
+        rw [heq]
+        exact hm
+      obtain ⟨n, hnM, hn⟩ := IsLocalization.exists_isIntegral_smul_of_isIntegral_map
+        (Sₘ := Sp) P.primeCompl hm'
+      have hgood : n * (m : R) ∈ t := by
+        change IsIntegral R ((n * (m : R)) • x)
+        simpa only [mul_smul] using hn
+      have hcomp : n * (m : R) ∈ P.primeCompl := mul_mem hnM m.property
+      exact hcomp (hspanP (Ideal.subset_span hgood))
+    rw [← mem_integralClosure_iff]
+    refine Submodule.mem_of_span_eq_top_of_smul_pow_mem
+      (integralClosure R S).toSubmodule t ht x ?_
+    rintro ⟨r, hr⟩
+    refine ⟨1, (mem_integralClosure_iff R S).2 ?_⟩
+    change IsIntegral R (r • x) at hr
+    simpa only [pow_one] using hr
+
 /-! ### Transitivity of integral closure -/
 
 /-- Taking the integral closure first in an intermediate ring and then in the
