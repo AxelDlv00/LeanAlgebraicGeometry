@@ -131,6 +131,8 @@ private theorem restrictSection_via_ab_eq_via_bc
           (inf_le_left : b.chart.U ⊓ c.chart.U ≤ b.chart.U) s) := by
   rw [restrictSection_restrictSection, restrictSection_restrictSection]
 
+omit [IsAlgClosed k] [IsIntegral X.left] [SmoothOfRelativeDimension 1 X.hom]
+  [IsProper X.hom] in
 private theorem restrictSection_pair_eq_direct
     {U V W : X.left.Opens} (hVU : V ≤ U) (hWV : W ≤ V)
     (hWU : W ≤ U) (s : Γ(X.left, U)) :
