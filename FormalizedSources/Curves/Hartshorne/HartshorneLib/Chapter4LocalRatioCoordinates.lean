@@ -61,6 +61,7 @@ def of_nonempty (U : X.left.Opens) (hU : (U : Set X.left).Nonempty) :
     LocalRatioOpen X :=
   ⟨U, hU, localRatio_genericPoint_mem_of_nonempty hU⟩
 
+omit [IsAlgClosed k] [SmoothOfRelativeDimension 1 X.hom] [IsProper X.hom] in
 @[simp] theorem coe_U (W : LocalRatioOpen X) :
     ((W.U : X.left.Opens) : Set X.left) = (W.U : Set X.left) :=
   rfl
@@ -73,6 +74,7 @@ noncomputable def localStructureValue (W : LocalRatioOpen X)
     (s : Γ(X.left, W.U)) : X.left.functionField :=
   (X.left.presheaf.germ W.U (genericPoint X.left) W.generic_mem).hom s
 
+omit [IsAlgClosed k] [SmoothOfRelativeDimension 1 X.hom] [IsProper X.hom] in
 @[simp] lemma localStructureValue_eq_germ (W : LocalRatioOpen X)
     (s : Γ(X.left, W.U)) :
     localStructureValue W s =
@@ -221,8 +223,8 @@ noncomputable def coordinate (a : LocalRatioCoordinateData D n)
 end LocalRatioCoordinateData
 
 /-- A supplied regularization of local ratios by honest structure-sheaf
-sections.  The `compatibility` field records value preservation on every
-smaller nonempty open; no gluing or regularity assertion is inferred. -/
+sections.  Restriction compatibility is automatic from functoriality of germs;
+only the actual regularity and value comparison are supplied as data. -/
 structure LocalRatioRegularization
     (a : LocalRatioCoordinateData D n) where
   /-- The function-field coordinates being regularized. -/
@@ -236,12 +238,6 @@ structure LocalRatioRegularization
     localStructureValue a.chart (regularized i) = c i
   /-- Explicit normalization of the distinguished coordinate. -/
   normalized : c a.denominator_index = 1
-  /-- Explicit compatibility of the supplied regularizations with restriction. -/
-  compatibility : ∀ {V : X.left.Opens} (hVU : V ≤ a.chart.U)
-    (hV : (V : Set X.left).Nonempty) (i : Fin (n + 1)),
-    localStructureValue (LocalRatioOpen.of_nonempty V hV)
-      ((X.left.presheaf.map (homOfLE hVU).op).hom (regularized i)) =
-      localStructureValue a.chart (regularized i)
 
 namespace LocalRatioRegularization
 
@@ -256,13 +252,26 @@ theorem regularized_value_eq_ratio (r : LocalRatioRegularization a)
     localStructureValue a.chart (r.regularized i) = a.coordinate i := by
   rw [r.regularized_value_eq i, r.c_eq_ratio i]
 
+/-- Taking the generic-point value commutes with restriction to a smaller
+nonempty open.  This is presheaf functoriality, not additional regularization
+data. -/
+theorem localStructureValue_restrict (r : LocalRatioRegularization a)
+    {V : X.left.Opens} (hVU : V ≤ a.chart.U)
+    (hV : (V : Set X.left).Nonempty) (i : Fin (n + 1)) :
+    localStructureValue (LocalRatioOpen.of_nonempty V hV)
+      ((X.left.presheaf.map (homOfLE hVU).op).hom (r.regularized i)) =
+      localStructureValue a.chart (r.regularized i) := by
+  exact X.left.presheaf.germ_res_apply (homOfLE hVU)
+    (genericPoint X.left)
+    (localRatio_genericPoint_mem_of_nonempty hV) (r.regularized i)
+
 theorem restricted_value_eq (r : LocalRatioRegularization a)
     {V : X.left.Opens} (hVU : V ≤ a.chart.U)
     (hV : (V : Set X.left).Nonempty) (i : Fin (n + 1)) :
     localStructureValue (LocalRatioOpen.of_nonempty V hV)
       ((X.left.presheaf.map (homOfLE hVU).op).hom (r.regularized i)) =
       r.c i := by
-  rw [r.compatibility hVU hV i, r.regularized_value_eq i]
+  rw [r.localStructureValue_restrict hVU hV i, r.regularized_value_eq i]
 
 end LocalRatioRegularization
 
