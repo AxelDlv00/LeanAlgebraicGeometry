@@ -3,10 +3,14 @@ title: Mumford Abelian Varieties formalization
 projects:
 - Mumford
 summary: Advance source-faithful Mumford formalization. Adjoint triviality for compact
-  connected complex Lie groups is now proved from holomorphic conjugation derivatives;
-  the first unmet analytic producer is an exponential/integration bridge from identity
-  differential to global triviality of conjugation. Full commutativity, uniformization,
-  and any exact frozen-source attachment remain open.
+  connected complex Lie groups is proved from holomorphic conjugation derivatives.
+  Commits da1f6eb341 and fa08b06d31 now formalize the local-inverse image-neighborhood
+  step, connected identity-neighborhood generation, centrality of candidate exponential
+  points, and the resulting conditional local-exponential commutativity consumer.
+  The first unmet analytic producer remains a genuine holomorphic Lie exponential/one-parameter
+  integration theorem with conjugation naturality and the inverse-function implication;
+  full source commutativity, uniformization, and any exact frozen-source attachment
+  remain open.
 status: active
 kind: proof
 priority: normal
@@ -29,8 +33,10 @@ metadata:
     task_title: Advance Mumford Abelian Varieties formalization
     projects: Mumford
   owner: fs-mumford
-  updated_at: '2026-09-02T18:01:01.347919+00:00'
+  updated_at: '2026-09-02T20:35:29.838777+00:00'
   pinned_commits:
+  - fa08b06d31
+  - da1f6eb341
   - a4db4f3094
   - e387a259e2
   - 7c2f4ea37e

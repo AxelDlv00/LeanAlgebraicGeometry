@@ -140,3 +140,5 @@
 {"at": "2026-09-02T14:29:13.341904+00:00", "actor": "horizon", "field": "edited", "from": "", "to": "", "note": "roadmap_refs, inbox_refs updated", "provenance": {"run": "0210", "session": "0004-horizon-fs-mumford", "role": "horizon", "round": "1", "rounds": "24", "task": "fs-mumford", "task_title": "Advance Mumford Abelian Varieties formalization", "projects": "Mumford"}}
 {"at": "2026-09-02T16:33:56.217312+00:00", "actor": "system", "field": "status", "from": "running", "to": "queued", "note": "Horizon session ended without the agent recording a terminal status; returned to queued"}
 {"at": "2026-09-02T16:41:00.950059+00:00", "actor": "system", "field": "status", "from": "queued", "to": "running", "note": "started by Horizon run"}
+{"at": "2026-09-02T19:07:58.770757+00:00", "actor": "system", "field": "status", "from": "running", "to": "queued", "note": "Horizon session ended without the agent recording a terminal status; returned to queued"}
+{"at": "2026-09-02T19:09:00.505355+00:00", "actor": "system", "field": "status", "from": "queued", "to": "running", "note": "started by Horizon run"}
