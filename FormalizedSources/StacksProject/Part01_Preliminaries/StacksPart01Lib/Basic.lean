@@ -31,6 +31,7 @@ import StacksPart01Lib.Artinian
 import StacksPart01Lib.Integral
 import StacksPart01Lib.GoingUp
 import StacksPart01Lib.Normal
+import StacksPart01Lib.NormalLocalization
 
 /-!
 # StacksPart01Lib.Basic
