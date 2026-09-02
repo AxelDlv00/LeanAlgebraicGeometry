@@ -34,6 +34,7 @@ import MumfordLib.ThetaNondegenerate
 import MumfordLib.ThetaIsotropic
 import MumfordLib.ThetaDuality
 import MumfordLib.ThetaComplexDuality
+import MumfordLib.MordellWeilDescent
 
 /-!
 # MumfordLib
