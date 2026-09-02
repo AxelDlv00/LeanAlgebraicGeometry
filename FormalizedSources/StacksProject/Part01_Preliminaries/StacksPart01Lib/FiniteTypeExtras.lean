@@ -7,6 +7,8 @@ Authors: The StacksPart01Lib Contributors
 import Mathlib.RingTheory.FiniteType
 import Mathlib.RingTheory.IntegralClosure.IsIntegralClosure.Basic
 import Mathlib.RingTheory.Finiteness.ModuleFinitePresentation
+import Mathlib.RingTheory.RingHom.Finite
+import Mathlib.RingTheory.RingHom.Integral
 
 /-!
 # StacksPart01Lib.FiniteTypeExtras
@@ -15,6 +17,8 @@ Finite ring maps give finite-type ring maps (Stacks Project, Tag `0D46`).
 -/
 
 namespace StacksPart01Lib
+
+universe u
 
 /-- A finite ring homomorphism is of finite type.
 
@@ -97,5 +101,31 @@ theorem module_finite_iff_exists_integral_generators
     letI : Algebra.IsIntegral R S := hI
     letI : Algebra.FiniteType R S := ⟨t, ht⟩
     exact Algebra.IsIntegral.finite
+
+/-! ### Descent from a principal-open cover -/
+
+/-- A ring map is integral if it becomes integral on finitely many principal
+opens whose defining elements generate the unit ideal (Stacks, Tag `02JL`). -/
+theorem ringHom_isIntegral_of_localization_finset
+    {R S : Type u} [CommRing R] [CommRing S] (f : R →+* S)
+    (s : Finset R) (hs : Ideal.span (s : Set R) = ⊤)
+    (hlocal : ∀ r : s, (Localization.awayMap f r).IsIntegral) :
+    f.IsIntegral := by
+  exact
+    (RingHom.ofLocalizationSpan_iff_finite
+      (P := fun g => g.IsIntegral)).mp RingHom.isIntegral_ofLocalizationSpan
+      f s hs hlocal
+
+/-- A ring map is finite if it becomes finite on finitely many principal opens
+whose defining elements generate the unit ideal (Stacks, Tag `02JL`). -/
+theorem ringHom_finite_of_localization_finset
+    {R S : Type u} [CommRing R] [CommRing S] (f : R →+* S)
+    (s : Finset R) (hs : Ideal.span (s : Set R) = ⊤)
+    (hlocal : ∀ r : s, (Localization.awayMap f r).Finite) :
+    f.Finite := by
+  exact
+    (RingHom.ofLocalizationSpan_iff_finite
+      (P := RingHom.Finite)).mp RingHom.finite_ofLocalizationSpan
+      f s hs hlocal
 
 end StacksPart01Lib
