@@ -7,6 +7,7 @@ Authors: The Mumford Contributors
 import Mathlib.Geometry.Manifold.Complex
 import Mathlib.Geometry.Manifold.Algebra.LieGroup
 import Mathlib.Geometry.Manifold.ContMDiffMFDeriv
+import Mathlib.Algebra.Group.End
 
 /-!
 # The adjoint map of a compact complex Lie group
@@ -40,6 +41,27 @@ variable {E H G : Type*}
 
 /-- Conjugation by an element of a complex Lie group. -/
 def complexLieConjugation (x : G) : G → G := fun y ↦ x * y * x⁻¹
+
+/-!
+The abstract group API already packages conjugation as the homomorphism
+`MulAut.conj : G →* MulAut G`.  The bridge below keeps the analytic map used
+in this file synchronized with that canonical API, so later differential or
+integration results can consume the homomorphism laws directly.
+-/
+
+omit [TopologicalSpace G] in
+@[simp]
+theorem complexLieConjugation_eq_mulAut_conj (x : G) :
+    complexLieConjugation x = MulAut.conj x := by
+  funext y
+  simp [complexLieConjugation, MulAut.conj_apply]
+
+theorem complexLieConjugation_mul (x y : G) :
+    complexLieConjugation (x * y) =
+      complexLieConjugation x ∘ complexLieConjugation y := by
+  have h := congrArg (fun e : MulAut G => (e : G → G))
+    ((MulAut.conj).map_mul x y)
+  convert h using 1 <;> rfl
 
 omit [TopologicalSpace G] in
 @[simp]
