@@ -38,4 +38,10 @@ theorem spectrum_finite_minimal_points
     {x : PrimeSpectrum R | IsMin x}.Finite := by
   exact PrimeSpectrum.finite_setOf_isMin R
 
+/-- Equivalently, a Noetherian ring has finitely many minimal prime ideals. -/
+theorem finite_minimal_primes
+    (R : Type*) [CommSemiring R] [IsNoetherianRing R] :
+    (minimalPrimes R).Finite := by
+  exact minimalPrimes.finite_of_isNoetherianRing R
+
 end StacksPart01
