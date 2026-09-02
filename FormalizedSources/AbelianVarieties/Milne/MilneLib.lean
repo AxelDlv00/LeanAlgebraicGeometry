@@ -20,6 +20,7 @@ import MilneLib.Dimension
 import MilneLib.DimensionCorollaries
 import MilneLib.BasicLemmas
 import MilneLib.FibreCorollaries
+import MilneLib.SymmetricPower
 
 /-!
 # MilneLib
