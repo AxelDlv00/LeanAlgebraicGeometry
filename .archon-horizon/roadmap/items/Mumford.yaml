@@ -1,0 +1,37 @@
+id: Mumford
+title: Mumford Abelian Varieties formalization
+projects:
+- Mumford
+summary: Advance source-faithful Mumford formalization. Adjoint triviality for compact
+  connected complex Lie groups is now proved from holomorphic conjugation derivatives;
+  the first unmet analytic producer is an exponential/integration bridge from identity
+  differential to global triviality of conjugation. Full commutativity, uniformization,
+  and any exact frozen-source attachment remain open.
+status: active
+kind: proof
+priority: normal
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Mumford
+metadata:
+  author: horizon
+  created_at: '2026-09-01T17:16:57.695768+00:00'
+  provenance:
+    run: '0205'
+    session: 0012-horizon-fs-mumford
+    role: horizon
+    round: '5'
+    rounds: '24'
+    task: fs-mumford
+    task_title: Advance Mumford Abelian Varieties formalization
+    projects: Mumford
+  owner: fs-mumford
+  updated_at: '2026-09-02T18:01:01.347919+00:00'
+  pinned_commits:
+  - a4db4f3094
+  - e387a259e2
+  - 7c2f4ea37e
+  - 5a444d4fa6
