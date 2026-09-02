@@ -5,6 +5,7 @@ Authors: The Milne Contributors
 -/
 
 import MilneLib.Isogeny
+import MilneLib.DimensionCorollaries
 
 /-!
 # Fibre corollaries for isogenies
@@ -37,5 +38,27 @@ theorem Isogeny.finite_preimage_singleton_of_isAbelianVariety_of_arbitraryField
     f.left y).mp
   exact Isogeny.isFinite_fiberToSpecResidueField_of_isAbelianVariety
     hA hB f h y
+
+/- The scheme-theoretic residue-field fibres are finite over a field and hence
+   have zero Krull dimension.  This keeps the geometric fibre conclusion
+   separate from the still-explicit flatness hypotheses in the rank API. -/
+theorem Isogeny.topologicalKrullDim_fiber_eq_zero_of_isAbelianVariety_of_arbitraryField
+    {K : Type u} [Field K]
+    {A B : Over (Spec (.of K))} [GrpObj A] [GrpObj B]
+    (hA : IsAbelianVariety A) (hB : IsAbelianVariety B)
+    (f : A ⟶ B) [IsMonHom f] (h : Isogeny f)
+    (y : B.left) :
+    topologicalKrullDim (f.left.fiber y) = 0 := by
+  letI : Surjective f.left := h.1
+  have hfib : IsFinite (f.left.fiberToSpecResidueField y) :=
+    Isogeny.isFinite_fiberToSpecResidueField_of_isAbelianVariety
+      hA hB f h y
+  have hsurj : Surjective (f.left.fiberToSpecResidueField y) := by
+    change Surjective (pullback.snd f.left (B.left.fromSpecResidueField y))
+    exact MorphismProperty.pullback_snd _ _
+      (inferInstance : Surjective f.left)
+  exact @topologicalKrullDim_eq_zero_of_isFinite_surjective_to_field
+    (B.left.residueField y) (inferInstance) (f.left.fiber y)
+    (f.left.fiberToSpecResidueField y) hfib hsurj
 
 end MilneLib
