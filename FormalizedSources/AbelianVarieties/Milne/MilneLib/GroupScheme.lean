@@ -951,6 +951,16 @@ theorem isLocallyNoetherian_left_of_isAbelianVariety
     locallyOfFiniteType_of_isAbelianVariety G hG
   exact LocallyOfFiniteType.isLocallyNoetherian G.hom
 
+/-- The underlying scheme of an abelian variety over a field is Noetherian. -/
+theorem isNoetherian_left_of_isAbelianVariety
+    (G : Over (Spec (.of K))) [GrpObj G] (hG : IsAbelianVariety G) :
+    IsNoetherian G.left := by
+  letI : IsProper G.hom := hG.1
+  letI : IsLocallyNoetherian G.left :=
+    isLocallyNoetherian_left_of_isAbelianVariety G hG
+  letI : CompactSpace G.left := compactSpace_of_universallyClosed G.hom
+  exact {}
+
 /-- An abelian variety remains an abelian variety after base change along a
 morphism of field spectra.  The group structure on the pullback is the one
 transported by the pullback functor. -/
