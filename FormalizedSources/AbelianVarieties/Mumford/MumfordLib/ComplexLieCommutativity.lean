@@ -7,16 +7,19 @@ Authors: The Mumford Contributors
 import MumfordLib.ComplexLieAdjoint
 import Mathlib.Algebra.Group.Commute.Basic
 import Mathlib.Algebra.Group.Subgroup.Lattice
+import Mathlib.Geometry.Manifold.LocalDiffeomorph
+import Mathlib.Topology.Algebra.OpenSubgroup
+import Mathlib.Topology.Connected.Clopen
 
 /-!
 # The integration interface for compact complex Lie groups
 
 The compact-holomorphic argument in `ComplexLieAdjoint` makes the derivative
-of every conjugation map equal to the identity.  Mathlib does not currently
-provide the Lie exponential or the theorem integrating this derivative.  This
-file records that missing input explicitly and proves the remaining algebraic
-step.  The resulting theorems are conditional interfaces: they do not assert
-the existence of an exponential for an arbitrary Lie group.
+of every conjugation map equal to the identity.  This file proves the
+local-to-global generation step in Mumford's argument and records the missing
+Lie exponential input explicitly.  The resulting Lie-group theorems are
+conditional interfaces: they do not assert the existence of an exponential
+for an arbitrary Lie group.
 -/
 
 set_option autoImplicit false
@@ -97,9 +100,90 @@ theorem isMulCommutative_of_central_generators
     exact Set.mem_univ y
   exact hc y hy
 
+/-- In a preconnected topological group, a subset containing an identity
+neighborhood topologically generates the whole group. -/
+theorem subgroup_closure_eq_top_of_one_mem_interior
+    {G : Type*} [Group G] [TopologicalSpace G] [SeparatelyContinuousMul G]
+    [PreconnectedSpace G] {s : Set G}
+    (h1 : (1 : G) ∈ interior s) :
+    Subgroup.closure s = (⊤ : Subgroup G) := by
+  have h1c : (1 : G) ∈ interior (Subgroup.closure s : Set G) :=
+    (interior_mono Subgroup.subset_closure) h1
+  have hopen : IsOpen (Subgroup.closure s : Set G) :=
+    Subgroup.isOpen_of_one_mem_interior _ h1c
+  have hclosed : IsClosed (Subgroup.closure s : Set G) :=
+    Subgroup.isClosed_of_isOpen _ hopen
+  have hclopen : IsClopen (Subgroup.closure s : Set G) :=
+    ⟨hclosed, hopen⟩
+  have huniv : (Subgroup.closure s : Set G) = Set.univ :=
+    hclopen.eq_univ ⟨1, Subgroup.one_mem _⟩
+  apply top_unique
+  intro x _
+  have hx : x ∈ (Subgroup.closure s : Set G) := by
+    rw [huniv]
+    exact Set.mem_univ x
+  exact hx
+
+/-- An identity neighborhood of central elements forces a preconnected
+topological group to be commutative. -/
+theorem isMulCommutative_of_central_nhds
+    {G : Type*} [Group G] [TopologicalSpace G] [SeparatelyContinuousMul G]
+    [PreconnectedSpace G] {s : Set G}
+    (hcentral : ∀ z ∈ s, ∀ x : G, Commute x z)
+    (h1 : (1 : G) ∈ interior s) :
+    IsMulCommutative G :=
+  isMulCommutative_of_central_generators hcentral
+    (subgroup_closure_eq_top_of_one_mem_interior h1)
+
+/-!
+### Local generation from a local inverse
+-/
+
+/-- A map that is a local diffeomorphism at a point has range containing a
+neighborhood of its value at that point. -/
+theorem range_mem_interior_of_isLocalDiffeomorphAt
+    {𝕜 E' F H₁ H₂ M N : Type*} [NontriviallyNormedField 𝕜]
+    [NormedAddCommGroup E'] [NormedSpace 𝕜 E']
+    [NormedAddCommGroup F] [NormedSpace 𝕜 F]
+    [TopologicalSpace H₁] [TopologicalSpace H₂]
+    [TopologicalSpace M] [ChartedSpace H₁ M]
+    [TopologicalSpace N] [ChartedSpace H₂ N]
+    {I' : ModelWithCorners 𝕜 E' H₁} {J : ModelWithCorners 𝕜 F H₂}
+    {n : WithTop ℕ∞} {f : M → N} {x : M}
+    (hf : IsLocalDiffeomorphAt I' J n f x) :
+    f x ∈ interior (Set.range f) := by
+  apply mem_interior.mpr
+  refine ⟨hf.localInverse.source, ?_, hf.localInverse.open_source,
+    hf.localInverse_mem_source⟩
+  intro y hy
+  exact ⟨hf.localInverse y, hf.localInverse_right_inv hy⟩
+
 /-!
 ### Consuming the adjoint producer
 -/
+
+/-- Conjugation functoriality for a candidate exponential, together with the
+compact adjoint calculation, makes every exponential point central. -/
+theorem commute_exponential_of_conjugation_exp
+    [I.Boundaryless] [CompactSpace G] [PreconnectedSpace G]
+    (exponential : E → G)
+    (hconjugation_exp : ∀ (x : G) (v : E),
+      complexLieConjugation x (exponential v) =
+        exponential ((complexLieAdjoint (G := G) I x) v))
+    (a : G) (v : E) :
+    Commute a (exponential v) := by
+  apply (commute_iff_eq a (exponential v)).2
+  calc
+    a * exponential v = (a * exponential v * a⁻¹) * a := by
+      simp [mul_assoc]
+    _ = exponential ((complexLieAdjoint (G := G) I a) v) * a := by
+      have hconj := hconjugation_exp a v
+      change a * exponential v * a⁻¹ =
+        exponential ((complexLieAdjoint (G := G) I a) v) at hconj
+      rw [hconj]
+    _ = exponential v * a := by
+      rw [complexLieAdjoint_eq_id (G := G) I a]
+      rfl
 
 /-- Every point is fixed by conjugation once the explicit exponential boundary
 is supplied and the compact adjoint map is trivial. -/
@@ -111,18 +195,8 @@ theorem complexLieConjugation_eq_self_of_exponential
     intro z hz
     obtain ⟨v, rfl⟩ := hz
     intro a
-    apply (commute_iff_eq a (d.exponential v)).2
-    calc
-      a * d.exponential v =
-          (a * d.exponential v * a⁻¹) * a := by simp [mul_assoc]
-      _ = d.exponential ((complexLieAdjoint (G := G) I a) v) * a := by
-        have hconj := d.conjugation_exp a v
-        change a * d.exponential v * a⁻¹ =
-          d.exponential ((complexLieAdjoint (G := G) I a) v) at hconj
-        rw [hconj]
-      _ = d.exponential v * a := by
-        rw [complexLieAdjoint_eq_id (G := G) I a]
-        rfl
+    exact commute_exponential_of_conjugation_exp
+      (G := G) I d.exponential d.conjugation_exp a v
   have hgen : Subgroup.closure (Set.range d.exponential) = (⊤ : Subgroup G) :=
     d.exponential_generates
   have hcomm : Commute x y := by
@@ -131,6 +205,30 @@ theorem complexLieConjugation_eq_self_of_exponential
     exact (isMulCommutative_iff.mp hmul) x y
   change x * y * x⁻¹ = y
   exact hcomm.mul_inv_cancel
+
+/-- A local-diffeomorphism candidate for the exponential suffices for
+commutativity once conjugation functoriality is supplied.  This discharges the
+inverse-neighborhood and connected-generation steps, but it does not construct
+the Lie exponential or prove its functoriality. -/
+theorem complexLieGroup_isMulCommutative_of_local_exponential
+    [I.Boundaryless] [CompactSpace G] [PreconnectedSpace G]
+    (exponential : E → G)
+    (hexponential_zero : exponential 0 = 1)
+    (hexponential_local :
+      IsLocalDiffeomorphAt 𝓘(ℂ, E) I ⊤ exponential 0)
+    (hconjugation_exp : ∀ (x : G) (v : E),
+      complexLieConjugation x (exponential v) =
+        exponential ((complexLieAdjoint (G := G) I x) v)) :
+    IsMulCommutative G := by
+  letI : IsTopologicalGroup G := topologicalGroup_of_lieGroup I ⊤
+  apply isMulCommutative_of_central_nhds (s := Set.range exponential)
+  · intro z hz a
+    obtain ⟨v, rfl⟩ := hz
+    exact commute_exponential_of_conjugation_exp
+      (G := G) I exponential hconjugation_exp a v
+  · have hlocal :=
+      range_mem_interior_of_isLocalDiffeomorphAt hexponential_local
+    simpa only [hexponential_zero] using hlocal
 
 /-- The compact connected complex Lie group is commutative under the explicit
 exponential boundary. -/
