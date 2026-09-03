@@ -162,7 +162,7 @@ theorem range_mem_interior_of_isLocalDiffeomorphAt
   intro y hy
   exact ⟨hf.localInverse y, hf.localInverse_right_inv hy⟩
 
-/-- A complex `C¹` map from a Banach space to a boundaryless manifold has
+/-- An `RCLike` C¹ map from a Banach space to a boundaryless manifold has
 range containing a neighborhood of its value wherever its manifold derivative
 is invertible.
 
@@ -170,40 +170,42 @@ This is the inverse-function consequence used for the Lie exponential. It is
 proved in an extended chart because the manifold inverse-function theorem is
 not currently packaged in this direction. -/
 theorem range_mem_interior_of_contMDiffAt_of_mfderiv_isInvertible
-    {E' H' M : Type*}
-    [NormedAddCommGroup E'] [NormedSpace ℂ E'] [CompleteSpace E']
-    [TopologicalSpace H'] (I' : ModelWithCorners ℂ E' H')
+    {𝕜 E' H' M : Type*}
+    [RCLike 𝕜]
+    [NormedAddCommGroup E'] [NormedSpace 𝕜 E'] [CompleteSpace E']
+    [TopologicalSpace H'] (I' : ModelWithCorners 𝕜 E' H')
     [TopologicalSpace M] [ChartedSpace H' M] [IsManifold I' 1 M]
     [I'.Boundaryless]
     {f : E' → M} {x : E'}
-    (hf : ContMDiffAt 𝓘(ℂ, E') I' 1 f x)
-    (hderiv : (mfderiv 𝓘(ℂ, E') I' f x).IsInvertible) :
+    (hf : ContMDiffAt 𝓘(𝕜, E') I' 1 f x)
+    (hderiv : (mfderiv 𝓘(𝕜, E') I' f x).IsInvertible) :
     f x ∈ interior (Set.range f) := by
   let e := extChartAt I' (f x)
   let g : E' → E' := fun y => e (f y)
-  have hg_contDiff : ContDiffAt ℂ 1 g x := by
+  have hg_contDiff : ContDiffAt 𝕜 1 g x := by
     have h := (contMDiffAt_iff_target.mp hf).2
     exact h.contDiffAt
-  have hf_md : MDifferentiableAt 𝓘(ℂ, E') I' f x :=
+  have hf_md : MDifferentiableAt 𝓘(𝕜, E') I' f x :=
     hf.mdifferentiableAt one_ne_zero
-  have he_md : MDifferentiableAt I' 𝓘(ℂ, E') e (f x) :=
+  have he_md : MDifferentiableAt I' 𝓘(𝕜, E') e (f x) :=
     mdifferentiableAt_extChartAt (mem_chart_source H' (f x))
   have hg_mfderiv :
-      mfderiv 𝓘(ℂ, E') 𝓘(ℂ, E') g x =
-        (mfderiv I' 𝓘(ℂ, E') e (f x)).comp
-          (mfderiv 𝓘(ℂ, E') I' f x) := by
+      mfderiv 𝓘(𝕜, E') 𝓘(𝕜, E') g x =
+        (mfderiv I' 𝓘(𝕜, E') e (f x)).comp
+          (mfderiv 𝓘(𝕜, E') I' f x) := by
     exact mfderiv_comp x he_md hf_md
-  have hg_invertible : (fderiv ℂ g x).IsInvertible := by
+  have hg_invertible : (fderiv 𝕜 g x).IsInvertible := by
     rw [← mfderiv_eq_fderiv, hg_mfderiv]
     exact (isInvertible_mfderiv_extChartAt
       (I := I') (x := f x) (y := f x)
         (mem_extChartAt_source (I := I') (f x))).comp hderiv
   obtain ⟨g', hg'⟩ := hg_invertible
-  have hg_hasFDeriv : HasFDerivAt g (g' : E' →L[ℂ] E') x := by
+  have hg_hasFDeriv : HasFDerivAt g (g' : E' →L[𝕜] E') x := by
     rw [hg']
     exact (hg_contDiff.differentiableAt one_ne_zero).hasFDerivAt
   have hmap : Filter.map g (nhds x) = nhds (g x) :=
-    (hg_contDiff.hasStrictFDerivAt' hg_hasFDeriv one_ne_zero).map_nhds_eq_of_equiv
+    (hg_contDiff.hasStrictFDerivAt' (f' := (g' : E' →L[𝕜] E')) hg_hasFDeriv
+      one_ne_zero).map_nhds_eq_of_equiv
   have hsource : f ⁻¹' e.source ∈ nhds x :=
     hf.continuousAt.preimage_mem_nhds
       (extChartAt_source_mem_nhds (I := I') (f x))
