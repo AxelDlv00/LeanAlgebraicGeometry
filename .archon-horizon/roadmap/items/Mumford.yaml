@@ -2,11 +2,11 @@ id: Mumford
 title: Mumford Abelian Varieties formalization
 projects:
 - Mumford
-summary: Advance source-faithful Mumford formalization. The real ODE route proves
-  global central one-parameter subgroups and now fixed-time tangent additivity, canonicalRealFlow
-  I (v + w) t = canonicalRealFlow I v t * canonicalRealFlow I w t (ef59abc787). The
-  next genuine producer is joint tangent-parameter regularity and complex differentiability,
-  including d exp at zero; exact frozen-source attachments remain open.
+summary: Advance source-faithful Mumford analytic formalization. Real central flows
+  now have fixed-time additivity and a finite-dimensional joint real-continuity producer,
+  plus explicit derivative and initial-tangent APIs (52b98f8eac). Complex holomorphic
+  exponential, complex d exp at zero, local generation/surjectivity, and exact frozen-source
+  attachments remain open.
 status: active
 kind: proof
 priority: normal
@@ -29,8 +29,9 @@ metadata:
     task_title: Advance Mumford Abelian Varieties formalization
     projects: Mumford
   owner: fs-mumford
-  updated_at: '2026-09-03T17:25:35.961471+00:00'
+  updated_at: '2026-09-03T19:33:14.333898+00:00'
   pinned_commits:
+  - 52b98f8eac
   - ef59abc787
   - 5aa93e4263
   - 52ddb1a583

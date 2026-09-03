@@ -1,14 +1,14 @@
 id: I-2051
 provider: local
 kind: issue
-body: 'Blueprint-to-Lean links are still absent after 52 verified declarations
-
-
-  Run 0167 graph stats show 52 closed Lean nodes but all 5,501 tex nodes have lean_status=empty;
-  `rg \\lean{ blueprint/src` returns zero. The new Topology/Spectrum/Zariski/IdealTheory
-  declarations therefore do not close any source-faithful blueprint node. Highest-value
-  next action: add minimal genuine `\lean{...}` mappings to matching frozen statements
-  (or record why mappings are intentionally deferred), then resync and inspect warnings.'
+body: Blueprint-to-Lean links remain intentionally absent after the Run 0211 graph
+  sync indexed 316 Lean declarations. All 5,501 TeX nodes still have lean_status=empty
+  and the frozen blueprint contains no editable \lean pins. Part 01 now has checked
+  Tag 00DV producers for clauses (1), (2), (3), (4), (6), (8), (9), (10), (11), and
+  (12); clauses (5) and (7), plus Tag 051B, remain open. The missing links are a traceability
+  boundary under protection I-2034, not a source-completion claim. Highest-value next
+  action is an authorized attachment pass; this standing task records the producer
+  progress and leaves the issue open.
 labels:
 - agent-ready
 status: open
@@ -19,7 +19,7 @@ audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-08-27T11:15:12.240649+00:00'
-updated_at: '2026-09-03T16:14:10.553416+00:00'
+updated_at: '2026-09-03T19:16:05.653181+00:00'
 metadata:
   provenance:
     run: '0167'

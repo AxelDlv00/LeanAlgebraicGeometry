@@ -2,10 +2,13 @@ id: StacksPart01.localization-support
 title: Part 01 localization and support frontier
 projects:
 - StacksPart01_Preliminaries
-summary: Tag 00EW is now packaged source-faithfully and the missing rectangular converse
-  in Tag 07DQ is proved. Blueprint attachments remain blocked by I-2034/I-2051; next
-  formalize the Tag 00DV Nakayama consumer needed by the finite-presentation/support
-  frontier, then Tag 051B.
+summary: Tag 00EW is packaged source-faithfully and Tag 07DQ's rectangular converse
+  is proved. Run 0211 now packages verified Tag 00DV Nakayama producers for clauses
+  (1), (2), (3), (4), (6), (8), (9), (10), (11), and (12) in StacksPart01Lib/Nakayama.lean,
+  including localized-module and nilpotent forms, and exports them through Basic.
+  Frozen blueprint attachments remain blocked by I-2034/I-2051; Tag 00DV clauses (5)
+  and (7), then the Tag 051B finite-presentation support/minor and quasi-compact-complement
+  consumer, remain next.
 status: active
 kind: proof
 priority: high
@@ -31,7 +34,7 @@ metadata:
     projects: StacksPart01_Preliminaries
   owner: fs-stacks-part01-prelim
   milestone: StacksPart01
-  updated_at: '2026-09-03T16:13:49.231513+00:00'
+  updated_at: '2026-09-03T19:07:20.188251+00:00'
   pinned_commits:
   - 08e6e076b459f3dcabc08c6c3af6127a60dd6cac
   - d7848004f50af5358e67d2e53a99a8837e926afe
