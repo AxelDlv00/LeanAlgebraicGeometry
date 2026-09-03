@@ -44,6 +44,35 @@ When `S = Spec(k)`, this is the fibre power `V^n` over `k`. -/
 noncomputable abbrev relativePower {S : Scheme.{u}} (V : Over S) (n : ℕ) : Over S :=
   ∏ᶜ (fun _ : Fin n => V)
 
+/-! The affine case of the relative product is available directly from the
+wide-pullback presentation used to construct products in `Over`. -/
+
+/-- A finite relative power of an affine scheme over an affine base is affine.
+
+The proof transports the `Over`-product limit cone to its underlying
+wide-pullback cone and applies the affine-limit theorem.  No quotient
+existence or geometric finiteness hypothesis is used here. -/
+theorem relativePower_isAffine {S : Scheme.{u}} (V : Over S) (n : ℕ)
+    [IsAffine S] [IsAffine V.left] : IsAffine (relativePower V n).left := by
+  let F : Discrete (Fin n) ⥤ Over S := Discrete.functor (fun _ => V)
+  let D := CategoryTheory.Over.ConstructProducts.widePullbackDiagramOfDiagramOver S F
+  let cF := limit.cone F
+  let cW := CategoryTheory.Over.ConstructProducts.conesEquivInverseObj S F cF
+  have hcF : IsLimit cF := limit.isLimit F
+  have hcW : IsLimit cW :=
+    (IsLimit.ofConeEquiv
+      (CategoryTheory.Over.ConstructProducts.conesEquiv S F).symm).symm hcF
+  letI : ∀ j, IsAffine (D.obj j) := by
+    intro j
+    cases j with
+    | none =>
+      change IsAffine S
+      infer_instance
+    | some i =>
+      change IsAffine V.left
+      infer_instance
+  exact Scheme.isAffine_of_isLimit cW hcW
+
 /-- Permute the factors of the relative power.  The convention is
 `permute σ ≫ π i = π (σ i)`. -/
 noncomputable def permute {S : Scheme.{u}} (V : Over S) (n : ℕ)
@@ -119,6 +148,14 @@ underlying scheme used by a relative-product quotient. -/
 noncomputable def permutationAutHomOverLeft {S : Scheme.{u}} (V : Over S) (n : ℕ) :
     Equiv.Perm (Fin n) →* Aut ((relativePower V n).left) :=
   (Functor.mapAut _ (Over.forget S)).comp (permutationAutHom V n)
+
+/-- The permutation action on an affine relative power satisfies the
+orbit-in-affine hypothesis via the whole affine scheme. -/
+theorem permutation_orbitsInAffineOpen_of_isAffine {S : Scheme.{u}} (V : Over S) (n : ℕ)
+    [IsAffine S] [IsAffine V.left] :
+    StableGroupAction.OrbitsInAffineOpen (permutationAutHomOverLeft V n) := by
+  letI : IsAffine (relativePower V n).left := relativePower_isAffine V n
+  exact StableGroupAction.orbitsInAffineOpen_of_isAffine _
 
 /-- Conditional stable-cover corollary for the relative permutation action.  The
 orbit-in-affine hypothesis is kept explicit: this bridge does not assert it
