@@ -131,6 +131,18 @@ def IsStableOpen (U : X.Opens) : Prop :=
   ∀ g : G, (act g).hom ⁻¹ᵁ U = U
 
 omit [Finite G] in
+/-- Every orbit on an affine scheme is contained in the affine open `⊤`.
+
+This is intentionally a theorem, rather than an unconditional typeclass
+instance, so that downstream quotient constructions keep their geometric
+orbit hypothesis visible at the call site. -/
+lemma orbitsInAffineOpen_of_isAffine [IsAffine X] : OrbitsInAffineOpen act := by
+  intro x
+  refine ⟨⟨⊤, isAffineOpen_top X⟩, ?_⟩
+  intro g
+  trivial
+
+omit [Finite G] in
 lemma act_one_hom : (act 1).hom = 𝟙 X := by
   rw [map_one]
   rfl
