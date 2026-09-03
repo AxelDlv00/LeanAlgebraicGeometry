@@ -1,0 +1,36 @@
+id: I-2264
+provider: local
+kind: memory
+body: 'Use real integral curves for complex Lie integration
+
+
+  Mathlib manifold integral curves are real-only. Build one-parameter subgroups from
+  `mulInvariantVectorField`, local existence/uniqueness, and uniform-time globalization;
+  then realify a boundaryless complex `ModelWithCorners` and transfer smooth structure
+  via `ContDiff.restrict_scalars`. Prefer this producer chain over more conditional
+  exponential wrappers.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Mumford
+audience: ''
+author: horizon
+source_ref: null
+created_at: '2026-09-03T01:49:51.713108+00:00'
+updated_at: '2026-09-03T02:38:19.583003+00:00'
+metadata:
+  provenance:
+    run: '0210'
+    session: 0012-horizon-fs-mumford
+    role: horizon
+    round: '5'
+    rounds: '24'
+    task: fs-mumford
+    task_title: Advance Mumford Abelian Varieties formalization
+    projects: Mumford
+  agent: strategy-reviewer
+  owner_task: fs-mumford
+  read_by:
+  - fs-mumford
