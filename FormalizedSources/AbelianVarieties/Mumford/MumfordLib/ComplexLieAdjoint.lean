@@ -129,5 +129,28 @@ theorem complexLieAdjoint_eq_id
   exact MDifferentiable.apply_eq_of_compactSpace
     (complexLieAdjoint_mdifferentiable (G := G) I) x 1
 
+set_option backward.isDefEq.respectTransparency false in
+/-- In intrinsic tangent-space coordinates, the derivative at the identity of
+every conjugation in a compact connected complex Lie group is the identity. -/
+theorem mfderiv_complexLieConjugation_one_eq_id
+    [I.Boundaryless] [CompactSpace G] [PreconnectedSpace G] (x : G) :
+    mfderiv I I (complexLieConjugation x) 1 =
+      ContinuousLinearMap.id ℂ E := by
+  have hadj := complexLieAdjoint_eq_id (G := G) I x
+  rw [complexLieAdjoint, inTangentCoordinates] at hadj
+  have hmem :
+      (1 : G) ∈ (trivializationAt E (TangentSpace I) (1 : G)).baseSet :=
+    FiberBundle.mem_baseSet_trivializationAt' (1 : G)
+  rw [ContinuousLinearMap.inCoordinates_eq hmem hmem] at hadj
+  let e := (trivializationAt E (TangentSpace I) (1 : G)).continuousLinearEquivAt
+    ℂ (1 : G) hmem
+  ext v
+  change mfderiv I I (complexLieConjugation x) 1 v = v
+  have happ := congrArg (fun L : E →L[ℂ] E => L (e v)) hadj
+  have hinv := congrArg e.symm happ
+  simp only [e, ContinuousLinearMap.comp_apply, ContinuousLinearEquiv.coe_coe,
+    ContinuousLinearEquiv.symm_apply_apply, ContinuousLinearMap.id_apply] at hinv
+  with_reducible_and_instances exact hinv
+
 end Analytic
 end Mumford
