@@ -14,9 +14,10 @@ localization of `A^G` at its defining element.  Combining this description
 with the fixed-localization theorem identifies its sections with the fixed
 subring of the corresponding localization of `A`.
 
-The main result proves that this identification carries actual presheaf
+The main results prove that this identification carries actual presheaf
 restriction maps to the fixed-localized transition maps constructed in
-`InvariantLocalizationTransitions`.
+`InvariantLocalizationTransitions`, and that the affine quotient map on
+sections is the inclusion of the fixed subring into the full localization.
 -/
 
 set_option autoImplicit false
@@ -292,16 +293,16 @@ theorem sourceBasicOpenSectionsEquiv_comp_algebraMap
 
 /-- The localization presentation of sections on the exact preimage of an
 invariant quotient basic open. -/
-noncomputable def invariantSourceBasicOpenSectionsEquiv
+noncomputable def invariantSourceBasicOpenPreimageSectionsEquiv
     (b : FixedPoints.subalgebra k A G) :
     invariantSourceBasicOpenPreimageSections b ≃+*
       Localization.Away (b : A) :=
   (invariantSourceBasicOpenPreimageEquiv b).trans
     (sourceBasicOpenSectionsEquiv b)
 
-theorem invariantSourceBasicOpenSectionsEquiv_comp_algebraMap
+theorem invariantSourceBasicOpenPreimageSectionsEquiv_comp_algebraMap
     (b : FixedPoints.subalgebra k A G) :
-    (invariantSourceBasicOpenSectionsEquiv b).toRingHom.comp
+    (invariantSourceBasicOpenPreimageSectionsEquiv b).toRingHom.comp
         (algebraMap A (invariantSourceBasicOpenPreimageSections b)) =
       algebraMap A (Localization.Away (b : A)) := by
   change (sourceBasicOpenSectionsEquiv b).toRingHom.comp
@@ -341,7 +342,7 @@ the affine quotient map on actual structure-sheaf sections is the inclusion of
 the fixed subring into the full localization. -/
 theorem affineInvariantQuotientMap_app_basicOpen_fixed [Finite G]
     (b : FixedPoints.subalgebra k A G) :
-    (invariantSourceBasicOpenSectionsEquiv b).toRingHom.comp
+    (invariantSourceBasicOpenPreimageSectionsEquiv b).toRingHom.comp
         ((affineInvariantQuotientMap (k := k) (A := A) (G := G)).app
           (PrimeSpectrum.basicOpen b)).hom =
       (fixedAway (b : A) b.property).subtype.comp
@@ -363,21 +364,21 @@ theorem affineInvariantQuotientMap_app_basicOpen_fixed [Finite G]
     (invariantQuotientBasicOpenSectionsIsLocalization b)
     (Localization.Away (b : A)) inferInstance _ _ ?_
   calc
-    ((invariantSourceBasicOpenSectionsEquiv b).toRingHom.comp qApp).comp
+    ((invariantSourceBasicOpenPreimageSectionsEquiv b).toRingHom.comp qApp).comp
         algebraMapQ =
-      (invariantSourceBasicOpenSectionsEquiv b).toRingHom.comp
+      (invariantSourceBasicOpenPreimageSectionsEquiv b).toRingHom.comp
         (qApp.comp algebraMapQ) := RingHom.comp_assoc _ _ _
-    _ = (invariantSourceBasicOpenSectionsEquiv b).toRingHom.comp
+    _ = (invariantSourceBasicOpenPreimageSectionsEquiv b).toRingHom.comp
         (algebraMapPreimage.comp invariantInclusion) :=
-      congrArg (invariantSourceBasicOpenSectionsEquiv b).toRingHom.comp
+      congrArg (invariantSourceBasicOpenPreimageSectionsEquiv b).toRingHom.comp
         (affineInvariantQuotientMap_app_basicOpen_comp_algebraMap b)
-    _ = ((invariantSourceBasicOpenSectionsEquiv b).toRingHom.comp
+    _ = ((invariantSourceBasicOpenPreimageSectionsEquiv b).toRingHom.comp
         algebraMapPreimage).comp invariantInclusion :=
       (RingHom.comp_assoc _ _ _).symm
     _ = (algebraMap A (Localization.Away (b : A))).comp
         invariantInclusion :=
       congrArg (fun f => f.comp invariantInclusion)
-        (invariantSourceBasicOpenSectionsEquiv_comp_algebraMap b)
+        (invariantSourceBasicOpenPreimageSectionsEquiv_comp_algebraMap b)
     _ = (fixedAway (b : A) b.property).subtype.comp
         (invariantToFixedAway b) := by rfl
     _ = (fixedAway (b : A) b.property).subtype.comp
