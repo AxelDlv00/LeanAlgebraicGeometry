@@ -244,6 +244,17 @@ theorem specAction_preimage_basicOpen_fixed (a : FixedPoints.subalgebra k A G) (
     PrimeSpectrum.basicOpen (a : A)
   rw [show g⁻¹ • (a : A) = (a : A) from a.property g⁻¹]
 
+/-- The affine invariant quotient map pulls a basic open of an invariant
+element back to the corresponding basic open on the source. -/
+theorem affineInvariantQuotientMap_preimage_basicOpen_fixed
+    (a : FixedPoints.subalgebra k A G) :
+    (affineInvariantQuotientMap (k := k) (A := A) (G := G)) ⁻¹ᵁ
+        (PrimeSpectrum.basicOpen a :
+          (Spec (CommRingCat.of (FixedPoints.subalgebra k A G))).Opens) =
+      PrimeSpectrum.basicOpen (a : A) := by
+  rw [affineInvariantQuotientMap, AlgebraicGeometry.SpecMap_preimage_basicOpen]
+  rfl
+
 /-- The affine quotient map is integral without any finite-type hypothesis on
 the source algebra. -/
 theorem affineInvariantQuotientMap_isIntegral [Finite G] :
