@@ -4,7 +4,8 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: The Milne Contributors
 -/
 
-import MilneLib.InvariantQuotientOverlap
+import MilneLib.InvariantLocalizationTransitions
+import MilneLib.InvariantQuotientOpen
 
 /-!
 # Sections on invariant quotient charts
@@ -40,33 +41,9 @@ theorem specRestriction_comp_algebraMap
     ((Spec R).presheaf.map (homOfLE hVU).op).hom.comp
         (algebraMap R Γ(Spec R, U)) =
       algebraMap R Γ(Spec R, V) := by
-  have hU := AlgebraicGeometry.IsAffineOpen.algebraMap_Spec_obj
-    (R := R) (U := U)
-  have hV := AlgebraicGeometry.IsAffineOpen.algebraMap_Spec_obj
-    (R := R) (U := V)
-  have hcat :
-      (Scheme.ΓSpecIso R).inv ≫
-          (Spec R).presheaf.map
-            (homOfLE (show U ≤ (⊤ : (Spec R).Opens) from le_top)).op ≫
-          (Spec R).presheaf.map (homOfLE hVU).op =
-        (Scheme.ΓSpecIso R).inv ≫
-          (Spec R).presheaf.map
-            (homOfLE (show V ≤ (⊤ : (Spec R).Opens) from le_top)).op := by
-    rw [← Functor.map_comp]
-    rfl
-  calc
-    ((Spec R).presheaf.map (homOfLE hVU).op).hom.comp
-        (algebraMap R Γ(Spec R, U)) =
-      ((Spec R).presheaf.map (homOfLE hVU).op).hom.comp
-        (((Scheme.ΓSpecIso R).inv ≫
-          (Spec R).presheaf.map
-            (homOfLE (show U ≤ (⊤ : (Spec R).Opens) from le_top)).op).hom) :=
-      congrArg ((Spec R).presheaf.map (homOfLE hVU).op).hom.comp hU
-    _ = (((Scheme.ΓSpecIso R).inv ≫
-          (Spec R).presheaf.map
-            (homOfLE (show V ≤ (⊤ : (Spec R).Opens) from le_top)).op).hom) := by
-      exact congrArg CommRingCat.Hom.hom hcat
-    _ = algebraMap R Γ(Spec R, V) := hV.symm
+  exact congrArg CommRingCat.Hom.hom
+    (StructureSheaf.algebraMap_self_map R (Opposite.op V) (Opposite.op U)
+      (homOfLE hVU).op)
 
 /-- Sections of the quotient structure sheaf on the invariant basic open
 defined by `b`. -/
