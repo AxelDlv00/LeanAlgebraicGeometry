@@ -91,6 +91,74 @@ theorem specAction_hom_base_asIdeal (g : G) (x : PrimeSpectrum A) :
 
 end SpectrumAction
 
+section AffineMap
+
+variable {k A G : Type*} [CommRing k] [CommRing A] [Algebra k A]
+  [Group G] [MulSemiringAction G A] [SMulCommClass G k A]
+
+/-- The affine quotient map associated with a finite group action. -/
+noncomputable def affineInvariantQuotientMap :
+    Spec (CommRingCat.of A) ⟶
+      Spec (CommRingCat.of (FixedPoints.subalgebra k A G)) :=
+  Spec.map (CommRingCat.ofHom (algebraMap (FixedPoints.subalgebra k A G) A))
+
+end AffineMap
+
+section AffineUniversal
+
+variable {k A G B : Type u} [CommRing k] [CommRing A] [Algebra k A]
+  [Group G] [MulSemiringAction G A] [SMulCommClass G k A] [CommRing B]
+
+/-- The ring map induced by an invariant map factors through the fixed
+subalgebra. -/
+def invariantRingHomLift (phi : B →+* A)
+    (hphi : ∀ (g : G) (b : B), g • phi b = phi b) :
+    B →+* FixedPoints.subalgebra k A G :=
+  let hmem : ∀ b : B, phi b ∈ FixedPoints.subalgebra k A G := fun b => by
+    change ∀ g : G, g • phi b = phi b
+    exact fun g => hphi g b
+  phi.codRestrict (FixedPoints.subalgebra k A G) hmem
+
+@[simp]
+theorem invariantRingHomLift_coe (phi : B →+* A)
+    (hphi : ∀ (g : G) (b : B), g • phi b = phi b) (b : B) :
+    (invariantRingHomLift (k := k) (G := G) phi hphi b : A) = phi b := by
+  unfold invariantRingHomLift
+  exact RingHom.codRestrict_apply phi (FixedPoints.subalgebra k A G) _ b
+
+/-- The affine invariant quotient has the universal factorization property for
+invariant maps from affine schemes. -/
+theorem affineInvariantQuotientMap_existsUnique_factor
+    (phi : B →+* A)
+    (hphi : ∀ (g : G) (b : B), g • phi b = phi b) :
+  ∃! u : Spec (CommRingCat.of (FixedPoints.subalgebra k A G)) ⟶
+        Spec (CommRingCat.of B),
+      affineInvariantQuotientMap (k := k) (A := A) (G := G) ≫ u =
+        Spec.map (CommRingCat.ofHom phi) := by
+  let ψ := invariantRingHomLift (k := k) (G := G) phi hphi
+  refine ⟨Spec.map (CommRingCat.ofHom ψ), ?_, ?_⟩
+  · change Spec.map (CommRingCat.ofHom (algebraMap (FixedPoints.subalgebra k A G) A)) ≫
+      Spec.map (CommRingCat.ofHom ψ) = Spec.map (CommRingCat.ofHom phi)
+    rw [← Spec.map_comp, ← CommRingCat.ofHom_comp]
+    rw [Spec.map_inj (φ := CommRingCat.ofHom
+      ((algebraMap (FixedPoints.subalgebra k A G) A).comp ψ))
+      (ψ := CommRingCat.ofHom phi)]
+    ext b
+    change (invariantRingHomLift (k := k) (G := G) phi hphi b : A) = phi b
+    exact invariantRingHomLift_coe (k := k) (G := G) phi hphi b
+  · intro u hu
+    obtain ⟨χ, rfl⟩ := Spec.map_surjective u
+    rw [Spec.map_inj]
+    apply CommRingCat.hom_ext
+    ext b
+    change ((χ.hom b : FixedPoints.subalgebra k A G) : A) = phi b
+    unfold affineInvariantQuotientMap at hu
+    rw [← Spec.map_comp, Spec.map_inj] at hu
+    have hcomp := congrArg CommRingCat.Hom.hom hu
+    exact DFunLike.congr_fun hcomp b
+
+end AffineUniversal
+
 section Invariants
 
 variable {k A G : Type*} [CommRing k] [CommRing A] [Algebra k A]
@@ -149,12 +217,6 @@ section AffineQuotient
 
 variable {k A G : Type*} [CommRing k] [CommRing A] [Algebra k A]
   [Group G] [MulSemiringAction G A] [SMulCommClass G k A]
-
-/-- The affine quotient map associated with a finite group action. -/
-noncomputable def affineInvariantQuotientMap :
-    Spec (CommRingCat.of A) ⟶
-      Spec (CommRingCat.of (FixedPoints.subalgebra k A G)) :=
-  Spec.map (CommRingCat.ofHom (algebraMap (FixedPoints.subalgebra k A G) A))
 
 /-- The action on the affine source is constant along the invariant-ring
 projection. -/
