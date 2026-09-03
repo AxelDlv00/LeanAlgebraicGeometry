@@ -1,1 +1,0 @@
-{"markdown": "Committed the final Horizon handoff as `ffe2becd55` (`Mumford: persist conjugation-flow handoff`).\n\nAll 15 scoped Mumford paths are clean. Unrelated concurrent workspace changes were left untouched; `fs-mumford` remains running with I-2048 open.\n", "recommendation": ""}
