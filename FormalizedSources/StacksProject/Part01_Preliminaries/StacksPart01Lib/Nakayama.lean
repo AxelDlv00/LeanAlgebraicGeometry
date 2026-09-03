@@ -131,6 +131,47 @@ theorem LinearMap.surjective_of_surjective_mod_smul
       (((I • (⊤ : Submodule R N)).mkQ) ∘ₗ f)) : Function.Surjective f := by
   exact LinearMap.surjective_of_surjective_comp_mkQ f I hI hf
 
+/-- **Stacks, Tag 00DV (7).**  A set of generators modulo `I` lifts, after
+inverting an element of `1 + I`, to generators of the localized module.
+The set formulation includes the finite-list statement from the source. -/
+@[stacks 00DV "(7)"]
+theorem exists_sub_one_mem_and_span_localized_eq_top_of_span_image_mkQ_eq_top
+    [AddCommGroup M] [Module R M] [Module.Finite R M]
+    {I : Ideal R} (s : Set M)
+    (hspan : Submodule.span R
+      (((I • (⊤ : Submodule R M)).mkQ) '' s) = ⊤) :
+    ∃ r : R, r - 1 ∈ I ∧
+      Submodule.span (Localization (Submonoid.powers r))
+        ((LocalizedModule.mkLinearMap (Submonoid.powers r) M) '' s) = ⊤ := by
+  have hmap :
+      Submodule.map ((I • (⊤ : Submodule R M)).mkQ)
+          (Submodule.span R s) = ⊤ := by
+    rw [Submodule.map_span, hspan]
+  have hsup :
+      (⊤ : Submodule R M) ≤ Submodule.span R s ⊔ I • (⊤ : Submodule R M) := by
+    rw [top_le_iff, sup_comm, ← Submodule.map_mkQ_eq_top]
+    exact hmap
+  obtain ⟨r, hrI, hrange⟩ :=
+    Submodule.exists_sub_one_mem_and_smul_le_of_fg_of_le_sup
+      (N := Submodule.span R s) (N' := (⊤ : Submodule R M))
+      (P := (⊤ : Submodule R M)) Module.Finite.fg_top le_top hsup
+  refine ⟨r, hrI, ?_⟩
+  let p : Submonoid R := Submonoid.powers r
+  let l : M →ₗ[R] LocalizedModule p M := LocalizedModule.mkLinearMap p M
+  have hle :
+      Submodule.localized' (Localization p) p l (⊤ : Submodule R M) ≤
+        Submodule.localized' (Localization p) p l (Submodule.span R s) :=
+    Submodule.localized'_le_localized'_of_smul_le
+      (Localization p) p l (⟨r, Submonoid.mem_powers r⟩ : p) hrange
+  have htop :
+      (⊤ : Submodule (Localization p) (LocalizedModule p M)) ≤
+        Submodule.localized' (Localization p) p l (Submodule.span R s) := by
+    simpa only [Submodule.localized'_top] using hle
+  have hloc :
+      Submodule.localized' (Localization p) p l (Submodule.span R s) = ⊤ :=
+    top_unique htop
+  simpa only [Submodule.localized'_span] using hloc
+
 /-- **Stacks, Tag 00DV (8).**  A spanning set of the image of a finite
 submodule modulo `I` lifts to a spanning set of that submodule, with the
 quotient map injective on the chosen lifts. -/
