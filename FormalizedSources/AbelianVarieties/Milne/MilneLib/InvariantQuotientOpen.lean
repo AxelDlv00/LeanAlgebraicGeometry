@@ -126,6 +126,37 @@ theorem quotientOpenOfStable_basicOpen_fixed [Finite G]
           (Spec (CommRingCat.of (FixedPoints.subalgebra k A G))).Opens) := hx
     rwa [affineInvariantQuotientMap_preimage_basicOpen_fixed] at hy
 
+/-- Descending stable opens is monotone. -/
+theorem quotientOpenOfStable_mono [Finite G]
+    {U V : (Spec (CommRingCat.of A)).Opens}
+    (hU : ∀ g : G, (specAction G A g).hom ⁻¹ᵁ U = U)
+    (hV : ∀ g : G, (specAction G A g).hom ⁻¹ᵁ V = V)
+    (hUV : U ≤ V) :
+    quotientOpenOfStable (k := k) (A := A) (G := G) U hU ≤
+      quotientOpenOfStable (k := k) (A := A) (G := G) V hV := by
+  rintro x ⟨y, hy, rfl⟩
+  exact ⟨y, hUV hy, rfl⟩
+
+/-- Descending stable opens preserves pairwise intersections. -/
+theorem quotientOpenOfStable_inf [Finite G]
+    (U V : (Spec (CommRingCat.of A)).Opens)
+    (hU : ∀ g : G, (specAction G A g).hom ⁻¹ᵁ U = U)
+    (hV : ∀ g : G, (specAction G A g).hom ⁻¹ᵁ V = V) :
+    quotientOpenOfStable (k := k) (A := A) (G := G) (U ⊓ V)
+        (fun g => by rw [Scheme.Hom.preimage_inf, hU g, hV g]) =
+      quotientOpenOfStable (k := k) (A := A) (G := G) U hU ⊓
+        quotientOpenOfStable (k := k) (A := A) (G := G) V hV := by
+  ext x
+  constructor
+  · rintro ⟨y, hy, rfl⟩
+    exact ⟨⟨y, hy.1, rfl⟩, ⟨y, hy.2, rfl⟩⟩
+  · rintro ⟨⟨y, hyU, hy⟩, ⟨z, hzV, hz⟩⟩
+    refine ⟨y, ⟨hyU, ?_⟩, hy⟩
+    have hyV : y ∈ (affineInvariantQuotientMap (k := k) (A := A) (G := G)) ⁻¹'
+        ((affineInvariantQuotientMap (k := k) (A := A) (G := G)) '' (V : Set _)) :=
+      ⟨z, hzV, hz.trans hy.symm⟩
+    rwa [preimage_image_eq_of_stable (k := k) (A := A) (G := G) V hV] at hyV
+
 -- The two sides use definitionally equal presentations of the image of `b`.
 set_option backward.defeqAttrib.useBackward true in
 set_option backward.isDefEq.respectTransparency false in

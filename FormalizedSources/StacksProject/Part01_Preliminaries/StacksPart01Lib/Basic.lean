@@ -43,6 +43,7 @@ import StacksPart01Lib.FiniteProductClosure
 import StacksPart01Lib.NoetherianSpectrum
 import StacksPart01Lib.Support
 import StacksPart01Lib.SupportQuotient
+import StacksPart01Lib.SupportElement
 
 /-!
 # StacksPart01Lib.Basic
