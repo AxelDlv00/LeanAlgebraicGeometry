@@ -699,7 +699,7 @@
     },
     "states": {
       "blocked": 116,
-      "closed": 807,
+      "closed": 813,
       "formalized_open": 0,
       "informal": 212,
       "ready": 96
@@ -721,7 +721,13 @@
       "Mumford.Analytic.MDifferentiableAt.restrict_scalars_complex: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Mumford.Analytic.canonicalRealFlow: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Mumford.Analytic.canonicalRealFlow_add: Lean declaration is not referenced by any blueprint \\lean{...}",
+      "Mumford.Analytic.canonicalRealFlow_continuous: Lean declaration is not referenced by any blueprint \\lean{...}",
+      "Mumford.Analytic.canonicalRealFlow_continuous_joint: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Mumford.Analytic.canonicalRealFlow_eq_of_isMIntegralCurve: Lean declaration is not referenced by any blueprint \\lean{...}",
+      "Mumford.Analytic.canonicalRealFlow_eq_time_one_smul: Lean declaration is not referenced by any blueprint \\lean{...}",
+      "Mumford.Analytic.canonicalRealFlow_hasMFDerivAt: Lean declaration is not referenced by any blueprint \\lean{...}",
+      "Mumford.Analytic.canonicalRealFlow_hasMFDerivAt_zero: Lean declaration is not referenced by any blueprint \\lean{...}",
+      "Mumford.Analytic.canonicalRealFlow_linear_combination: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Mumford.Analytic.canonicalRealFlow_neg: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Mumford.Analytic.canonicalRealFlow_smul: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Mumford.Analytic.canonicalRealFlow_spec: Lean declaration is not referenced by any blueprint \\lean{...}",
@@ -748,13 +754,7 @@
       "Mumford.Analytic.complexToRealModel_prod: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Mumford.Analytic.contDiffGroupoid_complex_le_real: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Mumford.Analytic.contMDiff_complexLieConjugation_real: Lean declaration is not referenced by any blueprint \\lean{...}",
-      "Mumford.Analytic.exists_central_real_oneParameterSubgroup_of_complexLieGroup: Lean declaration is not referenced by any blueprint \\lean{...}",
-      "Mumford.Analytic.exists_global_mulInvariant_integralCurve: Lean declaration is not referenced by any blueprint \\lean{...}",
-      "Mumford.Analytic.exists_oneParameterSubgroup: Lean declaration is not referenced by any blueprint \\lean{...}",
-      "Mumford.Analytic.exists_real_oneParameterSubgroup_of_complexLieGroup: Lean declaration is not referenced by any blueprint \\lean{...}",
-      "Mumford.Analytic.isMIntegralCurve_commute_complexLieGroup: Lean declaration is not referenced by any blueprint \\lean{...}",
-      "Mumford.Analytic.isMIntegralCurve_eq_of_eq_at: Lean declaration is not referenced by any blueprint \\lean{...}",
-      "Mumford.Analytic.isMIntegralCurve_mul_of_central: Lean declaration is not referenced by any blueprint \\lean{...}"
+      "Mumford.Analytic.exists_central_real_oneParameterSubgroup_of_complexLieGroup: Lean declaration is not referenced by any blueprint \\lean{...}"
     ]
   },
   "nodes": [

@@ -2,11 +2,12 @@ id: Mumford
 title: Mumford Abelian Varieties formalization
 projects:
 - Mumford
-summary: Advance source-faithful Mumford analytic formalization. Real central flows
-  now have fixed-time additivity and a finite-dimensional joint real-continuity producer,
-  plus explicit derivative and initial-tangent APIs (52b98f8eac). Complex holomorphic
-  exponential, complex d exp at zero, local generation/surjectivity, and exact frozen-source
-  attachments remain open.
+summary: Advance source-faithful Mumford analytic formalization. Canonical real flows
+  now have fixed-time additivity, finite-basis global real C1 time-one regularity,
+  and an identity-neighborhood range; compact connected complex Lie-group commutativity
+  is proved from central flow generation (cefb299fa0). Genuine complex-holomorphic
+  exponential, lattice uniformization, and approved frozen-source attachments remain
+  open.
 status: active
 kind: proof
 priority: normal
@@ -29,8 +30,10 @@ metadata:
     task_title: Advance Mumford Abelian Varieties formalization
     projects: Mumford
   owner: fs-mumford
-  updated_at: '2026-09-03T19:33:14.333898+00:00'
+  updated_at: '2026-09-03T23:39:40.228817+00:00'
   pinned_commits:
+  - 22300255d0
+  - cefb299fa0
   - 52b98f8eac
   - ef59abc787
   - 5aa93e4263
