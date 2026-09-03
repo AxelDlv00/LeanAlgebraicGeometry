@@ -41,6 +41,7 @@ import StacksPart01Lib.FiniteProduct
 import StacksPart01Lib.FiniteMapProduct
 import StacksPart01Lib.FiniteProductClosure
 import StacksPart01Lib.NoetherianSpectrum
+import StacksPart01Lib.Support
 
 /-!
 # StacksPart01Lib.Basic
