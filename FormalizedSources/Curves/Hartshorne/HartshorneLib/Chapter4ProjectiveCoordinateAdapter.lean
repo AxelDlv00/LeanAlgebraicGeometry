@@ -95,6 +95,7 @@ def awayLift (f : MvPolynomial J k)
     (algebraMap (Away (homogeneousSubmodule J k) f)
       (Localization.Away f))
 
+omit [Algebra k B] in
 /-- Normal form for `awayLift`: the value of `a / f ^ n`, multiplied by the
 evaluated denominator, is the value of `a`. -/
 theorem awayLift_mul_eq {f : MvPolynomial J k} {e : ℕ}
@@ -123,6 +124,44 @@ theorem awayLift_mul_eq {f : MvPolynomial J k} {e : ℕ}
         HomogeneousLocalization.Away.val_mk, map_pow]
     _ = psi a := hlift
 
+omit [Algebra k B] in
+/-- `awayLift` only depends on the underlying evaluation map. -/
+theorem awayLift_congr {f : MvPolynomial J k}
+    {psi₁ psi₂ : MvPolynomial J k →+* B} (h : psi₁ = psi₂)
+    (hu : IsUnit (psi₁ f)) :
+    awayLift f psi₁ hu = awayLift f psi₂ (h ▸ hu) := by
+  subst h
+  rfl
+
+variable {B' : Type u} [CommRing B'] [Algebra k B']
+
+/-- Post-composition by a `k`-algebra homomorphism commutes with evaluation. -/
+theorem comp_eval (r : B →ₐ[k] B') (c : J → B) :
+    r.toRingHom.comp (eval (k := k) c) =
+      eval (k := k) (fun i => r (c i)) := by
+  apply MvPolynomial.ringHom_ext
+  · intro z
+    simp [eval]
+  · intro i
+    simp
+
+/-- Post-composition by a `k`-algebra homomorphism commutes with `awayLift`. -/
+theorem comp_awayLift {f : MvPolynomial J k} {e : ℕ}
+    (hf : f ∈ homogeneousSubmodule J k e) (r : B →ₐ[k] B')
+    (psi : MvPolynomial J k →+* B) (hu : IsUnit (psi f)) :
+    r.toRingHom.comp (awayLift f psi hu) =
+      awayLift f (r.toRingHom.comp psi) (by simpa using hu.map r.toRingHom) := by
+  apply RingHom.ext
+  intro w
+  obtain ⟨n, a, ha, rfl⟩ :=
+    Away.mk_surjective (homogeneousSubmodule J k) hf w
+  have h₁ := congrArg r (awayLift_mul_eq hf psi hu n a ha)
+  rw [map_mul, map_pow] at h₁
+  have h₂ := awayLift_mul_eq hf (r.toRingHom.comp psi)
+    (by simpa using hu.map r.toRingHom) n a ha
+  simp only [RingHom.comp_apply] at h₂ ⊢
+  exact ((hu.map r.toRingHom).pow n).mul_right_cancel (h₁.trans h₂.symm)
+
 /-- Every homogeneous coordinate has degree one. -/
 theorem X_mem_deg_one (i : J) :
     (X i : MvPolynomial J k) ∈ homogeneousSubmodule J k 1 :=
@@ -136,6 +175,16 @@ def chartHom (i : J) (c : J → B) (hi : c i = 1) :
     Away (homogeneousSubmodule J k) (X i) →+* B :=
   awayLift (X i) (eval c)
     (by rw [eval_X c i, hi]; exact isUnit_one)
+
+/-- Post-composition by a `k`-algebra homomorphism commutes with a standard-chart
+classifying map. -/
+theorem comp_chartHom (r : B →ₐ[k] B') (i : J) (c : J → B) (hi : c i = 1) :
+    r.toRingHom.comp (chartHom (k := k) i c hi) =
+      chartHom (k := k) i (fun j => r (c j)) (by rw [hi, map_one]) := by
+  rw [chartHom, chartHom]
+  exact (comp_awayLift (X_mem_deg_one (k := k) i) r (eval c)
+    (by rw [eval_X c i, hi]; exact isUnit_one)).trans
+      (awayLift_congr (comp_eval r c) _)
 
 /-- The normalized coordinate `X_j / X_i` on the `i`-th projective chart. -/
 def chartCoord (i j : J) :
@@ -163,7 +212,8 @@ theorem chartHom_mk (i : J) (c : J → B) (hi : c i = 1)
       (Away.mk (homogeneousSubmodule J k) hf n a ha) = eval c a
   have h := awayLift_mul_eq hf (eval c)
     (by rw [eval_X c i, hi]; exact isUnit_one) n a ha
-  convert h using 1 <;> simp [eval_X c i, hi]
+  convert h using 1
+  all_goals simp [eval_X c i, hi]
 
 @[simp]
 theorem chartHom_chartCoord (i j : J) (c : J → B) (hi : c i = 1) :
@@ -195,6 +245,62 @@ theorem fromSpec_preimage_basicOpen (i j : J) (c : J → B) (hi : c i = 1) :
         (f := (X i : MvPolynomial J k)) (g := (X j : MvPolynomial J k))
         (X_mem_deg_one i) (X_mem_deg_one j)) = c j
   rw [isLocalizationElem_eq_chartCoord, chartHom_chartCoord]
+
+/-- `fromSpec` is natural in the affine coordinate algebra. -/
+theorem SpecMap_fromSpec (r : B →ₐ[k] B') (i : J) (c : J → B)
+    (hi : c i = 1) :
+    Spec.map (CommRingCat.ofHom r.toRingHom) ≫ fromSpec (k := k) i c hi =
+      fromSpec (k := k) i (fun j => r (c j)) (by rw [hi, map_one]) := by
+  rw [fromSpec, fromSpec, ← Category.assoc, ← Spec.map_comp]
+  congr 2
+  ext w
+  exact DFunLike.congr_fun (comp_chartHom r i c hi) w
+
+/-! ### Coordinate maps on open subschemes -/
+
+/-- A normalized coordinate family on an open subscheme defines a morphism to
+projective space.  The coefficient map is explicit so that this construction
+does not install a global algebra instance on the ring of sections. -/
+noncomputable def fromOpen {Z : Scheme.{u}} (U : Z.Opens)
+    (algebraMap' : k →+* Γ(Z, U)) (i : J) (c : J → Γ(Z, U))
+    (hi : c i = 1) :
+    U.toScheme ⟶ Proj (homogeneousSubmodule J k) := by
+  letI : Algebra k Γ(Z, U) := algebraMap'.toAlgebra
+  exact U.toSpecΓ ≫ fromSpec (k := k) i c hi
+
+/-- On an open source, the inverse image of `D_+(X_j)` is the restriction of
+the principal open where the section `c_j` is nonzero. -/
+theorem fromOpen_preimage_basicOpen {Z : Scheme.{u}} (U : Z.Opens)
+    (algebraMap' : k →+* Γ(Z, U)) (i j : J) (c : J → Γ(Z, U))
+    (hi : c i = 1) :
+    fromOpen U algebraMap' i c hi ⁻¹ᵁ
+        Proj.basicOpen (homogeneousSubmodule J k) (X j) =
+      U.ι ⁻¹ᵁ Z.basicOpen (c j) := by
+  letI : Algebra k Γ(Z, U) := algebraMap'.toAlgebra
+  rw [fromOpen, Scheme.Hom.comp_preimage, fromSpec_preimage_basicOpen,
+    Scheme.Opens.toSpecΓ_preimage_basicOpen]
+
+/-- Coordinate morphisms from open subschemes commute with restriction when
+the restriction map preserves the chosen coefficient maps. -/
+theorem homOfLE_fromOpen {Z : Scheme.{u}} {U V : Z.Opens}
+    (algebraMapU : k →+* Γ(Z, U)) (algebraMapV : k →+* Γ(Z, V))
+    (hVU : V ≤ U)
+    (halgebra :
+      ((Z.presheaf.map (homOfLE hVU).op).hom).comp algebraMapU = algebraMapV)
+    (i : J) (c : J → Γ(Z, U)) (hi : c i = 1) :
+    Z.homOfLE hVU ≫ fromOpen U algebraMapU i c hi =
+      fromOpen V algebraMapV i
+        (fun j => (Z.presheaf.map (homOfLE hVU).op).hom (c j))
+        (by rw [hi, map_one]) := by
+  letI : Algebra k Γ(Z, U) := algebraMapU.toAlgebra
+  letI : Algebra k Γ(Z, V) := algebraMapV.toAlgebra
+  let r : Γ(Z, U) →ₐ[k] Γ(Z, V) :=
+    { toRingHom := (Z.presheaf.map (homOfLE hVU).op).hom
+      commutes' := fun x => DFunLike.congr_fun halgebra x }
+  rw [fromOpen, fromOpen,
+    ← Scheme.Opens.toSpecΓ_SpecMap_presheaf_map_assoc V U hVU]
+  congr 1
+  simpa [r] using SpecMap_fromSpec (k := k) r i c hi
 
 /-! ### Equality after a unit rescaling -/
 
@@ -315,6 +421,19 @@ theorem fromSpec_eq_of_unit_smul [Finite J] (i₀ i₁ : J) (c₀ c₁ : J → B
     CommRingCat.ofHom_comp, CommRingCat.ofHom_comp, Spec.map_comp, Spec.map_comp]
   simp only [Category.assoc]
   rw [Proj.SpecMap_awayMap_awayι, Proj.SpecMap_awayMap_awayι, hoverlap]
+
+/-- Coordinate maps from the same open subscheme agree when their normalized
+coordinate families differ by multiplication by a unit. -/
+theorem fromOpen_eq_of_unit_smul [Finite J] {Z : Scheme.{u}} (U : Z.Opens)
+    (algebraMap' : k →+* Γ(Z, U)) (i₀ i₁ : J)
+    (c₀ c₁ : J → Γ(Z, U)) (hi₀ : c₀ i₀ = 1) (hi₁ : c₁ i₁ = 1)
+    (lambda : Γ(Z, U)) (hlambda : IsUnit lambda)
+    (hc : ∀ j, c₀ j = lambda * c₁ j) :
+    fromOpen U algebraMap' i₀ c₀ hi₀ =
+      fromOpen U algebraMap' i₁ c₁ hi₁ := by
+  letI : Algebra k Γ(Z, U) := algebraMap'.toAlgebra
+  unfold fromOpen
+  rw [fromSpec_eq_of_unit_smul i₀ i₁ c₀ c₁ hi₀ hi₁ lambda hlambda hc]
 
 end
 end ProjectiveCoordinates
