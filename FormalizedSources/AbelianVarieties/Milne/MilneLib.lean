@@ -9,6 +9,7 @@ import MilneLib.Isogeny
 import MilneLib.IsogenyDescent
 import MilneLib.IsogenyCharacterization
 import MilneLib.Descent
+import MilneLib.InvariantQuotient
 import MilneLib.Torsion
 import MilneLib.Coherent
 import MilneLib.LinearAlgebra
