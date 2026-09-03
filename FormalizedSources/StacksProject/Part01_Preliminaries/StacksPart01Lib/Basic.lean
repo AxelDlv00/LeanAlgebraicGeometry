@@ -20,6 +20,7 @@ import StacksPart01Lib.ChineseRemainder
 import StacksPart01Lib.Nilradical
 import StacksPart01Lib.Localization
 import StacksPart01Lib.LocalizationExtras
+import StacksPart01Lib.ReducedLocalization
 import StacksPart01Lib.CommutativeAlgebra
 import StacksPart01Lib.Charpoly
 import StacksPart01Lib.CharpolyModule
@@ -27,6 +28,8 @@ import StacksPart01Lib.FiniteModule
 import StacksPart01Lib.FiniteType
 import StacksPart01Lib.FiniteTypeExtras
 import StacksPart01Lib.FiniteBaseChange
+import StacksPart01Lib.FiniteLocalization
+import StacksPart01Lib.FiniteLocalizedQuotient
 import StacksPart01Lib.Artinian
 import StacksPart01Lib.Integral
 import StacksPart01Lib.GoingUp
@@ -35,6 +38,7 @@ import StacksPart01Lib.Normal
 import StacksPart01Lib.NormalLocalization
 import StacksPart01Lib.IntegralProduct
 import StacksPart01Lib.FiniteProduct
+import StacksPart01Lib.FiniteMapProduct
 import StacksPart01Lib.FiniteProductClosure
 import StacksPart01Lib.NoetherianSpectrum
 
