@@ -17,8 +17,8 @@ needed when affine finite-group quotient charts are compared on overlaps.
 
 The action and the fixed subring are kept in this namespace rather than made
 global instances: the action depends on the proof that the denominator is
-invariant.  The main comparison is stated elementwise, which is the form used
-by the chart construction and avoids proof-dependent algebra instances.
+invariant.  The comparison is first stated elementwise, then packaged as a
+localization through an explicit, locally installed algebra structure.
 -/
 
 set_option autoImplicit false
@@ -318,6 +318,40 @@ theorem localizationAwayFixedRingEquiv_algebraMap [Finite G]
     fixedAway_isLocalization b
   exact (IsLocalization.algEquiv (Submonoid.powers b) (Localization.Away b)
     (fixedAway (b : A) b.property)).commutes a
+
+/-- Including the fixed localized ring into `A[1/b]` after the canonical equivalence is the
+usual localization of the invariant-ring inclusion. -/
+theorem fixedAway_subtype_comp_localizationAwayFixedRingEquiv [Finite G]
+    (b : FixedPoints.subalgebra k A G) :
+    (fixedAway (b : A) b.property).subtype.comp
+        (localizationAwayFixedRingEquiv b).toRingHom =
+      Localization.awayMap
+        (algebraMap (FixedPoints.subalgebra k A G) A) b := by
+  refine IsLocalization.ringHom_ext (Submonoid.powers b) ?_
+  ext a
+  simp only [RingHom.comp_apply]
+  change ((localizationAwayFixedRingEquiv b)
+      (algebraMap (FixedPoints.subalgebra k A G) (Localization.Away b) a)).1 =
+    Localization.awayMap (algebraMap (FixedPoints.subalgebra k A G) A) b
+      (algebraMap (FixedPoints.subalgebra k A G) (Localization.Away b) a)
+  rw [localizationAwayFixedRingEquiv_algebraMap]
+  change algebraMap A (Localization.Away (b : A)) (a : A) = _
+  rw [Localization.awayMap, IsLocalization.Away.map, IsLocalization.map_eq]
+  rfl
+
+/-- The localized invariant-ring inclusion followed by the inverse comparison is the
+inclusion of the fixed subring into `A[1/b]`. -/
+theorem awayMap_comp_localizationAwayFixedRingEquiv_symm [Finite G]
+    (b : FixedPoints.subalgebra k A G) :
+    (Localization.awayMap
+        (algebraMap (FixedPoints.subalgebra k A G) A) b).comp
+        (localizationAwayFixedRingEquiv b).symm.toRingHom =
+      (fixedAway (b : A) b.property).subtype := by
+  rw [← fixedAway_subtype_comp_localizationAwayFixedRingEquiv]
+  ext x
+  change ((localizationAwayFixedRingEquiv b)
+    ((localizationAwayFixedRingEquiv b).symm x)).1 = x.1
+  rw [RingEquiv.apply_symm_apply]
 
 end FixedSubalgebra
 
