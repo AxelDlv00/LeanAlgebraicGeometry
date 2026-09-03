@@ -6,7 +6,6 @@ Authors: The Mumford Contributors
 
 import Mathlib.Geometry.Manifold.GroupLieAlgebra
 import Mathlib.Geometry.Manifold.IntegralCurve.UniformTime
-import Mathlib.Geometry.Manifold.IntegralCurve.Transform
 
 /-!
 # One-parameter subgroups of real Lie groups

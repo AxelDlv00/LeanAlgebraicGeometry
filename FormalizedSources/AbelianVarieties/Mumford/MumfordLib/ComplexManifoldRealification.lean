@@ -121,13 +121,17 @@ theorem exists_real_oneParameterSubgroup_of_complexLieGroup
     {G : Type*}
     (I : ModelWithCorners ℂ E H)
     [TopologicalSpace G] [ChartedSpace H G] [Group G]
-    [LieGroup I (minSmoothness ℝ 3) G]
+    [LieGroup I (minSmoothness ℂ 3) G]
     [CompleteSpace E] [T2Space G] [I.Boundaryless]
     (v : GroupLieAlgebra (complexToRealModel I) G) :
     ∃ γ : ℝ → G, γ 0 = 1 ∧
       IsMIntegralCurve γ
         (mulInvariantVectorField (I := complexToRealModel I) v) ∧
       ∀ s t : ℝ, γ (s + t) = γ s * γ t :=
+  let h : minSmoothness ℝ 3 = minSmoothness ℂ 3 := by
+    simp only [minSmoothness_of_isRCLikeNormedField]
+  letI : LieGroup I (minSmoothness ℝ 3) G :=
+    h ▸ (inferInstance : LieGroup I (minSmoothness ℂ 3) G)
   exists_oneParameterSubgroup (I := complexToRealModel I) v
 
 end Analytic
