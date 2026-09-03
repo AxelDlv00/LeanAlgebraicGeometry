@@ -699,7 +699,7 @@
     },
     "states": {
       "blocked": 116,
-      "closed": 806,
+      "closed": 807,
       "formalized_open": 0,
       "informal": 212,
       "ready": 96
@@ -720,6 +720,7 @@
       "Mumford.Analytic.IsMIntegralCurveOn.mul_left_mulInvariantVectorField: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Mumford.Analytic.MDifferentiableAt.restrict_scalars_complex: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Mumford.Analytic.canonicalRealFlow: Lean declaration is not referenced by any blueprint \\lean{...}",
+      "Mumford.Analytic.canonicalRealFlow_add: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Mumford.Analytic.canonicalRealFlow_eq_of_isMIntegralCurve: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Mumford.Analytic.canonicalRealFlow_neg: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Mumford.Analytic.canonicalRealFlow_smul: Lean declaration is not referenced by any blueprint \\lean{...}",
@@ -753,8 +754,7 @@
       "Mumford.Analytic.exists_real_oneParameterSubgroup_of_complexLieGroup: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Mumford.Analytic.isMIntegralCurve_commute_complexLieGroup: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Mumford.Analytic.isMIntegralCurve_eq_of_eq_at: Lean declaration is not referenced by any blueprint \\lean{...}",
-      "Mumford.Analytic.isMIntegralCurve_of_oneParameterSubgroup_of_hasMFDerivAt: Lean declaration is not referenced by any blueprint \\lean{...}",
-      "Mumford.Analytic.isMulCommutative_of_central_generators: Lean declaration is not referenced by any blueprint \\lean{...}"
+      "Mumford.Analytic.isMIntegralCurve_mul_of_central: Lean declaration is not referenced by any blueprint \\lean{...}"
     ]
   },
   "nodes": [
