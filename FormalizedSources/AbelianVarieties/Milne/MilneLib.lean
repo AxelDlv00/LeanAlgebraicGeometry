@@ -12,6 +12,7 @@ import MilneLib.Descent
 import MilneLib.InvariantQuotient
 import MilneLib.InvariantLocalization
 import MilneLib.InvariantQuotientOpen
+import MilneLib.InvariantQuotientOverlap
 import MilneLib.InvariantQuotientOrder
 import MilneLib.InvariantQuotientGlue
 import MilneLib.AffineQuotientOver
