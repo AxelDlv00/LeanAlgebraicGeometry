@@ -22,6 +22,7 @@ import StacksPart01Lib.Localization
 import StacksPart01Lib.LocalizationExtras
 import StacksPart01Lib.ReducedLocalization
 import StacksPart01Lib.CommutativeAlgebra
+import StacksPart01Lib.SupportMatrix
 import StacksPart01Lib.Charpoly
 import StacksPart01Lib.CharpolyModule
 import StacksPart01Lib.FiniteModule
