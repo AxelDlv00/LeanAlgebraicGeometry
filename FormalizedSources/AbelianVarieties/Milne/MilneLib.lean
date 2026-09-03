@@ -22,6 +22,7 @@ import MilneLib.DimensionCorollaries
 import MilneLib.BasicLemmas
 import MilneLib.FibreCorollaries
 import MilneLib.SymmetricPower
+import MilneLib.StableAffineCover
 
 /-!
 # MilneLib
