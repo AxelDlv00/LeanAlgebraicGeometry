@@ -6,6 +6,7 @@ Authors: The StacksPart01Lib Contributors
 
 import Mathlib.RingTheory.Flat.FaithfullyFlat.Basic
 import Mathlib.RingTheory.LocalRing.Module
+import Mathlib.RingTheory.Spectrum.Prime.Module
 import Mathlib.RingTheory.Spectrum.Prime.RingHom
 import Mathlib.RingTheory.Support
 
@@ -77,5 +78,14 @@ theorem support_baseChange_finite_eq_empty_of_isEmpty
     (h : Module.support A M = ∅) :
     Module.support B (B ⊗[A] M) = ∅ := by
   rw [support_baseChange_finite_eq, h, Set.preimage_empty]
+
+/-- The support after finite base change is closed: this consumes the base-change
+identity together with the closedness theorem for finite module supports. -/
+theorem support_baseChange_finite_isClosed
+    (M : Type w) [AddCommGroup M] [Module A M] [Module.Finite A M] :
+    IsClosed (Module.support B (B ⊗[A] M)) := by
+  rw [support_baseChange_finite_eq]
+  exact (Module.isClosed_support (R := A) (M := M)).preimage
+    (PrimeSpectrum.continuous_comap (algebraMap A B))
 
 end StacksPart01
