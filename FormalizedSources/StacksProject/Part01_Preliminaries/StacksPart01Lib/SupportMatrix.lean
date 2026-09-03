@@ -6,17 +6,17 @@ Authors: The StacksPart01Lib Contributors
 
 import StacksPart01Lib.CommutativeAlgebra
 import StacksPart01Lib.FiniteLocalizedQuotient
+import Mathlib.RingTheory.Finiteness.Cardinality
 import Mathlib.RingTheory.Support
 import Mathlib.RingTheory.Spectrum.Prime.Topology
 
 /-!
 # Determinantal support obstructions
 
-This file records the matrix-presentation core of the finite-presentation
-support argument.  Maximal column minors annihilate the cokernel, and the
-finite-localization argument identifies its full support with the corresponding
-zero locus.  The remaining frontier is the reduction of an arbitrary finite
-presentation to this matrix-cokernel form.
+This file proves the finite-presentation support argument. Maximal column minors
+annihilate a matrix cokernel, and a finite-localization argument identifies its
+full support with the corresponding zero locus. An arbitrary finitely presented
+module admits such a finite matrix presentation.
 -/
 
 namespace StacksPart01
@@ -126,5 +126,51 @@ theorem isCompact_compl_zeroLocus_columnMinorIdeal
     IsCompact (PrimeSpectrum.zeroLocus (columnMinorIdeal A : Set R))ᶜ := by
   exact (PrimeSpectrum.isRetrocompact_zeroLocus_compl_of_fg
     (columnMinorIdeal_fg A)).isCompact
+
+/-! ### Finitely presented modules -/
+
+/-- A finitely presented module is linearly equivalent to the cokernel of a
+matrix between finite free modules. -/
+theorem exists_matrixCoker_equiv_of_finitePresentation
+    {R M : Type*} [CommRing R] [AddCommGroup M] [Module R M]
+    [Module.FinitePresentation R M] :
+    ∃ (n m : ℕ) (A : Matrix (Fin n) (Fin m) R),
+      Nonempty (M ≃ₗ[R] ((Fin n → R) ⧸ LinearMap.range A.mulVecLin)) := by
+  classical
+  obtain ⟨n, K, e, hK⟩ := Module.FinitePresentation.exists_fin R M
+  obtain ⟨m, f, hf⟩ :=
+    (Submodule.fg_iff_exists_fin_linearMap R (Fin n → R)).mp hK
+  let A : Matrix (Fin n) (Fin m) R := LinearMap.toMatrix' f
+  have hAf : A.mulVecLin = f := by
+    exact Matrix.toLin'_toMatrix' f
+  rw [← hf, ← hAf] at e
+  exact ⟨n, m, A, ⟨e⟩⟩
+
+/-- The support of a finitely presented module is the zero locus of the maximal
+column minors of a finite presentation matrix. -/
+theorem exists_support_eq_zeroLocus_columnMinorIdeal_of_finitePresentation
+    {R M : Type*} [CommRing R] [AddCommGroup M] [Module R M]
+    [Module.FinitePresentation R M] :
+    ∃ (n m : ℕ) (A : Matrix (Fin n) (Fin m) R),
+      Module.support R M =
+        PrimeSpectrum.zeroLocus (columnMinorIdeal A : Set R) := by
+  obtain ⟨n, m, A, ⟨e⟩⟩ :=
+    exists_matrixCoker_equiv_of_finitePresentation (R := R) (M := M)
+  exact ⟨n, m, A,
+    e.support_eq.trans (matrixCoker_support_eq_zeroLocus_columnMinorIdeal A)⟩
+
+/-- **Stacks Project, Tag 051B**: the support of a finitely presented module is
+closed, and its complement is quasi-compact. -/
+@[stacks 051B]
+theorem support_finitePresentation_isClosed_and_isCompact_compl
+    {R M : Type*} [CommRing R] [AddCommGroup M] [Module R M]
+    [Module.FinitePresentation R M] :
+    IsClosed (Module.support R M) ∧ IsCompact (Module.support R M)ᶜ := by
+  obtain ⟨n, m, A, hA⟩ :=
+    exists_support_eq_zeroLocus_columnMinorIdeal_of_finitePresentation
+      (R := R) (M := M)
+  rw [hA]
+  exact ⟨PrimeSpectrum.isClosed_zeroLocus _,
+    isCompact_compl_zeroLocus_columnMinorIdeal A⟩
 
 end StacksPart01
