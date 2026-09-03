@@ -231,6 +231,19 @@ theorem specAction_hom_affineInvariantQuotientMap (g : G) :
   ext x
   exact x.property g⁻¹
 
+/-- Basic opens cut out by invariant elements are stable under the spectrum
+action.  This is the localization identity used when comparing affine
+quotient charts on overlaps. -/
+theorem specAction_preimage_basicOpen_fixed (a : FixedPoints.subalgebra k A G) (g : G) :
+    (specAction G A g).hom ⁻¹ᵁ
+        (PrimeSpectrum.basicOpen (a : A) :
+          (Spec (CommRingCat.of A)).Opens) =
+      PrimeSpectrum.basicOpen (a : A) := by
+  rw [specAction_hom, AlgebraicGeometry.SpecMap_preimage_basicOpen]
+  change PrimeSpectrum.basicOpen (g⁻¹ • (a : A)) =
+    PrimeSpectrum.basicOpen (a : A)
+  rw [show g⁻¹ • (a : A) = (a : A) from a.property g⁻¹]
+
 /-- The affine quotient map is integral without any finite-type hypothesis on
 the source algebra. -/
 theorem affineInvariantQuotientMap_isIntegral [Finite G] :
