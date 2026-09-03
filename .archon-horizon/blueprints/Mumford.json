@@ -699,7 +699,7 @@
     },
     "states": {
       "blocked": 116,
-      "closed": 758,
+      "closed": 764,
       "formalized_open": 0,
       "informal": 212,
       "ready": 96
@@ -713,7 +713,9 @@
       "Mumford.Analytic.complexLieAdjoint_mdifferentiable: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Mumford.Analytic.complexLieAdjoint_one: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Mumford.Analytic.complexLieConjugation: Lean declaration is not referenced by any blueprint \\lean{...}",
+      "Mumford.Analytic.complexLieConjugation_eq_mulAut_conj: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Mumford.Analytic.complexLieConjugation_eq_self_of_exponential: Lean declaration is not referenced by any blueprint \\lean{...}",
+      "Mumford.Analytic.complexLieConjugation_mul: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Mumford.Analytic.complexLieConjugation_one: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Mumford.Analytic.complexLieConjugation_one_eq_id: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Mumford.Analytic.complexLieGroup_isMulCommutative_of_exponential: Lean declaration is not referenced by any blueprint \\lean{...}",
@@ -752,9 +754,7 @@
       "Mumford.GroupScheme.pointTranslation: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Mumford.GroupScheme.pointTranslationIso: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Mumford.GroupScheme.pointTranslationIso_hom: Lean declaration is not referenced by any blueprint \\lean{...}",
-      "Mumford.GroupScheme.pointTranslationIso_hom_apply: Lean declaration is not referenced by any blueprint \\lean{...}",
-      "Mumford.GroupScheme.pointTranslationIso_hom_comp: Lean declaration is not referenced by any blueprint \\lean{...}",
-      "Mumford.GroupScheme.pointTranslationIso_inv: Lean declaration is not referenced by any blueprint \\lean{...}"
+      "Mumford.GroupScheme.pointTranslationIso_hom_apply: Lean declaration is not referenced by any blueprint \\lean{...}"
     ]
   },
   "nodes": [
@@ -4791,7 +4791,7 @@
     },
     {
       "chapter": "Analytic Theory",
-      "comment_count": 3,
+      "comment_count": 4,
       "dep_count": 0,
       "descendant_count": 2,
       "group": "c140",

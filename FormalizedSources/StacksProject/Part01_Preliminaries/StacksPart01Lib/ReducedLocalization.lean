@@ -18,6 +18,19 @@ canonical map into their product is injective (Stacks, Tags 00EU and 00EW).
 
 namespace StacksPart01
 
+/-- Every element of the maximal ideal in the localization at a minimal prime
+is nilpotent (Stacks, Tag 00EU). -/
+theorem isNilpotent_of_mem_maximalIdeal_localizationAt_minimalPrime
+    {R : Type*} [CommRing R]
+    (p : PrimeSpectrum R) (hp : IsMin p)
+    {x : Localization.AtPrime p.asIdeal}
+    (hx : x ∈ IsLocalRing.maximalIdeal (Localization.AtPrime p.asIdeal)) :
+    IsNilpotent x := by
+  letI : Ring.KrullDimLE 0 (Localization.AtPrime p.asIdeal) :=
+    Ring.KrullDimLE.of_isLocalization p.asIdeal
+      (PrimeSpectrum.isMin_iff.mp hp) _
+  exact Ring.KrullDimLE.isNilpotent_iff_mem_maximalIdeal.mpr hx
+
 /-- The localization of a reduced ring at a minimal prime is a field
 (Stacks, Tag 00EU). -/
 theorem localizationAt_minimalPrime_isField
