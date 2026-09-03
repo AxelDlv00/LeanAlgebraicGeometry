@@ -5,6 +5,7 @@ Authors: The Mumford Contributors
 -/
 
 import MumfordLib.ComplexLieAdjoint
+import MumfordLib.RealLieFlowParameter
 import Mathlib.Analysis.Calculus.InverseFunctionTheorem.ContDiff
 import Mathlib.Algebra.Group.Commute.Basic
 import Mathlib.Algebra.Group.Subgroup.Lattice
@@ -17,12 +18,11 @@ import Mathlib.Topology.Connected.Clopen
 
 The compact-holomorphic argument in `ComplexLieAdjoint` makes the derivative
 of every conjugation map equal to the identity.  This file proves the
-local-to-global generation step in Mumford's argument and records the missing
-Lie exponential input explicitly.  The resulting Lie-group theorems are
-conditional interfaces: they do not assert the existence of an exponential
-for an arbitrary Lie group.  The coordinate space `E` is intentionally kept
-general here; specializing it to the source's finite-dimensional complex
-tangent model is a separate source-fidelity obligation.
+local-to-global generation step in Mumford's argument, records useful
+conditional exponential interfaces, and then closes commutativity with the
+canonical real flow.  The real inverse-function argument suffices for
+commutativity; construction of the source's holomorphic exponential remains a
+separate input for analytic uniformization.
 -/
 
 set_option autoImplicit false
@@ -345,6 +345,83 @@ theorem complexLieGroup_isMulCommutative_of_exponential
   calc
     x * y = (x * y * x⁻¹) * x := by simp [mul_assoc]
     _ = y * x := by rw [h]
+
+/-!
+### Commutativity from canonical real flows
+-/
+
+/-- The time-one values of the canonical real flows contain an identity
+neighborhood.  The inverse-function theorem is applied in the real model
+coordinates `E`; an explicit linear equivalence then identifies that range
+with the range parametrized by the underlying real Lie algebra. -/
+theorem canonicalRealFlow_time_one_mem_interior
+    [CompleteSpace E] [T2Space G]
+    [I.Boundaryless] [CompactSpace G] [PreconnectedSpace G] :
+    (1 : G) ∈ interior (Set.range
+      (fun v : GroupLieAlgebra (complexToRealModel I) G =>
+        canonicalRealFlow (G := G) I v 1)) := by
+  let e : E ≃ₗ[ℝ] GroupLieAlgebra (complexToRealModel I) G :=
+    { toFun := fun x => @id E x
+      invFun := fun x => @id E x
+      left_inv := by intro x; rfl
+      right_inv := by intro x; rfl
+      map_add' := by intro x y; rfl
+      map_smul' := by intro c x; rfl }
+  let f : E → G := fun v => canonicalRealFlow (G := G) I v 1
+  let exp : GroupLieAlgebra (complexToRealModel I) G → G :=
+    fun v => canonicalRealFlow (G := G) I v 1
+  have hf : ContMDiff 𝓘(ℝ, E) (complexToRealModel I) 1 f := by
+    simpa [f] using (canonicalRealFlow_time_one_contMDiff (G := G) I)
+  have hdiff : MDifferentiableAt 𝓘(ℝ, E) (complexToRealModel I) f 0 :=
+    hf.mdifferentiableAt one_ne_zero
+  have hderiv :
+      mfderiv 𝓘(ℝ, E) (complexToRealModel I) f 0 =
+        ContinuousLinearMap.id ℝ E := by
+    dsimp [f]
+    exact mfderiv_canonicalRealFlow_time_one_eq_id (G := G) I hdiff
+  have hinvertible :
+      (mfderiv 𝓘(ℝ, E) (complexToRealModel I) f 0).IsInvertible := by
+    rw [hderiv]
+    exact ⟨ContinuousLinearEquiv.refl ℝ E, rfl⟩
+  have hlocal :=
+    range_mem_interior_of_contMDiffAt_of_mfderiv_isInvertible
+      (𝕜 := ℝ) (I' := complexToRealModel I) hf.contMDiffAt hinvertible
+  have hzero : f 0 = (1 : G) := by
+    dsimp [f]
+    change canonicalRealFlow (G := G) I
+      (0 : GroupLieAlgebra (complexToRealModel I) G) 1 = 1
+    exact congrFun (canonicalRealFlow_zero (G := G) I) (1 : ℝ)
+  have hlocal_one : (1 : G) ∈ interior (Set.range f) := by
+    rw [← hzero]
+    exact hlocal
+  have hrange : Set.range f = Set.range exp := by
+    apply Set.Subset.antisymm
+    · rintro z ⟨v, rfl⟩
+      refine ⟨e v, ?_⟩
+      dsimp [exp, f, e]
+    · rintro z ⟨v, rfl⟩
+      obtain ⟨u, rfl⟩ := e.surjective v
+      refine ⟨u, ?_⟩
+      dsimp [exp, f, e]
+  rw [← hrange]
+  exact hlocal_one
+
+/-- Every compact connected complex Lie group is commutative.  Canonical real
+flows give a central identity neighborhood, and connectedness propagates its
+commutativity to the whole group. -/
+theorem complexLieGroup_isMulCommutative
+    [CompleteSpace E] [T2Space G]
+    [I.Boundaryless] [CompactSpace G] [PreconnectedSpace G] :
+    IsMulCommutative G := by
+  letI : IsTopologicalGroup G := topologicalGroup_of_lieGroup I ⊤
+  let s : Set G := Set.range
+    (fun v : GroupLieAlgebra (complexToRealModel I) G =>
+      canonicalRealFlow (G := G) I v 1)
+  apply isMulCommutative_of_central_nhds (s := s)
+  · intro z hz x
+    obtain ⟨v, rfl⟩ := hz
+    exact (canonicalRealFlow_spec (G := G) I v).2.2.2 x 1
+  · exact canonicalRealFlow_time_one_mem_interior (G := G) I
 
 end Analytic
 end Mumford
