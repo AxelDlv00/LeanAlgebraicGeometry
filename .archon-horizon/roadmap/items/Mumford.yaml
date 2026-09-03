@@ -2,13 +2,12 @@ id: Mumford
 title: Mumford Abelian Varieties formalization
 projects:
 - Mumford
-summary: Advance source-faithful Mumford formalization. The real ODE substrate now
-  includes global one-parameter subgroups, generic smooth-map/derivative transport,
-  global uniqueness, inverse and pairwise-commute laws, and scalar-time compatibility
-  (52ddb1a583, after the prior realification and adjoint/local-generation commits).
-  Joint holomorphic complex flow, tangent/differential identification, d exp_0, conjugation
-  naturality, and exact frozen-source attachments remain open; keep this milestone
-  active.
+summary: 'Advance source-faithful Mumford formalization. The real ODE route now proves
+  global one-parameter subgroups and full conjugation naturality: every identity-based
+  real flow in a compact connected complex Lie group has central image (5aa93e4263).
+  The next genuine producer is joint tangent-parameter regularity and complex differentiability
+  of these flows, including d exp at zero; exact frozen-source attachments remain
+  open.'
 status: active
 kind: proof
 priority: normal
@@ -31,8 +30,9 @@ metadata:
     task_title: Advance Mumford Abelian Varieties formalization
     projects: Mumford
   owner: fs-mumford
-  updated_at: '2026-09-03T06:53:34.155685+00:00'
+  updated_at: '2026-09-03T09:33:55.917978+00:00'
   pinned_commits:
+  - 5aa93e4263
   - 52ddb1a583
   - c092da8bc5
   - e81a04a2c5

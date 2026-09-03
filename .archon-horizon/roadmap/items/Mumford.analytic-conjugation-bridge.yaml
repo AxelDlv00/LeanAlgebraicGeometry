@@ -2,11 +2,12 @@ id: Mumford.analytic-conjugation-bridge
 title: Realified conjugation derivative bridge
 projects:
 - Mumford
-summary: Prove the real tangent/differential transport identity for conjugation on
-  the complex Lie group, then consume IsMIntegralCurve.comp_of_mfderiv to show fixed-flow
-  centrality. Keep the complex joint-flow and d exp_0 obligations explicit; do not
-  attach the frozen commutativity node until the source theorem is fully proved.
-status: pending
+summary: 'Completed the realified conjugation route: complex mfderiv restricts to
+  the real model; smooth multiplicative maps transport invariant fields and curves;
+  trivial adjoint coordinates give the raw identity derivative; conjugation fixes
+  every identity-based real integral curve, whose image is central. This does not
+  construct a jointly parameterized complex exponential or close the source theorem.'
+status: done
 kind: proof
 priority: high
 depends_on: []
@@ -31,3 +32,9 @@ metadata:
     projects: Mumford
   parent: Mumford
   owner: fs-mumford
+  updated_at: '2026-09-03T09:32:50.500229+00:00'
+  pinned_commits:
+  - 5aa93e4263
+  - a07f6afd46
+  - e7121fc030
+  - cd211de29f

@@ -699,7 +699,7 @@
     },
     "states": {
       "blocked": 116,
-      "closed": 780,
+      "closed": 786,
       "formalized_open": 0,
       "informal": 212,
       "ready": 96
@@ -708,7 +708,11 @@
       "Mumford.Analytic.ComplexLieExponentialData: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Mumford.Analytic.ComplexLieExponentialData.exponential_zero_apply: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Mumford.Analytic.ContMDiff.restrict_scalars_complex: Lean declaration is not referenced by any blueprint \\lean{...}",
+      "Mumford.Analytic.IsMIntegralCurve.comp_mul_mulInvariantVectorField: Lean declaration is not referenced by any blueprint \\lean{...}",
+      "Mumford.Analytic.IsMIntegralCurve.comp_of_mfderiv: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Mumford.Analytic.IsMIntegralCurve.map_add_eq_mul: Lean declaration is not referenced by any blueprint \\lean{...}",
+      "Mumford.Analytic.IsMIntegralCurve.map_commute: Lean declaration is not referenced by any blueprint \\lean{...}",
+      "Mumford.Analytic.IsMIntegralCurve.map_neg_eq_inv: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Mumford.Analytic.IsMIntegralCurve.mul_left_mulInvariantVectorField: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Mumford.Analytic.IsMIntegralCurveOn.mul_left_mulInvariantVectorField: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Mumford.Analytic.commute_exponential_of_conjugation_exp: Lean declaration is not referenced by any blueprint \\lean{...}",
@@ -734,9 +738,11 @@
       "Mumford.Analytic.exists_global_mulInvariant_integralCurve: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Mumford.Analytic.exists_oneParameterSubgroup: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Mumford.Analytic.exists_real_oneParameterSubgroup_of_complexLieGroup: Lean declaration is not referenced by any blueprint \\lean{...}",
+      "Mumford.Analytic.isMIntegralCurve_eq_of_eq_at: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Mumford.Analytic.isMulCommutative_of_central_generators: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Mumford.Analytic.isMulCommutative_of_central_nhds: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Mumford.Analytic.mfderiv_mul_left_mulInvariantVectorField: Lean declaration is not referenced by any blueprint \\lean{...}",
+      "Mumford.Analytic.oneParameterSubgroup_smul_eq: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Mumford.Analytic.range_mem_interior_of_contMDiffAt_of_mfderiv_isInvertible: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Mumford.Analytic.range_mem_interior_of_isLocalDiffeomorphAt: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Mumford.Analytic.subgroup_closure_eq_top_of_one_mem_interior: Lean declaration is not referenced by any blueprint \\lean{...}",
@@ -748,13 +754,7 @@
       "Mumford.GroupScheme.eq_comp_of_isAffine_of_properIntegral: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Mumford.GroupScheme.existsUnique_factor_through_snd_iff: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Mumford.GroupScheme.existsUnique_hom_additive_decomp_of_rigidity: Lean declaration is not referenced by any blueprint \\lean{...}",
-      "Mumford.GroupScheme.existsUnique_hom_additive_decomp_of_rigidity_arbitraryField: Lean declaration is not referenced by any blueprint \\lean{...}",
-      "Mumford.GroupScheme.existsUnique_hom_comp_pointTranslation_of_isAbelianVariety_arbitraryField: Lean declaration is not referenced by any blueprint \\lean{...}",
-      "Mumford.GroupScheme.exists_hom_comp_pointTranslation_of_isAbelianVariety: Lean declaration is not referenced by any blueprint \\lean{...}",
-      "Mumford.GroupScheme.factor_through_snd_unique: Lean declaration is not referenced by any blueprint \\lean{...}",
-      "Mumford.GroupScheme.factors_through_snd_iff: Lean declaration is not referenced by any blueprint \\lean{...}",
-      "Mumford.GroupScheme.hom_additive_decomp_axis_unique: Lean declaration is not referenced by any blueprint \\lean{...}",
-      "Mumford.GroupScheme.hom_additive_decomp_of_rigidity: Lean declaration is not referenced by any blueprint \\lean{...}"
+      "Mumford.GroupScheme.existsUnique_hom_additive_decomp_of_rigidity_arbitraryField: Lean declaration is not referenced by any blueprint \\lean{...}"
     ]
   },
   "nodes": [
@@ -4791,7 +4791,7 @@
     },
     {
       "chapter": "Analytic Theory",
-      "comment_count": 5,
+      "comment_count": 6,
       "dep_count": 0,
       "descendant_count": 2,
       "group": "c140",

@@ -1,0 +1,1 @@
+{"at": "2026-09-03T09:33:16.996177+00:00", "actor": "horizon", "field": "created", "from": "", "to": "pending", "note": "opened", "provenance": {"run": "0210", "session": "0016-horizon-fs-mumford", "role": "horizon", "round": "7", "rounds": "24", "task": "fs-mumford", "task_title": "Advance Mumford Abelian Varieties formalization", "projects": "Mumford"}}
