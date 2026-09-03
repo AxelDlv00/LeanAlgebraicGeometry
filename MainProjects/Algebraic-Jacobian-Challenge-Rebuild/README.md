@@ -101,7 +101,7 @@ Lean-root measurement. The graph labels many glue declarations `lean_ok`, but a 
 Its tracked `+GluePackage:olean` attempt reached 9361/9370 before the 1800-second cap
 (exit 124); `GluePackage`, top `PreSnd`, `OverlapIsoSnd`, and `GluedComparison` artifacts
 are absent. `Pic0CriticalPath.lean` is 1,120 lines with 87
-imports, over the 500-line house rule (I-0220 tracks 27 over-limit files); this is
+imports, over the 500-line house rule (I-0220 tracks the project-wide over-limit set); this is
 organization/compile risk, not an acceptance edge. The ten-file PreSnd split is primarily a
 compile-performance choice. The older DivSchemeRedesign family and other one-lemma files
 outside the root are unconsumed routes, not progress toward the headline.
