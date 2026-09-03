@@ -124,5 +124,55 @@ theorem fixedAwayTransition_comp_invariantToFixedAway
     invariantLocalizationTransition_algebraMap,
     localizationAwayFixedRingEquiv_algebraMap c]
 
+/-- Fixed-localized section-ring transitions compose along nested invariant
+basic opens. -/
+theorem fixedAwayTransition_comp
+    [Finite G]
+    {b c d : FixedPoints.subalgebra k A G}
+    (hcb : PrimeSpectrum.basicOpen c ≤ PrimeSpectrum.basicOpen b)
+    (hdc : PrimeSpectrum.basicOpen d ≤ PrimeSpectrum.basicOpen c) :
+    (fixedAwayTransition (k := k) (A := A) (G := G) hdc).comp
+        (fixedAwayTransition (k := k) (A := A) (G := G) hcb) =
+      fixedAwayTransition (k := k) (A := A) (G := G) (hdc.trans hcb) := by
+  unfold fixedAwayTransition
+  apply RingHom.ext
+  intro x
+  simp only [RingHom.comp_apply, RingEquiv.toRingHom_eq_coe]
+  let y := invariantLocalizationTransition (k := k) (A := A) (G := G) hcb
+    ((localizationAwayFixedRingEquiv b).symm x)
+  calc
+    localizationAwayFixedRingEquiv d
+        (invariantLocalizationTransition (k := k) (A := A) (G := G) hdc
+          ((localizationAwayFixedRingEquiv c).symm
+            (localizationAwayFixedRingEquiv c y))) =
+      localizationAwayFixedRingEquiv d
+        (invariantLocalizationTransition (k := k) (A := A) (G := G) hdc y) :=
+          congrArg (fun z => localizationAwayFixedRingEquiv d
+            (invariantLocalizationTransition (k := k) (A := A) (G := G) hdc z))
+            ((localizationAwayFixedRingEquiv c).symm_apply_apply y)
+    _ = localizationAwayFixedRingEquiv d
+        (invariantLocalizationTransition (k := k) (A := A) (G := G)
+          (hdc.trans hcb) ((localizationAwayFixedRingEquiv b).symm x)) := by
+      apply congrArg (localizationAwayFixedRingEquiv d)
+      exact DFunLike.congr_fun
+        (invariantLocalizationTransition_comp
+          (k := k) (A := A) (G := G) hcb hdc)
+        ((localizationAwayFixedRingEquiv b).symm x)
+
+/-- The fixed-localized section-ring transition attached to the identity
+inclusion is the identity map. -/
+@[simp]
+theorem fixedAwayTransition_refl
+    [Finite G]
+    (b : FixedPoints.subalgebra k A G) :
+    fixedAwayTransition (k := k) (A := A) (G := G) (le_refl _) =
+      RingHom.id (fixedAway (b : A) b.property) := by
+  unfold fixedAwayTransition
+  apply RingHom.ext
+  intro x
+  simp only [RingHom.comp_apply, RingEquiv.toRingHom_eq_coe]
+  rw [invariantLocalizationTransition_refl, RingHom.id_apply]
+  exact (localizationAwayFixedRingEquiv b).apply_symm_apply x
+
 end InvariantLocalization
 end MilneLib
