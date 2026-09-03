@@ -100,6 +100,24 @@ theorem localizedModule_universal (S : Submonoid R)
     (LocalizedModule.mkLinearMap S M) g h
 
 /-!
+The universal property can be packaged as the explicit Hom-set equivalence used
+in Stacks, Tag 07K0.  The forward map restricts a linear map along the
+localization map, while the inverse is the canonical localized lift.
+-/
+noncomputable def localizedModule_homEquiv (S : Submonoid R)
+    {M N : Type*} [AddCommMonoid M] [AddCommMonoid N]
+    [Module R M] [Module R N]
+    (h : ∀ s : S, IsUnit ((algebraMap R (Module.End R N)) s)) :
+    (LocalizedModule S M →ₗ[R] N) ≃ (M →ₗ[R] N) where
+  toFun l := l.comp (LocalizedModule.mkLinearMap S M)
+  invFun g := IsLocalizedModule.lift S (LocalizedModule.mkLinearMap S M) g h
+  left_inv l := by
+    apply IsLocalizedModule.ext S (LocalizedModule.mkLinearMap S M) h
+    exact IsLocalizedModule.lift_comp S (LocalizedModule.mkLinearMap S M)
+      (l.comp (LocalizedModule.mkLinearMap S M)) h
+  right_inv g := IsLocalizedModule.lift_comp S (LocalizedModule.mkLinearMap S M) g h
+
+/-!
 The localized identity map is the identity, a useful normalization for
 iterated localization constructions.
 -/
