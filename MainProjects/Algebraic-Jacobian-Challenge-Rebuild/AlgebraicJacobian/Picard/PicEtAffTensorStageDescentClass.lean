@@ -49,6 +49,80 @@ theorem relPic_pair_eq_of_compatible
   rw [hq]
   exact hQ'
 
+set_option synthInstance.maxHeartbeats 100000 in
+-- The two pushout comparisons unfold dependent tensor-product algebra structures.
+set_option maxHeartbeats 1600000 in
+set_option maxSynthPendingDepth 16 in
+/-- A relative Picard class satisfying the named scalar-extended face equality gives an
+actual descent class on a cover base-changed around the corresponding pushout square. -/
+noncomputable def descentClassOfPushoutFaceEq
+    {k S R T : Type u} [Field k]
+    [CommRing S] [CommRing R] [CommRing T]
+    [Algebra k S] [Algebra k R] [Algebra k T]
+    [Algebra S T] [Algebra R T]
+    [IsScalarTower k S T] [IsScalarTower k R T]
+    [Algebra.IsPushout k S R T]
+    (C : Over (Spec (.of k))) (E : Algebra.EtaleCover R)
+    (qS : relPic C (overSpec k (S ⊗[k] E.Carrier)))
+    (hfaces :
+      let f : R →ₐ[k] E.Carrier :=
+        (Algebra.ofId R E.Carrier).restrictScalars k
+      let q₁ := finiteStageTensorPushoutFaceLeft f f
+      let q₂ := finiteStageTensorPushoutFaceRight f f
+      relPicAlgMap C
+          ((AlgebraicJacobian.scalarExtensionMapOfAlgHom
+            (R := k) (K := S) q₁).restrictScalars k) qS =
+        relPicAlgMap C
+          ((AlgebraicJacobian.scalarExtensionMapOfAlgHom
+            (R := k) (K := S) q₂).restrictScalars k) qS) :
+    descentClasses C (E.baseChange T) := by
+  let f : R →ₐ[k] E.Carrier :=
+    (Algebra.ofId R E.Carrier).restrictScalars k
+  let Q := Pic0FiniteStageTensorPushoutRing f f
+  let U := (E.baseChange T).Carrier
+  let U₂ := U ⊗[T] U
+  let eU : S ⊗[k] E.Carrier ≃ₐ[S] U :=
+    (DatG0.etaleCoverPushoutCarrierEquiv
+      (M := k) (S := S) (T := T) E).symm
+  let eQ : S ⊗[k] Q ≃ₐ[S] U₂ :=
+    DatG0.etaleCoverPushoutOverlapEquiv
+      (M := k) (S := S) (T := T) E
+  let q₁ : E.Carrier →ₐ[k] Q := finiteStageTensorPushoutFaceLeft f f
+  let q₂ : E.Carrier →ₐ[k] Q := finiteStageTensorPushoutFaceRight f f
+  let q₁S : S ⊗[k] E.Carrier →ₐ[k] S ⊗[k] Q :=
+    (AlgebraicJacobian.scalarExtensionMapOfAlgHom
+      (R := k) (K := S) q₁).restrictScalars k
+  let q₂S : S ⊗[k] E.Carrier →ₐ[k] S ⊗[k] Q :=
+    (AlgebraicJacobian.scalarExtensionMapOfAlgHom
+      (R := k) (K := S) q₂).restrictScalars k
+  let j₁ : U →ₐ[k] U₂ :=
+    (DatG0.etaleCoverPushoutOverlapFaceLeft
+      (M := k) (S := S) (T := T) E).restrictScalars k
+  let j₂ : U →ₐ[k] U₂ :=
+    (DatG0.etaleCoverPushoutOverlapFaceRight
+      (M := k) (S := S) (T := T) E).restrictScalars k
+  let eUk : S ⊗[k] E.Carrier →ₐ[k] U := eU.toAlgHom.restrictScalars k
+  let eQk : S ⊗[k] Q →ₐ[k] U₂ := eQ.toAlgHom.restrictScalars k
+  have h₁ : eQk.comp q₁S = j₁.comp eUk := by
+    apply AlgHom.ext
+    intro x
+    exact DFunLike.congr_fun
+      (DatG0.etaleCoverPushoutOverlapEquiv_faceLeft
+        (M := k) (S := S) (T := T) E) x
+  have h₂ : eQk.comp q₂S = j₂.comp eUk := by
+    apply AlgHom.ext
+    intro x
+    exact DFunLike.congr_fun
+      (DatG0.etaleCoverPushoutOverlapEquiv_faceRight
+        (M := k) (S := S) (T := T) E) x
+  refine ⟨relPicAlgMap C eUk qS, ?_⟩
+  rw [mem_descentClasses_iff]
+  change relPicAlgMap C j₁ (relPicAlgMap C eUk qS) =
+    relPicAlgMap C j₂ (relPicAlgMap C eUk qS)
+  rw [← relPicAlgMap_comp, ← relPicAlgMap_comp, ← h₁, ← h₂,
+    relPicAlgMap_comp, relPicAlgMap_comp]
+  exact congrArg (relPicAlgMap C eQk) hfaces
+
 end
 
 end AlgebraicGeometry
