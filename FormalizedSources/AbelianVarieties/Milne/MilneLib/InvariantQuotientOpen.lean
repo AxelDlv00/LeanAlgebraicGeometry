@@ -157,6 +157,101 @@ theorem quotientOpenOfStable_inf [Finite G]
       ⟨z, hzV, hz.trans hy.symm⟩
     rwa [preimage_image_eq_of_stable (k := k) (A := A) (G := G) V hV] at hyV
 
+/-! ## Restricted quotients -/
+
+/-- The affine invariant quotient map restricted to a stable source open and its descended
+quotient-side open. -/
+noncomputable def affineInvariantQuotientMapRestrictStable [Finite G]
+    (U : (Spec (CommRingCat.of A)).Opens)
+    (hU : ∀ g : G, (specAction G A g).hom ⁻¹ᵁ U = U) :
+    U.toScheme ⟶
+      (quotientOpenOfStable (k := k) (A := A) (G := G) U hU).toScheme := by
+  let q := affineInvariantQuotientMap (k := k) (A := A) (G := G)
+  let W := quotientOpenOfStable (k := k) (A := A) (G := G) U hU
+  have hland : Set.range (U.ι ≫ q) ⊆ Set.range W.ι := by
+    rintro _ ⟨x, rfl⟩
+    have hx : q (U.ι x) ∈ W := ⟨U.ι x, x.2, rfl⟩
+    exact ⟨⟨q (U.ι x), hx⟩, rfl⟩
+  exact IsOpenImmersion.lift W.ι (U.ι ≫ q) hland
+
+/-- The restricted quotient projection followed by the target-open inclusion is the ambient
+affine invariant quotient projection. -/
+@[reassoc]
+theorem affineInvariantQuotientMapRestrictStable_fac [Finite G]
+    (U : (Spec (CommRingCat.of A)).Opens)
+    (hU : ∀ g : G, (specAction G A g).hom ⁻¹ᵁ U = U) :
+    affineInvariantQuotientMapRestrictStable (k := k) (A := A) (G := G) U hU ≫
+        (quotientOpenOfStable (k := k) (A := A) (G := G) U hU).ι =
+      U.ι ≫ affineInvariantQuotientMap (k := k) (A := A) (G := G) := by
+  exact IsOpenImmersion.lift_fac _ _ _
+
+/-- The quotient projection restricted to a stable open is surjective onto the descended
+quotient-side open. -/
+theorem affineInvariantQuotientMapRestrictStable_surjective [Finite G]
+    (U : (Spec (CommRingCat.of A)).Opens)
+    (hU : ∀ g : G, (specAction G A g).hom ⁻¹ᵁ U = U) :
+    Function.Surjective
+      (affineInvariantQuotientMapRestrictStable
+        (k := k) (A := A) (G := G) U hU).base := by
+  intro y
+  rcases y.2 with ⟨x, hxU, hxy⟩
+  let xU : U.toScheme := ⟨x, hxU⟩
+  refine ⟨xU, ?_⟩
+  apply Subtype.ext
+  change (quotientOpenOfStable (k := k) (A := A) (G := G) U hU).ι
+      ((affineInvariantQuotientMapRestrictStable
+        (k := k) (A := A) (G := G) U hU).base xU) = y.1
+  rw [← Scheme.Hom.comp_apply, affineInvariantQuotientMapRestrictStable_fac]
+  exact hxy
+
+/-- The fibers of the quotient projection restricted to a stable open are still exactly the
+ambient finite-group orbits. -/
+theorem affineInvariantQuotientMapRestrictStable_eq_iff_exists_specAction [Finite G]
+    (U : (Spec (CommRingCat.of A)).Opens)
+    (hU : ∀ g : G, (specAction G A g).hom ⁻¹ᵁ U = U)
+    (x y : U.toScheme) :
+    (affineInvariantQuotientMapRestrictStable
+          (k := k) (A := A) (G := G) U hU).base x =
+        (affineInvariantQuotientMapRestrictStable
+          (k := k) (A := A) (G := G) U hU).base y ↔
+      ∃ g : G, (specAction G A g).hom.base (U.ι x) = U.ι y := by
+  rw [← affineInvariantQuotientMap_eq_iff_exists_specAction
+    (k := k) (A := A) (G := G) (U.ι x) (U.ι y)]
+  constructor
+  · intro h
+    calc
+      (affineInvariantQuotientMap (k := k) (A := A) (G := G)).base (U.ι x) =
+          (quotientOpenOfStable (k := k) (A := A) (G := G) U hU).ι
+            ((affineInvariantQuotientMapRestrictStable
+              (k := k) (A := A) (G := G) U hU).base x) := by
+        simpa only [Scheme.Hom.comp_apply] using congrArg (fun f => f.base x)
+          (affineInvariantQuotientMapRestrictStable_fac
+            (k := k) (A := A) (G := G) U hU).symm
+      _ = (quotientOpenOfStable (k := k) (A := A) (G := G) U hU).ι
+            ((affineInvariantQuotientMapRestrictStable
+              (k := k) (A := A) (G := G) U hU).base y) := congrArg _ h
+      _ = (affineInvariantQuotientMap (k := k) (A := A) (G := G)).base (U.ι y) := by
+        simpa only [Scheme.Hom.comp_apply] using congrArg (fun f => f.base y)
+          (affineInvariantQuotientMapRestrictStable_fac
+            (k := k) (A := A) (G := G) U hU)
+  · intro h
+    apply Subtype.ext
+    calc
+      (quotientOpenOfStable (k := k) (A := A) (G := G) U hU).ι
+          ((affineInvariantQuotientMapRestrictStable
+            (k := k) (A := A) (G := G) U hU).base x) =
+        (affineInvariantQuotientMap (k := k) (A := A) (G := G)).base (U.ι x) := by
+          simpa only [Scheme.Hom.comp_apply] using congrArg (fun f => f.base x)
+            (affineInvariantQuotientMapRestrictStable_fac
+              (k := k) (A := A) (G := G) U hU)
+      _ = (affineInvariantQuotientMap (k := k) (A := A) (G := G)).base (U.ι y) := h
+      _ = (quotientOpenOfStable (k := k) (A := A) (G := G) U hU).ι
+          ((affineInvariantQuotientMapRestrictStable
+            (k := k) (A := A) (G := G) U hU).base y) := by
+          simpa only [Scheme.Hom.comp_apply] using congrArg (fun f => f.base y)
+            (affineInvariantQuotientMapRestrictStable_fac
+              (k := k) (A := A) (G := G) U hU).symm
+
 -- The two sides use definitionally equal presentations of the image of `b`.
 set_option backward.defeqAttrib.useBackward true in
 set_option backward.isDefEq.respectTransparency false in
