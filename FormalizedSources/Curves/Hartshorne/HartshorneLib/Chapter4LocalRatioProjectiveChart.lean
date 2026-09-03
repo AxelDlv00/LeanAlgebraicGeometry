@@ -144,6 +144,24 @@ of the normalized section on the source chart. -/
         (MvPolynomial.isHomogeneous_X k j))
   simpa [f] using hpre
 
+/-! ### Ambient basic opens -/
+
+/-- The chart preimage agrees with the ambient basic open cut out by the
+    corresponding regularized section. -/
+@[simp] theorem chartMap_preimage_basicOpen_ambient
+    (r : LocalRatioRegularization a) (j : Fin (n + 1)) :
+    r.chartMap ⁻¹ᵁ
+        Proj.basicOpen (MvPolynomial.homogeneousSubmodule (Fin (n + 1)) k)
+          (MvPolynomial.X j) =
+      a.chart.U.ι ⁻¹ᵁ X.left.basicOpen (r.regularized j) := by
+  rw [r.chartMap_preimage_basicOpen]
+  change a.chart.U.toScheme.basicOpen
+      (a.chart.U.topIso.inv.hom (r.regularized j)) =
+    a.chart.U.ι ⁻¹ᵁ X.left.basicOpen (r.regularized j)
+  rw [← Scheme.Opens.ι_image_basicOpen_topIso_inv
+    (X := X.left) (U := a.chart.U) (r.regularized j)]
+  exact (a.chart.U.ι.preimage_image_eq _).symm
+
 end LocalRatioRegularization
 
 end
