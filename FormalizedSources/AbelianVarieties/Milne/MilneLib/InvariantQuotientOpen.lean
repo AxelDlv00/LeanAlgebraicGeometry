@@ -9,18 +9,18 @@ import MilneLib.InvariantLocalization
 import Mathlib.AlgebraicGeometry.Restrict
 
 /-!
-# Invariant affine quotient basic opens
+# Opens in affine invariant quotients
 
-This file identifies a basic open in the spectrum of an invariant subalgebra with the
-spectrum of the fixed subring of the corresponding localization.  It is the geometric form
-of invariants commuting with localization at an invariant element.
+Stable opens descend through the affine finite-group quotient topology.  For invariant basic
+opens, the quotient-side open is identified with the spectrum of the fixed subring of the
+corresponding localization.
 -/
 
 set_option autoImplicit false
 
 universe u v
 
-open CategoryTheory AlgebraicGeometry
+open CategoryTheory AlgebraicGeometry Topology TopologicalSpace
 
 namespace MilneLib
 namespace InvariantLocalization
@@ -51,6 +51,52 @@ noncomputable def localizedInvariantQuotientMap
           ((algebraMap (FixedPoints.subalgebra k A G) A) b))) ⟶
       Spec (CommRingCat.of (fixedAway (b : A) b.property)) :=
   Spec.map (CommRingCat.ofHom (fixedAway (b : A) b.property).subtype)
+
+/-! ## Saturated opens -/
+
+/-- The preimage of the image of a stable open under the affine invariant quotient is the
+original open.  The proof uses the orbit description of quotient fibers, so this is the
+topological descent input for quotient-side chart overlaps. -/
+theorem preimage_image_eq_of_stable [Finite G]
+    (U : (Spec (CommRingCat.of A)).Opens)
+    (hU : ∀ g : G, (specAction G A g).hom ⁻¹ᵁ U = U) :
+    (affineInvariantQuotientMap (k := k) (A := A) (G := G)) ⁻¹'
+        ((affineInvariantQuotientMap (k := k) (A := A) (G := G)) '' (U : Set _)) =
+      (U : Set _) := by
+  apply Set.Subset.antisymm
+  · rintro x ⟨y, hyU, hxy⟩
+    have hq := (affineInvariantQuotientMap_eq_iff_exists_specAction
+      (k := k) (A := A) (G := G) x y).mp hxy.symm
+    obtain ⟨g, hact⟩ := hq
+    have hxact : x ∈ (specAction G A g).hom ⁻¹ᵁ U := by
+      change (specAction G A g).hom x ∈ U
+      rw [hact]
+      exact hyU
+    rw [hU g] at hxact
+    exact hxact
+  · intro x hx
+    exact ⟨x, hx, rfl⟩
+
+/-- The quotient-side open descended from a stable open in the affine source. -/
+noncomputable def quotientOpenOfStable [Finite G]
+    (U : (Spec (CommRingCat.of A)).Opens)
+    (hU : ∀ g : G, (specAction G A g).hom ⁻¹ᵁ U = U) :
+    (Spec (CommRingCat.of (FixedPoints.subalgebra k A G))).Opens :=
+  ⟨(affineInvariantQuotientMap (k := k) (A := A) (G := G)) '' (U : Set _), by
+    apply ((affineInvariantQuotientMap_isQuotientMap
+      (k := k) (A := A) (G := G)).isCoinducing.isOpen_preimage).mp
+    rw [preimage_image_eq_of_stable (k := k) (A := A) (G := G) U hU]
+    exact U.2⟩
+
+/-- Pulling the descended quotient open back along the affine quotient map recovers the stable
+source open. -/
+theorem quotientOpenOfStable_preimage [Finite G]
+    (U : (Spec (CommRingCat.of A)).Opens)
+    (hU : ∀ g : G, (specAction G A g).hom ⁻¹ᵁ U = U) :
+    (affineInvariantQuotientMap (k := k) (A := A) (G := G)) ⁻¹ᵁ
+        quotientOpenOfStable (k := k) (A := A) (G := G) U hU = U := by
+  apply TopologicalSpace.Opens.ext
+  exact preimage_image_eq_of_stable (k := k) (A := A) (G := G) U hU
 
 -- The two sides use definitionally equal presentations of the image of `b`.
 set_option backward.defeqAttrib.useBackward true in
