@@ -13,6 +13,7 @@ import MilneLib.InvariantQuotient
 import MilneLib.InvariantLocalization
 import MilneLib.InvariantQuotientOpen
 import MilneLib.InvariantQuotientOrder
+import MilneLib.InvariantQuotientGlue
 import MilneLib.AffineQuotientOver
 import MilneLib.Torsion
 import MilneLib.Coherent
