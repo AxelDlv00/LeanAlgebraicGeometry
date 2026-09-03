@@ -84,6 +84,39 @@ lemma exists_sub_one_mem_and_smul_le_top_and_localized_eq_of_fg_of_le_sup
       N.localized' (Localization p) p l
   exact le_antisymm hle hge
 
+/-! ### Localized residue surjectivity -/
+
+/-- **Stacks, Tag 00DV (5).**  If a map is surjective after quotienting the
+target by `I`, and the target is finite, then after inverting an element of
+`1 + I` the localized map is surjective. -/
+@[stacks 00DV "(5)"]
+theorem LinearMap.exists_sub_one_mem_and_surjective_localizedMap_of_surjective_mod_smul
+    [AddCommGroup M] [Module R M] [AddCommGroup N] [Module R N]
+    [Module.Finite R N] (f : M →ₗ[R] N) (I : Ideal R)
+    (hf : Function.Surjective
+      (((I • (⊤ : Submodule R N)).mkQ) ∘ₗ f)) :
+    ∃ r : R, r - 1 ∈ I ∧
+      Function.Surjective (LocalizedModule.map (Submonoid.powers r) f) := by
+  have hsup :
+      (⊤ : Submodule R N) ≤ LinearMap.range f ⊔ I • (⊤ : Submodule R N) := by
+    rw [top_le_iff, sup_comm, ← Submodule.map_mkQ_eq_top, ← LinearMap.range_comp]
+    exact LinearMap.range_eq_top_of_surjective _ hf
+  obtain ⟨r, hrI, hrange⟩ :=
+    Submodule.exists_sub_one_mem_and_smul_le_of_fg_of_le_sup
+      (N := LinearMap.range f) (N' := (⊤ : Submodule R N))
+      (P := (⊤ : Submodule R N)) Module.Finite.fg_top le_top hsup
+  refine ⟨r, hrI, ?_⟩
+  let p : Submonoid R := Submonoid.powers r
+  let lM : M →ₗ[R] LocalizedModule p M := LocalizedModule.mkLinearMap p M
+  let lN : N →ₗ[R] LocalizedModule p N := LocalizedModule.mkLinearMap p N
+  apply (IsLocalizedModule.map_surjective_iff_localizedModuleMap_surjective lM lN).mp
+  rw [← LinearMap.range_eq_top,
+    LinearMap.range_localizedMap_eq_localized₀_range p lM lN f]
+  apply top_unique
+  have hle := Submodule.localized₀_le_localized₀_of_smul_le p lN
+    (⟨r, Submonoid.mem_powers r⟩ : p) hrange
+  simpa using hle
+
 /-! ### Residue surjectivity -/
 
 /-- **Stacks, Tag 00DV (6).**  Surjectivity after quotienting the target by
