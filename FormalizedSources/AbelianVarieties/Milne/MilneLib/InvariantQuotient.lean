@@ -30,6 +30,67 @@ open scoped Pointwise
 
 namespace MilneLib
 
+section SpectrumAction
+
+variable (G : Type*) [Group G] (A : Type u) [CommRing A]
+  [MulSemiringAction G A]
+
+lemma specAction_toRingHom_comp (g h : G) :
+    (MulSemiringAction.toRingHom G A g).comp
+        (MulSemiringAction.toRingHom G A h) =
+      MulSemiringAction.toRingHom G A (g * h) :=
+  RingHom.ext fun x => (mul_smul g h x).symm
+
+lemma specAction_toRingHom_one :
+    MulSemiringAction.toRingHom G A (1 : G) = RingHom.id A :=
+  RingHom.ext fun x => one_smul G x
+
+/-- A ring action induces an action on its spectrum.  The inverse compensates
+for the contravariance of `Spec`, making this a group homomorphism. -/
+noncomputable def specAction : G →* Aut (Spec (CommRingCat.of A)) :=
+  MonoidHom.mk'
+    (fun g =>
+      { hom := Spec.map
+          (CommRingCat.ofHom (MulSemiringAction.toRingHom G A g⁻¹))
+        inv := Spec.map
+          (CommRingCat.ofHom (MulSemiringAction.toRingHom G A g))
+        hom_inv_id := by
+          rw [← Spec.map_comp, ← CommRingCat.ofHom_comp, specAction_toRingHom_comp,
+            inv_mul_cancel, specAction_toRingHom_one, CommRingCat.ofHom_id, Spec.map_id]
+        inv_hom_id := by
+          rw [← Spec.map_comp, ← CommRingCat.ofHom_comp, specAction_toRingHom_comp,
+            mul_inv_cancel, specAction_toRingHom_one, CommRingCat.ofHom_id, Spec.map_id] })
+    (fun g h => by
+      refine Iso.ext ?_
+      change Spec.map
+          (CommRingCat.ofHom
+            (MulSemiringAction.toRingHom G A (g * h)⁻¹)) =
+        Spec.map
+            (CommRingCat.ofHom
+              (MulSemiringAction.toRingHom G A h⁻¹)) ≫
+          Spec.map
+            (CommRingCat.ofHom
+              (MulSemiringAction.toRingHom G A g⁻¹))
+      rw [← Spec.map_comp, ← CommRingCat.ofHom_comp, specAction_toRingHom_comp,
+        ← mul_inv_rev])
+
+lemma specAction_hom (g : G) :
+    (specAction G A g).hom =
+      Spec.map
+        (CommRingCat.ofHom (MulSemiringAction.toRingHom G A g⁻¹)) :=
+  rfl
+
+/-- On prime ideals, the induced spectrum action agrees with pointwise
+transport by the group action. -/
+theorem specAction_hom_base_asIdeal (g : G) (x : PrimeSpectrum A) :
+    ((specAction G A g).hom.base x).asIdeal = g • x.asIdeal := by
+  rw [specAction_hom]
+  change (PrimeSpectrum.comap (MulSemiringAction.toRingHom G A g⁻¹) x).asIdeal = _
+  rw [PrimeSpectrum.comap_asIdeal, Ideal.pointwise_smul_eq_comap]
+  rfl
+
+end SpectrumAction
+
 section Invariants
 
 variable {k A G : Type*} [CommRing k] [CommRing A] [Algebra k A]
@@ -95,6 +156,19 @@ noncomputable def affineInvariantQuotientMap :
       Spec (CommRingCat.of (FixedPoints.subalgebra k A G)) :=
   Spec.map (CommRingCat.ofHom (algebraMap (FixedPoints.subalgebra k A G) A))
 
+/-- The action on the affine source is constant along the invariant-ring
+projection. -/
+@[reassoc]
+theorem specAction_hom_affineInvariantQuotientMap (g : G) :
+    (specAction G A g).hom ≫
+        affineInvariantQuotientMap (k := k) (A := A) (G := G) =
+      affineInvariantQuotientMap (k := k) (A := A) (G := G) := by
+  unfold affineInvariantQuotientMap
+  rw [specAction_hom, ← Spec.map_comp, ← CommRingCat.ofHom_comp]
+  congr 2
+  ext x
+  exact x.property g⁻¹
+
 /-- The affine quotient map is integral without any finite-type hypothesis on
 the source algebra. -/
 theorem affineInvariantQuotientMap_isIntegral [Finite G] :
@@ -151,6 +225,25 @@ theorem affineInvariantQuotientMap_eq_iff_exists_smul [Finite G]
     change x.asIdeal.under (FixedPoints.subalgebra k A G) =
       y.asIdeal.under (FixedPoints.subalgebra k A G)
     rw [hg, Ideal.under_smul]
+
+/-- The fibers of the affine invariant quotient are exactly the orbits of the
+induced action on `Spec A`. -/
+theorem affineInvariantQuotientMap_eq_iff_exists_specAction [Finite G]
+    (x y : PrimeSpectrum A) :
+    (affineInvariantQuotientMap (k := k) (A := A) (G := G)).base x =
+        (affineInvariantQuotientMap (k := k) (A := A) (G := G)).base y ↔
+      ∃ g : G, (specAction G A g).hom.base x = y := by
+  rw [affineInvariantQuotientMap_eq_iff_exists_smul]
+  constructor
+  · rintro ⟨g, hg⟩
+    refine ⟨g, PrimeSpectrum.ext ?_⟩
+    rw [specAction_hom_base_asIdeal]
+    exact hg.symm
+  · rintro ⟨g, hg⟩
+    refine ⟨g, ?_⟩
+    have := congrArg PrimeSpectrum.asIdeal hg
+    rw [specAction_hom_base_asIdeal] at this
+    exact this.symm
 
 end AffineQuotient
 
