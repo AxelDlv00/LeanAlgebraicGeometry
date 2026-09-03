@@ -46,11 +46,12 @@ continuous in time and tangent parameters.  This is a real continuity
 statement only; it does not assert complex holomorphicity. -/
 theorem canonicalRealFlow_continuous_joint
     [CompleteSpace E] [T2Space G] [I.Boundaryless]
-    [CompactSpace G] [PreconnectedSpace G]
-    [FiniteDimensional ℂ E] :
+    [CompactSpace G] [PreconnectedSpace G] :
     Continuous (fun p : ℝ × GroupLieAlgebra (complexToRealModel I) G =>
       canonicalRealFlow I p.2 p.1) := by
   classical
+  letI : FiniteDimensional ℂ E :=
+    FiniteDimensional.of_locallyCompact_manifold G I
   letI : FiniteDimensional ℝ E := FiniteDimensional.complexToReal E
   letI : FiniteDimensional ℝ (GroupLieAlgebra (complexToRealModel I) G) := by
     change FiniteDimensional ℝ E
