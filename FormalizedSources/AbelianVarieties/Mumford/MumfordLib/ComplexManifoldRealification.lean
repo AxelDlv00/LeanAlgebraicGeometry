@@ -5,6 +5,7 @@ Authors: The Mumford Contributors
 -/
 
 import MumfordLib.RealLieOneParameter
+import Mathlib.Analysis.Calculus.FDeriv.RestrictScalars
 import Mathlib.Geometry.Manifold.Complex
 
 /-!
@@ -79,6 +80,48 @@ instance complexToRealModel_boundaryless
   range_eq_univ := by
     change Set.range I = Set.univ
     exact I.range_eq_univ
+
+/-- A complex manifold derivative remains a manifold derivative after
+restricting scalars to `ℝ`. -/
+theorem HasMFDerivAt.restrict_scalars_complex
+    {E' H' M M' : Type*}
+    [NormedAddCommGroup E'] [NormedSpace ℂ E'] [TopologicalSpace H']
+    (I : ModelWithCorners ℂ E H) (J : ModelWithCorners ℂ E' H')
+    [TopologicalSpace M] [ChartedSpace H M]
+    [TopologicalSpace M'] [ChartedSpace H' M']
+    {f : M → M'} {x : M}
+    {f' : TangentSpace I x →L[ℂ] TangentSpace J (f x)}
+    (hf : HasMFDerivAt I J f x f') :
+    HasMFDerivAt (complexToRealModel I) (complexToRealModel J) f x
+      (f'.restrictScalars ℝ) := by
+  rw [HasMFDerivAt] at hf ⊢
+  exact ⟨hf.1, hf.2.restrictScalars ℝ⟩
+
+/-- Complex manifold differentiability implies differentiability for the
+underlying realified models. -/
+theorem MDifferentiableAt.restrict_scalars_complex
+    {E' H' M M' : Type*}
+    [NormedAddCommGroup E'] [NormedSpace ℂ E'] [TopologicalSpace H']
+    (I : ModelWithCorners ℂ E H) (J : ModelWithCorners ℂ E' H')
+    [TopologicalSpace M] [ChartedSpace H M]
+    [TopologicalSpace M'] [ChartedSpace H' M']
+    {f : M → M'} {x : M} (hf : MDifferentiableAt I J f x) :
+    MDifferentiableAt (complexToRealModel I) (complexToRealModel J) f x := by
+  rw [mdifferentiableAt_iff] at hf ⊢
+  exact ⟨hf.1, hf.2.restrictScalars ℝ⟩
+
+/-- The manifold derivative for a realified complex manifold is the scalar
+restriction of its complex manifold derivative. -/
+theorem mfderiv_complexToRealModel
+    {E' H' M M' : Type*}
+    [NormedAddCommGroup E'] [NormedSpace ℂ E'] [TopologicalSpace H']
+    (I : ModelWithCorners ℂ E H) (J : ModelWithCorners ℂ E' H')
+    [TopologicalSpace M] [ChartedSpace H M]
+    [TopologicalSpace M'] [ChartedSpace H' M']
+    {f : M → M'} {x : M} (hf : MDifferentiableAt I J f x) :
+    mfderiv (complexToRealModel I) (complexToRealModel J) f x =
+      (mfderiv I J f x).restrictScalars ℝ :=
+  (HasMFDerivAt.restrict_scalars_complex I J hf.hasMFDerivAt).mfderiv
 
 /-- A complex-smooth map is smooth between the corresponding realified
 manifolds. -/
