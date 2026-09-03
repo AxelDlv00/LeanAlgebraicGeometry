@@ -118,6 +118,155 @@ noncomputable def localizedModule_homEquiv (S : Submonoid R)
   right_inv g := IsLocalizedModule.lift_comp S (LocalizedModule.mkLinearMap S M) g h
 
 /-!
+The canonical map into an iterated localization is itself a localization map
+at the join of the two denominator submonoids.  This is the module form of
+Stacks, Tag 02C7; the join has carrier the pointwise products in a commutative
+semiring.
+-/
+theorem localizedModule_nested_smul_isUnit
+    {M : Type*} [AddCommMonoid M] [Module R M]
+    (S T : Submonoid R) (t : T) :
+    IsUnit (algebraMap R
+      (Module.End R (LocalizedModule S (LocalizedModule T M))) (t : R)) := by
+  let fS : LocalizedModule T M →ₗ[R] LocalizedModule S (LocalizedModule T M) :=
+    LocalizedModule.mkLinearMap S (LocalizedModule T M)
+  let a₁ : Module.End R (LocalizedModule T M) :=
+    algebraMap R (Module.End R (LocalizedModule T M)) (t : R)
+  let a₂ : Module.End R (LocalizedModule S (LocalizedModule T M)) :=
+    algebraMap R (Module.End R (LocalizedModule S (LocalizedModule T M))) (t : R)
+  let d : Module.End R (LocalizedModule T M) := LocalizedModule.divBy t
+  let D : Module.End R (LocalizedModule S (LocalizedModule T M)) :=
+    IsLocalizedModule.map S fS fS d
+  have hinner_left : d.comp a₁ = LinearMap.id := by
+    ext x
+    change LocalizedModule.divBy t (a₁ x) = x
+    exact LocalizedModule.divBy_mul_by t x
+  have hinner_right : a₁.comp d = LinearMap.id := by
+    ext x
+    change a₁ (LocalizedModule.divBy t x) = x
+    exact LocalizedModule.mul_by_divBy t x
+  have hscalar : a₂.comp fS = fS.comp a₁ := by
+    ext x
+    simp [LinearMap.comp_apply, a₁, a₂, Module.algebraMap_end_apply]
+  have hmap : D.comp fS = fS.comp d := by
+    exact IsLocalizedModule.map_comp S fS fS d
+  have hDleft : D.comp a₂ = LinearMap.id := by
+    apply IsLocalizedModule.linearMap_ext S fS fS
+    calc
+      (D.comp a₂).comp fS = D.comp (a₂.comp fS) := by rw [LinearMap.comp_assoc]
+      _ = D.comp (fS.comp a₁) := by rw [hscalar]
+      _ = (D.comp fS).comp a₁ := by rw [LinearMap.comp_assoc]
+      _ = (fS.comp d).comp a₁ := by rw [hmap]
+      _ = fS.comp (d.comp a₁) := by rw [LinearMap.comp_assoc]
+      _ = fS.comp LinearMap.id := by rw [hinner_left]
+      _ = LinearMap.id.comp fS := by ext; simp
+  have hDright : a₂.comp D = LinearMap.id := by
+    apply IsLocalizedModule.linearMap_ext S fS fS
+    calc
+      (a₂.comp D).comp fS = a₂.comp (D.comp fS) := by rw [LinearMap.comp_assoc]
+      _ = a₂.comp (fS.comp d) := by rw [hmap]
+      _ = (a₂.comp fS).comp d := by rw [LinearMap.comp_assoc]
+      _ = (fS.comp a₁).comp d := by rw [hscalar]
+      _ = fS.comp (a₁.comp d) := by rw [LinearMap.comp_assoc]
+      _ = fS.comp LinearMap.id := by rw [hinner_right]
+      _ = LinearMap.id.comp fS := by ext; simp
+  rw [Module.End.isUnit_iff]
+  constructor
+  · intro x y hxy
+    calc
+      x = (D.comp a₂) x := by rw [hDleft]; rfl
+      _ = D (a₂ x) := rfl
+      _ = D (a₂ y) := congrArg D hxy
+      _ = (D.comp a₂) y := rfl
+      _ = y := by rw [hDleft]; rfl
+  · intro y
+    refine ⟨D y, ?_⟩
+    change a₂ (D y) = y
+    have hh := congrArg (fun q => q y) hDright
+    simpa [LinearMap.comp_apply] using hh
+
+theorem localizedModule_comp_isLocalizedModule
+    {M : Type*} [AddCommMonoid M] [Module R M]
+    (S T : Submonoid R) :
+    IsLocalizedModule (S ⊔ T)
+      ((LocalizedModule.mkLinearMap S (LocalizedModule T M)).comp
+        (LocalizedModule.mkLinearMap T M)) := by
+  let fS : LocalizedModule T M →ₗ[R] LocalizedModule S (LocalizedModule T M) :=
+    LocalizedModule.mkLinearMap S (LocalizedModule T M)
+  let fT : M →ₗ[R] LocalizedModule T M := LocalizedModule.mkLinearMap T M
+  let f : M →ₗ[R] LocalizedModule S (LocalizedModule T M) := fS.comp fT
+  constructor
+  · intro c
+    rcases (Submonoid.mem_sup.mp c.property) with ⟨s, hs, t, ht, hst⟩
+    rw [← hst, map_mul]
+    exact (IsLocalizedModule.map_units fS ⟨s, hs⟩).mul
+      (localizedModule_nested_smul_isUnit S T ⟨t, ht⟩)
+  · intro y
+    obtain ⟨⟨x, s⟩, hs⟩ := IsLocalizedModule.surj S fS y
+    obtain ⟨⟨m, t⟩, ht⟩ := IsLocalizedModule.surj T fT x
+    let c : ↥(S ⊔ T) := ⟨(s : R) * (t : R),
+      (Submonoid.mem_sup.mpr ⟨s, s.property, t, t.property, rfl⟩)⟩
+    refine ⟨⟨m, c⟩, ?_⟩
+    have hs' : (s : R) • y = fS x := by
+      simpa only [Submonoid.smul_def] using hs
+    have ht' : (t : R) • x = fT m := by
+      simpa only [Submonoid.smul_def] using ht
+    dsimp [c]
+    change ((s : R) * (t : R)) • y = fS (fT m)
+    rw [← smul_smul, smul_comm (s : R) (t : R), hs', ← fS.map_smul, ht']
+  · intro x y hxy
+    obtain ⟨s, hs⟩ := IsLocalizedModule.exists_of_eq (S := S) (f := fS) hxy
+    have hxy' : fT ((s : R) • x) = fT ((s : R) • y) := by
+      have hs' : (s : R) • fT x = (s : R) • fT y := by
+        simpa only [Submonoid.smul_def] using hs
+      simpa [fT, map_smul] using hs'
+    obtain ⟨t, ht⟩ := IsLocalizedModule.exists_of_eq (S := T) (f := fT) hxy'
+    refine ⟨⟨(t : R) * (s : R),
+      (Submonoid.mem_sup.mpr ⟨s, s.property, t, t.property, by ring⟩)⟩, ?_⟩
+    change ((t : R) * (s : R)) • x = ((t : R) * (s : R)) • y
+    calc
+      ((t : R) * (s : R)) • x = (t : R) • (s : R) • x := (smul_smul _ _ _).symm
+      _ = (t : R) • (s : R) • y := by simpa only [Submonoid.smul_def] using ht
+      _ = ((t : R) * (s : R)) • y := smul_smul _ _ _
+
+/- The canonical map identity records the orientation of the Tag 02C7 equivalence. -/
+noncomputable def localizedModule_localizeTwiceEquiv
+    {M : Type*} [AddCommMonoid M] [Module R M]
+    (S T : Submonoid R) :
+    LocalizedModule S (LocalizedModule T M) ≃ₗ[R] LocalizedModule (S ⊔ T) M := by
+  let f : M →ₗ[R] LocalizedModule S (LocalizedModule T M) :=
+    (LocalizedModule.mkLinearMap S (LocalizedModule T M)).comp
+      (LocalizedModule.mkLinearMap T M)
+  letI : IsLocalizedModule (S ⊔ T) f :=
+    localizedModule_comp_isLocalizedModule S T
+  exact IsLocalizedModule.linearEquiv (S ⊔ T) f
+    (LocalizedModule.mkLinearMap (S ⊔ T) M)
+
+@[simp]
+theorem localizedModule_localizeTwiceEquiv_comp
+    {M : Type*} [AddCommGroup M] [Module R M]
+    (S T : Submonoid R) :
+    (localizedModule_localizeTwiceEquiv S T).toLinearMap.comp
+        ((LocalizedModule.mkLinearMap S (LocalizedModule T M)).comp
+          (LocalizedModule.mkLinearMap T M)) =
+      LocalizedModule.mkLinearMap (S ⊔ T) M := by
+  let f : M →ₗ[R] LocalizedModule S (LocalizedModule T M) :=
+    (LocalizedModule.mkLinearMap S (LocalizedModule T M)).comp
+      (LocalizedModule.mkLinearMap T M)
+  letI : IsLocalizedModule (S ⊔ T) f :=
+    localizedModule_comp_isLocalizedModule S T
+  apply LinearMap.ext
+  intro x
+  change (IsLocalizedModule.linearEquiv (S ⊔ T)
+      ((LocalizedModule.mkLinearMap S (LocalizedModule T M)).comp
+        (LocalizedModule.mkLinearMap T M))
+      (LocalizedModule.mkLinearMap (S ⊔ T) M))
+      (((LocalizedModule.mkLinearMap S (LocalizedModule T M)).comp
+        (LocalizedModule.mkLinearMap T M)) x) =
+      (LocalizedModule.mkLinearMap (S ⊔ T) M) x
+  exact IsLocalizedModule.linearEquiv_apply _ _ _ x
+
+/-!
 The localized identity map is the identity, a useful normalization for
 iterated localization constructions.
 -/
