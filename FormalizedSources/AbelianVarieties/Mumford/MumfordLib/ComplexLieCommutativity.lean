@@ -5,6 +5,7 @@ Authors: The Mumford Contributors
 -/
 
 import MumfordLib.ComplexLieAdjoint
+import Mathlib.Analysis.Calculus.InverseFunctionTheorem.ContDiff
 import Mathlib.Algebra.Group.Commute.Basic
 import Mathlib.Algebra.Group.Subgroup.Lattice
 import Mathlib.Geometry.Manifold.LocalDiffeomorph
@@ -161,6 +162,69 @@ theorem range_mem_interior_of_isLocalDiffeomorphAt
   intro y hy
   exact ⟨hf.localInverse y, hf.localInverse_right_inv hy⟩
 
+/-- A complex `C¹` map from a Banach space to a boundaryless manifold has
+range containing a neighborhood of its value wherever its manifold derivative
+is invertible.
+
+This is the inverse-function consequence used for the Lie exponential. It is
+proved in an extended chart because the manifold inverse-function theorem is
+not currently packaged in this direction. -/
+theorem range_mem_interior_of_contMDiffAt_of_mfderiv_isInvertible
+    {E' H' M : Type*}
+    [NormedAddCommGroup E'] [NormedSpace ℂ E'] [CompleteSpace E']
+    [TopologicalSpace H'] (I' : ModelWithCorners ℂ E' H')
+    [TopologicalSpace M] [ChartedSpace H' M] [IsManifold I' 1 M]
+    [I'.Boundaryless]
+    {f : E' → M} {x : E'}
+    (hf : ContMDiffAt 𝓘(ℂ, E') I' 1 f x)
+    (hderiv : (mfderiv 𝓘(ℂ, E') I' f x).IsInvertible) :
+    f x ∈ interior (Set.range f) := by
+  let e := extChartAt I' (f x)
+  let g : E' → E' := fun y => e (f y)
+  have hg_contDiff : ContDiffAt ℂ 1 g x := by
+    have h := (contMDiffAt_iff_target.mp hf).2
+    exact h.contDiffAt
+  have hf_md : MDifferentiableAt 𝓘(ℂ, E') I' f x :=
+    hf.mdifferentiableAt one_ne_zero
+  have he_md : MDifferentiableAt I' 𝓘(ℂ, E') e (f x) :=
+    mdifferentiableAt_extChartAt (mem_chart_source H' (f x))
+  have hg_mfderiv :
+      mfderiv 𝓘(ℂ, E') 𝓘(ℂ, E') g x =
+        (mfderiv I' 𝓘(ℂ, E') e (f x)).comp
+          (mfderiv 𝓘(ℂ, E') I' f x) := by
+    exact mfderiv_comp x he_md hf_md
+  have hg_invertible : (fderiv ℂ g x).IsInvertible := by
+    rw [← mfderiv_eq_fderiv, hg_mfderiv]
+    exact (isInvertible_mfderiv_extChartAt
+      (I := I') (x := f x) (y := f x)
+        (mem_extChartAt_source (I := I') (f x))).comp hderiv
+  obtain ⟨g', hg'⟩ := hg_invertible
+  have hg_hasFDeriv : HasFDerivAt g (g' : E' →L[ℂ] E') x := by
+    rw [hg']
+    exact (hg_contDiff.differentiableAt one_ne_zero).hasFDerivAt
+  have hmap : Filter.map g (nhds x) = nhds (g x) :=
+    (hg_contDiff.hasStrictFDerivAt' hg_hasFDeriv one_ne_zero).map_nhds_eq_of_equiv
+  have hsource : f ⁻¹' e.source ∈ nhds x :=
+    hf.continuousAt.preimage_mem_nhds
+      (extChartAt_source_mem_nhds (I := I') (f x))
+  let t : Set E' := g '' (f ⁻¹' e.source)
+  have ht : t ∈ nhds (g x) := by
+    rw [← hmap]
+    change g ⁻¹' t ∈ nhds x
+    exact Filter.mem_of_superset hsource (Set.subset_preimage_image g _)
+  have hpre : e ⁻¹' t ∈ nhds (f x) := by
+    have ht' : t ∈ Filter.map e (nhds (f x)) := by
+      rw [map_extChartAt_nhds_of_boundaryless (I := I')]
+      exact ht
+    exact ht'
+  rw [mem_interior_iff_mem_nhds]
+  apply Filter.mem_of_superset
+    (Filter.inter_mem hpre (extChartAt_source_mem_nhds (I := I') (f x)))
+  rintro y ⟨hy, hy_source⟩
+  obtain ⟨z, hz_source, hz⟩ := hy
+  refine ⟨z, ?_⟩
+  exact e.injOn hz_source hy_source hz
+
 /-!
 ### Consuming the adjoint producer
 -/
@@ -231,6 +295,38 @@ theorem complexLieGroup_isMulCommutative_of_local_exponential
       (G := G) I exponential hconjugation_exp a v
   · have hlocal :=
       range_mem_interior_of_isLocalDiffeomorphAt hexponential_local
+    simpa only [hexponential_zero] using hlocal
+
+/-- A `C¹` candidate exponential with identity derivative at zero suffices for
+commutativity once conjugation functoriality is supplied. The inverse-function
+and connected-generation steps are consequences rather than hypotheses here;
+the theorem still does not construct the exponential or its functoriality. -/
+theorem complexLieGroup_isMulCommutative_of_exponential_mfderiv
+    [CompleteSpace E]
+    [I.Boundaryless] [CompactSpace G] [PreconnectedSpace G]
+    (exponential : E → G)
+    (hexponential_zero : exponential 0 = 1)
+    (hexponential_contMDiffAt :
+      ContMDiffAt 𝓘(ℂ, E) I 1 exponential 0)
+    (hexponential_mfderiv :
+      mfderiv 𝓘(ℂ, E) I exponential 0 = ContinuousLinearMap.id ℂ E)
+    (hconjugation_exp : ∀ (x : G) (v : E),
+      complexLieConjugation x (exponential v) =
+        exponential ((complexLieAdjoint (G := G) I x) v)) :
+    IsMulCommutative G := by
+  letI : IsTopologicalGroup G := topologicalGroup_of_lieGroup I ⊤
+  apply isMulCommutative_of_central_nhds (s := Set.range exponential)
+  · intro z hz a
+    obtain ⟨v, rfl⟩ := hz
+    exact commute_exponential_of_conjugation_exp
+      (G := G) I exponential hconjugation_exp a v
+  · have hderiv :
+        (mfderiv 𝓘(ℂ, E) I exponential 0).IsInvertible := by
+      rw [hexponential_mfderiv]
+      exact ⟨ContinuousLinearEquiv.refl ℂ E, rfl⟩
+    have hlocal :=
+      range_mem_interior_of_contMDiffAt_of_mfderiv_isInvertible
+        I hexponential_contMDiffAt hderiv
     simpa only [hexponential_zero] using hlocal
 
 /-- The compact connected complex Lie group is commutative under the explicit
