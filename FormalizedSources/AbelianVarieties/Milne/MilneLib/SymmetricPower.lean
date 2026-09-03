@@ -6,6 +6,7 @@ Authors: The Milne Contributors
 
 import Mathlib.AlgebraicGeometry.Limits
 import Mathlib.CategoryTheory.Limits.Shapes.SingleObj
+import MilneLib.StableAffineCover
 
 /-!
 # Relative symmetric powers: the categorical interface
@@ -57,6 +58,79 @@ theorem permute_comp_projection {S : Scheme.{u}} (V : Over S) (n : ℕ)
   change (Pi.lift (fun i => Pi.π (fun _ : Fin n => V) (σ i))) ≫
       Pi.π (fun _ : Fin n => V) i = _
   rw [Pi.lift_π]
+
+/-! ### The permutation maps are automorphisms -/
+
+/-- Composition of factor permutations in the relative product. -/
+theorem permute_comp {S : Scheme.{u}} (V : Over S) (n : ℕ)
+    (σ τ : Equiv.Perm (Fin n)) :
+    permute V n σ ≫ permute V n τ = permute V n (σ * τ) := by
+  apply Pi.hom_ext
+  intro i
+  rw [Category.assoc, permute_comp_projection, permute_comp_projection,
+    permute_comp_projection]
+  rfl
+
+@[simp]
+theorem permute_one {S : Scheme.{u}} (V : Over S) (n : ℕ) :
+    permute V n (1 : Equiv.Perm (Fin n)) = 𝟙 _ := by
+  apply Pi.hom_ext
+  intro i
+  rw [permute_comp_projection, Category.id_comp]
+  rfl
+
+/-- The factor permutation bundled as an automorphism; its inverse is the
+permutation by `σ⁻¹`. -/
+noncomputable def permuteIso {S : Scheme.{u}} (V : Over S) (n : ℕ)
+    (σ : Equiv.Perm (Fin n)) : Aut (relativePower V n) where
+  hom := permute V n σ
+  inv := permute V n σ⁻¹
+  hom_inv_id := by rw [permute_comp, mul_inv_cancel, permute_one]
+  inv_hom_id := by rw [permute_comp, inv_mul_cancel, permute_one]
+
+@[simp]
+theorem permuteIso_hom {S : Scheme.{u}} (V : Over S) (n : ℕ)
+    (σ : Equiv.Perm (Fin n)) :
+    (permuteIso V n σ).hom = permute V n σ := rfl
+
+/-- The permutation action on a relative product, valued in categorical
+automorphisms.  The inverse in the value compensates for the opposite
+multiplication on `Aut`. -/
+noncomputable def permutationAutHom {S : Scheme.{u}} (V : Over S) (n : ℕ) :
+    Equiv.Perm (Fin n) →* Aut (relativePower V n) where
+  toFun σ := permuteIso V n σ⁻¹
+  map_one' := by
+    apply Iso.ext
+    change permute V n (1 : Equiv.Perm (Fin n))⁻¹ = 𝟙 _
+    rw [inv_one, permute_one]
+  map_mul' σ τ := by
+    apply Iso.ext
+    change permute V n (σ * τ)⁻¹ =
+      permute V n τ⁻¹ ≫ permute V n σ⁻¹
+    rw [permute_comp, ← mul_inv_rev]
+
+@[simp]
+theorem permutationAutHom_apply_hom {S : Scheme.{u}} (V : Over S) (n : ℕ)
+    (σ : Equiv.Perm (Fin n)) :
+    ((permutationAutHom V n) σ).hom = permute V n σ⁻¹ := rfl
+
+/-- Push the relative permutation action along `Over.forget` to the actual
+underlying scheme used by a relative-product quotient. -/
+noncomputable def permutationAutHomOverLeft {S : Scheme.{u}} (V : Over S) (n : ℕ) :
+    Equiv.Perm (Fin n) →* Aut ((relativePower V n).left) :=
+  (Functor.mapAut _ (Over.forget S)).comp (permutationAutHom V n)
+
+/-- Conditional stable-cover corollary for the relative permutation action.  The
+orbit-in-affine hypothesis is kept explicit: this bridge does not assert it
+for an arbitrary curve or relative product. -/
+theorem exists_stable_affineOpen_permutation {S : Scheme.{u}} (V : Over S) (n : ℕ)
+    (h : StableGroupAction.OrbitsInAffineOpen (permutationAutHomOverLeft V n))
+    (x : (relativePower V n).left) :
+    ∃ U : ((relativePower V n).left).Opens,
+      IsAffineOpen U ∧ x ∈ U ∧
+        StableGroupAction.IsStableOpen (permutationAutHomOverLeft V n) U :=
+  StableGroupAction.exists_stable_affineOpen_of_orbits
+    (permutationAutHomOverLeft V n) h x
 
 /-
 `End` uses the opposite order of categorical composition (`f * g = g ≫ f`).
