@@ -249,5 +249,77 @@ theorem mem_fixedAway_iff_exists_invariant_num [Finite G]
   rw [map_mul, awayMap_algebraMap, awayMap_algebraMap, smul_pow', hb g, ha g] at hg
   rw [hg, hxa]
 
+/-! ## Localization of the invariant subalgebra -/
+
+section FixedSubalgebra
+
+variable {k : Type*} [CommRing k] [Algebra k A] [SMulCommClass G k A]
+
+/-- The invariant subalgebra maps to the fixed subring after localization. -/
+noncomputable def invariantToFixedAway (b : FixedPoints.subalgebra k A G) :
+    FixedPoints.subalgebra k A G →+* fixedAway (b : A) b.property :=
+  ((algebraMap A (Localization.Away (b : A))).comp
+    (algebraMap (FixedPoints.subalgebra k A G) A)).codRestrict _
+      (fun x => algebraMap_mem_fixedAway (b : A) b.property x.property)
+
+/-- The algebra structure on the fixed localized ring induced by invariant numerators.
+It is explicit because the target depends on the proof that `b` is invariant. -/
+@[implicit_reducible]
+noncomputable def fixedAwayAlgebra (b : FixedPoints.subalgebra k A G) :
+    Algebra (FixedPoints.subalgebra k A G) (fixedAway (b : A) b.property) :=
+  RingHom.toAlgebra (invariantToFixedAway b)
+
+/-- The fixed subring of `A[1/b]` is a localization of the invariant subalgebra away from
+`b`. -/
+theorem fixedAway_isLocalization [Finite G] (b : FixedPoints.subalgebra k A G) :
+    letI := fixedAwayAlgebra b
+    IsLocalization.Away b (fixedAway (b : A) b.property) := by
+  letI := fixedAwayAlgebra b
+  apply IsLocalization.Away.mk b
+  · change IsUnit (invariantToFixedAway b b)
+    exact isUnit_algebraMap_fixedAway (b : A) b.property
+  · intro x
+    obtain ⟨a, n, ha, hx⟩ := exists_invariant_num_den
+      (G := G) (b : A) b.property x.1 x.2
+    refine ⟨n, ⟨a, ha⟩, ?_⟩
+    apply Subtype.ext
+    change x.1 * (algebraMap A (Localization.Away (b : A)) (b : A)) ^ n =
+      algebraMap A (Localization.Away (b : A)) a
+    simpa only [map_pow] using hx
+  · intro a c h
+    change invariantToFixedAway b a = invariantToFixedAway b c at h
+    have h' : algebraMap A (Localization.Away (b : A)) (a : A) =
+        algebraMap A (Localization.Away (b : A)) (c : A) :=
+      congrArg Subtype.val h
+    obtain ⟨n, hn⟩ := IsLocalization.Away.exists_of_eq
+      (S := Localization.Away (b : A)) (x := (b : A)) h'
+    exact ⟨n, Subtype.ext hn⟩
+
+/-- The canonical ring equivalence `(A^G)[1/b] ≃ (A[1/b])^G`. -/
+noncomputable def localizationAwayFixedRingEquiv [Finite G]
+    (b : FixedPoints.subalgebra k A G) :
+    Localization.Away b ≃+* fixedAway (b : A) b.property := by
+  letI := fixedAwayAlgebra b
+  letI : IsLocalization.Away b (fixedAway (b : A) b.property) :=
+    fixedAway_isLocalization b
+  exact (IsLocalization.algEquiv (Submonoid.powers b) (Localization.Away b)
+    (fixedAway (b : A) b.property)).toRingEquiv
+
+/-- The localization equivalence sends invariant numerators to their images in the fixed
+localized ring. -/
+@[simp]
+theorem localizationAwayFixedRingEquiv_algebraMap [Finite G]
+    (b a : FixedPoints.subalgebra k A G) :
+    localizationAwayFixedRingEquiv b
+        (algebraMap (FixedPoints.subalgebra k A G) (Localization.Away b) a) =
+      invariantToFixedAway b a := by
+  letI := fixedAwayAlgebra b
+  letI : IsLocalization.Away b (fixedAway (b : A) b.property) :=
+    fixedAway_isLocalization b
+  exact (IsLocalization.algEquiv (Submonoid.powers b) (Localization.Away b)
+    (fixedAway (b : A) b.property)).commutes a
+
+end FixedSubalgebra
+
 end InvariantLocalization
 end MilneLib
