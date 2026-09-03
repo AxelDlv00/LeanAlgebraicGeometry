@@ -17,7 +17,7 @@ additional hypotheses and are not claimed here.
 
 set_option autoImplicit false
 
-universe u
+universe w u
 
 open CategoryTheory AlgebraicGeometry TopologicalSpace
 
@@ -115,5 +115,106 @@ theorem exists_basicOpen_le_of_finite {X : Scheme.{u}} {U : X.Opens}
     rwa [hU.fromSpec_primeIdealOf] at h2
   · rw [← hU.fromSpec_image_basicOpen]
     exact (hU.fromSpec.image_mono hle).trans (hU.fromSpec.image_preimage_le V)
+
+/-! ## Stable affine neighborhoods for finite group actions -/
+
+namespace StableGroupAction
+
+variable {G : Type w} [Group G] [Finite G] {X : Scheme.{u}} (act : G →* Aut X)
+
+/-- The orbit-in-affine hypothesis for a finite group acting on a scheme. -/
+def OrbitsInAffineOpen : Prop :=
+  ∀ x : X, ∃ U : X.affineOpens, ∀ g : G, (act g).hom.base x ∈ U.1
+
+/-- An open subscheme preserved by every element of the action. -/
+def IsStableOpen (U : X.Opens) : Prop :=
+  ∀ g : G, (act g).hom ⁻¹ᵁ U = U
+
+omit [Finite G] in
+lemma act_one_hom : (act 1).hom = 𝟙 X := by
+  rw [map_one]
+  rfl
+
+omit [Finite G] in
+lemma act_mul_hom (g t : G) :
+    (act (g * t)).hom = (act t).hom ≫ (act g).hom := by
+  rw [map_mul]
+  rfl
+
+/-- If every orbit of a finite group action lies in an affine open, then every
+point has an affine open neighborhood preserved by the whole group. -/
+theorem exists_stable_affineOpen_of_orbits (h : OrbitsInAffineOpen act) (x : X) :
+    ∃ U : X.Opens, IsAffineOpen U ∧ x ∈ U ∧ IsStableOpen act U := by
+  classical
+  letI : Fintype G := Fintype.ofFinite G
+  obtain ⟨U, hxU⟩ := h x
+  have horb : ∀ t g : G, (act g).hom.base ((act t).hom.base x) ∈ U.1 := by
+    intro t g
+    have hh : (act g).hom.base ((act t).hom.base x) =
+        (act (g * t)).hom.base x := by
+      rw [act_mul_hom act g t]
+      rfl
+    rw [hh]
+    exact hxU (g * t)
+  obtain ⟨s, hs_mem, hs_le⟩ := exists_basicOpen_le_of_finite U.2
+    (fun g : G => (act g).hom.base x) hxU
+    (V := Finset.univ.inf fun g : G => (act g).hom ⁻¹ᵁ U.1)
+    (fun t => mem_finset_inf.mpr fun g _ => horb t g)
+  have hWle : ∀ g : G,
+      (Finset.univ.inf fun d : G => (act d).hom ⁻¹ᵁ U.1) ≤
+        (act g).hom ⁻¹ᵁ U.1 :=
+    fun g => Finset.inf_le (Finset.mem_univ g)
+  set t : G → Γ(X, Finset.univ.inf fun d : G => (act d).hom ⁻¹ᵁ U.1) :=
+    fun g => X.presheaf.map (homOfLE (hWle g)).op ((act g).hom.app U.1 s) with ht
+  set N : Γ(X, Finset.univ.inf fun d : G => (act d).hom ⁻¹ᵁ U.1) :=
+    ∏ g : G, t g with hN
+  have hbo_t : ∀ g : G, X.basicOpen (t g) =
+      (Finset.univ.inf fun d : G => (act d).hom ⁻¹ᵁ U.1) ⊓
+        (act g).hom ⁻¹ᵁ X.basicOpen s := by
+    intro g
+    rw [ht, Scheme.basicOpen_res, ← Scheme.preimage_basicOpen]
+  have hP1 : (act (1 : G)).hom ⁻¹ᵁ X.basicOpen s = X.basicOpen s := by
+    rw [act_one_hom act]
+    rfl
+  have hbo_N : X.basicOpen N =
+      Finset.univ.inf fun g : G => (act g).hom ⁻¹ᵁ X.basicOpen s := by
+    rw [hN, basicOpen_finset_prod ⟨1, Finset.mem_univ 1⟩,
+      Finset.inf_congr rfl fun g _ => hbo_t g]
+    refine le_antisymm
+      (Finset.le_inf fun g _ => (Finset.inf_le (Finset.mem_univ g)).trans inf_le_right)
+      (Finset.le_inf fun g _ => le_inf (le_trans ?_ hs_le)
+        (Finset.inf_le (Finset.mem_univ g)))
+    exact le_of_le_of_eq (Finset.inf_le (Finset.mem_univ 1)) hP1
+  have hNs : X.basicOpen N ≤ X.basicOpen s := by
+    rw [hbo_N]
+    exact le_of_le_of_eq (Finset.inf_le (Finset.mem_univ 1)) hP1
+  refine ⟨X.basicOpen N, ?_, ?_, ?_⟩
+  · have heq : X.basicOpen (X.presheaf.map (homOfLE hs_le).op N) =
+        X.basicOpen N := by
+      rw [Scheme.basicOpen_res]
+      exact inf_eq_right.mpr hNs
+    rw [← heq]
+    exact (U.2.basicOpen s).basicOpen _
+  · rw [hbo_N, mem_finset_inf]
+    intro g _
+    change (act g).hom.base x ∈ X.basicOpen s
+    exact hs_mem g
+  · intro a
+    rw [hbo_N, preimage_finset_inf]
+    have hPa : ∀ g : G,
+        (act a).hom ⁻¹ᵁ ((act g).hom ⁻¹ᵁ X.basicOpen s) =
+          (act (g * a)).hom ⁻¹ᵁ X.basicOpen s := by
+      intro g
+      rw [act_mul_hom act]
+      rfl
+    rw [Finset.inf_congr rfl fun g _ => hPa g]
+    refine le_antisymm (Finset.le_inf fun d _ => ?_) (Finset.le_inf fun d _ => ?_)
+    · have hh := Finset.inf_le (s := Finset.univ)
+          (f := fun g : G => (act (g * a)).hom ⁻¹ᵁ X.basicOpen s)
+          (Finset.mem_univ (d * a⁻¹))
+      rwa [inv_mul_cancel_right] at hh
+    · exact Finset.inf_le (Finset.mem_univ (d * a))
+
+end StableGroupAction
 
 end MilneLib
