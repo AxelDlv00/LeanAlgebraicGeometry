@@ -1,1 +1,0 @@
-{"markdown": "Finalization check passed: no modified, staged, or untracked ledger paths remain under Hartshorne. Latest project commit is `edd78a10d1`.\n\nPost-commit changes are only Horizon task comments and regenerated hgraph state, which are intentionally outside the ledger. No unrelated concurrent changes were committed.\n", "recommendation": ""}

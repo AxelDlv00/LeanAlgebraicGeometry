@@ -1,0 +1,1 @@
+{"indicator": "sum of set_option heartbeat budgets", "options": ["maxHeartbeats", "synthInstance.maxHeartbeats", "maxRecDepth", "maxSynthPending"], "min_heartbeats": 1, "files": [], "projects": [{"project": "RefinedBrillNoetherTheoryHurwitzSpaces", "files": 0, "heartbeats": 0, "hits": 0}], "total_files": 0, "total_heartbeats": 0, "total_hits": 0}
