@@ -2,9 +2,11 @@ id: Milne
 title: Milne Abelian Varieties formalization
 projects:
 - Milne
-summary: Source-faithful Milne frontier. The affine finite-group invariant-quotient
-  producer is verified; global finite quotients, symmetric powers, descent, and the
-  abelian-variety geometry remain downstream milestones.
+summary: Source-faithful Milne frontier. The affine invariant quotient core, finite
+  affine refinements, stable affine neighborhoods under the orbit-in-affine hypothesis,
+  the Spec(k)-slice bridge, invariant chart preimage identities, and the relative-product
+  permutation Aut action are verified producers. Global finite quotients, symmetric
+  powers, descent, and the remaining abelian-variety geometry remain downstream milestones.
 status: active
 kind: proof
 priority: high
@@ -29,3 +31,7 @@ metadata:
     projects: Milne
   owner: fs-milne
   milestone: Milne
+  updated_at: '2026-09-03T06:50:27.245790+00:00'
+  pinned_commits:
+  - 45b8798b44
+  - 5df4ddadf4
