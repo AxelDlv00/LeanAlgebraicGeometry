@@ -2,10 +2,10 @@ id: Milne.symmetric-power
 title: Symmetric-power quotient and factorization
 projects:
 - Milne
-summary: Pending source node prop:milne-symmetric-power. Bridge the relative product's
-  permutation Aut action to affine invariant charts, prove orbit-in-affine for the
-  curve, and glue overlap transitions before exposing the Scheme universal property;
-  do not infer existence from the existing conditional SymmetricPowerData interface.
+summary: Pending source node prop:milne-symmetric-power. Instantiate the generic stable-affine-neighborhood
+  theorem with the relative product permutation Aut action after proving the curve's
+  orbit-in-affine hypothesis, then consume affine invariant charts and overlap gluing;
+  do not infer existence or separability from the conditional SymmetricPowerData interface.
 status: pending
 kind: proof
 priority: high
@@ -32,3 +32,4 @@ metadata:
   parent: Milne
   owner: fs-milne
   milestone: Milne
+  updated_at: '2026-09-03T06:15:55.510554+00:00'

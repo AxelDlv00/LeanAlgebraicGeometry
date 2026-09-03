@@ -2,10 +2,12 @@ id: Milne.finite-quotient
 title: Global finite quotient by gluing affine charts
 projects:
 - Milne
-summary: Pending source node prop:milne-finite-quotient. Consume the affine invariant-ring
-  charts, then supply stable affine covers, invariant overlap/localization maps, Scheme.GlueData
-  cocycles, and the arbitrary-target universal property; keep separability and free-action
-  etale clauses separate.
+summary: Pending source node prop:milne-finite-quotient. The exact orbit-in-affine
+  hypothesis now yields stable affine neighborhoods, and affine invariant quotient
+  charts, base-compatible factorization, and invariant basic-open preimages are proved.
+  Next construct overlap localization isomorphisms and Scheme.GlueData cocycles, then
+  the arbitrary-target universal property and sheaf identification; keep free-action
+  etaleness separate.
 status: pending
 kind: proof
 priority: high
@@ -32,3 +34,4 @@ metadata:
   parent: Milne
   owner: fs-milne
   milestone: Milne
+  updated_at: '2026-09-03T06:14:29.448870+00:00'
