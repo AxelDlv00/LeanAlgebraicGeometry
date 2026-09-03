@@ -34,9 +34,9 @@ measures how much of it is free.
   `pullbackTensorMap_isIso_of_right_unit`. The first factor is arbitrary. The
   transfer uses the unconditional naturality square `pullbackTensorMap_natural`.
 
-* `pullbackTensorMap_isIso_of_right_locallyTrivial` — the assembly: from the
-  displayed trivialisation `Q ≅ 𝒪_X` alone, invertibility at `P ⊗ Q` for
-  arbitrary `P`, with no hidden class or additional hypothesis.
+* `pullbackTensorMap_isIso_of_right_locallyTrivial` — the chart-local assembly:
+  a locally trivial second factor suffices, while the first factor remains
+  arbitrary.
 
 ## The honest accounting
 
@@ -74,6 +74,19 @@ open CategoryTheory
 namespace AlgebraicGeometry
 
 namespace Scheme.Modules
+
+/-- Extract the middle morphism of an isomorphic four-fold composite when the
+other three morphisms are isomorphisms. -/
+private lemma isIso_of_isIso_comp4_mid {C : Type*} [Category C]
+    {W X Y Z T : C} {a : W ⟶ X} {b : X ⟶ Y} {c : Y ⟶ Z} {d : Z ⟶ T}
+    (h : IsIso (a ≫ b ≫ c ≫ d)) (ha : IsIso a) (hc : IsIso c) (hd : IsIso d) :
+    IsIso b := by
+  haveI := h
+  haveI := ha
+  haveI := hc
+  haveI := hd
+  haveI : IsIso (b ≫ c ≫ d) := IsIso.of_isIso_comp_left a (b ≫ c ≫ d)
+  exact IsIso.of_isIso_comp_right b (c ≫ d)
 
 /-- **One-sided transfer along an isomorphism of the second factor.**
 
@@ -173,32 +186,74 @@ noncomputable def pullbackTensorIsoOfTwist {X Y : Scheme.{u}} (f : Y ⟶ X)
   @asIso _ _ _ _ (pullbackTensorMap f P L)
     (pullbackTensorMap_isIso_of_right_iso_unit f P L eL)
 
-/-- **The one-sided comparison, assembled**: for a locally trivial second factor
-`Q` and an **arbitrary** first factor `P`, the comparison
-`f^*(P ⊗ Q) ⟶ f^*P ⊗ f^*Q` is an isomorphism with no hypothesis on `P`.
+/-- On a chart where the second factor is trivial, the restriction of the
+one-sided pullback--tensor comparison is an isomorphism. -/
+private lemma pullbackTensorMap_right_chart_isIso {X Y U V : Scheme.{u}}
+    (f : Y ⟶ X) (P Q : X.Modules) (j : U ⟶ X) (j' : V ⟶ Y) (g : V ⟶ U)
+    [IsOpenImmersion j] [IsOpenImmersion j'] (hcomp : j' ≫ f = g ≫ j)
+    (eQ : (Scheme.Modules.pullback j).obj Q ≅
+      SheafOfModules.unit U.ringCatSheaf) :
+    IsIso ((Scheme.Modules.restrictFunctor j').map (pullbackTensorMap f P Q)) := by
+  refine (CategoryTheory.NatIso.isIso_map_iff
+    (Scheme.Modules.restrictFunctorIsoPullback j') (pullbackTensorMap f P Q)).mpr ?_
+  have hcompiso : IsIso (pullbackTensorMap (j' ≫ f) P Q) := by
+    rw [hcomp, pullbackTensorMap_restrict g j P Q]
+    haveI hj : IsIso (pullbackTensorMap j P Q) :=
+      pullbackTensorMap_isIso_of_isOpenImmersion j P Q
+    have hb : IsIso ((Scheme.Modules.pullback g).map (pullbackTensorMap j P Q)) :=
+      Functor.map_isIso _ _
+    have hc : IsIso (pullbackTensorMap g ((Scheme.Modules.pullback j).obj P)
+        ((Scheme.Modules.pullback j).obj Q)) :=
+      pullbackTensorMap_isIso_of_right_iso_unit g _ _ eQ
+    have ha : IsIso ((Scheme.Modules.pullbackComp g j).inv.app (tensorObj P Q)) := by
+      infer_instance
+    have hd : IsIso (tensorObjIsoOfIso ((Scheme.Modules.pullbackComp g j).app P)
+        ((Scheme.Modules.pullbackComp g j).app Q)).hom :=
+      (tensorObjIsoOfIso ((Scheme.Modules.pullbackComp g j).app P)
+        ((Scheme.Modules.pullbackComp g j).app Q)).isIso_hom
+    exact IsIso.comp_isIso' ha (IsIso.comp_isIso' hb (IsIso.comp_isIso' hc hd))
+  rw [pullbackTensorMap_restrict j' f P Q] at hcompiso
+  haveI : IsIso (pullbackTensorMap j' ((Scheme.Modules.pullback f).obj P)
+      ((Scheme.Modules.pullback f).obj Q)) :=
+    pullbackTensorMap_isIso_of_isOpenImmersion j' _ _
+  haveI hinv : IsIso ((Scheme.Modules.pullbackComp j' f).inv.app (tensorObj P Q)) := by
+    infer_instance
+  exact isIso_of_isIso_comp4_mid hcompiso hinv inferInstance inferInstance
 
-Local triviality of `Q` is used only pointwise, to produce a trivialisation over
-a neighbourhood of each point; the transfer itself is
-`pullbackTensorMap_isIso_of_right_iso_unit`, whose only input beyond `f`, `P`, and
-`Q` is `Q ≅ 𝒪` globally. The
-statement is therefore given at a *globally* trivialisable `Q`, which is the
-shape a twist by `L^{⊗m}` presents after restriction to a trivialising chart —
-D2' consumes it chart-locally and globalises with `isIso_of_isIso_restrict`, the
-same assembly `pullbackTensorIsoOfLocallyTrivial` uses. -/
+/-- **The one-sided pullback--tensor comparison.** If the second factor is
+locally trivial and the first factor is arbitrary, then the specific comparison
+`f^*(P ⊗ Q) ⟶ f^*P ⊗ f^*Q` is an isomorphism. -/
 theorem pullbackTensorMap_isIso_of_right_locallyTrivial {X Y : Scheme.{u}} (f : Y ⟶ X)
-    (P Q : X.Modules) (eQ : Q ≅ SheafOfModules.unit X.ringCatSheaf) :
-    IsIso (pullbackTensorMap f P Q) :=
-  pullbackTensorMap_isIso_of_right_iso_unit f P Q eQ
+    (P Q : X.Modules) (hQ : LineBundle.IsLocallyTrivial Q) :
+    IsIso (pullbackTensorMap f P Q) := by
+  have key : ∀ y : Y, ∃ V : Y.Opens, y ∈ V ∧
+      IsIso ((Scheme.Modules.restrictFunctor V.ι).map (pullbackTensorMap f P Q)) := by
+    intro y
+    obtain ⟨U, hxU, _, ⟨eQ0⟩⟩ := hQ (f.base y)
+    have hyU : y ∈ f ⁻¹ᵁ U := hxU
+    obtain ⟨V, _, hyV, hVU⟩ :=
+      exists_isAffineOpen_mem_and_subset (X := Y) (x := y) hyU
+    have eQ : (Scheme.Modules.pullback U.ι).obj Q ≅
+        SheafOfModules.unit (U : Scheme).ringCatSheaf :=
+      (Scheme.Modules.restrictFunctorIsoPullback U.ι).symm.app Q ≪≫ eQ0
+    set g : (V : Scheme) ⟶ (U : Scheme) := f.resLE U V hVU with hg_def
+    have hcomp : V.ι ≫ f = g ≫ U.ι := (Scheme.Hom.resLE_comp_ι f hVU).symm
+    exact ⟨V, hyV, pullbackTensorMap_right_chart_isIso
+      f P Q U.ι V.ι g hcomp eQ⟩
+  exact isIso_of_isIso_restrict (pullbackTensorMap f P Q)
+    (fun y => (key y).choose)
+    (fun y => (key y).choose_spec.1)
+    (fun y => (key y).choose_spec.2)
 
 /-- The `Iso` packaging of `pullbackTensorMap_isIso_of_right_locallyTrivial`,
 for consumers that want `f^*(P ⊗ Q) ≅ f^*P ⊗ f^*Q` as data. Its hom is
 definitionally the specific comparison map. -/
 noncomputable def pullbackTensorIsoOfRightLocallyTrivial {X Y : Scheme.{u}} (f : Y ⟶ X)
-    (P Q : X.Modules) (eQ : Q ≅ SheafOfModules.unit X.ringCatSheaf) :
+    (P Q : X.Modules) (hQ : LineBundle.IsLocallyTrivial Q) :
     (Scheme.Modules.pullback f).obj (tensorObj P Q) ≅
       tensorObj ((Scheme.Modules.pullback f).obj P) ((Scheme.Modules.pullback f).obj Q) :=
   @asIso _ _ _ _ (pullbackTensorMap f P Q)
-    (pullbackTensorMap_isIso_of_right_locallyTrivial f P Q eQ)
+    (pullbackTensorMap_isIso_of_right_locallyTrivial f P Q hQ)
 
 end Scheme.Modules
 
