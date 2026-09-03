@@ -110,6 +110,27 @@ theorem IsMIntegralCurve.mul_left_mulInvariantVectorField
     exact mfderiv_mul_left_mulInvariantVectorField g (γ t) v
   simpa only [Function.comp_def] using hcomp.congr_mfderiv hderiv
 
+omit [LieGroup I (minSmoothness ℝ 3) G] in
+set_option backward.isDefEq.respectTransparency false in
+/-- A smooth map preserving a left-invariant vector field transports its
+global integral curves. -/
+theorem IsMIntegralCurve.comp_of_mfderiv
+    {v : GroupLieAlgebra I G} {γ : ℝ → G} {f : G → G}
+    (hγ : IsMIntegralCurve γ (mulInvariantVectorField v))
+    (hf : ContMDiff I I (minSmoothness ℝ 3) f)
+    (hderiv : ∀ t : ℝ,
+      (mfderiv I I f (γ t)).comp
+          ((1 : ℝ →L[ℝ] ℝ).smulRight (mulInvariantVectorField v (γ t))) =
+        (1 : ℝ →L[ℝ] ℝ).smulRight (mulInvariantVectorField v (f (γ t)))) :
+    IsMIntegralCurve (f ∘ γ) (mulInvariantVectorField v) := by
+  intro t
+  have M : minSmoothness ℝ 3 ≠ 0 :=
+    lt_of_lt_of_le (by simp) le_minSmoothness |>.ne'
+  have hf' : HasMFDerivAt I I f (γ t) (mfderiv I I f (γ t)) :=
+    (hf.contMDiffAt.mdifferentiableAt M).hasMFDerivAt
+  have hcomp := HasMFDerivAt.comp (x := t) hf' (hγ t)
+  simpa only [Function.comp_def] using hcomp.congr_mfderiv (hderiv t)
+
 set_option backward.isDefEq.respectTransparency false in
 /-- Every left-invariant vector field on a real Lie group has a global integral
 curve through the identity. The common local existence time is transported to
@@ -159,6 +180,82 @@ theorem IsMIntegralCurve.map_add_eq_mul
       (by simp only [comp_apply, zero_add, hγ0, mul_one])
   have ht := congrFun heq t
   simpa only [comp_apply, add_comm] using ht
+
+set_option backward.isDefEq.respectTransparency false in
+/-- Global integral curves of a left-invariant vector field are determined by
+their value at one time. -/
+theorem isMIntegralCurve_eq_of_eq_at
+    [T2Space G] [I.Boundaryless]
+    {v : GroupLieAlgebra I G} {γ γ' : ℝ → G}
+    (hγ : IsMIntegralCurve γ (mulInvariantVectorField v))
+    (hγ' : IsMIntegralCurve γ' (mulInvariantVectorField v))
+    (t₀ : ℝ) (h : γ t₀ = γ' t₀) :
+    γ = γ' := by
+  have hv : CMDiff 1
+      (fun x : G => (mulInvariantVectorField v x : TangentBundle I G)) :=
+    (contMDiff_mulInvariantVectorField v).of_le
+      (one_le_two.trans le_minSmoothness)
+  exact isMIntegralCurve_Ioo_eq_of_contMDiff_boundaryless hv hγ hγ' h
+
+set_option backward.isDefEq.respectTransparency false in
+/-- A one-parameter subgroup evaluated at opposite times gives the group
+inverse. -/
+theorem IsMIntegralCurve.map_neg_eq_inv
+    [T2Space G] [I.Boundaryless]
+    {v : GroupLieAlgebra I G} {γ : ℝ → G}
+    (hγ : IsMIntegralCurve γ (mulInvariantVectorField v))
+    (hγ0 : γ 0 = 1) (t : ℝ) :
+    γ (-t) = (γ t)⁻¹ := by
+  have h := IsMIntegralCurve.map_add_eq_mul (I := I) hγ hγ0 (-t) t
+  rw [neg_add_cancel, hγ0] at h
+  exact eq_inv_of_mul_eq_one_left h.symm
+
+set_option backward.isDefEq.respectTransparency false in
+/-- Values of one global left-invariant flow commute with one another. -/
+theorem IsMIntegralCurve.map_commute
+    [T2Space G] [I.Boundaryless]
+    {v : GroupLieAlgebra I G} {γ : ℝ → G}
+    (hγ : IsMIntegralCurve γ (mulInvariantVectorField v))
+    (hγ0 : γ 0 = 1) (s t : ℝ) :
+    Commute (γ s) (γ t) := by
+  rw [Commute]
+  calc
+    γ s * γ t = γ (s + t) :=
+      (IsMIntegralCurve.map_add_eq_mul (I := I) hγ hγ0 s t).symm
+    _ = γ (t + s) := by rw [add_comm]
+    _ = γ t * γ s := IsMIntegralCurve.map_add_eq_mul (I := I) hγ hγ0 t s
+
+omit [LieGroup I (minSmoothness ℝ 3) G] in
+set_option backward.isDefEq.respectTransparency false in
+/-- Reparameterizing a left-invariant flow by a scalar integrates the scaled
+Lie-algebra vector. -/
+theorem IsMIntegralCurve.comp_mul_mulInvariantVectorField
+    [T2Space G] [I.Boundaryless]
+    {v : GroupLieAlgebra I G} {γ : ℝ → G}
+    (hγ : IsMIntegralCurve γ (mulInvariantVectorField v)) (c : ℝ) :
+    IsMIntegralCurve (fun t => γ (t * c))
+      (mulInvariantVectorField (c • v)) := by
+  simpa only [Function.comp_def, mulInvariantVectorField_smul] using hγ.comp_mul c
+
+set_option backward.isDefEq.respectTransparency false in
+/-- Scalar-time compatibility is independent of the chosen global integral
+curve through the identity. -/
+theorem oneParameterSubgroup_smul_eq
+    [T2Space G] [I.Boundaryless]
+    {v : GroupLieAlgebra I G} {γ δ : ℝ → G}
+    (hγ : IsMIntegralCurve γ (mulInvariantVectorField v))
+    (hγ0 : γ 0 = 1)
+    {c : ℝ}
+    (hδ : IsMIntegralCurve δ (mulInvariantVectorField (c • v)))
+    (hδ0 : δ 0 = 1) (t : ℝ) :
+    γ (t * c) = δ t := by
+  have hscaled :=
+    IsMIntegralCurve.comp_mul_mulInvariantVectorField (I := I) hγ c
+  have hscaled0 : (fun t : ℝ => γ (t * c)) 0 = 1 := by
+    simp only [zero_mul, hγ0]
+  have heq := isMIntegralCurve_eq_of_eq_at (I := I)
+    hscaled hδ 0 (hscaled0.trans hδ0.symm)
+  exact congrFun heq t
 
 set_option backward.isDefEq.respectTransparency false in
 /-- Every tangent vector of a real Lie group integrates to a global
