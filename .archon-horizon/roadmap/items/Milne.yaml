@@ -1,0 +1,31 @@
+id: Milne
+title: Milne Abelian Varieties formalization
+projects:
+- Milne
+summary: Source-faithful Milne frontier. The affine finite-group invariant-quotient
+  producer is verified; global finite quotients, symmetric powers, descent, and the
+  abelian-variety geometry remain downstream milestones.
+status: active
+kind: proof
+priority: high
+depends_on: []
+inbox_refs: []
+task_refs:
+- fs-milne
+scope:
+  projects:
+  - Milne
+metadata:
+  author: horizon
+  created_at: '2026-09-03T04:05:20.874253+00:00'
+  provenance:
+    run: 0209
+    session: 0012-horizon-fs-milne
+    role: horizon
+    round: '5'
+    rounds: '24'
+    task: fs-milne
+    task_title: Advance Milne Abelian Varieties formalization
+    projects: Milne
+  owner: fs-milne
+  milestone: Milne

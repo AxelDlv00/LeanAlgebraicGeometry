@@ -1,0 +1,33 @@
+id: Milne.descent
+title: Effective finite-group and Galois descent
+projects:
+- Milne
+summary: Pending source node prop:milne-descent-varieties. Build semilinear affine
+  descent, stable-cover sheaf/gluing data, and effective quasi-projective descent;
+  keep imported or conditional interfaces visibly distinct from proved producers.
+status: pending
+kind: proof
+priority: normal
+depends_on:
+- Milne.finite-quotient
+inbox_refs: []
+task_refs:
+- fs-milne
+scope:
+  projects:
+  - Milne
+metadata:
+  author: horizon
+  created_at: '2026-09-03T04:11:33.729723+00:00'
+  provenance:
+    run: 0209
+    session: 0012-horizon-fs-milne
+    role: horizon
+    round: '5'
+    rounds: '24'
+    task: fs-milne
+    task_title: Advance Milne Abelian Varieties formalization
+    projects: Milne
+  parent: Milne
+  owner: fs-milne
+  milestone: Milne

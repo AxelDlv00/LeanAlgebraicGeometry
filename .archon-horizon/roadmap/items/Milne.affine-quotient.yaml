@@ -1,0 +1,34 @@
+id: Milne.affine-quotient
+title: Affine finite-group invariant quotient
+projects:
+- Milne
+summary: 'Done in MilneLib/InvariantQuotient.lean: fixed-point integrality, finite
+  projection and finite-type carrier over a noetherian base, surjectivity, quotient
+  topology, orbit fibers, spectrum action, and unique factorization for invariant
+  affine maps. This is a producer, not the global finite-quotient theorem.'
+status: done
+kind: proof
+priority: high
+depends_on:
+- Milne
+inbox_refs: []
+task_refs:
+- fs-milne
+scope:
+  projects:
+  - Milne
+metadata:
+  author: horizon
+  created_at: '2026-09-03T04:08:19.255581+00:00'
+  provenance:
+    run: 0209
+    session: 0012-horizon-fs-milne
+    role: horizon
+    round: '5'
+    rounds: '24'
+    task: fs-milne
+    task_title: Advance Milne Abelian Varieties formalization
+    projects: Milne
+  parent: Milne
+  owner: fs-milne
+  milestone: Milne
