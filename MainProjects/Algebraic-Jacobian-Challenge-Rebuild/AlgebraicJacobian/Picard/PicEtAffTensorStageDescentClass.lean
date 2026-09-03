@@ -123,6 +123,77 @@ noncomputable def descentClassOfPushoutFaceEq
     relPicAlgMap_comp, relPicAlgMap_comp]
   exact congrArg (relPicAlgMap C eQk) hfaces
 
+set_option synthInstance.maxHeartbeats 100000 in
+-- The source and target overlap rings contain map-selected dependent tensor products.
+set_option maxHeartbeats 1600000 in
+set_option maxSynthPendingDepth 16 in
+/-- A finite-stage relative Picard class compatible with an ambient descent class gives
+an actual descent class on the lower base-changed cover.
+
+The maps `jA` and `jQ` are the carrier and overlap comparisons from the lower normalized
+tensor models to the ambient cover.  The two square hypotheses say that `jQ` intertwines
+the normalized lower faces with the actual ambient Cech faces. -/
+noncomputable def descentClassOfCompatibleAmbient
+    {k S R TS TK : Type u} [Field k]
+    [CommRing S] [CommRing R] [CommRing TS] [CommRing TK]
+    [Algebra k S] [Algebra k R] [Algebra k TS] [Algebra k TK]
+    [Algebra S TS] [Algebra R TS] [Algebra R TK]
+    [IsScalarTower k S TS] [IsScalarTower k R TS]
+    [Algebra.IsPushout k S R TS]
+    (C : Over (Spec (.of k))) (E : Algebra.EtaleCover R)
+    (qStage : relPic C (overSpec k (S ⊗[k] E.Carrier)))
+    (ξK : descentClasses C (E.baseChange TK))
+    (jA : S ⊗[k] E.Carrier →ₐ[k] (E.baseChange TK).Carrier)
+    (jQ :
+      let f : R →ₐ[k] E.Carrier :=
+        (Algebra.ofId R E.Carrier).restrictScalars k
+      S ⊗[k] Pic0FiniteStageTensorPushoutRing f f →ₐ[k]
+        (E.baseChange TK).Carrier ⊗[TK] (E.baseChange TK).Carrier)
+    (hjQ : Function.Injective (relPicAlgMap C jQ))
+    (map_eq : relPicAlgMap C jA qStage =
+      (ξK : relPic C (overSpec k (E.baseChange TK).Carrier)))
+    (faceLeft_eq :
+      let f : R →ₐ[k] E.Carrier :=
+        (Algebra.ofId R E.Carrier).restrictScalars k
+      let q₁ := finiteStageTensorPushoutFaceLeft f f
+      let q₁S : S ⊗[k] E.Carrier →ₐ[k]
+          S ⊗[k] Pic0FiniteStageTensorPushoutRing f f :=
+        (AlgebraicJacobian.scalarExtensionMapOfAlgHom
+          (R := k) (K := S) q₁).restrictScalars k
+      jQ.comp q₁S = (doubleInl (E.baseChange TK)).comp jA)
+    (faceRight_eq :
+      let f : R →ₐ[k] E.Carrier :=
+        (Algebra.ofId R E.Carrier).restrictScalars k
+      let q₂ := finiteStageTensorPushoutFaceRight f f
+      let q₂S : S ⊗[k] E.Carrier →ₐ[k]
+          S ⊗[k] Pic0FiniteStageTensorPushoutRing f f :=
+        (AlgebraicJacobian.scalarExtensionMapOfAlgHom
+          (R := k) (K := S) q₂).restrictScalars k
+      jQ.comp q₂S = (doubleInr (E.baseChange TK)).comp jA) :
+    descentClasses C (E.baseChange TS) := by
+  let f : R →ₐ[k] E.Carrier :=
+    (Algebra.ofId R E.Carrier).restrictScalars k
+  let Q := Pic0FiniteStageTensorPushoutRing f f
+  let q₁ : E.Carrier →ₐ[k] Q := finiteStageTensorPushoutFaceLeft f f
+  let q₂ : E.Carrier →ₐ[k] Q := finiteStageTensorPushoutFaceRight f f
+  let q₁S : S ⊗[k] E.Carrier →ₐ[k] S ⊗[k] Q :=
+    (AlgebraicJacobian.scalarExtensionMapOfAlgHom
+      (R := k) (K := S) q₁).restrictScalars k
+  let q₂S : S ⊗[k] E.Carrier →ₐ[k] S ⊗[k] Q :=
+    (AlgebraicJacobian.scalarExtensionMapOfAlgHom
+      (R := k) (K := S) q₂).restrictScalars k
+  have hξK :
+      relPicAlgMap C (doubleInl (E.baseChange TK))
+          (ξK : relPic C (overSpec k (E.baseChange TK).Carrier)) =
+        relPicAlgMap C (doubleInr (E.baseChange TK))
+          (ξK : relPic C (overSpec k (E.baseChange TK).Carrier)) :=
+    (mem_descentClasses_iff (C := C)).mp ξK.2
+  have hfaces : relPicAlgMap C q₁S qStage = relPicAlgMap C q₂S qStage :=
+    relPic_pair_eq_of_compatible C qStage ξK jA jQ q₁S q₂S
+      (doubleInl (E.baseChange TK)) (doubleInr (E.baseChange TK))
+      hjQ map_eq faceLeft_eq faceRight_eq hξK
+  exact descentClassOfPushoutFaceEq C E qStage hfaces
+
 end
 
 end AlgebraicGeometry
