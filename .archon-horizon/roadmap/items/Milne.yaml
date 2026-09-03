@@ -2,14 +2,13 @@ id: Milne
 title: Milne Abelian Varieties formalization
 projects:
 - Milne
-summary: Source-faithful Milne frontier. The affine invariant quotient core, stable
-  affine neighborhoods under the exact orbit-in-affine hypothesis, characteristic-free
-  finite-group localization of invariants, invariant basic-open identification, and
-  restricted quotient-map compatibility are verified producers. Affine relative-power/orbit
-  producers, functorial quotient-chart overlap transitions, invariant localization
-  laws, and fixed-localized section-ring transition compatibility are now landed.
-  Global finite quotients, symmetric powers, descent, and the remaining abelian-variety
-  geometry remain downstream milestones.
+summary: Source-faithful Milne frontier. The affine finite-group quotient core, stable
+  affine neighborhoods, characteristic-free invariant localization, descended stable
+  opens, and finite-cover reconstruction data are verified. This round adds fixed-localization
+  cocycle laws, geometric basic-chart transition squares, actual structure-sheaf localization
+  equivalences with restriction naturality, and identification of the affine quotient
+  map on local sections with fixed-subring inclusion. Global finite quotients, symmetric
+  powers, descent, and the remaining abelian-variety geometry remain downstream milestones.
 status: active
 kind: proof
 priority: high
@@ -34,7 +33,7 @@ metadata:
     projects: Milne
   owner: fs-milne
   milestone: Milne
-  updated_at: '2026-09-03T20:22:11.078556+00:00'
+  updated_at: '2026-09-03T23:13:59.876906+00:00'
   pinned_commits:
   - b897c8243ac044161d37e820e63dfac598e5d4de
   - b599860a2123ee2a3791f0cd1378d1cca27f1b7b

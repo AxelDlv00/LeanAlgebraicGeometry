@@ -4,12 +4,11 @@ projects:
 - Milne
 summary: 'Pending source node prop:milne-symmetric-power. Relative-power permutation
   maps form a composition-verified Aut-valued S_n action; affine relative-power/orbit
-  producers, stable chart intersections, functorial quotient-chart transitions, and
-  invariant/fixed-localized section-ring transitions are reusable upstream inputs.
-  Remaining: a genuinely non-affine product-action orbit-in-affine premise, cross-chart
-  invariant section-sheaf identification, global quotient and arbitrary-target factorization,
-  and separability. SymmetricPowerData remains supplied conditional data, not an existence
-  claim.'
+  producers and the new basis-level quotient sheaf/localization comparisons are reusable
+  upstream inputs. Remaining: a genuinely non-affine product-action orbit-in-affine
+  premise, cross-chart quotient overlap isomorphisms and cocycle, the global quotient
+  and arbitrary-target factorization, and separability. SymmetricPowerData remains
+  supplied conditional data, not an existence claim.'
 status: pending
 kind: proof
 priority: high
@@ -36,4 +35,4 @@ metadata:
   parent: Milne
   owner: fs-milne
   milestone: Milne
-  updated_at: '2026-09-03T20:23:01.556346+00:00'
+  updated_at: '2026-09-03T23:14:01.242999+00:00'

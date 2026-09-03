@@ -2,13 +2,15 @@ id: Milne.finite-quotient
 title: Global finite quotient by gluing affine charts
 projects:
 - Milne
-summary: 'Pending source node prop:milne-finite-quotient. Stable opens descend through
-  the affine quotient with exact pullback; order/equality reflection, invariant basic-open
-  localization, binary lattice laws, a surjective restricted orbit-fiber map, and
-  finite-cover OpenCover/GlueData reconstruction are verified. Functorial quotient-chart
-  overlap transitions plus invariant and fixed-localized section-ring transition laws
-  are now landed. Remaining: genuine cross-chart section-sheaf identification and
-  cocycle/gluing, arbitrary-target universal property, and free-action etaleness.'
+summary: 'Pending source node prop:milne-finite-quotient. Stable quotient opens, order/equality
+  reflection, finite-cover reconstruction data, functorial chart transitions, and
+  localization cocycle laws are verified. Actual quotient and source structure-sheaf
+  sections on invariant basic opens are now identified with fixed/full localizations;
+  restriction naturality and the equation q.app D(b) = ((A[1/b])^G -> A[1/b]) hold
+  under these presentations. Remaining: compare quotient overlaps coming from different
+  affine coordinate rings, construct canonical transition isomorphisms and the triple
+  cocycle for genuine Scheme.GlueData, then prove the global topology/sheaf clauses,
+  arbitrary-target universal property, and free-action etaleness.'
 status: pending
 kind: proof
 priority: high
@@ -35,8 +37,12 @@ metadata:
   parent: Milne
   owner: fs-milne
   milestone: Milne
-  updated_at: '2026-09-03T20:22:43.057172+00:00'
+  updated_at: '2026-09-03T23:13:58.383207+00:00'
   pinned_commits:
+  - a73295519c
+  - 506c8e3c88
+  - 1c1312869f
+  - af9654478f
   - 5c80c93a7c
   - 27ac22b0f8
   - f7b180ade0
