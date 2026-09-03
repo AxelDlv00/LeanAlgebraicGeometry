@@ -19,7 +19,7 @@ namespace StacksPart01
 
 /-- Finiteness of a varying-base product map descends to every component. -/
 theorem finite_component_of_piMap
-    {ι : Type*} {R S : ι → Type*} [Finite ι]
+    {ι : Type*} {R S : ι → Type*}
     [∀ i, CommRing (R i)] [∀ i, CommRing (S i)]
     (f : ∀ i, R i →+* S i)
     (hf : (RingHom.piMap f).Finite) (i : ι) :
