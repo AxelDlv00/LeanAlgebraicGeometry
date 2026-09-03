@@ -2,12 +2,14 @@ id: Milne.symmetric-power
 title: Symmetric-power quotient and factorization
 projects:
 - Milne
-summary: Pending source node prop:milne-symmetric-power. The relative-power permutation
-  maps form a composition-verified Aut-valued S_n action, and invariant localization,
-  stable-open order reflection, and bounded affine-cover/glue packaging are reusable
-  upstream producers. Still prove the product-action orbit-in-affine premise, identify
-  invariant section rings on overlaps, construct the global quotient and factorization,
-  and prove separability; do not infer existence or separability from SymmetricPowerData.
+summary: 'Pending source node prop:milne-symmetric-power. Relative-power permutation
+  maps form a composition-verified Aut-valued S_n action; affine relative-power/orbit
+  producers, stable chart intersections, functorial quotient-chart transitions, and
+  invariant/fixed-localized section-ring transitions are reusable upstream inputs.
+  Remaining: a genuinely non-affine product-action orbit-in-affine premise, cross-chart
+  invariant section-sheaf identification, global quotient and arbitrary-target factorization,
+  and separability. SymmetricPowerData remains supplied conditional data, not an existence
+  claim.'
 status: pending
 kind: proof
 priority: high
@@ -34,4 +36,4 @@ metadata:
   parent: Milne
   owner: fs-milne
   milestone: Milne
-  updated_at: '2026-09-03T17:21:51.723791+00:00'
+  updated_at: '2026-09-03T20:23:01.556346+00:00'
