@@ -137,6 +137,43 @@ theorem quotientOpenOfStable_mono [Finite G]
   rintro x ⟨y, hy, rfl⟩
   exact ⟨y, hUV hy, rfl⟩
 
+/-- The descended open attached to the whole affine source is the whole invariant quotient. -/
+theorem quotientOpenOfStable_top [Finite G] :
+    quotientOpenOfStable (k := k) (A := A) (G := G) (⊤ : (Spec (CommRingCat.of A)).Opens)
+        (fun _ => by simp) = ⊤ := by
+  apply TopologicalSpace.Opens.ext
+  ext y
+  constructor
+  · intro
+    trivial
+  · intro
+    obtain ⟨x, rfl⟩ :=
+      affineInvariantQuotientMap_surjective (k := k) (A := A) (G := G) y
+    exact ⟨x, trivial, rfl⟩
+
+/-- Descended stable opens preserve binary unions, giving the finite-cover operation on the
+quotient side. -/
+theorem quotientOpenOfStable_sup [Finite G]
+    (U V : (Spec (CommRingCat.of A)).Opens)
+    (hU : ∀ g : G, (specAction G A g).hom ⁻¹ᵁ U = U)
+    (hV : ∀ g : G, (specAction G A g).hom ⁻¹ᵁ V = V) :
+    quotientOpenOfStable (k := k) (A := A) (G := G) (U ⊔ V)
+        (fun g => by rw [Scheme.Hom.preimage_sup, hU g, hV g]) =
+      quotientOpenOfStable (k := k) (A := A) (G := G) U hU ⊔
+        quotientOpenOfStable (k := k) (A := A) (G := G) V hV := by
+  ext x
+  constructor
+  · rintro ⟨y, hy, rfl⟩
+    rcases hy with hy | hy
+    · exact Or.inl ⟨y, hy, rfl⟩
+    · exact Or.inr ⟨y, hy, rfl⟩
+  · intro hx
+    rcases hx with hx | hx
+    · rcases hx with ⟨y, hy, hxy⟩
+      exact ⟨y, Or.inl hy, hxy⟩
+    · rcases hx with ⟨y, hy, hxy⟩
+      exact ⟨y, Or.inr hy, hxy⟩
+
 /-- Descending stable opens preserves pairwise intersections. -/
 theorem quotientOpenOfStable_inf [Finite G]
     (U V : (Spec (CommRingCat.of A)).Opens)
