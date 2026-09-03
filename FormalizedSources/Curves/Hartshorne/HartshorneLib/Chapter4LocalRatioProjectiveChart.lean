@@ -112,9 +112,38 @@ noncomputable def chartMap (r : LocalRatioRegularization a) :
     r.chartMap ≫ projectiveSpaceStructureMap k n = a.chart.U.ι ≫ X.hom := by
   exact r.projectiveMapData.map_over
 
-/- The corresponding preimage-of-basic-open statement is deliberately left
-  for the restriction/gluing phase: unfolding the generic `Proj` preimage
-  theorem here makes elaboration depend on the full glued-map implementation. -/
+/-- The preimage of each projective basic open is the corresponding basic open
+of the normalized section on the source chart. -/
+@[simp] theorem chartMap_preimage_basicOpen (r : LocalRatioRegularization a)
+    (j : Fin (n + 1)) :
+    r.chartMap ⁻¹ᵁ
+        Proj.basicOpen (MvPolynomial.homogeneousSubmodule (Fin (n + 1)) k)
+          (MvPolynomial.X j) =
+      a.chart.U.toScheme.basicOpen (r.chartSection j) := by
+  let f : MvPolynomial (Fin (n + 1)) k →+* Γ(a.chart.U, ⊤) :=
+    (MvPolynomial.aeval r.chartSection).toRingHom
+  have hf :
+      (HomogeneousIdeal.irrelevant
+        (MvPolynomial.homogeneousSubmodule (Fin (n + 1)) k)).toIdeal.map f = ⊤ := by
+    exact chartEval_irrelevant_span (a := a) r
+  change (Proj.fromOfGlobalSections
+      (MvPolynomial.homogeneousSubmodule (Fin (n + 1)) k)
+      f hf) ⁻¹ᵁ
+      Proj.basicOpen (MvPolynomial.homogeneousSubmodule (Fin (n + 1)) k)
+        (MvPolynomial.X j) = _
+  have hpre :
+      Proj.fromOfGlobalSections
+          (MvPolynomial.homogeneousSubmodule (Fin (n + 1)) k) f hf ⁻¹ᵁ
+        Proj.basicOpen (MvPolynomial.homogeneousSubmodule (Fin (n + 1)) k)
+          (MvPolynomial.X j) =
+      a.chart.U.toScheme.basicOpen (f (MvPolynomial.X j)) :=
+    Proj.fromOfGlobalSections_preimage_basicOpen
+      (𝒜 := MvPolynomial.homogeneousSubmodule (Fin (n + 1)) k)
+      (f := f) (hf := hf) (r := MvPolynomial.X j) (n := 1)
+      Nat.zero_lt_one
+      ((MvPolynomial.mem_homogeneousSubmodule _ _).mpr
+        (MvPolynomial.isHomogeneous_X k j))
+  simpa [f] using hpre
 
 end LocalRatioRegularization
 
