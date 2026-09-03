@@ -14,10 +14,11 @@ An honest regularization of divisor-section ratios on a nonempty open gives
 structure-sheaf sections on the corresponding open subscheme.  The selected
 denominator is normalized to `1`, so the irrelevant ideal condition required by
 `Proj.fromOfGlobalSections` follows internally.  This module constructs the
-resulting projective morphism over `Spec k`.  The preimage of each projective
-basic open is identified with the corresponding basic open in the chart.
-Compatibility between different denominator charts remains the separate
-restriction and gluing step.
+resulting projective morphism over `Spec k`.  The preimage of a projective
+basic open is reserved for the restriction phase, where it can be consumed
+alongside the corresponding chart restriction.  Compatibility between
+different denominator charts remains the separate restriction and gluing
+step.
 -/
 
 set_option autoImplicit false
