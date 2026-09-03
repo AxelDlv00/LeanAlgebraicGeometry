@@ -92,5 +92,37 @@ theorem invariantLocalizationTransition_refl
   simp only [RingHom.comp_apply, RingHom.id_apply,
     invariantLocalizationTransition_algebraMap]
 
+/-! ## Fixed localized section rings -/
+
+/-- Transport an invariant-localization transition through the canonical
+fixed-ring equivalences.  This is the ring map on sections of nested
+invariant basic quotient charts. -/
+noncomputable def fixedAwayTransition
+    [Finite G]
+    {b c : FixedPoints.subalgebra k A G}
+    (hcb : PrimeSpectrum.basicOpen c ≤ PrimeSpectrum.basicOpen b) :
+    fixedAway (b : A) b.property →+* fixedAway (c : A) c.property :=
+  (localizationAwayFixedRingEquiv c).toRingHom.comp
+    ((invariantLocalizationTransition (k := k) (A := A) (G := G) hcb).comp
+      (localizationAwayFixedRingEquiv b).symm.toRingHom)
+
+/-- The fixed-ring transition commutes with the invariant-subalgebra map.
+Thus the localization transition is compatible with the canonical section
+rings on both sides of a descended invariant basic-open inclusion. -/
+theorem fixedAwayTransition_comp_invariantToFixedAway
+    [Finite G]
+    {b c : FixedPoints.subalgebra k A G}
+    (hcb : PrimeSpectrum.basicOpen c ≤ PrimeSpectrum.basicOpen b) :
+    (fixedAwayTransition (k := k) (A := A) (G := G) hcb).comp
+        (invariantToFixedAway b) =
+      invariantToFixedAway c := by
+  apply RingHom.ext
+  intro a
+  dsimp [fixedAwayTransition]
+  rw [← localizationAwayFixedRingEquiv_algebraMap b a,
+    RingEquiv.symm_apply_apply,
+    invariantLocalizationTransition_algebraMap,
+    localizationAwayFixedRingEquiv_algebraMap c]
+
 end InvariantLocalization
 end MilneLib
