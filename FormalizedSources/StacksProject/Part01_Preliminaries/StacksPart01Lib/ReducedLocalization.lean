@@ -95,4 +95,31 @@ theorem iUnion_minimalPrimes_eq_compl_nonZeroDivisors
     not_forall, mul_comm]
   constructor <;> rintro ⟨y, h₁, h₂⟩ <;> exact ⟨y, h₂, h₁⟩
 
+/-- A reduced ring is a subring of the product of the fields obtained by
+localizing at its minimal primes; the canonical map is injective, and the
+minimal primes cover exactly the zero divisors (Stacks, Tag 00EW). -/
+@[stacks 00EW]
+theorem reduced_ring_sub_product_fields (R : Type*) [CommRing R] [IsReduced R] :
+    (∀ p : {p : PrimeSpectrum R // IsMin p},
+      IsField (Localization.AtPrime p.1.asIdeal)) ∧
+    (∃ S : Subring
+        (∀ p : {p : PrimeSpectrum R // IsMin p},
+          Localization.AtPrime p.1.asIdeal),
+      Nonempty (R ≃+* S)) ∧
+    Function.Injective
+      (RingHom.pi fun p : {p : PrimeSpectrum R // IsMin p} =>
+        algebraMap R (Localization.AtPrime p.1.asIdeal)) ∧
+    ⋃ p ∈ minimalPrimes R, (p : Set R) =
+      (nonZeroDivisors R : Set R)ᶜ := by
+  let f : R →+*
+      (∀ p : {p : PrimeSpectrum R // IsMin p},
+        Localization.AtPrime p.1.asIdeal) :=
+    RingHom.pi fun p => algebraMap R (Localization.AtPrime p.1.asIdeal)
+  have hf : Function.Injective f :=
+    reduced_algebraMap_pi_localizationAt_minimalPrime_injective R
+  refine ⟨fun p => localizationAt_minimalPrime_isField p.1 p.2, ?_, hf,
+    iUnion_minimalPrimes_eq_compl_nonZeroDivisors⟩
+  refine ⟨f.range, ⟨RingEquiv.ofBijective f.rangeRestrict ?_⟩⟩
+  exact ⟨RingHom.injective_codRestrict.mpr hf, f.rangeRestrict_surjective⟩
+
 end StacksPart01
