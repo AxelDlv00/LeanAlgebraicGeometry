@@ -151,3 +151,5 @@
 {"at": "2026-09-03T04:11:56.932704+00:00", "actor": "horizon", "field": "edited", "from": "", "to": "", "note": "roadmap_refs updated", "provenance": {"run": "0209", "session": "0012-horizon-fs-milne", "role": "horizon", "round": "5", "rounds": "24", "task": "fs-milne", "task_title": "Advance Milne Abelian Varieties formalization", "projects": "Milne"}}
 {"at": "2026-09-03T04:28:18.810454+00:00", "actor": "system", "field": "status", "from": "running", "to": "queued", "note": "Horizon session ended without the agent recording a terminal status; returned to queued"}
 {"at": "2026-09-03T04:29:14.331767+00:00", "actor": "system", "field": "status", "from": "queued", "to": "running", "note": "started by Horizon run"}
+{"at": "2026-09-03T07:02:27.500154+00:00", "actor": "system", "field": "status", "from": "running", "to": "queued", "note": "Horizon session ended without the agent recording a terminal status; returned to queued"}
+{"at": "2026-09-03T07:03:22.827492+00:00", "actor": "system", "field": "status", "from": "queued", "to": "running", "note": "started by Horizon run"}
