@@ -11,6 +11,8 @@ import AlgebraicJacobian.Picard.QuotFlatBaseChange
 import AlgebraicJacobian.Picard.QuotSupportBaseChange
 import AlgebraicJacobian.Picard.SchematicSupport
 import AlgebraicJacobian.Picard.TensorObjSubstrate
+import AlgebraicJacobian.Picard.AffineOpenStalkLocalization
+import AlgebraicJacobian.Picard.FlatKernelBase
 
 /-!
 # The Quot functor and the relative Grassmannian functor
@@ -707,12 +709,31 @@ theorem gammaFiber_finrank_baseChange_field (π : X ⟶ S) (L : X.Modules)
       = hilbertFunction (pullback.snd π T.hom)
           ((Scheme.Modules.pullback (pullback.fst π T.hom)).obj L) F
           (ψ.left.base t') m := by
-  refine gammaFiber_finrank_baseChange_field_of_quasicoherent π L ψ F hfp hps t' m ?_
-  -- Remaining obligation (`lem:gamma_fiber_baseChange_field`): quasi-coherence
-  -- of the sheafified tensor of quasi-coherent modules (Stacks 01CB), i.e. the
-  -- affine tensor-section formula for `sheafTensorObj` of
-  -- `Picard/TensorSectionFormula.lean`.
-  sorry
+  have hFqc : ((pullback.snd π T.hom).fiberModule (ψ.left.base t') F).IsQuasicoherent :=
+    pullback_isQuasicoherent_hom _ F (by
+      letI := hfp
+      infer_instance)
+  have hLqc : ((pullback.snd π T.hom).fiberModule (ψ.left.base t')
+      ((Scheme.Modules.pullback (pullback.fst π T.hom)).obj L)).IsQuasicoherent :=
+    pullback_isQuasicoherent_hom _ _
+      (pullback_isQuasicoherent_hom _ L inferInstance)
+  let Fₜ := (pullback.snd π T.hom).fiberModule (ψ.left.base t') F
+  let Lₜ := (pullback.snd π T.hom).fiberModule (ψ.left.base t')
+      ((Scheme.Modules.pullback (pullback.fst π T.hom)).obj L)
+  have hpow : ∀ n : ℕ, (Modules.tensorPow Lₜ n).IsQuasicoherent := by
+    intro n
+    induction n with
+    | zero =>
+        exact Modules.unit_isQuasicoherent _
+    | succ n ih =>
+        dsimp [Modules.tensorPow]
+        letI : (Modules.tensorPow Lₜ n).IsQuasicoherent := ih
+        exact Modules.tensorObj_isQuasicoherent _ _
+  have hGqc : (Scheme.Modules.moduleTensorPow Fₜ Lₜ m).IsQuasicoherent := by
+    dsimp [Modules.moduleTensorPow]
+    letI : (Modules.tensorPow Lₜ m).IsQuasicoherent := hpow m
+    exact Modules.tensorObj_isQuasicoherent _ _
+  exact gammaFiber_finrank_baseChange_field_of_quasicoherent π L ψ F hfp hps t' m hGqc
 
 end HilbertFunctionBaseChange
 
