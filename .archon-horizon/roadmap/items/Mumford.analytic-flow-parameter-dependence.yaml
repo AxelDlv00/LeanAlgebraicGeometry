@@ -2,10 +2,10 @@ id: Mumford.analytic-flow-parameter-dependence
 title: Joint complex exponential from real flows
 projects:
 - Mumford
-summary: 'Fixed-real-time tangent additivity is now proved: central product differentiation
-  and ODE uniqueness give canonicalRealFlow I (v + w) t = canonicalRealFlow I v t
-  * canonicalRealFlow I w t (ef59abc787). Still missing joint regularity in (t, v),
-  complex differentiability, d exp at zero, and the local-generation/source attachment.'
+summary: Finite-dimensional real joint parameter continuity is now proved for canonicalRealFlow,
+  together with derivative, initial-tangent, time-one scalar transport, and linear-combination
+  APIs (52b98f8eac). Complex differentiability, the complex exponential/d exp at zero,
+  local generation or surjectivity, and exact frozen-source attachment remain open.
 status: pending
 kind: proof
 priority: high
@@ -32,8 +32,9 @@ metadata:
     projects: Mumford
   parent: Mumford
   owner: fs-mumford
-  updated_at: '2026-09-03T17:22:46.840851+00:00'
+  updated_at: '2026-09-03T19:54:11.105187+00:00'
   pinned_commits:
+  - 52b98f8eac
   - ef59abc787
   - 7ea8bb89a6
   - b752c411e1
