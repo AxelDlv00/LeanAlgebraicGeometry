@@ -244,7 +244,7 @@ noncomputable def localizedModule_localizeTwiceEquiv
 
 @[simp]
 theorem localizedModule_localizeTwiceEquiv_comp
-    {M : Type*} [AddCommGroup M] [Module R M]
+    {M : Type*} [AddCommMonoid M] [Module R M]
     (S T : Submonoid R) :
     (localizedModule_localizeTwiceEquiv S T).toLinearMap.comp
         ((LocalizedModule.mkLinearMap S (LocalizedModule T M)).comp
