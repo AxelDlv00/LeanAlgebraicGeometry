@@ -60,6 +60,58 @@ theorem mfderiv_mul_left_mulInvariantVectorField
   exact h.symm
 
 set_option backward.isDefEq.respectTransparency false in
+/-- A smooth multiplicative map carries a left-invariant vector field according
+to its derivative at the identity. -/
+theorem mfderiv_map_mulInvariantVectorField
+    {f : G → G}
+    (hf : ContMDiff I I (minSmoothness ℝ 3) f)
+    (hf_one : f 1 = 1)
+    (hf_mul : ∀ x y : G, f (x * y) = f x * f y)
+    (v w : GroupLieAlgebra I G)
+    (hvw : mfderiv I I f 1 v = w) (x : G) :
+    mfderiv I I f x (mulInvariantVectorField v x) =
+      mulInvariantVectorField w (f x) := by
+  have M : minSmoothness ℝ 3 ≠ 0 :=
+    lt_of_lt_of_le (by simp) le_minSmoothness |>.ne'
+  have hLx : MDifferentiableAt I I (fun y : G => x * y) 1 :=
+    (contMDiffAt_mul_left
+      (n := minSmoothness ℝ 3)).mdifferentiableAt M
+  have hf_x1 : MDifferentiableAt I I f (x * 1) :=
+    hf.contMDiffAt.mdifferentiableAt M
+  have hf_1 : MDifferentiableAt I I f 1 :=
+    hf.contMDiffAt.mdifferentiableAt M
+  have hLfx : MDifferentiableAt I I (fun y : G => f x * y) (f 1) :=
+    (contMDiffAt_mul_left
+      (n := minSmoothness ℝ 3)).mdifferentiableAt M
+  have hleft := mfderiv_comp_apply (I' := I) (x := (1 : G))
+    (g := f) (f := fun y : G => x * y) hf_x1 hLx v
+  have hright := mfderiv_comp_apply (I' := I) (x := (1 : G))
+    (g := fun y : G => f x * y) (f := f) hLfx hf_1 v
+  rw [mul_one] at hleft
+  have hvw' :
+      mfderiv I I (fun y : G => f x * y) (f 1) (mfderiv I I f 1 v) =
+        mfderiv I I (fun y : G => f x * y) (f 1) w := by
+    with_reducible_and_instances
+      exact congrArg (mfderiv I I (fun y : G => f x * y) (f 1)) hvw
+  have hright' :
+      mfderiv I I ((fun y : G => f x * y) ∘ f) 1 v =
+        mfderiv I I (fun y : G => f x * y) 1 w := by
+    calc
+      _ = mfderiv I I (fun y : G => f x * y) (f 1)
+          (mfderiv I I f 1 v) := hright
+      _ = mfderiv I I (fun y : G => f x * y) (f 1) w := hvw'
+      _ = mfderiv I I (fun y : G => f x * y) 1 w := by rw [hf_one]
+  have hcomp :
+      f ∘ (fun y : G => x * y) =
+        (fun y : G => f x * y) ∘ f := by
+    funext y
+    exact hf_mul x y
+  rw [hcomp] at hleft
+  change mfderiv I I f x (mfderiv I I (fun y : G => x * y) 1 v) =
+      mfderiv I I (fun y : G => f x * y) 1 w
+  with_reducible_and_instances exact hleft.symm.trans hright'
+
+set_option backward.isDefEq.respectTransparency false in
 /-- Left translation preserves integral curves of a left-invariant vector
 field on the same time set. -/
 theorem IsMIntegralCurveOn.mul_left_mulInvariantVectorField
@@ -112,6 +164,27 @@ theorem IsMIntegralCurve.mul_left_mulInvariantVectorField
 
 omit [LieGroup I (minSmoothness ℝ 3) G] in
 set_option backward.isDefEq.respectTransparency false in
+/-- A smooth map carrying one left-invariant vector field to another transports
+global integral curves between the two fields. -/
+theorem IsMIntegralCurve.comp_of_mfderiv_to
+    {v w : GroupLieAlgebra I G} {γ : ℝ → G} {f : G → G}
+    (hγ : IsMIntegralCurve γ (mulInvariantVectorField v))
+    (hf : ContMDiff I I (minSmoothness ℝ 3) f)
+    (hderiv : ∀ t : ℝ,
+      (mfderiv I I f (γ t)).comp
+          ((1 : ℝ →L[ℝ] ℝ).smulRight (mulInvariantVectorField v (γ t))) =
+        (1 : ℝ →L[ℝ] ℝ).smulRight (mulInvariantVectorField w (f (γ t)))) :
+    IsMIntegralCurve (f ∘ γ) (mulInvariantVectorField w) := by
+  intro t
+  have M : minSmoothness ℝ 3 ≠ 0 :=
+    lt_of_lt_of_le (by simp) le_minSmoothness |>.ne'
+  have hf' : HasMFDerivAt I I f (γ t) (mfderiv I I f (γ t)) :=
+    (hf.contMDiffAt.mdifferentiableAt M).hasMFDerivAt
+  have hcomp := HasMFDerivAt.comp (x := t) hf' (hγ t)
+  simpa only [Function.comp_def] using hcomp.congr_mfderiv (hderiv t)
+
+omit [LieGroup I (minSmoothness ℝ 3) G] in
+set_option backward.isDefEq.respectTransparency false in
 /-- A smooth map preserving a left-invariant vector field transports its
 global integral curves. -/
 theorem IsMIntegralCurve.comp_of_mfderiv
@@ -122,14 +195,27 @@ theorem IsMIntegralCurve.comp_of_mfderiv
       (mfderiv I I f (γ t)).comp
           ((1 : ℝ →L[ℝ] ℝ).smulRight (mulInvariantVectorField v (γ t))) =
         (1 : ℝ →L[ℝ] ℝ).smulRight (mulInvariantVectorField v (f (γ t)))) :
-    IsMIntegralCurve (f ∘ γ) (mulInvariantVectorField v) := by
+    IsMIntegralCurve (f ∘ γ) (mulInvariantVectorField v) :=
+  IsMIntegralCurve.comp_of_mfderiv_to (I := I) hγ hf hderiv
+
+set_option backward.isDefEq.respectTransparency false in
+/-- A smooth multiplicative map transports a left-invariant integral curve
+according to its derivative at the identity. -/
+theorem IsMIntegralCurve.comp_of_map_mul
+    {v w : GroupLieAlgebra I G} {γ : ℝ → G} {f : G → G}
+    (hγ : IsMIntegralCurve γ (mulInvariantVectorField v))
+    (hf : ContMDiff I I (minSmoothness ℝ 3) f)
+    (hf_one : f 1 = 1)
+    (hf_mul : ∀ x y : G, f (x * y) = f x * f y)
+    (hvw : mfderiv I I f 1 v = w) :
+    IsMIntegralCurve (f ∘ γ) (mulInvariantVectorField w) := by
+  apply IsMIntegralCurve.comp_of_mfderiv_to (I := I) hγ hf
   intro t
-  have M : minSmoothness ℝ 3 ≠ 0 :=
-    lt_of_lt_of_le (by simp) le_minSmoothness |>.ne'
-  have hf' : HasMFDerivAt I I f (γ t) (mfderiv I I f (γ t)) :=
-    (hf.contMDiffAt.mdifferentiableAt M).hasMFDerivAt
-  have hcomp := HasMFDerivAt.comp (x := t) hf' (hγ t)
-  simpa only [Function.comp_def] using hcomp.congr_mfderiv (hderiv t)
+  apply ContinuousLinearMap.ext
+  intro c
+  simp only [ContinuousLinearMap.comp_apply, ContinuousLinearMap.smulRight_apply,
+    one_apply_eq_self, map_smul]
+  rw [mfderiv_map_mulInvariantVectorField hf hf_one hf_mul v w hvw]
 
 set_option backward.isDefEq.respectTransparency false in
 /-- Every left-invariant vector field on a real Lie group has a global integral
