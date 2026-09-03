@@ -2,15 +2,15 @@ id: Mumford
 title: Mumford Abelian Varieties formalization
 projects:
 - Mumford
-summary: 'Advance source-faithful Mumford formalization. Adjoint triviality and local-generation
-  consumers are proved conditionally. This session adds an arbitrary-full-lattice
-  exponential fibre criterion and bundled quotient ContinuousAddEquiv (3e246a903d),
-  a MulAut conjugation API bridge (74d390dc21; linter cleanup 1c9d1b707d), and a finite
-  abstract isotropic subgroup square-order bound (fe937e5c76). These interfaces do
-  not construct the missing analytic object: the first unmet producer remains a genuine
-  holomorphic Lie exponential or one-parameter integration theorem with conjugation
-  naturality and the inverse-function implication. Pivot next to that producer and
-  keep exact frozen-source attachments open.'
+summary: 'Advance source-faithful Mumford formalization. Adjoint triviality, the chart-level
+  inverse-function range consequence, and local-generation consumers are now proved
+  conditionally. This session also constructs global real one-parameter subgroups
+  and transfers complex manifold/Lie-group structure to the real model (fc086762ba,
+  9eeb6b7a84, e81a04a2c5, c092da8bc5), alongside the existing quotient and theta interfaces.
+  These are genuine real ODE and structure producers but do not construct the missing
+  jointly holomorphic complex exponential: parameter dependence, tangent/differential
+  identification, and conjugation naturality remain open. Keep exact frozen-source
+  attachments open.'
 status: active
 kind: proof
 priority: normal
@@ -33,8 +33,12 @@ metadata:
     task_title: Advance Mumford Abelian Varieties formalization
     projects: Mumford
   owner: fs-mumford
-  updated_at: '2026-09-02T23:28:51.636637+00:00'
+  updated_at: '2026-09-03T04:43:27.274798+00:00'
   pinned_commits:
+  - c092da8bc5
+  - e81a04a2c5
+  - 9eeb6b7a84
+  - fc086762ba
   - fe937e5c76
   - 1c9d1b707d
   - 74d390dc21
