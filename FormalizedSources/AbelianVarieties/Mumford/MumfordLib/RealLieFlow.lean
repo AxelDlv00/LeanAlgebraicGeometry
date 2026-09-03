@@ -75,14 +75,19 @@ theorem canonicalRealFlow_zero
       fun _ => (1 : G) := by
   have hzero := canonicalRealFlow_spec I
     (0 : GroupLieAlgebra (complexToRealModel I) G)
+  have hδ :
+      IsMIntegralCurve (canonicalRealFlow I
+        (0 : GroupLieAlgebra (complexToRealModel I) G))
+        (mulInvariantVectorField
+          ((0 : ℝ) • (0 : GroupLieAlgebra (complexToRealModel I) G))) := by
+    simpa only [zero_smul] using hzero.2.1
   have hscaled := oneParameterSubgroup_smul_eq
     (I := complexToRealModel I)
     (hγ := (canonicalRealFlow_spec I (0 : GroupLieAlgebra
       (complexToRealModel I) G)).2.1)
     (hγ0 := hzero.1)
     (c := (0 : ℝ))
-    (hδ := (canonicalRealFlow_spec I (0 : GroupLieAlgebra
-      (complexToRealModel I) G)).2.1)
+    (hδ := hδ)
     (hδ0 := hzero.1)
   funext t
   simpa only [zero_smul, mul_zero, hzero.1] using (hscaled t).symm
