@@ -56,6 +56,23 @@ theorem quotientOpenFamily_preimage (U : ι → (affineSpec (A := A)).Opens)
         quotientOpenFamily (k := k) (A := A) (G := G) U hU i = U i := by
   exact quotientOpenOfStable_preimage (k := k) (A := A) (G := G) (U i) (hU i)
 
+/-- Pointwise intersections of stable chart families descend to intersections of
+the corresponding quotient charts.  This packages the pairwise/triple overlap
+operation used when assembling a finite gluing datum. -/
+@[simp]
+theorem quotientOpenFamily_inf
+    (U V : ι → (affineSpec (A := A)).Opens)
+    (hU : ∀ (i : ι) (g : G), (specAction G A g).hom ⁻¹ᵁ U i = U i)
+    (hV : ∀ (i : ι) (g : G), (specAction G A g).hom ⁻¹ᵁ V i = V i) :
+    quotientOpenFamily (k := k) (A := A) (G := G)
+        (fun i => U i ⊓ V i)
+        (fun i g => by rw [Scheme.Hom.preimage_inf, hU i g, hV i g]) =
+      fun i => quotientOpenFamily (k := k) (A := A) (G := G) U hU i ⊓
+        quotientOpenFamily (k := k) (A := A) (G := G) V hV i := by
+  funext i
+  exact quotientOpenOfStable_inf (k := k) (A := A) (G := G)
+    (U i) (V i) (hU i) (hV i)
+
 /-- A covering family descends to a covering family on the affine invariant quotient. -/
 theorem iSup_quotientOpenFamily_eq_top (U : ι → (affineSpec (A := A)).Opens)
     (hU : ∀ (i : ι) (g : G), (specAction G A g).hom ⁻¹ᵁ U i = U i)
