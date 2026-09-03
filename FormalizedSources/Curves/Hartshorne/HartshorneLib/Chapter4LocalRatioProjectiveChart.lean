@@ -6,6 +6,7 @@ Authors: The Hartshorne Contributors
 
 import HartshorneLib.Chapter4LocalRatioRegularization
 import HartshorneLib.Chapter4ProjectiveMapProducer
+import HartshorneLib.Chapter4ProjectiveCoordinateAdapter
 
 /-!
 # Hartshorne IV.3.1: projective maps on denominator charts
@@ -83,15 +84,12 @@ theorem chartEval_irrelevant_span (r : LocalRatioRegularization a) :
     (HomogeneousIdeal.irrelevant
       (MvPolynomial.homogeneousSubmodule (Fin (n + 1)) k)).toIdeal.map
         r.chartEval = ⊤ := by
-  rw [Ideal.eq_top_iff_one]
-  have hX : MvPolynomial.X a.denominator_index ∈
-      HomogeneousIdeal.irrelevant
-        (MvPolynomial.homogeneousSubmodule (Fin (n + 1)) k) :=
-    HomogeneousIdeal.mem_irrelevant_of_mem _ one_pos
-      ((MvPolynomial.mem_homogeneousSubmodule _ _).mpr
-        (MvPolynomial.isHomogeneous_X k a.denominator_index))
-  simpa [chartEval_X, chartSection_denominator_eq_one] using
-    Ideal.mem_map_of_mem r.chartEval hX
+  change (HomogeneousIdeal.irrelevant
+      (MvPolynomial.homogeneousSubmodule (Fin (n + 1)) k)).toIdeal.map
+      (ProjectiveCoordinates.eval (k := k) r.chartSection) = ⊤
+  exact ProjectiveCoordinates.eval_irrelevant_span_of_normalized
+    (k := k) (B := Γ(a.chart.U, ⊤)) a.denominator_index r.chartSection
+    r.chartSection_denominator_eq_one
 
 /-! ### The local projective morphism -/
 
@@ -222,6 +220,73 @@ theorem overlap_chartMap_preimage_basicOpen_eq
     _ = _ := by
       rw [Scheme.Hom.image_preimage_eq_opensRange_inf,
         Scheme.Opens.opensRange_ι]
+
+/-! ### Overlap compatibility for the normalized open-source maps -/
+
+/-- The two normalized coordinate families define the same projective morphism
+after restriction to a chart overlap.  The transition factor is the restricted
+denominator section, whose invertibility is supplied by the local-ratio data. -/
+theorem overlap_fromOpen_eq
+    {b : LocalRatioCoordinateData D n}
+    (r : LocalRatioRegularization a) (s : LocalRatioRegularization b)
+    (h : a.SameSectionValues b) :
+    X.left.homOfLE
+          (show a.chart.U ⊓ b.chart.U ≤ a.chart.U from inf_le_left) ≫
+        ProjectiveCoordinates.fromOpen (k := k) (J := Fin (n + 1)) (Z := X.left)
+          a.chart.U
+          (X.left.overAlgebraMap k a.chart.U) a.denominator_index r.regularized
+          r.regularized_denominator_eq_one =
+      X.left.homOfLE
+          (show a.chart.U ⊓ b.chart.U ≤ b.chart.U from inf_le_right) ≫
+        ProjectiveCoordinates.fromOpen (k := k) (J := Fin (n + 1)) (Z := X.left)
+          b.chart.U
+          (X.left.overAlgebraMap k b.chart.U) b.denominator_index s.regularized
+          (by exact s.regularized_denominator_eq_one) := by
+  let W : X.left.Opens := a.chart.U ⊓ b.chart.U
+  let αW : k →+* Γ(X.left, W) := X.left.overAlgebraMap k W
+  have hleft := ProjectiveCoordinates.homOfLE_fromOpen (k := k)
+    (J := Fin (n + 1)) (Z := X.left) (U := a.chart.U) (V := W)
+    (X.left.overAlgebraMap k a.chart.U) αW inf_le_left
+    (X.left.overAlgebraMap_naturality k
+      (homOfLE (show W ≤ a.chart.U from inf_le_left)).op)
+    a.denominator_index r.regularized r.regularized_denominator_eq_one
+  have hright := ProjectiveCoordinates.homOfLE_fromOpen (k := k)
+    (J := Fin (n + 1)) (Z := X.left) (U := b.chart.U) (V := W)
+    (X.left.overAlgebraMap k b.chart.U) αW inf_le_right
+    (X.left.overAlgebraMap_naturality k
+      (homOfLE (show W ≤ b.chart.U from inf_le_right)).op)
+    b.denominator_index s.regularized s.regularized_denominator_eq_one
+  calc
+    X.left.homOfLE
+          (show a.chart.U ⊓ b.chart.U ≤ a.chart.U from inf_le_left) ≫
+        ProjectiveCoordinates.fromOpen (k := k) (J := Fin (n + 1)) (Z := X.left)
+          a.chart.U
+          (X.left.overAlgebraMap k a.chart.U) a.denominator_index r.regularized
+          r.regularized_denominator_eq_one =
+      ProjectiveCoordinates.fromOpen (k := k) (J := Fin (n + 1)) (Z := X.left)
+        W αW a.denominator_index
+        (fun j => (X.left.presheaf.map
+          (homOfLE (show W ≤ a.chart.U from inf_le_left)).op).hom
+            (r.regularized j))
+        (by rw [r.regularized_denominator_eq_one, map_one]) := hleft
+    _ = ProjectiveCoordinates.fromOpen (k := k) (J := Fin (n + 1)) (Z := X.left)
+        W αW b.denominator_index
+        (fun j => (X.left.presheaf.map
+          (homOfLE (show W ≤ b.chart.U from inf_le_right)).op).hom
+            (s.regularized j))
+        (by rw [s.regularized_denominator_eq_one, map_one]) := by
+      apply ProjectiveCoordinates.fromOpen_eq_of_unit_smul
+        (k := k) (J := Fin (n + 1)) W αW a.denominator_index b.denominator_index
+        _ _ _ _
+      · exact r.restricted_transition_isUnit s h
+      · intro j
+        exact r.restricted_regularized_eq_transition_mul s h j
+    _ = X.left.homOfLE
+          (show a.chart.U ⊓ b.chart.U ≤ b.chart.U from inf_le_right) ≫
+        ProjectiveCoordinates.fromOpen (k := k) (J := Fin (n + 1)) (Z := X.left)
+          b.chart.U
+          (X.left.overAlgebraMap k b.chart.U) b.denominator_index s.regularized
+          s.regularized_denominator_eq_one := hright.symm
 
 end LocalRatioRegularization
 
