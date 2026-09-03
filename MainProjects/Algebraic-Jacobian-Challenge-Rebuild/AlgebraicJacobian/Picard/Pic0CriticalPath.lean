@@ -52,6 +52,7 @@ import AlgebraicJacobian.Picard.PicEtFiniteStageCover
 import AlgebraicJacobian.Picard.PicEtTensorStageCover
 import AlgebraicJacobian.Picard.PicEtTensorStageCarrier
 import AlgebraicJacobian.Picard.PicEtPushoutCarrierOverlap
+import AlgebraicJacobian.Picard.PicEtAffTensorStageDescentClass
 import AlgebraicJacobian.Picard.PicEtAffTensorStage
 import AlgebraicJacobian.Picard.CechPicFiniteStage
 import AlgebraicJacobian.Picard.RelPicFiniteStage
