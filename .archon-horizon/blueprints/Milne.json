@@ -848,7 +848,7 @@
     },
     "states": {
       "blocked": 124,
-      "closed": 448,
+      "closed": 487,
       "formalized_open": 0,
       "informal": 254,
       "ready": 138
@@ -896,14 +896,14 @@
       "MilneLib.GroupVariety.ringKrullDim_stalk_eq_of_closedPoints: Lean declaration is not referenced by any blueprint \\lean{...}",
       "MilneLib.GroupVariety.ringKrullDim_stalk_eq_of_pointTranslation: Lean declaration is not referenced by any blueprint \\lean{...}",
       "MilneLib.GroupVariety.snd_left_isClosedMap: Lean declaration is not referenced by any blueprint \\lean{...}",
-      "MilneLib.IsAbelianVariety.baseChange: Lean declaration is not referenced by any blueprint \\lean{...}",
-      "MilneLib.IsFinite.of_isProper_of_faithfullyFlat_baseChange: Lean declaration is not referenced by any blueprint \\lean{...}",
-      "MilneLib.IsFinite.of_isProper_of_finite_preimage_singleton: Lean declaration is not referenced by any blueprint \\lean{...}",
-      "MilneLib.IsSymmetric: Lean declaration is not referenced by any blueprint \\lean{...}",
-      "MilneLib.Isogeny.baseChange_of_finite: Lean declaration is not referenced by any blueprint \\lean{...}",
-      "MilneLib.Isogeny.baseChange_of_isAbelianVariety: Lean declaration is not referenced by any blueprint \\lean{...}",
-      "MilneLib.Isogeny.baseChange_of_isogeny: Lean declaration is not referenced by any blueprint \\lean{...}",
-      "MilneLib.Isogeny.comp_of_finite: Lean declaration is not referenced by any blueprint \\lean{...}"
+      "MilneLib.InvariantLocalization.affineInvariantQuotientMapRestrictBasicOpenIso: Lean declaration is not referenced by any blueprint \\lean{...}",
+      "MilneLib.InvariantLocalization.affineInvariantQuotientMapRestrictStable: Lean declaration is not referenced by any blueprint \\lean{...}",
+      "MilneLib.InvariantLocalization.affineInvariantQuotientMapRestrictStable_eq_iff_exists_specAction: Lean declaration is not referenced by any blueprint \\lean{...}",
+      "MilneLib.InvariantLocalization.affineInvariantQuotientMapRestrictStable_fac: Lean declaration is not referenced by any blueprint \\lean{...}",
+      "MilneLib.InvariantLocalization.affineInvariantQuotientMapRestrictStable_surjective: Lean declaration is not referenced by any blueprint \\lean{...}",
+      "MilneLib.InvariantLocalization.algebraMap_mem_fixedAway: Lean declaration is not referenced by any blueprint \\lean{...}",
+      "MilneLib.InvariantLocalization.awayMap: Lean declaration is not referenced by any blueprint \\lean{...}",
+      "MilneLib.InvariantLocalization.awayMapMulSemiringAction: Lean declaration is not referenced by any blueprint \\lean{...}"
     ]
   },
   "nodes": [
@@ -4099,7 +4099,7 @@
     },
     {
       "chapter": "Geometry of Abelian Varieties",
-      "comment_count": 4,
+      "comment_count": 6,
       "dep_count": 0,
       "descendant_count": 1,
       "group": "c148",
@@ -6767,7 +6767,7 @@
     },
     {
       "chapter": "Jacobian Varieties",
-      "comment_count": 6,
+      "comment_count": 7,
       "dep_count": 0,
       "descendant_count": 25,
       "group": "c200",

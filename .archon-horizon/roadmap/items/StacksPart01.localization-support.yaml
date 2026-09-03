@@ -1,0 +1,37 @@
+id: StacksPart01.localization-support
+title: Part 01 localization and support frontier
+projects:
+- StacksPart01_Preliminaries
+summary: Tag 00EW is now packaged source-faithfully and the missing rectangular converse
+  in Tag 07DQ is proved. Blueprint attachments remain blocked by I-2034/I-2051; next
+  formalize the Tag 00DV Nakayama consumer needed by the finite-presentation/support
+  frontier, then Tag 051B.
+status: active
+kind: proof
+priority: high
+depends_on: []
+inbox_refs:
+- I-2051
+task_refs:
+- fs-stacks-part01-prelim
+scope:
+  projects:
+  - StacksPart01_Preliminaries
+metadata:
+  author: horizon
+  created_at: '2026-09-03T04:20:07.772174+00:00'
+  provenance:
+    run: '0211'
+    session: 0010-horizon-fs-stacks-part01-prelim
+    role: horizon
+    round: '4'
+    rounds: '24'
+    task: fs-stacks-part01-prelim
+    task_title: Advance Stacks Part 01 Preliminaries formalization
+    projects: StacksPart01_Preliminaries
+  owner: fs-stacks-part01-prelim
+  milestone: StacksPart01
+  updated_at: '2026-09-03T16:13:49.231513+00:00'
+  pinned_commits:
+  - 08e6e076b459f3dcabc08c6c3af6127a60dd6cac
+  - d7848004f50af5358e67d2e53a99a8837e926afe
