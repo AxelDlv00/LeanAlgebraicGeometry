@@ -952,6 +952,51 @@ theorem twist_isFiniteSupport
       (Modules.schematicSupportι x.F ≫ pullback.snd π T.hom) := x.properSupport
   exact IsFinite.of_isProper_of_locallyQuasiFinite _
 
+/-- **Flatness of the twisted divisor pushforward over an affine test.**
+
+The support-descent argument used for `coherentSheafFlat_id_pushforward` applies
+unchanged after tensoring by a locally trivial line bundle.  We expose the
+twisted form because the rank bridge below needs flat global sections of the
+actual D2 target, not of the untwisted divisor sheaf. -/
+theorem twist_coherentSheafFlat_id_pushforward
+    {R : CommRingCat.{u}} {S X : Scheme.{u}} {π : X ⟶ S}
+    [IsProper π] (f : Spec R ⟶ S) (L : X.Modules)
+    (hL : LineBundle.IsLocallyTrivial L)
+    (x : DivFamily π (Over.mk f))
+    [LocallyQuasiFinite
+      (Modules.schematicSupportι x.F ≫ pullback.snd π (Over.mk f).hom)] :
+    CoherentSheafFlat (𝟙 (Spec R))
+      ((Modules.pushforward (pullback.snd π f)).obj (x.twist L)) := by
+  letI : (x.twist L).IsFinitePresentation := x.twist_isFinitePresentation L hL
+  letI : (x.twist L).IsQuasicoherent := x.twist_isQuasicoherent L hL
+  haveI : LocallyQuasiFinite
+      (Modules.schematicSupportι (x.twist L) ≫ pullback.snd π (Over.mk f).hom) :=
+    (x.twist_locallyQuasiFinite_iff L hL).mpr inferInstance
+  let q := pullback.snd π (Over.mk f).hom
+  let i := Modules.schematicSupportι (x.twist L)
+  haveI : IsProper (i ≫ q) := x.twist_hasProperSupport L
+  haveI : IsFinite (i ≫ q) := IsFinite.of_isProper_of_locallyQuasiFinite _
+  haveI : IsAffineHom (i ≫ q) := inferInstance
+  haveI : IsAffineHom i :=
+    inferInstanceAs (IsAffineHom (Modules.annihilator (x.twist L)).subschemeι)
+  let N := (Modules.pullback i).obj (x.twist L)
+  have hdesc : x.twist L ≅ (Modules.pushforward i).obj N :=
+    Modules.schematicSupportDescentIso (x.twist L)
+  haveI : N.IsQuasicoherent := pullback_isQuasicoherent_hom i
+    (x.twist L) inferInstance
+  have h1 : CoherentSheafFlat q ((Modules.pushforward i).obj N) :=
+    coherentSheafFlat_of_iso q hdesc (x.twist_isCoherentSheafFlat L hL)
+  have h2 : CoherentSheafFlat (i ≫ q) N :=
+    CoherentSheafFlat.of_pushforward_of_isAffineHom i q N h1
+  have h3 : CoherentSheafFlat (𝟙 (Spec R))
+      ((Modules.pushforward (i ≫ q)).obj N) :=
+    CoherentSheafFlat.pushforward_of_isAffineHom (i ≫ q)
+      (𝟙 (Spec R)) N (by rw [Category.comp_id])
+  intro U hU V hV eV
+  exact coherentSheafFlat_of_iso (𝟙 (Spec R))
+    ((Modules.pushforwardComp i q).app N ≪≫
+      (Modules.pushforward q).mapIso hdesc.symm) h3 hU hV eV
+
 set_option backward.isDefEq.respectTransparency false in
 /-- On an affine test base, a finite-flat divisor pushforward is locally free
 of the divisor's fibre degree.  The proof supplies finite presentation and
@@ -1024,6 +1069,85 @@ theorem pushforward_isLocallyFreeOfRank
     IsFinite.of_isProper_of_locallyQuasiFinite _
   exact (Modules.fiberRank_gammaTop_eq_fiberH0_of_isFinite_schematicSupport
     q x.F hsupport t).trans (hx t)
+
+/-- **Twisted D2 rank producer.**  On an affine test base, the pushforward of
+the locally trivial twist of a divisor family is locally free of the prescribed
+fibre-`H⁰` rank.  The fibre rank is kept as an explicit hypothesis: proving its
+constancy for the chosen positive twist is the separate Riemann--Roch/global
+generation obligation. -/
+set_option backward.isDefEq.respectTransparency false in
+theorem pushforward_twist_isLocallyFreeOfRank
+    {R : CommRingCat.{u}} {S X : Scheme.{u}} {π : X ⟶ S}
+    [IsProper π] (f : Spec R ⟶ S) [IsNoetherianRing R]
+    (L : X.Modules) (hL : LineBundle.IsLocallyTrivial L)
+    (x : DivFamily π (Over.mk f))
+    [LocallyQuasiFinite
+      (Modules.schematicSupportι x.F ≫ pullback.snd π (Over.mk f).hom)]
+    {d : ℕ}
+    (hRank : ∀ t : PrimeSpectrum R,
+      (pullback.snd π (Over.mk f).hom).fiberH0 (x.twist L) t = d) :
+    SheafOfModules.IsLocallyFreeOfRank
+      ((Modules.pushforward (pullback.snd π f)).obj (x.twist L)) d := by
+  letI : IsLocallyNoetherian (Over.mk f).left := by
+    change IsLocallyNoetherian (Spec R)
+    infer_instance
+  letI : (x.twist L).IsFinitePresentation := x.twist_isFinitePresentation L hL
+  letI : (x.twist L).IsQuasicoherent := x.twist_isQuasicoherent L hL
+  haveI : LocallyQuasiFinite
+      (Modules.schematicSupportι (x.twist L) ≫ pullback.snd π (Over.mk f).hom) :=
+    (x.twist_locallyQuasiFinite_iff L hL).mpr inferInstance
+  let q := pullback.snd π (Over.mk f).hom
+  let M : (Spec R).Modules := (Modules.pushforward q).obj (x.twist L)
+  haveI : QuasiCompact q := by
+    dsimp [q]
+    infer_instance
+  haveI : QuasiSeparated q := by
+    dsimp [q]
+    infer_instance
+  haveI : M.IsFinitePresentation := by
+    exact Modules.isFinitePresentation_pushforward q (x.twist L)
+  haveI : M.IsQuasicoherent := by
+    exact Modules.pushforward_isQuasicoherent q (x.twist L)
+  letI baseM := ((𝟙 (Spec R)) : Spec R ⟶ Spec R).baseSectionsModule M
+    (⊤ : (Spec R).Opens)
+  haveI : IsNoetherianRing Γ(Spec R, (⊤ : (Spec R).Opens)) :=
+    isNoetherianRing_of_ringEquiv R
+      (Scheme.ΓSpecIso R).commRingCatIsoToRingEquiv.symm
+  have hfinΓ : Module.Finite Γ(Spec R, (⊤ : (Spec R).Opens))
+      Γ(M, (⊤ : (Spec R).Opens)) :=
+    Modules.module_finite_sections_of_isFinitePresentation M
+      ⟨⊤, isAffineOpen_top (Spec R)⟩
+  have hfin : Module.Finite R Γ(M, (⊤ : (Spec R).Opens)) :=
+    module_finite_top_of_gammaSpecTop M hfinΓ
+  letI : Module.Finite Γ(Spec R, (⊤ : (Spec R).Opens))
+      Γ(M, (⊤ : (Spec R).Opens)) := hfinΓ
+  have hflatΓ : Module.Flat Γ(Spec R, (⊤ : (Spec R).Opens))
+      Γ(M, (⊤ : (Spec R).Opens)) :=
+    Modules.flat_sections_of_coherentSheafFlat_id
+      (x.twist_coherentSheafFlat_id_pushforward f L hL)
+      (isAffineOpen_top (Spec R))
+  letI : Module.Flat Γ(Spec R, (⊤ : (Spec R).Opens))
+      Γ(M, (⊤ : (Spec R).Opens)) := hflatΓ
+  letI : Module.FinitePresentation Γ(Spec R, (⊤ : (Spec R).Opens))
+      Γ(M, (⊤ : (Spec R).Opens)) :=
+    Module.finitePresentation_of_finite Γ(Spec R, (⊤ : (Spec R).Opens)) _
+  have hprojΓ : Module.Projective Γ(Spec R, (⊤ : (Spec R).Opens))
+      Γ(M, (⊤ : (Spec R).Opens)) :=
+    Module.Flat.projective_of_finitePresentation
+  have hproj : Module.Projective R Γ(M, (⊤ : (Spec R).Opens)) :=
+    module_projective_top_of_gammaSpecTop M hprojΓ
+  letI : Module.Projective R Γ(M, (⊤ : (Spec R).Opens)) := hproj
+  letI : Module.Flat R Γ(M, (⊤ : (Spec R).Opens)) := Module.Flat.of_projective
+  apply Modules.isLocallyFreeOfRank_of_finite_projective_sections M hfin inferInstance
+  intro t
+  change Module.rankAtStalk Γ(M, (⊤ : (Spec R).Opens)) t = d
+  rw [Module.rankAtStalk_eq]
+  haveI : IsProper (Modules.schematicSupportι (x.twist L) ≫ q) :=
+    x.twist_hasProperSupport L
+  have hsupport : IsFinite (Modules.schematicSupportι (x.twist L) ≫ q) :=
+    IsFinite.of_isProper_of_locallyQuasiFinite _
+  exact (Modules.fiberRank_gammaTop_eq_fiberH0_of_isFinite_schematicSupport
+    q (x.twist L) hsupport t).trans (hRank t)
 
 end DivFamily
 
