@@ -114,6 +114,40 @@ theorem le_of_le_smul_of_isNilpotent
                 le_sup_right)
   simpa [hn, Submodule.bot_smul, sup_bot_eq] using hpow n
 
+/-! ### Nilpotent residue criteria -/
+
+/-- **Stacks, Tag 00DV (11).**  For a nilpotent ideal, surjectivity after
+quotienting source and target lifts to surjectivity of the original map. -/
+@[stacks 00DV "(11)"]
+theorem LinearMap.surjective_of_surjective_mod_smul_of_isNilpotent
+    [AddCommGroup M] [Module R M] [AddCommGroup N] [Module R N]
+    (f : M →ₗ[R] N) (I : Ideal R) (hI : IsNilpotent I)
+    (hf : Function.Surjective
+      (((I • (⊤ : Submodule R N)).mkQ) ∘ₗ f)) : Function.Surjective f := by
+  rw [← LinearMap.range_eq_top, ← top_le_iff]
+  apply le_of_le_smul_of_isNilpotent (N := LinearMap.range f)
+    (N' := (⊤ : Submodule R N)) (hI := hI)
+  rw [top_le_iff, sup_comm, ← Submodule.map_mkQ_eq_top, ← LinearMap.range_comp]
+  exact LinearMap.range_eq_top_of_surjective _ hf
+
+/-- **Stacks, Tag 00DV (12).**  If a set of elements spans the quotient by a
+nilpotent ideal, then it spans the whole module. -/
+@[stacks 00DV "(12)"]
+theorem span_eq_top_of_span_image_mkQ_eq_top_of_isNilpotent
+    [AddCommGroup M] [Module R M] (I : Ideal R) (s : Set M)
+    (hspan : Submodule.span R
+      (((I • (⊤ : Submodule R M)).mkQ) '' s) = ⊤)
+    (hI : IsNilpotent I) : Submodule.span R s = ⊤ := by
+  have hmap : (Submodule.span R s).map ((I • (⊤ : Submodule R M)).mkQ) = ⊤ := by
+    rw [Submodule.map_span, hspan]
+  have hsup :
+      (I • (⊤ : Submodule R M)) ⊔ Submodule.span R s = ⊤ :=
+    (Submodule.map_mkQ_eq_top _ _).mp hmap
+  have hle : (⊤ : Submodule R M) ≤ Submodule.span R s ⊔ I • (⊤ : Submodule R M) := by
+    simpa [sup_comm] using hsup.symm.le
+  exact top_unique (le_of_le_smul_of_isNilpotent (N := Submodule.span R s)
+    (N' := (⊤ : Submodule R M)) hle hI)
+
 /-! A finite-submodule spelling is useful at call sites that already carry
 `FG` as the finiteness witness. -/
 
