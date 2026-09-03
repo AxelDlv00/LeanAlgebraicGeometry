@@ -14,6 +14,7 @@ import MilneLib.InvariantLocalization
 import MilneLib.InvariantLocalizationTransitions
 import MilneLib.InvariantQuotientOpen
 import MilneLib.InvariantQuotientOverlap
+import MilneLib.InvariantQuotientSections
 import MilneLib.InvariantQuotientOrder
 import MilneLib.InvariantQuotientGlue
 import MilneLib.AffineQuotientOver
