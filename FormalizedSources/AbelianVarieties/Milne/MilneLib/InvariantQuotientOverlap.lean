@@ -5,6 +5,7 @@ Authors: The Milne Contributors
 -/
 
 import MilneLib.InvariantQuotientOpen
+import MilneLib.InvariantLocalizationTransitions
 
 /-!
 # Transitions between stable-open quotient charts
@@ -84,6 +85,62 @@ theorem affineInvariantQuotientMapRestrictStable_naturality [Finite G]
   simp only [Category.assoc, affineInvariantQuotientMapRestrictStable_fac]
   rw [← Category.assoc, stableOpenHom_ι]
   rw [quotientOpenOfStableHom_ι, affineInvariantQuotientMapRestrictStable_fac]
+
+/-! ## Invariant basic charts -/
+
+/-- The canonical localization transition realizes inclusion of invariant basic
+opens under their affine localization presentations. -/
+@[reassoc]
+theorem invariantBasicOpenIso_transition
+    {b c : FixedPoints.subalgebra k A G}
+    (hcb : PrimeSpectrum.basicOpen c ≤ PrimeSpectrum.basicOpen b) :
+    (AlgebraicGeometry.basicOpenIsoSpecAway
+        (R := CommRingCat.of (FixedPoints.subalgebra k A G)) c).hom ≫
+        Spec.map (CommRingCat.ofHom
+          (invariantLocalizationTransition (k := k) (A := A) (G := G) hcb)) =
+      (Spec (CommRingCat.of (FixedPoints.subalgebra k A G))).homOfLE hcb ≫
+        (AlgebraicGeometry.basicOpenIsoSpecAway
+          (R := CommRingCat.of (FixedPoints.subalgebra k A G)) b).hom := by
+  rw [← cancel_mono (Spec.map (CommRingCat.ofHom
+    (algebraMap (FixedPoints.subalgebra k A G) (Localization.Away b))))]
+  simp only [Category.assoc]
+  rw [← Spec.map_comp, ← CommRingCat.ofHom_comp,
+    invariantLocalizationTransition_comp_algebraMap]
+  simp [AlgebraicGeometry.basicOpenIsoSpecAway]
+
+/-- The fixed-localized section-ring transition is the restriction morphism
+between quotient basic-open charts under their canonical affine presentations. -/
+@[reassoc]
+theorem fixedSubalgebraBasicOpenIso_transition
+    [Finite G]
+    {b c : FixedPoints.subalgebra k A G}
+    (hcb : PrimeSpectrum.basicOpen c ≤ PrimeSpectrum.basicOpen b) :
+    (fixedSubalgebraBasicOpenIso (k := k) (A := A) (G := G) c).hom ≫
+        Spec.map (CommRingCat.ofHom
+          (fixedAwayTransition (k := k) (A := A) (G := G) hcb)) =
+      (Spec (CommRingCat.of (FixedPoints.subalgebra k A G))).homOfLE hcb ≫
+        (fixedSubalgebraBasicOpenIso (k := k) (A := A) (G := G) b).hom := by
+  change
+    (AlgebraicGeometry.basicOpenIsoSpecAway
+        (R := CommRingCat.of (FixedPoints.subalgebra k A G)) c).hom ≫
+      Spec.map (CommRingCat.ofHom
+        (localizationAwayFixedRingEquiv c).symm.toRingHom) ≫
+      Spec.map (CommRingCat.ofHom
+        (fixedAwayTransition (k := k) (A := A) (G := G) hcb)) =
+    (Spec (CommRingCat.of (FixedPoints.subalgebra k A G))).homOfLE hcb ≫
+      (AlgebraicGeometry.basicOpenIsoSpecAway
+        (R := CommRingCat.of (FixedPoints.subalgebra k A G)) b).hom ≫
+      Spec.map (CommRingCat.ofHom
+        (localizationAwayFixedRingEquiv b).symm.toRingHom)
+  conv_lhs =>
+    rhs
+    rw [← Spec.map_comp, ← CommRingCat.ofHom_comp]
+  dsimp [fixedAwayTransition]
+  rw [← RingEquiv.toCommRingCatIso_hom (localizationAwayFixedRingEquiv c),
+    ← RingEquiv.toCommRingCatIso_inv (localizationAwayFixedRingEquiv c)]
+  simp only [Category.assoc, Iso.hom_inv_id, Category.comp_id]
+  rw [Spec.map_comp, ← Category.assoc, invariantBasicOpenIso_transition,
+    Category.assoc]
 
 /-! ## Composition and identity laws -/
 
