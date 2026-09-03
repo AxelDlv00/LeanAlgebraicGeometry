@@ -10,6 +10,7 @@ import MilneLib.IsogenyDescent
 import MilneLib.IsogenyCharacterization
 import MilneLib.Descent
 import MilneLib.InvariantQuotient
+import MilneLib.InvariantLocalization
 import MilneLib.AffineQuotientOver
 import MilneLib.Torsion
 import MilneLib.Coherent
