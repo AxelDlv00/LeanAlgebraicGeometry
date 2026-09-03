@@ -2,12 +2,11 @@ id: Mumford
 title: Mumford Abelian Varieties formalization
 projects:
 - Mumford
-summary: 'Advance source-faithful Mumford formalization. The real ODE route now proves
-  global one-parameter subgroups and full conjugation naturality: every identity-based
-  real flow in a compact connected complex Lie group has central image (5aa93e4263).
-  The next genuine producer is joint tangent-parameter regularity and complex differentiability
-  of these flows, including d exp at zero; exact frozen-source attachments remain
-  open.'
+summary: Advance source-faithful Mumford formalization. The real ODE route proves
+  global central one-parameter subgroups and now fixed-time tangent additivity, canonicalRealFlow
+  I (v + w) t = canonicalRealFlow I v t * canonicalRealFlow I w t (ef59abc787). The
+  next genuine producer is joint tangent-parameter regularity and complex differentiability,
+  including d exp at zero; exact frozen-source attachments remain open.
 status: active
 kind: proof
 priority: normal
@@ -30,8 +29,9 @@ metadata:
     task_title: Advance Mumford Abelian Varieties formalization
     projects: Mumford
   owner: fs-mumford
-  updated_at: '2026-09-03T09:33:55.917978+00:00'
+  updated_at: '2026-09-03T17:25:35.961471+00:00'
   pinned_commits:
+  - ef59abc787
   - 5aa93e4263
   - 52ddb1a583
   - c092da8bc5

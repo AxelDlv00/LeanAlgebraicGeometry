@@ -2,11 +2,10 @@ id: Mumford.analytic-flow-parameter-dependence
 title: Joint complex exponential from real flows
 projects:
 - Mumford
-summary: Package the proved identity-based real integral curves into a map on the
-  tangent space with joint parameter regularity; prove complex differentiability,
-  value and derivative at zero, and connect its local image to the existing central-neighborhood
-  generation theorem. Do not replace this producer with another conditional exponential
-  wrapper.
+summary: 'Fixed-real-time tangent additivity is now proved: central product differentiation
+  and ODE uniqueness give canonicalRealFlow I (v + w) t = canonicalRealFlow I v t
+  * canonicalRealFlow I w t (ef59abc787). Still missing joint regularity in (t, v),
+  complex differentiability, d exp at zero, and the local-generation/source attachment.'
 status: pending
 kind: proof
 priority: high
@@ -33,3 +32,8 @@ metadata:
     projects: Mumford
   parent: Mumford
   owner: fs-mumford
+  updated_at: '2026-09-03T17:22:46.840851+00:00'
+  pinned_commits:
+  - ef59abc787
+  - 7ea8bb89a6
+  - b752c411e1
