@@ -162,6 +162,27 @@ of the normalized section on the source chart. -/
     (X := X.left) (U := a.chart.U) (r.regularized j)]
   exact (a.chart.U.ι.preimage_image_eq _).symm
 
+/-! ### Overlap basic opens -/
+
+/-- On an overlap, corresponding restricted regularized coordinates cut out
+    the same basic open. -/
+theorem restricted_basicOpen_eq
+    {b : LocalRatioCoordinateData D n}
+    (r : LocalRatioRegularization a) (s : LocalRatioRegularization b)
+    (h : a.SameSectionValues b) (i : Fin (n + 1)) :
+    X.left.basicOpen
+        ((X.left.presheaf.map
+          (homOfLE (show a.chart.U ⊓ b.chart.U ≤ a.chart.U from
+            inf_le_left)).op).hom (r.regularized i)) =
+      X.left.basicOpen
+        ((X.left.presheaf.map
+          (homOfLE (show a.chart.U ⊓ b.chart.U ≤ b.chart.U from
+            inf_le_right)).op).hom (s.regularized i)) := by
+  rw [r.restricted_regularized_eq_transition_mul s h i,
+    Scheme.basicOpen_mul,
+    X.left.basicOpen_of_isUnit (r.restricted_transition_isUnit s h)]
+  exact inf_eq_right.mpr (X.left.basicOpen_le _)
+
 end LocalRatioRegularization
 
 end
