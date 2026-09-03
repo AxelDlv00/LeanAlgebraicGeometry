@@ -98,6 +98,34 @@ theorem quotientOpenOfStable_preimage [Finite G]
   apply TopologicalSpace.Opens.ext
   exact preimage_image_eq_of_stable (k := k) (A := A) (G := G) U hU
 
+/-- Descending an invariant basic open gives the corresponding basic open of the fixed
+subalgebra. -/
+@[simp]
+theorem quotientOpenOfStable_basicOpen_fixed [Finite G]
+    (b : FixedPoints.subalgebra k A G) :
+    quotientOpenOfStable (k := k) (A := A) (G := G)
+        (PrimeSpectrum.basicOpen (b : A) : (Spec (CommRingCat.of A)).Opens)
+        (fun g => specAction_preimage_basicOpen_fixed b g) =
+      (PrimeSpectrum.basicOpen b :
+        (Spec (CommRingCat.of (FixedPoints.subalgebra k A G))).Opens) := by
+  ext x
+  constructor
+  · rintro ⟨y, hy, rfl⟩
+    have hy' : y ∈ (affineInvariantQuotientMap (k := k) (A := A) (G := G)) ⁻¹ᵁ
+        (PrimeSpectrum.basicOpen b :
+          (Spec (CommRingCat.of (FixedPoints.subalgebra k A G))).Opens) := by
+      rw [affineInvariantQuotientMap_preimage_basicOpen_fixed]
+      exact hy
+    exact hy'
+  · intro hx
+    obtain ⟨y, rfl⟩ :=
+      affineInvariantQuotientMap_surjective (k := k) (A := A) (G := G) x
+    refine ⟨y, ?_, rfl⟩
+    have hy : y ∈ (affineInvariantQuotientMap (k := k) (A := A) (G := G)) ⁻¹ᵁ
+        (PrimeSpectrum.basicOpen b :
+          (Spec (CommRingCat.of (FixedPoints.subalgebra k A G))).Opens) := hx
+    rwa [affineInvariantQuotientMap_preimage_basicOpen_fixed] at hy
+
 -- The two sides use definitionally equal presentations of the image of `b`.
 set_option backward.defeqAttrib.useBackward true in
 set_option backward.isDefEq.respectTransparency false in
