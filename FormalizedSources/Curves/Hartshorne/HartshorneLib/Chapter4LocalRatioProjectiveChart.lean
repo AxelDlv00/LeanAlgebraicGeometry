@@ -183,6 +183,46 @@ theorem restricted_basicOpen_eq
     X.left.basicOpen_of_isUnit (r.restricted_transition_isUnit s h)]
   exact inf_eq_right.mpr (X.left.basicOpen_le _)
 
+/-- The two chart maps restricted to an overlap have the same inverse image of
+    every standard projective basic open. -/
+theorem overlap_chartMap_preimage_basicOpen_eq
+    {b : LocalRatioCoordinateData D n}
+    (r : LocalRatioRegularization a) (s : LocalRatioRegularization b)
+    (h : a.SameSectionValues b) (i : Fin (n + 1)) :
+    (X.left.homOfLE
+          (show a.chart.U ⊓ b.chart.U ≤ a.chart.U from inf_le_left) ≫
+        r.chartMap) ⁻¹ᵁ
+        Proj.basicOpen (MvPolynomial.homogeneousSubmodule (Fin (n + 1)) k)
+          (MvPolynomial.X i) =
+      (X.left.homOfLE
+          (show a.chart.U ⊓ b.chart.U ≤ b.chart.U from inf_le_right) ≫
+        s.chartMap) ⁻¹ᵁ
+        Proj.basicOpen (MvPolynomial.homogeneousSubmodule (Fin (n + 1)) k)
+          (MvPolynomial.X i) := by
+  rw [Scheme.Hom.comp_preimage, Scheme.Hom.comp_preimage,
+    r.chartMap_preimage_basicOpen_ambient,
+    s.chartMap_preimage_basicOpen_ambient,
+    ← Scheme.Hom.comp_preimage, ← Scheme.Hom.comp_preimage,
+    X.left.homOfLE_ι, X.left.homOfLE_ι]
+  apply (a.chart.U ⊓ b.chart.U).ι.image_injective
+  change (a.chart.U ⊓ b.chart.U).ι ''ᵁ
+        ((a.chart.U ⊓ b.chart.U).ι ⁻¹ᵁ
+          X.left.basicOpen (r.regularized i)) =
+      (a.chart.U ⊓ b.chart.U).ι ''ᵁ
+        ((a.chart.U ⊓ b.chart.U).ι ⁻¹ᵁ
+          X.left.basicOpen (s.regularized i))
+  calc
+    _ = (a.chart.U ⊓ b.chart.U) ⊓
+        X.left.basicOpen (r.regularized i) := by
+      rw [Scheme.Hom.image_preimage_eq_opensRange_inf,
+        Scheme.Opens.opensRange_ι]
+    _ = (a.chart.U ⊓ b.chart.U) ⊓
+        X.left.basicOpen (s.regularized i) := by
+      simpa only [Scheme.basicOpen_res] using r.restricted_basicOpen_eq s h i
+    _ = _ := by
+      rw [Scheme.Hom.image_preimage_eq_opensRange_inf,
+        Scheme.Opens.opensRange_ι]
+
 end LocalRatioRegularization
 
 end
