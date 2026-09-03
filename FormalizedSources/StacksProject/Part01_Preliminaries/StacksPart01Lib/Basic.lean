@@ -44,6 +44,7 @@ import StacksPart01Lib.NoetherianSpectrum
 import StacksPart01Lib.Support
 import StacksPart01Lib.SupportQuotient
 import StacksPart01Lib.SupportElement
+import StacksPart01Lib.Nakayama
 
 /-!
 # StacksPart01Lib.Basic
