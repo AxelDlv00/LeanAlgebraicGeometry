@@ -20,6 +20,7 @@ import StacksPart01Lib.ChineseRemainder
 import StacksPart01Lib.Nilradical
 import StacksPart01Lib.Localization
 import StacksPart01Lib.LocalizationExtras
+import StacksPart01Lib.LocalProperties
 import StacksPart01Lib.ReducedLocalization
 import StacksPart01Lib.CommutativeAlgebra
 import StacksPart01Lib.SupportMatrix
