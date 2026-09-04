@@ -5,14 +5,18 @@ projects:
 summary: 'Pending source node prop:milne-finite-quotient. Stable quotient opens, order/equality
   reflection, finite-cover reconstruction data, functorial chart transitions, within-one-affine-ring
   localization cocycle laws, stable-affine section actions, separated affine overlap
-  charts, Spec(k)-slice fixed-ring transitions, and conditional pairwise overlap cones
-  are verified. Commit a3a8f3916b supplies ring-level triple-tensor transitions, factorization/cocycle
-  proofs, and conditional Scheme.GlueData; b2fc3124b6 proves that the affine quotient
-  preimage of the descended intersection of two stable opens is the source intersection.
-  Overlap rings/open immersions and quotient existence remain explicit inputs. Remaining:
-  compare overlaps from different affine coordinate rings, instantiate supplied data
-  from the finite quotient, then prove global topology/sheaf clauses, arbitrary-target
-  universal property, and free-action etaleness.'
+  charts, Spec(k)-slice fixed-ring transitions, conditional pairwise overlap cones,
+  and restricted quotient-map transport are verified. Commit a3a8f3916b supplies ring-level
+  triple-tensor transitions, factorization/cocycle proofs, and conditional Scheme.GlueData;
+  b2fc3124b6 proves that the affine quotient preimage of the descended intersection
+  of two stable opens is the source intersection. Commit 841890b05c supplies invariant
+  basic-open transport for globally equivariantly equivalent affine presentations,
+  and bf8c03bc33 supplies the restricted quotient-map consumer for a descended stable
+  open. These are local transport producers only: they do not construct arbitrary
+  common affine overlaps, open immersions, comparison isomorphisms, cocycles, or a
+  global quotient. Remaining: compare overlaps from different affine coordinate rings,
+  instantiate supplied data from the finite quotient, then prove global topology/sheaf
+  clauses, arbitrary-target universal property, and free-action etaleness.'
 status: pending
 kind: proof
 priority: high
@@ -39,8 +43,10 @@ metadata:
   parent: Milne
   owner: fs-milne
   milestone: Milne
-  updated_at: '2026-09-04T15:54:56.557544+00:00'
+  updated_at: '2026-09-04T21:08:21.837449+00:00'
   pinned_commits:
+  - bf8c03bc33
+  - 841890b05c
   - b2fc3124b6
   - a3a8f3916b
   - 75871d09e0
