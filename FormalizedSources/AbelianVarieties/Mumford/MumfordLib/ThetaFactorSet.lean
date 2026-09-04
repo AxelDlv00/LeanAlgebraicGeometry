@@ -176,6 +176,51 @@ theorem sectionCoordinates_injective :
   have hst : s = t := E.includeScalar_injective hscalar
   simp [hst]
 
+/-! The exact sequence also gives existence of scalar-section coordinates. -/
+
+theorem sectionCoordinates_surjective :
+    Function.Surjective E.sectionCoordinates := by
+  intro g
+  let k : K := E.quotient g
+  have hquot :
+      E.quotientHom (E.normalizedQuotientLift k) = E.quotientHom g := by
+    rw [E.quotientHom_normalizedQuotientLift]
+    change Multiplicative.ofAdd (Multiplicative.toAdd (E.quotientHom g)) =
+      E.quotientHom g
+    exact (Multiplicative.ofAdd : K ≃ Multiplicative K).symm_apply_apply _
+  have hker :
+      g * (E.normalizedQuotientLift k)⁻¹ ∈ E.quotientHom.ker := by
+    rw [MonoidHom.mem_ker, map_mul, map_inv, hquot, mul_inv_cancel]
+  obtain ⟨s, hs⟩ :=
+    (E.mem_quotientHom_ker_iff
+      (g * (E.normalizedQuotientLift k)⁻¹)).mp hker
+  refine ⟨(s, k), ?_⟩
+  change E.includeScalar s * E.normalizedQuotientLift k = g
+  calc
+    E.includeScalar s * E.normalizedQuotientLift k =
+        (g * (E.normalizedQuotientLift k)⁻¹) *
+          E.normalizedQuotientLift k := by rw [hs]
+    _ = g := by simp
+
+/-- The chosen section gives a bijective scalar/quotient coordinate chart. -/
+noncomputable def sectionCoordinatesEquiv : S × K ≃ G :=
+  Equiv.ofBijective E.sectionCoordinates
+    ⟨E.sectionCoordinates_injective, E.sectionCoordinates_surjective⟩
+
+@[simp]
+theorem sectionCoordinatesEquiv_apply (p : S × K) :
+    E.sectionCoordinatesEquiv p = E.sectionCoordinates p :=
+  rfl
+
+@[simp]
+theorem sectionCoordinatesEquiv_symm_snd (g : G) :
+    (E.sectionCoordinatesEquiv.symm g).2 = E.quotient g := by
+  have h := congrArg E.quotient
+    (E.sectionCoordinatesEquiv.apply_symm_apply g)
+  rw [E.sectionCoordinatesEquiv_apply] at h
+  simpa only [sectionCoordinates, quotient_mul, quotient_includeScalar,
+    quotient_normalizedQuotientLift, zero_add] using h
+
 /-- The group law in scalar-section coordinates is twisted by the factor set. -/
 theorem sectionCoordinates_mul (s t : S) (k l : K) :
     E.sectionCoordinates (s, k) * E.sectionCoordinates (t, l) =
