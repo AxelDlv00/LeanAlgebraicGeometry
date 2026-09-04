@@ -699,7 +699,7 @@
     },
     "states": {
       "blocked": 116,
-      "closed": 849,
+      "closed": 851,
       "formalized_open": 0,
       "informal": 212,
       "ready": 96
@@ -725,6 +725,7 @@
       "Mumford.Analytic.canonicalComplexExponentialMonoidHom_apply: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Mumford.Analytic.canonicalComplexExponentialMonoidHom_surjective: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Mumford.Analytic.canonicalComplexExponential_add: Lean declaration is not referenced by any blueprint \\lean{...}",
+      "Mumford.Analytic.canonicalComplexExponential_conjugation: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Mumford.Analytic.canonicalComplexExponential_hasMFDerivAt_zero: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Mumford.Analytic.canonicalComplexExponential_mdifferentiable: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Mumford.Analytic.canonicalComplexExponential_neg: Lean declaration is not referenced by any blueprint \\lean{...}",
@@ -740,6 +741,7 @@
       "Mumford.Analytic.canonicalComplexFlow_ofReal: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Mumford.Analytic.canonicalComplexFlow_zero_parameter: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Mumford.Analytic.canonicalComplexFlow_zero_vector: Lean declaration is not referenced by any blueprint \\lean{...}",
+      "Mumford.Analytic.canonicalComplexLieExponentialData: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Mumford.Analytic.canonicalRealFlow: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Mumford.Analytic.canonicalRealFlow_add: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Mumford.Analytic.canonicalRealFlow_contMDiff_one: Lean declaration is not referenced by any blueprint \\lean{...}",
@@ -752,9 +754,7 @@
       "Mumford.Analytic.canonicalRealFlow_hasMFDerivAt_zero: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Mumford.Analytic.canonicalRealFlow_linear_combination: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Mumford.Analytic.canonicalRealFlow_neg: Lean declaration is not referenced by any blueprint \\lean{...}",
-      "Mumford.Analytic.canonicalRealFlow_smul: Lean declaration is not referenced by any blueprint \\lean{...}",
-      "Mumford.Analytic.canonicalRealFlow_spec: Lean declaration is not referenced by any blueprint \\lean{...}",
-      "Mumford.Analytic.canonicalRealFlow_time_one_contMDiff: Lean declaration is not referenced by any blueprint \\lean{...}"
+      "Mumford.Analytic.canonicalRealFlow_smul: Lean declaration is not referenced by any blueprint \\lean{...}"
     ]
   },
   "nodes": [
