@@ -24,10 +24,12 @@ pushforward, its projective bundle is the base, giving one effective divisor.
 The checked familywise evaluator and uniqueness theorem provide the actual
 Lean specialization.  Milne III.5 additionally assumes complete nonsingular,
 positive genus, and a rational point; those are not AJCR route hypotheses.\\
-R3 & Stacks, Varieties Lemma 33.25.6, Tag 056U; Milne III, Lemma 5.2(b). & A
-nonempty smooth open has a closed point with finite separable residue field;
-over a separably closed field this is a rational point.  This is the rational
-point used inside translated-drop coverage, while Milne supplies the
+R3 & Stacks, Varieties Lemma 33.25.6, Tag 056U; Milne III, Lemma 5.2(b). & Tag
+056U gives density of closed points with residue field finite separable over
+the base.  Its use here is a derived specialization: restrict to the required
+nonempty smooth open, choose such a point, and then use separable closedness to
+split the finite separable residue extension.  This is the rational-point
+input inside translated-drop coverage, while Milne supplies the
 classical degree-\(g\), rank-one model subject to the same III.5 caveat.\\
 R4 & Stacks, Properties of Schemes Lemma 26.15.4, Tag 01JJ; Morphisms Lemma
 29.22.9, Tag 01TX; Kleiman, Theorem 4.8(1). & A sheaf covered by representable
@@ -37,13 +39,17 @@ is context, not an imported shortcut.\\
 R5 & Stacks, Schemes Lemmas 26.14.1--2, Tags 01JB--01JC; Limits Lemma
 32.10.1, Tag 01ZM; Limits Lemmas 32.8.12 and 32.8.11, Tags 0EUU and 081E. &
 Descend the finite-presentation charts, maps, and equalities to a common stage;
-after enlargement the open immersions and isomorphisms hold.  Scheme gluing and
-its mapping property yield the global carrier comparison.  None of these
-results proves Picard representability over the stage.\\
-R6 & Stacks, Fields Lemma \emph{normal-closure-galois}, Tag 0EXM; Picard
-Schemes of Curves Section
+Tag 01ZM is applied to an inverse system with affine transition maps and qcqs
+stages, while Tags 0EUU and 081E require the relevant stage maps to be locally
+of finite presentation before openness or invertibility is reflected.  Scheme
+gluing and its mapping property yield the global carrier comparison.  None of
+these results proves Picard representability over the stage.\\
+R6 & Stacks, Fields Lemmas \emph{normal-closure-inside-normal}, Tag 0BMG, and
+\emph{normal-closure-galois}, Tag 0EXM; Picard Schemes of Curves Section
 44.4, Tag 0B9K; Descent Remark 35.35.12, Tag 040L. & Take the finite normal
-closure of all coefficients before finalizing \(P\), then descend the class and
+closure of all coefficients inside the fixed normal extension \(\Omega/K\)
+before finalizing \(P\): Tag 0BMG supplies containment and Tag 0EXM supplies the
+Galois conclusion for the finite separable input.  Then descend the class and
 prove the all-tests Yoneda equivalence on \(P.\mathrm{gluedOver}\).  Tag 0B9K
 describes the fppf Picard sheaf only; a bespoke proof must connect it to AJCR's
 big-etale degree-zero carrier.  No citation supplies that connection already.\\
@@ -86,7 +92,8 @@ R5 & For arbitrary legacy
 \texttt{P0 : Pic0FiniteStageGluePackage C\_Omega K}, carrier
 \texttt{P0.gluedOver}; comparison \texttt{P0.finiteStageBaseChangeIso} plus
 its structure-map equation. & Proved only as a carrier base-change comparison;
-the convenience \texttt{Over} wrapper is unrooted.\\
+the package theorem assumes algebraicity only and supplies no separability or
+Galois certificate; the convenience \texttt{Over} wrapper is unrooted.\\
 R6 & Jointly choose legacy \texttt{P} with \texttt{L = P.N.1} finite Galois,
 then construct
 \texttt{xiL : pic0Subgroup ((baseChange K L).obj C) P.gluedOver}, (UC), and
@@ -94,7 +101,8 @@ the exact \texttt{RepresentableBy} certificate. & Unresolved; the class is the
 first unmet mathematical producer.\\
 R7 & Prove \texttt{P.gluedMap.IsProjective}, then construct
 \texttt{(pic0SemilinearGalActionOfRepresentableBy C repL).OrbitsInAffineOpen}
-on the same \texttt{P.gluedOver}. & Projectivity unresolved; exact conditional
+on the same \texttt{P.gluedOver}. & Projectivity planned and blocked by R6;
+exact conditional
 wrapper source-present but unrooted.\\
 R8 & \texttt{pic0RepresentableBy\_finiteGaloisDescent C repL}; carrier
 \texttt{StableAffineOpen.gluedQuotientOver ...}. & Proved conditionally on

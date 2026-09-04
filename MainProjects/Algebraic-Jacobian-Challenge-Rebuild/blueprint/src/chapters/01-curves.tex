@@ -81,17 +81,19 @@ quarantined in Appendix~\ref{route-app-quarantine}.
 
 \section{Hypothesis ledger}
 
-Fix a separable closure \(\Omega/K\): thus \(\Omega/K\) is algebraic and
-separable and \(\Omega\) is separably closed.  The exact Lean context includes
-\(\operatorname{Algebra.IsSeparable} K\ \Omega\).  Every finite coefficient
-set used in descent is required first to lie in a finite subextension
+Fix the canonical separable closure
+\(\Omega=\operatorname{SeparableClosure}K\).  Thus \(\Omega/K\) is algebraic,
+separable, and normal, and \(\Omega\) is separably closed.  The exact Lean
+instantiation carries \(\operatorname{Algebra.IsSeparable} K\ \Omega\) and the
+normality used by the normal-closure construction.  Every finite coefficient
+set used in R6 must first lie in a finite subextension
 \(E/K\subset\Omega/K\) carrying both \(\operatorname{Module.Finite}_K E\) and
-\(\operatorname{Algebra.IsSeparable} K E\).  Only after that certificate is
-available may the finite normal-closure theorem be applied.  A stage carrying
-only \(\operatorname{Algebra.IsAlgebraic} K E\) is not admissible for R6.
-The checked carrier comparison may first be built at an arbitrary finite
-subextension \(E_0/K\).  The missing universal-class producer must enlarge all
-finitely many coefficients to a finite normal subextension and only then
+\(\operatorname{Algebra.IsSeparable} K E\).  A generic GluePackage, however,
+is constructed under algebraicity alone and does not itself produce the latter
+certificate.  The checked carrier comparison may therefore first be built at
+an arbitrary algebraic finite stage \(E_0/K\).  The missing universal-class
+producer must separately establish separability, enlarge all finitely many
+coefficients to a finite normal subextension inside \(\Omega\), and only then
 finalize the legacy package \(P\).
 Accordingly its literal final field \(L=P.N.1\) is already finite Galois over
 \(K\); no later step changes the carrier.  The following ledger is exhaustive.
@@ -102,18 +104,20 @@ Accordingly its literal final field \(L=P.N.1\) is already finite Galois over
 H1 & \(K\) is a field. & Global; never discharged.\\
 H2 & \(C/K\) is smooth of relative dimension one, proper, and geometrically
 irreducible. & Global challenge input; preserved by field base change.\\
-H3 & \(\Omega/K\) is algebraic and separable, and \(\Omega\) is separably
-closed; every finite stage \(E/K\subset\Omega\) used by the route carries
+H3 & \(\Omega=\operatorname{SeparableClosure}K\), hence \(\Omega/K\) is
+algebraic, separable, and normal and \(\Omega\) is separably closed; every
+finite stage \(E/K\subset\Omega\) admitted to R6 carries
 \(\operatorname{Module.Finite}_K E\) and \(\operatorname{Algebra.IsSeparable} K E\). &
 Used for translated rank-one coverage, finite-stage spreading, and the
 finite-Galois final stage.  The finite normal closure is taken only after the
 separability certificate is present, and remains inside \(\Omega\).  This is
 stronger than merely choosing an algebraic separably closed extension over an
-imperfect field; the exact Lean context must include
-\texttt{Algebra.IsSeparable K Omega}.\\
+imperfect field; the exact Lean instantiation must expose the separability and
+normality needed at the normal-closure step.\\
 H4 & A legacy finite-stage glue package \(P_0\) has final field
 \(E_0=P_0.N.1\subset\Omega\). & Checked from finite presentation of the finite
-atlas; it supplies the comparison shape but is not yet the final route carrier.\\
+atlas under algebraicity alone; it supplies the comparison shape but neither a
+separability certificate nor the final route carrier.\\
 H5 & A legacy package \(P\) is selected jointly with the universal-class
 descent, with \(L=P.N.1\subset\Omega\) finite Galois over \(K\). & The
 normal-closure theorem supplies the field enlargement; reflecting the whole
@@ -123,8 +127,9 @@ H6 & \(h_{J_L}\simeq\operatorname{Pic}^0_{C_L}\) on the literal carrier
 \(J_L=P.\mathrm{gluedOver}\). & \textbf{Unresolved first mathematical
 producer}; it must come from a class \(\xi_L\) on this carrier and its Yoneda
 equivalence.\\
-H7 & \(P.\mathrm{gluedMap}\) is projective. & \textbf{Unresolved exact-carrier
-geometry}; this is the one selected sufficient input for orbit-affineness.\\
+H7 & \(P.\mathrm{gluedMap}\) is projective. & \textbf{Planned downstream
+geometry, blocked by H6}; this is the one selected sufficient input for
+orbit-affineness.\\
 H8 & \(J_L\to\Spec L\) is locally of finite type and quasi-compact. & Produced
 from the finite affine presentation; the conditional Galois wrappers consume
 these certificates.\\

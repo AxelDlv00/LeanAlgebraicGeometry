@@ -41,7 +41,7 @@ characterized by invariance of the universal Picard class.
 \end{theorem}
 
 \begin{proof}
-  This target is unresolved.  A valid proof must construct a relatively ample
+  This target is planned and blocked on (FS-Rep).  A valid proof must construct a relatively ample
   invertible sheaf, or equivalently the finite-type closed immersion furnished
   by the projectivity API, on the literal glued scheme and verify compatibility
   with \(P.\mathrm{gluedMap}\).  Classical projectivity of the Jacobian cannot
@@ -80,7 +80,7 @@ characterized by invariance of the universal Picard class.
   \texttt{[FiniteDimensional K P.N.1] [IsGalois K P.N.1]} and returns (OA) on
   \texttt{P.gluedOver}.  Its module is not public-root reachable, so it receives
   no \texttt{\textbackslash leanok} marker; rooting that wrapper is a planned
-  integration step after the unresolved input (Proj).  The immersion entry
+  integration step after the planned input (Proj).  The immersion entry
   point used internally by the wrapper is quarantined as a second public route.
 \end{proof}
 
@@ -150,7 +150,6 @@ characterized by invariance of the universal Picard class.
 \begin{remark}[No carrier switch]
   \label{route-rem-no-carrier-switch}
   \dcref{custom}
-  \uses{route-thm-finite-galois-descent}
 
   The selected route finalizes one legacy package with \(L=P.N.1\) before
   descending \(\xi_L\).  It then uses \(P.\mathrm{gluedOver}\) in (FS-Rep),

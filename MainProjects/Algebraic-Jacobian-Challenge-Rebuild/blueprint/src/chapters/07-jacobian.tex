@@ -73,7 +73,8 @@
   `toJacobianData` constructor assigns the four displayed fields without
   transport; all four comparison lemmas are proved by reflexivity.  This is
   the required same-carrier handoff.  It remains conditional until the two
-  unresolved producers in Chapter~\ref{route-ch-universal} and
+  first unresolved producer and downstream planned producer in
+  Chapter~\ref{route-ch-universal} and
   Chapter~\ref{route-ch-galois} are supplied.
 \end{proof}
 
@@ -146,17 +147,11 @@
       \operatorname{Pic}^0_C(\Spec K[\epsilon])\longrightarrow
       \operatorname{Pic}^0_C(\Spec K)\right),
   \]
-  and \(\mathfrak m_e/\mathfrak m_e^2\) is finite-dimensional over
-  \(\kappa(e)\).  These are bijections of sets.  In particular, the displayed
-  kernel equivalence alone does not identify scalar multiplication or prove a
-  dimension formula.
-  The checked auxiliary declaration
-  \texttt{JacobianData.finiteDimensional\_cotangentSpace} supplies the
-  finite-dimensionality certificate used by the later numerical consumer; it
-  is recorded in the handoff table but omitted from the machine attachment
-  because the current hgraph scanner includes a following module comment in
-  that declaration's body and consequently reports a lexical ``sorry''
-  false positive.  No ``sorry'' occurs in the declaration or its proof.
+  These are bijections of sets.  In particular, the displayed kernel
+  equivalence alone does not identify scalar multiplication or prove a
+  dimension formula.  Finite-dimensionality of the cotangent space is used
+  internally by the checked numerical consumers below; it is not part of this
+  theorem-family claim.
 \end{theorem}
 
 \begin{theorem}[Conditional tangent dimension consumers]
@@ -337,7 +332,7 @@ dimension count.
 \end{theorem}
 
 \begin{proof}
-  These are unresolved producers, not assumptions to erase.  For the first,
+  These are planned downstream producers, not assumptions to erase.  For the first,
   Kleiman's divisor/Hilbert construction is the classical source shape; the
   AJCR proof must build the actual proper divisor scheme rather than reuse the
   widened affine-test representer, define the displayed fixed translation, and
@@ -391,7 +386,7 @@ dimension count.
   own Abel source, geometric-reducedness proof, or dimension chart.
 \end{proof}
 
-\section{The unresolved Phase 8 assembly}
+\section{The blocked Phase 8 assembly}
 
 \begin{theorem}[Rational-extension and uniqueness substrate]
   \label{route-thm-albanese-substrate}
@@ -458,7 +453,7 @@ dimension count.
   precomposition proves uniqueness.  Existence is not formal: it requires the
   map \(C\to A\) to be constant.  Milne I.3, Proposition 3.9 proves this only
   for rational maps from \(\mathbb A^1\) or \(\mathbb P^1\).  Its
-  specialization here therefore first requires the unresolved pointed
+  specialization here therefore first requires the planned pointed
   genus-zero classification \(C\simeq\mathbb P^1_K\), or an equivalent
   rational-parametrization bridge.  No checked theorem currently proves that
   bridge, derives (V0) from \(g(C)=0\), or supplies (Hex); all three remain

@@ -1,4 +1,4 @@
-\chapter{Universal class and finite-stage representability}
+\chapter{Universal class and the finite-stage representability gap}
 \label{route-ch-universal}
 
 Chapter~\ref{route-ch-finite-stage} proves the carrier comparison for any
@@ -21,22 +21,21 @@ This joint choice is what prevents a silent change of carrier.
     AlgebraicGeometry.pic0FiniteStageUniversalAtlasClass}
   \leanok
   \dcref{custom: Yoneda universal element and its restrictions}
-  \uses{route-thm-global-comparison}
+  \uses{route-thm-sepclosed-representability, route-thm-finite-atlas}
 
   Let
   \[
     \xi_\Omega:=r_\Omega(\mathrm{id}_{J_\Omega})
        \in\operatorname{Pic}^0_{C_\Omega}(J_\Omega).
   \]
-  For every selected affine chart \(U_i\subset J_\Omega\) and every selected
-  affine overlap \(U_{ij\alpha}\subset U_i\cap U_j\), the checked classes are
-  exactly the pullbacks of this one \(\xi_\Omega\).  If
-  \(q^i_{ij\alpha}:U_{ij\alpha}\to U_i\) and
-  \(q^j_{ij\alpha}:U_{ij\alpha}\to U_j\), then
+  For every selected affine chart \(U_i\subset J_\Omega\) and every exact
+  ordered pair-overlap \(U_{ij}=U_i\cap U_j\), the checked classes are exactly
+  the pullbacks of this one \(\xi_\Omega\).  If
+  \(q^i_{ij}:U_{ij}\to U_i\) and \(q^j_{ij}:U_{ij}\to U_j\), then
   \[
-    (q^i_{ij\alpha})^*(\xi_\Omega|_{U_i})
-      =\xi_\Omega|_{U_{ij\alpha}}
-      =(q^j_{ij\alpha})^*(\xi_\Omega|_{U_j}).
+    (q^i_{ij})^*(\xi_\Omega|_{U_i})
+      =\xi_\Omega|_{U_{ij}}
+      =(q^j_{ij})^*(\xi_\Omega|_{U_j}).
   \]
 \end{theorem}
 
@@ -60,8 +59,8 @@ attachments or proof credit in this specification.
   \label{route-thm-descended-universal-class}
   \notready
   \source{stacks-project}
-  \dcref{Tags 01ZM and 0EXM; Tag 0B9K as a source boundary}
-  \uses{route-thm-sepclosed-universal-class}
+  \dcref{Tags 01ZM, 0BMG, and 0EXM; Tag 0B9K as a source boundary}
+  \uses{route-thm-sepclosed-universal-class, route-thm-global-comparison}
 
   There must exist, simultaneously:
   \begin{enumerate}
@@ -104,8 +103,11 @@ attachments or proof credit in this specification.
 \begin{proof}
   The field-theoretic part has no route choice.  Every finite coefficient set
   lies in a finite separable subextension because \(\Omega/K\) is algebraic
-  and separable.  Stacks Tag 0EXM places its finite normal closure \(L\) inside
-  \(\Omega\).  Only then re-run the finite-presentation descent of all chart
+  and separable.  Normality of \(\Omega/K\) and Stacks Tag 0BMG place a finite
+  normal enlargement \(L/K\), containing that coefficient field, inside
+  \(\Omega\).  Separability inherited from \(\Omega/K\), equivalently Tag
+  0EXM applied to the normal closure of the finite separable input, makes
+  \(L/K\) finite Galois.  Only then re-run the finite-presentation descent of all chart
   rings, restriction maps, inverse maps, and triple equations at \(L\), and
   assemble the final legacy package with \(P.N.1=L\).  One must not retain an
   earlier package while changing its field.
@@ -169,7 +171,6 @@ attachments or proof credit in this specification.
 \begin{remark}[Frontier accounting]
   \label{route-rem-first-frontier}
   \dcref{custom}
-  \uses{route-thm-finite-stage-yoneda}
 
   The first unmet mathematical producer is the class \(\xi_L\) and equation
   (UC) in Theorem~\ref{route-thm-descended-universal-class}.  Choosing the

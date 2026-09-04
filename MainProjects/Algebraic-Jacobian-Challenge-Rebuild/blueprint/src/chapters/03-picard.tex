@@ -17,37 +17,47 @@ is not inserted into the rank-one Abel isomorphism itself.
   \dcref{custom}
   \uses{route-thm-rank-one-abel-iso}
 
-  A translator is exactly a Cech Picard class
+  Put \(\mathcal P^0_\Sigma=(\operatorname{pic0SigmaSheaf} C).1\).  A
+  translator is exactly an element of the Lean subtype
   \[
-    a\in (C\times_k k).\mathrm{CechPic}
-    \quad\text{with}\quad \deg(a)=g.
+    \operatorname{PicRankOneTranslatorIndex}(C)
+      =\left\{a:(C\mathbin\otimes\operatorname{overSpec}(k,k)).\mathrm{left}.
+          \mathrm{CechPic}\ \middle|\
+          \operatorname{classDeg}_k(a)=g\right\}.
   \]
-  For every \(T/k\), multiplication by its theta family gives a natural
-  equivalence
+  On the slice site, multiplication by its theta family gives the natural
+  isomorphism
   \[
     \tau_a(T):\operatorname{Pic}^0_C(T)
        \xrightarrow{\sim}\operatorname{Pic}^{g}_C(T),
     \qquad \lambda\longmapsto\lambda\otimes a_T .
   \]
   With \(W\) the represented rank-one divisor open from
-  Theorem~\ref{route-thm-rank-one-open}, define
+  Theorem~\ref{route-thm-rank-one-open}, the actual big-site chart is
   \[
-    j_a:h_W\longrightarrow\operatorname{Pic}^0_C
+    j_a:\operatorname{yoneda}(W.\mathrm{left})
+      \longrightarrow\mathcal P^0_\Sigma .
   \]
-  as the canonical rank-one Abel isomorphism, followed by inclusion into
-  \(\operatorname{Pic}^{g}_C\), followed by \(\tau_a^{-1}\).  Every \(j_a\)
-  is relatively represented by open immersions.
+  It is the canonical rank-one Abel isomorphism, followed by the rank-one-locus
+  inclusion, followed by the inverse of the sigma extension of \(\tau_a\).
+  Every \(j_a\) is relatively represented by open immersions.  The later
+  representability theorem uses the canonical sigma-extension-to-slice bridge
+  to recover the target \(\operatorname{pic0TypeFunctor}(C)\); the chart target
+  itself is not definitionally that slice functor.
 \end{definition}
 
 \begin{proof}
   The three factors have the exact Lean carriers
   \[
-    h_W\;\xrightarrow{\sim}\;
-    \operatorname{sigmaExtension}(\operatorname{PicRankOneOpen})
-    \longrightarrow \operatorname{pic0SigmaSheaf}
+    \operatorname{yoneda}(W.\mathrm{left})\xrightarrow{\sim}
+    \operatorname{rankOneLocus}(\pi)
+      \longrightarrow
+    \operatorname{sigmaExtension}(\operatorname{Pic}^{g}_C)
+      \xrightarrow{\operatorname{sigmaExtension}(\tau_a)^{-1}}
+    \mathcal P^0_\Sigma .
   \]
-  after applying the genus translation.  The first and last factors are
-  natural isomorphisms and the middle factor is the checked relatively
+  The first and last factors are natural isomorphisms and the middle factor is
+  the checked relatively
   represented open inclusion.  Closure of open immersions under composition
   proves the claim.
 \end{proof}
@@ -64,7 +74,8 @@ is not inserted into the rank-one Abel isomorphism itself.
 
   The auxiliary producer has the following exact field-valued type.  For every
   field extension \(K/k\) and every
-  \(\mu\in\operatorname{Pic}^0_C(\operatorname{Spec}_k K)\), it returns a
+  \(\mu\in\operatorname{pic0Subgroup}(C,\operatorname{overSpec}(k,K))\), it
+  returns a
   finite separable extension \(L/K\), the scalar-tower instances
   \(k\to K\to L\), a finite-support datum on \(C_L\), its
   residue-degree-one certificate, and the Cech subtraction equality; its final
@@ -75,32 +86,38 @@ is not inserted into the rank-one Abel isomorphism itself.
     [\operatorname{Algebra}KL]\,[\operatorname{IsScalarTower}kKL]
     [\operatorname{Module.Finite}_K L]\,[\operatorname{Algebra.IsSeparable}KL]\;
     \exists d\;r,\quad
-    \operatorname{classDeg}_k(\operatorname{chartTwistClass}(d,r))=g
-    \;\wedge\;\operatorname{finiteSupport}(r)\;\wedge\;
-    \operatorname{residueDegreeOne}(r)\;\wedge\;
-    \operatorname{picClass}(r)=\operatorname{map}((\operatorname{chartTwistClass}(0,r))^{-1})
+    \operatorname{classDeg}_k(\operatorname{chartTwistClass}(d.m,r.Z))=g
+    \;\wedge\;\operatorname{Finite}(r.S.\operatorname{support})\;\wedge\;
+    \bigl(\forall p\in r.S.\operatorname{support},
+      \operatorname{residueDeg}_L(p)=1\bigr)\;\wedge\;
+    \operatorname{picClass}_L(r.S)=
+      \operatorname{CechPic.map}(C,k,L)
+        (\operatorname{chartTwistClass}(0,r.Z)^{-1})
     \;\wedge\;\operatorname{rankOneLayer}(\mu,d)\in
-      \operatorname{PicRankOneOpen}(\pi)(\operatorname{Spec}_k K).
+      \operatorname{PicRankOneOpen}(\pi)(\operatorname{overSpec}(k,K)).
   \]
   The public theorem
   \texttt{exists\_picRankOneTranslatedChart\_fieldFactorization} deliberately
   hides that auxiliary \(L,d,r\): its exact conclusion is only
   \[
-    \exists a:\operatorname{PicRankOneTranslatorIndex}\;
-    \exists x:\operatorname{Spec}_k K\longrightarrow W,\qquad
-    j_a(x)=\mu .
+    \exists a:\operatorname{PicRankOneTranslatorIndex}(C)\;
+    \exists x:(\operatorname{overSpec}(k,K)).\mathrm{left}
+        \longrightarrow W.\mathrm{left},\qquad
+    (j_a)_{(\operatorname{overSpec}(k,K)).\mathrm{left}}(x)
+      =\langle(\operatorname{overSpec}(k,K)).\mathrm{hom},\mu\rangle
+      \in\mathcal P^0_\Sigma((\operatorname{overSpec}(k,K)).\mathrm{left}).
   \]
   Thus \(L\) is not a field-valued output of the public factorization and is
-  never identified with \(k\) or \(K\).  Consequently, for every \(k\)-scheme \(T\), every
-  \(\mu\in\operatorname{Pic}^0_C(T)\), and every point \(t\in T\), there are
+  never identified with \(k\) or \(K\).  Consequently, for every \(k\)-scheme
+  \(T\), every \(s\in\mathcal P^0_\Sigma(T)\), and every point \(t\in T\), there are
   an open neighbourhood \(U\subseteq T\), an index \(a\), and
-  \(x_U:U\to W\) with \(j_a(x_U)=\mu|_U\).  Equivalently, the family
+  \(x_U:U\to W.\mathrm{left}\) with \(j_a(x_U)=s|_U\).  Equivalently, the family
   \(\{j_a\}_a\) is pointwise covering and its sigma-desc map is
   Zariski-locally surjective.
 \end{theorem}
 
 \begin{proof}
-  Restrict \(\mu\) to \(\kappa(t)\).  The translated-drop construction first
+  Restrict the slice component of \(s\) to \(\kappa(t)\).  The translated-drop construction first
   produces the displayed finite separable extension \(L/\kappa(t)\), a finite
   support on \(C_L\) of residue degree one over \(L\), and the Cech
   subtraction equality.  The resulting translated class is then proved to
@@ -108,9 +125,11 @@ is not inserted into the rank-one Abel isomorphism itself.
   inverse gives the factorization through \(W\).  There is no step in which
   separable closedness identifies the auxiliary residue field with \(k\), and
   no descent of the witness from \(L\) (or from \(\kappa(t)\)) to \(k\) is
-  claimed.  Relative representability of \(j_a\) pulls this factorization
+  claimed.  Relative representability of \(j_a\) pulls this residue-field factorization
   back to an open neighbourhood of \(t\).  Stacks Tag 056U is used only for
-  the finite-separable closed-point input in the support construction.
+  density of closed points with finite separable residue field on a smooth
+  scheme; obtaining the required rational point over a separably closed field
+  is a separate specialization.
 
   Milne's Lemma 5.2(b) is the classical fibrewise model: a general
   degree-\(g\) divisor has \(h^0=1\).  The Lean proof is stronger in the
