@@ -85,6 +85,40 @@ theorem canonicalComplexExponential_hasMFDerivAt_zero
   intro v
   rfl
 
+/-! The fixed-vector parameter derivative is a direct composition of the
+    scalar multiplication map with the origin derivative above. -/
+theorem canonicalComplexFlow_hasMFDerivAt_zero
+    [CompleteSpace E] [T2Space G] [I.Boundaryless]
+    [CompactSpace G] [PreconnectedSpace G] (v : E) :
+    HasMFDerivAt 𝓘(ℂ) I
+      (fun z : ℂ => canonicalComplexFlow (G := G) I v z) 0
+      ((ContinuousLinearMap.id ℂ ℂ).smulRight v) := by
+  have hscalarF : HasFDerivAt (fun z : ℂ => z • v)
+      ((ContinuousLinearMap.id ℂ ℂ).smulRight v) 0 :=
+    (hasFDerivAt_id (𝕜 := ℂ) (E := ℂ) 0).smul_const v
+  have hscalar : HasMFDerivAt 𝓘(ℂ) 𝓘(ℂ, E)
+      (fun z : ℂ => z • v) 0
+      ((ContinuousLinearMap.id ℂ ℂ).smulRight v) :=
+    hscalarF.hasMFDerivAt
+  have hexp := canonicalComplexExponential_hasMFDerivAt_zero (G := G) I
+  have hexp' : HasMFDerivAt 𝓘(ℂ, E) I
+      (canonicalComplexExponential (G := G) I) ((0 : ℂ) • v)
+      (ContinuousLinearMap.id ℂ E) := by
+    rw [zero_smul]
+    exact hexp
+  have hcomp := HasMFDerivAt.comp (x := (0 : ℂ))
+    (f := fun z : ℂ => z • v)
+    (g := canonicalComplexExponential (G := G) I)
+    hexp' hscalar
+  convert hcomp using 1
+  · funext z
+    simp only [Function.comp_apply, canonicalComplexFlow_eq_exponential_smul]
+  · apply ContinuousLinearMap.ext
+    intro z
+    change z • v = (ContinuousLinearMap.id ℂ E)
+      ((ContinuousLinearMap.id ℂ ℂ).smulRight v z)
+    simp
+
 /-- The time-one exponential candidate is complex-differentiable everywhere.
 The proof translates the identity derivative at zero using the additive flow
 law. -/
