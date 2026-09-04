@@ -6,6 +6,7 @@ Authors: The Mumford Contributors
 
 import MumfordLib.ComplexLieAdjoint
 import MumfordLib.RealLieFlowParameter
+import MumfordLib.ComplexLieFlowParameter
 import Mathlib.Analysis.Calculus.InverseFunctionTheorem.ContDiff
 import Mathlib.Algebra.Group.Commute.Basic
 import Mathlib.Algebra.Group.Subgroup.Lattice
@@ -454,6 +455,56 @@ theorem canonicalRealFlow_time_one_surjective
     rw [huniv]
     exact Set.mem_univ x
   exact hx
+
+/-!
+### Consuming the named complex exponential candidate
+
+The real flow already supplies the global range statement.  The next bridge
+transports it across the identity-on-vectors map used by
+`canonicalComplexExponential`, and then records the resulting commutativity
+route using the bundled multiplicative exponential API. -/
+
+/-- The named complex exponential candidate is surjective because its
+underlying real time-one flow is surjective. -/
+theorem canonicalComplexExponential_surjective
+    [CompleteSpace E] [T2Space G]
+    [I.Boundaryless] [CompactSpace G] [PreconnectedSpace G] :
+    Function.Surjective (canonicalComplexExponential (G := G) I) := by
+  intro x
+  obtain ⟨v, hv⟩ := canonicalRealFlow_time_one_surjective (G := G) I x
+  refine ⟨v, ?_⟩
+  change canonicalRealFlow (G := G) I
+    (complexToRealLieAlgebraMap I v) 1 = x
+  exact hv
+
+/-- Surjectivity of the bundled multiplicative exponential homomorphism. -/
+theorem canonicalComplexExponentialMonoidHom_surjective
+    [CompleteSpace E] [T2Space G]
+    [I.Boundaryless] [CompactSpace G] [PreconnectedSpace G] :
+    Function.Surjective (canonicalComplexExponentialMonoidHom (G := G) I) := by
+  intro x
+  obtain ⟨v, hv⟩ := canonicalComplexExponential_surjective (G := G) I x
+  refine ⟨Multiplicative.ofAdd v, ?_⟩
+  simpa using hv
+
+/-- The canonical complex exponential gives a direct central-generator proof
+of commutativity.  This is a consumer of the named candidate, while the
+source-level holomorphic exponential and its lattice kernel remain separate
+analytic inputs. -/
+theorem complexLieGroup_isMulCommutative_of_canonicalComplexExponential
+    [CompleteSpace E] [T2Space G]
+    [I.Boundaryless] [CompactSpace G] [PreconnectedSpace G] :
+    IsMulCommutative G := by
+  apply isMulCommutative_of_central_generators
+    (s := Set.range (canonicalComplexExponential (G := G) I))
+  · intro z hz x
+    obtain ⟨v, rfl⟩ := hz
+    change Commute x (canonicalRealFlow (G := G) I
+      (complexToRealLieAlgebraMap I v) 1)
+    exact (canonicalRealFlow_spec (G := G) I
+      (complexToRealLieAlgebraMap I v)).2.2.2 x 1
+  · rw [Set.range_eq_univ.mpr (canonicalComplexExponential_surjective (G := G) I)]
+    exact Subgroup.closure_univ
 
 /-- Every compact connected complex Lie group is commutative.  Canonical real
 flows give a central identity neighborhood, and connectedness propagates its
