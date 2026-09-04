@@ -134,51 +134,51 @@ theorem chartRingBaseChangeIso_hom_structureMap
       pullback.snd (chartBaseChangeMap C P U)
         (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k))) := by
   letI : CommRing
-      (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U) :=
+      (Pic0FiniteStageChartBaseChangeRing C P.models.L P.models.n P.models.m P.models.relation P.models.M P.N U) :=
     pic0FiniteStageChartBaseChangeCommRing
-      C P.L P.n P.m P.relation P.M P.N U
+      C P.models.L P.models.n P.models.m P.models.relation P.models.M P.N U
   letI : CommSemiring
-      (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U) :=
+      (Pic0FiniteStageChartBaseChangeRing C P.models.L P.models.n P.models.m P.models.relation P.models.M P.N U) :=
     (inferInstance : CommRing
-      (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U)).toCommSemiring
+      (Pic0FiniteStageChartBaseChangeRing C P.models.L P.models.n P.models.m P.models.relation P.models.M P.N U)).toCommSemiring
   letI : Semiring
-      (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U) :=
+      (Pic0FiniteStageChartBaseChangeRing C P.models.L P.models.n P.models.m P.models.relation P.models.M P.N U) :=
     (inferInstance : CommSemiring
-      (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U)).toSemiring
+      (Pic0FiniteStageChartBaseChangeRing C P.models.L P.models.n P.models.m P.models.relation P.models.M P.N U)).toSemiring
   letI : Algebra P.N.1
-      (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U) :=
+      (Pic0FiniteStageChartBaseChangeRing C P.models.L P.models.n P.models.m P.models.relation P.models.M P.N U) :=
     pic0FiniteStageChartBaseChangeAlgebra
-      C P.L P.n P.m P.relation P.M P.N U
+      C P.models.L P.models.n P.models.m P.models.relation P.models.M P.N U
   letI : CommRing
       (k ⊗[P.N.1]
-        Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U) :=
+        Pic0FiniteStageChartBaseChangeRing C P.models.L P.models.n P.models.m P.models.relation P.models.M P.N U) :=
     @Algebra.TensorProduct.instCommRing P.N.1 k
-      (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U)
+      (Pic0FiniteStageChartBaseChangeRing C P.models.L P.models.n P.models.m P.models.relation P.models.M P.N U)
       (inferInstance : CommSemiring P.N.1) (inferInstance : CommRing k)
       (inferInstance : Algebra P.N.1 k)
       (inferInstance : CommSemiring
-        (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U))
+        (Pic0FiniteStageChartBaseChangeRing C P.models.L P.models.n P.models.m P.models.relation P.models.M P.N U))
       (inferInstance : Algebra P.N.1
-        (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U))
+        (Pic0FiniteStageChartBaseChangeRing C P.models.L P.models.n P.models.m P.models.relation P.models.M P.N U))
   letI : CommSemiring
       (k ⊗[P.N.1]
-        Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U) :=
+        Pic0FiniteStageChartBaseChangeRing C P.models.L P.models.n P.models.m P.models.relation P.models.M P.N U) :=
     (inferInstance : CommRing
       (k ⊗[P.N.1]
-        Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U)).toCommSemiring
+        Pic0FiniteStageChartBaseChangeRing C P.models.L P.models.n P.models.m P.models.relation P.models.M P.N U)).toCommSemiring
   letI : Semiring
       (k ⊗[P.N.1]
-        Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U) :=
-    pic0FiniteStageFinalScalarExtensionSemiring C P.L P.n P.m P.relation P.M P.N
+        Pic0FiniteStageChartBaseChangeRing C P.models.L P.models.n P.models.m P.models.relation P.models.M P.N U) :=
+    pic0FiniteStageFinalScalarExtensionSemiring C P.models.L P.models.n P.models.m P.models.relation P.models.M P.N
       (Sum.inl U)
   letI : Algebra k
       (k ⊗[P.N.1]
-        Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U) :=
-    pic0FiniteStageFinalScalarExtensionAlgebra C P.L P.n P.m P.relation P.M P.N
+        Pic0FiniteStageChartBaseChangeRing C P.models.L P.models.n P.models.m P.models.relation P.models.M P.N U) :=
+    pic0FiniteStageFinalScalarExtensionAlgebra C P.models.L P.models.n P.models.m P.models.relation P.models.M P.N
       (Sum.inl U)
   change
     (affineBaseChangeIso P.N.1 k
-      (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U) ≪≫
+      (Pic0FiniteStageChartBaseChangeRing C P.models.L P.models.n P.models.m P.models.relation P.models.M P.N U) ≪≫
       Scheme.Spec.mapIso
         (chartFinalBaseChangeEquiv C P U).symm.toRingEquiv.toCommRingCatIso.op).hom ≫
       Spec.map (CommRingCat.ofHom
@@ -199,78 +199,78 @@ noncomputable def overlapBaseChangeIso
       (pic0FiniteStageAffineOverlap C U V).1.toScheme :=
   letI : CommRing
       (Pic0FiniteStageOverlapBaseChangeRing
-        C P.L P.n P.m P.relation P.M P.N U V) :=
+        C P.models.L P.models.n P.models.m P.models.relation P.models.M P.N U V) :=
     pic0FiniteStageOverlapBaseChangeCommRing
-      C P.L P.n P.m P.relation P.M P.N U V
+      C P.models.L P.models.n P.models.m P.models.relation P.models.M P.N U V
   letI : Algebra P.N.1
       (Pic0FiniteStageOverlapBaseChangeRing
-        C P.L P.n P.m P.relation P.M P.N U V) :=
+        C P.models.L P.models.n P.models.m P.models.relation P.models.M P.N U V) :=
     pic0FiniteStageOverlapBaseChangeAlgebra
-      C P.L P.n P.m P.relation P.M P.N U V
+      C P.models.L P.models.n P.models.m P.models.relation P.models.M P.N U V
   letI : Algebra P.N.1
-      (Pic0FiniteStageFinalModelRing C P.L P.n P.m P.relation P.M P.N
+      (Pic0FiniteStageFinalModelRing C P.models.L P.models.n P.models.m P.models.relation P.models.M P.N
         (Sum.inr (U, V))) :=
-    pic0FiniteStageFinalModelRingAlgebra C P.L P.n P.m P.relation P.M P.N
+    pic0FiniteStageFinalModelRingAlgebra C P.models.L P.models.n P.models.m P.models.relation P.models.M P.N
       (Sum.inr (U, V))
   letI : Module P.N.1
-      (Pic0FiniteStageFinalModelRing C P.L P.n P.m P.relation P.M P.N
+      (Pic0FiniteStageFinalModelRing C P.models.L P.models.n P.models.m P.models.relation P.models.M P.N
         (Sum.inr (U, V))) :=
-    pic0FiniteStageFinalModelRingModule C P.L P.n P.m P.relation P.M P.N
+    pic0FiniteStageFinalModelRingModule C P.models.L P.models.n P.models.m P.models.relation P.models.M P.N
       (Sum.inr (U, V))
   letI : CommRing
-      (Pic0FiniteStageFinalModelRing C P.L P.n P.m P.relation P.M P.N
+      (Pic0FiniteStageFinalModelRing C P.models.L P.models.n P.models.m P.models.relation P.models.M P.N
         (Sum.inr (U, V))) :=
-    pic0FiniteStageFinalModelRingCommRing C P.L P.n P.m P.relation P.M P.N
+    pic0FiniteStageFinalModelRingCommRing C P.models.L P.models.n P.models.m P.models.relation P.models.M P.N
       (Sum.inr (U, V))
   letI : CommSemiring
-      (Pic0FiniteStageFinalModelRing C P.L P.n P.m P.relation P.M P.N
+      (Pic0FiniteStageFinalModelRing C P.models.L P.models.n P.models.m P.models.relation P.models.M P.N
         (Sum.inr (U, V))) :=
     (inferInstance : CommRing
-      (Pic0FiniteStageFinalModelRing C P.L P.n P.m P.relation P.M P.N
+      (Pic0FiniteStageFinalModelRing C P.models.L P.models.n P.models.m P.models.relation P.models.M P.N
         (Sum.inr (U, V)))).toCommSemiring
   letI : Semiring
-      (Pic0FiniteStageFinalModelRing C P.L P.n P.m P.relation P.M P.N
+      (Pic0FiniteStageFinalModelRing C P.models.L P.models.n P.models.m P.models.relation P.models.M P.N
         (Sum.inr (U, V))) :=
-    (pic0FiniteStageFinalModelRingCommSemiring C P.L P.n P.m P.relation P.M P.N
+    (pic0FiniteStageFinalModelRingCommSemiring C P.models.L P.models.n P.models.m P.models.relation P.models.M P.N
       (Sum.inr (U, V))).toSemiring
   letI : CommRing
-      (k ⊗[P.N.1] Pic0FiniteStageFinalModelRing C P.L P.n P.m P.relation P.M P.N
+      (k ⊗[P.N.1] Pic0FiniteStageFinalModelRing C P.models.L P.models.n P.models.m P.models.relation P.models.M P.N
         (Sum.inr (U, V))) :=
     @Algebra.TensorProduct.instCommRing P.N.1 k
-      (Pic0FiniteStageFinalModelRing C P.L P.n P.m P.relation P.M P.N
+      (Pic0FiniteStageFinalModelRing C P.models.L P.models.n P.models.m P.models.relation P.models.M P.N
         (Sum.inr (U, V)))
       (inferInstance : CommSemiring P.N.1)
       (inferInstance : CommRing k)
       (inferInstance : Algebra P.N.1 k)
       (inferInstance : CommSemiring
-        (Pic0FiniteStageFinalModelRing C P.L P.n P.m P.relation P.M P.N
+        (Pic0FiniteStageFinalModelRing C P.models.L P.models.n P.models.m P.models.relation P.models.M P.N
           (Sum.inr (U, V))))
-      (pic0FiniteStageFinalModelRingAlgebra C P.L P.n P.m P.relation P.M P.N
+      (pic0FiniteStageFinalModelRingAlgebra C P.models.L P.models.n P.models.m P.models.relation P.models.M P.N
         (Sum.inr (U, V)))
   letI : CommSemiring
-      (k ⊗[P.N.1] Pic0FiniteStageFinalModelRing C P.L P.n P.m P.relation P.M P.N
+      (k ⊗[P.N.1] Pic0FiniteStageFinalModelRing C P.models.L P.models.n P.models.m P.models.relation P.models.M P.N
         (Sum.inr (U, V))) :=
     (inferInstance : CommRing
-      (k ⊗[P.N.1] Pic0FiniteStageFinalModelRing C P.L P.n P.m P.relation P.M P.N
+      (k ⊗[P.N.1] Pic0FiniteStageFinalModelRing C P.models.L P.models.n P.models.m P.models.relation P.models.M P.N
         (Sum.inr (U, V)))).toCommSemiring
   letI : Semiring
-      (k ⊗[P.N.1] Pic0FiniteStageFinalModelRing C P.L P.n P.m P.relation P.M P.N
+      (k ⊗[P.N.1] Pic0FiniteStageFinalModelRing C P.models.L P.models.n P.models.m P.models.relation P.models.M P.N
         (Sum.inr (U, V))) :=
     (inferInstance : CommSemiring
-      (k ⊗[P.N.1] Pic0FiniteStageFinalModelRing C P.L P.n P.m P.relation P.M P.N
+      (k ⊗[P.N.1] Pic0FiniteStageFinalModelRing C P.models.L P.models.n P.models.m P.models.relation P.models.M P.N
         (Sum.inr (U, V)))).toSemiring
   letI : Algebra k
-      (k ⊗[P.N.1] Pic0FiniteStageFinalModelRing C P.L P.n P.m P.relation P.M P.N
+      (k ⊗[P.N.1] Pic0FiniteStageFinalModelRing C P.models.L P.models.n P.models.m P.models.relation P.models.M P.N
         (Sum.inr (U, V))) :=
-    pic0FiniteStageFinalScalarExtensionAlgebra C P.L P.n P.m P.relation P.M P.N
+    pic0FiniteStageFinalScalarExtensionAlgebra C P.models.L P.models.n P.models.m P.models.relation P.models.M P.N
       (Sum.inr (U, V))
   pullbackSymmetry _ _ ≪≫
     pullbackSpecIso P.N.1 k
       (Pic0FiniteStageOverlapBaseChangeRing
-        C P.L P.n P.m P.relation P.M P.N U V) ≪≫
+        C P.models.L P.models.n P.models.m P.models.relation P.models.M P.N U V) ≪≫
     Scheme.Spec.mapIso
       (pic0FiniteStageFinalBaseChangeEquiv
-        C P.L P.n P.m P.relation P.e P.M P.N
+        C P.models.L P.models.n P.models.m P.models.relation P.models.e P.models.M P.N
           (Sum.inr (U, V))).symm.toRingEquiv.toCommRingCatIso.op ≪≫
     (pic0FiniteStageAffineOverlap C U V).2.isoSpec.symm
 
@@ -287,12 +287,35 @@ theorem overlapBaseChangeIso_hom_ι
         (pic0FiniteStageAffineOverlap C U V).1.ι =
       (overlapRingBaseChangeIso C P U V).hom ≫
         (pic0FiniteStageAffineOverlap C U V).2.fromSpec := by
+  letI : CommRing
+      (Pic0FiniteStageOverlapBaseChangeRing
+        C P.models.L P.models.n P.models.m P.models.relation P.models.M P.N U V) :=
+    pic0FiniteStageOverlapBaseChangeCommRing
+      C P.models.L P.models.n P.models.m P.models.relation P.models.M P.N U V
+  letI : CommSemiring
+      (Pic0FiniteStageOverlapBaseChangeRing
+        C P.models.L P.models.n P.models.m P.models.relation P.models.M P.N U V) :=
+    (inferInstance : CommRing
+      (Pic0FiniteStageOverlapBaseChangeRing
+        C P.models.L P.models.n P.models.m P.models.relation P.models.M P.N U V)).toCommSemiring
+  letI : Semiring
+      (Pic0FiniteStageOverlapBaseChangeRing
+        C P.models.L P.models.n P.models.m P.models.relation P.models.M P.N U V) :=
+    (inferInstance : CommSemiring
+      (Pic0FiniteStageOverlapBaseChangeRing
+        C P.models.L P.models.n P.models.m P.models.relation P.models.M P.N U V)).toSemiring
+  letI : Algebra P.N.1
+      (Pic0FiniteStageOverlapBaseChangeRing
+        C P.models.L P.models.n P.models.m P.models.relation P.models.M P.N U V) :=
+    pic0FiniteStageOverlapBaseChangeAlgebra
+      C P.models.L P.models.n P.models.m P.models.relation P.models.M P.N U V
   calc
     _ = (overlapRingBaseChangeIso C P U V).hom ≫
         ((pic0FiniteStageAffineOverlap C U V).2.isoSpec.inv ≫
           (pic0FiniteStageAffineOverlap C U V).1.ι) := by
       simp only [overlapBaseChangeIso, overlapRingBaseChangeIso,
-        overlapBaseChangeMap, overlapBaseChangeStructureRingHom,
+        overlapBaseChangeMap, overlapBaseChangeStructureHom,
+        overlapBaseChangeStructureRingHom,
         overlapFinalBaseChangeEquiv, affineBaseChangeIso, Iso.trans_hom,
         Iso.symm_hom, Category.assoc]
     _ = _ := congrArg

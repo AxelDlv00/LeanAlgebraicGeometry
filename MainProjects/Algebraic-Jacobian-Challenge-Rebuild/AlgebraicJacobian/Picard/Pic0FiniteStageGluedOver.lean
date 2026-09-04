@@ -126,22 +126,22 @@ noncomputable def chartBaseChangeMap
     (U : Pic0FiniteStageChartIndex C) :
     P.glueData.U U ⟶ Spec (.of P.N.1) :=
   letI : CommRing
-      (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U) :=
+      (Pic0FiniteStageChartBaseChangeRing C P.models.L P.models.n P.models.m P.models.relation P.models.M P.N U) :=
     pic0FiniteStageChartBaseChangeCommRing
-      C P.L P.n P.m P.relation P.M P.N U
+      C P.models.L P.models.n P.models.m P.models.relation P.models.M P.N U
   letI : Algebra P.N.1
-      (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U) :=
+      (Pic0FiniteStageChartBaseChangeRing C P.models.L P.models.n P.models.m P.models.relation P.models.M P.N U) :=
     pic0FiniteStageChartBaseChangeAlgebra
-      C P.L P.n P.m P.relation P.M P.N U
+      C P.models.L P.models.n P.models.m P.models.relation P.models.M P.N U
   Spec.map (CommRingCat.ofHom
     (@algebraMap P.N.1
       (Pic0FiniteStageChartBaseChangeRing
-        C P.L P.n P.m P.relation P.M P.N U)
+        C P.models.L P.models.n P.models.m P.models.relation P.models.M P.N U)
       (inferInstance : CommSemiring P.N.1)
       (pic0FiniteStageChartBaseChangeCommRing
-        C P.L P.n P.m P.relation P.M P.N U).toSemiring
+        C P.models.L P.models.n P.models.m P.models.relation P.models.M P.N U).toSemiring
       (pic0FiniteStageChartBaseChangeAlgebra
-        C P.L P.n P.m P.relation P.M P.N U)))
+        C P.models.L P.models.n P.models.m P.models.relation P.models.M P.N U)))
 
 @[simp]
 theorem gluedMapData_chartMap
