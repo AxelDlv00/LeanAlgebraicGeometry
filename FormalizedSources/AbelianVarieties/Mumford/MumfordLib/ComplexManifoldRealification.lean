@@ -97,6 +97,28 @@ theorem HasMFDerivAt.restrict_scalars_complex
   rw [HasMFDerivAt] at hf ⊢
   exact ⟨hf.1, hf.2.restrictScalars ℝ⟩
 
+/-- A realified manifold derivative whose continuous-linear-map witness is the
+    scalar restriction of a complex-linear map can be lifted back to the
+    complex model. -/
+theorem HasMFDerivAt.of_restrict_scalars_complex
+    {E' H' M M' : Type*}
+    [NormedAddCommGroup E'] [NormedSpace ℂ E'] [TopologicalSpace H']
+    (I : ModelWithCorners ℂ E H) (J : ModelWithCorners ℂ E' H')
+    [TopologicalSpace M] [ChartedSpace H M]
+    [TopologicalSpace M'] [ChartedSpace H' M']
+    {f : M → M'} {x : M}
+    {f' : TangentSpace I x →L[ℂ] TangentSpace J (f x)}
+    (hf : HasMFDerivAt (complexToRealModel I) (complexToRealModel J) f x
+      (f'.restrictScalars ℝ)) :
+    HasMFDerivAt I J f x f' := by
+  rw [HasMFDerivAt] at hf ⊢
+  exact ⟨hf.1, hf.2.of_restrictScalars ℝ rfl⟩
+
+/-- Realifying the standard complex model gives the standard real model. -/
+theorem complexToRealModel_self :
+    complexToRealModel (𝓘(ℂ, E)) = 𝓘(ℝ, E) := by
+  apply ModelWithCorners.ext <;> rfl
+
 /-- Complex manifold differentiability implies differentiability for the
 underlying realified models. -/
 theorem MDifferentiableAt.restrict_scalars_complex
