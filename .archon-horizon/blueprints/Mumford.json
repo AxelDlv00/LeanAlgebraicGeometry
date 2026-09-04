@@ -699,7 +699,7 @@
     },
     "states": {
       "blocked": 116,
-      "closed": 827,
+      "closed": 829,
       "formalized_open": 0,
       "informal": 212,
       "ready": 96
@@ -721,6 +721,7 @@
       "Mumford.Analytic.MDifferentiableAt.restrict_scalars_complex: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Mumford.Analytic.canonicalComplexFlow: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Mumford.Analytic.canonicalComplexFlow_add_parameter: Lean declaration is not referenced by any blueprint \\lean{...}",
+      "Mumford.Analytic.canonicalComplexFlow_contMDiff_of_vector: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Mumford.Analytic.canonicalComplexFlow_continuous_joint: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Mumford.Analytic.canonicalComplexFlow_ofReal: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Mumford.Analytic.canonicalComplexFlow_zero_parameter: Lean declaration is not referenced by any blueprint \\lean{...}",
@@ -730,6 +731,7 @@
       "Mumford.Analytic.canonicalRealFlow_contMDiff_one: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Mumford.Analytic.canonicalRealFlow_continuous: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Mumford.Analytic.canonicalRealFlow_continuous_joint: Lean declaration is not referenced by any blueprint \\lean{...}",
+      "Mumford.Analytic.canonicalRealFlow_continuous_joint_complex_smul: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Mumford.Analytic.canonicalRealFlow_eq_of_isMIntegralCurve: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Mumford.Analytic.canonicalRealFlow_eq_time_one_smul: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Mumford.Analytic.canonicalRealFlow_hasMFDerivAt: Lean declaration is not referenced by any blueprint \\lean{...}",
@@ -752,9 +754,7 @@
       "Mumford.Analytic.complexLieConjugation_eq_mulAut_conj: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Mumford.Analytic.complexLieConjugation_eq_self_of_exponential: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Mumford.Analytic.complexLieConjugation_mul: Lean declaration is not referenced by any blueprint \\lean{...}",
-      "Mumford.Analytic.complexLieConjugation_one: Lean declaration is not referenced by any blueprint \\lean{...}",
-      "Mumford.Analytic.complexLieConjugation_one_eq_id: Lean declaration is not referenced by any blueprint \\lean{...}",
-      "Mumford.Analytic.complexLieGroup_isMulCommutative: Lean declaration is not referenced by any blueprint \\lean{...}"
+      "Mumford.Analytic.complexLieConjugation_one: Lean declaration is not referenced by any blueprint \\lean{...}"
     ]
   },
   "nodes": [
@@ -4791,7 +4791,7 @@
     },
     {
       "chapter": "Analytic Theory",
-      "comment_count": 9,
+      "comment_count": 10,
       "dep_count": 0,
       "descendant_count": 2,
       "group": "c140",
