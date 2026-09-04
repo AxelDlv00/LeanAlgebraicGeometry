@@ -104,6 +104,32 @@ noncomputable def chartMap (r : LocalRatioRegularization a) :
     a.chart.U.toScheme ⟶ projectiveSpace k n :=
   r.projectiveMapData.map
 
+/-! ### Independence from the chosen regularization -/
+
+/-- The projective chart map only depends on the regularized section family, not
+    on the proof that its generic values are the prescribed ratios. -/
+theorem chartMap_eq_of_regularized_eq
+    (r s : LocalRatioRegularization a)
+    (h : ∀ i, r.regularized i = s.regularized i) :
+    r.chartMap = s.chartMap := by
+  have hfun : r.regularized = s.regularized := funext h
+  cases r with
+  | mk rsections hrules =>
+    cases s with
+    | mk ssections hrules =>
+      dsimp at hfun
+      cases hfun
+      rfl
+
+/-- The chart map obtained from the zero-divisor bound is independent of the
+    auxiliary representatives selected by `of_zeroBound`. -/
+theorem of_zeroBound_chartMap_eq
+    (hbound : ∀ i, a.coordinate i ∈
+      divisorSections (X := X) (0 : CurveDivisor k X) a.chart.U)
+    (r : LocalRatioRegularization a) :
+    (of_zeroBound (a := a) hbound).chartMap = r.chartMap := by
+  rw [of_zeroBound_eq hbound r]
+
 @[reassoc (attr := simp)] theorem chartMap_over
     (r : LocalRatioRegularization a) :
     r.chartMap ≫ projectiveSpaceStructureMap k n = a.chart.U.ι ≫ X.hom := by
