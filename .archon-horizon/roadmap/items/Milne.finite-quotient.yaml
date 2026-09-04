@@ -10,11 +10,12 @@ summary: 'Pending source node prop:milne-finite-quotient. Stable quotient opens,
   -> A[1/b]) hold under these presentations. Commit 75871d09e0 additionally provides
   stable-affine section actions, separated affine overlap charts, Spec(k)-slice fixed-ring
   transitions with reversal/composition laws, and explicit conditional pairwise overlap
-  cones. These local APIs are not yet consumed by cross-chart gluing. Remaining: compare
-  quotient overlaps coming from different affine coordinate rings, construct canonical
-  transition isomorphisms and the triple cocycle for genuine Scheme.GlueData, then
-  prove the global topology/sheaf clauses, arbitrary-target universal property, and
-  free-action etaleness.'
+  cones. Commit a3a8f3916b adds supplied-ring triple-tensor transition maps with proved
+  factorization and cocycle laws, plus a conditional Scheme.GlueData constructor;
+  overlap rings, open immersions, and quotient existence remain explicit inputs. Remaining:
+  compare quotient overlaps coming from different affine coordinate rings, instantiate
+  the supplied data from the finite quotient, then prove the global topology/sheaf
+  clauses, arbitrary-target universal property, and free-action etaleness.'
 status: pending
 kind: proof
 priority: high
@@ -41,8 +42,9 @@ metadata:
   parent: Milne
   owner: fs-milne
   milestone: Milne
-  updated_at: '2026-09-04T11:32:05.579056+00:00'
+  updated_at: '2026-09-04T14:50:39.007116+00:00'
   pinned_commits:
+  - a3a8f3916b
   - 75871d09e0
   - a73295519c
   - 506c8e3c88
