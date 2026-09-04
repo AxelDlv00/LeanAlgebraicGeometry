@@ -326,5 +326,33 @@ noncomputable def invariantAffineRingGlueData
 
 end InvariantRingGlue
 
+section CrossChartRange
+
+variable {k A G : Type u}
+  [CommRing k] [CommRing A] [Algebra k A]
+  [Group G] [MulSemiringAction G A] [SMulCommClass G k A] [Finite G]
+
+/-- The affine invariant quotient pulls back the descended overlap of two stable
+opens to their source intersection.  This is the cross-chart range identity
+used to identify a geometric overlap before any gluing datum is assembled. -/
+@[simp]
+theorem affineInvariantQuotientMap_preimage_stable_inf
+    (U V : (Spec (CommRingCat.of A)).Opens)
+    (hU : ∀ g : G, (specAction G A g).hom ⁻¹ᵁ U = U)
+    (hV : ∀ g : G, (specAction G A g).hom ⁻¹ᵁ V = V) :
+    (affineInvariantQuotientMap (k := k) (A := A) (G := G)) ⁻¹ᵁ
+        (quotientOpenOfStable (k := k) (A := A) (G := G) U hU ⊓
+          quotientOpenOfStable (k := k) (A := A) (G := G) V hV) =
+      U ⊓ V := by
+  let hUV : ∀ g : G,
+      (specAction G A g).hom ⁻¹ᵁ (U ⊓ V) = U ⊓ V := by
+    intro g
+    rw [Scheme.Hom.preimage_inf, hU g, hV g]
+  rw [← quotientOpenOfStable_inf (k := k) (A := A) (G := G) U V hU hV]
+  exact quotientOpenOfStable_preimage (k := k) (A := A) (G := G)
+    (U ⊓ V) hUV
+
+end CrossChartRange
+
 end InvariantLocalization
 end MilneLib
