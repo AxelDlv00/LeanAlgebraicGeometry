@@ -4,10 +4,11 @@ projects:
 - Milne
 summary: 'Pending source node prop:milne-finite-quotient. Stable quotient opens, order/equality
   reflection, finite-cover reconstruction data, functorial chart transitions, and
-  localization cocycle laws are verified. Actual quotient and source structure-sheaf
-  sections on invariant basic opens are now identified with fixed/full localizations;
-  restriction naturality and the equation q.app D(b) = ((A[1/b])^G -> A[1/b]) hold
-  under these presentations. Remaining: compare quotient overlaps coming from different
+  within-one-affine-ring localization cocycle laws are verified. Actual quotient and
+  source structure-sheaf sections on invariant basic opens are identified with fixed/full
+  localizations; restriction naturality and the equation q.app D(b) = ((A[1/b])^G
+  -> A[1/b]) hold under these presentations. These local APIs are not yet consumed
+  by cross-chart gluing. Remaining: compare quotient overlaps coming from different
   affine coordinate rings, construct canonical transition isomorphisms and the triple
   cocycle for genuine Scheme.GlueData, then prove the global topology/sheaf clauses,
   arbitrary-target universal property, and free-action etaleness.'
@@ -37,7 +38,7 @@ metadata:
   parent: Milne
   owner: fs-milne
   milestone: Milne
-  updated_at: '2026-09-03T23:13:58.383207+00:00'
+  updated_at: '2026-09-04T00:09:21.977061+00:00'
   pinned_commits:
   - a73295519c
   - 506c8e3c88
