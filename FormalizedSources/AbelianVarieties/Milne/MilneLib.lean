@@ -23,6 +23,9 @@ import MilneLib.InvariantQuotientOrder
 import MilneLib.InvariantQuotientGlue
 import MilneLib.InvariantQuotientCrossChart
 import MilneLib.InvariantQuotientCrossChartCompat
+import MilneLib.InvariantQuotientCrossChartMap
+import MilneLib.InvariantQuotientCrossChartCover
+import MilneLib.InvariantQuotientAtlasMap
 import MilneLib.AffineQuotientOver
 import MilneLib.AffineTensorCarrier
 import MilneLib.Torsion
