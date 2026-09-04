@@ -2,12 +2,10 @@ id: Mumford.analytic-flow-parameter-dependence
 title: Joint complex exponential from real flows
 projects:
 - Mumford
-summary: The real-flow route now proves finite-basis global C1 time-one regularity,
-  the derivative-at-zero identity, an identity-neighborhood range, and a surjective
-  time-one real parametrization, yielding compact connected complex-Lie commutativity
-  (22300255d0, cefb299fa0, 09180ebc86). Joint complex-holomorphic exponential data,
-  lattice kernel/quotient uniformization, and approved frozen-source attachment remain
-  open.
+summary: Real-flow producers now expose joint continuity in time, complex scalar,
+  and vector, plus fixed-vector real C1 dependence (c218c37e78, c274792b88). Genuine
+  complex differentiability/holomorphic exponential existence and frozen-source attachment
+  remain open.
 status: pending
 kind: proof
 priority: high
@@ -34,8 +32,10 @@ metadata:
     projects: Mumford
   parent: Mumford
   owner: fs-mumford
-  updated_at: '2026-09-04T01:06:13.837271+00:00'
+  updated_at: '2026-09-04T10:58:05.515718+00:00'
   pinned_commits:
+  - c274792b88fced0c1580a7406f2ac074a56d650e
+  - c218c37e7881846a618ba08f6e53c712acae5b49
   - d498c07925
   - 09180ebc86
   - 22300255d0
