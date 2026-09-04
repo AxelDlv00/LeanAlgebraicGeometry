@@ -1,0 +1,191 @@
+\chapter{Finite-stage carrier and base-change comparison}
+\label{route-ch-finite-stage}
+
+Return to the original curve \(C/K\).  Fix the separable closure
+\(\Omega/K\) of Hypothesis H3, put \(C_\Omega=C\times_K\Omega\), and apply
+Chapter~\ref{route-ch-sepclosed} to obtain the exact pair
+\((J_\Omega,r_\Omega)\).  The finite-stage package is parameterized in the
+Lean order \(\operatorname{Pic0FiniteStageGluePackage}\ C_\Omega\ K\): its
+first curve argument is over the separably closed field \(\Omega\), while its
+ambient field parameter is the original \(K\), with
+\([\operatorname{Algebra}\ K\ \Omega]\) and
+\([\operatorname{Algebra.IsAlgebraic}\ K\ \Omega]\).  Thus every displayed
+\(P_0.N.1\) is a finite subextension of \(\Omega/K\), not a finite extension
+of an unspecified field.
+
+\section{A finite affine atlas}
+
+\begin{theorem}[Finite-presentation atlas and simultaneous models]
+  \label{route-thm-finite-atlas}
+  \lean{AlgebraicGeometry.Pic0FiniteStageAtlas,
+    AlgebraicGeometry.pic0FiniteStageAtlas,
+    AlgebraicGeometry.finitePresentation_pic0FiniteStageChartRing,
+    AlgebraicGeometry.exists_finSubext_pic0FiniteStageAtlas_chartRing_models}
+  \leanok
+  \source{stacks-project}
+  \dcref{Tag 01ZM, especially parts (1)--(3)}
+  \uses{route-thm-sepclosed-finiteness}
+
+  Choose a finite set \(I\) of affine opens \(U_i\subset J_\Omega\) covering
+  \(J_\Omega\).  Since the represented Picard group is separated, each
+  ordered intersection \(U_{ij}:=U_i\cap U_j\) is itself affine; this is the
+  canonical overlap selected by the Lean atlas.  Write
+  \[
+    A_i=\Gamma(U_i,\mathcal O),\qquad
+    B_{ij}=\Gamma(U_{ij},\mathcal O).
+  \]
+  The package index is exactly
+  \[
+    \operatorname{Pic0FiniteStageRingIndex}
+      = I\;\sqcup\;(I\times I),
+  \]
+  with ring \(A_i\) on the left summand and \(B_{ij}\) on the right.
+  Every ring is finitely presented over \(\Omega\), and both restriction
+  maps \(A_i\to B_{ij}\) and \(A_j\to B_{ij}\) are finitely presented.
+  There is one finite subextension over which this complete object family is
+  modeled.  Restriction and transition maps, and their equations, are the
+  separate next package, not outputs of this chart-ring attachment.
+\end{theorem}
+
+\begin{proof}
+  Quasi-compactness gives the finite affine cover, and separatedness of the
+  represented group makes each ordered intersection affine (hence
+  quasi-compact).  Local finite presentation gives finite presentation of the
+  selected coordinate rings and restriction maps.  Stacks Tag 01ZM(1) descends
+  this finite family.  The attached Lean producer realizes it through
+  `Pic0FiniteStageChartRing`, `Pic0FiniteStageOverlapRing`, and the sum index
+  displayed above.  Restriction maps, inverse transitions, and their equations
+  are the separate next package, not outputs of this attachment.
+\end{proof}
+
+\begin{theorem}[The finite-stage GluePackage]
+  \label{route-thm-glue-package}
+  \lean{AlgebraicGeometry.Pic0FiniteStageGluePackage,
+    AlgebraicGeometry.exists_pic0FiniteStageGluePackage,
+    AlgebraicGeometry.Pic0FiniteStageGluePackage.presentation,
+    AlgebraicGeometry.Pic0FiniteStageGluePackage.glueData,
+    AlgebraicGeometry.Pic0FiniteStageGluePackage.gluedOver}
+  \leanok
+  \source{stacks-project}
+  \dcref{Tags 01ZM, 0EUU, 081E}
+  \uses{route-thm-finite-atlas}
+
+  There is a package \(P_0\) with nested finite subextensions
+  \[
+    K\subseteq P_0.L.1\subseteq P_0.M.1\subseteq
+      E_0:=P_0.N.1\subseteq\Omega .
+  \]
+  It contains finite-presentation models of every \(A_i\) and canonical
+  \(B_{ij}\), all algebra maps in the restriction and reversed-overlap
+  transition families, proofs that restriction maps remain open immersions,
+  and the descended triple-overlap equations.  These data form
+  \[
+    P_0.\mathrm{glueData}:\mathrm{Scheme.GlueData}
+  \]
+  and a glued structure morphism
+  \[
+    P_0.\mathrm{gluedMap}:P_0.\mathrm{glueData.glued}
+      \longrightarrow\Spec E_0.
+  \]
+  Set
+  \(J_{E_0}=P_0.\mathrm{gluedOver}:=\Over.mk(P_0.\mathrm{gluedMap})\).
+\end{theorem}
+
+\begin{proof}
+  Use Theorem~\ref{route-thm-finite-atlas} for the finite list of chart and
+  canonical-overlap rings.  The `Pic0FiniteStageRestrictionIndex` supplies the
+  two restriction legs for every ordered pair, while the transition and triple
+  indices supply the reversal and cocycle fields.
+  Enlarge to \(P_0.M.1\) so every restriction and transition map descends and
+  every required open-immersion property holds; Stacks Tag 0EUU is the
+  abstract finite-stage open-immersion principle.  Enlarge to \(P_0.N.1\) so
+  inverse and triple-cocycle equations hold; Tag 081E is the corresponding
+  isomorphism descent principle.  The contravariant spectra of the descended
+  rings and maps satisfy the exact \(\mathrm{Scheme.GlueData}\) fields, whose
+  standard gluing construction gives \(J_{E_0}\).
+\end{proof}
+
+\section{Nested pullbacks and overlap comparison}
+
+\begin{theorem}[Finite-stage overlap diagrams recover the original atlas]
+  \label{route-thm-overlap-comparison}
+  \lean{AlgebraicGeometry.nestedPullbackFlatteningIso,
+    AlgebraicGeometry.Pic0FiniteStageGluePackage.gluingOverlapFlatteningIso,
+    AlgebraicGeometry.Pic0FiniteStageGluePackage.baseChangeGluingIso,
+    AlgebraicGeometry.Pic0FiniteStageGluePackage.gluingOverlapIso,
+    AlgebraicGeometry.Pic0FiniteStageGluePackage.gluingOverlapIso_fst,
+    AlgebraicGeometry.Pic0FiniteStageGluePackage.gluingOverlapIso_snd}
+  \leanok
+  \dcref{custom}
+  \uses{route-thm-glue-package}
+
+  For every pair \(i,j\), scalar extension of the finite-stage overlap to
+  \(\Omega\) is canonically isomorphic to the corresponding overlap
+  \(U_i\cap U_j\) in \(J_\Omega\).  The isomorphism is the composite of:
+  the associativity/flattening isomorphism for the nested tensor products,
+  the comparison with the selected finite affine overlap cover, and the
+  pullback isomorphism induced by the descended restriction maps.  Under it,
+  both projections agree exactly with the left and right atlas restriction
+  maps.  The transition maps agree on triple overlaps.
+\end{theorem}
+
+\begin{proof}
+  On coordinate rings, associativity identifies
+  \(\Omega\otimes_{E_0}
+    (E_0\otimes_{P_0.M.1}(P_0.M.1\otimes_{P_0.L.1}A))\) with the original
+  \(\Omega\)-algebra.  The package comparison equations identify both
+  restriction homomorphisms and the cyclic transition homomorphism after this
+  flattening.  Passing contravariantly to spectra gives the nested-pullback
+  and overlap isomorphisms.  The named first- and second-projection theorems,
+  followed by the triple face equation, verify the complete gluing diagram;
+  no appeal to Picard representability occurs in this argument.
+\end{proof}
+
+\begin{theorem}[Global finite-stage base-change comparison]
+  \label{route-thm-global-comparison}
+  \lean{AlgebraicGeometry.Pic0FiniteStageGluePackage.gluingGluedIso,
+    AlgebraicGeometry.Pic0FiniteStageGluePackage.finiteStageBaseChangeIso,
+    AlgebraicGeometry.Pic0FiniteStageGluePackage.finiteStageBaseChangeIso_hom_structureMap}
+  \leanok
+  \source{stacks-project}
+  \dcref{Tags 01JB--01JC, gluing and its mapping property; Tag 01ZM,
+    finite-stage gluing}
+  \uses{route-thm-overlap-comparison, route-thm-sepclosed-representability}
+
+  The chart comparisons glue to an isomorphism over \(\Omega\)
+  \[
+    \beta_{P_0}:
+      J_{E_0}\times_{\Spec E_0}\Spec\Omega
+        \xrightarrow{\sim}J_\Omega .
+  \]
+  It commutes with the two structure maps to \(\Spec\Omega\).  Transporting
+  \(r_\Omega\) along \(\beta_{P_0}\) proves only
+  \[
+    \operatorname{RepresentableBy}
+      \bigl(\operatorname{Pic}^0_{C_\Omega},
+            J_{E_0}\times_{E_0}\Omega\bigr).
+  \]
+  It does \textbf{not} prove
+  \(\operatorname{RepresentableBy}
+      (\operatorname{Pic}^0_{C_{E_0}},J_{E_0})\).
+\end{theorem}
+
+\begin{proof}
+  Theorem~\ref{route-thm-overlap-comparison} identifies the complete
+  base-changed gluing diagram with the finite atlas of \(J_\Omega\).
+  Uniqueness of gluing yields the first global isomorphism; the checked
+  structure-map equation upgrades it to the slice category.  The last
+  displayed post-base-change certificate is ordinary transport of an
+  existing representer across that slice isomorphism.  Since no Picard class
+  on \(J_{E_0}\) and no natural equivalence over \(E_0\) has yet been constructed,
+  interpreting this result as finite-stage representability would be a
+  logical error.
+
+  The source tree also contains the wrappers
+  \texttt{finiteStageBaseChangeOverIso} and
+  \texttt{pic0RepresentableBy\_finiteStageBaseChange}.  Their defining module
+  is not reachable from the public \texttt{AlgebraicJacobian} root, so they are
+  unverified implementation artifacts here and receive no
+  \texttt{\textbackslash leanok} credit.  Their targets in any case remain the
+  slice comparison and post-base-change representation over \(\Omega\).
+\end{proof}

@@ -1,18 +1,35 @@
-% Actual content of the blueprint, shared by the web and print versions.
-% It must *not* include \begin{document}. Split content across chapters with \input.
-%
-% The refactor grows this file: each new mathematical chapter is a separate file under
-% chapters/ and is added here in dependency order, mirroring the structure of the sources.
+% Authoritative mathematical specification for the AJCR rank-one descent route.
+% Only the files included here are normative.  The detail and legacy trees are
+% retained as historical audit material and are explicitly quarantined below.
 
-\input{chapters/Challenge}
-\input{chapters/BaseChange}
-\input{chapters/Curves}
-\input{chapters/Algebra}
-\input{chapters/Cohomology}
-\input{chapters/RiemannRoch}
-\input{chapters/PicardEtale}
-\input{chapters/DivisorScheme}
-\input{chapters/Tangent}
-\input{chapters/AbelianVariety}
-\input{chapters/Albanese}
-\input{chapters/Jacobian}
+\chapter*{About This Blueprint}
+
+This is the authoritative route specification for the Algebraic Jacobian
+Challenge Rebuild.  It fixes one construction: represented degree-
+\(g\) divisors, the rank-one Abel isomorphism, translated rank-one charts over
+a separably closed field, finite-stage descent of their glued carrier and
+universal class, finite-Galois descent, and the same-carrier handoff to the
+challenge interfaces.  A formalizer following this text has no remaining
+route choice.
+
+Each numbered mathematical package states its objects and quantifiers, records
+the exact public Lean handoff, and visibly classifies its state as
+\emph{proved}, \emph{imported}, \emph{conditional}, \emph{planned}, or
+\emph{unresolved}.  A \texttt{\textbackslash leanok} marker means that every
+attached declaration is checked and reachable from the public
+\texttt{AlgebraicJacobian} root.  It may certify a conditional implication;
+the displayed antecedents then remain hypotheses, and the marker gives no
+completion credit to the corresponding route instantiation.  Textual
+declarations outside that root are named only as unverified implementation
+artifacts and receive no \texttt{\textbackslash leanok} marker.
+
+\input{chapters/01-curves}
+\input{chapters/02-cohomology}
+\input{chapters/03-picard}
+\input{chapters/04-divisors}
+\input{chapters/05-pic0}
+\input{chapters/06-albanese}
+\input{chapters/07-jacobian}
+
+\appendix
+\input{appendices/technical}

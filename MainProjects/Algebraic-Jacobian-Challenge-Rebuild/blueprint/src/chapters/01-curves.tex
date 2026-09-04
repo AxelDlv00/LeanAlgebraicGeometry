@@ -1,0 +1,157 @@
+\chapter{Route contract and hypothesis ledger}
+\label{route-ch-contract}
+
+\section{Fixed objects and functors}
+
+\begin{definition}[The AJCR curve and its degree-zero Picard functor]
+  \label{route-conv-objects}
+  \lean{AlgebraicGeometry.genus, AlgebraicGeometry.pic0TypeFunctor}
+  \leanok
+  \dcref{custom}
+
+  Let \(K\) be a field and let
+  \[
+    C\longrightarrow \Spec K
+  \]
+  be smooth of relative dimension one, proper, and geometrically irreducible.
+  Put
+  \(g=g(C)=\dim_K H^1(C,\mathcal O_C)\).  For a \(K\)-scheme \(T\), write
+  \[
+    \operatorname{Pic}^0_C(T)=\operatorname{pic0TypeFunctor}(C)(T)
+  \]
+  for the degree-zero subgroup of the big-etale-sheafified relative Picard
+  functor used in Lean.  Its elements are classes whose degree after every
+  field-valued pullback is zero.  This notation does \emph{not} assert that
+  this functor has already been identified with the identity component of a
+  Picard scheme.
+
+  No rational point of \(C\) is assumed.  In particular, no step may introduce
+  a global \(K\)-point merely to normalize a divisor or a Picard class.
+\end{definition}
+
+\begin{proof}
+  This is the exact binder of the public Lean interfaces: \([\mathrm{Field}\ K]\),
+  \(C:\Over(\Spec K)\), and the three displayed geometric typeclasses.  The
+  degree-zero functor is defined before any representer and is therefore the
+  object which every later \(\mathrm{RepresentableBy}\) certificate must
+  represent.
+\end{proof}
+
+\section{The one permitted route}
+
+The dependency order is fixed as follows.  Every arrow is a mandatory
+dependency, not a status claim.  The boxed break marks the first missing
+mathematical producer; later arrows describe blocked consumers, not a change
+of route.
+
+\[
+\begin{gathered}
+  (R1)\ D_g\text{ represents the widened degree-}g\text{ divisor functor}\\
+  \Downarrow\\
+  (R2)\ W\simeq \operatorname{Pic}^{g,\mathrm{rk}=1}_C\\
+  \Downarrow\\
+  (R3)\ \{W_a\to\operatorname{Pic}^0_C\}_{a}\text{ covers over }\Omega\\
+  \Downarrow\\
+  (R4)\ J_\Omega\text{ represents }\operatorname{Pic}^0_{C_\Omega}
+    \text{ and is qc, qs, lfp}\\
+  \Downarrow\\
+  (R5)\ P_0=(E_0,\mathrm{GlueData},J_{E_0}),\qquad
+       J_{E_0}\times_{E_0}\Omega\simeq J_\Omega\\
+  \Downarrow\\[-2pt]
+  \boxed{(R6)\ \text{jointly choose }P\text{ with }L=P.N.1/K
+    \text{ finite Galois, descend }\xi_L,
+    \text{ and prove }h_{P.\mathrm{gluedOver}}
+      \simeq\operatorname{Pic}^0_{C_L}}\\
+  \Downarrow\\
+  (R7)\ \text{prove }P.\mathrm{gluedMap}\text{ projective, hence
+       finite-in-affine for this same }J_L=P.\mathrm{gluedOver}\\
+  \Downarrow\\
+  (R8)\ J=J_L/\operatorname{Gal}(L/K)\text{ represents }
+        \operatorname{Pic}^0_C\\
+  \Downarrow\\
+  (R9)\ \mathrm{PicRepDatum}\longrightarrow\mathrm{JacobianData}
+       \longrightarrow\text{Phase 8 consumers}.
+\end{gathered}
+\]
+
+The route does not pass through a quotient of the unrestricted
+admissible-degree Abel map, a symmetric-power/Weil construction, an Albanese
+first construction, or a filtered-colimit theorem.  Those branches are
+quarantined in Appendix~\ref{route-app-quarantine}.
+
+\section{Hypothesis ledger}
+
+Fix a separable closure \(\Omega/K\): thus \(\Omega/K\) is algebraic and
+separable and \(\Omega\) is separably closed.  The exact Lean context includes
+\(\operatorname{Algebra.IsSeparable} K\ \Omega\).  Every finite coefficient
+set used in descent is required first to lie in a finite subextension
+\(E/K\subset\Omega/K\) carrying both \(\operatorname{Module.Finite}_K E\) and
+\(\operatorname{Algebra.IsSeparable} K E\).  Only after that certificate is
+available may the finite normal-closure theorem be applied.  A stage carrying
+only \(\operatorname{Algebra.IsAlgebraic} K E\) is not admissible for R6.
+The checked carrier comparison may first be built at an arbitrary finite
+subextension \(E_0/K\).  The missing universal-class producer must enlarge all
+finitely many coefficients to a finite normal subextension and only then
+finalize the legacy package \(P\).
+Accordingly its literal final field \(L=P.N.1\) is already finite Galois over
+\(K\); no later step changes the carrier.  The following ledger is exhaustive.
+
+\begin{center}
+\begin{tabular}{p{0.08\textwidth}p{0.37\textwidth}p{0.43\textwidth}}
+\textbf{ID} & \textbf{Hypothesis} & \textbf{Scope and discharge}\\ \hline
+H1 & \(K\) is a field. & Global; never discharged.\\
+H2 & \(C/K\) is smooth of relative dimension one, proper, and geometrically
+irreducible. & Global challenge input; preserved by field base change.\\
+H3 & \(\Omega/K\) is algebraic and separable, and \(\Omega\) is separably
+closed; every finite stage \(E/K\subset\Omega\) used by the route carries
+\(\operatorname{Module.Finite}_K E\) and \(\operatorname{Algebra.IsSeparable} K E\). &
+Used for translated rank-one coverage, finite-stage spreading, and the
+finite-Galois final stage.  The finite normal closure is taken only after the
+separability certificate is present, and remains inside \(\Omega\).  This is
+stronger than merely choosing an algebraic separably closed extension over an
+imperfect field; the exact Lean context must include
+\texttt{Algebra.IsSeparable K Omega}.\\
+H4 & A legacy finite-stage glue package \(P_0\) has final field
+\(E_0=P_0.N.1\subset\Omega\). & Checked from finite presentation of the finite
+atlas; it supplies the comparison shape but is not yet the final route carrier.\\
+H5 & A legacy package \(P\) is selected jointly with the universal-class
+descent, with \(L=P.N.1\subset\Omega\) finite Galois over \(K\). & The
+normal-closure theorem supplies the field enlargement; reflecting the whole
+finite diagram at that stage and producing the exact Lean package are planned
+parts of the first producer.\\
+H6 & \(h_{J_L}\simeq\operatorname{Pic}^0_{C_L}\) on the literal carrier
+\(J_L=P.\mathrm{gluedOver}\). & \textbf{Unresolved first mathematical
+producer}; it must come from a class \(\xi_L\) on this carrier and its Yoneda
+equivalence.\\
+H7 & \(P.\mathrm{gluedMap}\) is projective. & \textbf{Unresolved exact-carrier
+geometry}; this is the one selected sufficient input for orbit-affineness.\\
+H8 & \(J_L\to\Spec L\) is locally of finite type and quasi-compact. & Produced
+from the finite affine presentation; the conditional Galois wrappers consume
+these certificates.\\
+H9 & A \(K\)-rational point \(P\in C(K)\). & Used only by pointed Abel--Jacobi
+consumers in Phase 8; never used to construct \(\operatorname{Pic}^0\).\\
+H10 & Properness, smoothness of relative dimension \(g\), and geometric
+irreducibility of the final carrier. & Outputs still to be instantiated from
+the original-field datum; they are not hypotheses of representability.\\
+\end{tabular}
+\end{center}
+
+\begin{remark}[Status discipline]
+  \label{route-rem-status}
+  \dcref{custom}
+
+  \emph{Proved} means a public-root-reachable Lean declaration with the
+  displayed type.  \emph{Imported} means a source or Mathlib theorem used with
+  its full hypotheses.  \emph{Conditional} means Lean checks an implication
+  whose antecedent remains visible; a \texttt{\textbackslash leanok} marker on
+  such a node certifies only that generic implication, not its unresolved route
+  instance.  \emph{Planned} means the exact target type is fixed but no
+  producer exists.  \emph{Unresolved} means that target is the first unmet
+  mathematical obligation on the route.  A source declaration not reachable
+  from the public root is \emph{unverified} here and receives no Lean marker.
+\end{remark}
+
+\begin{proof}
+  This convention separates implementation state from mathematical truth and
+  prevents a consumer theorem from being counted as its missing producer.
+\end{proof}

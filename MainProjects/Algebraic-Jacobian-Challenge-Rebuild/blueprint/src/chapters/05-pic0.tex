@@ -1,0 +1,180 @@
+\chapter{Universal class and finite-stage representability}
+\label{route-ch-universal}
+
+Chapter~\ref{route-ch-finite-stage} proves the carrier comparison for any
+legacy \(P_0:\operatorname{Pic0FiniteStageGluePackage}(C_\Omega,K)\).  The
+route does not freeze that arbitrary stage.  Instead, the first missing
+producer must choose a final legacy package only after all carrier, class, and
+cocycle coefficients have been enlarged to one finite Galois subextension.
+This joint choice is what prevents a silent change of carrier.
+
+\section{What is pinned over the separably closed field}
+
+\begin{theorem}[The universal class and all atlas restrictions over \(\Omega\)]
+  \label{route-thm-sepclosed-universal-class}
+  \lean{AlgebraicGeometry.pic0SepClosedUniversalClass,
+    AlgebraicGeometry.pic0FiniteStageUniversalChartClass,
+    AlgebraicGeometry.pic0FiniteStageUniversalOverlapClass,
+    AlgebraicGeometry.pic0FiniteStageUniversalChartClass_restrict_left,
+    AlgebraicGeometry.pic0FiniteStageUniversalChartClass_restrict_right,
+    AlgebraicGeometry.Pic0FiniteStageUniversalAtlasClass,
+    AlgebraicGeometry.pic0FiniteStageUniversalAtlasClass}
+  \leanok
+  \dcref{custom: Yoneda universal element and its restrictions}
+  \uses{route-thm-global-comparison}
+
+  Let
+  \[
+    \xi_\Omega:=r_\Omega(\mathrm{id}_{J_\Omega})
+       \in\operatorname{Pic}^0_{C_\Omega}(J_\Omega).
+  \]
+  For every selected affine chart \(U_i\subset J_\Omega\) and every selected
+  affine overlap \(U_{ij\alpha}\subset U_i\cap U_j\), the checked classes are
+  exactly the pullbacks of this one \(\xi_\Omega\).  If
+  \(q^i_{ij\alpha}:U_{ij\alpha}\to U_i\) and
+  \(q^j_{ij\alpha}:U_{ij\alpha}\to U_j\), then
+  \[
+    (q^i_{ij\alpha})^*(\xi_\Omega|_{U_i})
+      =\xi_\Omega|_{U_{ij\alpha}}
+      =(q^j_{ij\alpha})^*(\xi_\Omega|_{U_j}).
+  \]
+\end{theorem}
+
+\begin{proof}
+  Apply the representing equivalence to the identity of \(J_\Omega\).  Its
+  naturality says that precomposition by a chart or overlap morphism is
+  pullback of the resulting Picard class, proving both restriction equations.
+  Every class in this theorem still lives over \(\Omega\).
+\end{proof}
+
+The source tree additionally declares \texttt{pic0ClassYoneda} and
+\texttt{pic0SepClosedClassYoneda\_app}, which express the expected
+class-to-natural-transformation formula.  Their defining module is not
+reachable from the public \texttt{AlgebraicJacobian} root and has no current
+verified artifact.  They are therefore unverified implementation aids, not
+attachments or proof credit in this specification.
+
+\section{The first unmet producer}
+
+\begin{theorem}[Joint Galois-stage package and descended universal class]
+  \label{route-thm-descended-universal-class}
+  \notready
+  \source{stacks-project}
+  \dcref{Tags 01ZM and 0EXM; Tag 0B9K as a source boundary}
+  \uses{route-thm-sepclosed-universal-class}
+
+  There must exist, simultaneously:
+  \begin{enumerate}
+  \item a legacy package
+    \(P:\operatorname{Pic0FiniteStageGluePackage}(C_\Omega,K)\);
+  \item for \(L:=P.N.1\subset\Omega\), certificates that \(L/K\) is finite
+    Galois, with the displayed inclusion and scalar-tower maps;
+  \item on the literal carrier \(J_L:=P.\mathrm{gluedOver}\), a class
+    \[
+      \xi_L\in\operatorname{Pic}^0_{C_L}(J_L)
+        =\operatorname{pic0Subgroup}
+          ((\operatorname{baseChange}_{K,L})C,P.\mathrm{gluedOver}),
+      \qquad C_L=C\times_KL.
+    \]
+  \end{enumerate}
+  The symbol \(P\) in this theorem is a new, jointly selected package; it is
+  not the arbitrary comparison witness \(P_0\) from
+  Theorem~\ref{route-thm-global-comparison}.  If the construction starts from
+  \(P_0\), it must additionally provide an explicit refinement map from
+  \(P_0\) to \(P\) together with the induced \(\operatorname{Over}\)-map and
+  its compatibility with every chart and overlap comparison.  Without those
+  fields, \(P_0\) is discarded after the comparison theorem and no field
+  enlargement is allowed to silently replace its carrier.  All subsequent
+  occurrences of \(J_L\), \(\xi_L\), (FS-Rep), (Proj), and (OA) quantify over
+  this single final \(P\).
+  For the checked comparison
+  \(\beta_P:J_L\times_L\Omega\xrightarrow{\sim}J_\Omega\), this class must
+  satisfy
+  \[
+    \operatorname{bc}_{L,\Omega}(\xi_L)=\beta_P^*(\xi_\Omega)
+      \quad\text{in}\quad
+    \operatorname{Pic}^0_{C_\Omega}(J_L\times_L\Omega).
+    \tag{UC}
+  \]
+  Equivalently, its restriction to every descended chart pulls back to
+  \(\xi_\Omega|_{U_i}\), and its two restrictions to every descended overlap
+  agree before gluing.
+\end{theorem}
+
+\begin{proof}
+  The field-theoretic part has no route choice.  Every finite coefficient set
+  lies in a finite separable subextension because \(\Omega/K\) is algebraic
+  and separable.  Stacks Tag 0EXM places its finite normal closure \(L\) inside
+  \(\Omega\).  Only then re-run the finite-presentation descent of all chart
+  rings, restriction maps, inverse maps, and triple equations at \(L\), and
+  assemble the final legacy package with \(P.N.1=L\).  One must not retain an
+  earlier package while changing its field.
+
+  The unresolved mathematical step is to descend finite presentations of
+  representatives of the finitely many chart classes, all transition
+  isomorphisms and their cocycle equations at that same \(L\), glue them using
+  the actual etale-sheafified relative Picard equivalence relation, and prove
+  degree zero after every field-valued pullback.  Comparison through
+  \(\beta_P\) must then prove (UC).  Tag 01ZM supplies finite-presentation,
+  morphism, and equality descent.  Section 44.4 (Tag 0B9K) describes the fppf
+  Picard sheaf and invertible-sheaf descent, but is only orientation: it does
+  not identify that object with AJCR's big-etale degree-zero carrier or
+  construct \(\xi_L\).  The planned Lean handoff is one dependent package
+  containing exactly \(P\), the finite-Galois certificates, \(\xi_L\), and
+  equation (UC).
+\end{proof}
+
+\begin{theorem}[Yoneda equivalence on the same finite Galois carrier]
+  \label{route-thm-finite-stage-yoneda}
+  \notready
+  \source{stacks-project}
+  \dcref{Tag 040L, descent of morphisms; exact RepresentableBy target}
+  \uses{route-thm-descended-universal-class}
+
+  For the same \((P,L,\xi_L)\), every \(L\)-scheme \(T\) must admit the
+  bijection
+  \[
+    \Phi_T:\Hom_L(T,J_L)\xrightarrow{\sim}
+       \operatorname{Pic}^0_{C_L}(T),
+    \qquad f\longmapsto f^*\xi_L.
+    \tag{Y}
+  \]
+  For every \(q:T'\to T\) and \(f:T\to J_L\), it must satisfy the correctly
+  typed naturality equation
+  \[
+    \Phi_{T'}(f\circ q)=q^*\Phi_T(f).
+  \]
+  The exact public Lean handoff is
+  \[
+    \operatorname{RepresentableBy}
+      (\operatorname{pic0TypeFunctor}(C_L),P.\mathrm{gluedOver}).
+    \tag{FS-Rep}
+  \]
+\end{theorem}
+
+\begin{proof}
+  Pullback of \(\xi_L\) defines the transformation in (Y).  To prove every
+  component bijective, compare it after the faithfully flat extension
+  \(L\to\Omega\).  Equation (UC), \(\beta_P\), and \(r_\Omega\) identify the
+  result with a bijection.  Existence and equality of morphisms then descend;
+  Stacks Remark 35.35.12 (Tag 040L) supplies the abstract fpqc morphism-descent
+  principle.  The specialization must be performed uniformly for arbitrary
+  \(T\), including the curve scalar-tower and big-etale degree-zero transports.
+
+  No public-root declaration proves (Y) or (FS-Rep).  In particular,
+  \texttt{pic0RepresentableBy\_finiteStageBaseChange} has target over
+  \(\Omega\), not over \(L\), and its own module is unrooted.
+\end{proof}
+
+\begin{remark}[Frontier accounting]
+  \label{route-rem-first-frontier}
+  \dcref{custom}
+  \uses{route-thm-finite-stage-yoneda}
+
+  The first unmet mathematical producer is the class \(\xi_L\) and equation
+  (UC) in Theorem~\ref{route-thm-descended-universal-class}.  Choosing the
+  finite normal coefficient field and rebuilding the finite diagram there is
+  a fixed imported/planned prelude inside that same package, not a competing
+  route.  The frontier moves only when a class on the displayed literal
+  carrier exists; further transport or comparison wrappers do not move it.
+\end{remark}

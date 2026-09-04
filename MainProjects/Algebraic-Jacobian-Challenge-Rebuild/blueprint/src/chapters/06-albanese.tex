@@ -1,0 +1,162 @@
+\chapter{Finite-Galois descent to the original field}
+\label{route-ch-galois}
+
+Fix the single witness \((P,L,\xi_L)\) from
+Theorem~\ref{route-thm-descended-universal-class}, where
+\(L=P.N.1\) is finite Galois over \(K\), and assume
+Theorem~\ref{route-thm-finite-stage-yoneda} has supplied
+\[
+  r_L:h_{J_L}\xrightarrow{\sim}\operatorname{Pic}^0_{C_L},
+  \qquad J_L=P.\mathrm{gluedOver}.
+\]
+No object is base-changed or replaced in this chapter: the Galois action,
+projectivity input, orbit condition, and quotient all use this literal carrier.
+
+\section{The one selected exact-carrier geometry route}
+
+The equivalence \(r_L\) canonically equips \(J_L\) with a commutative group
+object and with the semilinear action
+\[
+  \rho:\operatorname{Gal}(L/K)\longrightarrow
+       \operatorname{Aut}_{K\text{-semilin}}(J_L)
+\]
+characterized by invariance of the universal Picard class.
+
+\begin{theorem}[Projectivity of the literal finite-stage carrier]
+  \label{route-thm-exact-carrier-projective}
+  \notready
+  \dcref{custom: the exact IsProjective producer; no accepted source
+    specialization yet}
+  \uses{route-thm-finite-stage-yoneda}
+
+  Construct the certificate
+  \[
+    h_{\mathrm{proj}}:
+      \operatorname{IsProjective}(P.\mathrm{gluedMap}),
+    \tag{Proj}
+  \]
+  where \(P\) is the same legacy package that carries \(\xi_L\) and \(r_L\).
+  This is the sole selected producer for the orbit condition.  A proof by an
+  independently chosen projective-space immersion is not an alternate route.
+\end{theorem}
+
+\begin{proof}
+  This target is unresolved.  A valid proof must construct a relatively ample
+  invertible sheaf, or equivalently the finite-type closed immersion furnished
+  by the projectivity API, on the literal glued scheme and verify compatibility
+  with \(P.\mathrm{gluedMap}\).  Classical projectivity of the Jacobian cannot
+  be imported here until its hypotheses and its identification with AJCR's
+  degree-zero big-etale functor are proved.  In particular, projectivity of an
+  admissible divisor source, a stable-facade carrier, or an object merely
+  isomorphic after base change does not inhabit (Proj).
+\end{proof}
+
+\begin{theorem}[Projectivity implies exact-carrier orbit-affineness]
+  \label{route-thm-exact-carrier-orbits}
+  \notready
+  \dcref{custom: finite hyperplane avoidance on the literal carrier}
+  \uses{route-thm-exact-carrier-projective}
+
+  From (Proj), for every scheme point \(x\in|J_L|\), produce an affine open
+  \(V\subseteq J_L\) such that
+  \[
+    \{\rho(\sigma)(x):\sigma\in\operatorname{Gal}(L/K)\}\subseteq V.
+    \tag{OA}
+  \]
+  The exact Lean output is
+  \[
+    (\operatorname{pic0SemilinearGalActionOfRepresentableBy}(C,r_L))
+       .\operatorname{OrbitsInAffineOpen}.
+  \]
+\end{theorem}
+
+\begin{proof}
+  The finite Galois orbit is a finite subset.  Projectivity supplies a closed
+  immersion of \(J_L\) into finite relative projective space; choose a
+  hyperplane avoiding the orbit, and pull back its affine complement.  The
+  source tree contains the exact conditional wrapper
+  \texttt{pic0FiniteStageOrbitsInAffineOpen\_of\_isProjective C Ck P repL
+  hproj}.  It has the required binders
+  \texttt{[FiniteDimensional K P.N.1] [IsGalois K P.N.1]} and returns (OA) on
+  \texttt{P.gluedOver}.  Its module is not public-root reachable, so it receives
+  no \texttt{\textbackslash leanok} marker; rooting that wrapper is a planned
+  integration step after the unresolved input (Proj).  The immersion entry
+  point used internally by the wrapper is quarantined as a second public route.
+\end{proof}
+
+\section{The conditional descent theorem}
+
+\begin{theorem}[Finite-Galois descent of the represented degree-zero functor]
+  \label{route-thm-finite-galois-descent}
+  \lean{AlgebraicGeometry.pic0SemilinearGalActionOfRepresentableBy,
+    AlgebraicGeometry.pic0GaloisInvariantEquiv,
+    AlgebraicGeometry.pic0GaloisInvariantEquivGaloisEquivariantOver,
+    AlgebraicGeometry.pic0RepresentableBy_finiteGaloisDescent,
+    AlgebraicGeometry.locallyOfFiniteType_pic0FiniteGaloisDescent,
+    AlgebraicGeometry.quasiCompact_pic0FiniteGaloisDescent}
+  \leanok
+  \source{stacks-project}
+  \dcref{Tags 0246 and 040L, effective fpqc descent and descent of morphisms}
+  \uses{route-thm-exact-carrier-orbits}
+
+  Let \(L/K\) be the displayed finite Galois extension, with the Lean
+  instances \([\operatorname{Algebra}\ K\ L]\),
+  \([\operatorname{FiniteDimensional}\ K\ L]\), and
+  \([\operatorname{IsGalois}\ K\ L]\).  Let
+  \(C_L=(\operatorname{baseChange}\ K\ L).obj\,C\), let
+  \(J_L:\operatorname{Over}(\operatorname{Spec}L)\), and assume the exact
+  input
+  \[
+    r_L:\operatorname{RepresentableBy}
+      (\operatorname{pic0TypeFunctor}(C_L),J_L)
+  \]
+  together with the typeclass \(\operatorname{OrbitsInAffineOpen}\) for
+  \(\operatorname{pic0SemilinearGalActionOfRepresentableBy}(C,r_L)\).  The
+  stable affine opens glue to
+  \[
+    J:=\operatorname{StableAffineOpen.gluedQuotientOver}(\rho)
+       \longrightarrow\Spec K.
+  \]
+  For every \(K\)-scheme \(T\), the checked equivalences are
+  \[
+    \Hom_K(T,J)
+      \simeq\Hom_L(T_L,J_L)^{\operatorname{Gal}(L/K)}
+      \simeq\operatorname{Pic}^0_{C_L}(T_L)^{\operatorname{Gal}(L/K)}
+      \simeq\operatorname{Pic}^0_C(T).
+    \tag{G}
+  \]
+  Hence \(J\) represents \(\operatorname{pic0TypeFunctor}(C)\).  If
+  \(J_L\to\Spec L\) is locally of finite type, respectively quasi-compact,
+  then so is \(J\to\Spec K\).
+\end{theorem}
+
+\begin{proof}
+  Orbit-affineness chooses a Galois-stable affine cover.  Affine fpqc descent
+  glues its invariant coordinate rings; Stacks Section 35.38 (Tag 0246)
+  records effective descent for quasi-affine morphisms and Tag 040L records
+  descent of compatible morphisms.  The first equivalence in (G) is the
+  checked quotient universal property.  The second uses \(r_L\) and its
+  canonical semilinear action.  The third is the checked equivalence between
+  original-field Picard classes and Galois-invariant classes after base change.
+  Their naturality in \(T\) is exactly the \texttt{RepresentableBy}
+  certificate, and the finiteness properties descend through the same quotient.
+
+  This is a checked \emph{conditional} theorem: the displayed \(r_L\), field
+  typeclasses, and \texttt{OrbitsInAffineOpen} remain visible inputs.  Its Lean binder for the
+  invariant comparison includes geometric reducedness of \(C\); smoothness of
+  the challenge curve derives that instance, so H2 already discharges it.
+\end{proof}
+
+\begin{remark}[No carrier switch]
+  \label{route-rem-no-carrier-switch}
+  \dcref{custom}
+  \uses{route-thm-finite-galois-descent}
+
+  The selected route finalizes one legacy package with \(L=P.N.1\) before
+  descending \(\xi_L\).  It then uses \(P.\mathrm{gluedOver}\) in (FS-Rep),
+  (Proj), (OA), and the generic finite-Galois theorem.  The newer
+  \texttt{Pic0FiniteStageStableGluePackage} has no checked carrier comparison
+  with this object and is never substituted.  Forward representer transport
+  along an arbitrary object isomorphism is likewise a consumer of an existing
+  representation, not a producer for R6.
+\end{remark}

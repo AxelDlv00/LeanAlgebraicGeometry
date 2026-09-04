@@ -1,0 +1,202 @@
+\chapter{The separably closed rank-one cover}
+\label{route-ch-sepclosed}
+
+Let \(k\) now be separably closed and retain H1--H2 for \(C/k\).
+Separably closedness is used to construct translators and prove coverage; it
+is not inserted into the rank-one Abel isomorphism itself.
+
+\section{Translated charts}
+
+\begin{definition}[The exact translator and chart family]
+  \label{route-def-translated-charts}
+  \lean{AlgebraicGeometry.PicRankOneTranslatorIndex,
+    AlgebraicGeometry.pic0GenusTranslationIso,
+    AlgebraicGeometry.picRankOneTranslatedChart,
+    AlgebraicGeometry.picRankOneTranslatedChart_isOpenImmersion}
+  \leanok
+  \dcref{custom}
+  \uses{route-thm-rank-one-abel-iso}
+
+  A translator is exactly a Cech Picard class
+  \[
+    a\in (C\times_k k).\mathrm{CechPic}
+    \quad\text{with}\quad \deg(a)=g.
+  \]
+  For every \(T/k\), multiplication by its theta family gives a natural
+  equivalence
+  \[
+    \tau_a(T):\operatorname{Pic}^0_C(T)
+       \xrightarrow{\sim}\operatorname{Pic}^{g}_C(T),
+    \qquad \lambda\longmapsto\lambda\otimes a_T .
+  \]
+  With \(W\) the represented rank-one divisor open from
+  Theorem~\ref{route-thm-rank-one-open}, define
+  \[
+    j_a:h_W\longrightarrow\operatorname{Pic}^0_C
+  \]
+  as the canonical rank-one Abel isomorphism, followed by inclusion into
+  \(\operatorname{Pic}^{g}_C\), followed by \(\tau_a^{-1}\).  Every \(j_a\)
+  is relatively represented by open immersions.
+\end{definition}
+
+\begin{proof}
+  The three factors have the exact Lean carriers
+  \[
+    h_W\;\xrightarrow{\sim}\;
+    \operatorname{sigmaExtension}(\operatorname{PicRankOneOpen})
+    \longrightarrow \operatorname{pic0SigmaSheaf}
+  \]
+  after applying the genus translation.  The first and last factors are
+  natural isomorphisms and the middle factor is the checked relatively
+  represented open inclusion.  Closure of open immersions under composition
+  proves the claim.
+\end{proof}
+
+\begin{theorem}[Translated rank-one coverage]
+  \label{route-thm-translated-coverage}
+  \lean{AlgebraicGeometry.exists_sepClosedTranslated_mem_picRankOneOpen,
+    AlgebraicGeometry.exists_picRankOneTranslatedChart_fieldFactorization,
+    AlgebraicGeometry.picRankOneTranslatedChart_pointwiseCoverage}
+  \leanok
+  \source{abelian-varieties:page-0107, stacks-project}
+  \dcref{Milne III, Lemma 5.2(b); Stacks Tag 056U}
+  \uses{route-def-translated-charts}
+
+  The auxiliary producer has the following exact field-valued type.  For every
+  field extension \(K/k\) and every
+  \(\mu\in\operatorname{Pic}^0_C(\operatorname{Spec}_k K)\), it returns a
+  finite separable extension \(L/K\), the scalar-tower instances
+  \(k\to K\to L\), a finite-support datum on \(C_L\), its
+  residue-degree-one certificate, and the Cech subtraction equality; its final
+  conclusion is that the translated layer element belongs to the rank-one open.
+  In symbols, its witness has the shape
+  \[
+    \exists L\;[\operatorname{Field}L]\,[\operatorname{Algebra}kL]
+    [\operatorname{Algebra}KL]\,[\operatorname{IsScalarTower}kKL]
+    [\operatorname{Module.Finite}_K L]\,[\operatorname{Algebra.IsSeparable}KL]\;
+    \exists d\;r,\quad
+    \operatorname{classDeg}_k(\operatorname{chartTwistClass}(d,r))=g
+    \;\wedge\;\operatorname{finiteSupport}(r)\;\wedge\;
+    \operatorname{residueDegreeOne}(r)\;\wedge\;
+    \operatorname{picClass}(r)=\operatorname{map}((\operatorname{chartTwistClass}(0,r))^{-1})
+    \;\wedge\;\operatorname{rankOneLayer}(\mu,d)\in
+      \operatorname{PicRankOneOpen}(\pi)(\operatorname{Spec}_k K).
+  \]
+  The public theorem
+  \texttt{exists\_picRankOneTranslatedChart\_fieldFactorization} deliberately
+  hides that auxiliary \(L,d,r\): its exact conclusion is only
+  \[
+    \exists a:\operatorname{PicRankOneTranslatorIndex}\;
+    \exists x:\operatorname{Spec}_k K\longrightarrow W,\qquad
+    j_a(x)=\mu .
+  \]
+  Thus \(L\) is not a field-valued output of the public factorization and is
+  never identified with \(k\) or \(K\).  Consequently, for every \(k\)-scheme \(T\), every
+  \(\mu\in\operatorname{Pic}^0_C(T)\), and every point \(t\in T\), there are
+  an open neighbourhood \(U\subseteq T\), an index \(a\), and
+  \(x_U:U\to W\) with \(j_a(x_U)=\mu|_U\).  Equivalently, the family
+  \(\{j_a\}_a\) is pointwise covering and its sigma-desc map is
+  Zariski-locally surjective.
+\end{theorem}
+
+\begin{proof}
+  Restrict \(\mu\) to \(\kappa(t)\).  The translated-drop construction first
+  produces the displayed finite separable extension \(L/\kappa(t)\), a finite
+  support on \(C_L\) of residue degree one over \(L\), and the Cech
+  subtraction equality.  The resulting translated class is then proved to
+  lie in the public \(\operatorname{PicRankOneOpen}\), and the canonical Abel
+  inverse gives the factorization through \(W\).  There is no step in which
+  separable closedness identifies the auxiliary residue field with \(k\), and
+  no descent of the witness from \(L\) (or from \(\kappa(t)\)) to \(k\) is
+  claimed.  Relative representability of \(j_a\) pulls this factorization
+  back to an open neighbourhood of \(t\).  Stacks Tag 056U is used only for
+  the finite-separable closed-point input in the support construction.
+
+  Milne's Lemma 5.2(b) is the classical fibrewise model: a general
+  degree-\(g\) divisor has \(h^0=1\).  The Lean proof is stronger in the
+  direction needed here because it constructs the translator and proves
+  membership in the exact etale-local rank-one predicate.  Milne's surrounding
+  Section III.5 assumes a complete nonsingular curve of positive genus and a
+  chosen rational point; the citation is only the fibrewise model, while the
+  checked translated-drop theorem retains AJCR's displayed hypotheses and
+  introduces no such point.
+\end{proof}
+
+\section{The exact separably closed representer}
+
+\begin{theorem}[Representability from the translated atlas]
+  \label{route-thm-sepclosed-representability}
+  \lean{AlgebraicGeometry.pic0_sepClosed_representableBy_of_isOpen,
+    AlgebraicGeometry.pic0_sepClosed_representableBy}
+  \leanok
+  \source{stacks-project, kleiman-picard}
+  \dcref{Tag 01JJ; Theorem 4.8(1)}
+  \uses{route-thm-translated-coverage}
+
+  There is one selected pair
+  \[
+    (J_k,r_k),\qquad J_k\longrightarrow\Spec k,\qquad
+    r_k:h_{J_k}\xrightarrow{\sim}\operatorname{Pic}^0_C,
+  \]
+  where \(J_k\) is obtained by gluing the represented open charts
+  \(\{W\xrightarrow{j_a}\operatorname{Pic}^0_C\}_a\).
+  In Lean this pair is the dependent value
+  \[
+    \operatorname{pic0\_sepClosed\_representableBy}(C):
+    \sum_{J:\Over(\Spec k)}
+      \operatorname{RepresentableBy}(\operatorname{pic0TypeFunctor}(C),J).
+  \]
+\end{theorem}
+
+\begin{proof}
+  Stacks Tag 01JJ says that a Zariski sheaf covered by representable
+  subfunctors whose inclusions are relatively represented by open immersions
+  is representable.  Apply it to the charts of
+  Definition~\ref{route-def-translated-charts}: openness is proved there and
+  coverage is Theorem~\ref{route-thm-translated-coverage}.  The overlap maps
+  are forced by equality of their universal Picard classes, so the glued
+  functor of points is naturally \(\operatorname{Pic}^0_C\).
+  Kleiman's Theorem 4.8 supplies the surrounding classical Picard
+  representability theorem, but the checked Lean result is specifically the
+  translated rank-one atlas specialization just described.
+\end{proof}
+
+\begin{theorem}[Finiteness and same-carrier data over a separably closed field]
+  \label{route-thm-sepclosed-finiteness}
+  \lean{AlgebraicGeometry.locallyOfFiniteType_pic0_sepClosed_representableBy,
+    AlgebraicGeometry.locallyOfFinitePresentation_pic0_sepClosed_representableBy,
+    AlgebraicGeometry.quasiCompact_pic0SepClosedRepresenter,
+    AlgebraicGeometry.quasiSeparatedSpace_pic0SepClosedRepresenter,
+    AlgebraicGeometry.picRepDatumSepClosed,
+    AlgebraicGeometry.jacobianDataSepClosed}
+  \leanok
+  \source{kleiman-picard, stacks-project}
+  \dcref{Kleiman Theorem 4.8(1); Stacks Tag 01TX}
+  \uses{route-thm-sepclosed-representability, route-rem-admissible-source}
+
+  The selected structure morphism \(J_k\to\Spec k\) is locally of finite
+  presentation and quasi-compact, and \(J_k\) is quasi-separated.  The exact
+  same pair \((J_k,r_k)\) defines
+  \[
+    \operatorname{PicRepDatum}(k,k,C)
+    \quad\text{and}\quad
+    \operatorname{JacobianData}(C);
+  \]
+  the second adds the quasi-compactness certificate, while neither handoff
+  changes the carrier, representation, group object, or universal element.
+\end{theorem}
+
+\begin{proof}
+  Each rank-one chart is locally of finite type, so the glued structure map
+  is locally of finite type.  Since \(\Spec k\) is Noetherian, Stacks
+  Tag 01TX upgrades this to local finite presentation.  The represented
+  admissible divisor source is quasi-compact and its
+  Abel morphism to this exact \(J_k\) is etale-locally surjective, hence
+  surjective on underlying points; quasi-compactness descends through that
+  map.  Local finite type over a field makes \(J_k\) locally Noetherian and
+  therefore quasi-separated in the checked interface.  Finally the
+  definitional projection lemmas for
+  \(\operatorname{picRepDatumSepClosed}\) and
+  \(\operatorname{jacobianDataSepClosed}\) identify both fields with
+  \((J_k,r_k)\) literally.
+\end{proof}

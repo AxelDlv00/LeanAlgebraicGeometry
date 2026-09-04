@@ -1,0 +1,537 @@
+\chapter{Same-carrier data and Phase 8 consumers}
+\label{route-ch-handoff}
+
+\section{The public data boundary}
+
+\begin{definition}[Exact \(\operatorname{PicRepDatum}\) and
+    \(\operatorname{JacobianData}\) carriers]
+  \label{route-def-public-data}
+  \lean{AlgebraicGeometry.PicRepDatum,
+    AlgebraicGeometry.PicRepDatum.grpObj,
+    AlgebraicGeometry.PicRepDatum.homEquiv,
+    AlgebraicGeometry.JacobianData,
+    AlgebraicGeometry.JacobianData.grpObj,
+    AlgebraicGeometry.JacobianData.homEquiv,
+    AlgebraicGeometry.JacobianData.uniqueUpToIso}
+  \leanok
+  \dcref{custom}
+
+  For fields \(k\to k'\) and a curve \(C'/k'\), a
+  \(\operatorname{PicRepDatum}(k,k',C')\) consists exactly of
+  \[
+    J'/k',\qquad
+    r':h_{J'}\xrightarrow{\sim}\operatorname{Pic}^0_{C'},\qquad
+    J'\to\Spec k'\text{ locally of finite type}.
+  \]
+  For a curve \(C/k\), a \(\operatorname{JacobianData}(C)\) consists exactly
+  of the same-field carrier and representation, the same local-finite-type
+  certificate, and a quasi-compactness certificate for its structure map.
+  In both structures the group object, the bijections
+  \(\Hom(T,J')\simeq\operatorname{Pic}^0_{C'}(T)\), and uniqueness of the
+  representing object are derived from \(r'\); they are not new fields.
+\end{definition}
+
+\begin{proof}
+  This is a direct expansion of the two Lean structures.  In particular,
+  neither stores properness, smoothness, a dimension, an Abel source, or an
+  Albanese theorem.  Those are downstream consumers with separate inputs.
+\end{proof}
+
+\begin{theorem}[Conditional original-field package and literal handoff]
+  \label{route-thm-public-handoff}
+  \lean{AlgebraicGeometry.picRepDatum_finiteGaloisDescent,
+    AlgebraicGeometry.jacobianData_finiteGaloisDescent,
+    AlgebraicGeometry.PicRepDatum.toJacobianData,
+    AlgebraicGeometry.PicRepDatum.toJacobianData_J,
+    AlgebraicGeometry.PicRepDatum.toJacobianData_rep,
+    AlgebraicGeometry.PicRepDatum.toJacobianData_grpObj,
+    AlgebraicGeometry.PicRepDatum.homEquiv_toJacobianData}
+  \leanok
+  \dcref{custom}
+  \uses{route-def-public-data, route-thm-finite-galois-descent}
+
+  Under the exact hypotheses of
+  Theorem~\ref{route-thm-finite-galois-descent}, let \(J/K\) be its glued
+  quotient.  The locally-finite-type conclusion packages
+  \((J,r)\) as \(d:\operatorname{PicRepDatum}(K,K,C)\).  Given the descended
+  quasi-compactness certificate, define
+  \[
+    D=d.\operatorname{toJacobianData}:
+       \operatorname{JacobianData}(C).
+  \]
+  Then, definitionally,
+  \[
+    D.J=d.J=J,\qquad D.\mathrm{rep}=d.\mathrm{rep}=r,
+    \qquad D.\mathrm{grpObj}=d.\mathrm{grpObj},
+    \qquad D.\mathrm{homEquiv}=d.\mathrm{homEquiv}.
+  \]
+\end{theorem}
+
+\begin{proof}
+  The checked finite-Galois wrapper builds the quotient and its representation,
+  and descends local finite type and quasi-compactness from \(J_L\).  The
+  `toJacobianData` constructor assigns the four displayed fields without
+  transport; all four comparison lemmas are proved by reflexivity.  This is
+  the required same-carrier handoff.  It remains conditional until the two
+  unresolved producers in Chapter~\ref{route-ch-universal} and
+  Chapter~\ref{route-ch-galois} are supplied.
+\end{proof}
+
+\section{Checked consumers of an arbitrary datum}
+
+\begin{theorem}[Universal-element, Abel, and functorial consumers]
+  \label{route-thm-datum-core-consumers}
+  \lean{AlgebraicGeometry.JacobianData.homEquiv,
+    AlgebraicGeometry.JacobianData.homEquiv_comp,
+    AlgebraicGeometry.JacobianData.ofCurve,
+    AlgebraicGeometry.JacobianData.comp_ofCurve,
+    AlgebraicGeometry.JacobianData.pullbackHom,
+    AlgebraicGeometry.JacobianData.pullbackHom_id,
+    AlgebraicGeometry.JacobianData.pullbackHom_comp,
+    AlgebraicGeometry.JacobianData.baseChange,
+    AlgebraicGeometry.baseChangeIsoOfData}
+  \leanok
+  \source{abelian-varieties:page-0110}
+  \dcref{Milne III, Proposition 6.1, only for the classical pointed model}
+  \uses{route-thm-public-handoff}
+
+  For any \(D:\operatorname{JacobianData}(C)\), the representation gives a
+  commutative group object on \(D.J\).  For every \(K\)-point \(P\) of \(C\),
+  the class of \(\mathcal O(\Delta-P\times C)\) defines
+  \[
+    \operatorname{ofCurve}_D(P):C\longrightarrow D.J,
+    \qquad \operatorname{ofCurve}_D(P)\circ P=e_{D.J}.
+  \]
+  A morphism of curves \(X\to Y\), together with data \(D_X,D_Y\), induces
+  the contravariant group morphism \(D_Y.J\to D_X.J\), with checked identity
+  and composition laws.  For every field extension \(K\to L\),
+  \(D.\operatorname{baseChange}(L)\) has literal carrier \(D.J\times_KL\),
+  and for any datum \(D_L\) for \(C_L\), uniqueness of representers gives the
+  group-scheme isomorphism
+  \[
+    \operatorname{baseChangeIsoOfData}(D,D_L):
+       D.J\times_KL\xrightarrow{\sim}D_L.J.
+  \]
+\end{theorem}
+
+\begin{proof}
+  All assertions are formal consequences of the represented degree-zero
+  functor.  The Abel map is the inverse representing equivalence applied to
+  the diagonal class; naturality proves the pointing equation.  Pullback of
+  Picard classes supplies the contravariant curve map.  Field base change uses
+  the Picard base-change equivalence, and the displayed isomorphism is
+  uniqueness of representing objects upgraded to group objects.  Milne's
+  Proposition 6.1 explains the intended pointed Jacobian map, but its Albanese
+  factorization is not asserted in this theorem.
+\end{proof}
+
+\begin{theorem}[Tangent-space interface at the identity]
+  \label{route-thm-tangent-interface}
+  \lean{AlgebraicGeometry.JacobianData.identitySection,
+    AlgebraicGeometry.JacobianData.tangentSpaceCotangentDual,
+    AlgebraicGeometry.JacobianData.tangentSpaceEquivPic0Kernel,
+    AlgebraicGeometry.JacobianData.cotangentSpaceDual_equiv_pic0Kernel,
+    AlgebraicGeometry.JacobianData.finrank_eq_of_addEquiv_of_bijective_smul}
+  \leanok
+  \source{kleiman-picard}
+  \dcref{Theorem 5.11}
+  \uses{route-thm-datum-core-consumers}
+
+  Let \(e:\Spec K\to D.J\) be the group identity, let
+  \(R=\mathcal O_{D.J,e}\), \(\kappa(e)=R/\mathfrak m_e\), and
+  \(V=(\mathfrak m_e/\mathfrak m_e^2)^\vee\).  There are checked bijections
+  \[
+    V\simeq T_eD.J\simeq
+    \ker\!\left(
+      \operatorname{Pic}^0_C(\Spec K[\epsilon])\longrightarrow
+      \operatorname{Pic}^0_C(\Spec K)\right),
+  \]
+  and \(\mathfrak m_e/\mathfrak m_e^2\) is finite-dimensional over
+  \(\kappa(e)\).  These are bijections of sets.  In particular, the displayed
+  kernel equivalence alone does not identify scalar multiplication or prove a
+  dimension formula.
+  The checked auxiliary declaration
+  \texttt{JacobianData.finiteDimensional\_cotangentSpace} supplies the
+  finite-dimensionality certificate used by the later numerical consumer; it
+  is recorded in the handoff table but omitted from the machine attachment
+  because the current hgraph scanner includes a following module comment in
+  that declaration's body and consequently reports a lexical ``sorry''
+  false positive.  No ``sorry'' occurs in the declaration or its proof.
+\end{theorem}
+
+\begin{theorem}[Conditional tangent dimension consumers]
+  \label{route-thm-tangent-conditional}
+  \lean{AlgebraicGeometry.JacobianData.finrank_cotangentSpaceDual_eq_genus,
+    AlgebraicGeometry.JacobianData.nonempty_cotangentSpace_addEquiv_h1}
+  \leanok
+  \source{kleiman-picard}
+  \dcref{Theorem 5.11 and Corollary 5.13}
+  \uses{route-thm-tangent-interface}
+
+  If
+  \[
+    \dim_{\kappa(e)}(\mathfrak m_e/\mathfrak m_e^2)=g(C),
+    \tag{TD}
+  \]
+  then \(\dim_{\kappa(e)}V=g(C)\).  If in addition
+  \(H^1(C,\mathcal O_C)\) is finite-dimensional over \(K\), there exists an
+  additive equivalence
+  \[
+    \mathfrak m_e/\mathfrak m_e^2\simeq_+
+      H^1(C,\mathcal O_C).
+  \]
+  Both checked theorems take (TD) as an explicit hypothesis.
+\end{theorem}
+
+\begin{theorem}[Semilinear epsilon-kernel comparison]
+  \label{route-thm-tangent-semilinear}
+  \notready
+  \source{kleiman-picard}
+  \dcref{Theorem 5.11, specialized to the degree-zero etale Picard functor}
+  \uses{route-thm-tangent-interface}
+
+  Construct a bijection \(i:\kappa(e)\to K\), an additive equivalence
+  \[
+    j:V\xrightarrow{\sim_+}H^1(C,\mathcal O_C),
+  \]
+  and prove, for every \(a\in\kappa(e)\) and \(v\in V\),
+  \[
+    j(a v)=i(a)j(v).
+    \tag{SL}
+  \]
+  Then the checked scalar-bijection finrank lemma gives (TD), which feeds the
+  two conditional consumers above.
+\end{theorem}
+
+\begin{proof}
+  \emph{Proof obligation.}  Kleiman Theorem 5.11 identifies
+  the tangent space of the Picard scheme with \(H^1(C,\mathcal O_C)\) by
+  analysing line bundles over the dual numbers.  The AJCR specialization must
+  perform that calculation inside the epsilon-kernel of the exact
+  etale-sheafified degree-zero functor, prove additivity, and identify the
+  scalar action through the rational identity section.  The present Lean
+  equivalence is set-valued, so it cannot supply (SL) or (TD).
+\end{proof}
+
+This tangent branch is the selected numerical input for the Phase 8 dimension
+producer below.  It is not an alternate construction of the Jacobian: it starts
+from the same original-field datum and supplies only the missing relative
+dimension count.
+
+\begin{theorem}[Conditional Abel map under field base change]
+  \label{route-thm-abel-basechange-conditional}
+  \lean{AlgebraicGeometry.abelCrossBaseCechCore,
+    AlgebraicGeometry.abelCrossBaseCechCore_of_graph,
+    AlgebraicGeometry.baseChange_ofCurve_data_of_cech}
+  \leanok
+  \dcref{custom: Cech representatives of the diagonal and constant graph}
+  \uses{route-thm-datum-core-consumers}
+
+  For a field extension \(K\to L\), a point \(P:\Spec K\to C\), and data
+  \(D,D_L\) for \(C,C_L\), assume
+  \texttt{abelCrossBaseCechCore K L C P}: transport of the Cech class
+  \([\mathcal O(\Delta)]-[\mathcal O(P\times C)]\) along the pullback counit
+  and the scalar-tower comparison equals the corresponding class on \(C_L\).
+  Then
+  \[
+    \operatorname{baseChangeIsoOfData}(D,D_L)\circ
+      (\operatorname{ofCurve}_D(P))_L
+      =\operatorname{ofCurve}_{D_L}(P_L).
+    \tag{AJ-BC}
+  \]
+  Equality of the transported diagonal-graph and constant-graph classes is a
+  sufficient checked hypothesis for the Cech core.
+\end{theorem}
+
+\begin{theorem}[The Abel Cech base-change core]
+  \label{route-thm-abel-basechange-core}
+  \notready
+  \dcref{custom}
+  \uses{route-thm-abel-basechange-conditional}
+
+  Prove \texttt{abelCrossBaseCechCore K L C P} for every field extension
+  \(K\to L\), every challenge curve \(C/K\), and every \(K\)-point \(P\).
+  This is the first unmet producer for (AJ-BC).  The graph-factor theorem is a
+  reduction to two equalities, not a proof of either equality.
+\end{theorem}
+
+\begin{proof}
+  \emph{Proof obligation.}  Compare the local equations of
+  the diagonal and constant graph before and after the nested curve/test base
+  change, prove their Cech cocycles correspond, then use multiplicativity and
+  inversion to obtain the Abel class equation.  Only after this theorem may
+  the conditional datum-level equality be used in the challenge assembly.
+\end{proof}
+
+\begin{theorem}[Coherent base change for the selected datum family]
+  \label{route-thm-phase8-basechange-coherence}
+  \notready
+  \dcref{custom: exact Challenge base-change interface}
+  \uses{route-thm-public-handoff, route-thm-datum-core-consumers,
+    route-thm-abel-basechange-core}
+
+  Select the datum \(D_C\) from the same R8--R9 construction for every challenge
+  curve and every field extension.  For \(K\to L\), define
+  \[
+    \gamma_{C,L}:=
+      \operatorname{baseChangeIsoOfData}(D_C,D_{C_L}):
+      D_C.J\times_KL\xrightarrow{\sim}D_{C_L}.J.
+  \]
+  Prove that \(\gamma_{C,K}\) is the canonical identity comparison and, for
+  \(K\to L\to M\), that \(\gamma_{C,M}\) equals the composite of the canonical
+  pullback associator with \((\gamma_{C,L})_M\) and \(\gamma_{C_L,M}\).  Prove
+  these as group-scheme equalities and prove (AJ-BC) for every \(P\in C(K)\).
+  These are exactly the producers for \texttt{Jacobian.baseChangeIso},
+  \texttt{baseChangeIso\_id}, \texttt{baseChangeIso\_comp}, and
+  \texttt{baseChange\_ofCurve}.
+\end{theorem}
+
+\begin{proof}
+  The object isomorphism exists by uniqueness of representers, but no current
+  datum theorem supplies its identity and tower equations.  Normalize all
+  three isomorphisms by the universal Picard class and use extensionality of
+  representing morphisms to prove the two coherences.  The Abel equation is
+  the checked conditional theorem instantiated by the Cech producer from
+  Theorem~\ref{route-thm-abel-basechange-core}.  All equations must use the
+  same selected data; arbitrary isomorphic replacement is not allowed.
+\end{proof}
+
+\begin{theorem}[Exact producers for the Phase 8 geometry interface]
+  \label{route-thm-phase8-geometry-producers}
+  \notready
+  \source{kleiman-picard}
+  \dcref{Section 3, Theorems 3.7 and 3.13; Section 5, Lemma 5.1,
+    Theorem 5.11, and Corollary 5.13}
+  \uses{route-thm-public-handoff, route-thm-tangent-semilinear}
+
+  For the selected original-field datum \(D_C\), construct these three exact
+  inputs on its unchanged carrier.
+  \begin{enumerate}
+  \item Put \(n_C=\operatorname{divRepAffAdmissibleParameter}(C)\).  Construct
+    the proper degree-\(n_C\) effective-divisor scheme
+    \(D_C^{\mathrm{prop}}\), its geometric-irreducibility certificate, and the
+    translated Abel morphism
+    \[
+      a_C:D_C^{\mathrm{prop}}\longrightarrow D_C.J
+    \]
+    obtained from the universal divisor class using the fixed
+    \texttt{admissibleAbelChartIndex}/\texttt{admissibleAbelChartDivisor}
+    translation.  Prove \(a_C\) surjective and package precisely
+    \[
+      A_C:\operatorname{AbelSourceData}(D_C)
+    \]
+    with fields \((D_C^{\mathrm{prop}},\operatorname{IsProper},
+    \operatorname{GeometricallyIrreducible},a_C,
+    \operatorname{Surjective}(a_C))\).
+  \item Construct
+    \(h_{\mathrm{red}}:
+      \operatorname{GeometricallyReduced}(D_C.J\to\Spec K)\).
+  \item Construct a Zariski zero-hypercover
+    \(\mathcal U_C\) of \(D_C.J\) and, for every leg \(i\), a certificate
+    \[
+      \operatorname{SmoothOfRelativeDimension}
+        \bigl(g(C),\mathcal U_C.f(i)\mathbin{\gg}D_C.J.\mathrm{hom}\bigr).
+      \tag{DimCov}
+    \]
+  \end{enumerate}
+\end{theorem}
+
+\begin{proof}
+  These are unresolved producers, not assumptions to erase.  For the first,
+  Kleiman's divisor/Hilbert construction is the classical source shape; the
+  AJCR proof must build the actual proper divisor scheme rather than reuse the
+  widened affine-test representer, define the displayed fixed translation, and
+  specialize the Riemann inequality to prove surjectivity on scheme points.
+  This downstream source is not an alternate construction of \(D_C.J\).
+
+  For the second, specialize Kleiman Lemma 5.1 to the exact degree-zero functor:
+  prove reducedness at the identity from the dual-number computation and move
+  it by the checked translations, including arbitrary residue-field points.
+  For the third, use (SL) to fix the identity-chart dimension at \(g(C)\), use
+  geometric reducedness and the group-scheme smoothness criterion to obtain a
+  standard-smooth identity chart, and construct the translated Zariski cover
+  with (DimCov).  The Lean handoff is exactly the three arguments consumed
+  below; no theorem currently constructs them.
+\end{proof}
+
+\begin{theorem}[Conditional geometric consumers]
+  \label{route-thm-datum-geometric-consumers}
+  \lean{AlgebraicGeometry.JacobianData.isSeparated,
+    AlgebraicGeometry.AbelSourceData,
+    AlgebraicGeometry.isProper_of_abelSource,
+    AlgebraicGeometry.geometricallyIrreducible_of_abelSource,
+    AlgebraicGeometry.JacobianData.smooth,
+    AlgebraicGeometry.JacobianData.isAbelianVariety_of_abelSource,
+    AlgebraicGeometry.JacobianData.smoothOfRelativeDimension_of_translation_cover}
+  \leanok
+  \source{kleiman-picard}
+  \dcref{Section 5, Lemma 5.1 and Corollaries 5.13--5.14}
+  \uses{route-thm-phase8-geometry-producers}
+
+  Every datum carrier is separated.  If an
+  \(\operatorname{AbelSourceData}(D)\) is supplied---a proper geometrically
+  irreducible \(K\)-scheme mapping surjectively to \(D.J\)---then \(D.J\) is
+  proper and geometrically irreducible.  If \(D.J\) is geometrically reduced,
+  then it is smooth.  A Zariski zero-hypercover whose legs are smooth of
+  relative dimension \(g(C)\) proves
+  \[
+    \operatorname{SmoothOfRelativeDimension}(g(C),D.J\to\Spec K).
+  \]
+  The name \texttt{smoothOfRelativeDimension\_statement} is only an
+  abbreviation for this proposition, not a proof or a producer.
+\end{theorem}
+
+\begin{proof}
+  The unit of a group scheme over a field is closed, so the diagonal is closed
+  and the carrier is separated.  Properness and geometric irreducibility
+  descend along the surjective Abel source in the checked consumer theorems.
+  A geometrically reduced group scheme locally of finite type over a field is
+  smooth.  Relative dimension is local on the source, so it glues from the
+  displayed hypercover.  Each implication is checked, but none constructs its
+  own Abel source, geometric-reducedness proof, or dimension chart.
+\end{proof}
+
+\section{The unresolved Phase 8 assembly}
+
+\begin{theorem}[Rational-extension and uniqueness substrate]
+  \label{route-thm-albanese-substrate}
+  \lean{AlgebraicGeometry.Scheme.RationalMap.indeterminacy_pure_codim_one_into_grpScheme,
+    AlgebraicGeometry.Scheme.RationalMap.extend_to_av,
+    AlgebraicGeometry.JacobianData.existsUnique_ofCurve_comp_of_baseChange,
+    AlgebraicGeometry.JacobianData.existsUnique_ofCurve_comp_of_baseChange_datum}
+  \leanok
+  \source{abelian-varieties:page-0023, abelian-varieties:page-0024}
+  \dcref{Milne I, Theorem 3.2 and Lemma 3.3}
+  \uses{route-thm-datum-core-consumers}
+
+  Over an algebraically closed field, a rational map from a smooth integral
+  variety to an abelian variety extends uniquely once the displayed
+  pure-codimension-one indeterminacy input is supplied; the checked Milne--3.3
+  theorem supplies that input under its stated variety and group hypotheses.
+  Separately, if
+  \[
+    \exists u:D.J\to A,\quad f=u\circ\operatorname{ofCurve}_D(P)
+    \tag{Hex}
+  \]
+  and uniqueness of the corresponding morphism is known after base change,
+  the checked faithful-base-change theorem upgrades (Hex) to the required
+  \(\exists!\) over \(K\).  It also accepts an independently constructed datum
+  over the extension, using uniqueness of representers to compare carriers.
+\end{theorem}
+
+\begin{proof}
+  Milne Theorem I.3.2 combines codimension at least two for maps into proper
+  targets with Lemma I.3.3, which says that nonempty indeterminacy into a group
+  variety is pure of codimension one; hence the locus is empty and the rational
+  map is regular.  For the descent statement, flat surjective base change is
+  faithful on morphisms, so two factors equal after base change are equal over
+  \(K\).  Neither argument constructs the factor in (Hex); that is a separate
+  positive-genus obligation.
+\end{proof}
+
+\begin{theorem}[Conditional genus-zero package]
+  \label{route-thm-genus-zero-conditional}
+  \lean{AlgebraicGeometry.JacobianData.isTerminal_of_pic0Subgroup_eq_bot,
+    AlgebraicGeometry.jacobianData_of_vanishing,
+    AlgebraicGeometry.isTerminal_jacobianData_of_vanishing,
+    AlgebraicGeometry.JacobianData.existsUnique_ofCurve_comp_of_pic0Subgroup_eq_bot,
+    AlgebraicGeometry.existsUnique_ofCurve_comp_of_vanishing}
+  \leanok
+  \dcref{Milne I, Proposition 3.9; III, Section 2, genus-zero convention}
+  \uses{route-thm-albanese-substrate}
+
+  If
+  \[
+    \forall T/K,\qquad \operatorname{Pic}^0_C(T)=\{0\},
+    \tag{V0}
+  \]
+  the checked constructor represents this functor by \(\Spec K\), and any
+  datum representing it has terminal carrier.  If \(C\to\Spec K\) is
+  surjective, \(P\in C(K)\), and the explicit existence statement (Hex) is
+  supplied, then the genus-zero factor is unique.
+\end{theorem}
+
+\begin{proof}
+  Under (V0), the Yoneda functor of the terminal object and the degree-zero
+  Picard functor are both singleton-valued, giving the datum and terminality.
+  The Abel map to a terminal carrier is an epimorphism for a nonempty curve, so
+  precomposition proves uniqueness.  Existence is not formal: it requires the
+  map \(C\to A\) to be constant.  Milne I.3, Proposition 3.9 proves this only
+  for rational maps from \(\mathbb A^1\) or \(\mathbb P^1\).  Its
+  specialization here therefore first requires the unresolved pointed
+  genus-zero classification \(C\simeq\mathbb P^1_K\), or an equivalent
+  rational-parametrization bridge.  No checked theorem currently proves that
+  bridge, derives (V0) from \(g(C)=0\), or supplies (Hex); all three remain
+  explicit inputs.
+\end{proof}
+
+\begin{theorem}[The pointed Albanese consumer]
+  \label{route-thm-phase8-albanese}
+  \notready
+  \source{abelian-varieties:page-0110}
+  \dcref{Milne III, Proposition 6.1}
+  \uses{route-thm-albanese-substrate, route-thm-genus-zero-conditional,
+    route-thm-phase8-geometry-producers,
+    route-thm-datum-geometric-consumers}
+
+  For a \(K\)-point \(P:\Spec K\to C\), an abelian variety \(A/K\), and
+  \(f:C\to A\) with \(f\circ P=e_A\), prove
+  \[
+    \exists!\,u:D.J\to A,
+       \qquad f=u\circ\operatorname{ofCurve}_D(P).
+    \tag{Alb}
+  \]
+  The final Lean target is
+  \texttt{Jacobian.exists\_unique\_ofCurve\_comp} after \(D.J\) is selected as
+  \texttt{Jacobian C}.
+\end{theorem}
+
+\begin{proof}
+  \emph{Proof obligation.}  Milne Proposition 6.1 constructs
+  the factor through the degree-\(g\) symmetric sum, extends the resulting
+  rational map to the abelian target, proves it is a homomorphism by rigidity,
+  and uses generation by \(g\) copies of the Abel image for uniqueness.  The
+  cited proposition assumes \(g>0\); the challenge theorem does not.  The
+  genus-zero terminal case and the positive-genus construction must therefore
+  be joined explicitly.  Existing rational-extension, rigidity, and
+  conditional uniqueness files are consumers, not a theorem of type (Alb).
+\end{proof}
+
+\begin{theorem}[Phase 8 geometric and base-change assembly]
+  \label{route-thm-phase8-assembly}
+  \notready
+  \source{kleiman-picard, abelian-varieties:page-0110}
+  \dcref{Kleiman Section 5; Milne III, Section 6}
+  \uses{route-thm-public-handoff, route-thm-datum-core-consumers,
+    route-thm-tangent-semilinear, route-thm-phase8-basechange-coherence,
+    route-thm-phase8-geometry-producers,
+    route-thm-datum-geometric-consumers, route-thm-phase8-albanese}
+
+  Select one original-field datum \(D_C\) for every challenge curve, with
+  carrier definitionally equal to \(\operatorname{Jacobian}(C)\).  Discharge,
+  without changing that carrier:
+  \begin{enumerate}
+  \item the group object and smooth-relative-dimension-\(g(C)\) instance;
+  \item properness and geometric irreducibility;
+  \item \(\operatorname{ofCurve}\), its pointing law, and (Alb);
+  \item the contravariant functor on \(\operatorname{Curve}(K)\);
+  \item for every \(K\to L\), the group-scheme base-change isomorphism, its
+    identity and tower coherences, and compatibility with
+    \(\operatorname{ofCurve}\).
+  \end{enumerate}
+\end{theorem}
+
+\begin{proof}
+  \emph{Proof obligation.}  Instantiate the datum-level
+  consumers above with the same selected \(D_C\), supply the missing geometric
+  producers, and define every headline object by projection from that datum.
+  Uniqueness of representers gives the base-change object isomorphism; the
+  existing datum-level lemmas supply its group structure and Abel compatibility,
+  after which uniqueness proves the identity and tower equations.
+
+  None of these headline targets currently has a public proof.  The exact
+  declaration-level audit, including the axiom-contaminated derived
+  \texttt{Jacobian.congr}, is recorded in
+  Appendix~\ref{route-app-challenge-status}; it supplies no mathematical
+  premise to this theorem.
+\end{proof}

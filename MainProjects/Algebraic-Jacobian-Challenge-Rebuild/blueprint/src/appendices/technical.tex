@@ -1,0 +1,236 @@
+\chapter{Reference map, Lean handoffs, and quarantined routes}
+\label{route-app-technical}
+
+This appendix is part of the authoritative specification.  It records where
+each mathematical assertion comes from, what exact Lean object receives it,
+and which nearby constructions are deliberately outside the route.
+
+\section{Reference map}
+\label{route-app-reference-map}
+
+\begin{center}
+\begin{tabular}{p{0.08\textwidth}p{0.32\textwidth}p{0.50\textwidth}}
+\textbf{Step} & \textbf{Precise anchor} & \textbf{Specialization used here}\\ \hline
+R1 & Kleiman, \emph{The Picard Scheme}, Section 3, Definition 3.6,
+Theorem 3.7, and Exercise 3.8. & Relative effective divisors commute with
+base change; for a projective flat curve their functor is represented by an
+open Hilbert subscheme, and fixed degree is open-and-closed and of finite
+type.  Lean proves the analogous statement only for its exact widened,
+locally certified degree-\(g\) functor.\\
+R2 & Kleiman, Section 3, Theorem 3.13; Milne, \emph{Abelian Varieties},
+Chapter III, Theorem 5.1(a) and Lemma 5.2(b), transcription page 0107. & An
+Abel fibre is a complete linear system.  Under \(H^1=0\) and rank-one
+pushforward, its projective bundle is the base, giving one effective divisor.
+The checked familywise evaluator and uniqueness theorem provide the actual
+Lean specialization.  Milne III.5 additionally assumes complete nonsingular,
+positive genus, and a rational point; those are not AJCR route hypotheses.\\
+R3 & Stacks, Varieties Lemma 33.25.6, Tag 056U; Milne III, Lemma 5.2(b). & A
+nonempty smooth open has a closed point with finite separable residue field;
+over a separably closed field this is a rational point.  This is the rational
+point used inside translated-drop coverage, while Milne supplies the
+classical degree-\(g\), rank-one model subject to the same III.5 caveat.\\
+R4 & Stacks, Properties of Schemes Lemma 26.15.4, Tag 01JJ; Morphisms Lemma
+29.22.9, Tag 01TX; Kleiman, Theorem 4.8(1). & A sheaf covered by representable
+open subfunctors is represented; over the Noetherian base \(\Spec k\), local
+finite type implies local finite presentation.  Kleiman's full Picard theorem
+is context, not an imported shortcut.\\
+R5 & Stacks, Schemes Lemmas 26.14.1--2, Tags 01JB--01JC; Limits Lemma
+32.10.1, Tag 01ZM; Limits Lemmas 32.8.12 and 32.8.11, Tags 0EUU and 081E. &
+Descend the finite-presentation charts, maps, and equalities to a common stage;
+after enlargement the open immersions and isomorphisms hold.  Scheme gluing and
+its mapping property yield the global carrier comparison.  None of these
+results proves Picard representability over the stage.\\
+R6 & Stacks, Fields Lemma \emph{normal-closure-galois}, Tag 0EXM; Picard
+Schemes of Curves Section
+44.4, Tag 0B9K; Descent Remark 35.35.12, Tag 040L. & Take the finite normal
+closure of all coefficients before finalizing \(P\), then descend the class and
+prove the all-tests Yoneda equivalence on \(P.\mathrm{gluedOver}\).  Tag 0B9K
+describes the fppf Picard sheaf only; a bespoke proof must connect it to AJCR's
+big-etale degree-zero carrier.  No citation supplies that connection already.\\
+R7 & No accepted source-to-carrier specialization yet. & The one selected
+target is projectivity of the literal \(P.\mathrm{gluedMap}\); finite
+hyperplane avoidance then gives orbit-affineness on
+\(J_L=P.\mathrm{gluedOver}\).  The exact conditional Lean wrapper is
+source-present but not public-root reachable.\\
+R8 & Stacks, Descent Section 35.38, Tag 0246, and Remark 35.35.12, Tag 040L. &
+Galois-stable quasi-affine charts descend effectively, and compatible
+morphisms descend uniquely.  The checked finite-Galois quotient theorem
+specializes this to the represented degree-zero Picard functor.\\
+R9 & Milne III, Proposition 6.1, transcription page 0110; Kleiman, Section 5,
+especially Lemma 5.1 and Corollaries 5.13--5.14. & Milne proves the pointed
+Albanese property for positive genus; the challenge also requires genus zero.
+Kleiman supplies the classical group-scheme geometry.  The datum-level Lean
+consumers retain every extra hypothesis explicitly.\\
+\end{tabular}
+\end{center}
+
+\section{Exact Lean handoffs}
+\label{route-app-lean-handoff}
+
+\begin{center}
+\begin{tabular}{p{0.08\textwidth}p{0.46\textwidth}p{0.36\textwidth}}
+\textbf{Step} & \textbf{Public handoff and exact carrier} & \textbf{State}\\ \hline
+R1 & \texttt{divFunctorAff\_genus\_representableBy} on
+\texttt{divRepAffGenusScheme C}, representing exactly
+\texttt{divFunctorAff C (genus C)}. & Proved.\\
+R2 & \texttt{canonicalRankOneAbelIso} between the two sigma-extended loci;
+\texttt{canonicalRankOneAbelSliceIso} slicewise; and
+\texttt{picRankOneOpenSigmaIso} from the represented open
+\texttt{divRankOneOpenOver}. & Proved.\\
+R3 & \texttt{picRankOneTranslatedChart\_pointwiseCoverage} for the exact
+translator subtype \texttt{PicRankOneTranslatorIndex}. & Proved.\\
+R4 & \texttt{pic0\_sepClosed\_representableBy C} with carrier
+\texttt{.1} and certificate \texttt{.2}; the selected universal class is
+\texttt{pic0SepClosedUniversalClass C}. & Proved.\\
+R5 & For arbitrary legacy
+\texttt{P0 : Pic0FiniteStageGluePackage C\_Omega K}, carrier
+\texttt{P0.gluedOver}; comparison \texttt{P0.finiteStageBaseChangeIso} plus
+its structure-map equation. & Proved only as a carrier base-change comparison;
+the convenience \texttt{Over} wrapper is unrooted.\\
+R6 & Jointly choose legacy \texttt{P} with \texttt{L = P.N.1} finite Galois,
+then construct
+\texttt{xiL : pic0Subgroup ((baseChange K L).obj C) P.gluedOver}, (UC), and
+the exact \texttt{RepresentableBy} certificate. & Unresolved; the class is the
+first unmet mathematical producer.\\
+R7 & Prove \texttt{P.gluedMap.IsProjective}, then construct
+\texttt{(pic0SemilinearGalActionOfRepresentableBy C repL).OrbitsInAffineOpen}
+on the same \texttt{P.gluedOver}. & Projectivity unresolved; exact conditional
+wrapper source-present but unrooted.\\
+R8 & \texttt{pic0RepresentableBy\_finiteGaloisDescent C repL}; carrier
+\texttt{StableAffineOpen.gluedQuotientOver ...}. & Proved conditionally on
+\texttt{repL} and orbit-affineness.\\
+R9 & \texttt{picRepDatum\_finiteGaloisDescent}, then
+\texttt{PicRepDatum.toJacobianData}; all shared fields preserve the quotient
+carrier by reflexivity. & Proved conditionally; original-field instantiation
+blocked by R6--R7.\\
+P8 & \texttt{JacobianData.ofCurve}, \texttt{pullbackHom},
+\texttt{baseChange}, the tangent, geometry, Abel-base-change, and conditional
+Albanese families, then the declarations in \texttt{Challenge.lean}. & Datum
+consumers proved with displayed inputs; their first unmet producers and the
+still-sorry-bearing headline assembly are recorded below.\\
+\end{tabular}
+\end{center}
+
+\section{Quarantine}
+
+\begin{remark}[Rejected and non-normative branches]
+  \label{route-app-quarantine}
+  \dcref{custom}
+
+  The following material is not an alternate choice left to a formalizer.
+  \begin{enumerate}
+  \item The unrestricted high-degree or admissible Abel map, its quotient by
+    complete linear systems, and the symmetric-power/Weil or Albanese-first
+    constructions are rejected as construction routes.  Milne's
+    \(n>2g\) argument cannot justify the degree-\(g\) rank-one step.  The fixed
+    admissible integer may be reused only in the downstream Phase 8 producer
+    of an \texttt{AbelSourceData}; it does not replace R1--R8 or represent
+    \(\operatorname{Pic}^0\).
+  \item \texttt{DivFamZar}, the conditional F5/F6 faithfully-flat divisor
+    classifiers, and the admissible-degree representer are implementation
+    layers or quasi-compactness inputs only.  They do not replace R1--R2.
+  \item A \texttt{GlueData}, \texttt{GluePackage}, overlap isomorphism, or
+    \texttt{pic0RepresentableBy\_finiteStageBaseChange} is not a
+    representability theorem over the finite stage.  Only (UC) followed by
+    (Y) may cross R6.
+  \item \texttt{Pic0FiniteStageStableGluePackage} is not the R5--R7 carrier.
+    Until a checked legacy-to-stable carrier isomorphism exists, its stable
+    orbit wrappers cannot be spliced into this route.
+  \item The Lean functor \texttt{pic0TypeFunctor} means the degree-zero
+    etale-sheafified Picard functor.  No theorem currently identifies it with
+    Kleiman's connected identity component, so those phrases are not
+    interchangeable in Lean attachments or completion claims.
+  \item The projective-space immersion entry point is only the internal proof
+    of the selected projectivity-to-orbits implication; constructing an
+    immersion independently is not a second R7 producer.  Kleiman Theorem 4.8,
+    arbitrary object-isomorphism transport,
+    post-base-change representability, and filtered-colimit preservation are
+    comparison or consumer results.  None is an imported proof of R6 or R8.
+  \item The conditional constructors
+    \texttt{JacobianData.ofRepresentableBy}, \texttt{ofCharts},
+    \texttt{ofChartsOfCompactSpace}, \texttt{ofAbelImage},
+    \texttt{ofAbelLifts}, \texttt{ofChartsOfAbelImage},
+    \texttt{ofChartsOfAbelLifts}, \texttt{ofPic0ClassSurjective}, and
+    \texttt{PicRepDatum.toJacobianDataOfAbelLifts} are downstream packaging
+    devices.  Likewise \texttt{Pic0RepresentabilityOverlap} and
+    \texttt{Pic0RepresentabilityDescentData} start from an already supplied
+    representation.  None replaces the quotient-carrier handoff in R8--R9.
+  \item \texttt{blueprint/src/chapters/detail},
+    \texttt{blueprint/src/chapters-legacy}, and
+    \texttt{content-formalization.tex} are historical audit material.  They
+    are not included by \texttt{content.tex}; any conflicting route, status,
+    or aspirational proof in them is non-normative and must not be cited as
+    project state.
+  \end{enumerate}
+\end{remark}
+
+\section{Public-root and Challenge status}
+\label{route-app-challenge-status}
+
+The modules defining \texttt{finiteStageBaseChangeOverIso},
+\texttt{pic0RepresentableBy\_finiteStageBaseChange},
+\texttt{pic0ClassYoneda},
+\texttt{pic0SepClosedClassYoneda\_app}, and
+\texttt{pic0FiniteStageOrbitsInAffineOpen\_of\_isProjective} are present in
+the source tree but not reachable from the public \texttt{AlgebraicJacobian}
+root at this checkpoint.  They receive no \texttt{\textbackslash leanok}
+credit in the normative chapters.  The first two remain only slice/post-base-
+change comparisons, and the last remains conditional on (Proj), even after
+future root integration.
+
+The headline declarations \texttt{Jacobian}, \texttt{instGrpObj},
+\texttt{smoothOfRelativeDimension\_genus}, the anonymous proper and
+geometrically-irreducible instances, \texttt{ofCurve},
+\texttt{comp\_ofCurve}, \texttt{exists\_unique\_ofCurve\_comp}, the map and
+laws of \texttt{functor}, \texttt{baseChangeIso},
+\texttt{baseChangeIso\_id}, \texttt{baseChangeIso\_comp}, and
+\texttt{baseChange\_ofCurve} in \texttt{Challenge.lean} remain backed by
+\texttt{sorry}.  \texttt{Jacobian.congr} is definitionally derived from the
+sorry-bearing functor and is therefore axiom-contaminated rather than an
+independent endpoint.  The generic scheme base-change functor and its
+identity/composition isomorphisms are checked, but they do not prove the
+Jacobian-specific comparison or coherences.
+
+\section{Residual blocker ledger}
+
+\begin{remark}[Blockers in dependency order]
+  \label{route-app-blockers}
+  \dcref{custom}
+
+  \begin{enumerate}
+  \item \textbf{B1, first unmet producer:} after taking the finite normal
+    closure of all coefficients, finalize a legacy \(P\) with
+    \(L=P.N.1/K\) finite Galois, construct \(\xi_L\) on its literal
+    \texttt{P.gluedOver}, and prove (UC), including the exact big-etale and
+    degree-zero transports.  Current tensor-stage work supplies local inputs
+    only.
+  \item \textbf{B2:} prove every component of
+    pullback by \(\xi_L\) bijective on every \(L\)-scheme, yielding (FS-Rep).
+  \item \textbf{B3:} prove \texttt{P.gluedMap.IsProjective} on that exact
+    carrier; no stable-package or independently immersed substitute is allowed.
+  \item \textbf{B4:} root and instantiate the exact projectivity-to-orbits
+    wrapper, yielding (OA) for the canonical action on the same \(J_L\).
+  \item \textbf{B5:} instantiate the conditional finite-Galois theorem and
+    same-carrier handoff, producing one original-field
+    \texttt{JacobianData C}.
+  \item \textbf{B6:} construct the additive, scalar-compatible
+    epsilon-kernel--\(H^1(C,\mathcal O_C)\) comparison (SL); the current
+    set-level equivalence cannot prove the tangent dimension formula.
+  \item \textbf{B7:} prove \texttt{abelCrossBaseCechCore} for every field
+    extension and rational base point; the current graph theorem only reduces
+    this to two Cech-class equations.
+  \item \textbf{B8:} construct the fixed proper degree-\(n_C\) Abel source,
+    geometric reducedness, and the relative-dimension-\(g\) zero-hypercover
+    required by the checked geometry consumers.
+  \item \textbf{B9:} prove the pointed genus-zero identification with
+    \(\mathbb P^1\), all-test degree-zero Picard vanishing, and constancy/Hex;
+    combine these with the positive-genus factorization to obtain (Alb).
+  \item \textbf{B10:} select the datum family in \texttt{Challenge.lean}, prove
+    functoriality and the Jacobian-specific base-change identity/tower
+    coherences on that family, instantiate (AJ-BC), and expose all geometry
+    without changing carriers or signatures.
+  \end{enumerate}
+
+  B2--B10 are blocked consumers, not parallel alternatives to B1.  This order is
+  the formalization route.
+\end{remark}

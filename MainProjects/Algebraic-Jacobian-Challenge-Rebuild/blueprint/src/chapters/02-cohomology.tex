@@ -1,0 +1,180 @@
+\chapter{Degree-$g$ divisors and the rank-one Abel isomorphism}
+\label{route-ch-rank-one}
+
+Throughout this chapter the base field is an arbitrary field \(k\), and
+\(C/k\) satisfies H1--H2.  No separable-closedness or rational point is used.
+
+\section{The represented divisor package}
+
+\begin{theorem}[Represented widened divisors of degree \(g\)]
+  \label{route-thm-divisor-representer}
+  \lean{AlgebraicGeometry.divRepAffGenusScheme,
+    AlgebraicGeometry.divFunctorAff_genus_representableBy}
+  \leanok
+  \source{kleiman-picard}
+  \dcref{Theorem 3.7 and Exercise 3.8}
+  \uses{route-conv-objects}
+
+  Let \(\pi:C\to\mathbb P^1_k\) be the finite dominant map chosen internally
+  from H1--H2.  There is a \(k\)-scheme \(D_g\) and, naturally for every
+  \(T\to\Spec k\), a bijection
+  \[
+    \Hom_k(T,D_g)\;\simeq\;
+    \operatorname{divFunctorAff}(C,g)(T).
+  \]
+  The right side is the Lean widened divisor functor: compatible divisor
+  families on arbitrary affine opens, with the local certification used by
+  the finite-map/cohomology construction.  This statement must not be silently
+  replaced by representability of a differently defined divisor functor.
+\end{theorem}
+
+\begin{proof}
+  Kleiman's Theorem 3.7 represents relative effective divisors for a
+  projective flat family as an open of the Hilbert scheme, and Exercise 3.8
+  isolates fixed degree on a curve.  The Lean specialization chooses \(\pi\),
+  proves the required \(H^0\) and \(H^1\) finiteness and Euler-characteristic
+  identities from H1--H2, constructs the finite-relation affine charts, and
+  glues their classifiers.  At parameter \(g(C)\) this yields the displayed
+  `RepresentableBy` certificate on the exact functor
+  `divFunctorAff C (genus C)`.
+\end{proof}
+
+\begin{definition}[The admissible divisor source is auxiliary]
+  \label{route-rem-admissible-source}
+  \lean{AlgebraicGeometry.divRepAffAdmissibleScheme,
+    AlgebraicGeometry.divFunctorAff_admissible_representableBy}
+  \leanok
+  \source{kleiman-picard}
+  \dcref{Definition 4.7 and proof of Theorem 4.8}
+  \uses{route-thm-divisor-representer}
+
+  Lean also constructs a quasi-compact represented divisor source in a larger
+  admissible degree.  In this route it is used only to prove quasi-compactness
+  of the final separably closed representer via a surjective Abel map.  Its
+  unrestricted Abel map is not the rank-one chart and is not quotiented to
+  construct \(J\).
+\end{definition}
+
+\begin{proof}
+  The large degree kills \(H^1\) and supplies etale-local effective
+  representatives, exactly as in Kleiman's bounded Abel construction.  For
+  degree greater than \(g\), however, complete linear systems have positive
+  dimension; hence the unrestricted Abel map cannot be an open immersion.
+\end{proof}
+
+\section{The intrinsic rank-one open}
+
+\begin{theorem}[The rank-one Picard locus and its represented inverse image]
+  \label{route-thm-rank-one-open}
+  \lean{AlgebraicGeometry.PicRankOneLocalPresentation,
+    AlgebraicGeometry.PicRankOneOpen,
+    AlgebraicGeometry.picRankOneOpen_isOpen,
+    AlgebraicGeometry.DivRankOneOpenData,
+    AlgebraicGeometry.divRankOneOpenDataOfPicRankOneOpen}
+  \leanok
+  \source{kleiman-picard}
+  \dcref{proof of Theorem 4.8, cohomology-and-base-change open loci}
+  \uses{route-thm-divisor-representer}
+
+  For a test \(T/k\) and
+  \(\lambda\in\operatorname{Pic}^{g}_C(T)\), say that \(\lambda\) is
+  rank one precisely when
+  \[
+    \forall(A,\,[\mathrm{CommRing}\ A],\,[\mathrm{Algebra}\ k\ A])\;
+    \forall t:\operatorname{Spec}_k A\longrightarrow T,\quad
+    \operatorname{Nonempty}\bigl(\operatorname{PicRankOneLocalPresentation}
+      (\pi,\lambda_t)\bigr),
+    \tag{R1P}
+  \]
+  where \(\lambda_t\) is the functorial pullback of \(\lambda\).  A witness
+  in (R1P) is not an unnamed line bundle: it contains an etale cover
+  \(q:\operatorname{Spec}B\to\operatorname{Spec}A\), a descent-class
+  representative \(u\) with
+  \[
+    \operatorname{PicEtAff.mk}(u)=\operatorname{picEtAffineEquiv}(\lambda_t),
+  \]
+  a \(\operatorname{BasicOpenCocycleDatum}\ d\) satisfying
+  \([u]=\operatorname{relPicMk}(d.\operatorname{cechPicClass})\), and a
+  \(\operatorname{Scheme.Modules}\) object \(M\) with an isomorphism from
+  its underlying sheaf to \(d.\operatorname{sheaf}\).  It also contains
+  \(\operatorname{Scheme.Modules.IsLineBundle}(M)\), and, for every cartesian
+  square \(X'\to X\) over \(\operatorname{Spec}B\),
+  \[
+    \operatorname{IsIso}\bigl((\operatorname{canonicalBaseChangeMap}\,sq).app\,M\bigr),
+  \]
+  together with \(\operatorname{Subsingleton}(H^1(d.\operatorname{sheaf}))\),
+  finite and projective \(H^0(d.\operatorname{sheaf})\) over \(B\), and
+  \(\operatorname{rankAtStalk}(H^0(d.\operatorname{sheaf}),p)=1\) for every
+  \(p\in\operatorname{PrimeSpectrum}B\).  These classes form a subfunctor
+  \[
+    \operatorname{Pic}^{g,\mathrm{rk}=1}_C
+       \hookrightarrow \operatorname{Pic}^{g}_C
+  \]
+  relatively represented by open immersions.
+
+  Pulling this subfunctor back along the degree-\(g\) Abel map
+  \(a_g:h_{D_g}\to\operatorname{Pic}^{g}_C\) gives an actual open
+  \(W\subset D_g\), encoded by `DivRankOneOpenData`.  For every \(T\), a
+  map \(T\to D_g\) factors through \(W\) exactly when its Abel class is in
+  the rank-one subfunctor.
+\end{theorem}
+
+\begin{proof}
+  The Lean proof does not assume an unidentified universal line bundle on the
+  Picard functor.  It defines the split locus of a class at residue-field
+  points, proves that this locus pulls back exactly, proves openness on affine
+  tests using a native etale presentation and flat quotient maps, and then
+  glues over affine opens.  The resulting relatively represented open is
+  pulled back along the represented Abel transformation to obtain \(W\).
+  This realizes the open-locus specialization used in Kleiman's proof while
+  retaining the precise class-tied Lean predicate.
+\end{proof}
+
+\begin{theorem}[Canonical rank-one Abel isomorphism]
+  \label{route-thm-rank-one-abel-iso}
+  \lean{AlgebraicGeometry.canonicalRankOneEvaluationDivisorData,
+    AlgebraicGeometry.canonicalRankOneAbelIso,
+    AlgebraicGeometry.canonicalRankOneAbelSliceIso,
+    AlgebraicGeometry.rankOneDivisorOpenRepresentableBy,
+    AlgebraicGeometry.picRankOneOpenRepresentableBy,
+    AlgebraicGeometry.picRankOneOpenSigmaIso}
+  \leanok
+  \source{abelian-varieties:page-0107}
+  \dcref{Theorem 5.1(a), Lemma 5.2(b), and the description of Abel fibres}
+  \uses{route-thm-rank-one-open}
+
+  With \(\pi=\operatorname{divRepAffP1Map}(C)\), Lean's primary statement is
+  the isomorphism of sigma-extension objects
+  \[
+    \operatorname{rankOneDivisorLocus}(\pi)
+      \xrightarrow{\sim}\operatorname{rankOneLocus}(\pi).
+  \]
+  The slicewise isomorphism
+  \texttt{canonicalRankOneAbelSliceIso}, the represented divisor open
+  \(W=\operatorname{divRankOneOpenOver}(\pi)\), and
+  \texttt{picRankOneOpenSigmaIso} identify this with the restricted Abel
+  transformation
+  \(a_g|_W:h_W\xrightarrow{\sim}
+  \operatorname{Pic}^{g,\mathrm{rk}=1}_C\).
+  Explicitly, for every test \(T/k\) and every rank-one class \(\lambda\),
+  the counit
+  \(f_T^*f_{T*}\mathcal L\to\mathcal L\) of any class-tied local
+  presentation has a canonical zero divisor; these local divisors descend to
+  a unique element of \(W(T)\).  Its Abel class is \(\lambda\), and any two
+  divisors in \(W(T)\) with the same Abel class are equal.
+\end{theorem}
+
+\begin{proof}
+  Milne identifies an Abel fibre with the complete linear system and records
+  that the generic degree-\(g\) locus has \(h^0=1\).  Lean strengthens the
+  required family statement directly: rank-one local data provide the
+  evaluation divisor on each affine; naturality and arbitrary-test uniqueness
+  glue it; injectivity of the restricted Abel map turns its right inverse into
+  a two-sided inverse.  Sigma extension gives the displayed big-site
+  isomorphism.  Milne's theorem is used only as the classical mathematical
+  model, not as a claim that the whole symmetric-power construction is the
+  chosen formalization route.  Milne Chapter III, Section 5 has standing
+  assumptions that the curve is complete nonsingular, \(g>0\), and equipped
+  with a rational point; none is silently transferred to the stronger
+  familywise Lean statement or to the genus-zero case.
+\end{proof}
