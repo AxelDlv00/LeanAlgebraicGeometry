@@ -4,7 +4,6 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: The AlgebraicJacobian Contributors
 -/
 import AlgebraicJacobian.Picard.Pic0FiniteStageGlueData
-import AlgebraicJacobian.Picard.Pic0FiniteStageCanonicalGlueContext
 
 /-!
 # The face equation for the finite-stage Picard glue datum
@@ -199,42 +198,6 @@ theorem pic0FiniteStageAffineTripleTransition_fac
       (pic0FiniteStageRestrictionBaseChange C L n m relation M mapM N U V)
       (pic0FiniteStageRestrictionBaseChange C L n m relation M mapM N U W))
     hright htau hleft hface
-
-set_option synthInstance.maxHeartbeats 400000 in
-set_option maxHeartbeats 6400000 in
-/-! The canonical facade supplies the comparison square from its stored model invariant.
-Face consumers therefore pass one context and do not rebuild a dependent certificate. -/
-theorem pic0FiniteStageAffineTripleTransition_fac_of_canonical_context
-    {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
-    (D : Pic0FiniteStageCanonicalGlueContext C F)
-    [Algebra.IsAlgebraic D.context.models.L.1 k]
-    [Algebra.IsAlgebraic D.context.models.M.1 k]
-    (U V W : Pic0FiniteStageChartIndex C) :
-    (pic0FiniteStageAffineTripleTransition
-        C D.context.L D.context.n D.context.m D.context.relation D.context.M
-        D.context.mapM D.context.N D.context.thetaN U V W).comp
-        (finiteStageTensorPushoutFaceRight
-          (pic0FiniteStageRestrictionBaseChange
-            C D.context.L D.context.n D.context.m D.context.relation D.context.M
-            D.context.mapM D.context.N V W)
-          (pic0FiniteStageRestrictionBaseChange
-            C D.context.L D.context.n D.context.m D.context.relation D.context.M
-            D.context.mapM D.context.N V U)) =
-      (finiteStageTensorPushoutFaceLeft
-        (pic0FiniteStageRestrictionBaseChange
-          C D.context.L D.context.n D.context.m D.context.relation D.context.M
-          D.context.mapM D.context.N U V)
-        (pic0FiniteStageRestrictionBaseChange
-          C D.context.L D.context.n D.context.m D.context.relation D.context.M
-          D.context.mapM D.context.N U W)).comp
-        (pic0FiniteStageTransitionBaseChange
-          C D.context.L D.context.n D.context.m D.context.relation D.context.M
-          D.context.mapM D.context.N U V) := by
-  exact pic0FiniteStageAffineTripleTransition_fac
-    C D.context.models.L D.context.models.n D.context.models.m
-      D.context.models.relation D.context.models.M D.context.models.mapM
-      D.context.triple.N D.context.models.e D.context.models.comparison
-      D.context.triple.thetaN (fun p => D.comparison_of_models C p) U V W
 
 end
 

@@ -224,37 +224,6 @@ noncomputable def pic0FiniteStageAffineRingGlueData
   (pic0FiniteStageAffineRingGluePresentation C L n m relation M mapM N
     e hmapM hOpen thetaN hthetaN).glueData
 
-set_option synthInstance.maxHeartbeats 400000 in
--- The facade reuses three nested finite-subextension scalar towers from the context.
-set_option maxHeartbeats 12800000 in
--- Elaborating the canonical face certificate normalizes its dependent tensor carriers.
-/-- Assemble a pinned affine presentation directly from the canonical context facade.
-
-The context stores the model comparison, open-immersion certificates, and final-stage
-face equations with their dependent carriers already aligned.  This wrapper keeps those
-witnesses opaque to consumers and makes the presentation a certified output of the context,
-rather than an independent value sharing only its coefficient-field type.
--/
-noncomputable def pic0FiniteStageAffineRingGluePresentation_of_canonical_context
-    {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
-    (D : Pic0FiniteStageCanonicalGlueContext C F) :
-    AlgebraicJacobian.AffineRingGluePresentation D.context.triple.N.1 := by
-  letI : Algebra.IsAlgebraic D.context.models.L.1 k := by infer_instance
-  letI : Algebra.IsAlgebraic D.context.models.M.1 k := by infer_instance
-  exact pic0FiniteStageAffineRingGluePresentation
-    C D.context.models.L D.context.models.n D.context.models.m
-      D.context.models.relation D.context.models.M D.context.models.mapM
-      D.context.triple.N D.context.models.e D.context.models.comparison
-      D.context.models.openImmersion D.context.triple.thetaN
-      (fun p => D.comparison_of_models C p)
-
-/-- Compatibility projection of the canonical presentation to its glue datum. -/
-noncomputable def pic0FiniteStageAffineRingGlueData_of_canonical_context
-    {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
-    (D : Pic0FiniteStageCanonicalGlueContext C F) :
-    Scheme.GlueData :=
-  (pic0FiniteStageAffineRingGluePresentation_of_canonical_context C D).glueData
-
 end
 
 end
