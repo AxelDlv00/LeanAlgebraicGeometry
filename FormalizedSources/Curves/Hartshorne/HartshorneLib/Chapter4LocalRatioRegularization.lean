@@ -109,7 +109,8 @@ theorem regularized_ext
   exact h i
 
 /- The section family produced by `of_zeroBound` is independent of the
-   auxiliary choices used to obtain its representatives. -/
+   auxiliary choices used to obtain its representatives, once the zero-bound
+   hypothesis is supplied. -/
 theorem of_zeroBound_eq
     (hbound : ∀ i, a.coordinate i ∈
       divisorSections (X := X) (0 : CurveDivisor k X) a.chart.U)
