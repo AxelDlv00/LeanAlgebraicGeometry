@@ -7,6 +7,7 @@ import Mathlib
 import AlgebraicJacobian.Picard.QuotScheme
 import AlgebraicJacobian.Picard.PullbackFinitePresentation
 import AlgebraicJacobian.Picard.TensorSectionFormula
+import AlgebraicJacobian.Picard.TensorObjInverse
 
 /-!
 # Base change of Γ-fibres over a residue field extension, via the schematic support
@@ -622,6 +623,75 @@ theorem annihilator_le_annihilator_sheafTensorObj
       ≤ Scheme.Modules.annihilator (Scheme.Modules.sheafTensorObj A B) :=
   Scheme.IdealSheafData.le_ofIdeals_iff.mpr
     (fun U => ideal_annihilator_le_annihilator_sheafTensorObj A B U)
+
+/-! ## Exact support invariance for an invertible factor -/
+
+namespace Scheme.Modules
+
+/-- An isomorphism of module sheaves preserves the annihilator ideal sheaf. -/
+theorem annihilator_eq_of_iso_support
+    {X : Scheme.{u}} {F G : X.Modules} (e : F ≅ G) :
+    annihilator F = annihilator G := by
+  unfold annihilator
+  congr 1
+  funext U
+  let eU : Γ(F, U.1) ≃ₗ[Γ(X, U.1)] Γ(G, U.1) :=
+    ((toPresheafOfModules X ⋙
+      PresheafOfModules.evaluation X.ringCatSheaf.obj
+        (Opposite.op U.1)).mapIso e).toLinearEquiv
+  ext r
+  constructor
+  · intro hr
+    rw [Module.mem_annihilator] at hr ⊢
+    intro x
+    obtain ⟨y, rfl⟩ := eU.surjective x
+    rw [← eU.map_smul, hr, map_zero]
+  · intro hr
+    rw [Module.mem_annihilator] at hr ⊢
+    intro x
+    apply eU.injective
+    rw [eU.map_zero, eU.map_smul, hr]
+
+/-- Tensoring on the left by a locally trivial module preserves the schematic
+annihilator.  The reverse inclusion is obtained by tensoring with a two-sided
+tensor inverse and contracting the inverse pair. -/
+theorem annihilator_tensorObj_eq_right_of_isLocallyTrivial_support
+    {X : Scheme.{u}} (L F : X.Modules)
+    (hL : LineBundle.IsLocallyTrivial L) :
+    annihilator (tensorObj L F) = annihilator F := by
+  obtain ⟨Linv, _hLinv, ⟨e⟩⟩ := exists_tensorObj_inverse hL
+  have hleft {A B : X.Modules} :
+      annihilator A ≤ annihilator (tensorObj A B) := by
+    rw [annihilator_eq_of_iso_support (tensorObjIsoSheafTensorObj A B)]
+    exact annihilator_le_annihilator_sheafTensorObj A B
+  have hright {A B : X.Modules} :
+      annihilator B ≤ annihilator (tensorObj A B) := by
+    calc
+      annihilator B ≤ annihilator (tensorObj B A) := hleft
+      _ = annihilator (tensorObj A B) :=
+        annihilator_eq_of_iso_support (tensorObj_braiding B A)
+  apply le_antisymm
+  · calc
+      annihilator (tensorObj L F) ≤
+          annihilator (tensorObj Linv (tensorObj L F)) := hright
+      _ = annihilator F := annihilator_eq_of_iso_support
+        (tensorObj_assoc_iso.symm ≪≫
+          tensorObjIsoOfIso (tensorObj_braiding Linv L ≪≫ e) (Iso.refl F) ≪≫
+          tensorObj_left_unitor F)
+  · exact hright
+
+/-- Finiteness of the schematic-support morphism is invariant under tensoring
+with a locally trivial factor. -/
+theorem isFinite_tensorObj_left_iff_support
+    {X S : Scheme.{u}} (f : X ⟶ S) (L F : X.Modules)
+    (hL : LineBundle.IsLocallyTrivial L) :
+    IsFinite (schematicSupportι (tensorObj L F) ≫ f) ↔
+      IsFinite (schematicSupportι F ≫ f) := by
+  change IsFinite ((annihilator (tensorObj L F)).subschemeι ≫ f) ↔
+    IsFinite ((annihilator F).subschemeι ≫ f)
+  rw [annihilator_tensorObj_eq_right_of_isLocallyTrivial_support L F hL]
+
+end Scheme.Modules
 
 namespace Scheme.Modules
 
