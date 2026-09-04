@@ -3,19 +3,16 @@ title: Global finite quotient by gluing affine charts
 projects:
 - Milne
 summary: 'Pending source node prop:milne-finite-quotient. Stable quotient opens, order/equality
-  reflection, finite-cover reconstruction data, functorial chart transitions, and
-  within-one-affine-ring localization cocycle laws are verified. Actual quotient and
-  source structure-sheaf sections on invariant basic opens are identified with fixed/full
-  localizations; restriction naturality and the equation q.app D(b) = ((A[1/b])^G
-  -> A[1/b]) hold under these presentations. Commit 75871d09e0 additionally provides
-  stable-affine section actions, separated affine overlap charts, Spec(k)-slice fixed-ring
-  transitions with reversal/composition laws, and explicit conditional pairwise overlap
-  cones. Commit a3a8f3916b adds supplied-ring triple-tensor transition maps with proved
-  factorization and cocycle laws, plus a conditional Scheme.GlueData constructor;
-  overlap rings, open immersions, and quotient existence remain explicit inputs. Remaining:
-  compare quotient overlaps coming from different affine coordinate rings, instantiate
-  the supplied data from the finite quotient, then prove the global topology/sheaf
-  clauses, arbitrary-target universal property, and free-action etaleness.'
+  reflection, finite-cover reconstruction data, functorial chart transitions, within-one-affine-ring
+  localization cocycle laws, stable-affine section actions, separated affine overlap
+  charts, Spec(k)-slice fixed-ring transitions, and conditional pairwise overlap cones
+  are verified. Commit a3a8f3916b supplies ring-level triple-tensor transitions, factorization/cocycle
+  proofs, and conditional Scheme.GlueData; b2fc3124b6 proves that the affine quotient
+  preimage of the descended intersection of two stable opens is the source intersection.
+  Overlap rings/open immersions and quotient existence remain explicit inputs. Remaining:
+  compare overlaps from different affine coordinate rings, instantiate supplied data
+  from the finite quotient, then prove global topology/sheaf clauses, arbitrary-target
+  universal property, and free-action etaleness.'
 status: pending
 kind: proof
 priority: high
@@ -42,8 +39,9 @@ metadata:
   parent: Milne
   owner: fs-milne
   milestone: Milne
-  updated_at: '2026-09-04T14:50:39.007116+00:00'
+  updated_at: '2026-09-04T15:54:56.557544+00:00'
   pinned_commits:
+  - b2fc3124b6
   - a3a8f3916b
   - 75871d09e0
   - a73295519c
