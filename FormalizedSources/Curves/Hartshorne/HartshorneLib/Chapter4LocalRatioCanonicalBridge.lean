@@ -42,6 +42,20 @@ attribute [local instance] MvPolynomial.gradedAlgebra
 noncomputable local instance chartAlgebraBridge : Algebra k Γ(a.chart.U, ⊤) :=
   (a.chart.U.toScheme.overAlgebraMap k (⊤ : a.chart.U.toScheme.Opens)).toAlgebra
 
+theorem chartMap_preimage_basicOpen_eval
+    (r : LocalRatioRegularization a) (j : Fin (n + 1)) :
+    r.chartMap ⁻¹ᵁ
+        Proj.basicOpen (MvPolynomial.homogeneousSubmodule (Fin (n + 1)) k)
+          (MvPolynomial.X j) =
+      a.chart.U.toScheme.basicOpen
+        (((MvPolynomial.aeval r.chartSection).toRingHom :
+          MvPolynomial (Fin (n + 1)) k →+* Γ(a.chart.U, ⊤))
+          (MvPolynomial.X j)) := by
+  rw [r.chartMap_preimage_basicOpen]
+  exact congrArg (fun z => a.chart.U.toScheme.basicOpen z) (r.chartEval_X j).symm
+
+set_option maxHeartbeats 800000 in
+-- The canonical Proj restriction expands through a large glued cover.
 /-- Restricting the canonical chart map to its denominator standard open is
 the affine map supplied by `toBasicOpenOfGlobalSections`. -/
 theorem chartMap_morphismRestrict_denominator
@@ -49,7 +63,8 @@ theorem chartMap_morphismRestrict_denominator
     r.chartMap ∣_
         Proj.basicOpen (MvPolynomial.homogeneousSubmodule (Fin (n + 1)) k)
           (MvPolynomial.X a.denominator_index) =
-      (Scheme.isoOfEq (r.chartMap_preimage_basicOpen
+      (Scheme.isoOfEq a.chart.U.toScheme (chartMap_preimage_basicOpen_eval
+        (a := a) r
         a.denominator_index)).hom ≫
         Proj.toBasicOpenOfGlobalSections
           (MvPolynomial.homogeneousSubmodule (Fin (n + 1)) k)
@@ -57,18 +72,29 @@ theorem chartMap_morphismRestrict_denominator
           Nat.zero_lt_one
           ((MvPolynomial.mem_homogeneousSubmodule _ _).mpr
             (MvPolynomial.isHomogeneous_X k a.denominator_index)) := by
+  let f : MvPolynomial (Fin (n + 1)) k →+* Γ(a.chart.U, ⊤) :=
+    (MvPolynomial.aeval r.chartSection).toRingHom
+  have hf :
+      (HomogeneousIdeal.irrelevant
+        (MvPolynomial.homogeneousSubmodule (Fin (n + 1)) k)).toIdeal.map f = ⊤ := by
+    exact chartEval_irrelevant_span (a := a) r
+  have hdeg : MvPolynomial.X a.denominator_index ∈
+      MvPolynomial.homogeneousSubmodule (Fin (n + 1)) k 1 :=
+    (MvPolynomial.mem_homogeneousSubmodule _ _).mpr
+      (MvPolynomial.isHomogeneous_X k a.denominator_index)
   change
     (Proj.fromOfGlobalSections
-        (MvPolynomial.homogeneousSubmodule (Fin (n + 1)) k)
-        (MvPolynomial.aeval r.chartSection).toRingHom r.chartEval_irrelevant_span) ∣_
+        (MvPolynomial.homogeneousSubmodule (Fin (n + 1)) k) f hf) ∣_
       Proj.basicOpen (MvPolynomial.homogeneousSubmodule (Fin (n + 1)) k)
         (MvPolynomial.X a.denominator_index) = _
-  exact Proj.fromOfGlobalSections_morphismRestrict
-    (MvPolynomial.homogeneousSubmodule (Fin (n + 1)) k)
-    (MvPolynomial.aeval r.chartSection).toRingHom r.chartEval_irrelevant_span
-    Nat.zero_lt_one
-    ((MvPolynomial.mem_homogeneousSubmodule _ _).mpr
-      (MvPolynomial.isHomogeneous_X k a.denominator_index))
+  have hrestrict :=
+    Proj.fromOfGlobalSections_morphismRestrict
+      (𝒜 := MvPolynomial.homogeneousSubmodule (Fin (n + 1)) k)
+      (f := f) (hf := hf) (r := MvPolynomial.X a.denominator_index) (n := 1)
+      Nat.zero_lt_one hdeg
+  convert hrestrict using 1
+  all_goals simp only [f]
+  all_goals rfl
 
 end LocalRatioRegularization
 
@@ -79,6 +105,8 @@ attribute [local instance] MvPolynomial.gradedAlgebra
 noncomputable local instance globalSectionsAlgebra : Algebra k Γ(X.left, ⊤) :=
   (X.left.overAlgebraMap k (⊤ : X.left.Opens)).toAlgebra
 
+omit [IsAlgClosed k] [IsIntegral X.left] [SmoothOfRelativeDimension 1 X.hom]
+  [IsProper X.hom] in
 /-- The canonical projective map sends the inverse image of a standard
 projective open to the principal open defined by the corresponding section. -/
 @[simp] theorem map_preimage_basicOpen
@@ -88,18 +116,27 @@ projective open to the principal open defined by the corresponding section. -/
         Proj.basicOpen (MvPolynomial.homogeneousSubmodule (Fin (n + 1)) k)
           (MvPolynomial.X j) =
       X.left.basicOpen (data.sections j) := by
+  let f : MvPolynomial (Fin (n + 1)) k →+* Γ(X.left, ⊤) :=
+    (MvPolynomial.aeval data.sections).toRingHom
+  have hf :
+      (HomogeneousIdeal.irrelevant
+        (MvPolynomial.homogeneousSubmodule (Fin (n + 1)) k)).toIdeal.map f = ⊤ := by
+    exact data.irrelevant_span
+  have hdeg : MvPolynomial.X j ∈
+      MvPolynomial.homogeneousSubmodule (Fin (n + 1)) k 1 :=
+    (MvPolynomial.mem_homogeneousSubmodule _ _).mpr
+      (MvPolynomial.isHomogeneous_X k j)
   change
     Proj.fromOfGlobalSections
-        (MvPolynomial.homogeneousSubmodule (Fin (n + 1)) k)
-        (MvPolynomial.aeval data.sections).toRingHom data.irrelevant_span ⁻¹ᵁ
+        (MvPolynomial.homogeneousSubmodule (Fin (n + 1)) k) f hf ⁻¹ᵁ
       Proj.basicOpen (MvPolynomial.homogeneousSubmodule (Fin (n + 1)) k)
         (MvPolynomial.X j) = _
-  exact Proj.fromOfGlobalSections_preimage_basicOpen
-    (MvPolynomial.homogeneousSubmodule (Fin (n + 1)) k)
-    (MvPolynomial.aeval data.sections).toRingHom data.irrelevant_span
-    Nat.zero_lt_one
-    ((MvPolynomial.mem_homogeneousSubmodule _ _).mpr
-      (MvPolynomial.isHomogeneous_X k j))
+  have hpre :=
+    Proj.fromOfGlobalSections_preimage_basicOpen
+      (𝒜 := MvPolynomial.homogeneousSubmodule (Fin (n + 1)) k)
+      (f := f) (hf := hf) (r := MvPolynomial.X j) (n := 1)
+      Nat.zero_lt_one hdeg
+  simpa [f] using hpre
 
 end GlobalSectionsProjectiveMapData
 
