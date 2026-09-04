@@ -496,14 +496,15 @@ theorem complexLieGroup_isMulCommutative_of_canonicalComplexExponential
     [I.Boundaryless] [CompactSpace G] [PreconnectedSpace G] :
     IsMulCommutative G := by
   apply isMulCommutative_of_central_generators
-    (s := Set.range (canonicalComplexExponential (G := G) I))
+    (s := Set.range (canonicalComplexExponentialMonoidHom (G := G) I))
   · intro z hz x
     obtain ⟨v, rfl⟩ := hz
     change Commute x (canonicalRealFlow (G := G) I
-      (complexToRealLieAlgebraMap I v) 1)
+      (complexToRealLieAlgebraMap I v.toAdd) 1)
     exact (canonicalRealFlow_spec (G := G) I
-      (complexToRealLieAlgebraMap I v)).2.2.2 x 1
-  · rw [Set.range_eq_univ.mpr (canonicalComplexExponential_surjective (G := G) I)]
+      (complexToRealLieAlgebraMap I v.toAdd)).2.2.2 x 1
+  · rw [Set.range_eq_univ.mpr
+      (canonicalComplexExponentialMonoidHom_surjective (G := G) I)]
     exact Subgroup.closure_univ
 
 /-- Every compact connected complex Lie group is commutative.  Canonical real
