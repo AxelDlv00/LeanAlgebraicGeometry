@@ -51,6 +51,22 @@ def canonicalComplexFlow
     (v : E) (z : ℂ) : G :=
   canonicalRealFlow I (complexToRealLieAlgebraMap I (z • v)) 1
 
+/-! The time-one map underlying `canonicalComplexFlow`.  This is the
+    formalization's exponential candidate; source-level uniqueness and
+    uniformization are separate statements. -/
+def canonicalComplexExponential
+    [CompleteSpace E] [T2Space G] [I.Boundaryless]
+    [CompactSpace G] [PreconnectedSpace G]
+    (v : E) : G :=
+  canonicalRealFlow I (complexToRealLieAlgebraMap I v) 1
+
+@[simp]
+theorem canonicalComplexFlow_eq_exponential_smul
+    [CompleteSpace E] [T2Space G] [I.Boundaryless]
+    [CompactSpace G] [PreconnectedSpace G] (v : E) (z : ℂ) :
+    canonicalComplexFlow (G := G) I v z =
+      canonicalComplexExponential (G := G) I (z • v) := rfl
+
 @[simp]
 theorem canonicalComplexFlow_zero_vector
     [CompleteSpace E] [T2Space G] [I.Boundaryless]
