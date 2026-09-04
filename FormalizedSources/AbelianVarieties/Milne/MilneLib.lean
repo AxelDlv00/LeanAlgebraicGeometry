@@ -21,6 +21,7 @@ import MilneLib.InvariantQuotientSections
 import MilneLib.InvariantQuotientOrder
 import MilneLib.InvariantQuotientGlue
 import MilneLib.InvariantQuotientCrossChart
+import MilneLib.InvariantQuotientCrossChartCompat
 import MilneLib.AffineQuotientOver
 import MilneLib.Torsion
 import MilneLib.Coherent
