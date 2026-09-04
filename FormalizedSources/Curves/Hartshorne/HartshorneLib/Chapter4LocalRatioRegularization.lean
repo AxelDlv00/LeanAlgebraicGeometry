@@ -108,6 +108,25 @@ theorem regularized_ext
   apply localStructureValue_injective a.chart
   exact h i
 
+/- The section family produced by `of_zeroBound` is independent of the
+   auxiliary choices used to obtain its representatives. -/
+theorem of_zeroBound_eq
+    (hbound : ∀ i, a.coordinate i ∈
+      divisorSections (X := X) (0 : CurveDivisor k X) a.chart.U)
+    (r : LocalRatioRegularization a) :
+    of_zeroBound (a := a) hbound = r := by
+  cases r with
+  | mk sections hsections =>
+    have hsections' :
+        (of_zeroBound (a := a) hbound).regularized = sections := by
+      apply regularized_ext
+        (r := of_zeroBound (a := a) hbound)
+        (s := ⟨sections, hsections⟩)
+      intro i
+      rw [of_zeroBound_value hbound i, hsections i]
+    cases hsections'
+    rfl
+
 end LocalRatioRegularization
 
 end
