@@ -1,7 +1,5 @@
 % LaTeX macros and settings shared by the pdf and web versions of the blueprint.
 
-% Theorem-like environments that appear in the dependency graph. They share the
-% `theorem` counter (the [theorem] argument) and are never reset.
 % Source-blueprint metadata consumed by hgraph and hidden in rendered prose.
 \providecommand{\dcref}[1]{}
 \providecommand{\source}[1]{}
@@ -13,7 +11,10 @@
 \providecommand{\notready}{}
 \providecommand{\sketch}{}
 \providecommand{\level}[1]{}
+\providecommand{\provenancetag}[1]{}
 
+% Theorem-like environments that appear in the dependency graph. They share the
+% `theorem` counter (the [theorem] argument) and are never reset.
 \newtheorem{theorem}{Theorem}
 \newtheorem{proposition}[theorem]{Proposition}
 \newtheorem{lemma}[theorem]{Lemma}
@@ -28,6 +29,8 @@
 % Mathematical operators and macros used in the chapters. KaTeX (dashboard) and
 % plasTeX (web) only know standard LaTeX/AMS, so non-standard commands are defined here.
 \DeclareMathOperator{\Spec}{Spec}
+\providecommand{\Sch}{\mathrm{Sch}}
+\providecommand{\et}{\mathrm{et}}
 \DeclareMathOperator{\Pic}{Pic}
 \DeclareMathOperator{\Hom}{Hom}
 \DeclareMathOperator{\Mor}{Mor}
@@ -46,9 +49,6 @@
 \newcommand{\Over}{\mathrm{Over}}
 \newcommand{\GrpObj}{\mathrm{GrpObj}}
 
-% Visible source-alignment markers for mathematical statements.
-\newcommand{\provenancetag}[1]{%
-  \par\smallskip\noindent\textbf{#1.}\enspace}
 \newcommand{\alignmentcheck}[1]{%
   \par\noindent\textbf{#1}\enspace}
 
