@@ -11,6 +11,8 @@ import MilneLib.IsogenyCharacterization
 import MilneLib.Descent
 import MilneLib.InvariantQuotient
 import MilneLib.InvariantQuotientTransitions
+import MilneLib.InvariantQuotientTransitionsOver
+import MilneLib.StableAffineSections
 import MilneLib.InvariantLocalization
 import MilneLib.InvariantLocalizationTransitions
 import MilneLib.InvariantQuotientOpen

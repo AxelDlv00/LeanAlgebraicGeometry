@@ -137,6 +137,44 @@ theorem affineInvariantQuotientIso_inv (e : B ≃+* A)
           (ringEquiv_symm_equivariant e hₑ))) := by
   rfl
 
+/-- Reversing an equivariant coordinate equivalence reverses the induced
+quotient-chart isomorphism. -/
+theorem affineInvariantQuotientIso_inv_eq_hom_symm (e : B ≃+* A)
+    (hₑ : ∀ (g : G) (b : B), g • e b = e (g • b)) :
+    (affineInvariantQuotientIso (k := k) (G := G) e hₑ).inv =
+      (affineInvariantQuotientIso (k := k) (G := G) e.symm
+        (ringEquiv_symm_equivariant e hₑ)).hom := by
+  rw [affineInvariantQuotientIso_inv, affineInvariantQuotientIso_hom]
+
+/-- Quotient-chart isomorphisms respect composition of equivariant coordinate
+equivalences. -/
+theorem affineInvariantQuotientIso_hom_trans (e : B ≃+* A) (f : C ≃+* B)
+    (hₑ : ∀ (g : G) (b : B), g • e b = e (g • b))
+    (hf : ∀ (g : G) (c : C), g • f c = f (g • c)) :
+    (affineInvariantQuotientIso (k := k) (G := G) e hₑ).hom ≫
+        (affineInvariantQuotientIso (k := k) (G := G) f hf).hom =
+      (affineInvariantQuotientIso (k := k) (G := G) (f.trans e) (by
+        intro g c
+        change g • e (f c) = e (f (g • c))
+        rw [hₑ, hf])).hom := by
+  rw [affineInvariantQuotientIso_hom, affineInvariantQuotientIso_hom,
+    affineInvariantQuotientIso_hom, ← Spec.map_comp, ← CommRingCat.ofHom_comp]
+  apply congrArg Spec.map
+  apply CommRingCat.hom_ext
+  ext c
+  rfl
+
+@[simp]
+theorem affineInvariantQuotientIso_hom_refl :
+    (affineInvariantQuotientIso (k := k) (G := G) (RingEquiv.refl A)
+      (fun _ _ => rfl)).hom =
+      𝟙 (Spec (CommRingCat.of (FixedPoints.subalgebra k A G))) := by
+  rw [affineInvariantQuotientIso_hom, ← Spec.map_id]
+  apply congrArg Spec.map
+  apply CommRingCat.hom_ext
+  ext a
+  rfl
+
 /-! ## The quotient transition square -/
 
 /-- An equivariant affine map descends to a map between the affine invariant
