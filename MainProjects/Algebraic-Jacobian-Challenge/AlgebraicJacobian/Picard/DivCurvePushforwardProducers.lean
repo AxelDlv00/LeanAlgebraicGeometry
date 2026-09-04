@@ -53,6 +53,24 @@ theorem isFinite_support_of_curve
     locallyQuasiFinite_support_of_curve T π x
   exact IsFinite.of_isProper_of_locallyQuasiFinite _
 
+/-! The curve support producer also discharges the quasi-finiteness input of
+`coherentSheafFlat_id_pushforward`.  Keeping this bridge here makes the
+flattening-stratification consumer usable without repeating a geometric
+instance argument at each call site. -/
+
+/-- The pushforward of the structure sheaf of a curve divisor is flat over an
+arbitrary test object once the curve hypotheses supply finite fibres. -/
+theorem coherentSheafFlat_id_pushforward_of_curve
+    [SmoothOfRelativeDimension 1 π] [GeometricallyIntegral π] [IsProper π]
+    (x : DivFamily π T) :
+    CoherentSheafFlat (𝟙 (T.left : Scheme.{u}))
+      ((Modules.pushforward (pullback.snd π T.hom)).obj x.F) := by
+  letI : LocallyQuasiFinite
+      (Modules.schematicSupportι x.F ≫ pullback.snd π T.hom) :=
+    locallyQuasiFinite_support_of_curve T π x
+  intro U hU V hV e
+  exact (Scheme.DivFamily.coherentSheafFlat_id_pushforward (T := T) x) hU hV e
+
 /-- The finite-presentation input for the pushforward tower on a locally
 noetherian test base, with the support finiteness supplied by curve geometry. -/
 theorem isFinitePresentation_pushforward_of_curve
