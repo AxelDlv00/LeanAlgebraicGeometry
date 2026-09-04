@@ -105,25 +105,27 @@ hypothesis on `F` is exactly the hypothesis needed by the affine section
 formula.
 -/
 theorem finrank_globalSections_tensor_of_finite
-    {K : Type u} [Field K] {D : Scheme.{u}}
-    (p : D ⟶ Spec (CommRingCat.of K)) [IsFinite p]
+    {K : CommRingCat.{u}} (hK : IsField K) {D : Scheme.{u}}
+    (p : D ⟶ Spec K) [IsFinite p]
     {L F : D.Modules} (hL : LineBundle.IsLocallyTrivial L)
     [F.IsQuasicoherent] :
-    (let α : K →+* Γ(D, (⊤ : D.Opens)) :=
-      p.appTop.hom.comp ((Scheme.ΓSpecIso (CommRingCat.of K)).inv.hom)
+    (letI : Field K := hK.toField
+     let α : K →+* Γ(D, (⊤ : D.Opens)) :=
+      p.appTop.hom.comp ((Scheme.ΓSpecIso K).inv.hom)
      letI : Algebra K Γ(D, (⊤ : D.Opens)) := α.toAlgebra
      letI : Module K Γ(F, (⊤ : D.Opens)) := Module.compHom _ α
      letI : Module K Γ(L.tensorObj F, (⊤ : D.Opens)) := Module.compHom _ α
      Module.finrank K Γ(L.tensorObj F, (⊤ : D.Opens)) =
        Module.finrank K Γ(F, (⊤ : D.Opens))) := by
+  letI : Field K := hK.toField
   dsimp
   letI : IsAffineHom p := IsFinite.toIsAffineHom
   letI : IsAffine D := isAffine_of_isAffineHom p
   let α : K →+* Γ(D, (⊤ : D.Opens)) :=
-    p.appTop.hom.comp ((Scheme.ΓSpecIso (CommRingCat.of K)).inv.hom)
+    p.appTop.hom.comp ((Scheme.ΓSpecIso K).inv.hom)
   letI : Algebra K Γ(D, (⊤ : D.Opens)) := α.toAlgebra
   have hf : (p.appTop.hom).Finite := p.finite_appTop
-  have hi : ((Scheme.ΓSpecIso (CommRingCat.of K)).inv.hom).Finite :=
+  have hi : ((Scheme.ΓSpecIso K).inv.hom).Finite :=
     RingHom.Finite.of_surjective _ (ConcreteCategory.bijective_of_isIso _).2
   have hα : α.Finite := by
     exact hf.comp hi

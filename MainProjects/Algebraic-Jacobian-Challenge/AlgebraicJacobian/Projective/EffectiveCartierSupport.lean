@@ -308,12 +308,12 @@ private theorem generic_avoidance_fiber
         rw [kernel.condition, Functor.map_zero]
   exact Modules.genericPoint_not_mem_annihilator_support j q hjq hL
 
-/-- The schematic support of a relative effective Cartier divisor on a proper
-smooth geometrically integral curve has finite set-theoretic fibres. -/
-theorem finite_fiber_support_of_curve
+private theorem finite_annihilator_support_fiberModule_of_curve
     [SmoothOfRelativeDimension 1 π] [GeometricallyIntegral π] [IsProper π]
     (x : DivFamily π T) (t : (T.left : Scheme.{u})) :
-    ((Modules.schematicSupportι x.F ≫ pullback.snd π T.hom) ⁻¹' {t}).Finite := by
+    ((Modules.annihilator
+      ((pullback.snd π T.hom).fiberModule t x.F)).support :
+        Set ((pullback.snd π T.hom).fiber t)).Finite := by
   let f := pullback.snd π T.hom
   let C := f.fiber t
   let Ft : C.Modules := (Modules.pullback (f.fiberι t)).obj x.F
@@ -344,13 +344,28 @@ theorem finite_fiber_support_of_curve
     fun a b h => @SmoothOfRelativeDimension.specializes_eq_genericPoint_or_eq
       C (T.left.residueField t) inferInstance
       (f.fiberToSpecResidueField t) hCtSmooth hCtIntegral a b h
+  change ((Modules.annihilator Ft).support : Set C).Finite
+  exact Scheme.finite_of_isClosed_of_notMem_genericPoint hgen
+    (Modules.annihilator Ft).support.isClosed
+    (by
+      simpa [C, Ft, f, Scheme.Hom.fiberModule] using
+        generic_avoidance_fiber T π x t)
+
+/-- The schematic support of a relative effective Cartier divisor on a proper
+smooth geometrically integral curve has finite set-theoretic fibres. -/
+theorem finite_fiber_support_of_curve
+    [SmoothOfRelativeDimension 1 π] [GeometricallyIntegral π] [IsProper π]
+    (x : DivFamily π T) (t : (T.left : Scheme.{u})) :
+    ((Modules.schematicSupportι x.F ≫ pullback.snd π T.hom) ⁻¹' {t}).Finite := by
+  let f := pullback.snd π T.hom
+  let C := f.fiber t
+  let Ft : C.Modules := (Modules.pullback (f.fiberι t)).obj x.F
+  letI : x.F.IsFinitePresentation := x.isFinitePresentation
   have hSuppFinite :
       ((Modules.annihilator Ft).support : Set C).Finite :=
-    Scheme.finite_of_isClosed_of_notMem_genericPoint hgen
-      (Modules.annihilator Ft).support.isClosed
-      (by
-        simpa [C, Ft, f, Scheme.Hom.fiberModule] using
-          generic_avoidance_fiber T π x t)
+    by
+      simpa [C, Ft, f, Scheme.Hom.fiberModule] using
+        finite_annihilator_support_fiberModule_of_curve T π x t
   let s : Set (Modules.schematicSupport x.F) :=
     (Modules.schematicSupportι x.F ≫ f) ⁻¹' {t}
   let liftToFiber : s → C := fun z =>
@@ -389,6 +404,50 @@ theorem finite_fiber_support_of_curve
   letI : Finite s := Finite.of_injective lift hlift_inj
   change s.Finite
   exact Set.finite_coe_iff.mp inferInstance
+
+/-- The schematic support of the fibre module of a relative effective Cartier
+divisor on a proper smooth geometrically integral curve is finite over the
+residue field. -/
+theorem isFinite_schematicSupport_fiberModule_of_curve
+    [SmoothOfRelativeDimension 1 π] [GeometricallyIntegral π] [IsProper π]
+    (x : DivFamily π T) (t : (T.left : Scheme.{u})) :
+    IsFinite
+      (Modules.schematicSupportι
+          ((pullback.snd π T.hom).fiberModule t x.F) ≫
+        (pullback.snd π T.hom).fiberToSpecResidueField t) := by
+  let f := pullback.snd π T.hom
+  let C := f.fiber t
+  let Ft : C.Modules := (Modules.pullback (f.fiberι t)).obj x.F
+  let q := f.fiberToSpecResidueField t
+  change IsFinite (Modules.schematicSupportι Ft ≫ q)
+  have hps : Modules.HasProperSupport q Ft := by
+    change Modules.HasProperSupport
+      ((pullback.snd π T.hom).fiberToSpecResidueField t)
+      ((pullback.snd π T.hom).fiberModule t x.F)
+    exact Modules.HasProperSupport.of_isPullback
+      (IsPullback.of_hasPullback (pullback.snd π T.hom)
+        (T.left.fromSpecResidueField t))
+      x.F x.isFinitePresentation x.properSupport
+  have hSuppFinite :
+      ((Modules.annihilator Ft).support : Set C).Finite := by
+    simpa [C, Ft, f, Scheme.Hom.fiberModule] using
+      finite_annihilator_support_fiberModule_of_curve T π x t
+  have hfib : ∀ s : Spec (T.left.residueField t),
+      ((Modules.schematicSupportι Ft ≫ q) ⁻¹' {s}).Finite := by
+    intro s
+    refine (hSuppFinite.preimage
+      (Modules.isPreimmersion_schematicSupportι Ft).isEmbedding.injective.injOn).subset ?_
+    intro z _
+    have hset : Set.range (Modules.schematicSupportι Ft) =
+        (Modules.annihilator Ft).support :=
+      (Modules.annihilator Ft).range_subschemeι
+    exact (Set.ext_iff.mp hset (Modules.schematicSupportι Ft z)).mp ⟨z, rfl⟩
+  have hqf : LocallyQuasiFinite (Modules.schematicSupportι Ft ≫ q) :=
+    Modules.locallyQuasiFinite_schematicSupportι_comp_of_finite_fibers
+      q Ft hps hfib
+  haveI : IsProper (Modules.schematicSupportι Ft ≫ q) := hps
+  haveI : LocallyQuasiFinite (Modules.schematicSupportι Ft ≫ q) := hqf
+  exact IsFinite.of_isProper_of_locallyQuasiFinite _
 
 /-- The support morphism of a relative effective Cartier divisor on a proper
 smooth geometrically integral curve is locally quasi-finite. -/
