@@ -406,6 +406,55 @@ theorem canonicalRealFlow_time_one_mem_interior
   rw [← hrange]
   exact hlocal_one
 
+/-- The time-one canonical real flow is surjective.  Its image is a subgroup
+that contains an identity neighborhood, hence is both open and closed in the
+preconnected group.  This is a real surjectivity statement; it does not yet
+provide the complex-linear lattice data required by uniformization. -/
+theorem canonicalRealFlow_time_one_surjective
+    [CompleteSpace E] [T2Space G]
+    [I.Boundaryless] [CompactSpace G] [PreconnectedSpace G] :
+    Function.Surjective (fun v : GroupLieAlgebra (complexToRealModel I) G =>
+      canonicalRealFlow (G := G) I v 1) := by
+  letI : IsTopologicalGroup G := topologicalGroup_of_lieGroup I ⊤
+  let exp : GroupLieAlgebra (complexToRealModel I) G → G :=
+    fun v => canonicalRealFlow (G := G) I v 1
+  have hzero : exp 0 = (1 : G) := by
+    dsimp [exp]
+    exact congrFun (canonicalRealFlow_zero (G := G) I) (1 : ℝ)
+  have hadd (v w : GroupLieAlgebra (complexToRealModel I) G) :
+      exp (v + w) = exp v * exp w := by
+    exact canonicalRealFlow_add (G := G) I v w 1
+  have hinv (v : GroupLieAlgebra (complexToRealModel I) G) :
+      exp (-v) = (exp v)⁻¹ := by
+    exact canonicalRealFlow_neg (G := G) I v 1
+  let Hexp : Subgroup G :=
+    { carrier := Set.range exp
+      one_mem' := ⟨0, hzero⟩
+      mul_mem' := by
+        intro a b ha hb
+        obtain ⟨v, rfl⟩ := ha
+        obtain ⟨w, rfl⟩ := hb
+        exact ⟨v + w, hadd v w⟩
+      inv_mem' := by
+        intro a ha
+        obtain ⟨v, rfl⟩ := ha
+        exact ⟨-v, hinv v⟩ }
+  have h1 : (1 : G) ∈ interior (Hexp : Set G) := by
+    simpa [Hexp, exp] using
+      (canonicalRealFlow_time_one_mem_interior (G := G) I)
+  have hopen : IsOpen (Hexp : Set G) :=
+    Hexp.isOpen_of_one_mem_interior h1
+  have hclosed : IsClosed (Hexp : Set G) :=
+    Hexp.isClosed_of_isOpen hopen
+  have hclopen : IsClopen (Hexp : Set G) := ⟨hclosed, hopen⟩
+  have huniv : (Hexp : Set G) = Set.univ :=
+    hclopen.eq_univ ⟨1, Hexp.one_mem⟩
+  intro x
+  have hx : x ∈ (Hexp : Set G) := by
+    rw [huniv]
+    exact Set.mem_univ x
+  exact hx
+
 /-- Every compact connected complex Lie group is commutative.  Canonical real
 flows give a central identity neighborhood, and connectedness propagates its
 commutativity to the whole group. -/
