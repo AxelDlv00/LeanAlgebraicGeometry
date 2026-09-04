@@ -82,30 +82,35 @@ is not inserted into the rank-one Abel isomorphism itself.
   conclusion is that the translated layer element belongs to the rank-one open.
   In symbols, its witness has the shape
   \[
-    \exists L\;[\operatorname{Field}L]\,[\operatorname{Algebra}kL]
-    [\operatorname{Algebra}KL]\,[\operatorname{IsScalarTower}kKL]
-    [\operatorname{Module.Finite}_K L]\,[\operatorname{Algebra.IsSeparable}KL]\;
-    \exists d\;r,\quad
-    \operatorname{classDeg}_k(\operatorname{chartTwistClass}(d.m,r.Z))=g
-    \;\wedge\;\operatorname{Finite}(r.S.\operatorname{support})\;\wedge\;
-    \bigl(\forall p\in r.S.\operatorname{support},
-      \operatorname{residueDeg}_L(p)=1\bigr)\;\wedge\;
-    \operatorname{picClass}_L(r.S)=
-      \operatorname{CechPic.map}(C,k,L)
-        (\operatorname{chartTwistClass}(0,r.Z)^{-1})
-    \;\wedge\;\operatorname{rankOneLayer}(\mu,d)\in
-      \operatorname{PicRankOneOpen}(\pi)(\operatorname{overSpec}(k,K)).
+    \begin{aligned}
+    \exists L\;&[\operatorname{Field}L]\,[\operatorname{Algebra}kL]
+      [\operatorname{Algebra}KL]\,[\operatorname{IsScalarTower}kKL]\\
+      & [\operatorname{Module.Finite}_K L]
+      [\operatorname{Algebra.IsSeparable}KL]\;\exists d\;r,\\
+      &\operatorname{classDeg}_k(\operatorname{chartTwistClass}(d.m,r.Z))=g
+        \;\wedge\;\operatorname{Finite}(r.S.\operatorname{support})\\
+      &\wedge\;\bigl(\forall p\in r.S.\operatorname{support},
+        \operatorname{residueDeg}_L(p)=1\bigr)\\
+      &\wedge\;\operatorname{picClass}_L(r.S)=
+        \operatorname{CechPic.map}(C,k,L)
+          (\operatorname{chartTwistClass}(0,r.Z)^{-1})\\
+      &\wedge\;\operatorname{rankOneLayer}(\mu,d)\in
+        \operatorname{PicRankOneOpen}(\pi)(\operatorname{overSpec}(k,K)).
+    \end{aligned}
   \]
   The public theorem
   \texttt{exists\_picRankOneTranslatedChart\_fieldFactorization} deliberately
   hides that auxiliary \(L,d,r\): its exact conclusion is only
   \[
-    \exists a:\operatorname{PicRankOneTranslatorIndex}(C)\;
-    \exists x:(\operatorname{overSpec}(k,K)).\mathrm{left}
-        \longrightarrow W.\mathrm{left},\qquad
-    (j_a)_{(\operatorname{overSpec}(k,K)).\mathrm{left}}(x)
-      =\langle(\operatorname{overSpec}(k,K)).\mathrm{hom},\mu\rangle
-      \in\mathcal P^0_\Sigma((\operatorname{overSpec}(k,K)).\mathrm{left}).
+    \begin{aligned}
+      &\exists a:\operatorname{PicRankOneTranslatorIndex}(C)\;\exists x:
+        (\operatorname{overSpec}(k,K)).\mathrm{left}
+          \longrightarrow W.\mathrm{left},\\
+      &(j_a)_{(\operatorname{overSpec}(k,K)).\mathrm{left}}(x)
+        =\langle(\operatorname{overSpec}(k,K)).\mathrm{hom},\mu\rangle\\
+      &\hspace{8em}\in
+        \mathcal P^0_\Sigma((\operatorname{overSpec}(k,K)).\mathrm{left}).
+    \end{aligned}
   \]
   Thus \(L\) is not a field-valued output of the public factorization and is
   never identified with \(k\) or \(K\).  Consequently, for every \(k\)-scheme
