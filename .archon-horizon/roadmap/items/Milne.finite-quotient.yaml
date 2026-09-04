@@ -7,11 +7,14 @@ summary: 'Pending source node prop:milne-finite-quotient. Stable quotient opens,
   within-one-affine-ring localization cocycle laws are verified. Actual quotient and
   source structure-sheaf sections on invariant basic opens are identified with fixed/full
   localizations; restriction naturality and the equation q.app D(b) = ((A[1/b])^G
-  -> A[1/b]) hold under these presentations. These local APIs are not yet consumed
-  by cross-chart gluing. Remaining: compare quotient overlaps coming from different
-  affine coordinate rings, construct canonical transition isomorphisms and the triple
-  cocycle for genuine Scheme.GlueData, then prove the global topology/sheaf clauses,
-  arbitrary-target universal property, and free-action etaleness.'
+  -> A[1/b]) hold under these presentations. Commit 75871d09e0 additionally provides
+  stable-affine section actions, separated affine overlap charts, Spec(k)-slice fixed-ring
+  transitions with reversal/composition laws, and explicit conditional pairwise overlap
+  cones. These local APIs are not yet consumed by cross-chart gluing. Remaining: compare
+  quotient overlaps coming from different affine coordinate rings, construct canonical
+  transition isomorphisms and the triple cocycle for genuine Scheme.GlueData, then
+  prove the global topology/sheaf clauses, arbitrary-target universal property, and
+  free-action etaleness.'
 status: pending
 kind: proof
 priority: high
@@ -38,8 +41,9 @@ metadata:
   parent: Milne
   owner: fs-milne
   milestone: Milne
-  updated_at: '2026-09-04T00:09:21.977061+00:00'
+  updated_at: '2026-09-04T11:32:05.579056+00:00'
   pinned_commits:
+  - 75871d09e0
   - a73295519c
   - 506c8e3c88
   - 1c1312869f
