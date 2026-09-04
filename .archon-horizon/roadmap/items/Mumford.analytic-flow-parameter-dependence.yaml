@@ -2,17 +2,16 @@ id: Mumford.analytic-flow-parameter-dependence
 title: Joint complex exponential from real flows
 projects:
 - Mumford
-summary: Run 0216 proves a reverse complex-to-real manifold derivative bridge, identity
-  complex derivative at zero for the named time-one exponential candidate, global/fixed/joint
-  complex MDifferentiability, additive zero/add/neg laws, a bundled multiplicative
-  exponential homomorphism and its surjectivity, and a commutativity consumer using
-  that bundled hom (commits 4667789eef, 0d091ef928, 2706c20134, 730be260af, 9770b9a656,
-  e41e004728). The same run adds an exact-sequence scalar/quotient coordinate equivalence
-  for abstract theta extensions (ac38279401). These are genuine Lean producers under
-  explicit hypotheses; the frozen source nodes remain pending because unique holomorphic
-  integration/uniqueness, approved source attachment, conjugation naturality, scheme-theoretic
-  theta data, and lattice-kernel/quotient uniformization are not proved. Candidate
-  surjectivity is proved, but it is not a lattice or quotient theorem.
+summary: Run 0216 proves the reverse complex-to-real derivative bridge, identity complex
+  derivative at zero, global/fixed/joint complex MDifferentiability, additive zero/add/neg
+  laws, a bundled multiplicative exponential homomorphism and candidate surjectivity;
+  ac38279401 adds exact-sequence theta-extension coordinates. It additionally proves
+  canonicalComplexExponential_conjugation from central real-flow transport and packages
+  canonicalComplexLieExponentialData, consumed by the generic commutativity interface
+  (c4ddebf5a7). These are genuine conditional Lean producers under explicit compact/preconnected
+  Lie hypotheses. Frozen source nodes remain pending for source-level holomorphic
+  existence/uniqueness, lattice-kernel and quotient uniformization, scheme theta data,
+  and approved attachments.
 status: pending
 kind: proof
 priority: high
@@ -39,8 +38,9 @@ metadata:
     projects: Mumford
   parent: Mumford
   owner: fs-mumford
-  updated_at: '2026-09-04T16:03:15.176399+00:00'
+  updated_at: '2026-09-04T18:44:08.258236+00:00'
   pinned_commits:
+  - c4ddebf5a7
   - ac38279401
   - e41e004728
   - 9770b9a656
