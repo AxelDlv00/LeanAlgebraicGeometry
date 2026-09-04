@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>
+  MathJax = {
+    tex: {
+		    inlineMath: [['$','$'], ['\\(','\\)']]
+	} }
+</script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+</script>
+<meta name="generator" content="plasTeX" />
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Reference map, Lean handoffs, and quarantined routes</title>
+<link rel="prev" href="route-ch-handoff.html" title="Same-carrier data and Phase 8 consumers" />
+<link rel="up" href="index.html" title="AlgebraicJacobian" />
+<link rel="stylesheet" href="styles/theme-white.css" />
+<link rel="stylesheet" href="styles/amsthm.css" />
+<link rel="stylesheet" href="styles/showmore.css" />
+<link rel="stylesheet" href="styles/blueprint.css" />
+<link rel="stylesheet" href="styles/extra_styles.css" />
+</head>
+
+<body>
+<header>
+<svg  id="toc-toggle" class="icon icon-list-numbered "><use xlink:href="symbol-defs.svg#icon-list-numbered"></use></svg>
+<h1 id="doc_title"><a href="index.html">AlgebraicJacobian</a></h1>
+</header>
+
+<div class="wrapper">
+<nav class="toc">
+<ul class="sub-toc-0">
+<li class="">
+  <a href="sect0001.html"><span class="toc_ref"></span> <span class="toc_entry">About This Blueprint</span></a>
+ </li>
+<li class="">
+  <a href="route-ch-contract.html"><span class="toc_ref">1</span> <span class="toc_entry">Route contract and hypothesis ledger</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="route-ch-contract.html#a0000000003"><span class="toc_ref">1.1</span> <span class="toc_entry">Fixed objects and functors</span></a>
+ </li>
+<li class="">
+  <a href="route-ch-contract.html#a0000000004"><span class="toc_ref">1.2</span> <span class="toc_entry">The one permitted route</span></a>
+ </li>
+<li class="">
+  <a href="route-ch-contract.html#a0000000005"><span class="toc_ref">1.3</span> <span class="toc_entry">Hypothesis ledger</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="route-ch-rank-one.html"><span class="toc_ref">2</span> <span class="toc_entry">Degree-\(g\) divisors and the rank-one Abel isomorphism</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="route-ch-rank-one.html#a0000000006"><span class="toc_ref">2.1</span> <span class="toc_entry">The represented divisor package</span></a>
+ </li>
+<li class="">
+  <a href="route-ch-rank-one.html#a0000000007"><span class="toc_ref">2.2</span> <span class="toc_entry">The intrinsic rank-one open</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="route-ch-sepclosed.html"><span class="toc_ref">3</span> <span class="toc_entry">The separably closed rank-one cover</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="route-ch-sepclosed.html#a0000000008"><span class="toc_ref">3.1</span> <span class="toc_entry">Translated charts</span></a>
+ </li>
+<li class="">
+  <a href="route-ch-sepclosed.html#a0000000009"><span class="toc_ref">3.2</span> <span class="toc_entry">The exact separably closed representer</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="route-ch-finite-stage.html"><span class="toc_ref">4</span> <span class="toc_entry">Finite-stage carrier and base-change comparison</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="route-ch-finite-stage.html#a0000000010"><span class="toc_ref">4.1</span> <span class="toc_entry">A finite affine atlas</span></a>
+ </li>
+<li class="">
+  <a href="route-ch-finite-stage.html#a0000000011"><span class="toc_ref">4.2</span> <span class="toc_entry">Nested pullbacks and overlap comparison</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="route-ch-universal.html"><span class="toc_ref">5</span> <span class="toc_entry">Universal class and the finite-stage representability gap</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="route-ch-universal.html#a0000000012"><span class="toc_ref">5.1</span> <span class="toc_entry">What is pinned over the separably closed field</span></a>
+ </li>
+<li class="">
+  <a href="route-ch-universal.html#a0000000013"><span class="toc_ref">5.2</span> <span class="toc_entry">The first unmet producer</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="route-ch-galois.html"><span class="toc_ref">6</span> <span class="toc_entry">Finite-Galois descent to the original field</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="route-ch-galois.html#a0000000014"><span class="toc_ref">6.1</span> <span class="toc_entry">The one selected exact-carrier geometry route</span></a>
+ </li>
+<li class="">
+  <a href="route-ch-galois.html#a0000000015"><span class="toc_ref">6.2</span> <span class="toc_entry">The conditional descent theorem</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="route-ch-handoff.html"><span class="toc_ref">7</span> <span class="toc_entry">Same-carrier data and Phase 8 consumers</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="route-ch-handoff.html#a0000000016"><span class="toc_ref">7.1</span> <span class="toc_entry">The public data boundary</span></a>
+ </li>
+<li class="">
+  <a href="route-ch-handoff.html#a0000000017"><span class="toc_ref">7.2</span> <span class="toc_entry">Checked consumers of an arbitrary datum</span></a>
+ </li>
+<li class="">
+  <a href="route-ch-handoff.html#a0000000018"><span class="toc_ref">7.3</span> <span class="toc_entry">The blocked Phase 8 assembly</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class=" active current">
+  <a href="route-app-technical.html"><span class="toc_ref">A</span> <span class="toc_entry">Reference map, Lean handoffs, and quarantined routes</span></a>
+  <span class="expand-toc">▼</span>
+  <ul class="sub-toc-1 active">
+     <li class="">
+  <a href="route-app-technical.html#route-app-reference-map"><span class="toc_ref">A.1</span> <span class="toc_entry">Reference map</span></a>
+ </li>
+<li class="">
+  <a href="route-app-technical.html#route-app-lean-handoff"><span class="toc_ref">A.2</span> <span class="toc_entry">Exact Lean handoffs</span></a>
+ </li>
+<li class="">
+  <a href="route-app-technical.html#a0000000019"><span class="toc_ref">A.3</span> <span class="toc_entry">Quarantine</span></a>
+ </li>
+<li class="">
+  <a href="route-app-technical.html#route-app-challenge-status"><span class="toc_ref">A.4</span> <span class="toc_entry">Public-root and Challenge status</span></a>
+ </li>
+<li class="">
+  <a href="route-app-technical.html#a0000000020"><span class="toc_ref">A.5</span> <span class="toc_entry">Residual blocker ledger</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li ><a href="dep_graph_document.html">Dependency graph</a></li>
+</ul>
+</nav>
+
+<div class="content">
+<div class="content-wrapper">
+
+
+<div class="main-text">
+<h1 id="route-app-technical">A Reference map, Lean handoffs, and quarantined routes</h1>
+
+<p>This appendix is part of the authoritative specification. It records where each mathematical assertion comes from, what exact Lean object receives it, and which nearby constructions are deliberately outside the route. </p>
+<h1 id="route-app-reference-map">A.1 Reference map</h1>
+
+<div class="centered"> <table class="tabular">
+  <tr>
+    <td  style="text-align:left"
+        rowspan=""
+        colspan="">
+      <p> <b class="bfseries">Step</b> </p>
+
+    </td>
+    <td  style="text-align:left"
+        rowspan=""
+        colspan="">
+      <p> <b class="bfseries">Precise anchor</b> </p>
+
+    </td>
+    <td  style="text-align:left"
+        rowspan=""
+        colspan="">
+      <p> <b class="bfseries">Specialization used here</b></p>
+
+    </td>
+  </tr>
+  <tr>
+    <td  style="border-top-style:solid; border-top-color:black; border-top-width:1px; text-align:left"
+        rowspan=""
+        colspan="">
+      <p>R1 </p>
+
+    </td>
+    <td  style="border-top-style:solid; border-top-color:black; border-top-width:1px; text-align:left"
+        rowspan=""
+        colspan="">
+      <p> Kleiman, <em>The Picard Scheme</em>, Section 3, Definition 3.6, Theorem 3.7, and Exercise 3.8. </p>
+
+    </td>
+    <td  style="border-top-style:solid; border-top-color:black; border-top-width:1px; text-align:left"
+        rowspan=""
+        colspan="">
+      <p> Relative effective divisors commute with base change; for a projective flat curve their functor is represented by an open Hilbert subscheme, and fixed degree is open-and-closed and of finite type. Lean proves the analogous statement only for its exact widened, locally certified degree-\(g\) functor.</p>
+
+    </td>
+  </tr>
+  <tr>
+    <td  style="text-align:left"
+        rowspan=""
+        colspan="">
+      <p>R2 </p>
+
+    </td>
+    <td  style="text-align:left"
+        rowspan=""
+        colspan="">
+      <p> Kleiman, Section 3, Theorem 3.13; Milne, <em>Abelian Varieties</em>, Chapter III, Theorem 5.1(a) and Lemma 5.2(b), transcription page 0107. </p>
+
+    </td>
+    <td  style="text-align:left"
+        rowspan=""
+        colspan="">
+      <p> An Abel fibre is a complete linear system. Under \(H^1=0\) and rank-one pushforward, its projective bundle is the base, giving one effective divisor. The checked familywise evaluator and uniqueness theorem provide the actual Lean specialization. Milne III.5 additionally assumes complete nonsingular, positive genus, and a rational point; those are not AJCR route hypotheses.</p>
+
+    </td>
+  </tr>
+  <tr>
+    <td  style="text-align:left"
+        rowspan=""
+        colspan="">
+      <p>R3 </p>
+
+    </td>
+    <td  style="text-align:left"
+        rowspan=""
+        colspan="">
+      <p> Stacks, Varieties Lemma 33.25.6, Tag 056U; Milne III, Lemma 5.2(b). </p>
+
+    </td>
+    <td  style="text-align:left"
+        rowspan=""
+        colspan="">
+      <p> Tag 056U gives density of closed points with residue field finite separable over the base. Its use here is a derived specialization: restrict to the required nonempty smooth open, choose such a point, and then use separable closedness to split the finite separable residue extension. This is the rational-point input inside translated-drop coverage, while Milne supplies the classical degree-\(g\), rank-one model subject to the same III.5 caveat.</p>
+
+    </td>
+  </tr>
+</table> </div>
+<div class="centered"> <table class="tabular">
+  <tr>
+    <td  style="text-align:left"
+        rowspan=""
+        colspan="">
+      <p> <b class="bfseries">Step</b> </p>
+
+    </td>
+    <td  style="text-align:left"
+        rowspan=""
+        colspan="">
+      <p> <b class="bfseries">Precise anchor</b> </p>
+
+    </td>
+    <td  style="text-align:left"
+        rowspan=""
+        colspan="">
+      <p> <b class="bfseries">Specialization used here</b></p>
+
+    </td>
+  </tr>
+  <tr>
+    <td  style="border-top-style:solid; border-top-color:black; border-top-width:1px; text-align:left"
+        rowspan=""
+        colspan="">
+      <p>R4 </p>
+
+    </td>
+    <td  style="border-top-style:solid; border-top-color:black; border-top-width:1px; text-align:left"
+        rowspan=""
+        colspan="">
+      <p> Stacks, Properties of Schemes Lemma 26.15.4, Tag 01JJ; Morphisms Lemma 29.22.9, Tag 01TX; Kleiman, Theorem 4.8(1). </p>
+
+    </td>
+    <td  style="border-top-style:solid; border-top-color:black; border-top-width:1px; text-align:left"
+        rowspan=""
+        colspan="">
+      <p> A sheaf covered by representable open subfunctors is represented; over the Noetherian base \(\operatorname{Spec}k\), local finite type implies local finite presentation. Kleiman’s full Picard theorem is context, not an imported shortcut.</p>
+
+    </td>
+  </tr>
+  <tr>
+    <td  style="text-align:left"
+        rowspan=""
+        colspan="">
+      <p>R5 </p>
+
+    </td>
+    <td  style="text-align:left"
+        rowspan=""
+        colspan="">
+      <p> Stacks, Schemes Lemmas 26.14.1–2, Tags 01JB–01JC; Limits Lemma 32.10.1, Tag 01ZM; Limits Lemmas 32.8.12 and 32.8.11, Tags 0EUU and 081E. </p>
+
+    </td>
+    <td  style="text-align:left"
+        rowspan=""
+        colspan="">
+      <p> Descend the finite-presentation charts, maps, and equalities to a common stage; Tag 01ZM is applied to an inverse system with affine transition maps and qcqs stages, while Tags 0EUU and 081E require the relevant stage maps to be locally of finite presentation before openness or invertibility is reflected. Scheme gluing and its mapping property yield the global carrier comparison. None of these results proves Picard representability over the stage.</p>
+
+    </td>
+  </tr>
+  <tr>
+    <td  style="text-align:left"
+        rowspan=""
+        colspan="">
+      <p>R6 </p>
+
+    </td>
+    <td  style="text-align:left"
+        rowspan=""
+        colspan="">
+      <p> Stacks, Fields Lemmas <em>normal-closure-inside-normal</em>, Tag 0BMG, and <em>normal-closure-galois</em>, Tag 0EXM; Picard Schemes of Curves Section 44.4, Tag 0B9K; Descent Remark 35.35.12, Tag 040L. </p>
+
+    </td>
+    <td  style="text-align:left"
+        rowspan=""
+        colspan="">
+      <p> Take the finite normal closure of all coefficients inside the fixed normal extension \(\Omega /K\) before finalizing \(P\): Tag 0BMG supplies containment and Tag 0EXM supplies the Galois conclusion for the finite separable input. Then descend the class and prove the all-tests Yoneda equivalence on \(P.\mathrm{gluedOver}\). Tag 0B9K describes the fppf Picard sheaf only; a bespoke proof must connect it to AJCR’s big-etale degree-zero carrier. No citation supplies that connection already.</p>
+
+    </td>
+  </tr>
+</table> </div>
+<div class="centered"> <table class="tabular">
+  <tr>
+    <td  style="text-align:left"
+        rowspan=""
+        colspan="">
+      <p> <b class="bfseries">Step</b> </p>
+
+    </td>
+    <td  style="text-align:left"
+        rowspan=""
+        colspan="">
+      <p> <b class="bfseries">Precise anchor</b> </p>
+
+    </td>
+    <td  style="text-align:left"
+        rowspan=""
+        colspan="">
+      <p> <b class="bfseries">Specialization used here</b></p>
+
+    </td>
+  </tr>
+  <tr>
+    <td  style="border-top-style:solid; border-top-color:black; border-top-width:1px; text-align:left"
+        rowspan=""
+        colspan="">
+      <p>R7 </p>
+
+    </td>
+    <td  style="border-top-style:solid; border-top-color:black; border-top-width:1px; text-align:left"
+        rowspan=""
+        colspan="">
+      <p> No accepted source-to-carrier specialization yet. </p>
+
+    </td>
+    <td  style="border-top-style:solid; border-top-color:black; border-top-width:1px; text-align:left"
+        rowspan=""
+        colspan="">
+      <p> The one selected target is projectivity of the literal \(P.\mathrm{gluedMap}\); finite hyperplane avoidance then gives orbit-affineness on \(J_L=P.\mathrm{gluedOver}\). The exact conditional Lean wrapper is source-present but not public-root reachable.</p>
+
+    </td>
+  </tr>
+  <tr>
+    <td  style="text-align:left"
+        rowspan=""
+        colspan="">
+      <p>R8 </p>
+
+    </td>
+    <td  style="text-align:left"
+        rowspan=""
+        colspan="">
+      <p> Stacks, Descent Section 35.38, Tag 0246, and Remark 35.35.12, Tag 040L. </p>
+
+    </td>
+    <td  style="text-align:left"
+        rowspan=""
+        colspan="">
+      <p> Galois-stable quasi-affine charts descend effectively, and compatible morphisms descend uniquely. The checked finite-Galois quotient theorem specializes this to the represented degree-zero Picard functor.</p>
+
+    </td>
+  </tr>
+  <tr>
+    <td  style="text-align:left"
+        rowspan=""
+        colspan="">
+      <p>R9 </p>
+
+    </td>
+    <td  style="text-align:left"
+        rowspan=""
+        colspan="">
+      <p> Milne III, Proposition 6.1, transcription page 0110; Kleiman, Section 5, especially Lemma 5.1 and Corollaries 5.13–5.14. </p>
+
+    </td>
+    <td  style="text-align:left"
+        rowspan=""
+        colspan="">
+      <p> Milne proves the pointed Albanese property for positive genus; the challenge also requires genus zero. Kleiman supplies the classical group-scheme geometry. The datum-level Lean consumers retain every extra hypothesis explicitly.</p>
+
+    </td>
+  </tr>
+</table> </div>
+<h1 id="route-app-lean-handoff">A.2 Exact Lean handoffs</h1>
+
+<div class="centered"> <table class="tabular">
+  <tr>
+    <td  style="text-align:left"
+        rowspan=""
+        colspan="">
+      <p> <b class="bfseries">Step</b> </p>
+
+    </td>
+    <td  style="text-align:left"
+        rowspan=""
+        colspan="">
+      <p> <b class="bfseries">Public handoff and exact carrier</b> </p>
+
+    </td>
+    <td  style="text-align:left"
+        rowspan=""
+        colspan="">
+      <p> <b class="bfseries">State</b></p>
+
+    </td>
+  </tr>
+  <tr>
+    <td  style="border-top-style:solid; border-top-color:black; border-top-width:1px; text-align:left"
+        rowspan=""
+        colspan="">
+      <p>R1 </p>
+
+    </td>
+    <td  style="border-top-style:solid; border-top-color:black; border-top-width:1px; text-align:left"
+        rowspan=""
+        colspan="">
+      <p> <span class="ttfamily">divFunctorAff_genus_representableBy</span> on <span class="ttfamily">divRepAffGenusScheme C</span>, representing exactly <span class="ttfamily">divFunctorAff C (genus C)</span>. </p>
+
+    </td>
+    <td  style="border-top-style:solid; border-top-color:black; border-top-width:1px; text-align:left"
+        rowspan=""
+        colspan="">
+      <p> Proved.</p>
+
+    </td>
+  </tr>
+  <tr>
+    <td  style="text-align:left"
+        rowspan=""
+        colspan="">
+      <p>R2 </p>
+
+    </td>
+    <td  style="text-align:left"
+        rowspan=""
+        colspan="">
+      <p> <span class="ttfamily">canonicalRankOneAbelIso</span> between the two sigma-extended loci; <span class="ttfamily">canonicalRankOneAbelSliceIso</span> slicewise; and <span class="ttfamily">picRankOneOpenSigmaIso</span> from the represented open <span class="ttfamily">divRankOneOpenOver</span>. </p>
+
+    </td>
+    <td  style="text-align:left"
+        rowspan=""
+        colspan="">
+      <p> Proved.</p>
+
+    </td>
+  </tr>
+  <tr>
+    <td  style="text-align:left"
+        rowspan=""
+        colspan="">
+      <p>R3 </p>
+
+    </td>
+    <td  style="text-align:left"
+        rowspan=""
+        colspan="">
+      <p> <span class="ttfamily">picRankOneTranslatedChart_pointwiseCoverage</span> for the exact translator subtype <span class="ttfamily">PicRankOneTranslatorIndex</span>. </p>
+
+    </td>
+    <td  style="text-align:left"
+        rowspan=""
+        colspan="">
+      <p> Proved.</p>
+
+    </td>
+  </tr>
+  <tr>
+    <td  style="text-align:left"
+        rowspan=""
+        colspan="">
+      <p>R4 </p>
+
+    </td>
+    <td  style="text-align:left"
+        rowspan=""
+        colspan="">
+      <p> <span class="ttfamily">pic0_sepClosed_representableBy C</span> with carrier <span class="ttfamily">.1</span> and certificate <span class="ttfamily">.2</span>; the selected universal class is <span class="ttfamily">pic0SepClosedUniversalClass C</span>. </p>
+
+    </td>
+    <td  style="text-align:left"
+        rowspan=""
+        colspan="">
+      <p> Proved.</p>
+
+    </td>
+  </tr>
+  <tr>
+    <td  style="text-align:left"
+        rowspan=""
+        colspan="">
+      <p>R5 </p>
+
+    </td>
+    <td  style="text-align:left"
+        rowspan=""
+        colspan="">
+      <p> For arbitrary legacy <span class="ttfamily">P0 : Pic0FiniteStageGluePackage C_Omega K</span>, carrier <span class="ttfamily">P0.gluedOver</span>; comparison <span class="ttfamily">P0.finiteStageBaseChangeIso</span> plus its structure-map equation. </p>
+
+    </td>
+    <td  style="text-align:left"
+        rowspan=""
+        colspan="">
+      <p> Proved only as a carrier base-change comparison; the package theorem assumes algebraicity only and supplies no separability or Galois certificate; the convenience <span class="ttfamily">Over</span> wrapper is unrooted.</p>
+
+    </td>
+  </tr>
+</table> </div>
+<div class="centered"> <table class="tabular">
+  <tr>
+    <td  style="text-align:left"
+        rowspan=""
+        colspan="">
+      <p> <b class="bfseries">Step</b> </p>
+
+    </td>
+    <td  style="text-align:left"
+        rowspan=""
+        colspan="">
+      <p> <b class="bfseries">Public handoff and exact carrier</b> </p>
+
+    </td>
+    <td  style="text-align:left"
+        rowspan=""
+        colspan="">
+      <p> <b class="bfseries">State</b></p>
+
+    </td>
+  </tr>
+  <tr>
+    <td  style="border-top-style:solid; border-top-color:black; border-top-width:1px; text-align:left"
+        rowspan=""
+        colspan="">
+      <p>R6 </p>
+
+    </td>
+    <td  style="border-top-style:solid; border-top-color:black; border-top-width:1px; text-align:left"
+        rowspan=""
+        colspan="">
+      <p> Jointly choose legacy <span class="ttfamily">P</span> with <span class="ttfamily">L = P.N.1</span> finite Galois, then construct <span class="ttfamily">xiL : pic0Subgroup ((baseChange K L).obj C) P.gluedOver</span>, (UC), and the exact <span class="ttfamily">RepresentableBy</span> certificate. </p>
+
+    </td>
+    <td  style="border-top-style:solid; border-top-color:black; border-top-width:1px; text-align:left"
+        rowspan=""
+        colspan="">
+      <p> Unresolved; the class is the first unmet mathematical producer.</p>
+
+    </td>
+  </tr>
+  <tr>
+    <td  style="text-align:left"
+        rowspan=""
+        colspan="">
+      <p>R7 </p>
+
+    </td>
+    <td  style="text-align:left"
+        rowspan=""
+        colspan="">
+      <p> Prove <span class="ttfamily">P.gluedMap.IsProjective</span>, then construct <span class="ttfamily">(pic0SemilinearGalActionOfRepresentableBy C repL).OrbitsInAffineOpen</span> on the same <span class="ttfamily">P.gluedOver</span>. </p>
+
+    </td>
+    <td  style="text-align:left"
+        rowspan=""
+        colspan="">
+      <p> Projectivity planned and blocked by R6; exact conditional wrapper source-present but unrooted.</p>
+
+    </td>
+  </tr>
+  <tr>
+    <td  style="text-align:left"
+        rowspan=""
+        colspan="">
+      <p>R8 </p>
+
+    </td>
+    <td  style="text-align:left"
+        rowspan=""
+        colspan="">
+      <p> <span class="ttfamily">pic0RepresentableBy_finiteGaloisDescent C repL</span>; carrier <span class="ttfamily">StableAffineOpen.gluedQuotientOver ...</span>. </p>
+
+    </td>
+    <td  style="text-align:left"
+        rowspan=""
+        colspan="">
+      <p> Proved conditionally on <span class="ttfamily">repL</span> and orbit-affineness.</p>
+
+    </td>
+  </tr>
+  <tr>
+    <td  style="text-align:left"
+        rowspan=""
+        colspan="">
+      <p>R9 </p>
+
+    </td>
+    <td  style="text-align:left"
+        rowspan=""
+        colspan="">
+      <p> <span class="ttfamily">picRepDatum_finiteGaloisDescent</span>, then <span class="ttfamily">PicRepDatum.toJacobianData</span>; all shared fields preserve the quotient carrier by reflexivity. </p>
+
+    </td>
+    <td  style="text-align:left"
+        rowspan=""
+        colspan="">
+      <p> Proved conditionally; original-field instantiation blocked by R6–R7.</p>
+
+    </td>
+  </tr>
+  <tr>
+    <td  style="text-align:left"
+        rowspan=""
+        colspan="">
+      <p>P8 </p>
+
+    </td>
+    <td  style="text-align:left"
+        rowspan=""
+        colspan="">
+      <p> <span class="ttfamily">JacobianData.ofCurve</span>, <span class="ttfamily">pullbackHom</span>, <span class="ttfamily">baseChange</span>, the tangent, geometry, Abel-base-change, and conditional Albanese families, then the declarations in <span class="ttfamily">Challenge.lean</span>. </p>
+
+    </td>
+    <td  style="text-align:left"
+        rowspan=""
+        colspan="">
+      <p> Datum consumers proved with displayed inputs; their first unmet producers and the still-sorry-bearing headline assembly are recorded below.</p>
+
+    </td>
+  </tr>
+</table> </div>
+<h1 id="a0000000019">A.3 Quarantine</h1>
+<div class="remark_thmwrapper theorem-style-definition" id="route-app-quarantine">
+  <div class="remark_thmheading">
+    <span class="remark_thmcaption">
+    Remark
+    </span>
+    <span class="remark_thmlabel">38</span>
+    <span class="remark_thmtitle">Rejected and non-normative branches</span>
+    <div class="thm_header_extras">
+
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="route-app-technical.html#route-app-quarantine">#</a>
+
+
+
+        </div>
+  </div>
+  <div class="remark_thmcontent">
+
+<p>The following material is not an alternate choice left to a formalizer. </p>
+<ol class="enumerate">
+  <li><p>The unrestricted high-degree or admissible Abel map, its quotient by complete linear systems, and the symmetric-power/Weil or Albanese-first constructions are rejected as construction routes. Milne’s \(n{\gt}2g\) argument cannot justify the degree-\(g\) rank-one step. The fixed admissible integer may be reused only in the downstream Phase 8 producer of an <span class="ttfamily">AbelSourceData</span>; it does not replace R1–R8 or represent \(\operatorname {Pic}^0\). </p>
+</li>
+  <li><p><span class="ttfamily">DivFamZar</span>, the conditional F5/F6 faithfully-flat divisor classifiers, and the admissible-degree representer are implementation layers or quasi-compactness inputs only. They do not replace R1–R2. </p>
+</li>
+  <li><p>A <span class="ttfamily">GlueData</span>, <span class="ttfamily">GluePackage</span>, overlap isomorphism, or <span class="ttfamily">pic0RepresentableBy_finiteStageBaseChange</span> is not a representability theorem over the finite stage. Only (UC) followed by (Y) may cross R6. </p>
+</li>
+  <li><p><span class="ttfamily">Pic0FiniteStageStableGluePackage</span> is not the R5–R7 carrier. Until a checked legacy-to-stable carrier isomorphism exists, its stable orbit wrappers cannot be spliced into this route. </p>
+</li>
+  <li><p>The Lean functor <span class="ttfamily">pic0TypeFunctor</span> means the degree-zero etale-sheafified Picard functor. No theorem currently identifies it with Kleiman’s connected identity component, so those phrases are not interchangeable in Lean attachments or completion claims. </p>
+</li>
+  <li><p>The projective-space immersion entry point is only the internal proof of the selected projectivity-to-orbits implication; constructing an immersion independently is not a second R7 producer. Kleiman Theorem 4.8, arbitrary object-isomorphism transport, post-base-change representability, and filtered-colimit preservation are comparison or consumer results. None is an imported proof of R6 or R8. </p>
+</li>
+  <li><p>The conditional constructors <span class="ttfamily">JacobianData.ofRepresentableBy</span>, <span class="ttfamily">ofCharts</span>, <span class="ttfamily">ofChartsOfCompactSpace</span>, <span class="ttfamily">ofAbelImage</span>, <span class="ttfamily">ofAbelLifts</span>, <span class="ttfamily">ofChartsOfAbelImage</span>, <span class="ttfamily">ofChartsOfAbelLifts</span>, <span class="ttfamily">ofPic0ClassSurjective</span>, and <span class="ttfamily">PicRepDatum.toJacobianDataOfAbelLifts</span> are downstream packaging devices. Likewise <span class="ttfamily">Pic0RepresentabilityOverlap</span> and <span class="ttfamily">Pic0RepresentabilityDescentData</span> start from an already supplied representation. None replaces the quotient-carrier handoff in R8–R9. </p>
+</li>
+  <li><p><span class="ttfamily">blueprint/src/chapters/detail</span>, <span class="ttfamily">blueprint/src/chapters-legacy</span>, and <span class="ttfamily">content-formalization.tex</span> are historical audit material. They are not included by <span class="ttfamily">content.tex</span>; any conflicting route, status, or aspirational proof in them is non-normative and must not be cited as project state. </p>
+</li>
+</ol>
+
+  </div>
+</div>
+<h1 id="route-app-challenge-status">A.4 Public-root and Challenge status</h1>
+
+<p>The modules defining <span class="ttfamily">finiteStageBaseChangeOverIso</span>, <span class="ttfamily">pic0RepresentableBy_finiteStageBaseChange</span>, <span class="ttfamily">pic0ClassYoneda</span>, <span class="ttfamily">pic0SepClosedClassYoneda_app</span>, and <span class="ttfamily">pic0FiniteStageOrbitsInAffineOpen_of_isProjective</span> are present in the source tree but not reachable from the public <span class="ttfamily">AlgebraicJacobian</span> root at this checkpoint. They receive no <span class="ttfamily">\leanok</span> credit in the normative chapters. The first two remain only slice/post-base- change comparisons, and the last remains conditional on (Proj), even after future root integration. </p>
+<p>The headline declarations <span class="ttfamily">Jacobian</span>, <span class="ttfamily">instGrpObj</span>, <span class="ttfamily">smoothOfRelativeDimension_genus</span>, the anonymous proper and geometrically-irreducible instances, <span class="ttfamily">ofCurve</span>, <span class="ttfamily">comp_ofCurve</span>, <span class="ttfamily">exists_unique_ofCurve_comp</span>, the map and laws of <span class="ttfamily">functor</span>, <span class="ttfamily">baseChangeIso</span>, <span class="ttfamily">baseChangeIso_id</span>, <span class="ttfamily">baseChangeIso_comp</span>, and <span class="ttfamily">baseChange_ofCurve</span> in <span class="ttfamily">Challenge.lean</span> remain backed by <span class="ttfamily">sorry</span>. <span class="ttfamily">Jacobian.congr</span> is definitionally derived from the sorry-bearing functor and is therefore axiom-contaminated rather than an independent endpoint. The generic scheme base-change functor and its identity/composition isomorphisms are checked, but they do not prove the Jacobian-specific comparison or coherences. </p>
+<h1 id="a0000000020">A.5 Residual blocker ledger</h1>
+<div class="remark_thmwrapper theorem-style-definition" id="route-app-blockers">
+  <div class="remark_thmheading">
+    <span class="remark_thmcaption">
+    Remark
+    </span>
+    <span class="remark_thmlabel">39</span>
+    <span class="remark_thmtitle">Blockers in dependency order</span>
+    <div class="thm_header_extras">
+
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="route-app-technical.html#route-app-blockers">#</a>
+
+
+
+        </div>
+  </div>
+  <div class="remark_thmcontent">
+
+<ol class="enumerate">
+  <li><p><b class="bfseries">B1, first unmet producer:</b> after taking the finite normal closure of all coefficients, finalize a legacy \(P\) with \(L=P.N.1/K\) finite Galois, construct \(\xi _L\) on its literal <span class="ttfamily">P.gluedOver</span>, and prove (UC), including the exact big-etale and degree-zero transports. Current tensor-stage work supplies local inputs only. </p>
+</li>
+  <li><p><b class="bfseries">B2:</b> prove every component of pullback by \(\xi _L\) bijective on every \(L\)-scheme, yielding (FS-Rep). </p>
+</li>
+  <li><p><b class="bfseries">B3:</b> prove <span class="ttfamily">P.gluedMap.IsProjective</span> on that exact carrier; no stable-package or independently immersed substitute is allowed. </p>
+</li>
+  <li><p><b class="bfseries">B4:</b> root and instantiate the exact projectivity-to-orbits wrapper, yielding (OA) for the canonical action on the same \(J_L\). </p>
+</li>
+  <li><p><b class="bfseries">B5:</b> instantiate the conditional finite-Galois theorem and same-carrier handoff, producing one original-field <span class="ttfamily">JacobianData C</span>. </p>
+</li>
+  <li><p><b class="bfseries">B6:</b> construct the additive, scalar-compatible epsilon-kernel–\(H^1(C,\mathcal O_C)\) comparison (SL); the current set-level equivalence cannot prove the tangent dimension formula. </p>
+</li>
+  <li><p><b class="bfseries">B7:</b> prove <span class="ttfamily">abelCrossBaseCechCore</span> for every field extension and rational base point; the current graph theorem only reduces this to two Cech-class equations. </p>
+</li>
+  <li><p><b class="bfseries">B8:</b> construct the fixed proper degree-\(n_C\) Abel source, geometric reducedness, and the relative-dimension-\(g\) zero-hypercover required by the checked geometry consumers. </p>
+</li>
+  <li><p><b class="bfseries">B9:</b> prove the pointed genus-zero identification with \(\mathbb P^1\), all-test degree-zero Picard vanishing, and constancy/Hex; combine these with the positive-genus factorization to obtain (Alb). </p>
+</li>
+  <li><p><b class="bfseries">B10:</b> select the datum family in <span class="ttfamily">Challenge.lean</span>, prove functoriality and the Jacobian-specific base-change identity/tower coherences on that family, instantiate (AJ-BC), and expose all geometry without changing carriers or signatures. </p>
+</li>
+</ol>
+<p>B2–B10 are blocked consumers, not parallel alternatives to B1. This order is the formalization route. </p>
+
+  </div>
+</div>
+
+</div> <!--main-text -->
+</div> <!-- content-wrapper -->
+</div> <!-- content -->
+</div> <!-- wrapper -->
+
+<nav class="prev_up_next">
+  <svg  id="showmore-minus" class="icon icon-eye-minus showmore"><use xlink:href="symbol-defs.svg#icon-eye-minus"></use></svg>
+
+  <svg  id="showmore-plus" class="icon icon-eye-plus showmore"><use xlink:href="symbol-defs.svg#icon-eye-plus"></use></svg>
+
+  <a href="route-ch-handoff.html" title="Same-carrier data and Phase 8 consumers"><svg  class="icon icon-arrow-left "><use xlink:href="symbol-defs.svg#icon-arrow-left"></use></svg>
+</a>
+  <a href="index.html" title="AlgebraicJacobian"><svg  class="icon icon-arrow-up "><use xlink:href="symbol-defs.svg#icon-arrow-up"></use></svg>
+</a>
+</nav>
+
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/plastex.js"></script>
+<script type="text/javascript" src="js/svgxuse.js"></script>
+<script type="text/javascript" src="js/js.cookie.min.js"></script>
+<script type="text/javascript" src="js/showmore.js"></script>
+</body>
+</html>

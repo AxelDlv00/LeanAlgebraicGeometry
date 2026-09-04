@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>
+  MathJax = {
+    tex: {
+		    inlineMath: [['$','$'], ['\\(','\\)']]
+	} }
+</script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+</script>
+<meta name="generator" content="plasTeX" />
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Finite-stage carrier and base-change comparison</title>
+<link rel="next" href="route-ch-universal.html" title="Universal class and the finite-stage representability gap" />
+<link rel="prev" href="route-ch-sepclosed.html" title="The separably closed rank-one cover" />
+<link rel="up" href="index.html" title="AlgebraicJacobian" />
+<link rel="stylesheet" href="styles/theme-white.css" />
+<link rel="stylesheet" href="styles/amsthm.css" />
+<link rel="stylesheet" href="styles/showmore.css" />
+<link rel="stylesheet" href="styles/blueprint.css" />
+<link rel="stylesheet" href="styles/extra_styles.css" />
+</head>
+
+<body>
+<header>
+<svg  id="toc-toggle" class="icon icon-list-numbered "><use xlink:href="symbol-defs.svg#icon-list-numbered"></use></svg>
+<h1 id="doc_title"><a href="index.html">AlgebraicJacobian</a></h1>
+</header>
+
+<div class="wrapper">
+<nav class="toc">
+<ul class="sub-toc-0">
+<li class="">
+  <a href="sect0001.html"><span class="toc_ref"></span> <span class="toc_entry">About This Blueprint</span></a>
+ </li>
+<li class="">
+  <a href="route-ch-contract.html"><span class="toc_ref">1</span> <span class="toc_entry">Route contract and hypothesis ledger</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="route-ch-contract.html#a0000000003"><span class="toc_ref">1.1</span> <span class="toc_entry">Fixed objects and functors</span></a>
+ </li>
+<li class="">
+  <a href="route-ch-contract.html#a0000000004"><span class="toc_ref">1.2</span> <span class="toc_entry">The one permitted route</span></a>
+ </li>
+<li class="">
+  <a href="route-ch-contract.html#a0000000005"><span class="toc_ref">1.3</span> <span class="toc_entry">Hypothesis ledger</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="route-ch-rank-one.html"><span class="toc_ref">2</span> <span class="toc_entry">Degree-\(g\) divisors and the rank-one Abel isomorphism</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="route-ch-rank-one.html#a0000000006"><span class="toc_ref">2.1</span> <span class="toc_entry">The represented divisor package</span></a>
+ </li>
+<li class="">
+  <a href="route-ch-rank-one.html#a0000000007"><span class="toc_ref">2.2</span> <span class="toc_entry">The intrinsic rank-one open</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="route-ch-sepclosed.html"><span class="toc_ref">3</span> <span class="toc_entry">The separably closed rank-one cover</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="route-ch-sepclosed.html#a0000000008"><span class="toc_ref">3.1</span> <span class="toc_entry">Translated charts</span></a>
+ </li>
+<li class="">
+  <a href="route-ch-sepclosed.html#a0000000009"><span class="toc_ref">3.2</span> <span class="toc_entry">The exact separably closed representer</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class=" active current">
+  <a href="route-ch-finite-stage.html"><span class="toc_ref">4</span> <span class="toc_entry">Finite-stage carrier and base-change comparison</span></a>
+  <span class="expand-toc">▼</span>
+  <ul class="sub-toc-1 active">
+     <li class="">
+  <a href="route-ch-finite-stage.html#a0000000010"><span class="toc_ref">4.1</span> <span class="toc_entry">A finite affine atlas</span></a>
+ </li>
+<li class="">
+  <a href="route-ch-finite-stage.html#a0000000011"><span class="toc_ref">4.2</span> <span class="toc_entry">Nested pullbacks and overlap comparison</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="route-ch-universal.html"><span class="toc_ref">5</span> <span class="toc_entry">Universal class and the finite-stage representability gap</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="route-ch-universal.html#a0000000012"><span class="toc_ref">5.1</span> <span class="toc_entry">What is pinned over the separably closed field</span></a>
+ </li>
+<li class="">
+  <a href="route-ch-universal.html#a0000000013"><span class="toc_ref">5.2</span> <span class="toc_entry">The first unmet producer</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="route-ch-galois.html"><span class="toc_ref">6</span> <span class="toc_entry">Finite-Galois descent to the original field</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="route-ch-galois.html#a0000000014"><span class="toc_ref">6.1</span> <span class="toc_entry">The one selected exact-carrier geometry route</span></a>
+ </li>
+<li class="">
+  <a href="route-ch-galois.html#a0000000015"><span class="toc_ref">6.2</span> <span class="toc_entry">The conditional descent theorem</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="route-ch-handoff.html"><span class="toc_ref">7</span> <span class="toc_entry">Same-carrier data and Phase 8 consumers</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="route-ch-handoff.html#a0000000016"><span class="toc_ref">7.1</span> <span class="toc_entry">The public data boundary</span></a>
+ </li>
+<li class="">
+  <a href="route-ch-handoff.html#a0000000017"><span class="toc_ref">7.2</span> <span class="toc_entry">Checked consumers of an arbitrary datum</span></a>
+ </li>
+<li class="">
+  <a href="route-ch-handoff.html#a0000000018"><span class="toc_ref">7.3</span> <span class="toc_entry">The blocked Phase 8 assembly</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="route-app-technical.html"><span class="toc_ref">A</span> <span class="toc_entry">Reference map, Lean handoffs, and quarantined routes</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="route-app-technical.html#route-app-reference-map"><span class="toc_ref">A.1</span> <span class="toc_entry">Reference map</span></a>
+ </li>
+<li class="">
+  <a href="route-app-technical.html#route-app-lean-handoff"><span class="toc_ref">A.2</span> <span class="toc_entry">Exact Lean handoffs</span></a>
+ </li>
+<li class="">
+  <a href="route-app-technical.html#a0000000019"><span class="toc_ref">A.3</span> <span class="toc_entry">Quarantine</span></a>
+ </li>
+<li class="">
+  <a href="route-app-technical.html#route-app-challenge-status"><span class="toc_ref">A.4</span> <span class="toc_entry">Public-root and Challenge status</span></a>
+ </li>
+<li class="">
+  <a href="route-app-technical.html#a0000000020"><span class="toc_ref">A.5</span> <span class="toc_entry">Residual blocker ledger</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li ><a href="dep_graph_document.html">Dependency graph</a></li>
+</ul>
+</nav>
+
+<div class="content">
+<div class="content-wrapper">
+
+
+<div class="main-text">
+<h1 id="route-ch-finite-stage">4 Finite-stage carrier and base-change comparison</h1>
+
+<p>Return to the original curve \(C/K\). Fix the separable closure \(\Omega /K\) of Hypothesis H3, put \(C_\Omega =C\times _K\Omega \), and apply Chapter&#160;<a href="route-ch-sepclosed.html">3</a> to obtain the exact pair \((J_\Omega ,r_\Omega )\). The finite-stage package is parameterized in the Lean order \(\operatorname {Pic0FiniteStageGluePackage}\  C_\Omega \  K\): its first curve argument is over the separably closed field \(\Omega \), while its ambient field parameter is the original \(K\), with \([\operatorname {Algebra}\  K\  \Omega ]\) and \([\operatorname {Algebra.IsAlgebraic}\  K\  \Omega ]\). Thus every displayed \(P_0.N.1\) is a finite subextension of \(\Omega /K\), not a finite extension of an unspecified field. </p>
+<h1 id="a0000000010">4.1 A finite affine atlas</h1>
+<div class="theorem_thmwrapper theorem-style-plain" id="route-thm-finite-atlas">
+  <div class="theorem_thmheading">
+    <span class="theorem_thmcaption">
+    Theorem
+    </span>
+    <span class="theorem_thmlabel">11</span>
+    <span class="theorem_thmtitle">Finite-presentation atlas and simultaneous models</span>
+    <div class="thm_header_extras">
+
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="route-ch-finite-stage.html#route-thm-finite-atlas">#</a>
+
+    <a class="icon proof" href="route-ch-finite-stage.html#a0000000049"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+
+
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+
+        <ul class="uses">
+
+          <li><a href="route-ch-sepclosed.html#route-thm-sepclosed-finiteness">Theorem 10</a></li>
+
+        </ul>
+
+      </div>
+    </div>
+
+
+
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+
+        <ul class="uses">
+
+          <li><a href="/find/#doc/AlgebraicGeometry.Pic0FiniteStageAtlas" class="lean_decl">AlgebraicGeometry.Pic0FiniteStageAtlas</a></li>
+
+          <li><a href="/find/#doc/AlgebraicGeometry.pic0FiniteStageAtlas" class="lean_decl">AlgebraicGeometry.pic0FiniteStageAtlas</a></li>
+
+          <li><a href="/find/#doc/AlgebraicGeometry.finitePresentation_pic0FiniteStageChartRing" class="lean_decl">AlgebraicGeometry.finitePresentation_pic0FiniteStageChartRing</a></li>
+
+          <li><a href="/find/#doc/AlgebraicGeometry.exists_finSubext_pic0FiniteStageAtlas_chartRing_models" class="lean_decl">AlgebraicGeometry.exists_finSubext_pic0FiniteStageAtlas_chartRing_models</a></li>
+
+          <li><a href="/find/#doc/AlgebraicGeometry.pic0FiniteStageAffineOverlap" class="lean_decl">AlgebraicGeometry.pic0FiniteStageAffineOverlap</a></li>
+
+          <li><a href="/find/#doc/AlgebraicGeometry.Pic0FiniteStageOverlapRing" class="lean_decl">AlgebraicGeometry.Pic0FiniteStageOverlapRing</a></li>
+
+          <li><a href="/find/#doc/AlgebraicGeometry.finitePresentation_pic0FiniteStageOverlapRing" class="lean_decl">AlgebraicGeometry.finitePresentation_pic0FiniteStageOverlapRing</a></li>
+
+          <li><a href="/find/#doc/AlgebraicGeometry.Pic0FiniteStageRingIndex" class="lean_decl">AlgebraicGeometry.Pic0FiniteStageRingIndex</a></li>
+
+          <li><a href="/find/#doc/AlgebraicGeometry.pic0FiniteStageRestrictionLeft" class="lean_decl">AlgebraicGeometry.pic0FiniteStageRestrictionLeft</a></li>
+
+          <li><a href="/find/#doc/AlgebraicGeometry.pic0FiniteStageRestrictionRight" class="lean_decl">AlgebraicGeometry.pic0FiniteStageRestrictionRight</a></li>
+
+          <li><a href="/find/#doc/AlgebraicGeometry.exists_finSubext_pic0FiniteStageAtlas_ring_models" class="lean_decl">AlgebraicGeometry.exists_finSubext_pic0FiniteStageAtlas_ring_models</a></li>
+
+        </ul>
+
+      </div>
+    </div>
+
+
+        </div>
+  </div>
+  <div class="theorem_thmcontent">
+
+<p>The atlas structure first chooses a finite set \(I\) of affine opens \(U_i\subset J_\Omega \) covering \(J_\Omega \). It records compactness of every \(U_i\cap U_j\), a finite affine overlap presentation of that intersection, and finite presentation of each chart ring \(A_i=\Gamma (U_i,\mathcal O)\). Its first simultaneous-model theorem models only this chart-ring family over one finite subextension. </p>
+<p>Separately, separatedness of the represented Picard group makes the exact ordered intersection \(U_{ij}:=U_i\cap U_j\) affine. Define </p>
+<div class="displaymath" id="a0000000050">
+  \[  A_i=\Gamma (U_i,\mathcal O),\qquad B_{ij}=\Gamma (U_{ij},\mathcal O).  \]
+</div>
+<p> The package index is exactly </p>
+<div class="displaymath" id="a0000000051">
+  \[  \operatorname {Pic0FiniteStageRingIndex} = I\; \sqcup \; (I\times I),  \]
+</div>
+<p> with ring \(A_i\) on the left summand and \(B_{ij}\) on the right. Every ring in this combined family is finitely presented over \(\Omega \), and one finite subextension models all of them simultaneously. The two canonical algebra maps \(A_i\to B_{ij}\) and \(A_j\to B_{ij}\) are defined and finitely indexed, but their finite-stage models, transitions, and equations are not conclusions of either ring-model theorem; those belong to the GluePackage below. </p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000049">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p>Quasi-compactness gives the finite affine cover, and separatedness of the represented group makes each ordered intersection affine (hence quasi-compact). Local finite presentation gives finite presentation of the selected chart and exact-overlap coordinate rings. Apply Stacks Tag 01ZM to the inverse system of affine field stages: its transition maps are affine, and the schemes involved are quasi-compact and quasi-separated. The first attached producer descends only the chart rings; the second applies the same finite-family theorem to ‘Pic0FiniteStageRingIndex‘ and descends all chart and exact pair-overlap rings. Restriction maps, inverse transitions, and their equations are the separate next package, not outputs of either attachment. </p>
+
+  </div>
+</div>
+<div class="theorem_thmwrapper theorem-style-plain" id="route-thm-glue-package">
+  <div class="theorem_thmheading">
+    <span class="theorem_thmcaption">
+    Theorem
+    </span>
+    <span class="theorem_thmlabel">12</span>
+    <span class="theorem_thmtitle">The finite-stage GluePackage</span>
+    <div class="thm_header_extras">
+
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="route-ch-finite-stage.html#route-thm-glue-package">#</a>
+
+    <a class="icon proof" href="route-ch-finite-stage.html#a0000000052"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+
+
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+
+        <ul class="uses">
+
+          <li><a href="route-ch-finite-stage.html#route-thm-finite-atlas">Theorem 11</a></li>
+
+        </ul>
+
+      </div>
+    </div>
+
+
+
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+
+        <ul class="uses">
+
+          <li><a href="/find/#doc/AlgebraicGeometry.Pic0FiniteStageGluePackage" class="lean_decl">AlgebraicGeometry.Pic0FiniteStageGluePackage</a></li>
+
+          <li><a href="/find/#doc/AlgebraicGeometry.exists_pic0FiniteStageGluePackage" class="lean_decl">AlgebraicGeometry.exists_pic0FiniteStageGluePackage</a></li>
+
+          <li><a href="/find/#doc/AlgebraicGeometry.Pic0FiniteStageGluePackage.presentation" class="lean_decl">AlgebraicGeometry.Pic0FiniteStageGluePackage.presentation</a></li>
+
+          <li><a href="/find/#doc/AlgebraicGeometry.Pic0FiniteStageGluePackage.glueData" class="lean_decl">AlgebraicGeometry.Pic0FiniteStageGluePackage.glueData</a></li>
+
+          <li><a href="/find/#doc/AlgebraicGeometry.Pic0FiniteStageGluePackage.gluedOver" class="lean_decl">AlgebraicGeometry.Pic0FiniteStageGluePackage.gluedOver</a></li>
+
+          <li><a href="/find/#doc/AlgebraicGeometry.Pic0FiniteStageGluePackage.locallyOfFiniteType_gluedMap" class="lean_decl">AlgebraicGeometry.Pic0FiniteStageGluePackage.locallyOfFiniteType_gluedMap</a></li>
+
+          <li><a href="/find/#doc/AlgebraicGeometry.Pic0FiniteStageGluePackage.quasiCompact_gluedMap" class="lean_decl">AlgebraicGeometry.Pic0FiniteStageGluePackage.quasiCompact_gluedMap</a></li>
+
+        </ul>
+
+      </div>
+    </div>
+
+
+        </div>
+  </div>
+  <div class="theorem_thmcontent">
+
+<p>Under only \([\operatorname {Algebra.IsAlgebraic}\  K\  \Omega ]\), there is a package \(P_0\) with nested finite subextensions </p>
+<div class="displaymath" id="a0000000053">
+  \[  K\subseteq P_0.L.1\subseteq P_0.M.1\subseteq E_0:=P_0.N.1\subseteq \Omega .  \]
+</div>
+<p> It contains finite-presentation models of every \(A_i\) and canonical \(B_{ij}\), all algebra maps in the restriction and reversed-overlap transition families, proofs that restriction maps remain open immersions, and the descended triple-overlap equations. The package does not contain or produce an \(\operatorname {Algebra.IsSeparable}\  K\  E_0\) or Galois certificate. These data form </p>
+<div class="displaymath" id="a0000000054">
+  \[  P_0.\mathrm{glueData}:\mathrm{Scheme.GlueData}  \]
+</div>
+<p> and a glued structure morphism </p>
+<div class="displaymath" id="a0000000055">
+  \[  P_0.\mathrm{gluedMap}:P_0.\mathrm{glueData.glued} \longrightarrow \operatorname{Spec}E_0.  \]
+</div>
+<p> Set \(J_{E_0}=P_0.\mathrm{gluedOver}:=\mathrm{Over}.mk(P_0.\mathrm{gluedMap})\). Its structure map is locally of finite type and quasi-compact. </p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000052">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p>Use Theorem&#160;<a href="route-ch-finite-stage.html#route-thm-finite-atlas">11</a> for the finite list of chart and exact-overlap rings. The ‘Pic0FiniteStageRestrictionIndex‘ supplies the two restriction legs for every ordered pair, while the transition and triple indices supply the reversal and cocycle fields. Enlarge to \(P_0.M.1\) so every restriction and transition map descends and every required open-immersion property holds; Stacks Tag 0EUU is the finite-stage open-immersion principle, under its locally-finitely-presented stage-map hypothesis. Enlarge to \(P_0.N.1\) so inverse and triple-cocycle equations hold; Tag 081E is the corresponding isomorphism descent principle, again with its finite-presentation hypothesis. The contravariant spectra of the descended rings and maps satisfy the exact \(\mathrm{Scheme.GlueData}\) fields, whose standard gluing construction gives \(J_{E_0}\). Its finite affine cover proves quasi-compactness, and finite type of the descended chart algebras proves local finite type of its structure map. </p>
+
+  </div>
+</div>
+<h1 id="a0000000011">4.2 Nested pullbacks and overlap comparison</h1>
+<div class="theorem_thmwrapper theorem-style-plain" id="route-thm-overlap-comparison">
+  <div class="theorem_thmheading">
+    <span class="theorem_thmcaption">
+    Theorem
+    </span>
+    <span class="theorem_thmlabel">13</span>
+    <span class="theorem_thmtitle">Finite-stage overlap diagrams recover the original atlas</span>
+    <div class="thm_header_extras">
+
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="route-ch-finite-stage.html#route-thm-overlap-comparison">#</a>
+
+    <a class="icon proof" href="route-ch-finite-stage.html#a0000000056"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+
+
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+
+        <ul class="uses">
+
+          <li><a href="route-ch-finite-stage.html#route-thm-glue-package">Theorem 12</a></li>
+
+        </ul>
+
+      </div>
+    </div>
+
+
+
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+
+        <ul class="uses">
+
+          <li><a href="/find/#doc/AlgebraicGeometry.nestedPullbackFlatteningIso" class="lean_decl">AlgebraicGeometry.nestedPullbackFlatteningIso</a></li>
+
+          <li><a href="/find/#doc/AlgebraicGeometry.pic0SepClosedAtlasGlueData" class="lean_decl">AlgebraicGeometry.pic0SepClosedAtlasGlueData</a></li>
+
+          <li><a href="/find/#doc/AlgebraicGeometry.pic0SepClosedAtlasOverlapIso" class="lean_decl">AlgebraicGeometry.pic0SepClosedAtlasOverlapIso</a></li>
+
+          <li><a href="/find/#doc/AlgebraicGeometry.pic0SepClosedAtlasOverlapIso_hom_f" class="lean_decl">AlgebraicGeometry.pic0SepClosedAtlasOverlapIso_hom_f</a></li>
+
+          <li><a href="/find/#doc/AlgebraicGeometry.pic0SepClosedAtlasOverlapIso_hom_t_f" class="lean_decl">AlgebraicGeometry.pic0SepClosedAtlasOverlapIso_hom_t_f</a></li>
+
+          <li><a href="/find/#doc/AlgebraicGeometry.Pic0FiniteStageGluePackage.gluingOverlapFlatteningIso" class="lean_decl">AlgebraicGeometry.Pic0FiniteStageGluePackage.gluingOverlapFlatteningIso</a></li>
+
+          <li><a href="/find/#doc/AlgebraicGeometry.Pic0FiniteStageGluePackage.baseChangeGluingIso" class="lean_decl">AlgebraicGeometry.Pic0FiniteStageGluePackage.baseChangeGluingIso</a></li>
+
+          <li><a href="/find/#doc/AlgebraicGeometry.Pic0FiniteStageGluePackage.gluingOverlapIso" class="lean_decl">AlgebraicGeometry.Pic0FiniteStageGluePackage.gluingOverlapIso</a></li>
+
+          <li><a href="/find/#doc/AlgebraicGeometry.Pic0FiniteStageGluePackage.gluingOverlapIso_fst" class="lean_decl">AlgebraicGeometry.Pic0FiniteStageGluePackage.gluingOverlapIso_fst</a></li>
+
+          <li><a href="/find/#doc/AlgebraicGeometry.Pic0FiniteStageGluePackage.gluingOverlapIso_snd" class="lean_decl">AlgebraicGeometry.Pic0FiniteStageGluePackage.gluingOverlapIso_snd</a></li>
+
+        </ul>
+
+      </div>
+    </div>
+
+
+        </div>
+  </div>
+  <div class="theorem_thmcontent">
+
+<p>For every pair \(i,j\), let \(G_{ij}\) be the \((i,j)\)-object of the base-changed finite-stage \(\mathrm{GlueData}\), and let \(V_{ij}\) be the \((i,j)\)-object of the canonical \(\operatorname {pic0SepClosedAtlasGlueData}(C_\Omega )\). The exact checked comparison is </p>
+<div class="displaymath" id="a0000000057">
+  \[  \gamma _{ij}:G_{ij}\xrightarrow {\sim }V_{ij}.  \]
+</div>
+<p> It is the composite of the associativity/flattening isomorphism for the nested tensor products, the comparison with the selected finite affine overlap cover, and the pullback isomorphism induced by the descended restriction maps, ending with </p>
+<div class="displaymath" id="a0000000058">
+  \[  \delta _{ij}:U_{ij}.\operatorname {toScheme}\xrightarrow {\sim }V_{ij}.  \]
+</div>
+<p> Thus \(\delta _{ij}^{-1}\gamma _{ij}\), not \(\gamma _{ij}\) alone, identifies the base-changed object with the exact intersection \(U_i\cap U_j\). Under \(\gamma _{ij}\), both projections agree exactly with the left and right atlas restriction maps. The transition maps agree on triple overlaps. </p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000056">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p>On coordinate rings, associativity identifies \(\Omega \otimes _{E_0} (E_0\otimes _{P_0.M.1}(P_0.M.1\otimes _{P_0.L.1}A))\) with the original \(\Omega \)-algebra. The package comparison equations identify both restriction homomorphisms and the cyclic transition homomorphism after this flattening. Passing contravariantly to spectra gives the nested-pullback comparison and then the isomorphism to the canonical GlueData object. The separate ‘pic0SepClosedAtlasOverlapIso‘ identifies the exact intersection with that canonical object. The named first- and second-projection theorems, followed by the triple face equation, verify the complete gluing diagram; no appeal to Picard representability occurs in this argument. </p>
+
+  </div>
+</div>
+<div class="theorem_thmwrapper theorem-style-plain" id="route-thm-global-comparison">
+  <div class="theorem_thmheading">
+    <span class="theorem_thmcaption">
+    Theorem
+    </span>
+    <span class="theorem_thmlabel">14</span>
+    <span class="theorem_thmtitle">Global finite-stage base-change comparison</span>
+    <div class="thm_header_extras">
+
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="route-ch-finite-stage.html#route-thm-global-comparison">#</a>
+
+    <a class="icon proof" href="route-ch-finite-stage.html#a0000000059"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+
+
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+
+        <ul class="uses">
+
+          <li><a href="route-ch-finite-stage.html#route-thm-overlap-comparison">Theorem 13</a></li>
+
+          <li><a href="route-ch-sepclosed.html#route-thm-sepclosed-representability">Theorem 9</a></li>
+
+        </ul>
+
+      </div>
+    </div>
+
+
+
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+
+        <ul class="uses">
+
+          <li><a href="/find/#doc/AlgebraicGeometry.Pic0FiniteStageGluePackage.gluingGluedIso" class="lean_decl">AlgebraicGeometry.Pic0FiniteStageGluePackage.gluingGluedIso</a></li>
+
+          <li><a href="/find/#doc/AlgebraicGeometry.Pic0FiniteStageGluePackage.finiteStageBaseChangeIso" class="lean_decl">AlgebraicGeometry.Pic0FiniteStageGluePackage.finiteStageBaseChangeIso</a></li>
+
+          <li><a href="/find/#doc/AlgebraicGeometry.Pic0FiniteStageGluePackage.finiteStageBaseChangeIso_hom_structureMap" class="lean_decl">AlgebraicGeometry.Pic0FiniteStageGluePackage.finiteStageBaseChangeIso_hom_structureMap</a></li>
+
+        </ul>
+
+      </div>
+    </div>
+
+
+        </div>
+  </div>
+  <div class="theorem_thmcontent">
+
+<p>The chart comparisons glue to an isomorphism over \(\Omega \) </p>
+<div class="displaymath" id="a0000000060">
+  \[  \beta _{P_0}: J_{E_0}\times _{\operatorname{Spec}E_0}\operatorname{Spec}\Omega \xrightarrow {\sim }J_\Omega .  \]
+</div>
+<p> It commutes with the two structure maps to \(\operatorname{Spec}\Omega \). The attached proved assertion is precisely this carrier isomorphism and its structure-map equation. Transporting \(r_\Omega \) along \(\beta _{P_0}\) consequently gives </p>
+<div class="displaymath" id="a0000000061">
+  \[  \operatorname {RepresentableBy} \bigl(\operatorname {Pic}^0_{C_\Omega }, J_{E_0}\times _{E_0}\Omega \bigr).  \]
+</div>
+<p> This formal consequence is not credited as a finite-stage representation by the attachment. In particular it does <b class="bfseries">not</b> prove \(\operatorname {RepresentableBy} (\operatorname {Pic}^0_{C_{E_0}},J_{E_0})\). </p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000059">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p>Theorem&#160;<a href="route-ch-finite-stage.html#route-thm-overlap-comparison">13</a> identifies the complete base-changed gluing diagram with the finite atlas of \(J_\Omega \). Uniqueness of gluing yields the first global isomorphism; the checked structure-map equation upgrades it to the slice category. The last displayed post-base-change certificate is ordinary transport of an existing representer across that slice isomorphism. Since no Picard class on \(J_{E_0}\) and no natural equivalence over \(E_0\) has yet been constructed, interpreting this result as finite-stage representability would be a logical error. </p>
+<p>The source tree also contains the wrappers <span class="ttfamily">finiteStageBaseChangeOverIso</span> and <span class="ttfamily">pic0RepresentableBy_finiteStageBaseChange</span>. Their defining module is not reachable from the public <span class="ttfamily">AlgebraicJacobian</span> root, so they are unverified implementation artifacts here and receive no <span class="ttfamily">\leanok</span> credit. Their targets in any case remain the slice comparison and post-base-change representation over \(\Omega \). </p>
+
+  </div>
+</div>
+
+</div> <!--main-text -->
+</div> <!-- content-wrapper -->
+</div> <!-- content -->
+</div> <!-- wrapper -->
+
+<nav class="prev_up_next">
+  <svg  id="showmore-minus" class="icon icon-eye-minus showmore"><use xlink:href="symbol-defs.svg#icon-eye-minus"></use></svg>
+
+  <svg  id="showmore-plus" class="icon icon-eye-plus showmore"><use xlink:href="symbol-defs.svg#icon-eye-plus"></use></svg>
+
+  <a href="route-ch-sepclosed.html" title="The separably closed rank-one cover"><svg  class="icon icon-arrow-left "><use xlink:href="symbol-defs.svg#icon-arrow-left"></use></svg>
+</a>
+  <a href="index.html" title="AlgebraicJacobian"><svg  class="icon icon-arrow-up "><use xlink:href="symbol-defs.svg#icon-arrow-up"></use></svg>
+</a>
+  <a href="route-ch-universal.html" title="Universal class and the finite-stage representability gap"><svg  class="icon icon-arrow-right "><use xlink:href="symbol-defs.svg#icon-arrow-right"></use></svg>
+</a>
+</nav>
+
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/plastex.js"></script>
+<script type="text/javascript" src="js/svgxuse.js"></script>
+<script type="text/javascript" src="js/js.cookie.min.js"></script>
+<script type="text/javascript" src="js/showmore.js"></script>
+</body>
+</html>

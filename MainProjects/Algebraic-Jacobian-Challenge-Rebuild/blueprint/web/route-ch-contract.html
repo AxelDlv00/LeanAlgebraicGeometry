@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>
+  MathJax = {
+    tex: {
+		    inlineMath: [['$','$'], ['\\(','\\)']]
+	} }
+</script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+</script>
+<meta name="generator" content="plasTeX" />
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Route contract and hypothesis ledger</title>
+<link rel="next" href="route-ch-rank-one.html" title="Degree-g divisors and the rank-one Abel isomorphism" />
+<link rel="prev" href="sect0001.html" title="About This Blueprint" />
+<link rel="up" href="index.html" title="AlgebraicJacobian" />
+<link rel="stylesheet" href="styles/theme-white.css" />
+<link rel="stylesheet" href="styles/amsthm.css" />
+<link rel="stylesheet" href="styles/showmore.css" />
+<link rel="stylesheet" href="styles/blueprint.css" />
+<link rel="stylesheet" href="styles/extra_styles.css" />
+</head>
+
+<body>
+<header>
+<svg  id="toc-toggle" class="icon icon-list-numbered "><use xlink:href="symbol-defs.svg#icon-list-numbered"></use></svg>
+<h1 id="doc_title"><a href="index.html">AlgebraicJacobian</a></h1>
+</header>
+
+<div class="wrapper">
+<nav class="toc">
+<ul class="sub-toc-0">
+<li class="">
+  <a href="sect0001.html"><span class="toc_ref"></span> <span class="toc_entry">About This Blueprint</span></a>
+ </li>
+<li class=" active current">
+  <a href="route-ch-contract.html"><span class="toc_ref">1</span> <span class="toc_entry">Route contract and hypothesis ledger</span></a>
+  <span class="expand-toc">▼</span>
+  <ul class="sub-toc-1 active">
+     <li class="">
+  <a href="route-ch-contract.html#a0000000003"><span class="toc_ref">1.1</span> <span class="toc_entry">Fixed objects and functors</span></a>
+ </li>
+<li class="">
+  <a href="route-ch-contract.html#a0000000004"><span class="toc_ref">1.2</span> <span class="toc_entry">The one permitted route</span></a>
+ </li>
+<li class="">
+  <a href="route-ch-contract.html#a0000000005"><span class="toc_ref">1.3</span> <span class="toc_entry">Hypothesis ledger</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="route-ch-rank-one.html"><span class="toc_ref">2</span> <span class="toc_entry">Degree-\(g\) divisors and the rank-one Abel isomorphism</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="route-ch-rank-one.html#a0000000006"><span class="toc_ref">2.1</span> <span class="toc_entry">The represented divisor package</span></a>
+ </li>
+<li class="">
+  <a href="route-ch-rank-one.html#a0000000007"><span class="toc_ref">2.2</span> <span class="toc_entry">The intrinsic rank-one open</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="route-ch-sepclosed.html"><span class="toc_ref">3</span> <span class="toc_entry">The separably closed rank-one cover</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="route-ch-sepclosed.html#a0000000008"><span class="toc_ref">3.1</span> <span class="toc_entry">Translated charts</span></a>
+ </li>
+<li class="">
+  <a href="route-ch-sepclosed.html#a0000000009"><span class="toc_ref">3.2</span> <span class="toc_entry">The exact separably closed representer</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="route-ch-finite-stage.html"><span class="toc_ref">4</span> <span class="toc_entry">Finite-stage carrier and base-change comparison</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="route-ch-finite-stage.html#a0000000010"><span class="toc_ref">4.1</span> <span class="toc_entry">A finite affine atlas</span></a>
+ </li>
+<li class="">
+  <a href="route-ch-finite-stage.html#a0000000011"><span class="toc_ref">4.2</span> <span class="toc_entry">Nested pullbacks and overlap comparison</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="route-ch-universal.html"><span class="toc_ref">5</span> <span class="toc_entry">Universal class and the finite-stage representability gap</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="route-ch-universal.html#a0000000012"><span class="toc_ref">5.1</span> <span class="toc_entry">What is pinned over the separably closed field</span></a>
+ </li>
+<li class="">
+  <a href="route-ch-universal.html#a0000000013"><span class="toc_ref">5.2</span> <span class="toc_entry">The first unmet producer</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="route-ch-galois.html"><span class="toc_ref">6</span> <span class="toc_entry">Finite-Galois descent to the original field</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="route-ch-galois.html#a0000000014"><span class="toc_ref">6.1</span> <span class="toc_entry">The one selected exact-carrier geometry route</span></a>
+ </li>
+<li class="">
+  <a href="route-ch-galois.html#a0000000015"><span class="toc_ref">6.2</span> <span class="toc_entry">The conditional descent theorem</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="route-ch-handoff.html"><span class="toc_ref">7</span> <span class="toc_entry">Same-carrier data and Phase 8 consumers</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="route-ch-handoff.html#a0000000016"><span class="toc_ref">7.1</span> <span class="toc_entry">The public data boundary</span></a>
+ </li>
+<li class="">
+  <a href="route-ch-handoff.html#a0000000017"><span class="toc_ref">7.2</span> <span class="toc_entry">Checked consumers of an arbitrary datum</span></a>
+ </li>
+<li class="">
+  <a href="route-ch-handoff.html#a0000000018"><span class="toc_ref">7.3</span> <span class="toc_entry">The blocked Phase 8 assembly</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="route-app-technical.html"><span class="toc_ref">A</span> <span class="toc_entry">Reference map, Lean handoffs, and quarantined routes</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="route-app-technical.html#route-app-reference-map"><span class="toc_ref">A.1</span> <span class="toc_entry">Reference map</span></a>
+ </li>
+<li class="">
+  <a href="route-app-technical.html#route-app-lean-handoff"><span class="toc_ref">A.2</span> <span class="toc_entry">Exact Lean handoffs</span></a>
+ </li>
+<li class="">
+  <a href="route-app-technical.html#a0000000019"><span class="toc_ref">A.3</span> <span class="toc_entry">Quarantine</span></a>
+ </li>
+<li class="">
+  <a href="route-app-technical.html#route-app-challenge-status"><span class="toc_ref">A.4</span> <span class="toc_entry">Public-root and Challenge status</span></a>
+ </li>
+<li class="">
+  <a href="route-app-technical.html#a0000000020"><span class="toc_ref">A.5</span> <span class="toc_entry">Residual blocker ledger</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li ><a href="dep_graph_document.html">Dependency graph</a></li>
+</ul>
+</nav>
+
+<div class="content">
+<div class="content-wrapper">
+
+
+<div class="main-text">
+<h1 id="route-ch-contract">1 Route contract and hypothesis ledger</h1>
+
+<h1 id="a0000000003">1.1 Fixed objects and functors</h1>
+<div class="definition_thmwrapper theorem-style-definition" id="route-conv-objects">
+  <div class="definition_thmheading">
+    <span class="definition_thmcaption">
+    Definition
+    </span>
+    <span class="definition_thmlabel">1</span>
+    <span class="definition_thmtitle">The AJCR curve and its degree-zero Picard functor</span>
+    <div class="thm_header_extras">
+
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="route-ch-contract.html#route-conv-objects">#</a>
+
+    <a class="icon proof" href="route-ch-contract.html#a0000000021"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+
+
+
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+
+        <ul class="uses">
+
+          <li><a href="/find/#doc/AlgebraicGeometry.genus" class="lean_decl">AlgebraicGeometry.genus</a></li>
+
+          <li><a href="/find/#doc/AlgebraicGeometry.pic0TypeFunctor" class="lean_decl">AlgebraicGeometry.pic0TypeFunctor</a></li>
+
+        </ul>
+
+      </div>
+    </div>
+
+
+        </div>
+  </div>
+  <div class="definition_thmcontent">
+
+<p>Let \(K\) be a field and let </p>
+<div class="displaymath" id="a0000000022">
+  \[  C\longrightarrow \operatorname{Spec}K  \]
+</div>
+<p> be smooth of relative dimension one, proper, and geometrically irreducible. Put \(g=g(C)=\dim _K H^1(C,\mathcal O_C)\). For a \(K\)-scheme \(T\), write </p>
+<div class="displaymath" id="a0000000023">
+  \[  \operatorname {Pic}^0_C(T)=\operatorname {pic0TypeFunctor}(C)(T)  \]
+</div>
+<p> for the degree-zero subgroup of the big-etale-sheafified relative Picard functor used in Lean. Its elements are classes whose degree after every field-valued pullback is zero. This notation does <em>not</em> assert that this functor has already been identified with the identity component of a Picard scheme. </p>
+<p>No rational point of \(C\) is assumed. In particular, no step may introduce a global \(K\)-point merely to normalize a divisor or a Picard class. </p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000021">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p>This is the exact binder of the public Lean interfaces: \([\mathrm{Field}\  K]\), \(C:\mathrm{Over}(\operatorname{Spec}K)\), and the three displayed geometric typeclasses. The degree-zero functor is defined before any representer and is therefore the object which every later \(\mathrm{RepresentableBy}\) certificate must represent. </p>
+
+  </div>
+</div>
+<h1 id="a0000000004">1.2 The one permitted route</h1>
+<p>The dependency order is fixed as follows. Every arrow is a mandatory dependency, not a status claim. The boxed break marks the first missing mathematical producer; later arrows describe blocked consumers, not a change of route. </p>
+<div class="displaymath" id="a0000000024">
+  \[  \begin{gathered} (R1)\  D_g\text{ represents the widened degree-}g\text{ divisor functor}\\ \Downarrow \\ (R2)\  W\simeq \operatorname {Pic}^{g,\mathrm{rk}=1}_C\\ \Downarrow \\ (R3)\  \{ W_a\to \operatorname {Pic}^0_C\} _{a}\text{ covers over }\Omega \\ \Downarrow \\ (R4)\  J_\Omega \text{ represents }\operatorname {Pic}^0_{C_\Omega } \text{ and is qc, qs, lfp}\\ \Downarrow \\ (R5)\  P_0=(E_0,\mathrm{GlueData},J_{E_0}),\qquad J_{E_0}\times _{E_0}\Omega \simeq J_\Omega \\ \Downarrow \\[-2pt] \boxed {(R6)\  \text{jointly choose }P\text{ with }L=P.N.1/K \text{ finite Galois, descend }\xi _L, \text{ and prove }h_{P.\mathrm{gluedOver}} \simeq \operatorname {Pic}^0_{C_L}}\\ \Downarrow \\ (R7)\  \text{prove }P.\mathrm{gluedMap}\text{ projective, hence finite-in-affine for this same }J_L=P.\mathrm{gluedOver}\\ \Downarrow \\ (R8)\  J=J_L/\operatorname {Gal}(L/K)\text{ represents } \operatorname {Pic}^0_C\\ \Downarrow \\ (R9)\  \mathrm{PicRepDatum}\longrightarrow \mathrm{JacobianData} \longrightarrow \text{Phase 8 consumers}. \end{gathered}  \]
+</div>
+<p>The route does not pass through a quotient of the unrestricted admissible-degree Abel map, a symmetric-power/Weil construction, an Albanese first construction, or a filtered-colimit theorem. Those branches are quarantined in Appendix&#160;<a href="route-app-technical.html#route-app-quarantine">38</a>. </p>
+<h1 id="a0000000005">1.3 Hypothesis ledger</h1>
+<p>Fix the canonical separable closure \(\Omega =\operatorname {SeparableClosure}K\). Thus \(\Omega /K\) is algebraic, separable, and normal, and \(\Omega \) is separably closed. The exact Lean instantiation carries \(\operatorname {Algebra.IsSeparable} K\  \Omega \) and the normality used by the normal-closure construction. Every finite coefficient set used in R6 must first lie in a finite subextension \(E/K\subset \Omega /K\) carrying both \(\operatorname {Module.Finite}_K E\) and \(\operatorname {Algebra.IsSeparable} K E\). A generic GluePackage, however, is constructed under algebraicity alone and does not itself produce the latter certificate. The checked carrier comparison may therefore first be built at an arbitrary algebraic finite stage \(E_0/K\). The missing universal-class producer must separately establish separability, enlarge all finitely many coefficients to a finite normal subextension inside \(\Omega \), and only then finalize the legacy package \(P\). Accordingly its literal final field \(L=P.N.1\) is already finite Galois over \(K\); no later step changes the carrier. The following ledger is exhaustive. </p>
+<div class="centered"> <table class="tabular">
+  <tr>
+    <td  style="text-align:left"
+        rowspan=""
+        colspan="">
+      <p> <b class="bfseries">ID</b> </p>
+
+    </td>
+    <td  style="text-align:left"
+        rowspan=""
+        colspan="">
+      <p> <b class="bfseries">Hypothesis</b> </p>
+
+    </td>
+    <td  style="text-align:left"
+        rowspan=""
+        colspan="">
+      <p> <b class="bfseries">Scope and discharge</b></p>
+
+    </td>
+  </tr>
+  <tr>
+    <td  style="border-top-style:solid; border-top-color:black; border-top-width:1px; text-align:left"
+        rowspan=""
+        colspan="">
+      <p>H1 </p>
+
+    </td>
+    <td  style="border-top-style:solid; border-top-color:black; border-top-width:1px; text-align:left"
+        rowspan=""
+        colspan="">
+      <p> \(K\) is a field. </p>
+
+    </td>
+    <td  style="border-top-style:solid; border-top-color:black; border-top-width:1px; text-align:left"
+        rowspan=""
+        colspan="">
+      <p> Global; never discharged.</p>
+
+    </td>
+  </tr>
+  <tr>
+    <td  style="text-align:left"
+        rowspan=""
+        colspan="">
+      <p>H2 </p>
+
+    </td>
+    <td  style="text-align:left"
+        rowspan=""
+        colspan="">
+      <p> \(C/K\) is smooth of relative dimension one, proper, and geometrically irreducible. </p>
+
+    </td>
+    <td  style="text-align:left"
+        rowspan=""
+        colspan="">
+      <p> Global challenge input; preserved by field base change.</p>
+
+    </td>
+  </tr>
+  <tr>
+    <td  style="text-align:left"
+        rowspan=""
+        colspan="">
+      <p>H3 </p>
+
+    </td>
+    <td  style="text-align:left"
+        rowspan=""
+        colspan="">
+      <p> \(\Omega =\operatorname {SeparableClosure}K\), hence \(\Omega /K\) is algebraic, separable, and normal and \(\Omega \) is separably closed; every finite stage \(E/K\subset \Omega \) admitted to R6 carries \(\operatorname {Module.Finite}_K E\) and \(\operatorname {Algebra.IsSeparable} K E\). </p>
+
+    </td>
+    <td  style="text-align:left"
+        rowspan=""
+        colspan="">
+      <p> Used for translated rank-one coverage, finite-stage spreading, and the finite-Galois final stage. The finite normal closure is taken only after the separability certificate is present, and remains inside \(\Omega \). This is stronger than merely choosing an algebraic separably closed extension over an imperfect field; the exact Lean instantiation must expose the separability and normality needed at the normal-closure step.</p>
+
+    </td>
+  </tr>
+  <tr>
+    <td  style="text-align:left"
+        rowspan=""
+        colspan="">
+      <p>H4 </p>
+
+    </td>
+    <td  style="text-align:left"
+        rowspan=""
+        colspan="">
+      <p> A legacy finite-stage glue package \(P_0\) has final field \(E_0=P_0.N.1\subset \Omega \). </p>
+
+    </td>
+    <td  style="text-align:left"
+        rowspan=""
+        colspan="">
+      <p> Checked from finite presentation of the finite atlas under algebraicity alone; it supplies the comparison shape but neither a separability certificate nor the final route carrier.</p>
+
+    </td>
+  </tr>
+  <tr>
+    <td  style="text-align:left"
+        rowspan=""
+        colspan="">
+      <p>H5 </p>
+
+    </td>
+    <td  style="text-align:left"
+        rowspan=""
+        colspan="">
+      <p> A legacy package \(P\) is selected jointly with the universal-class descent, with \(L=P.N.1\subset \Omega \) finite Galois over \(K\). </p>
+
+    </td>
+    <td  style="text-align:left"
+        rowspan=""
+        colspan="">
+      <p> The normal-closure theorem supplies the field enlargement; reflecting the whole finite diagram at that stage and producing the exact Lean package are planned parts of the first producer.</p>
+
+    </td>
+  </tr>
+  <tr>
+    <td  style="text-align:left"
+        rowspan=""
+        colspan="">
+      <p>H6 </p>
+
+    </td>
+    <td  style="text-align:left"
+        rowspan=""
+        colspan="">
+      <p> \(h_{J_L}\simeq \operatorname {Pic}^0_{C_L}\) on the literal carrier \(J_L=P.\mathrm{gluedOver}\). </p>
+
+    </td>
+    <td  style="text-align:left"
+        rowspan=""
+        colspan="">
+      <p> <b class="bfseries">Unresolved first mathematical producer</b>; it must come from a class \(\xi _L\) on this carrier and its Yoneda equivalence.</p>
+
+    </td>
+  </tr>
+  <tr>
+    <td  style="text-align:left"
+        rowspan=""
+        colspan="">
+      <p>H7 </p>
+
+    </td>
+    <td  style="text-align:left"
+        rowspan=""
+        colspan="">
+      <p> \(P.\mathrm{gluedMap}\) is projective. </p>
+
+    </td>
+    <td  style="text-align:left"
+        rowspan=""
+        colspan="">
+      <p> <b class="bfseries">Planned downstream geometry, blocked by H6</b>; this is the one selected sufficient input for orbit-affineness.</p>
+
+    </td>
+  </tr>
+  <tr>
+    <td  style="text-align:left"
+        rowspan=""
+        colspan="">
+      <p>H8 </p>
+
+    </td>
+    <td  style="text-align:left"
+        rowspan=""
+        colspan="">
+      <p> \(J_L\to \operatorname{Spec}L\) is locally of finite type and quasi-compact. </p>
+
+    </td>
+    <td  style="text-align:left"
+        rowspan=""
+        colspan="">
+      <p> Produced from the finite affine presentation; the conditional Galois wrappers consume these certificates.</p>
+
+    </td>
+  </tr>
+  <tr>
+    <td  style="text-align:left"
+        rowspan=""
+        colspan="">
+      <p>H9 </p>
+
+    </td>
+    <td  style="text-align:left"
+        rowspan=""
+        colspan="">
+      <p> A \(K\)-rational point \(P\in C(K)\). </p>
+
+    </td>
+    <td  style="text-align:left"
+        rowspan=""
+        colspan="">
+      <p> Used only by pointed Abel–Jacobi consumers in Phase 8; never used to construct \(\operatorname {Pic}^0\).</p>
+
+    </td>
+  </tr>
+  <tr>
+    <td  style="text-align:left"
+        rowspan=""
+        colspan="">
+      <p>H10 </p>
+
+    </td>
+    <td  style="text-align:left"
+        rowspan=""
+        colspan="">
+      <p> Properness, smoothness of relative dimension \(g\), and geometric irreducibility of the final carrier. </p>
+
+    </td>
+    <td  style="text-align:left"
+        rowspan=""
+        colspan="">
+      <p> Outputs still to be instantiated from the original-field datum; they are not hypotheses of representability.</p>
+
+    </td>
+  </tr>
+</table> </div>
+<div class="remark_thmwrapper theorem-style-definition" id="route-rem-status">
+  <div class="remark_thmheading">
+    <span class="remark_thmcaption">
+    Remark
+    </span>
+    <span class="remark_thmlabel">2</span>
+    <span class="remark_thmtitle">Status discipline</span>
+    <div class="thm_header_extras">
+
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="route-ch-contract.html#route-rem-status">#</a>
+
+    <a class="icon proof" href="route-ch-contract.html#a0000000025"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+
+
+
+        </div>
+  </div>
+  <div class="remark_thmcontent">
+
+<p><em>Proved</em> means a public-root-reachable Lean declaration with the displayed type. <em>Imported</em> means a source or Mathlib theorem used with its full hypotheses. <em>Conditional</em> means Lean checks an implication whose antecedent remains visible; a <span class="ttfamily">\leanok</span> marker on such a node certifies only that generic implication, not its unresolved route instance. <em>Planned</em> means the exact target type is fixed but no producer exists. <em>Unresolved</em> means that target is the first unmet mathematical obligation on the route. A source declaration not reachable from the public root is <em>unverified</em> here and receives no Lean marker. </p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000025">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p>This convention separates implementation state from mathematical truth and prevents a consumer theorem from being counted as its missing producer. </p>
+
+  </div>
+</div>
+
+</div> <!--main-text -->
+</div> <!-- content-wrapper -->
+</div> <!-- content -->
+</div> <!-- wrapper -->
+
+<nav class="prev_up_next">
+  <svg  id="showmore-minus" class="icon icon-eye-minus showmore"><use xlink:href="symbol-defs.svg#icon-eye-minus"></use></svg>
+
+  <svg  id="showmore-plus" class="icon icon-eye-plus showmore"><use xlink:href="symbol-defs.svg#icon-eye-plus"></use></svg>
+
+  <a href="sect0001.html" title="About This Blueprint"><svg  class="icon icon-arrow-left "><use xlink:href="symbol-defs.svg#icon-arrow-left"></use></svg>
+</a>
+  <a href="index.html" title="AlgebraicJacobian"><svg  class="icon icon-arrow-up "><use xlink:href="symbol-defs.svg#icon-arrow-up"></use></svg>
+</a>
+  <a href="route-ch-rank-one.html" title="Degree-\(g\) divisors and the rank-one Abel isomorphism"><svg  class="icon icon-arrow-right "><use xlink:href="symbol-defs.svg#icon-arrow-right"></use></svg>
+</a>
+</nav>
+
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/plastex.js"></script>
+<script type="text/javascript" src="js/svgxuse.js"></script>
+<script type="text/javascript" src="js/js.cookie.min.js"></script>
+<script type="text/javascript" src="js/showmore.js"></script>
+</body>
+</html>

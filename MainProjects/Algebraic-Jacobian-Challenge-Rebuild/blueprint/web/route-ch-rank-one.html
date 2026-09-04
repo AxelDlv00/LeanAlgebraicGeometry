@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>
+  MathJax = {
+    tex: {
+		    inlineMath: [['$','$'], ['\\(','\\)']]
+	} }
+</script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+</script>
+<meta name="generator" content="plasTeX" />
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Degree-\(g\) divisors and the rank-one Abel isomorphism</title>
+<link rel="next" href="route-ch-sepclosed.html" title="The separably closed rank-one cover" />
+<link rel="prev" href="route-ch-contract.html" title="Route contract and hypothesis ledger" />
+<link rel="up" href="index.html" title="AlgebraicJacobian" />
+<link rel="stylesheet" href="styles/theme-white.css" />
+<link rel="stylesheet" href="styles/amsthm.css" />
+<link rel="stylesheet" href="styles/showmore.css" />
+<link rel="stylesheet" href="styles/blueprint.css" />
+<link rel="stylesheet" href="styles/extra_styles.css" />
+</head>
+
+<body>
+<header>
+<svg  id="toc-toggle" class="icon icon-list-numbered "><use xlink:href="symbol-defs.svg#icon-list-numbered"></use></svg>
+<h1 id="doc_title"><a href="index.html">AlgebraicJacobian</a></h1>
+</header>
+
+<div class="wrapper">
+<nav class="toc">
+<ul class="sub-toc-0">
+<li class="">
+  <a href="sect0001.html"><span class="toc_ref"></span> <span class="toc_entry">About This Blueprint</span></a>
+ </li>
+<li class="">
+  <a href="route-ch-contract.html"><span class="toc_ref">1</span> <span class="toc_entry">Route contract and hypothesis ledger</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="route-ch-contract.html#a0000000003"><span class="toc_ref">1.1</span> <span class="toc_entry">Fixed objects and functors</span></a>
+ </li>
+<li class="">
+  <a href="route-ch-contract.html#a0000000004"><span class="toc_ref">1.2</span> <span class="toc_entry">The one permitted route</span></a>
+ </li>
+<li class="">
+  <a href="route-ch-contract.html#a0000000005"><span class="toc_ref">1.3</span> <span class="toc_entry">Hypothesis ledger</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class=" active current">
+  <a href="route-ch-rank-one.html"><span class="toc_ref">2</span> <span class="toc_entry">Degree-\(g\) divisors and the rank-one Abel isomorphism</span></a>
+  <span class="expand-toc">▼</span>
+  <ul class="sub-toc-1 active">
+     <li class="">
+  <a href="route-ch-rank-one.html#a0000000006"><span class="toc_ref">2.1</span> <span class="toc_entry">The represented divisor package</span></a>
+ </li>
+<li class="">
+  <a href="route-ch-rank-one.html#a0000000007"><span class="toc_ref">2.2</span> <span class="toc_entry">The intrinsic rank-one open</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="route-ch-sepclosed.html"><span class="toc_ref">3</span> <span class="toc_entry">The separably closed rank-one cover</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="route-ch-sepclosed.html#a0000000008"><span class="toc_ref">3.1</span> <span class="toc_entry">Translated charts</span></a>
+ </li>
+<li class="">
+  <a href="route-ch-sepclosed.html#a0000000009"><span class="toc_ref">3.2</span> <span class="toc_entry">The exact separably closed representer</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="route-ch-finite-stage.html"><span class="toc_ref">4</span> <span class="toc_entry">Finite-stage carrier and base-change comparison</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="route-ch-finite-stage.html#a0000000010"><span class="toc_ref">4.1</span> <span class="toc_entry">A finite affine atlas</span></a>
+ </li>
+<li class="">
+  <a href="route-ch-finite-stage.html#a0000000011"><span class="toc_ref">4.2</span> <span class="toc_entry">Nested pullbacks and overlap comparison</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="route-ch-universal.html"><span class="toc_ref">5</span> <span class="toc_entry">Universal class and the finite-stage representability gap</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="route-ch-universal.html#a0000000012"><span class="toc_ref">5.1</span> <span class="toc_entry">What is pinned over the separably closed field</span></a>
+ </li>
+<li class="">
+  <a href="route-ch-universal.html#a0000000013"><span class="toc_ref">5.2</span> <span class="toc_entry">The first unmet producer</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="route-ch-galois.html"><span class="toc_ref">6</span> <span class="toc_entry">Finite-Galois descent to the original field</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="route-ch-galois.html#a0000000014"><span class="toc_ref">6.1</span> <span class="toc_entry">The one selected exact-carrier geometry route</span></a>
+ </li>
+<li class="">
+  <a href="route-ch-galois.html#a0000000015"><span class="toc_ref">6.2</span> <span class="toc_entry">The conditional descent theorem</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="route-ch-handoff.html"><span class="toc_ref">7</span> <span class="toc_entry">Same-carrier data and Phase 8 consumers</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="route-ch-handoff.html#a0000000016"><span class="toc_ref">7.1</span> <span class="toc_entry">The public data boundary</span></a>
+ </li>
+<li class="">
+  <a href="route-ch-handoff.html#a0000000017"><span class="toc_ref">7.2</span> <span class="toc_entry">Checked consumers of an arbitrary datum</span></a>
+ </li>
+<li class="">
+  <a href="route-ch-handoff.html#a0000000018"><span class="toc_ref">7.3</span> <span class="toc_entry">The blocked Phase 8 assembly</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="route-app-technical.html"><span class="toc_ref">A</span> <span class="toc_entry">Reference map, Lean handoffs, and quarantined routes</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="route-app-technical.html#route-app-reference-map"><span class="toc_ref">A.1</span> <span class="toc_entry">Reference map</span></a>
+ </li>
+<li class="">
+  <a href="route-app-technical.html#route-app-lean-handoff"><span class="toc_ref">A.2</span> <span class="toc_entry">Exact Lean handoffs</span></a>
+ </li>
+<li class="">
+  <a href="route-app-technical.html#a0000000019"><span class="toc_ref">A.3</span> <span class="toc_entry">Quarantine</span></a>
+ </li>
+<li class="">
+  <a href="route-app-technical.html#route-app-challenge-status"><span class="toc_ref">A.4</span> <span class="toc_entry">Public-root and Challenge status</span></a>
+ </li>
+<li class="">
+  <a href="route-app-technical.html#a0000000020"><span class="toc_ref">A.5</span> <span class="toc_entry">Residual blocker ledger</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li ><a href="dep_graph_document.html">Dependency graph</a></li>
+</ul>
+</nav>
+
+<div class="content">
+<div class="content-wrapper">
+
+
+<div class="main-text">
+<h1 id="route-ch-rank-one">2 Degree-\(g\) divisors and the rank-one Abel isomorphism</h1>
+
+<p>Throughout this chapter the base field is an arbitrary field \(k\), and \(C/k\) satisfies H1–H2. No separable-closedness or rational point is used. </p>
+<h1 id="a0000000006">2.1 The represented divisor package</h1>
+<div class="theorem_thmwrapper theorem-style-plain" id="route-thm-divisor-representer">
+  <div class="theorem_thmheading">
+    <span class="theorem_thmcaption">
+    Theorem
+    </span>
+    <span class="theorem_thmlabel">3</span>
+    <span class="theorem_thmtitle">Represented widened divisors of degree \(g\)</span>
+    <div class="thm_header_extras">
+
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="route-ch-rank-one.html#route-thm-divisor-representer">#</a>
+
+    <a class="icon proof" href="route-ch-rank-one.html#a0000000026"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+
+
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+
+        <ul class="uses">
+
+          <li><a href="route-ch-contract.html#route-conv-objects">Definition 1</a></li>
+
+        </ul>
+
+      </div>
+    </div>
+
+
+
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+
+        <ul class="uses">
+
+          <li><a href="/find/#doc/AlgebraicGeometry.divRepAffGenusScheme" class="lean_decl">AlgebraicGeometry.divRepAffGenusScheme</a></li>
+
+          <li><a href="/find/#doc/AlgebraicGeometry.divFunctorAff_genus_representableBy" class="lean_decl">AlgebraicGeometry.divFunctorAff_genus_representableBy</a></li>
+
+        </ul>
+
+      </div>
+    </div>
+
+
+        </div>
+  </div>
+  <div class="theorem_thmcontent">
+
+<p>Let \(\pi :C\to \mathbb P^1_k\) be the finite dominant map chosen internally from H1–H2. There is a \(k\)-scheme \(D_g\) and, naturally for every \(T\to \operatorname{Spec}k\), a bijection </p>
+<div class="displaymath" id="a0000000027">
+  \[  \operatorname{Hom}_k(T,D_g)\; \simeq \;  \operatorname {divFunctorAff}(C,g)(T).  \]
+</div>
+<p> The right side is the Lean widened divisor functor: compatible divisor families on arbitrary affine opens, with the local certification used by the finite-map/cohomology construction. This statement must not be silently replaced by representability of a differently defined divisor functor. </p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000026">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p>Kleiman’s Theorem 3.7 represents relative effective divisors for a projective flat family as an open of the Hilbert scheme, and Exercise 3.8 isolates fixed degree on a curve. The Lean specialization chooses \(\pi \), proves the required \(H^0\) and \(H^1\) finiteness and Euler-characteristic identities from H1–H2, constructs the finite-relation affine charts, and glues their classifiers. At parameter \(g(C)\) this yields the displayed ‘RepresentableBy‘ certificate on the exact functor ‘divFunctorAff C (genus C)‘. </p>
+
+  </div>
+</div>
+<div class="definition_thmwrapper theorem-style-definition" id="route-rem-admissible-source">
+  <div class="definition_thmheading">
+    <span class="definition_thmcaption">
+    Definition
+    </span>
+    <span class="definition_thmlabel">4</span>
+    <span class="definition_thmtitle">The admissible divisor source is auxiliary</span>
+    <div class="thm_header_extras">
+
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="route-ch-rank-one.html#route-rem-admissible-source">#</a>
+
+    <a class="icon proof" href="route-ch-rank-one.html#a0000000028"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+
+
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+
+        <ul class="uses">
+
+          <li><a href="route-ch-rank-one.html#route-thm-divisor-representer">Theorem 3</a></li>
+
+        </ul>
+
+      </div>
+    </div>
+
+
+
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+
+        <ul class="uses">
+
+          <li><a href="/find/#doc/AlgebraicGeometry.divRepAffAdmissibleScheme" class="lean_decl">AlgebraicGeometry.divRepAffAdmissibleScheme</a></li>
+
+          <li><a href="/find/#doc/AlgebraicGeometry.divFunctorAff_admissible_representableBy" class="lean_decl">AlgebraicGeometry.divFunctorAff_admissible_representableBy</a></li>
+
+          <li><a href="/find/#doc/AlgebraicGeometry.quasiCompact_divRepAffAdmissibleScheme" class="lean_decl">AlgebraicGeometry.quasiCompact_divRepAffAdmissibleScheme</a></li>
+
+        </ul>
+
+      </div>
+    </div>
+
+
+        </div>
+  </div>
+  <div class="definition_thmcontent">
+
+<p>Lean also constructs a quasi-compact represented divisor source in a larger admissible degree. In this route it is used only to prove quasi-compactness of the final separably closed representer via a surjective Abel map. Its unrestricted Abel map is not the rank-one chart and is not quotiented to construct \(J\). </p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000028">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p>The large degree kills \(H^1\) and supplies etale-local effective representatives, exactly as in Kleiman’s bounded Abel construction. For degree greater than \(g\), however, complete linear systems have positive dimension; hence the unrestricted Abel map cannot be an open immersion. </p>
+
+  </div>
+</div>
+<h1 id="a0000000007">2.2 The intrinsic rank-one open</h1>
+<div class="theorem_thmwrapper theorem-style-plain" id="route-thm-rank-one-open">
+  <div class="theorem_thmheading">
+    <span class="theorem_thmcaption">
+    Theorem
+    </span>
+    <span class="theorem_thmlabel">5</span>
+    <span class="theorem_thmtitle">The rank-one Picard locus and its represented inverse image</span>
+    <div class="thm_header_extras">
+
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="route-ch-rank-one.html#route-thm-rank-one-open">#</a>
+
+    <a class="icon proof" href="route-ch-rank-one.html#a0000000029"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+
+
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+
+        <ul class="uses">
+
+          <li><a href="route-ch-rank-one.html#route-thm-divisor-representer">Theorem 3</a></li>
+
+        </ul>
+
+      </div>
+    </div>
+
+
+
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+
+        <ul class="uses">
+
+          <li><a href="/find/#doc/AlgebraicGeometry.PicRankOneLocalPresentation" class="lean_decl">AlgebraicGeometry.PicRankOneLocalPresentation</a></li>
+
+          <li><a href="/find/#doc/AlgebraicGeometry.PicRankOneOpen" class="lean_decl">AlgebraicGeometry.PicRankOneOpen</a></li>
+
+          <li><a href="/find/#doc/AlgebraicGeometry.picRankOneOpen_isOpen" class="lean_decl">AlgebraicGeometry.picRankOneOpen_isOpen</a></li>
+
+          <li><a href="/find/#doc/AlgebraicGeometry.DivRankOneOpenData" class="lean_decl">AlgebraicGeometry.DivRankOneOpenData</a></li>
+
+          <li><a href="/find/#doc/AlgebraicGeometry.divRankOneOpenDataOfPicRankOneOpen" class="lean_decl">AlgebraicGeometry.divRankOneOpenDataOfPicRankOneOpen</a></li>
+
+        </ul>
+
+      </div>
+    </div>
+
+
+        </div>
+  </div>
+  <div class="theorem_thmcontent">
+
+<p>For a test \(T/k\) and \(\lambda \in \operatorname {Pic}^{g}_C(T)\), say that \(\lambda \) is rank one precisely when </p>
+<div class="displaymath" id="a0000000030">
+  \[  \forall (A,\, [\mathrm{CommRing}\  A],\, [\mathrm{Algebra}\  k\  A])\;  \forall t:\operatorname {Spec}_k A\longrightarrow T,\quad \operatorname {Nonempty}\bigl(\operatorname {PicRankOneLocalPresentation} (\pi ,\lambda _t)\bigr), \tag {R1P}  \]
+</div>
+<p> where \(\lambda _t\) is the functorial pullback of \(\lambda \). A witness in (R1P) is not an unnamed line bundle: it contains an etale cover \(q:\operatorname {Spec}B\to \operatorname {Spec}A\), a descent-class representative \(u\) with </p>
+<div class="displaymath" id="a0000000031">
+  \[  \operatorname {PicEtAff.mk}(u)=\operatorname {picEtAffineEquiv}(\lambda _t),  \]
+</div>
+<p> a \(\operatorname {BasicOpenCocycleDatum}\  d\) satisfying \([u]=\operatorname {relPicMk}(d.\operatorname {cechPicClass})\), and a \(\operatorname {Scheme.Modules}\) object \(M\) with an isomorphism from its underlying sheaf to \(d.\operatorname {sheaf}\). It also contains \(\operatorname {Scheme.Modules.IsLineBundle}(M)\), and, for every cartesian square \(X'\to X\) over \(\operatorname {Spec}B\), </p>
+<div class="displaymath" id="a0000000032">
+  \[  \operatorname {IsIso}\bigl((\operatorname {canonicalBaseChangeMap}\, sq).app\, M\bigr),  \]
+</div>
+<p> together with \(\operatorname {Subsingleton}(H^1(d.\operatorname {sheaf}))\), finite and projective \(H^0(d.\operatorname {sheaf})\) over \(B\), and \(\operatorname {rankAtStalk}(H^0(d.\operatorname {sheaf}),p)=1\) for every \(p\in \operatorname {PrimeSpectrum}B\). These classes form a subfunctor </p>
+<div class="displaymath" id="a0000000033">
+  \[  \operatorname {Pic}^{g,\mathrm{rk}=1}_C \hookrightarrow \operatorname {Pic}^{g}_C  \]
+</div>
+<p> relatively represented by open immersions. </p>
+<p>Pulling this subfunctor back along the degree-\(g\) Abel map \(a_g:h_{D_g}\to \operatorname {Pic}^{g}_C\) gives an actual open \(W\subset D_g\), encoded by ‘DivRankOneOpenData‘. For every \(T\), a map \(T\to D_g\) factors through \(W\) exactly when its Abel class is in the rank-one subfunctor. </p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000029">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p>The Lean proof does not assume an unidentified universal line bundle on the Picard functor. It defines the split locus of a class at residue-field points, proves that this locus pulls back exactly, proves openness on affine tests using a native etale presentation and flat quotient maps, and then glues over affine opens. The resulting relatively represented open is pulled back along the represented Abel transformation to obtain \(W\). This realizes the open-locus specialization used in Kleiman’s proof while retaining the precise class-tied Lean predicate. </p>
+
+  </div>
+</div>
+<div class="theorem_thmwrapper theorem-style-plain" id="route-thm-rank-one-abel-iso">
+  <div class="theorem_thmheading">
+    <span class="theorem_thmcaption">
+    Theorem
+    </span>
+    <span class="theorem_thmlabel">6</span>
+    <span class="theorem_thmtitle">Canonical rank-one Abel isomorphism</span>
+    <div class="thm_header_extras">
+
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="route-ch-rank-one.html#route-thm-rank-one-abel-iso">#</a>
+
+    <a class="icon proof" href="route-ch-rank-one.html#a0000000034"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+
+
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+
+        <ul class="uses">
+
+          <li><a href="route-ch-rank-one.html#route-thm-rank-one-open">Theorem 5</a></li>
+
+        </ul>
+
+      </div>
+    </div>
+
+
+
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+
+        <ul class="uses">
+
+          <li><a href="/find/#doc/AlgebraicGeometry.canonicalRankOneEvaluationDivisorData" class="lean_decl">AlgebraicGeometry.canonicalRankOneEvaluationDivisorData</a></li>
+
+          <li><a href="/find/#doc/AlgebraicGeometry.canonicalRankOneAbelIso" class="lean_decl">AlgebraicGeometry.canonicalRankOneAbelIso</a></li>
+
+          <li><a href="/find/#doc/AlgebraicGeometry.canonicalRankOneAbelSliceIso" class="lean_decl">AlgebraicGeometry.canonicalRankOneAbelSliceIso</a></li>
+
+          <li><a href="/find/#doc/AlgebraicGeometry.rankOneDivisorOpenRepresentableBy" class="lean_decl">AlgebraicGeometry.rankOneDivisorOpenRepresentableBy</a></li>
+
+          <li><a href="/find/#doc/AlgebraicGeometry.picRankOneOpenRepresentableBy" class="lean_decl">AlgebraicGeometry.picRankOneOpenRepresentableBy</a></li>
+
+          <li><a href="/find/#doc/AlgebraicGeometry.picRankOneOpenSigmaIso" class="lean_decl">AlgebraicGeometry.picRankOneOpenSigmaIso</a></li>
+
+        </ul>
+
+      </div>
+    </div>
+
+
+        </div>
+  </div>
+  <div class="theorem_thmcontent">
+
+<p>With \(\pi =\operatorname {divRepAffP1Map}(C)\), Lean’s primary statement is the isomorphism of sigma-extension objects </p>
+<div class="displaymath" id="a0000000035">
+  \[  \operatorname {rankOneDivisorLocus}(\pi ) \xrightarrow {\sim }\operatorname {rankOneLocus}(\pi ).  \]
+</div>
+<p> The slicewise isomorphism <span class="ttfamily">canonicalRankOneAbelSliceIso</span>, the represented divisor open \(W=\operatorname {divRankOneOpenOver}(\pi )\), and <span class="ttfamily">picRankOneOpenSigmaIso</span> identify this with the restricted Abel transformation \(a_g|_W:h_W\xrightarrow {\sim } \operatorname {Pic}^{g,\mathrm{rk}=1}_C\). Explicitly, for every test \(T/k\) and every rank-one class \(\lambda \), the counit \(f_T^*f_{T*}\mathcal L\to \mathcal L\) of any class-tied local presentation has a canonical zero divisor; these local divisors descend to a unique element of \(W(T)\). Its Abel class is \(\lambda \), and any two divisors in \(W(T)\) with the same Abel class are equal. </p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000034">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p>Milne identifies an Abel fibre with the complete linear system and records that the generic degree-\(g\) locus has \(h^0=1\). Lean strengthens the required family statement directly: rank-one local data provide the evaluation divisor on each affine; naturality and arbitrary-test uniqueness glue it; injectivity of the restricted Abel map turns its right inverse into a two-sided inverse. Sigma extension gives the displayed big-site isomorphism. Milne’s theorem is used only as the classical mathematical model, not as a claim that the whole symmetric-power construction is the chosen formalization route. Milne Chapter III, Section 5 has standing assumptions that the curve is complete nonsingular, \(g{\gt}0\), and equipped with a rational point; none is silently transferred to the stronger familywise Lean statement or to the genus-zero case. </p>
+
+  </div>
+</div>
+
+</div> <!--main-text -->
+</div> <!-- content-wrapper -->
+</div> <!-- content -->
+</div> <!-- wrapper -->
+
+<nav class="prev_up_next">
+  <svg  id="showmore-minus" class="icon icon-eye-minus showmore"><use xlink:href="symbol-defs.svg#icon-eye-minus"></use></svg>
+
+  <svg  id="showmore-plus" class="icon icon-eye-plus showmore"><use xlink:href="symbol-defs.svg#icon-eye-plus"></use></svg>
+
+  <a href="route-ch-contract.html" title="Route contract and hypothesis ledger"><svg  class="icon icon-arrow-left "><use xlink:href="symbol-defs.svg#icon-arrow-left"></use></svg>
+</a>
+  <a href="index.html" title="AlgebraicJacobian"><svg  class="icon icon-arrow-up "><use xlink:href="symbol-defs.svg#icon-arrow-up"></use></svg>
+</a>
+  <a href="route-ch-sepclosed.html" title="The separably closed rank-one cover"><svg  class="icon icon-arrow-right "><use xlink:href="symbol-defs.svg#icon-arrow-right"></use></svg>
+</a>
+</nav>
+
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/plastex.js"></script>
+<script type="text/javascript" src="js/svgxuse.js"></script>
+<script type="text/javascript" src="js/js.cookie.min.js"></script>
+<script type="text/javascript" src="js/showmore.js"></script>
+</body>
+</html>

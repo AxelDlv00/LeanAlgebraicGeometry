@@ -12,8 +12,10 @@
 <meta name="generator" content="plasTeX" />
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>AlgebraicJacobian</title>
-<link rel="next" href="sect0001.html" title="About This Blueprint" />
+<title>About This Blueprint</title>
+<link rel="next" href="route-ch-contract.html" title="Route contract and hypothesis ledger" />
+<link rel="prev" href="index.html" title="AlgebraicJacobian" />
+<link rel="up" href="index.html" title="AlgebraicJacobian" />
 <link rel="stylesheet" href="styles/theme-white.css" />
 <link rel="stylesheet" href="styles/amsthm.css" />
 <link rel="stylesheet" href="styles/showmore.css" />
@@ -24,12 +26,13 @@
 <body>
 <header>
 <svg  id="toc-toggle" class="icon icon-list-numbered "><use xlink:href="symbol-defs.svg#icon-list-numbered"></use></svg>
+<h1 id="doc_title"><a href="index.html">AlgebraicJacobian</a></h1>
 </header>
 
 <div class="wrapper">
 <nav class="toc">
 <ul class="sub-toc-0">
-<li class="">
+<li class=" active current">
   <a href="sect0001.html"><span class="toc_ref"></span> <span class="toc_entry">About This Blueprint</span></a>
  </li>
 <li class="">
@@ -160,132 +163,11 @@
 
 
 <div class="main-text">
-<div class="titlepage">
-<h1>AlgebraicJacobian</h1>
-<p class="authors">
-<span class="author">Axel Delaval </span>
-</p>
-</div>
+<h1 id="a0000000002">About This Blueprint</h1>
+<p>This is the authoritative route specification for the Algebraic Jacobian Challenge Rebuild. It fixes one construction: represented degree- \(g\) divisors, the rank-one Abel isomorphism, translated rank-one charts over a separably closed field, finite-stage descent of their glued carrier and universal class, finite-Galois descent, and the same-carrier handoff to the challenge interfaces. A formalizer following this text has no remaining route choice. </p>
+<p>Each numbered mathematical package states its objects and quantifiers, records the exact public Lean handoff, and visibly classifies its state as <em>proved</em>, <em>imported</em>, <em>conditional</em>, <em>planned</em>, or <em>unresolved</em>. A <span class="ttfamily">\leanok</span> marker means that every attached declaration is checked and reachable from the public <span class="ttfamily">AlgebraicJacobian</span> root. It may certify a conditional implication; the displayed antecedents then remain hypotheses, and the marker gives no completion credit to the corresponding route instantiation. Textual declarations outside that root are named only as unverified implementation artifacts and receive no <span class="ttfamily">\leanok</span> marker. </p>
 
 </div> <!--main-text -->
-<nav class=local_toc>
-<ul>
-  <li>
-  <a href="sect0001.html"><span class="toc_ref"></span> <span class="toc_entry">About This Blueprint</span></a>
-  </li>
-  <li>
-  <a href="route-ch-contract.html"><span class="toc_ref">1</span> <span class="toc_entry">Route contract and hypothesis ledger</span></a>
-	<ul>
-		   <li>
-  <a href="route-ch-contract.html#a0000000003"><span class="toc_ref">1.1</span> <span class="toc_entry">Fixed objects and functors</span></a>
-  </li>
-  <li>
-  <a href="route-ch-contract.html#a0000000004"><span class="toc_ref">1.2</span> <span class="toc_entry">The one permitted route</span></a>
-  </li>
-  <li>
-  <a href="route-ch-contract.html#a0000000005"><span class="toc_ref">1.3</span> <span class="toc_entry">Hypothesis ledger</span></a>
-  </li>
-
-	</ul>
-  </li>
-  <li>
-  <a href="route-ch-rank-one.html"><span class="toc_ref">2</span> <span class="toc_entry">Degree-\(g\) divisors and the rank-one Abel isomorphism</span></a>
-	<ul>
-		   <li>
-  <a href="route-ch-rank-one.html#a0000000006"><span class="toc_ref">2.1</span> <span class="toc_entry">The represented divisor package</span></a>
-  </li>
-  <li>
-  <a href="route-ch-rank-one.html#a0000000007"><span class="toc_ref">2.2</span> <span class="toc_entry">The intrinsic rank-one open</span></a>
-  </li>
-
-	</ul>
-  </li>
-  <li>
-  <a href="route-ch-sepclosed.html"><span class="toc_ref">3</span> <span class="toc_entry">The separably closed rank-one cover</span></a>
-	<ul>
-		   <li>
-  <a href="route-ch-sepclosed.html#a0000000008"><span class="toc_ref">3.1</span> <span class="toc_entry">Translated charts</span></a>
-  </li>
-  <li>
-  <a href="route-ch-sepclosed.html#a0000000009"><span class="toc_ref">3.2</span> <span class="toc_entry">The exact separably closed representer</span></a>
-  </li>
-
-	</ul>
-  </li>
-  <li>
-  <a href="route-ch-finite-stage.html"><span class="toc_ref">4</span> <span class="toc_entry">Finite-stage carrier and base-change comparison</span></a>
-	<ul>
-		   <li>
-  <a href="route-ch-finite-stage.html#a0000000010"><span class="toc_ref">4.1</span> <span class="toc_entry">A finite affine atlas</span></a>
-  </li>
-  <li>
-  <a href="route-ch-finite-stage.html#a0000000011"><span class="toc_ref">4.2</span> <span class="toc_entry">Nested pullbacks and overlap comparison</span></a>
-  </li>
-
-	</ul>
-  </li>
-  <li>
-  <a href="route-ch-universal.html"><span class="toc_ref">5</span> <span class="toc_entry">Universal class and the finite-stage representability gap</span></a>
-	<ul>
-		   <li>
-  <a href="route-ch-universal.html#a0000000012"><span class="toc_ref">5.1</span> <span class="toc_entry">What is pinned over the separably closed field</span></a>
-  </li>
-  <li>
-  <a href="route-ch-universal.html#a0000000013"><span class="toc_ref">5.2</span> <span class="toc_entry">The first unmet producer</span></a>
-  </li>
-
-	</ul>
-  </li>
-  <li>
-  <a href="route-ch-galois.html"><span class="toc_ref">6</span> <span class="toc_entry">Finite-Galois descent to the original field</span></a>
-	<ul>
-		   <li>
-  <a href="route-ch-galois.html#a0000000014"><span class="toc_ref">6.1</span> <span class="toc_entry">The one selected exact-carrier geometry route</span></a>
-  </li>
-  <li>
-  <a href="route-ch-galois.html#a0000000015"><span class="toc_ref">6.2</span> <span class="toc_entry">The conditional descent theorem</span></a>
-  </li>
-
-	</ul>
-  </li>
-  <li>
-  <a href="route-ch-handoff.html"><span class="toc_ref">7</span> <span class="toc_entry">Same-carrier data and Phase 8 consumers</span></a>
-	<ul>
-		   <li>
-  <a href="route-ch-handoff.html#a0000000016"><span class="toc_ref">7.1</span> <span class="toc_entry">The public data boundary</span></a>
-  </li>
-  <li>
-  <a href="route-ch-handoff.html#a0000000017"><span class="toc_ref">7.2</span> <span class="toc_entry">Checked consumers of an arbitrary datum</span></a>
-  </li>
-  <li>
-  <a href="route-ch-handoff.html#a0000000018"><span class="toc_ref">7.3</span> <span class="toc_entry">The blocked Phase 8 assembly</span></a>
-  </li>
-
-	</ul>
-  </li>
-  <li>
-  <a href="route-app-technical.html"><span class="toc_ref">A</span> <span class="toc_entry">Reference map, Lean handoffs, and quarantined routes</span></a>
-	<ul>
-		   <li>
-  <a href="route-app-technical.html#route-app-reference-map"><span class="toc_ref">A.1</span> <span class="toc_entry">Reference map</span></a>
-  </li>
-  <li>
-  <a href="route-app-technical.html#route-app-lean-handoff"><span class="toc_ref">A.2</span> <span class="toc_entry">Exact Lean handoffs</span></a>
-  </li>
-  <li>
-  <a href="route-app-technical.html#a0000000019"><span class="toc_ref">A.3</span> <span class="toc_entry">Quarantine</span></a>
-  </li>
-  <li>
-  <a href="route-app-technical.html#route-app-challenge-status"><span class="toc_ref">A.4</span> <span class="toc_entry">Public-root and Challenge status</span></a>
-  </li>
-  <li>
-  <a href="route-app-technical.html#a0000000020"><span class="toc_ref">A.5</span> <span class="toc_entry">Residual blocker ledger</span></a>
-  </li>
-
-	</ul>
-  </li>
-</ul>
-</nav>
 </div> <!-- content-wrapper -->
 </div> <!-- content -->
 </div> <!-- wrapper -->
@@ -295,7 +177,11 @@
 
   <svg  id="showmore-plus" class="icon icon-eye-plus showmore"><use xlink:href="symbol-defs.svg#icon-eye-plus"></use></svg>
 
-  <a href="sect0001.html" title="About This Blueprint"><svg  class="icon icon-arrow-right "><use xlink:href="symbol-defs.svg#icon-arrow-right"></use></svg>
+  <a href="index.html" title="AlgebraicJacobian"><svg  class="icon icon-arrow-left "><use xlink:href="symbol-defs.svg#icon-arrow-left"></use></svg>
+</a>
+  <a href="index.html" title="AlgebraicJacobian"><svg  class="icon icon-arrow-up "><use xlink:href="symbol-defs.svg#icon-arrow-up"></use></svg>
+</a>
+  <a href="route-ch-contract.html" title="Route contract and hypothesis ledger"><svg  class="icon icon-arrow-right "><use xlink:href="symbol-defs.svg#icon-arrow-right"></use></svg>
 </a>
 </nav>
 

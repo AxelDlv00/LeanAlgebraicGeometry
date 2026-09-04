@@ -1,0 +1,1396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>
+  MathJax = {
+    tex: {
+		    inlineMath: [['$','$'], ['\\(','\\)']]
+	} }
+</script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+</script>
+<meta name="generator" content="plasTeX" />
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Same-carrier data and Phase 8 consumers</title>
+<link rel="next" href="route-app-technical.html" title="Reference map, Lean handoffs, and quarantined routes" />
+<link rel="prev" href="route-ch-galois.html" title="Finite-Galois descent to the original field" />
+<link rel="up" href="index.html" title="AlgebraicJacobian" />
+<link rel="stylesheet" href="styles/theme-white.css" />
+<link rel="stylesheet" href="styles/amsthm.css" />
+<link rel="stylesheet" href="styles/showmore.css" />
+<link rel="stylesheet" href="styles/blueprint.css" />
+<link rel="stylesheet" href="styles/extra_styles.css" />
+</head>
+
+<body>
+<header>
+<svg  id="toc-toggle" class="icon icon-list-numbered "><use xlink:href="symbol-defs.svg#icon-list-numbered"></use></svg>
+<h1 id="doc_title"><a href="index.html">AlgebraicJacobian</a></h1>
+</header>
+
+<div class="wrapper">
+<nav class="toc">
+<ul class="sub-toc-0">
+<li class="">
+  <a href="sect0001.html"><span class="toc_ref"></span> <span class="toc_entry">About This Blueprint</span></a>
+ </li>
+<li class="">
+  <a href="route-ch-contract.html"><span class="toc_ref">1</span> <span class="toc_entry">Route contract and hypothesis ledger</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="route-ch-contract.html#a0000000003"><span class="toc_ref">1.1</span> <span class="toc_entry">Fixed objects and functors</span></a>
+ </li>
+<li class="">
+  <a href="route-ch-contract.html#a0000000004"><span class="toc_ref">1.2</span> <span class="toc_entry">The one permitted route</span></a>
+ </li>
+<li class="">
+  <a href="route-ch-contract.html#a0000000005"><span class="toc_ref">1.3</span> <span class="toc_entry">Hypothesis ledger</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="route-ch-rank-one.html"><span class="toc_ref">2</span> <span class="toc_entry">Degree-\(g\) divisors and the rank-one Abel isomorphism</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="route-ch-rank-one.html#a0000000006"><span class="toc_ref">2.1</span> <span class="toc_entry">The represented divisor package</span></a>
+ </li>
+<li class="">
+  <a href="route-ch-rank-one.html#a0000000007"><span class="toc_ref">2.2</span> <span class="toc_entry">The intrinsic rank-one open</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="route-ch-sepclosed.html"><span class="toc_ref">3</span> <span class="toc_entry">The separably closed rank-one cover</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="route-ch-sepclosed.html#a0000000008"><span class="toc_ref">3.1</span> <span class="toc_entry">Translated charts</span></a>
+ </li>
+<li class="">
+  <a href="route-ch-sepclosed.html#a0000000009"><span class="toc_ref">3.2</span> <span class="toc_entry">The exact separably closed representer</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="route-ch-finite-stage.html"><span class="toc_ref">4</span> <span class="toc_entry">Finite-stage carrier and base-change comparison</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="route-ch-finite-stage.html#a0000000010"><span class="toc_ref">4.1</span> <span class="toc_entry">A finite affine atlas</span></a>
+ </li>
+<li class="">
+  <a href="route-ch-finite-stage.html#a0000000011"><span class="toc_ref">4.2</span> <span class="toc_entry">Nested pullbacks and overlap comparison</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="route-ch-universal.html"><span class="toc_ref">5</span> <span class="toc_entry">Universal class and the finite-stage representability gap</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="route-ch-universal.html#a0000000012"><span class="toc_ref">5.1</span> <span class="toc_entry">What is pinned over the separably closed field</span></a>
+ </li>
+<li class="">
+  <a href="route-ch-universal.html#a0000000013"><span class="toc_ref">5.2</span> <span class="toc_entry">The first unmet producer</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="route-ch-galois.html"><span class="toc_ref">6</span> <span class="toc_entry">Finite-Galois descent to the original field</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="route-ch-galois.html#a0000000014"><span class="toc_ref">6.1</span> <span class="toc_entry">The one selected exact-carrier geometry route</span></a>
+ </li>
+<li class="">
+  <a href="route-ch-galois.html#a0000000015"><span class="toc_ref">6.2</span> <span class="toc_entry">The conditional descent theorem</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class=" active current">
+  <a href="route-ch-handoff.html"><span class="toc_ref">7</span> <span class="toc_entry">Same-carrier data and Phase 8 consumers</span></a>
+  <span class="expand-toc">▼</span>
+  <ul class="sub-toc-1 active">
+     <li class="">
+  <a href="route-ch-handoff.html#a0000000016"><span class="toc_ref">7.1</span> <span class="toc_entry">The public data boundary</span></a>
+ </li>
+<li class="">
+  <a href="route-ch-handoff.html#a0000000017"><span class="toc_ref">7.2</span> <span class="toc_entry">Checked consumers of an arbitrary datum</span></a>
+ </li>
+<li class="">
+  <a href="route-ch-handoff.html#a0000000018"><span class="toc_ref">7.3</span> <span class="toc_entry">The blocked Phase 8 assembly</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="route-app-technical.html"><span class="toc_ref">A</span> <span class="toc_entry">Reference map, Lean handoffs, and quarantined routes</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="route-app-technical.html#route-app-reference-map"><span class="toc_ref">A.1</span> <span class="toc_entry">Reference map</span></a>
+ </li>
+<li class="">
+  <a href="route-app-technical.html#route-app-lean-handoff"><span class="toc_ref">A.2</span> <span class="toc_entry">Exact Lean handoffs</span></a>
+ </li>
+<li class="">
+  <a href="route-app-technical.html#a0000000019"><span class="toc_ref">A.3</span> <span class="toc_entry">Quarantine</span></a>
+ </li>
+<li class="">
+  <a href="route-app-technical.html#route-app-challenge-status"><span class="toc_ref">A.4</span> <span class="toc_entry">Public-root and Challenge status</span></a>
+ </li>
+<li class="">
+  <a href="route-app-technical.html#a0000000020"><span class="toc_ref">A.5</span> <span class="toc_entry">Residual blocker ledger</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li ><a href="dep_graph_document.html">Dependency graph</a></li>
+</ul>
+</nav>
+
+<div class="content">
+<div class="content-wrapper">
+
+
+<div class="main-text">
+<h1 id="route-ch-handoff">7 Same-carrier data and Phase 8 consumers</h1>
+
+<h1 id="a0000000016">7.1 The public data boundary</h1>
+<div class="definition_thmwrapper theorem-style-definition" id="route-def-public-data">
+  <div class="definition_thmheading">
+    <span class="definition_thmcaption">
+    Definition
+    </span>
+    <span class="definition_thmlabel">23</span>
+    <span class="definition_thmtitle">Exact \(\operatorname {PicRepDatum}\) and \(\operatorname {JacobianData}\) carriers</span>
+    <div class="thm_header_extras">
+
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="route-ch-handoff.html#route-def-public-data">#</a>
+
+    <a class="icon proof" href="route-ch-handoff.html#a0000000083"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+
+
+
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+
+        <ul class="uses">
+
+          <li><a href="/find/#doc/AlgebraicGeometry.PicRepDatum" class="lean_decl">AlgebraicGeometry.PicRepDatum</a></li>
+
+          <li><a href="/find/#doc/AlgebraicGeometry.PicRepDatum.grpObj" class="lean_decl">AlgebraicGeometry.PicRepDatum.grpObj</a></li>
+
+          <li><a href="/find/#doc/AlgebraicGeometry.PicRepDatum.homEquiv" class="lean_decl">AlgebraicGeometry.PicRepDatum.homEquiv</a></li>
+
+          <li><a href="/find/#doc/AlgebraicGeometry.JacobianData" class="lean_decl">AlgebraicGeometry.JacobianData</a></li>
+
+          <li><a href="/find/#doc/AlgebraicGeometry.JacobianData.grpObj" class="lean_decl">AlgebraicGeometry.JacobianData.grpObj</a></li>
+
+          <li><a href="/find/#doc/AlgebraicGeometry.JacobianData.homEquiv" class="lean_decl">AlgebraicGeometry.JacobianData.homEquiv</a></li>
+
+          <li><a href="/find/#doc/AlgebraicGeometry.JacobianData.uniqueUpToIso" class="lean_decl">AlgebraicGeometry.JacobianData.uniqueUpToIso</a></li>
+
+        </ul>
+
+      </div>
+    </div>
+
+
+        </div>
+  </div>
+  <div class="definition_thmcontent">
+
+<p>For fields \(k\to k'\) and a curve \(C'/k'\), a \(\operatorname {PicRepDatum}(k,k',C')\) consists exactly of </p>
+<div class="displaymath" id="a0000000084">
+  \[  J'/k',\qquad r':h_{J'}\xrightarrow {\sim }\operatorname {Pic}^0_{C'},\qquad J'\to \operatorname{Spec}k'\text{ locally of finite type}.  \]
+</div>
+<p> For a curve \(C/k\), a \(\operatorname {JacobianData}(C)\) consists exactly of the same-field carrier and representation, the same local-finite-type certificate, and a quasi-compactness certificate for its structure map. In both structures the group object, the bijections \(\operatorname{Hom}(T,J')\simeq \operatorname {Pic}^0_{C'}(T)\), and uniqueness of the representing object are derived from \(r'\); they are not new fields. </p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000083">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p>This is a direct expansion of the two Lean structures. In particular, neither stores properness, smoothness, a dimension, an Abel source, or an Albanese theorem. Those are downstream consumers with separate inputs. </p>
+
+  </div>
+</div>
+<div class="theorem_thmwrapper theorem-style-plain" id="route-thm-public-handoff">
+  <div class="theorem_thmheading">
+    <span class="theorem_thmcaption">
+    Theorem
+    </span>
+    <span class="theorem_thmlabel">24</span>
+    <span class="theorem_thmtitle">Conditional original-field package and literal handoff</span>
+    <div class="thm_header_extras">
+
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="route-ch-handoff.html#route-thm-public-handoff">#</a>
+
+    <a class="icon proof" href="route-ch-handoff.html#a0000000085"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+
+
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+
+        <ul class="uses">
+
+          <li><a href="route-ch-handoff.html#route-def-public-data">Definition 23</a></li>
+
+          <li><a href="route-ch-galois.html#route-thm-finite-galois-descent">Theorem 21</a></li>
+
+        </ul>
+
+      </div>
+    </div>
+
+
+
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+
+        <ul class="uses">
+
+          <li><a href="/find/#doc/AlgebraicGeometry.picRepDatum_finiteGaloisDescent" class="lean_decl">AlgebraicGeometry.picRepDatum_finiteGaloisDescent</a></li>
+
+          <li><a href="/find/#doc/AlgebraicGeometry.jacobianData_finiteGaloisDescent" class="lean_decl">AlgebraicGeometry.jacobianData_finiteGaloisDescent</a></li>
+
+          <li><a href="/find/#doc/AlgebraicGeometry.PicRepDatum.toJacobianData" class="lean_decl">AlgebraicGeometry.PicRepDatum.toJacobianData</a></li>
+
+          <li><a href="/find/#doc/AlgebraicGeometry.PicRepDatum.toJacobianData_J" class="lean_decl">AlgebraicGeometry.PicRepDatum.toJacobianData_J</a></li>
+
+          <li><a href="/find/#doc/AlgebraicGeometry.PicRepDatum.toJacobianData_rep" class="lean_decl">AlgebraicGeometry.PicRepDatum.toJacobianData_rep</a></li>
+
+          <li><a href="/find/#doc/AlgebraicGeometry.PicRepDatum.toJacobianData_grpObj" class="lean_decl">AlgebraicGeometry.PicRepDatum.toJacobianData_grpObj</a></li>
+
+          <li><a href="/find/#doc/AlgebraicGeometry.PicRepDatum.homEquiv_toJacobianData" class="lean_decl">AlgebraicGeometry.PicRepDatum.homEquiv_toJacobianData</a></li>
+
+        </ul>
+
+      </div>
+    </div>
+
+
+        </div>
+  </div>
+  <div class="theorem_thmcontent">
+
+<p>Under the exact hypotheses of Theorem&#160;<a href="route-ch-galois.html#route-thm-finite-galois-descent">21</a>, let \(J/K\) be its glued quotient. The locally-finite-type conclusion packages \((J,r)\) as \(d:\operatorname {PicRepDatum}(K,K,C)\). Given the descended quasi-compactness certificate, define </p>
+<div class="displaymath" id="a0000000086">
+  \[  D=d.\operatorname {toJacobianData}: \operatorname {JacobianData}(C).  \]
+</div>
+<p> Then, definitionally, </p>
+<div class="displaymath" id="a0000000087">
+  \[  D.J=d.J=J,\qquad D.\mathrm{rep}=d.\mathrm{rep}=r, \qquad D.\mathrm{grpObj}=d.\mathrm{grpObj}, \qquad D.\mathrm{homEquiv}=d.\mathrm{homEquiv}.  \]
+</div>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000085">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p>The checked finite-Galois wrapper builds the quotient and its representation, and descends local finite type and quasi-compactness from \(J_L\). The ‘toJacobianData‘ constructor assigns the four displayed fields without transport; all four comparison lemmas are proved by reflexivity. This is the required same-carrier handoff. It remains conditional until the first unresolved producer in Chapter&#160;<a href="route-ch-universal.html">5</a> and the downstream projectivity/orbit producer in Chapter&#160;<a href="route-ch-galois.html">6</a> are supplied. </p>
+
+  </div>
+</div>
+<h1 id="a0000000017">7.2 Checked consumers of an arbitrary datum</h1>
+<div class="theorem_thmwrapper theorem-style-plain" id="route-thm-datum-core-consumers">
+  <div class="theorem_thmheading">
+    <span class="theorem_thmcaption">
+    Theorem
+    </span>
+    <span class="theorem_thmlabel">25</span>
+    <span class="theorem_thmtitle">Universal-element, Abel, and functorial consumers</span>
+    <div class="thm_header_extras">
+
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="route-ch-handoff.html#route-thm-datum-core-consumers">#</a>
+
+    <a class="icon proof" href="route-ch-handoff.html#a0000000088"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+
+
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+
+        <ul class="uses">
+
+          <li><a href="route-ch-handoff.html#route-thm-public-handoff">Theorem 24</a></li>
+
+        </ul>
+
+      </div>
+    </div>
+
+
+
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+
+        <ul class="uses">
+
+          <li><a href="/find/#doc/AlgebraicGeometry.JacobianData.homEquiv" class="lean_decl">AlgebraicGeometry.JacobianData.homEquiv</a></li>
+
+          <li><a href="/find/#doc/AlgebraicGeometry.JacobianData.homEquiv_comp" class="lean_decl">AlgebraicGeometry.JacobianData.homEquiv_comp</a></li>
+
+          <li><a href="/find/#doc/AlgebraicGeometry.JacobianData.ofCurve" class="lean_decl">AlgebraicGeometry.JacobianData.ofCurve</a></li>
+
+          <li><a href="/find/#doc/AlgebraicGeometry.JacobianData.comp_ofCurve" class="lean_decl">AlgebraicGeometry.JacobianData.comp_ofCurve</a></li>
+
+          <li><a href="/find/#doc/AlgebraicGeometry.JacobianData.pullbackHom" class="lean_decl">AlgebraicGeometry.JacobianData.pullbackHom</a></li>
+
+          <li><a href="/find/#doc/AlgebraicGeometry.JacobianData.pullbackHom_id" class="lean_decl">AlgebraicGeometry.JacobianData.pullbackHom_id</a></li>
+
+          <li><a href="/find/#doc/AlgebraicGeometry.JacobianData.pullbackHom_comp" class="lean_decl">AlgebraicGeometry.JacobianData.pullbackHom_comp</a></li>
+
+          <li><a href="/find/#doc/AlgebraicGeometry.JacobianData.baseChange" class="lean_decl">AlgebraicGeometry.JacobianData.baseChange</a></li>
+
+          <li><a href="/find/#doc/AlgebraicGeometry.baseChangeIsoOfData" class="lean_decl">AlgebraicGeometry.baseChangeIsoOfData</a></li>
+
+        </ul>
+
+      </div>
+    </div>
+
+
+        </div>
+  </div>
+  <div class="theorem_thmcontent">
+
+<p>For any \(D:\operatorname {JacobianData}(C)\), the representation gives a commutative group object on \(D.J\). For every \(K\)-point \(P\) of \(C\), the class of \(\mathcal O(\Delta -P\times C)\) defines </p>
+<div class="displaymath" id="a0000000089">
+  \[  \operatorname {ofCurve}_D(P):C\longrightarrow D.J, \qquad \operatorname {ofCurve}_D(P)\circ P=e_{D.J}.  \]
+</div>
+<p> A morphism of curves \(X\to Y\), together with data \(D_X,D_Y\), induces the contravariant group morphism \(D_Y.J\to D_X.J\), with checked identity and composition laws. For every field extension \(K\to L\), \(D.\operatorname {baseChange}(L)\) has literal carrier \(D.J\times _KL\), and for any datum \(D_L\) for \(C_L\), uniqueness of representers gives the group-scheme isomorphism </p>
+<div class="displaymath" id="a0000000090">
+  \[  \operatorname {baseChangeIsoOfData}(D,D_L): D.J\times _KL\xrightarrow {\sim }D_L.J.  \]
+</div>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000088">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p>All assertions are formal consequences of the represented degree-zero functor. The Abel map is the inverse representing equivalence applied to the diagonal class; naturality proves the pointing equation. Pullback of Picard classes supplies the contravariant curve map. Field base change uses the Picard base-change equivalence, and the displayed isomorphism is uniqueness of representing objects upgraded to group objects. Milne’s Proposition 6.1 explains the intended pointed Jacobian map, but its Albanese factorization is not asserted in this theorem. </p>
+
+  </div>
+</div>
+<div class="theorem_thmwrapper theorem-style-plain" id="route-thm-tangent-interface">
+  <div class="theorem_thmheading">
+    <span class="theorem_thmcaption">
+    Theorem
+    </span>
+    <span class="theorem_thmlabel">26</span>
+    <span class="theorem_thmtitle">Tangent-space interface at the identity</span>
+    <div class="thm_header_extras">
+
+
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="route-ch-handoff.html#route-thm-tangent-interface">#</a>
+
+
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+
+        <ul class="uses">
+
+          <li><a href="route-ch-handoff.html#route-thm-datum-core-consumers">Theorem 25</a></li>
+
+        </ul>
+
+      </div>
+    </div>
+
+
+
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+
+        <ul class="uses">
+
+          <li><a href="/find/#doc/AlgebraicGeometry.JacobianData.identitySection" class="lean_decl">AlgebraicGeometry.JacobianData.identitySection</a></li>
+
+          <li><a href="/find/#doc/AlgebraicGeometry.JacobianData.tangentSpaceCotangentDual" class="lean_decl">AlgebraicGeometry.JacobianData.tangentSpaceCotangentDual</a></li>
+
+          <li><a href="/find/#doc/AlgebraicGeometry.JacobianData.tangentSpaceEquivPic0Kernel" class="lean_decl">AlgebraicGeometry.JacobianData.tangentSpaceEquivPic0Kernel</a></li>
+
+          <li><a href="/find/#doc/AlgebraicGeometry.JacobianData.cotangentSpaceDual_equiv_pic0Kernel" class="lean_decl">AlgebraicGeometry.JacobianData.cotangentSpaceDual_equiv_pic0Kernel</a></li>
+
+          <li><a href="/find/#doc/AlgebraicGeometry.JacobianData.finrank_eq_of_addEquiv_of_bijective_smul" class="lean_decl">AlgebraicGeometry.JacobianData.finrank_eq_of_addEquiv_of_bijective_smul</a></li>
+
+        </ul>
+
+      </div>
+    </div>
+
+
+        </div>
+  </div>
+  <div class="theorem_thmcontent">
+
+<p>Let \(e:\operatorname{Spec}K\to D.J\) be the group identity, let \(R=\mathcal O_{D.J,e}\), \(\kappa (e)=R/\mathfrak m_e\), and \(V=(\mathfrak m_e/\mathfrak m_e^2)^\vee \). There are checked bijections </p>
+<div class="displaymath" id="a0000000091">
+  \[  V\simeq T_eD.J\simeq \ker \! \left( \operatorname {Pic}^0_C(\operatorname{Spec}K[\epsilon ])\longrightarrow \operatorname {Pic}^0_C(\operatorname{Spec}K)\right),  \]
+</div>
+<p> These are bijections of sets. In particular, the displayed kernel equivalence alone does not identify scalar multiplication or prove a dimension formula. Finite-dimensionality of the cotangent space is used internally by the checked numerical consumers below; it is not part of this theorem-family claim. </p>
+
+  </div>
+</div>
+<div class="theorem_thmwrapper theorem-style-plain" id="route-thm-tangent-conditional">
+  <div class="theorem_thmheading">
+    <span class="theorem_thmcaption">
+    Theorem
+    </span>
+    <span class="theorem_thmlabel">27</span>
+    <span class="theorem_thmtitle">Conditional tangent dimension consumers</span>
+    <div class="thm_header_extras">
+
+
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="route-ch-handoff.html#route-thm-tangent-conditional">#</a>
+
+
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+
+        <ul class="uses">
+
+          <li><a href="route-ch-handoff.html#route-thm-tangent-interface">Theorem 26</a></li>
+
+        </ul>
+
+      </div>
+    </div>
+
+
+
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+
+        <ul class="uses">
+
+          <li><a href="/find/#doc/AlgebraicGeometry.JacobianData.finrank_cotangentSpaceDual_eq_genus" class="lean_decl">AlgebraicGeometry.JacobianData.finrank_cotangentSpaceDual_eq_genus</a></li>
+
+          <li><a href="/find/#doc/AlgebraicGeometry.JacobianData.nonempty_cotangentSpace_addEquiv_h1" class="lean_decl">AlgebraicGeometry.JacobianData.nonempty_cotangentSpace_addEquiv_h1</a></li>
+
+        </ul>
+
+      </div>
+    </div>
+
+
+        </div>
+  </div>
+  <div class="theorem_thmcontent">
+
+<p>If </p>
+<div class="displaymath" id="a0000000092">
+  \[  \dim _{\kappa (e)}(\mathfrak m_e/\mathfrak m_e^2)=g(C), \tag {TD}  \]
+</div>
+<p> then \(\dim _{\kappa (e)}V=g(C)\). If in addition \(H^1(C,\mathcal O_C)\) is finite-dimensional over \(K\), there exists an additive equivalence </p>
+<div class="displaymath" id="a0000000093">
+  \[  \mathfrak m_e/\mathfrak m_e^2\simeq _+ H^1(C,\mathcal O_C).  \]
+</div>
+<p> Both checked theorems take (TD) as an explicit hypothesis. </p>
+
+  </div>
+</div>
+<div class="theorem_thmwrapper theorem-style-plain" id="route-thm-tangent-semilinear">
+  <div class="theorem_thmheading">
+    <span class="theorem_thmcaption">
+    Theorem
+    </span>
+    <span class="theorem_thmlabel">28</span>
+    <span class="theorem_thmtitle">Semilinear epsilon-kernel comparison</span>
+    <div class="thm_header_extras">
+
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="route-ch-handoff.html#route-thm-tangent-semilinear">#</a>
+
+    <a class="icon proof" href="route-ch-handoff.html#a0000000094"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+
+
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+
+        <ul class="uses">
+
+          <li><a href="route-ch-handoff.html#route-thm-tangent-interface">Theorem 26</a></li>
+
+        </ul>
+
+      </div>
+    </div>
+
+
+
+        </div>
+  </div>
+  <div class="theorem_thmcontent">
+
+<p>Construct a bijection \(i:\kappa (e)\to K\), an additive equivalence </p>
+<div class="displaymath" id="a0000000095">
+  \[  j:V\xrightarrow {\sim _+}H^1(C,\mathcal O_C),  \]
+</div>
+<p> and prove, for every \(a\in \kappa (e)\) and \(v\in V\), </p>
+<div class="displaymath" id="a0000000096">
+  \[  j(a v)=i(a)j(v). \tag {SL}  \]
+</div>
+<p> Then the checked scalar-bijection finrank lemma gives (TD), which feeds the two conditional consumers above. </p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000094">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p><em>Proof obligation.</em> Kleiman Theorem 5.11 identifies the tangent space of the Picard scheme with \(H^1(C,\mathcal O_C)\) by analysing line bundles over the dual numbers. The AJCR specialization must perform that calculation inside the epsilon-kernel of the exact etale-sheafified degree-zero functor, prove additivity, and identify the scalar action through the rational identity section. The present Lean equivalence is set-valued, so it cannot supply (SL) or (TD). </p>
+
+  </div>
+</div>
+<p>This tangent branch is the selected numerical input for the Phase 8 dimension producer below. It is not an alternate construction of the Jacobian: it starts from the same original-field datum and supplies only the missing relative dimension count. </p>
+<div class="theorem_thmwrapper theorem-style-plain" id="route-thm-abel-basechange-conditional">
+  <div class="theorem_thmheading">
+    <span class="theorem_thmcaption">
+    Theorem
+    </span>
+    <span class="theorem_thmlabel">29</span>
+    <span class="theorem_thmtitle">Conditional Abel map under field base change</span>
+    <div class="thm_header_extras">
+
+
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="route-ch-handoff.html#route-thm-abel-basechange-conditional">#</a>
+
+
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+
+        <ul class="uses">
+
+          <li><a href="route-ch-handoff.html#route-thm-datum-core-consumers">Theorem 25</a></li>
+
+        </ul>
+
+      </div>
+    </div>
+
+
+
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+
+        <ul class="uses">
+
+          <li><a href="/find/#doc/AlgebraicGeometry.abelCrossBaseCechCore" class="lean_decl">AlgebraicGeometry.abelCrossBaseCechCore</a></li>
+
+          <li><a href="/find/#doc/AlgebraicGeometry.abelCrossBaseCechCore_of_graph" class="lean_decl">AlgebraicGeometry.abelCrossBaseCechCore_of_graph</a></li>
+
+          <li><a href="/find/#doc/AlgebraicGeometry.baseChange_ofCurve_data_of_cech" class="lean_decl">AlgebraicGeometry.baseChange_ofCurve_data_of_cech</a></li>
+
+        </ul>
+
+      </div>
+    </div>
+
+
+        </div>
+  </div>
+  <div class="theorem_thmcontent">
+
+<p>For a field extension \(K\to L\), a point \(P:\operatorname{Spec}K\to C\), and data \(D,D_L\) for \(C,C_L\), assume <span class="ttfamily">abelCrossBaseCechCore K L C P</span>: transport of the Cech class \([\mathcal O(\Delta )]-[\mathcal O(P\times C)]\) along the pullback counit and the scalar-tower comparison equals the corresponding class on \(C_L\). Then </p>
+<div class="displaymath" id="a0000000097">
+  \[  \operatorname {baseChangeIsoOfData}(D,D_L)\circ (\operatorname {ofCurve}_D(P))_L =\operatorname {ofCurve}_{D_L}(P_L). \tag {AJ-BC}  \]
+</div>
+<p> Equality of the transported diagonal-graph and constant-graph classes is a sufficient checked hypothesis for the Cech core. </p>
+
+  </div>
+</div>
+<div class="theorem_thmwrapper theorem-style-plain" id="route-thm-abel-basechange-core">
+  <div class="theorem_thmheading">
+    <span class="theorem_thmcaption">
+    Theorem
+    </span>
+    <span class="theorem_thmlabel">30</span>
+    <span class="theorem_thmtitle">The Abel Cech base-change core</span>
+    <div class="thm_header_extras">
+
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="route-ch-handoff.html#route-thm-abel-basechange-core">#</a>
+
+    <a class="icon proof" href="route-ch-handoff.html#a0000000098"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+
+
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+
+        <ul class="uses">
+
+          <li><a href="route-ch-handoff.html#route-thm-abel-basechange-conditional">Theorem 29</a></li>
+
+        </ul>
+
+      </div>
+    </div>
+
+
+
+        </div>
+  </div>
+  <div class="theorem_thmcontent">
+
+<p>Prove <span class="ttfamily">abelCrossBaseCechCore K L C P</span> for every field extension \(K\to L\), every challenge curve \(C/K\), and every \(K\)-point \(P\). This is the first unmet producer for (AJ-BC). The graph-factor theorem is a reduction to two equalities, not a proof of either equality. </p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000098">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p><em>Proof obligation.</em> Compare the local equations of the diagonal and constant graph before and after the nested curve/test base change, prove their Cech cocycles correspond, then use multiplicativity and inversion to obtain the Abel class equation. Only after this theorem may the conditional datum-level equality be used in the challenge assembly. </p>
+
+  </div>
+</div>
+<div class="theorem_thmwrapper theorem-style-plain" id="route-thm-phase8-basechange-coherence">
+  <div class="theorem_thmheading">
+    <span class="theorem_thmcaption">
+    Theorem
+    </span>
+    <span class="theorem_thmlabel">31</span>
+    <span class="theorem_thmtitle">Coherent base change for the selected datum family</span>
+    <div class="thm_header_extras">
+
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="route-ch-handoff.html#route-thm-phase8-basechange-coherence">#</a>
+
+    <a class="icon proof" href="route-ch-handoff.html#a0000000099"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+
+
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+
+        <ul class="uses">
+
+          <li><a href="route-ch-handoff.html#route-thm-public-handoff">Theorem 24</a></li>
+
+          <li><a href="route-ch-handoff.html#route-thm-datum-core-consumers">Theorem 25</a></li>
+
+          <li><a href="route-ch-handoff.html#route-thm-abel-basechange-core">Theorem 30</a></li>
+
+        </ul>
+
+      </div>
+    </div>
+
+
+
+        </div>
+  </div>
+  <div class="theorem_thmcontent">
+
+<p>Select the datum \(D_C\) from the same R8–R9 construction for every challenge curve and every field extension. For \(K\to L\), define </p>
+<div class="displaymath" id="a0000000100">
+  \[  \gamma _{C,L}:= \operatorname {baseChangeIsoOfData}(D_C,D_{C_L}): D_C.J\times _KL\xrightarrow {\sim }D_{C_L}.J.  \]
+</div>
+<p> Prove that \(\gamma _{C,K}\) is the canonical identity comparison and, for \(K\to L\to M\), that \(\gamma _{C,M}\) equals the composite of the canonical pullback associator with \((\gamma _{C,L})_M\) and \(\gamma _{C_L,M}\). Prove these as group-scheme equalities and prove (AJ-BC) for every \(P\in C(K)\). These are exactly the producers for <span class="ttfamily">Jacobian.baseChangeIso</span>, <span class="ttfamily">baseChangeIso_id</span>, <span class="ttfamily">baseChangeIso_comp</span>, and <span class="ttfamily">baseChange_ofCurve</span>. </p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000099">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p>The object isomorphism exists by uniqueness of representers, but no current datum theorem supplies its identity and tower equations. Normalize all three isomorphisms by the universal Picard class and use extensionality of representing morphisms to prove the two coherences. The Abel equation is the checked conditional theorem instantiated by the Cech producer from Theorem&#160;<a href="route-ch-handoff.html#route-thm-abel-basechange-core">30</a>. All equations must use the same selected data; arbitrary isomorphic replacement is not allowed. </p>
+
+  </div>
+</div>
+<div class="theorem_thmwrapper theorem-style-plain" id="route-thm-phase8-geometry-producers">
+  <div class="theorem_thmheading">
+    <span class="theorem_thmcaption">
+    Theorem
+    </span>
+    <span class="theorem_thmlabel">32</span>
+    <span class="theorem_thmtitle">Exact producers for the Phase 8 geometry interface</span>
+    <div class="thm_header_extras">
+
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="route-ch-handoff.html#route-thm-phase8-geometry-producers">#</a>
+
+    <a class="icon proof" href="route-ch-handoff.html#a0000000101"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+
+
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+
+        <ul class="uses">
+
+          <li><a href="route-ch-handoff.html#route-thm-public-handoff">Theorem 24</a></li>
+
+          <li><a href="route-ch-handoff.html#route-thm-tangent-semilinear">Theorem 28</a></li>
+
+        </ul>
+
+      </div>
+    </div>
+
+
+
+        </div>
+  </div>
+  <div class="theorem_thmcontent">
+
+<p>For the selected original-field datum \(D_C\), construct these three exact inputs on its unchanged carrier. </p>
+<ol class="enumerate">
+  <li><p>Put \(n_C=\operatorname {divRepAffAdmissibleParameter}(C)\). Construct the proper degree-\(n_C\) effective-divisor scheme \(D_C^{\mathrm{prop}}\), its geometric-irreducibility certificate, and the translated Abel morphism </p>
+<div class="displaymath" id="a0000000102">
+  \[  a_C:D_C^{\mathrm{prop}}\longrightarrow D_C.J  \]
+</div>
+<p> obtained from the universal divisor class using the fixed <span class="ttfamily">admissibleAbelChartIndex</span>/<span class="ttfamily">admissibleAbelChartDivisor</span> translation. Prove \(a_C\) surjective and package precisely </p>
+<div class="displaymath" id="a0000000103">
+  \[  A_C:\operatorname {AbelSourceData}(D_C)  \]
+</div>
+<p> with fields \((D_C^{\mathrm{prop}},\operatorname {IsProper}, \operatorname {GeometricallyIrreducible},a_C, \operatorname {Surjective}(a_C))\). </p>
+</li>
+  <li><p>Construct \(h_{\mathrm{red}}: \operatorname {GeometricallyReduced}(D_C.J\to \operatorname{Spec}K)\). </p>
+</li>
+  <li><p>Construct a Zariski zero-hypercover \(\mathcal U_C\) of \(D_C.J\) and, for every leg \(i\), a certificate </p>
+<div class="displaymath" id="a0000000104">
+  \[  \operatorname {SmoothOfRelativeDimension} \bigl(g(C),\mathcal U_C.f(i)\mathbin {\gg }D_C.J.\mathrm{hom}\bigr). \tag {DimCov}  \]
+</div>
+</li>
+</ol>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000101">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p>These are planned downstream producers, not assumptions to erase. For the first, Kleiman’s divisor/Hilbert construction is the classical source shape; the AJCR proof must build the actual proper divisor scheme rather than reuse the widened affine-test representer, define the displayed fixed translation, and specialize the Riemann inequality to prove surjectivity on scheme points. This downstream source is not an alternate construction of \(D_C.J\). </p>
+<p>For the second, specialize Kleiman Lemma 5.1 to the exact degree-zero functor: prove reducedness at the identity from the dual-number computation and move it by the checked translations, including arbitrary residue-field points. For the third, use (SL) to fix the identity-chart dimension at \(g(C)\), use geometric reducedness and the group-scheme smoothness criterion to obtain a standard-smooth identity chart, and construct the translated Zariski cover with (DimCov). The Lean handoff is exactly the three arguments consumed below; no theorem currently constructs them. </p>
+
+  </div>
+</div>
+<div class="theorem_thmwrapper theorem-style-plain" id="route-thm-datum-geometric-consumers">
+  <div class="theorem_thmheading">
+    <span class="theorem_thmcaption">
+    Theorem
+    </span>
+    <span class="theorem_thmlabel">33</span>
+    <span class="theorem_thmtitle">Conditional geometric consumers</span>
+    <div class="thm_header_extras">
+
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="route-ch-handoff.html#route-thm-datum-geometric-consumers">#</a>
+
+    <a class="icon proof" href="route-ch-handoff.html#a0000000105"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+
+
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+
+        <ul class="uses">
+
+          <li><a href="route-ch-handoff.html#route-thm-phase8-geometry-producers">Theorem 32</a></li>
+
+        </ul>
+
+      </div>
+    </div>
+
+
+
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+
+        <ul class="uses">
+
+          <li><a href="/find/#doc/AlgebraicGeometry.JacobianData.isSeparated" class="lean_decl">AlgebraicGeometry.JacobianData.isSeparated</a></li>
+
+          <li><a href="/find/#doc/AlgebraicGeometry.AbelSourceData" class="lean_decl">AlgebraicGeometry.AbelSourceData</a></li>
+
+          <li><a href="/find/#doc/AlgebraicGeometry.isProper_of_abelSource" class="lean_decl">AlgebraicGeometry.isProper_of_abelSource</a></li>
+
+          <li><a href="/find/#doc/AlgebraicGeometry.geometricallyIrreducible_of_abelSource" class="lean_decl">AlgebraicGeometry.geometricallyIrreducible_of_abelSource</a></li>
+
+          <li><a href="/find/#doc/AlgebraicGeometry.JacobianData.smooth" class="lean_decl">AlgebraicGeometry.JacobianData.smooth</a></li>
+
+          <li><a href="/find/#doc/AlgebraicGeometry.JacobianData.isAbelianVariety_of_abelSource" class="lean_decl">AlgebraicGeometry.JacobianData.isAbelianVariety_of_abelSource</a></li>
+
+          <li><a href="/find/#doc/AlgebraicGeometry.JacobianData.smoothOfRelativeDimension_of_translation_cover" class="lean_decl">AlgebraicGeometry.JacobianData.smoothOfRelativeDimension_of_translation_cover</a></li>
+
+        </ul>
+
+      </div>
+    </div>
+
+
+        </div>
+  </div>
+  <div class="theorem_thmcontent">
+
+<p>Every datum carrier is separated. If an \(\operatorname {AbelSourceData}(D)\) is supplied—a proper geometrically irreducible \(K\)-scheme mapping surjectively to \(D.J\)—then \(D.J\) is proper and geometrically irreducible. If \(D.J\) is geometrically reduced, then it is smooth. A Zariski zero-hypercover whose legs are smooth of relative dimension \(g(C)\) proves </p>
+<div class="displaymath" id="a0000000106">
+  \[  \operatorname {SmoothOfRelativeDimension}(g(C),D.J\to \operatorname{Spec}K).  \]
+</div>
+<p> The name <span class="ttfamily">smoothOfRelativeDimension_statement</span> is only an abbreviation for this proposition, not a proof or a producer. </p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000105">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p>The unit of a group scheme over a field is closed, so the diagonal is closed and the carrier is separated. Properness and geometric irreducibility descend along the surjective Abel source in the checked consumer theorems. A geometrically reduced group scheme locally of finite type over a field is smooth. Relative dimension is local on the source, so it glues from the displayed hypercover. Each implication is checked, but none constructs its own Abel source, geometric-reducedness proof, or dimension chart. </p>
+
+  </div>
+</div>
+<h1 id="a0000000018">7.3 The blocked Phase 8 assembly</h1>
+<div class="theorem_thmwrapper theorem-style-plain" id="route-thm-albanese-substrate">
+  <div class="theorem_thmheading">
+    <span class="theorem_thmcaption">
+    Theorem
+    </span>
+    <span class="theorem_thmlabel">34</span>
+    <span class="theorem_thmtitle">Rational-extension and uniqueness substrate</span>
+    <div class="thm_header_extras">
+
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="route-ch-handoff.html#route-thm-albanese-substrate">#</a>
+
+    <a class="icon proof" href="route-ch-handoff.html#a0000000107"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+
+
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+
+        <ul class="uses">
+
+          <li><a href="route-ch-handoff.html#route-thm-datum-core-consumers">Theorem 25</a></li>
+
+        </ul>
+
+      </div>
+    </div>
+
+
+
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+
+        <ul class="uses">
+
+          <li><a href="/find/#doc/AlgebraicGeometry.Scheme.RationalMap.indeterminacy_pure_codim_one_into_grpScheme" class="lean_decl">AlgebraicGeometry.Scheme.RationalMap.indeterminacy_pure_codim_one_into_grpScheme</a></li>
+
+          <li><a href="/find/#doc/AlgebraicGeometry.Scheme.RationalMap.extend_to_av" class="lean_decl">AlgebraicGeometry.Scheme.RationalMap.extend_to_av</a></li>
+
+          <li><a href="/find/#doc/AlgebraicGeometry.JacobianData.existsUnique_ofCurve_comp_of_baseChange" class="lean_decl">AlgebraicGeometry.JacobianData.existsUnique_ofCurve_comp_of_baseChange</a></li>
+
+          <li><a href="/find/#doc/AlgebraicGeometry.JacobianData.existsUnique_ofCurve_comp_of_baseChange_datum" class="lean_decl">AlgebraicGeometry.JacobianData.existsUnique_ofCurve_comp_of_baseChange_datum</a></li>
+
+        </ul>
+
+      </div>
+    </div>
+
+
+        </div>
+  </div>
+  <div class="theorem_thmcontent">
+
+<p>Over an algebraically closed field, a rational map from a smooth integral variety to an abelian variety extends uniquely once the displayed pure-codimension-one indeterminacy input is supplied; the checked Milne–3.3 theorem supplies that input under its stated variety and group hypotheses. Separately, if </p>
+<div class="displaymath" id="a0000000108">
+  \[  \exists u:D.J\to A,\quad f=u\circ \operatorname {ofCurve}_D(P) \tag {Hex}  \]
+</div>
+<p> and uniqueness of the corresponding morphism is known after base change, the checked faithful-base-change theorem upgrades (Hex) to the required \(\exists !\) over \(K\). It also accepts an independently constructed datum over the extension, using uniqueness of representers to compare carriers. </p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000107">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p>Milne Theorem I.3.2 combines codimension at least two for maps into proper targets with Lemma I.3.3, which says that nonempty indeterminacy into a group variety is pure of codimension one; hence the locus is empty and the rational map is regular. For the descent statement, flat surjective base change is faithful on morphisms, so two factors equal after base change are equal over \(K\). Neither argument constructs the factor in (Hex); that is a separate positive-genus obligation. </p>
+
+  </div>
+</div>
+<div class="theorem_thmwrapper theorem-style-plain" id="route-thm-genus-zero-conditional">
+  <div class="theorem_thmheading">
+    <span class="theorem_thmcaption">
+    Theorem
+    </span>
+    <span class="theorem_thmlabel">35</span>
+    <span class="theorem_thmtitle">Conditional genus-zero package</span>
+    <div class="thm_header_extras">
+
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="route-ch-handoff.html#route-thm-genus-zero-conditional">#</a>
+
+    <a class="icon proof" href="route-ch-handoff.html#a0000000109"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+
+
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+
+        <ul class="uses">
+
+          <li><a href="route-ch-handoff.html#route-thm-albanese-substrate">Theorem 34</a></li>
+
+        </ul>
+
+      </div>
+    </div>
+
+
+
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+
+        <ul class="uses">
+
+          <li><a href="/find/#doc/AlgebraicGeometry.JacobianData.isTerminal_of_pic0Subgroup_eq_bot" class="lean_decl">AlgebraicGeometry.JacobianData.isTerminal_of_pic0Subgroup_eq_bot</a></li>
+
+          <li><a href="/find/#doc/AlgebraicGeometry.jacobianData_of_vanishing" class="lean_decl">AlgebraicGeometry.jacobianData_of_vanishing</a></li>
+
+          <li><a href="/find/#doc/AlgebraicGeometry.isTerminal_jacobianData_of_vanishing" class="lean_decl">AlgebraicGeometry.isTerminal_jacobianData_of_vanishing</a></li>
+
+          <li><a href="/find/#doc/AlgebraicGeometry.JacobianData.existsUnique_ofCurve_comp_of_pic0Subgroup_eq_bot" class="lean_decl">AlgebraicGeometry.JacobianData.existsUnique_ofCurve_comp_of_pic0Subgroup_eq_bot</a></li>
+
+          <li><a href="/find/#doc/AlgebraicGeometry.existsUnique_ofCurve_comp_of_vanishing" class="lean_decl">AlgebraicGeometry.existsUnique_ofCurve_comp_of_vanishing</a></li>
+
+        </ul>
+
+      </div>
+    </div>
+
+
+        </div>
+  </div>
+  <div class="theorem_thmcontent">
+
+<p>If </p>
+<div class="displaymath" id="a0000000110">
+  \[  \forall T/K,\qquad \operatorname {Pic}^0_C(T)=\{ 0\} , \tag {V0}  \]
+</div>
+<p> the checked constructor represents this functor by \(\operatorname{Spec}K\), and any datum representing it has terminal carrier. If \(C\to \operatorname{Spec}K\) is surjective, \(P\in C(K)\), and the explicit existence statement (Hex) is supplied, then the genus-zero factor is unique. </p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000109">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p>Under (V0), the Yoneda functor of the terminal object and the degree-zero Picard functor are both singleton-valued, giving the datum and terminality. The Abel map to a terminal carrier is an epimorphism for a nonempty curve, so precomposition proves uniqueness. Existence is not formal: it requires the map \(C\to A\) to be constant. Milne I.3, Proposition 3.9 proves this only for rational maps from \(\mathbb A^1\) or \(\mathbb P^1\). Its specialization here therefore first requires the planned pointed genus-zero classification \(C\simeq \mathbb P^1_K\), or an equivalent rational-parametrization bridge. No checked theorem currently proves that bridge, derives (V0) from \(g(C)=0\), or supplies (Hex); all three remain explicit inputs. </p>
+
+  </div>
+</div>
+<div class="theorem_thmwrapper theorem-style-plain" id="route-thm-phase8-albanese">
+  <div class="theorem_thmheading">
+    <span class="theorem_thmcaption">
+    Theorem
+    </span>
+    <span class="theorem_thmlabel">36</span>
+    <span class="theorem_thmtitle">The pointed Albanese consumer</span>
+    <div class="thm_header_extras">
+
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="route-ch-handoff.html#route-thm-phase8-albanese">#</a>
+
+    <a class="icon proof" href="route-ch-handoff.html#a0000000111"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+
+
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+
+        <ul class="uses">
+
+          <li><a href="route-ch-handoff.html#route-thm-albanese-substrate">Theorem 34</a></li>
+
+          <li><a href="route-ch-handoff.html#route-thm-genus-zero-conditional">Theorem 35</a></li>
+
+          <li><a href="route-ch-handoff.html#route-thm-phase8-geometry-producers">Theorem 32</a></li>
+
+          <li><a href="route-ch-handoff.html#route-thm-datum-geometric-consumers">Theorem 33</a></li>
+
+        </ul>
+
+      </div>
+    </div>
+
+
+
+        </div>
+  </div>
+  <div class="theorem_thmcontent">
+
+<p>For a \(K\)-point \(P:\operatorname{Spec}K\to C\), an abelian variety \(A/K\), and \(f:C\to A\) with \(f\circ P=e_A\), prove </p>
+<div class="displaymath" id="a0000000112">
+  \[  \exists !\, u:D.J\to A, \qquad f=u\circ \operatorname {ofCurve}_D(P). \tag {Alb}  \]
+</div>
+<p> The final Lean target is <span class="ttfamily">Jacobian.exists_unique_ofCurve_comp</span> after \(D.J\) is selected as <span class="ttfamily">Jacobian C</span>. </p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000111">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p><em>Proof obligation.</em> Milne Proposition 6.1 constructs the factor through the degree-\(g\) symmetric sum, extends the resulting rational map to the abelian target, proves it is a homomorphism by rigidity, and uses generation by \(g\) copies of the Abel image for uniqueness. The cited proposition assumes \(g{\gt}0\); the challenge theorem does not. The genus-zero terminal case and the positive-genus construction must therefore be joined explicitly. Existing rational-extension, rigidity, and conditional uniqueness files are consumers, not a theorem of type (Alb). </p>
+
+  </div>
+</div>
+<div class="theorem_thmwrapper theorem-style-plain" id="route-thm-phase8-assembly">
+  <div class="theorem_thmheading">
+    <span class="theorem_thmcaption">
+    Theorem
+    </span>
+    <span class="theorem_thmlabel">37</span>
+    <span class="theorem_thmtitle">Phase 8 geometric and base-change assembly</span>
+    <div class="thm_header_extras">
+
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="route-ch-handoff.html#route-thm-phase8-assembly">#</a>
+
+    <a class="icon proof" href="route-ch-handoff.html#a0000000113"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+
+
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+
+        <ul class="uses">
+
+          <li><a href="route-ch-handoff.html#route-thm-public-handoff">Theorem 24</a></li>
+
+          <li><a href="route-ch-handoff.html#route-thm-datum-core-consumers">Theorem 25</a></li>
+
+          <li><a href="route-ch-handoff.html#route-thm-tangent-semilinear">Theorem 28</a></li>
+
+          <li><a href="route-ch-handoff.html#route-thm-phase8-basechange-coherence">Theorem 31</a></li>
+
+          <li><a href="route-ch-handoff.html#route-thm-phase8-geometry-producers">Theorem 32</a></li>
+
+          <li><a href="route-ch-handoff.html#route-thm-datum-geometric-consumers">Theorem 33</a></li>
+
+          <li><a href="route-ch-handoff.html#route-thm-phase8-albanese">Theorem 36</a></li>
+
+        </ul>
+
+      </div>
+    </div>
+
+
+
+        </div>
+  </div>
+  <div class="theorem_thmcontent">
+
+<p>Select one original-field datum \(D_C\) for every challenge curve, with carrier definitionally equal to \(\operatorname {Jacobian}(C)\). Discharge, without changing that carrier: </p>
+<ol class="enumerate">
+  <li><p>the group object and smooth-relative-dimension-\(g(C)\) instance; </p>
+</li>
+  <li><p>properness and geometric irreducibility; </p>
+</li>
+  <li><p>\(\operatorname {ofCurve}\), its pointing law, and (Alb); </p>
+</li>
+  <li><p>the contravariant functor on \(\operatorname {Curve}(K)\); </p>
+</li>
+  <li><p>for every \(K\to L\), the group-scheme base-change isomorphism, its identity and tower coherences, and compatibility with \(\operatorname {ofCurve}\). </p>
+</li>
+</ol>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000113">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p><em>Proof obligation.</em> Instantiate the datum-level consumers above with the same selected \(D_C\), supply the missing geometric producers, and define every headline object by projection from that datum. Uniqueness of representers gives the base-change object isomorphism; the existing datum-level lemmas supply its group structure and Abel compatibility, after which uniqueness proves the identity and tower equations. </p>
+<p>None of these headline targets currently has a public proof. The exact declaration-level audit, including the axiom-contaminated derived <span class="ttfamily">Jacobian.congr</span>, is recorded in Appendix&#160;<a href="route-app-technical.html#route-app-challenge-status">A.4</a>; it supplies no mathematical premise to this theorem. </p>
+
+  </div>
+</div>
+
+
+</div> <!--main-text -->
+</div> <!-- content-wrapper -->
+</div> <!-- content -->
+</div> <!-- wrapper -->
+
+<nav class="prev_up_next">
+  <svg  id="showmore-minus" class="icon icon-eye-minus showmore"><use xlink:href="symbol-defs.svg#icon-eye-minus"></use></svg>
+
+  <svg  id="showmore-plus" class="icon icon-eye-plus showmore"><use xlink:href="symbol-defs.svg#icon-eye-plus"></use></svg>
+
+  <a href="route-ch-galois.html" title="Finite-Galois descent to the original field"><svg  class="icon icon-arrow-left "><use xlink:href="symbol-defs.svg#icon-arrow-left"></use></svg>
+</a>
+  <a href="index.html" title="AlgebraicJacobian"><svg  class="icon icon-arrow-up "><use xlink:href="symbol-defs.svg#icon-arrow-up"></use></svg>
+</a>
+  <a href="route-app-technical.html" title="Reference map, Lean handoffs, and quarantined routes"><svg  class="icon icon-arrow-right "><use xlink:href="symbol-defs.svg#icon-arrow-right"></use></svg>
+</a>
+</nav>
+
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/plastex.js"></script>
+<script type="text/javascript" src="js/svgxuse.js"></script>
+<script type="text/javascript" src="js/js.cookie.min.js"></script>
+<script type="text/javascript" src="js/showmore.js"></script>
+</body>
+</html>

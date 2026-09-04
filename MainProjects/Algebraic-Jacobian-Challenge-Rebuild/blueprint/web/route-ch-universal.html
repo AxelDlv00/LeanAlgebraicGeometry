@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>
+  MathJax = {
+    tex: {
+		    inlineMath: [['$','$'], ['\\(','\\)']]
+	} }
+</script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+</script>
+<meta name="generator" content="plasTeX" />
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Universal class and the finite-stage representability gap</title>
+<link rel="next" href="route-ch-galois.html" title="Finite-Galois descent to the original field" />
+<link rel="prev" href="route-ch-finite-stage.html" title="Finite-stage carrier and base-change comparison" />
+<link rel="up" href="index.html" title="AlgebraicJacobian" />
+<link rel="stylesheet" href="styles/theme-white.css" />
+<link rel="stylesheet" href="styles/amsthm.css" />
+<link rel="stylesheet" href="styles/showmore.css" />
+<link rel="stylesheet" href="styles/blueprint.css" />
+<link rel="stylesheet" href="styles/extra_styles.css" />
+</head>
+
+<body>
+<header>
+<svg  id="toc-toggle" class="icon icon-list-numbered "><use xlink:href="symbol-defs.svg#icon-list-numbered"></use></svg>
+<h1 id="doc_title"><a href="index.html">AlgebraicJacobian</a></h1>
+</header>
+
+<div class="wrapper">
+<nav class="toc">
+<ul class="sub-toc-0">
+<li class="">
+  <a href="sect0001.html"><span class="toc_ref"></span> <span class="toc_entry">About This Blueprint</span></a>
+ </li>
+<li class="">
+  <a href="route-ch-contract.html"><span class="toc_ref">1</span> <span class="toc_entry">Route contract and hypothesis ledger</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="route-ch-contract.html#a0000000003"><span class="toc_ref">1.1</span> <span class="toc_entry">Fixed objects and functors</span></a>
+ </li>
+<li class="">
+  <a href="route-ch-contract.html#a0000000004"><span class="toc_ref">1.2</span> <span class="toc_entry">The one permitted route</span></a>
+ </li>
+<li class="">
+  <a href="route-ch-contract.html#a0000000005"><span class="toc_ref">1.3</span> <span class="toc_entry">Hypothesis ledger</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="route-ch-rank-one.html"><span class="toc_ref">2</span> <span class="toc_entry">Degree-\(g\) divisors and the rank-one Abel isomorphism</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="route-ch-rank-one.html#a0000000006"><span class="toc_ref">2.1</span> <span class="toc_entry">The represented divisor package</span></a>
+ </li>
+<li class="">
+  <a href="route-ch-rank-one.html#a0000000007"><span class="toc_ref">2.2</span> <span class="toc_entry">The intrinsic rank-one open</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="route-ch-sepclosed.html"><span class="toc_ref">3</span> <span class="toc_entry">The separably closed rank-one cover</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="route-ch-sepclosed.html#a0000000008"><span class="toc_ref">3.1</span> <span class="toc_entry">Translated charts</span></a>
+ </li>
+<li class="">
+  <a href="route-ch-sepclosed.html#a0000000009"><span class="toc_ref">3.2</span> <span class="toc_entry">The exact separably closed representer</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="route-ch-finite-stage.html"><span class="toc_ref">4</span> <span class="toc_entry">Finite-stage carrier and base-change comparison</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="route-ch-finite-stage.html#a0000000010"><span class="toc_ref">4.1</span> <span class="toc_entry">A finite affine atlas</span></a>
+ </li>
+<li class="">
+  <a href="route-ch-finite-stage.html#a0000000011"><span class="toc_ref">4.2</span> <span class="toc_entry">Nested pullbacks and overlap comparison</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class=" active current">
+  <a href="route-ch-universal.html"><span class="toc_ref">5</span> <span class="toc_entry">Universal class and the finite-stage representability gap</span></a>
+  <span class="expand-toc">▼</span>
+  <ul class="sub-toc-1 active">
+     <li class="">
+  <a href="route-ch-universal.html#a0000000012"><span class="toc_ref">5.1</span> <span class="toc_entry">What is pinned over the separably closed field</span></a>
+ </li>
+<li class="">
+  <a href="route-ch-universal.html#a0000000013"><span class="toc_ref">5.2</span> <span class="toc_entry">The first unmet producer</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="route-ch-galois.html"><span class="toc_ref">6</span> <span class="toc_entry">Finite-Galois descent to the original field</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="route-ch-galois.html#a0000000014"><span class="toc_ref">6.1</span> <span class="toc_entry">The one selected exact-carrier geometry route</span></a>
+ </li>
+<li class="">
+  <a href="route-ch-galois.html#a0000000015"><span class="toc_ref">6.2</span> <span class="toc_entry">The conditional descent theorem</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="route-ch-handoff.html"><span class="toc_ref">7</span> <span class="toc_entry">Same-carrier data and Phase 8 consumers</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="route-ch-handoff.html#a0000000016"><span class="toc_ref">7.1</span> <span class="toc_entry">The public data boundary</span></a>
+ </li>
+<li class="">
+  <a href="route-ch-handoff.html#a0000000017"><span class="toc_ref">7.2</span> <span class="toc_entry">Checked consumers of an arbitrary datum</span></a>
+ </li>
+<li class="">
+  <a href="route-ch-handoff.html#a0000000018"><span class="toc_ref">7.3</span> <span class="toc_entry">The blocked Phase 8 assembly</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="route-app-technical.html"><span class="toc_ref">A</span> <span class="toc_entry">Reference map, Lean handoffs, and quarantined routes</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="route-app-technical.html#route-app-reference-map"><span class="toc_ref">A.1</span> <span class="toc_entry">Reference map</span></a>
+ </li>
+<li class="">
+  <a href="route-app-technical.html#route-app-lean-handoff"><span class="toc_ref">A.2</span> <span class="toc_entry">Exact Lean handoffs</span></a>
+ </li>
+<li class="">
+  <a href="route-app-technical.html#a0000000019"><span class="toc_ref">A.3</span> <span class="toc_entry">Quarantine</span></a>
+ </li>
+<li class="">
+  <a href="route-app-technical.html#route-app-challenge-status"><span class="toc_ref">A.4</span> <span class="toc_entry">Public-root and Challenge status</span></a>
+ </li>
+<li class="">
+  <a href="route-app-technical.html#a0000000020"><span class="toc_ref">A.5</span> <span class="toc_entry">Residual blocker ledger</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li ><a href="dep_graph_document.html">Dependency graph</a></li>
+</ul>
+</nav>
+
+<div class="content">
+<div class="content-wrapper">
+
+
+<div class="main-text">
+<h1 id="route-ch-universal">5 Universal class and the finite-stage representability gap</h1>
+
+<p>Chapter&#160;<a href="route-ch-finite-stage.html">4</a> proves the carrier comparison for any legacy \(P_0:\operatorname {Pic0FiniteStageGluePackage}(C_\Omega ,K)\). The route does not freeze that arbitrary stage. Instead, the first missing producer must choose a final legacy package only after all carrier, class, and cocycle coefficients have been enlarged to one finite Galois subextension. This joint choice is what prevents a silent change of carrier. </p>
+<h1 id="a0000000012">5.1 What is pinned over the separably closed field</h1>
+<div class="theorem_thmwrapper theorem-style-plain" id="route-thm-sepclosed-universal-class">
+  <div class="theorem_thmheading">
+    <span class="theorem_thmcaption">
+    Theorem
+    </span>
+    <span class="theorem_thmlabel">15</span>
+    <span class="theorem_thmtitle">The universal class and all atlas restrictions over \(\Omega \)</span>
+    <div class="thm_header_extras">
+
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="route-ch-universal.html#route-thm-sepclosed-universal-class">#</a>
+
+    <a class="icon proof" href="route-ch-universal.html#a0000000062"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+
+
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+
+        <ul class="uses">
+
+          <li><a href="route-ch-sepclosed.html#route-thm-sepclosed-representability">Theorem 9</a></li>
+
+          <li><a href="route-ch-finite-stage.html#route-thm-finite-atlas">Theorem 11</a></li>
+
+        </ul>
+
+      </div>
+    </div>
+
+
+
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+
+        <ul class="uses">
+
+          <li><a href="/find/#doc/AlgebraicGeometry.pic0SepClosedUniversalClass" class="lean_decl">AlgebraicGeometry.pic0SepClosedUniversalClass</a></li>
+
+          <li><a href="/find/#doc/AlgebraicGeometry.pic0FiniteStageUniversalChartClass" class="lean_decl">AlgebraicGeometry.pic0FiniteStageUniversalChartClass</a></li>
+
+          <li><a href="/find/#doc/AlgebraicGeometry.pic0FiniteStageUniversalOverlapClass" class="lean_decl">AlgebraicGeometry.pic0FiniteStageUniversalOverlapClass</a></li>
+
+          <li><a href="/find/#doc/AlgebraicGeometry.pic0FiniteStageUniversalChartClass_restrict_left" class="lean_decl">AlgebraicGeometry.pic0FiniteStageUniversalChartClass_restrict_left</a></li>
+
+          <li><a href="/find/#doc/AlgebraicGeometry.pic0FiniteStageUniversalChartClass_restrict_right" class="lean_decl">AlgebraicGeometry.pic0FiniteStageUniversalChartClass_restrict_right</a></li>
+
+          <li><a href="/find/#doc/AlgebraicGeometry.Pic0FiniteStageUniversalAtlasClass" class="lean_decl">AlgebraicGeometry.Pic0FiniteStageUniversalAtlasClass</a></li>
+
+          <li><a href="/find/#doc/AlgebraicGeometry.pic0FiniteStageUniversalAtlasClass" class="lean_decl">AlgebraicGeometry.pic0FiniteStageUniversalAtlasClass</a></li>
+
+        </ul>
+
+      </div>
+    </div>
+
+
+        </div>
+  </div>
+  <div class="theorem_thmcontent">
+
+<p>Let </p>
+<div class="displaymath" id="a0000000063">
+  \[  \xi _\Omega :=r_\Omega (\mathrm{id}_{J_\Omega }) \in \operatorname {Pic}^0_{C_\Omega }(J_\Omega ).  \]
+</div>
+<p> For every selected affine chart \(U_i\subset J_\Omega \) and every exact ordered pair-overlap \(U_{ij}=U_i\cap U_j\), the checked classes are exactly the pullbacks of this one \(\xi _\Omega \). If \(q^i_{ij}:U_{ij}\to U_i\) and \(q^j_{ij}:U_{ij}\to U_j\), then </p>
+<div class="displaymath" id="a0000000064">
+  \[  (q^i_{ij})^*(\xi _\Omega |_{U_i}) =\xi _\Omega |_{U_{ij}} =(q^j_{ij})^*(\xi _\Omega |_{U_j}).  \]
+</div>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000062">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p>Apply the representing equivalence to the identity of \(J_\Omega \). Its naturality says that precomposition by a chart or overlap morphism is pullback of the resulting Picard class, proving both restriction equations. Every class in this theorem still lives over \(\Omega \). </p>
+
+  </div>
+</div>
+<p>The source tree additionally declares <span class="ttfamily">pic0ClassYoneda</span> and <span class="ttfamily">pic0SepClosedClassYoneda_app</span>, which express the expected class-to-natural-transformation formula. Their defining module is not reachable from the public <span class="ttfamily">AlgebraicJacobian</span> root and has no current verified artifact. They are therefore unverified implementation aids, not attachments or proof credit in this specification. </p>
+<h1 id="a0000000013">5.2 The first unmet producer</h1>
+<div class="theorem_thmwrapper theorem-style-plain" id="route-thm-descended-universal-class">
+  <div class="theorem_thmheading">
+    <span class="theorem_thmcaption">
+    Theorem
+    </span>
+    <span class="theorem_thmlabel">16</span>
+    <span class="theorem_thmtitle">Joint Galois-stage package and descended universal class</span>
+    <div class="thm_header_extras">
+
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="route-ch-universal.html#route-thm-descended-universal-class">#</a>
+
+    <a class="icon proof" href="route-ch-universal.html#a0000000065"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+
+
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+
+        <ul class="uses">
+
+          <li><a href="route-ch-universal.html#route-thm-sepclosed-universal-class">Theorem 15</a></li>
+
+          <li><a href="route-ch-finite-stage.html#route-thm-global-comparison">Theorem 14</a></li>
+
+        </ul>
+
+      </div>
+    </div>
+
+
+
+        </div>
+  </div>
+  <div class="theorem_thmcontent">
+
+<p>There must exist, simultaneously: </p>
+<ol class="enumerate">
+  <li><p>a legacy package \(P:\operatorname {Pic0FiniteStageGluePackage}(C_\Omega ,K)\); </p>
+</li>
+  <li><p>for \(L:=P.N.1\subset \Omega \), certificates that \(L/K\) is finite Galois, with the displayed inclusion and scalar-tower maps; </p>
+</li>
+  <li><p>on the literal carrier \(J_L:=P.\mathrm{gluedOver}\), a class </p>
+<div class="displaymath" id="a0000000066">
+  \[  \xi _L\in \operatorname {Pic}^0_{C_L}(J_L) =\operatorname {pic0Subgroup} ((\operatorname {baseChange}_{K,L})C,P.\mathrm{gluedOver}), \qquad C_L=C\times _KL.  \]
+</div>
+</li>
+</ol>
+<p> The symbol \(P\) in this theorem is a new, jointly selected package; it is not the arbitrary comparison witness \(P_0\) from Theorem&#160;<a href="route-ch-finite-stage.html#route-thm-global-comparison">14</a>. If the construction starts from \(P_0\), it must additionally provide an explicit refinement map from \(P_0\) to \(P\) together with the induced \(\operatorname {Over}\)-map and its compatibility with every chart and overlap comparison. Without those fields, \(P_0\) is discarded after the comparison theorem and no field enlargement is allowed to silently replace its carrier. All subsequent occurrences of \(J_L\), \(\xi _L\), (FS-Rep), (Proj), and (OA) quantify over this single final \(P\). For the checked comparison \(\beta _P:J_L\times _L\Omega \xrightarrow {\sim }J_\Omega \), this class must satisfy </p>
+<div class="displaymath" id="a0000000067">
+  \[  \operatorname {bc}_{L,\Omega }(\xi _L)=\beta _P^*(\xi _\Omega ) \quad \text{in}\quad \operatorname {Pic}^0_{C_\Omega }(J_L\times _L\Omega ). \tag {UC}  \]
+</div>
+<p> Equivalently, its restriction to every descended chart pulls back to \(\xi _\Omega |_{U_i}\), and its two restrictions to every descended overlap agree before gluing. </p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000065">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p>The field-theoretic part has no route choice. Every finite coefficient set lies in a finite separable subextension because \(\Omega /K\) is algebraic and separable. Normality of \(\Omega /K\) and Stacks Tag 0BMG place a finite normal enlargement \(L/K\), containing that coefficient field, inside \(\Omega \). Separability inherited from \(\Omega /K\), equivalently Tag 0EXM applied to the normal closure of the finite separable input, makes \(L/K\) finite Galois. Only then re-run the finite-presentation descent of all chart rings, restriction maps, inverse maps, and triple equations at \(L\), and assemble the final legacy package with \(P.N.1=L\). One must not retain an earlier package while changing its field. </p>
+<p>The unresolved mathematical step is to descend finite presentations of representatives of the finitely many chart classes, all transition isomorphisms and their cocycle equations at that same \(L\), glue them using the actual etale-sheafified relative Picard equivalence relation, and prove degree zero after every field-valued pullback. Comparison through \(\beta _P\) must then prove (UC). Tag 01ZM supplies finite-presentation, morphism, and equality descent. Section 44.4 (Tag 0B9K) describes the fppf Picard sheaf and invertible-sheaf descent, but is only orientation: it does not identify that object with AJCR’s big-etale degree-zero carrier or construct \(\xi _L\). The planned Lean handoff is one dependent package containing exactly \(P\), the finite-Galois certificates, \(\xi _L\), and equation (UC). </p>
+
+  </div>
+</div>
+<div class="theorem_thmwrapper theorem-style-plain" id="route-thm-finite-stage-yoneda">
+  <div class="theorem_thmheading">
+    <span class="theorem_thmcaption">
+    Theorem
+    </span>
+    <span class="theorem_thmlabel">17</span>
+    <span class="theorem_thmtitle">Yoneda equivalence on the same finite Galois carrier</span>
+    <div class="thm_header_extras">
+
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="route-ch-universal.html#route-thm-finite-stage-yoneda">#</a>
+
+    <a class="icon proof" href="route-ch-universal.html#a0000000068"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+
+
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+
+        <ul class="uses">
+
+          <li><a href="route-ch-universal.html#route-thm-descended-universal-class">Theorem 16</a></li>
+
+        </ul>
+
+      </div>
+    </div>
+
+
+
+        </div>
+  </div>
+  <div class="theorem_thmcontent">
+
+<p>For the same \((P,L,\xi _L)\), every \(L\)-scheme \(T\) must admit the bijection </p>
+<div class="displaymath" id="a0000000069">
+  \[  \Phi _T:\operatorname{Hom}_L(T,J_L)\xrightarrow {\sim } \operatorname {Pic}^0_{C_L}(T), \qquad f\longmapsto f^*\xi _L. \tag {Y}  \]
+</div>
+<p> For every \(q:T'\to T\) and \(f:T\to J_L\), it must satisfy the correctly typed naturality equation </p>
+<div class="displaymath" id="a0000000070">
+  \[  \Phi _{T'}(f\circ q)=q^*\Phi _T(f).  \]
+</div>
+<p> The exact public Lean handoff is </p>
+<div class="displaymath" id="a0000000071">
+  \[  \operatorname {RepresentableBy} (\operatorname {pic0TypeFunctor}(C_L),P.\mathrm{gluedOver}). \tag {FS-Rep}  \]
+</div>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000068">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p>Pullback of \(\xi _L\) defines the transformation in (Y). To prove every component bijective, compare it after the faithfully flat extension \(L\to \Omega \). Equation (UC), \(\beta _P\), and \(r_\Omega \) identify the result with a bijection. Existence and equality of morphisms then descend; Stacks Remark 35.35.12 (Tag 040L) supplies the abstract fpqc morphism-descent principle. The specialization must be performed uniformly for arbitrary \(T\), including the curve scalar-tower and big-etale degree-zero transports. </p>
+<p>No public-root declaration proves (Y) or (FS-Rep). In particular, <span class="ttfamily">pic0RepresentableBy_finiteStageBaseChange</span> has target over \(\Omega \), not over \(L\), and its own module is unrooted. </p>
+
+  </div>
+</div>
+<div class="remark_thmwrapper theorem-style-definition" id="route-rem-first-frontier">
+  <div class="remark_thmheading">
+    <span class="remark_thmcaption">
+    Remark
+    </span>
+    <span class="remark_thmlabel">18</span>
+    <span class="remark_thmtitle">Frontier accounting</span>
+    <div class="thm_header_extras">
+
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="route-ch-universal.html#route-rem-first-frontier">#</a>
+
+
+
+        </div>
+  </div>
+  <div class="remark_thmcontent">
+
+<p>The first unmet mathematical producer is the class \(\xi _L\) and equation (UC) in Theorem&#160;<a href="route-ch-universal.html#route-thm-descended-universal-class">16</a>. Choosing the finite normal coefficient field and rebuilding the finite diagram there is a fixed imported/planned prelude inside that same package, not a competing route. The frontier moves only when a class on the displayed literal carrier exists; further transport or comparison wrappers do not move it. </p>
+
+  </div>
+</div>
+
+</div> <!--main-text -->
+</div> <!-- content-wrapper -->
+</div> <!-- content -->
+</div> <!-- wrapper -->
+
+<nav class="prev_up_next">
+  <svg  id="showmore-minus" class="icon icon-eye-minus showmore"><use xlink:href="symbol-defs.svg#icon-eye-minus"></use></svg>
+
+  <svg  id="showmore-plus" class="icon icon-eye-plus showmore"><use xlink:href="symbol-defs.svg#icon-eye-plus"></use></svg>
+
+  <a href="route-ch-finite-stage.html" title="Finite-stage carrier and base-change comparison"><svg  class="icon icon-arrow-left "><use xlink:href="symbol-defs.svg#icon-arrow-left"></use></svg>
+</a>
+  <a href="index.html" title="AlgebraicJacobian"><svg  class="icon icon-arrow-up "><use xlink:href="symbol-defs.svg#icon-arrow-up"></use></svg>
+</a>
+  <a href="route-ch-galois.html" title="Finite-Galois descent to the original field"><svg  class="icon icon-arrow-right "><use xlink:href="symbol-defs.svg#icon-arrow-right"></use></svg>
+</a>
+</nav>
+
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/plastex.js"></script>
+<script type="text/javascript" src="js/svgxuse.js"></script>
+<script type="text/javascript" src="js/js.cookie.min.js"></script>
+<script type="text/javascript" src="js/showmore.js"></script>
+</body>
+</html>

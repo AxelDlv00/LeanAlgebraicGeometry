@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>
+  MathJax = {
+    tex: {
+		    inlineMath: [['$','$'], ['\\(','\\)']]
+	} }
+</script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+</script>
+<meta name="generator" content="plasTeX" />
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Finite-Galois descent to the original field</title>
+<link rel="next" href="route-ch-handoff.html" title="Same-carrier data and Phase 8 consumers" />
+<link rel="prev" href="route-ch-universal.html" title="Universal class and the finite-stage representability gap" />
+<link rel="up" href="index.html" title="AlgebraicJacobian" />
+<link rel="stylesheet" href="styles/theme-white.css" />
+<link rel="stylesheet" href="styles/amsthm.css" />
+<link rel="stylesheet" href="styles/showmore.css" />
+<link rel="stylesheet" href="styles/blueprint.css" />
+<link rel="stylesheet" href="styles/extra_styles.css" />
+</head>
+
+<body>
+<header>
+<svg  id="toc-toggle" class="icon icon-list-numbered "><use xlink:href="symbol-defs.svg#icon-list-numbered"></use></svg>
+<h1 id="doc_title"><a href="index.html">AlgebraicJacobian</a></h1>
+</header>
+
+<div class="wrapper">
+<nav class="toc">
+<ul class="sub-toc-0">
+<li class="">
+  <a href="sect0001.html"><span class="toc_ref"></span> <span class="toc_entry">About This Blueprint</span></a>
+ </li>
+<li class="">
+  <a href="route-ch-contract.html"><span class="toc_ref">1</span> <span class="toc_entry">Route contract and hypothesis ledger</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="route-ch-contract.html#a0000000003"><span class="toc_ref">1.1</span> <span class="toc_entry">Fixed objects and functors</span></a>
+ </li>
+<li class="">
+  <a href="route-ch-contract.html#a0000000004"><span class="toc_ref">1.2</span> <span class="toc_entry">The one permitted route</span></a>
+ </li>
+<li class="">
+  <a href="route-ch-contract.html#a0000000005"><span class="toc_ref">1.3</span> <span class="toc_entry">Hypothesis ledger</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="route-ch-rank-one.html"><span class="toc_ref">2</span> <span class="toc_entry">Degree-\(g\) divisors and the rank-one Abel isomorphism</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="route-ch-rank-one.html#a0000000006"><span class="toc_ref">2.1</span> <span class="toc_entry">The represented divisor package</span></a>
+ </li>
+<li class="">
+  <a href="route-ch-rank-one.html#a0000000007"><span class="toc_ref">2.2</span> <span class="toc_entry">The intrinsic rank-one open</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="route-ch-sepclosed.html"><span class="toc_ref">3</span> <span class="toc_entry">The separably closed rank-one cover</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="route-ch-sepclosed.html#a0000000008"><span class="toc_ref">3.1</span> <span class="toc_entry">Translated charts</span></a>
+ </li>
+<li class="">
+  <a href="route-ch-sepclosed.html#a0000000009"><span class="toc_ref">3.2</span> <span class="toc_entry">The exact separably closed representer</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="route-ch-finite-stage.html"><span class="toc_ref">4</span> <span class="toc_entry">Finite-stage carrier and base-change comparison</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="route-ch-finite-stage.html#a0000000010"><span class="toc_ref">4.1</span> <span class="toc_entry">A finite affine atlas</span></a>
+ </li>
+<li class="">
+  <a href="route-ch-finite-stage.html#a0000000011"><span class="toc_ref">4.2</span> <span class="toc_entry">Nested pullbacks and overlap comparison</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="route-ch-universal.html"><span class="toc_ref">5</span> <span class="toc_entry">Universal class and the finite-stage representability gap</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="route-ch-universal.html#a0000000012"><span class="toc_ref">5.1</span> <span class="toc_entry">What is pinned over the separably closed field</span></a>
+ </li>
+<li class="">
+  <a href="route-ch-universal.html#a0000000013"><span class="toc_ref">5.2</span> <span class="toc_entry">The first unmet producer</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class=" active current">
+  <a href="route-ch-galois.html"><span class="toc_ref">6</span> <span class="toc_entry">Finite-Galois descent to the original field</span></a>
+  <span class="expand-toc">▼</span>
+  <ul class="sub-toc-1 active">
+     <li class="">
+  <a href="route-ch-galois.html#a0000000014"><span class="toc_ref">6.1</span> <span class="toc_entry">The one selected exact-carrier geometry route</span></a>
+ </li>
+<li class="">
+  <a href="route-ch-galois.html#a0000000015"><span class="toc_ref">6.2</span> <span class="toc_entry">The conditional descent theorem</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="route-ch-handoff.html"><span class="toc_ref">7</span> <span class="toc_entry">Same-carrier data and Phase 8 consumers</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="route-ch-handoff.html#a0000000016"><span class="toc_ref">7.1</span> <span class="toc_entry">The public data boundary</span></a>
+ </li>
+<li class="">
+  <a href="route-ch-handoff.html#a0000000017"><span class="toc_ref">7.2</span> <span class="toc_entry">Checked consumers of an arbitrary datum</span></a>
+ </li>
+<li class="">
+  <a href="route-ch-handoff.html#a0000000018"><span class="toc_ref">7.3</span> <span class="toc_entry">The blocked Phase 8 assembly</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="route-app-technical.html"><span class="toc_ref">A</span> <span class="toc_entry">Reference map, Lean handoffs, and quarantined routes</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="route-app-technical.html#route-app-reference-map"><span class="toc_ref">A.1</span> <span class="toc_entry">Reference map</span></a>
+ </li>
+<li class="">
+  <a href="route-app-technical.html#route-app-lean-handoff"><span class="toc_ref">A.2</span> <span class="toc_entry">Exact Lean handoffs</span></a>
+ </li>
+<li class="">
+  <a href="route-app-technical.html#a0000000019"><span class="toc_ref">A.3</span> <span class="toc_entry">Quarantine</span></a>
+ </li>
+<li class="">
+  <a href="route-app-technical.html#route-app-challenge-status"><span class="toc_ref">A.4</span> <span class="toc_entry">Public-root and Challenge status</span></a>
+ </li>
+<li class="">
+  <a href="route-app-technical.html#a0000000020"><span class="toc_ref">A.5</span> <span class="toc_entry">Residual blocker ledger</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li ><a href="dep_graph_document.html">Dependency graph</a></li>
+</ul>
+</nav>
+
+<div class="content">
+<div class="content-wrapper">
+
+
+<div class="main-text">
+<h1 id="route-ch-galois">6 Finite-Galois descent to the original field</h1>
+
+<p>Fix the single witness \((P,L,\xi _L)\) from Theorem&#160;<a href="route-ch-universal.html#route-thm-descended-universal-class">16</a>, where \(L=P.N.1\) is finite Galois over \(K\), and assume Theorem&#160;<a href="route-ch-universal.html#route-thm-finite-stage-yoneda">17</a> has supplied </p>
+<div class="displaymath" id="a0000000072">
+  \[  r_L:h_{J_L}\xrightarrow {\sim }\operatorname {Pic}^0_{C_L}, \qquad J_L=P.\mathrm{gluedOver}.  \]
+</div>
+<p> No object is base-changed or replaced in this chapter: the Galois action, projectivity input, orbit condition, and quotient all use this literal carrier. </p>
+<h1 id="a0000000014">6.1 The one selected exact-carrier geometry route</h1>
+<p>The equivalence \(r_L\) canonically equips \(J_L\) with a commutative group object and with the semilinear action </p>
+<div class="displaymath" id="a0000000073">
+  \[  \rho :\operatorname {Gal}(L/K)\longrightarrow \operatorname {Aut}_{K\text{-semilin}}(J_L)  \]
+</div>
+<p> characterized by invariance of the universal Picard class. </p>
+<div class="theorem_thmwrapper theorem-style-plain" id="route-thm-exact-carrier-projective">
+  <div class="theorem_thmheading">
+    <span class="theorem_thmcaption">
+    Theorem
+    </span>
+    <span class="theorem_thmlabel">19</span>
+    <span class="theorem_thmtitle">Projectivity of the literal finite-stage carrier</span>
+    <div class="thm_header_extras">
+
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="route-ch-galois.html#route-thm-exact-carrier-projective">#</a>
+
+    <a class="icon proof" href="route-ch-galois.html#a0000000074"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+
+
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+
+        <ul class="uses">
+
+          <li><a href="route-ch-universal.html#route-thm-finite-stage-yoneda">Theorem 17</a></li>
+
+        </ul>
+
+      </div>
+    </div>
+
+
+
+        </div>
+  </div>
+  <div class="theorem_thmcontent">
+
+<p>Construct the certificate </p>
+<div class="displaymath" id="a0000000075">
+  \[  h_{\mathrm{proj}}: \operatorname {IsProjective}(P.\mathrm{gluedMap}), \tag {Proj}  \]
+</div>
+<p> where \(P\) is the same legacy package that carries \(\xi _L\) and \(r_L\). This is the sole selected producer for the orbit condition. A proof by an independently chosen projective-space immersion is not an alternate route. </p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000074">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p>This target is planned and blocked on (FS-Rep). A valid proof must construct a relatively ample invertible sheaf, or equivalently the finite-type closed immersion furnished by the projectivity API, on the literal glued scheme and verify compatibility with \(P.\mathrm{gluedMap}\). Classical projectivity of the Jacobian cannot be imported here until its hypotheses and its identification with AJCR’s degree-zero big-etale functor are proved. In particular, projectivity of an admissible divisor source, a stable-facade carrier, or an object merely isomorphic after base change does not inhabit (Proj). </p>
+
+  </div>
+</div>
+<div class="theorem_thmwrapper theorem-style-plain" id="route-thm-exact-carrier-orbits">
+  <div class="theorem_thmheading">
+    <span class="theorem_thmcaption">
+    Theorem
+    </span>
+    <span class="theorem_thmlabel">20</span>
+    <span class="theorem_thmtitle">Projectivity implies exact-carrier orbit-affineness</span>
+    <div class="thm_header_extras">
+
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="route-ch-galois.html#route-thm-exact-carrier-orbits">#</a>
+
+    <a class="icon proof" href="route-ch-galois.html#a0000000076"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+
+
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+
+        <ul class="uses">
+
+          <li><a href="route-ch-galois.html#route-thm-exact-carrier-projective">Theorem 19</a></li>
+
+        </ul>
+
+      </div>
+    </div>
+
+
+
+        </div>
+  </div>
+  <div class="theorem_thmcontent">
+
+<p>From (Proj), for every scheme point \(x\in |J_L|\), produce an affine open \(V\subseteq J_L\) such that </p>
+<div class="displaymath" id="a0000000077">
+  \[  \{ \rho (\sigma )(x):\sigma \in \operatorname {Gal}(L/K)\} \subseteq V. \tag {OA}  \]
+</div>
+<p> The exact Lean output is </p>
+<div class="displaymath" id="a0000000078">
+  \[  (\operatorname {pic0SemilinearGalActionOfRepresentableBy}(C,r_L)) .\operatorname {OrbitsInAffineOpen}.  \]
+</div>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000076">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p>The finite Galois orbit is a finite subset. Projectivity supplies a closed immersion of \(J_L\) into finite relative projective space; choose a hyperplane avoiding the orbit, and pull back its affine complement. The source tree contains the exact conditional wrapper <span class="ttfamily">pic0FiniteStageOrbitsInAffineOpen_of_isProjective C Ck P repL hproj</span>. It has the required binders <span class="ttfamily">[FiniteDimensional K P.N.1] [IsGalois K P.N.1]</span> and returns (OA) on <span class="ttfamily">P.gluedOver</span>. Its module is not public-root reachable, so it receives no <span class="ttfamily">\leanok</span> marker; rooting that wrapper is a planned integration step after the planned input (Proj). The immersion entry point used internally by the wrapper is quarantined as a second public route. </p>
+
+  </div>
+</div>
+<h1 id="a0000000015">6.2 The conditional descent theorem</h1>
+<div class="theorem_thmwrapper theorem-style-plain" id="route-thm-finite-galois-descent">
+  <div class="theorem_thmheading">
+    <span class="theorem_thmcaption">
+    Theorem
+    </span>
+    <span class="theorem_thmlabel">21</span>
+    <span class="theorem_thmtitle">Finite-Galois descent of the represented degree-zero functor</span>
+    <div class="thm_header_extras">
+
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="route-ch-galois.html#route-thm-finite-galois-descent">#</a>
+
+    <a class="icon proof" href="route-ch-galois.html#a0000000079"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+
+
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+
+        <ul class="uses">
+
+          <li><a href="route-ch-galois.html#route-thm-exact-carrier-orbits">Theorem 20</a></li>
+
+        </ul>
+
+      </div>
+    </div>
+
+
+
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+
+        <ul class="uses">
+
+          <li><a href="/find/#doc/AlgebraicGeometry.pic0SemilinearGalActionOfRepresentableBy" class="lean_decl">AlgebraicGeometry.pic0SemilinearGalActionOfRepresentableBy</a></li>
+
+          <li><a href="/find/#doc/AlgebraicGeometry.pic0GaloisInvariantEquiv" class="lean_decl">AlgebraicGeometry.pic0GaloisInvariantEquiv</a></li>
+
+          <li><a href="/find/#doc/AlgebraicGeometry.pic0GaloisInvariantEquivGaloisEquivariantOver" class="lean_decl">AlgebraicGeometry.pic0GaloisInvariantEquivGaloisEquivariantOver</a></li>
+
+          <li><a href="/find/#doc/AlgebraicGeometry.pic0RepresentableBy_finiteGaloisDescent" class="lean_decl">AlgebraicGeometry.pic0RepresentableBy_finiteGaloisDescent</a></li>
+
+          <li><a href="/find/#doc/AlgebraicGeometry.locallyOfFiniteType_pic0FiniteGaloisDescent" class="lean_decl">AlgebraicGeometry.locallyOfFiniteType_pic0FiniteGaloisDescent</a></li>
+
+          <li><a href="/find/#doc/AlgebraicGeometry.quasiCompact_pic0FiniteGaloisDescent" class="lean_decl">AlgebraicGeometry.quasiCompact_pic0FiniteGaloisDescent</a></li>
+
+        </ul>
+
+      </div>
+    </div>
+
+
+        </div>
+  </div>
+  <div class="theorem_thmcontent">
+
+<p>Let \(L/K\) be the displayed finite Galois extension, with the Lean instances \([\operatorname {Algebra}\  K\  L]\), \([\operatorname {FiniteDimensional}\  K\  L]\), and \([\operatorname {IsGalois}\  K\  L]\). Let \(C_L=(\operatorname {baseChange}\  K\  L).obj\, C\), let \(J_L:\operatorname {Over}(\operatorname {Spec}L)\), and assume the exact input </p>
+<div class="displaymath" id="a0000000080">
+  \[  r_L:\operatorname {RepresentableBy} (\operatorname {pic0TypeFunctor}(C_L),J_L)  \]
+</div>
+<p> together with the typeclass \(\operatorname {OrbitsInAffineOpen}\) for \(\operatorname {pic0SemilinearGalActionOfRepresentableBy}(C,r_L)\). The stable affine opens glue to </p>
+<div class="displaymath" id="a0000000081">
+  \[  J:=\operatorname {StableAffineOpen.gluedQuotientOver}(\rho ) \longrightarrow \operatorname{Spec}K.  \]
+</div>
+<p> For every \(K\)-scheme \(T\), the checked equivalences are </p>
+<div class="displaymath" id="a0000000082">
+  \[  \operatorname{Hom}_K(T,J) \simeq \operatorname{Hom}_L(T_L,J_L)^{\operatorname {Gal}(L/K)} \simeq \operatorname {Pic}^0_{C_L}(T_L)^{\operatorname {Gal}(L/K)} \simeq \operatorname {Pic}^0_C(T). \tag {G}  \]
+</div>
+<p> Hence \(J\) represents \(\operatorname {pic0TypeFunctor}(C)\). If \(J_L\to \operatorname{Spec}L\) is locally of finite type, respectively quasi-compact, then so is \(J\to \operatorname{Spec}K\). </p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000079">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p>Orbit-affineness chooses a Galois-stable affine cover. Affine fpqc descent glues its invariant coordinate rings; Stacks Section 35.38 (Tag 0246) records effective descent for quasi-affine morphisms and Tag 040L records descent of compatible morphisms. The first equivalence in (G) is the checked quotient universal property. The second uses \(r_L\) and its canonical semilinear action. The third is the checked equivalence between original-field Picard classes and Galois-invariant classes after base change. Their naturality in \(T\) is exactly the <span class="ttfamily">RepresentableBy</span> certificate, and the finiteness properties descend through the same quotient. </p>
+<p>This is a checked <em>conditional</em> theorem: the displayed \(r_L\), field typeclasses, and <span class="ttfamily">OrbitsInAffineOpen</span> remain visible inputs. Its Lean binder for the invariant comparison includes geometric reducedness of \(C\); smoothness of the challenge curve derives that instance, so H2 already discharges it. </p>
+
+  </div>
+</div>
+<div class="remark_thmwrapper theorem-style-definition" id="route-rem-no-carrier-switch">
+  <div class="remark_thmheading">
+    <span class="remark_thmcaption">
+    Remark
+    </span>
+    <span class="remark_thmlabel">22</span>
+    <span class="remark_thmtitle">No carrier switch</span>
+    <div class="thm_header_extras">
+
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="route-ch-galois.html#route-rem-no-carrier-switch">#</a>
+
+
+
+        </div>
+  </div>
+  <div class="remark_thmcontent">
+
+<p>The selected route finalizes one legacy package with \(L=P.N.1\) before descending \(\xi _L\). It then uses \(P.\mathrm{gluedOver}\) in (FS-Rep), (Proj), (OA), and the generic finite-Galois theorem. The newer <span class="ttfamily">Pic0FiniteStageStableGluePackage</span> has no checked carrier comparison with this object and is never substituted. Forward representer transport along an arbitrary object isomorphism is likewise a consumer of an existing representation, not a producer for R6. </p>
+
+  </div>
+</div>
+
+</div> <!--main-text -->
+</div> <!-- content-wrapper -->
+</div> <!-- content -->
+</div> <!-- wrapper -->
+
+<nav class="prev_up_next">
+  <svg  id="showmore-minus" class="icon icon-eye-minus showmore"><use xlink:href="symbol-defs.svg#icon-eye-minus"></use></svg>
+
+  <svg  id="showmore-plus" class="icon icon-eye-plus showmore"><use xlink:href="symbol-defs.svg#icon-eye-plus"></use></svg>
+
+  <a href="route-ch-universal.html" title="Universal class and the finite-stage representability gap"><svg  class="icon icon-arrow-left "><use xlink:href="symbol-defs.svg#icon-arrow-left"></use></svg>
+</a>
+  <a href="index.html" title="AlgebraicJacobian"><svg  class="icon icon-arrow-up "><use xlink:href="symbol-defs.svg#icon-arrow-up"></use></svg>
+</a>
+  <a href="route-ch-handoff.html" title="Same-carrier data and Phase 8 consumers"><svg  class="icon icon-arrow-right "><use xlink:href="symbol-defs.svg#icon-arrow-right"></use></svg>
+</a>
+</nav>
+
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/plastex.js"></script>
+<script type="text/javascript" src="js/svgxuse.js"></script>
+<script type="text/javascript" src="js/js.cookie.min.js"></script>
+<script type="text/javascript" src="js/showmore.js"></script>
+</body>
+</html>
