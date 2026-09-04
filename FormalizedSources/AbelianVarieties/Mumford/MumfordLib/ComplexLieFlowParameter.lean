@@ -107,6 +107,32 @@ def canonicalComplexExponentialMonoidHom
         canonicalComplexExponential (G := G) I w.toAdd
     exact canonicalComplexExponential_add (G := G) I v.toAdd w.toAdd
 
+/-! The same candidate with an additive target is the shape consumed by the
+    period-lattice interfaces.  This is only a representation change: it does
+    not add a lattice, surjectivity, or holomorphicity certificate. -/
+noncomputable def canonicalComplexExponentialAddHom
+    [CompleteSpace E] [T2Space G] [I.Boundaryless]
+    [CompactSpace G] [PreconnectedSpace G] :
+    E →+ Additive G where
+  toFun v := Additive.ofMul (canonicalComplexExponential (G := G) I v)
+  map_zero' := by
+    change Additive.ofMul (canonicalComplexExponential (G := G) I 0) = Additive.ofMul 1
+    rw [canonicalComplexExponential_zero]
+  map_add' v w := by
+    change Additive.ofMul (canonicalComplexExponential (G := G) I (v + w)) =
+      Additive.ofMul
+        (canonicalComplexExponential (G := G) I v *
+          canonicalComplexExponential (G := G) I w)
+    rw [canonicalComplexExponential_add]
+
+@[simp]
+theorem canonicalComplexExponentialAddHom_apply
+    [CompleteSpace E] [T2Space G] [I.Boundaryless]
+    [CompactSpace G] [PreconnectedSpace G] (v : E) :
+    canonicalComplexExponentialAddHom (G := G) I v =
+      Additive.ofMul (canonicalComplexExponential (G := G) I v) :=
+  rfl
+
 @[simp]
 theorem canonicalComplexExponentialMonoidHom_apply
     [CompleteSpace E] [T2Space G] [I.Boundaryless]

@@ -495,6 +495,61 @@ theorem canonicalComplexExponential_exists_nhds_injOn
     canonicalRealFlow (G := G) I z 1
   exact hyz
 
+/-! Local injectivity at the identity propagates to every point of the kernel
+    by additive translation.  This is the topological consequence needed before
+    one can ask for a full period-lattice certificate. -/
+theorem isDiscrete_ker_of_exists_nhds_injOn
+    {E Y : Type*} [AddCommGroup E] [TopologicalSpace E]
+    [IsTopologicalAddGroup E] [AddZeroClass Y]
+    (f : E →+ Y)
+    (hlocal : ∃ U ∈ 𝓝 (0 : E), Set.InjOn f U) :
+    IsDiscrete (f.ker : Set E) := by
+  obtain ⟨U, hUnhds, hfinj⟩ := hlocal
+  obtain ⟨O, hOU, hOopen, hOzero⟩ := mem_nhds_iff.mp hUnhds
+  apply isDiscrete_iff_forall_exists_isOpen.mpr
+  intro x hx
+  let V : Set E := (fun y : E => y - x) ⁻¹' O
+  have hVopen : IsOpen V := by
+    change IsOpen ((fun y : E => y - x) ⁻¹' O)
+    exact IsOpen.preimage (continuous_id.sub continuous_const) hOopen
+  refine ⟨V, hVopen, ?_⟩
+  ext y
+  constructor
+  · rintro ⟨hyV, hyK⟩
+    change y - x ∈ O at hyV
+    have hdiffK : y - x ∈ f.ker := sub_mem hyK hx
+    have hdiffU : y - x ∈ U := hOU hyV
+    have hzeroU : (0 : E) ∈ U := mem_of_mem_nhds hUnhds
+    have hfdiff : f (y - x) = f 0 := by
+      rw [f.mem_ker.mp hdiffK, f.map_zero]
+    have hdiffzero : y - x = 0 := hfinj hdiffU hzeroU hfdiff
+    exact sub_eq_zero.mp hdiffzero
+  · intro hy
+    have hyx : y = x := by simpa using hy
+    subst y
+    constructor
+    · change x - x ∈ O
+      simpa using hOzero
+    · exact hx
+
+/-! The local inverse theorem therefore isolates zero in the kernel of the
+    additive presentation of the canonical exponential.  The result is a
+    genuine discreteness statement, while the stronger full-lattice assertion
+    remains an explicit external boundary. -/
+theorem canonicalComplexExponential_kernel_isDiscrete
+    [CompleteSpace E] [T2Space G]
+    [I.Boundaryless] [CompactSpace G] [PreconnectedSpace G] :
+    IsDiscrete
+      ((canonicalComplexExponentialAddHom (G := G) I).ker : Set E) := by
+  apply isDiscrete_ker_of_exists_nhds_injOn
+    (canonicalComplexExponentialAddHom (G := G) I)
+  obtain ⟨U, hU, hUinj⟩ :=
+    canonicalComplexExponential_exists_nhds_injOn (G := G) I
+  refine ⟨U, hU, ?_⟩
+  intro y hy z hz hyz
+  apply hUinj hy hz
+  exact Additive.ofMul.injective hyz
+
 /-- The time-one canonical real flow is surjective.  Its image is a subgroup
 that contains an identity neighborhood, hence is both open and closed in the
 preconnected group.  This is a real surjectivity statement; it does not yet
