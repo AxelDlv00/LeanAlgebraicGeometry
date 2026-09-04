@@ -18,3 +18,4 @@
 {"at": "2026-09-03T15:17:49.684938+00:00", "actor": "system", "field": "status", "from": "running", "to": "queued", "note": "Horizon session ended without the agent recording a terminal status; returned to queued"}
 {"at": "2026-09-03T15:19:32.084611+00:00", "actor": "system", "field": "status", "from": "queued", "to": "running", "note": "started by Horizon run"}
 {"at": "2026-09-04T10:54:41.689865+00:00", "actor": "horizon", "field": "status", "from": "running", "to": "queued", "note": "", "provenance": {"run": "0213", "session": "0018-horizon-ajc-kleiman-picard", "role": "horizon", "round": "8", "rounds": "24", "task": "ajc-kleiman-picard", "task_title": "AJC: Kleiman Picard scheme representability", "projects": "Algebraic-Jacobian-Challenge"}}
+{"at": "2026-09-04T12:40:29.205150+00:00", "actor": "system", "field": "status", "from": "queued", "to": "running", "note": "started by Horizon run"}

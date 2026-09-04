@@ -487,6 +487,48 @@ theorem canonicalComplexExponentialMonoidHom_surjective
   refine ⟨Multiplicative.ofAdd v, ?_⟩
   simpa using hv
 
+/-! The canonical candidate can be supplied to the explicit exponential
+    interface.  This is a conditional interface package: it records the
+    properties proved for the real-flow candidate, without asserting that it
+    is the source's uniquely integrated holomorphic exponential. -/
+
+/-- Conjugation naturality for the canonical time-one exponential candidate.
+The left side is unchanged because the real flow is central, while the compact
+adjoint calculation identifies the right-hand tangent vector with the input. -/
+theorem canonicalComplexExponential_conjugation
+    [CompleteSpace E] [T2Space G]
+    [I.Boundaryless] [CompactSpace G] [PreconnectedSpace G]
+    (x : G) (v : E) :
+    complexLieConjugation x (canonicalComplexExponential (G := G) I v) =
+      canonicalComplexExponential (G := G) I
+        ((complexLieAdjoint (G := G) I x) v) := by
+  rw [complexLieAdjoint_eq_id (G := G) I x]
+  change complexLieConjugation x
+      (canonicalRealFlow (G := G) I
+        (complexToRealLieAlgebraMap I v) 1) =
+    canonicalRealFlow (G := G) I
+      (complexToRealLieAlgebraMap I v) 1
+  exact congrFun
+    (complexLieConjugation_comp_integralCurve_eq (G := G) I
+      (canonicalRealFlow_spec (G := G) I
+        (complexToRealLieAlgebraMap I v)).2.1
+      (canonicalRealFlow_spec (G := G) I
+        (complexToRealLieAlgebraMap I v)).1 x) 1
+
+/-- The canonical real-flow exponential packaged as the explicit conditional
+complex exponential interface used by the commutativity argument. -/
+noncomputable def canonicalComplexLieExponentialData
+    [CompleteSpace E] [T2Space G]
+    [I.Boundaryless] [CompactSpace G] [PreconnectedSpace G] :
+    ComplexLieExponentialData (G := G) I where
+  exponential := canonicalComplexExponential (G := G) I
+  exponential_zero := canonicalComplexExponential_zero (G := G) I
+  exponential_generates := by
+    rw [Set.range_eq_univ.mpr
+      (canonicalComplexExponential_surjective (G := G) I)]
+    exact Subgroup.closure_univ
+  conjugation_exp := canonicalComplexExponential_conjugation (G := G) I
+
 /-- The canonical complex exponential gives a direct central-generator proof
 of commutativity.  This is a consumer of the named candidate, while the
 source-level holomorphic exponential and its lattice kernel remain separate
@@ -495,17 +537,8 @@ theorem complexLieGroup_isMulCommutative_of_canonicalComplexExponential
     [CompleteSpace E] [T2Space G]
     [I.Boundaryless] [CompactSpace G] [PreconnectedSpace G] :
     IsMulCommutative G := by
-  apply isMulCommutative_of_central_generators
-    (s := Set.range (canonicalComplexExponentialMonoidHom (G := G) I))
-  · intro z hz x
-    obtain ⟨v, rfl⟩ := hz
-    change Commute x (canonicalRealFlow (G := G) I
-      (complexToRealLieAlgebraMap I v.toAdd) 1)
-    exact (canonicalRealFlow_spec (G := G) I
-      (complexToRealLieAlgebraMap I v.toAdd)).2.2.2 x 1
-  · rw [Set.range_eq_univ.mpr
-      (canonicalComplexExponentialMonoidHom_surjective (G := G) I)]
-    exact Subgroup.closure_univ
+  exact complexLieGroup_isMulCommutative_of_exponential (G := G) I
+    (canonicalComplexLieExponentialData (G := G) I)
 
 /-- Every compact connected complex Lie group is commutative.  Canonical real
 flows give a central identity neighborhood, and connectedness propagates its
