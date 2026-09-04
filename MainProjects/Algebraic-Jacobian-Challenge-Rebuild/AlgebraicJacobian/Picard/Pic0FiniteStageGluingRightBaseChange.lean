@@ -44,7 +44,7 @@ theorem rightRestrictionBaseChangeMap_fst
         (rightRestrictionBaseChangeRingHom C P U V)) := by
   letI : CommRing
       (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N V) :=
-    pic0FiniteStageChartBaseChangeRingCommRing
+    pic0FiniteStageChartBaseChangeCommRing
       C P.L P.n P.m P.relation P.M P.N V
   letI : CommSemiring
       (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N V) :=
@@ -56,11 +56,11 @@ theorem rightRestrictionBaseChangeMap_fst
       (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N V)).toSemiring
   letI : Algebra P.N.1
       (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N V) :=
-    pic0FiniteStageChartBaseChangeRingAlgebra
+    pic0FiniteStageChartBaseChangeAlgebra
       C P.L P.n P.m P.relation P.M P.N V
   letI : CommRing
       (Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M P.N U V) :=
-    pic0FiniteStageOverlapBaseChangeRingCommRing
+    pic0FiniteStageOverlapBaseChangeCommRing
       C P.L P.n P.m P.relation P.M P.N U V
   letI : CommSemiring
       (Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M P.N U V) :=
@@ -74,7 +74,7 @@ theorem rightRestrictionBaseChangeMap_fst
         C P.L P.n P.m P.relation P.M P.N U V)).toSemiring
   letI : Algebra P.N.1
       (Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M P.N U V) :=
-    pic0FiniteStageOverlapBaseChangeRingAlgebra
+    pic0FiniteStageOverlapBaseChangeAlgebra
       C P.L P.n P.m P.relation P.M P.N U V
   unfold rightRestrictionBaseChangeMap
   exact affineBaseChangeMap_fst P.N.1 k
@@ -97,7 +97,7 @@ theorem rightRestrictionBaseChangeMap_snd
       pullback.snd _ _ := by
   letI : CommRing
       (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N V) :=
-    pic0FiniteStageChartBaseChangeRingCommRing
+    pic0FiniteStageChartBaseChangeCommRing
       C P.L P.n P.m P.relation P.M P.N V
   letI : CommSemiring
       (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N V) :=
@@ -109,11 +109,11 @@ theorem rightRestrictionBaseChangeMap_snd
       (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N V)).toSemiring
   letI : Algebra P.N.1
       (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N V) :=
-    pic0FiniteStageChartBaseChangeRingAlgebra
+    pic0FiniteStageChartBaseChangeAlgebra
       C P.L P.n P.m P.relation P.M P.N V
   letI : CommRing
       (Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M P.N U V) :=
-    pic0FiniteStageOverlapBaseChangeRingCommRing
+    pic0FiniteStageOverlapBaseChangeCommRing
       C P.L P.n P.m P.relation P.M P.N U V
   letI : CommSemiring
       (Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M P.N U V) :=
@@ -127,7 +127,7 @@ theorem rightRestrictionBaseChangeMap_snd
         C P.L P.n P.m P.relation P.M P.N U V)).toSemiring
   letI : Algebra P.N.1
       (Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M P.N U V) :=
-    pic0FiniteStageOverlapBaseChangeRingAlgebra
+    pic0FiniteStageOverlapBaseChangeAlgebra
       C P.L P.n P.m P.relation P.M P.N U V
   unfold rightRestrictionBaseChangeMap
   exact affineBaseChangeMap_snd P.N.1 k

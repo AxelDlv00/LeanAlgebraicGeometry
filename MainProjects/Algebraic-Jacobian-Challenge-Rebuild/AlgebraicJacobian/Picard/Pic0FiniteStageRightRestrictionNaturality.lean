@@ -151,14 +151,14 @@ noncomputable def rightRestrictionScalarExtensionHom
     (Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M P.N U V)
     (inferInstance : CommRing P.N.1)
     (inferInstance : CommRing k)
-    (pic0FiniteStageChartBaseChangeRingCommRing
+    (pic0FiniteStageChartBaseChangeCommRing
       C P.L P.n P.m P.relation P.M P.N V).toSemiring
-    (pic0FiniteStageOverlapBaseChangeRingCommRing
+    (pic0FiniteStageOverlapBaseChangeCommRing
       C P.L P.n P.m P.relation P.M P.N U V).toSemiring
     (inferInstance : Algebra P.N.1 k)
-    (pic0FiniteStageChartBaseChangeRingAlgebra
+    (pic0FiniteStageChartBaseChangeAlgebra
       C P.L P.n P.m P.relation P.M P.N V)
-    (pic0FiniteStageOverlapBaseChangeRingAlgebra
+    (pic0FiniteStageOverlapBaseChangeAlgebra
       C P.L P.n P.m P.relation P.M P.N U V)
     (rightRestrictionBaseChangeAlgHomPinned C P U V)
 
@@ -295,7 +295,7 @@ noncomputable def rightRestrictionBaseChangeMap
         (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k))) :=
   letI : CommRing
       (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N V) :=
-    pic0FiniteStageChartBaseChangeRingCommRing
+    pic0FiniteStageChartBaseChangeCommRing
       C P.L P.n P.m P.relation P.M P.N V
   letI : CommSemiring
       (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N V) :=
@@ -307,11 +307,11 @@ noncomputable def rightRestrictionBaseChangeMap
       (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N V)).toSemiring
   letI : Algebra P.N.1
       (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N V) :=
-    pic0FiniteStageChartBaseChangeRingAlgebra
+    pic0FiniteStageChartBaseChangeAlgebra
       C P.L P.n P.m P.relation P.M P.N V
   letI : CommRing
       (Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M P.N U V) :=
-    pic0FiniteStageOverlapBaseChangeRingCommRing
+    pic0FiniteStageOverlapBaseChangeCommRing
       C P.L P.n P.m P.relation P.M P.N U V
   letI : CommSemiring
       (Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M P.N U V) :=
@@ -325,7 +325,7 @@ noncomputable def rightRestrictionBaseChangeMap
         C P.L P.n P.m P.relation P.M P.N U V)).toSemiring
   letI : Algebra P.N.1
       (Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M P.N U V) :=
-    pic0FiniteStageOverlapBaseChangeRingAlgebra
+    pic0FiniteStageOverlapBaseChangeAlgebra
       C P.L P.n P.m P.relation P.M P.N U V
   affineBaseChangeMap P.N.1 k
     (Pic0FiniteStageChartBaseChangeRing
@@ -352,7 +352,7 @@ theorem rightRestrictionBaseChangeMap_naturality
   letI : Algebra.IsAlgebraic P.M.1 k := by infer_instance
   letI : CommRing
       (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N V) :=
-    pic0FiniteStageChartBaseChangeRingCommRing
+    pic0FiniteStageChartBaseChangeCommRing
       C P.L P.n P.m P.relation P.M P.N V
   letI : CommSemiring
       (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N V) :=
@@ -364,11 +364,11 @@ theorem rightRestrictionBaseChangeMap_naturality
       (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N V)).toSemiring
   letI : Algebra P.N.1
       (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N V) :=
-    pic0FiniteStageChartBaseChangeRingAlgebra
+    pic0FiniteStageChartBaseChangeAlgebra
       C P.L P.n P.m P.relation P.M P.N V
   letI : CommRing
       (Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M P.N U V) :=
-    pic0FiniteStageOverlapBaseChangeRingCommRing
+    pic0FiniteStageOverlapBaseChangeCommRing
       C P.L P.n P.m P.relation P.M P.N U V
   letI : CommSemiring
       (Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M P.N U V) :=
@@ -380,7 +380,7 @@ theorem rightRestrictionBaseChangeMap_naturality
       (Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M P.N U V)).toSemiring
   letI : Algebra P.N.1
       (Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M P.N U V) :=
-    pic0FiniteStageOverlapBaseChangeRingAlgebra
+    pic0FiniteStageOverlapBaseChangeAlgebra
       C P.L P.n P.m P.relation P.M P.N U V
   letI : CommRing
       (k ⊗[P.N.1]

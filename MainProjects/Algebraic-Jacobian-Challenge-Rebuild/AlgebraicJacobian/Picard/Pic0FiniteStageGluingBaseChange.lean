@@ -135,7 +135,7 @@ theorem chartRingBaseChangeIso_hom_structureMap
         (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k))) := by
   letI : CommRing
       (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U) :=
-    pic0FiniteStageChartBaseChangeRingCommRing
+    pic0FiniteStageChartBaseChangeCommRing
       C P.L P.n P.m P.relation P.M P.N U
   letI : CommSemiring
       (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U) :=
@@ -147,7 +147,7 @@ theorem chartRingBaseChangeIso_hom_structureMap
       (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U)).toSemiring
   letI : Algebra P.N.1
       (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U) :=
-    pic0FiniteStageChartBaseChangeRingAlgebra
+    pic0FiniteStageChartBaseChangeAlgebra
       C P.L P.n P.m P.relation P.M P.N U
   letI : CommRing
       (k ⊗[P.N.1]
@@ -200,12 +200,12 @@ noncomputable def overlapBaseChangeIso
   letI : CommRing
       (Pic0FiniteStageOverlapBaseChangeRing
         C P.L P.n P.m P.relation P.M P.N U V) :=
-    pic0FiniteStageOverlapBaseChangeRingCommRing
+    pic0FiniteStageOverlapBaseChangeCommRing
       C P.L P.n P.m P.relation P.M P.N U V
   letI : Algebra P.N.1
       (Pic0FiniteStageOverlapBaseChangeRing
         C P.L P.n P.m P.relation P.M P.N U V) :=
-    pic0FiniteStageOverlapBaseChangeRingAlgebra
+    pic0FiniteStageOverlapBaseChangeAlgebra
       C P.L P.n P.m P.relation P.M P.N U V
   letI : Algebra P.N.1
       (Pic0FiniteStageFinalModelRing C P.L P.n P.m P.relation P.M P.N
