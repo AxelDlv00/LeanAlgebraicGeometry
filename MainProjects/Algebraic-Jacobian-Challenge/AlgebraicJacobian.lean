@@ -230,6 +230,9 @@ import AlgebraicJacobian.Picard.SupportBaseChange
 -- proper smooth geometrically integral curve has finite fibres. This module consumes
 -- that fact and registers the exact instance required by `DivPushforwardFlat`.
 import AlgebraicJacobian.Projective.EffectiveCartierSupport
+-- Finite-support descent identifies the fibre rank of a divisor twist with
+-- its degree on every smooth proper geometrically integral relative curve.
+import AlgebraicJacobian.Picard.DivTwistRank
 -- Headline leaf B in the etale formulation (run 0084 r2, ajc-p2): leaf B implies the
 -- reducedness obligation, so the headline's five are not independent; plus what leaf
 -- B's own residue is (an affine-chart Omega-rank count, not a tangent space).
