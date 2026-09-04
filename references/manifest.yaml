@@ -587,6 +587,7 @@ references:
       - { path: abelian-varieties/tex/page-0022.tex, format: tex }
       - { path: abelian-varieties/tex/page-0023.tex, format: tex }
       - { path: abelian-varieties/tex/page-0024.tex, format: tex }
+      - { path: abelian-varieties/tex/page-0025.tex, format: tex }
       - { path: abelian-varieties/tex/page-0098.tex, format: tex }
       - { path: abelian-varieties/tex/page-0099.tex, format: tex }
       - { path: abelian-varieties/tex/page-0100.tex, format: tex }
@@ -686,6 +687,13 @@ references:
       p. 15, the "G x G -> G" middle term in the id x inv chain p. 17,
       "Suppose phi"/"Im(phi^*)" for Phi on p. 18). Cite as
       abelian-varieties:page-0021 .. page-0024.
+      PAGE 25 (doc p. 19, Chapter I Section 3) transcribed 2026-09-04 via
+      vision from a 200 dpi render and checked against a 350 dpi render (no
+      OCR): Theorem 3.8 and Proposition 3.9, including the statement that every
+      rational map from affine or projective one-space to an abelian variety
+      is constant and the beginning of its proof. The proof of Proposition 3.9
+      continues on PDF page 26. Cite its statement as
+      abelian-varieties:page-0025.
     topics: [abelian-varieties, albanese, jacobian, rigidity-lemma, symmetric-power, riemann-roch, autoduality, rational-maps]
 
   - slug: atiyah-macdonald-commutative-algebra

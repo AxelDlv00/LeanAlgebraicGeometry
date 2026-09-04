@@ -1,0 +1,83 @@
+% source: J. S. Milne, "Abelian Varieties" (course notes), v2.00, 2008, www.jmilne.org
+% pdf_page: 0025
+% doc_page: 19 (Chapter I, Section 3 -- proof of Theorem 3.4; Corollary 3.7; Theorem 3.8; Proposition 3.9 and beginning of its proof)
+% retrieved: 2026-09-04
+% transcribed_by: codex-gpt-5 (vision, rendered at 200dpi via pdftoppm; checked at 350dpi)
+
+% [running head: 3. RATIONAL MAPS INTO ABELIAN VARIETIES, page 19]
+
+\DeclareMathOperator{\Image}{Im}
+
+% [continuation of Theorem 3.4 from the previous page]
+
+\paragraph{Proof (of 3.4).}
+Clearly we can assume $k$ to be algebraically closed. Consider first the case
+that $V$ has dimension 1. From the (3.5), we know that $V$ can be embedded into
+a nonsingular complete curve $C$, and (3.2) shows that $\alpha$ extends to a map
+$\bar{\alpha}\colon C \times W \to A$. Now the Rigidity Theorem (1.1) shows that
+$\bar{\alpha}$ is constant. In the general case, let $C$ be an irreducible curve
+on $V$ passing through $v_0$ and nonsingular at $v_0$, and let $C' \to C$ be the
+normalization of $C$. By composition, $\alpha$ defines a morphism
+$C' \times W \to A$, which the preceding argument shows to be constant.
+Therefore $\alpha(C \times W) = \{a_0\}$, and Lemma 3.6 completes the proof.
+\hfill $\square$
+
+\paragraph{Corollary 3.7.}
+\textit{Every rational map $\alpha\colon G \dashrightarrow A$ from a group
+variety to an abelian variety is the composite of a homomorphism
+$h\colon G \to A$ with a translation.}
+
+\paragraph{Proof.}
+Theorem 3.2 shows that $\alpha$ is a regular map. The rest of the proof is the
+same as that of Corollary 1.2. \hfill $\square$
+
+\subsection*{Abelian varieties up to birational equivalence.}
+
+A rational map $\varphi\colon V \dashrightarrow W$ is \textit{dominating} if
+$\Image(\varphi_U)$ is dense in $W$ for one (hence all) representatives
+$(U, \varphi_U)$ of $\varphi$. Then $\varphi$ defines a homomorphism
+$k(W) \to k(V)$, and every such homomorphism arises from a (unique) dominating
+rational map (exercise!).
+
+A rational map $\varphi$ is \textit{birational} if the corresponding
+homomorphism $k(W) \to k(V)$ is an isomorphism. Equivalently, if there exists a
+rational map $\psi\colon W \dashrightarrow V$ such that $\varphi \circ \psi$
+and $\psi \circ \varphi$ are both the identity map wherever they are defined.
+Two varieties $V$ and $W$ are \textit{birationally equivalent} if there exists
+a birational map $V \dashrightarrow W$; equivalently, if $k(V) \approx k(W)$.
+
+In general, two varieties can be birationally equivalent without being
+isomorphic (see the start of this section 1 for examples). In fact, every
+variety (even complete and nonsingular) of dimension $> 1$ will be birationally
+equivalent to many nonisomorphic varieties. However, Theorem 3.1 shows that two
+complete nonsingular curves that are birationally equivalent will be isomorphic.
+The same is true of abelian varieties.
+
+\paragraph{Theorem 3.8.}
+\textit{If two abelian varieties are birationally equivalent, then they are
+isomorphic (as abelian varieties).}
+
+\paragraph{Proof.}
+Let $A$ and $B$ be the abelian varieties. A rational map
+$\varphi\colon A \dashrightarrow B$ extends to a regular map $A \to B$ (by
+3.2). If $\varphi$ is birational, its inverse $\psi$ also extends to a regular
+map, and the composites $\varphi \circ \psi$ and $\psi \circ \varphi$ will be
+identity maps because they are on open sets. Hence there is an isomorphism
+$\alpha\colon A \to B$ of algebraic varieties. After composing it with a
+translation, it will map 0 to 0, and then Corollary 1.2 shows that it preserves
+the group structure. \hfill $\square$
+
+\paragraph{Proposition 3.9.}
+\textit{Every rational map $\mathbb{A}^1 \dashrightarrow A$ or
+$\mathbb{P}^1 \dashrightarrow A$ is constant.}
+
+\paragraph{Proof.}
+According to (3.2), $\alpha$ extends to a regular map on the whole of
+$\mathbb{A}^1$. After composing $\alpha$ with a translation, we may suppose
+that $\alpha(0) = 0$. Then $\alpha$ is a homomorphism,
+\[
+  \alpha(x + y) = \alpha(x) + \alpha(y), \qquad
+  \text{all } x,y \in \mathbb{A}^1(k^{\mathrm{al}}) = k^{\mathrm{al}}.
+\]
+
+% [proof of Proposition 3.9 continues on the next PDF page]
