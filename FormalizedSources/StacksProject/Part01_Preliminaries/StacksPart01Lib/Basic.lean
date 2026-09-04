@@ -44,6 +44,7 @@ import StacksPart01Lib.FiniteProductClosure
 import StacksPart01Lib.NoetherianSpectrum
 import StacksPart01Lib.Support
 import StacksPart01Lib.SupportQuotient
+import StacksPart01Lib.SupportPower
 import StacksPart01Lib.SupportElement
 import StacksPart01Lib.Nakayama
 
