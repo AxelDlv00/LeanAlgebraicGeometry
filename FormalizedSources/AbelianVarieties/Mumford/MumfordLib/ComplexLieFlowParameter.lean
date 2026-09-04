@@ -100,7 +100,7 @@ def canonicalComplexExponentialMonoidHom
     Multiplicative E →* G where
   toFun v := canonicalComplexExponential (G := G) I v.toAdd
   map_one' := by
-    simpa using (canonicalComplexExponential_zero (G := G) I)
+    simp
   map_mul' v w := by
     change canonicalComplexExponential (G := G) I (v.toAdd + w.toAdd) =
       canonicalComplexExponential (G := G) I v.toAdd *
