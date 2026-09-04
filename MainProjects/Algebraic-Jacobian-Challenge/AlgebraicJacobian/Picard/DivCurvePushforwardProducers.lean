@@ -54,9 +54,10 @@ theorem isFinite_support_of_curve
   exact IsFinite.of_isProper_of_locallyQuasiFinite _
 
 /-! The curve support producer also discharges the quasi-finiteness input of
-`coherentSheafFlat_id_pushforward`.  Keeping this bridge here makes the
-flattening-stratification consumer usable without repeating a geometric
-instance argument at each call site. -/
+`coherentSheafFlat_id_pushforward`.  Keeping this bridge here exposes the
+identity-flatness input used when specializing flattening-stratification
+arguments, without repeating the geometric instance argument at each call
+site. -/
 
 /-- The pushforward of the structure sheaf of a curve divisor is flat over an
 arbitrary test object once the curve hypotheses supply finite fibres. -/
