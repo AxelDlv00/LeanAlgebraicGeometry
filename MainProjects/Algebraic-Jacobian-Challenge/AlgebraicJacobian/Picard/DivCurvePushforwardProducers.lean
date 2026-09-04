@@ -102,6 +102,76 @@ theorem twist_isFiniteSupport_of_curve
 
 end DivFamily
 
+namespace Modules
+
+/-! ## Finite sections over arbitrary affine opens -/
+
+/-- A module with finite schematic support has finitely generated pushforward
+sections over every affine open of the base.
+
+The support descent presentation factors these sections through the finite map
+`schematicSupportι F ≫ f`: its sections are finite over the base, while the
+restriction to the support is finite by affine finite-presentation descent.
+This is the arbitrary-test-base section producer needed before the
+finite-flat-to-locally-free assembly; it does not assume a noetherian base. -/
+theorem module_finite_sections_pushforward_of_isFinite_schematicSupport
+    {S X : Scheme.{u}} (f : X ⟶ S) (F : X.Modules)
+    [F.IsFinitePresentation]
+    (hfin : IsFinite (schematicSupportι F ≫ f))
+    {V : S.Opens} (hV : IsAffineOpen V) :
+    Module.Finite Γ(S, V) Γ((pushforward f).obj F, V) := by
+  let i := schematicSupportι F
+  let D := schematicSupport F
+  let W : D.Opens := (i ≫ f) ⁻¹ᵁ V
+  let N : D.Modules := (pullback i).obj F
+  letI : IsFinite (i ≫ f) := hfin
+  haveI : IsAffineHom i :=
+    inferInstanceAs (IsAffineHom (annihilator F).subschemeι)
+  haveI : IsAffineHom (i ≫ f) := inferInstance
+  haveI : N.IsFinitePresentation :=
+    isFinitePresentation_pullback_schematicSupportι F inferInstance
+  letI : Algebra Γ(S, V) Γ(D, W) := (Scheme.Hom.app (i ≫ f) V).hom.toAlgebra
+  letI : Module Γ(S, V) Γ(N, W) :=
+    Module.compHom _ (Scheme.Hom.app (i ≫ f) V).hom
+  haveI : Module.Finite Γ(S, V) Γ(D, W) :=
+    IsFinite.finite_app (i ≫ f) V hV
+  haveI : Module.Finite Γ(D, W) Γ(N, W) :=
+    finite_sections_preimage_of_isAffineHom (i ≫ f) N hV
+  haveI : IsScalarTower Γ(S, V) Γ(D, W) Γ(N, W) :=
+    IsScalarTower.of_algebraMap_smul fun _ _ => rfl
+  haveI : Module.Finite Γ(S, V) Γ(N, W) :=
+    Module.Finite.trans Γ(D, W) _
+  have hdesc : F ≅ (pushforward i).obj N :=
+    schematicSupportDescentIso F
+  have hcomp : (((pushforward f).map hdesc.hom).app V ≫
+      ((pushforward f).map hdesc.inv).app V) =
+      𝟙 Γ((pushforward f).obj F, V) := by
+    rw [← Hom.comp_app, ← Functor.map_comp, hdesc.hom_inv_id]
+    simp
+  refine Module.Finite.of_surjective
+    ({ toFun := fun n => ((pushforward f).map hdesc.inv).app V n
+       map_add' := fun a b => map_add _ a b
+       map_smul' := fun r n => Hom.app_smul ((pushforward f).map hdesc.inv) r n } :
+      Γ(N, W) →ₗ[Γ(S, V)] Γ((pushforward f).obj F, V)) (fun z => ?_)
+  exact ⟨((pushforward f).map hdesc.hom).app V z,
+    congrArg (fun g => g z) hcomp⟩
+
+/-- Curve specialization of
+`module_finite_sections_pushforward_of_isFinite_schematicSupport`: the
+structure sheaf of a relative effective Cartier divisor has finite pushforward
+sections over every affine open of every test object. -/
+theorem DivFamily.module_finite_sections_pushforward_of_curve
+    {S X : Scheme.{u}} {π : X ⟶ S} {T : Over S}
+    [SmoothOfRelativeDimension 1 π] [GeometricallyIntegral π] [IsProper π]
+    (x : DivFamily π T) {V : T.left.Opens} (hV : IsAffineOpen V) :
+    Module.Finite Γ(T.left, V)
+      Γ((pushforward (pullback.snd π T.hom)).obj x.F, V) := by
+  letI : x.F.IsFinitePresentation := x.isFinitePresentation
+  exact module_finite_sections_pushforward_of_isFinite_schematicSupport
+    (pullback.snd π T.hom) x.F (Scheme.DivFamily.isFinite_support_of_curve x) hV
+
+end Modules
+
 end Scheme
 
 end AlgebraicGeometry
