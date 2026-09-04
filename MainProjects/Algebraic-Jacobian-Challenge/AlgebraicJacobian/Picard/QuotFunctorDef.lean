@@ -684,11 +684,11 @@ The scheme-level content is carried by
 of properness to the fibre, monotonicity of the support under twisting, and
 the flat base-change statement for `Γ`,
 `finrank_gammaTop_baseChange_of_hasProperSupport` of
-`Picard/SchematicSupport.lean`).  What is left unproved here, and is the
-reason this declaration still uses `sorry`, is quasi-coherence of the
-sheafified tensor `moduleTensorPow F_t L_t^{⊗m}` of quasi-coherent modules —
+`Picard/SchematicSupport.lean`).  Quasi-coherence of
+`moduleTensorPow F_t L_t^{⊗m}` is proved below by induction on the tensor
+power, using `tensorObj_isQuasicoherent` at each step.  The latter rests on
 the affine tensor-section formula of `Picard/TensorSectionFormula.lean`
-([Stacks 01CB]), the same input `lem:pullback_tensor_map_isiso` needs. -/
+([Stacks 01CB]). -/
 theorem gammaFiber_finrank_baseChange_field (π : X ⟶ S) (L : X.Modules)
     [L.IsQuasicoherent] {T T' : Over S} (ψ : T' ⟶ T)
     (F : (Limits.pullback π T.hom).Modules) (hfp : F.IsFinitePresentation)
