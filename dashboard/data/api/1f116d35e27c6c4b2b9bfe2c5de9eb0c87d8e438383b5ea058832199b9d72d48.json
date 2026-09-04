@@ -1,0 +1,1 @@
+{"markdown": "I\u2019ve got the first compiler feedback now. The algebraic identities are structurally sound; the failures are elaboration details around the opaque tangent-space synonym and implicit group arguments. I\u2019m tightening those terms explicitly and keeping continuity as a real-topological statement.", "recommendation": ""}
