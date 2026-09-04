@@ -30,7 +30,7 @@ set_option autoImplicit false
 
 noncomputable section
 
-open scoped Manifold ContDiff
+open scoped Manifold ContDiff Topology
 
 namespace Mumford
 namespace Analytic
@@ -228,6 +228,61 @@ theorem range_mem_interior_of_contMDiffAt_of_mfderiv_isInvertible
   refine ⟨z, ?_⟩
   exact e.injOn hz_source hy_source hz
 
+/-- An invertible manifold derivative also gives a neighborhood on which the
+    original map is injective.  The proof uses the same extended-chart
+    construction as the range-interior lemma above. -/
+theorem eventually_injective_of_contMDiffAt_of_mfderiv_isInvertible
+    {𝕜 E' H' M : Type*}
+    [RCLike 𝕜]
+    [NormedAddCommGroup E'] [NormedSpace 𝕜 E'] [CompleteSpace E']
+    [TopologicalSpace H'] (I' : ModelWithCorners 𝕜 E' H')
+    [TopologicalSpace M] [ChartedSpace H' M] [IsManifold I' 1 M]
+    [I'.Boundaryless]
+    {f : E' → M} {x : E'}
+    (hf : ContMDiffAt 𝓘(𝕜, E') I' 1 f x)
+    (hderiv : (mfderiv 𝓘(𝕜, E') I' f x).IsInvertible) :
+    ∃ U ∈ 𝓝 x, Set.InjOn f U := by
+  let e := extChartAt I' (f x)
+  let g : E' → E' := fun y => e (f y)
+  have hg_contDiff : ContDiffAt 𝕜 1 g x := by
+    have h := (contMDiffAt_iff_target.mp hf).2
+    exact h.contDiffAt
+  have hf_md : MDifferentiableAt 𝓘(𝕜, E') I' f x :=
+    hf.mdifferentiableAt one_ne_zero
+  have he_md : MDifferentiableAt I' 𝓘(𝕜, E') e (f x) :=
+    mdifferentiableAt_extChartAt (mem_chart_source H' (f x))
+  have hg_mfderiv :
+      mfderiv 𝓘(𝕜, E') 𝓘(𝕜, E') g x =
+        (mfderiv I' 𝓘(𝕜, E') e (f x)).comp
+          (mfderiv 𝓘(𝕜, E') I' f x) := by
+    exact mfderiv_comp x he_md hf_md
+  have hg_invertible : (fderiv 𝕜 g x).IsInvertible := by
+    rw [← mfderiv_eq_fderiv, hg_mfderiv]
+    exact (isInvertible_mfderiv_extChartAt
+      (I := I') (x := f x) (y := f x)
+        (mem_extChartAt_source (I := I') (f x))).comp hderiv
+  obtain ⟨e', he'⟩ := hg_invertible
+  have hg_hasFDeriv : HasFDerivAt g (e' : E' →L[𝕜] E') x := by
+    rw [he']
+    exact (hg_contDiff.differentiableAt one_ne_zero).hasFDerivAt
+  let φ := hg_contDiff.toOpenPartialHomeomorph g hg_hasFDeriv one_ne_zero
+  have hφg : (φ : E' → E') = g := by
+    dsimp [φ]
+  let U : Set E' := φ.source
+  refine ⟨U, ?_, ?_⟩
+  · have hφx : x ∈ φ.source := by
+      dsimp [φ]
+      exact ContDiffAt.mem_toOpenPartialHomeomorph_source
+        hg_contDiff hg_hasFDeriv one_ne_zero
+    exact φ.open_source.mem_nhds hφx
+  · intro y hy z hz hyz
+    have hy' : y ∈ φ.source := by simpa [U] using hy
+    have hz' : z ∈ φ.source := by simpa [U] using hz
+    apply φ.injOn hy' hz'
+    rw [hφg]
+    dsimp [g, e]
+    rw [hyz]
+
 /-!
 ### Consuming the adjoint producer
 -/
@@ -406,6 +461,39 @@ theorem canonicalRealFlow_time_one_mem_interior
       dsimp [exp, f, e]
   rw [← hrange]
   exact hlocal_one
+
+/-! The realified inverse-function argument also supplies local injectivity for
+    the named complex exponential candidate.  This is a topological statement
+    about the underlying tangent space; it does not assert complex `C¹`
+    regularity. -/
+theorem canonicalComplexExponential_exists_nhds_injOn
+    [CompleteSpace E] [T2Space G]
+    [I.Boundaryless] [CompactSpace G] [PreconnectedSpace G] :
+    ∃ U ∈ 𝓝 (0 : E),
+      Set.InjOn (canonicalComplexExponential (G := G) I) U := by
+  let f : E → G := fun v => canonicalRealFlow (G := G) I v 1
+  have hf : ContMDiff 𝓘(ℝ, E) (complexToRealModel I) 1 f := by
+    simpa [f] using (canonicalRealFlow_time_one_contMDiff (G := G) I)
+  have hdiff : MDifferentiableAt 𝓘(ℝ, E) (complexToRealModel I) f 0 :=
+    hf.mdifferentiableAt one_ne_zero
+  have hderiv :
+      mfderiv 𝓘(ℝ, E) (complexToRealModel I) f 0 =
+        ContinuousLinearMap.id ℝ E := by
+    dsimp [f]
+    exact mfderiv_canonicalRealFlow_time_one_eq_id (G := G) I hdiff
+  have hinvertible :
+      (mfderiv 𝓘(ℝ, E) (complexToRealModel I) f 0).IsInvertible := by
+    rw [hderiv]
+    exact ⟨ContinuousLinearEquiv.refl ℝ E, rfl⟩
+  obtain ⟨U, hU, hUinj⟩ :=
+    eventually_injective_of_contMDiffAt_of_mfderiv_isInvertible
+      (𝕜 := ℝ) (I' := complexToRealModel I) hf.contMDiffAt hinvertible
+  refine ⟨U, hU, ?_⟩
+  intro y hy z hz hyz
+  apply hUinj hy hz
+  change canonicalRealFlow (G := G) I y 1 =
+    canonicalRealFlow (G := G) I z 1
+  exact hyz
 
 /-- The time-one canonical real flow is surjective.  Its image is a subgroup
 that contains an identity neighborhood, hence is both open and closed in the
