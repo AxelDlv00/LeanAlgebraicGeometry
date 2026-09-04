@@ -16,6 +16,7 @@ import MilneLib.StableAffineSections
 import MilneLib.InvariantLocalization
 import MilneLib.InvariantLocalizationTransitions
 import MilneLib.InvariantQuotientOpen
+import MilneLib.InvariantQuotientRestriction
 import MilneLib.InvariantQuotientOverlap
 import MilneLib.InvariantQuotientSections
 import MilneLib.InvariantQuotientOrder
@@ -23,6 +24,7 @@ import MilneLib.InvariantQuotientGlue
 import MilneLib.InvariantQuotientCrossChart
 import MilneLib.InvariantQuotientCrossChartCompat
 import MilneLib.AffineQuotientOver
+import MilneLib.AffineTensorCarrier
 import MilneLib.Torsion
 import MilneLib.Coherent
 import MilneLib.LinearAlgebra
