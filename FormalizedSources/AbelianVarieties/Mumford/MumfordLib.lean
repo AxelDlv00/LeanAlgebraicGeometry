@@ -25,6 +25,8 @@ import MumfordLib.RealLieFlowSubgroup
 import MumfordLib.RealLieFlowAddition
 import MumfordLib.RealLieIntegralCurveRegularity
 import MumfordLib.RealLieFlowParameter
+import MumfordLib.ComplexLieFlowParameter
+import MumfordLib.ComplexLieFlowRegularity
 import MumfordLib.ComplexLieCommutativity
 import MumfordLib.ComplexVectorLatticeTopology
 import MumfordLib.ComplexQuotientAtlas
