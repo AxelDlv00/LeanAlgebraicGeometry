@@ -7,11 +7,15 @@ Authors: The Mumford Contributors
 import MumfordLib.ComplexLieFlowParameter
 
 /-!
-# Real regularity of complex-parameterized flows
+# Regularity of complex-parameterized flows
 
-The complex parameter is used only as a real parameter here.  For a fixed
-tangent vector, scalar multiplication is a real-smooth map, so the existing
-real time-one regularity theorem gives a genuine `C¹` parameterized flow.
+The first theorem records the real `C¹` regularity obtained directly from the
+real time-one flow.  The subsequent theorems use the additive flow law and the
+reverse scalar derivative bridge to prove complex `MDifferentiable` regularity
+of the named exponential candidate and of its scalar parameterizations.  These
+are proved regularity producers; the source-level uniqueness, homomorphism
+interpretation, and lattice uniformization statements remain separate
+boundaries.
 -/
 
 set_option autoImplicit false
