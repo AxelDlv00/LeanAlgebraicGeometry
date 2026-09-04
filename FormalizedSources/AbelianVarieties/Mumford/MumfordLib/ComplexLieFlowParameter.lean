@@ -61,6 +61,60 @@ def canonicalComplexExponential
   canonicalRealFlow I (complexToRealLieAlgebraMap I v) 1
 
 @[simp]
+theorem canonicalComplexExponential_zero
+    [CompleteSpace E] [T2Space G] [I.Boundaryless]
+    [CompactSpace G] [PreconnectedSpace G] :
+    canonicalComplexExponential (G := G) I 0 = (1 : G) := by
+  unfold canonicalComplexExponential
+  rw [map_zero]
+  exact congrFun (canonicalRealFlow_zero (G := G) I) 1
+
+theorem canonicalComplexExponential_add
+    [CompleteSpace E] [T2Space G] [I.Boundaryless]
+    [CompactSpace G] [PreconnectedSpace G] (v w : E) :
+    canonicalComplexExponential (G := G) I (v + w) =
+      canonicalComplexExponential (G := G) I v *
+        canonicalComplexExponential (G := G) I w := by
+  unfold canonicalComplexExponential
+  rw [map_add]
+  exact canonicalRealFlow_add (G := G) I
+    (complexToRealLieAlgebraMap I v)
+    (complexToRealLieAlgebraMap I w) 1
+
+theorem canonicalComplexExponential_neg
+    [CompleteSpace E] [T2Space G] [I.Boundaryless]
+    [CompactSpace G] [PreconnectedSpace G] (v : E) :
+    canonicalComplexExponential (G := G) I (-v) =
+      (canonicalComplexExponential (G := G) I v)⁻¹ := by
+  unfold canonicalComplexExponential
+  rw [map_neg]
+  exact canonicalRealFlow_neg (G := G) I
+    (complexToRealLieAlgebraMap I v) 1
+
+/-! The multiplicative codomain is made explicit in the bundled form below:
+    an additive tangent vector is viewed as an element of `Multiplicative E`,
+    while the Lie group target keeps its native multiplication. -/
+def canonicalComplexExponentialMonoidHom
+    [CompleteSpace E] [T2Space G] [I.Boundaryless]
+    [CompactSpace G] [PreconnectedSpace G] :
+    Multiplicative E →* G where
+  toFun v := canonicalComplexExponential (G := G) I v.toAdd
+  map_one' := by
+    simpa using (canonicalComplexExponential_zero (G := G) I)
+  map_mul' v w := by
+    change canonicalComplexExponential (G := G) I (v.toAdd + w.toAdd) =
+      canonicalComplexExponential (G := G) I v.toAdd *
+        canonicalComplexExponential (G := G) I w.toAdd
+    exact canonicalComplexExponential_add (G := G) I v.toAdd w.toAdd
+
+@[simp]
+theorem canonicalComplexExponentialMonoidHom_apply
+    [CompleteSpace E] [T2Space G] [I.Boundaryless]
+    [CompactSpace G] [PreconnectedSpace G] (v : Multiplicative E) :
+    canonicalComplexExponentialMonoidHom (G := G) I v =
+      canonicalComplexExponential (G := G) I v.toAdd := rfl
+
+@[simp]
 theorem canonicalComplexFlow_eq_exponential_smul
     [CompleteSpace E] [T2Space G] [I.Boundaryless]
     [CompactSpace G] [PreconnectedSpace G] (v : E) (z : ℂ) :
