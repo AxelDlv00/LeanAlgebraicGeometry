@@ -2,16 +2,14 @@ id: AJC.picrep.divgrassmannian
 title: 'D2'': Grassmannian comparison for the degree-d divisor functor'
 projects:
 - Algebraic-Jacobian-Challenge
-summary: 'ACTIVE, currently unowned. The locally-quasi-finite support input is no
-  longer open: Projective/EffectiveCartierSupport.lean supplies the unconditional
-  DivFamily instance on proper smooth geometrically integral relative curves, and
-  DemandLedger verifies consumer synthesis. Remaining D2 work is now exactly: (i)
-  fibre-H0 and point-rank transport, (ii) arbitrary-test-base finite locally free
-  rank, (iii) the evaluation epimorphism, and (iv) the pullback-natural DivFunctorDeg-to-Grassmannian
-  package. Existing quotient/class, support transport, affine pullback conjugacy,
-  affine epi substrate, finite presentation, quasi-coherence, flatness, and tensor
-  globalization remain landed. Consumers must import the new producer module or DemandLedger;
-  importing DivPushforwardFlat alone does not expose it.'
+summary: 'ACTIVE, partial. The curve fibre-H0/rank transport is now closed: fiberH0_twist_eq_fiberDeg_of_curve
+  derives fibre H0 of a line-bundle twist from finite schematic support on every smooth
+  proper geometrically integral relative curve, with no rational-point binder. Remaining
+  D2 producers are arbitrary-test-base finite locally free pushforward rank, the post-pushforward
+  evaluation epimorphism, and the pullback-natural DivFunctorDeg-to-Grassmannian class.
+  The affine finite-presentation consumer experiment was preserved but not landed
+  after bounded checks timed out; next refactor the generic finite-support pushforward
+  finite-presentation proof out of DivGrassmannianEmbedding.'
 status: pending
 kind: proof
 priority: normal
@@ -35,8 +33,12 @@ metadata:
       item'
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.picrep
-  updated_at: '2026-08-04T01:50:53.167671+00:00'
+  updated_at: '2026-09-04T10:38:25.018661+00:00'
   pinned_commits:
+  - 97e5f48aff
+  - dde18df1c3
+  - e503971311
+  - df423ad908
   - cb15d595e91dbc239e94329f56f994228937d04c
   - dd26508b7485d91ac602c6ede8db3229623486f0
   - 538c651bae
