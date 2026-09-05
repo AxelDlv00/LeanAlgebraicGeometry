@@ -4,7 +4,6 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: The AlgebraicJacobian Contributors
 -/
 import AlgebraicJacobian.Picard.Pic0FiniteStageGluePackage
-import AlgebraicJacobian.Descent.GluedMapData
 
 /-!
 # The finite-stage Picard glue as a scheme over its field of definition
@@ -31,24 +30,6 @@ variable [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
   [GeometricallyIrreducible C.hom] [IsSepClosed k]
 
 namespace Pic0FiniteStageGluePackage
-
-/-! The dependent scalar towers are assembled by `P.presentation` in the package module.
-This projection keeps the public map type aligned with the presentation's glue datum and
-avoids rebuilding those towers in every consumer. -/
-noncomputable def gluedMapData
-    {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
-    (P : Pic0FiniteStageGluePackage C F) :
-    AlgebraicJacobian.GluedMapData P.glueData (Spec (.of P.N.1)) :=
-  P.presentation.mapData
-
-set_option maxHeartbeats 12800000 in
--- The projection is definitionally the selected map datum.
-@[simp]
-theorem presentation_mapData
-    {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
-    (P : Pic0FiniteStageGluePackage C F) :
-    P.presentation.mapData = P.gluedMapData :=
-  rfl
 
 /-- The structure map from the finite-stage glued scheme to its field of definition. -/
 noncomputable def gluedMap
@@ -94,14 +75,6 @@ noncomputable def chartBaseChangeMap
         C P.L P.n P.m P.relation P.M P.N U).toSemiring
       (pic0FiniteStageChartBaseChangeAlgebra
         C P.L P.n P.m P.relation P.M P.N U)))
-
-@[simp]
-theorem gluedMapData_chartMap
-    {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
-    (P : Pic0FiniteStageGluePackage C F)
-    (U : Pic0FiniteStageChartIndex C) :
-    P.gluedMapData.chartMap U = chartBaseChangeMap C P U := by
-  rfl
 
 /-- The finite-stage Picard glue, retained over the finite field `P.N.1`. -/
 noncomputable def gluedOver
