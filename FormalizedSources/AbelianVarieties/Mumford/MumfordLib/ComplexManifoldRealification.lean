@@ -99,6 +99,50 @@ theorem complexToRealLieAlgebraEquiv_symm_apply
     (complexToRealLieAlgebraEquiv (G := G) I).symm v = v :=
   rfl
 
+/-! The corresponding bridge for the original complex model is useful when a
+    theorem is stated with the intrinsic tangent fibre but its analytic proof
+    is carried out in the chosen model coordinates. -/
+
+/-- Identity-on-vectors complex-linear identification of the chosen model with
+the tangent fibre at the identity.
+
+This is a representation bridge only.  In particular, it does not add a
+normed or manifold structure to `GroupLieAlgebra I G`; holomorphic statements
+with an intrinsic tangent parameter below are phrased by pulling that
+parameter back along this equivalence. -/
+def complexLieAlgebraEquiv
+    {G : Type*} (I : ModelWithCorners ℂ E H)
+    [TopologicalSpace G] [ChartedSpace H G] [Group G] :
+    E ≃ₗ[ℂ] GroupLieAlgebra I G :=
+  { toFun := fun v => v
+    invFun := fun v => v
+    left_inv := by
+      intro v
+      rfl
+    right_inv := by
+      intro v
+      rfl
+    map_add' := by
+      intro v w
+      rfl
+    map_smul' := by
+      intro c v
+      rfl }
+
+@[simp]
+theorem complexLieAlgebraEquiv_apply
+    {G : Type*} [TopologicalSpace G] [ChartedSpace H G] [Group G]
+    (I : ModelWithCorners ℂ E H) (v : E) :
+    complexLieAlgebraEquiv (G := G) I v = (v : GroupLieAlgebra I G) :=
+  rfl
+
+@[simp]
+theorem complexLieAlgebraEquiv_symm_apply
+    {G : Type*} [TopologicalSpace G] [ChartedSpace H G] [Group G]
+    (I : ModelWithCorners ℂ E H) (v : GroupLieAlgebra I G) :
+    (complexLieAlgebraEquiv (G := G) I).symm v = (v : E) :=
+  rfl
+
 /-- Every complex-smooth coordinate change is smooth for the realified model. -/
 theorem contDiffGroupoid_complex_le_real
     (I : ModelWithCorners ℂ E H) (n : ℕ∞ω) :

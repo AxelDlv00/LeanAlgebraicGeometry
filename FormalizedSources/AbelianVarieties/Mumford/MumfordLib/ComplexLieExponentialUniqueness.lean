@@ -278,5 +278,47 @@ theorem existsUnique_complexLieExponentialFamily :
     exact complexLieExponential_eq_canonical (G := G) I
       (hΦ.1 p.2) (hΦ.2.1 p.2) (hΦ.2.2.2 p.2) p.1
 
+/-! ### The source-shaped tangent-space family -/
+
+/-- The canonical family can be stated with the tangent fibre at the identity
+as its parameter.
+
+The holomorphicity clause is deliberately expressed after pulling the tangent
+parameter back to the chosen model through `complexLieAlgebraEquiv`: the
+intrinsic tangent fibre is a type synonym and is not being given a new normed
+or manifold structure here.  Thus this theorem is a source-shaped producer
+for the intrinsic one-parameter maps while retaining the precise model-level
+analytic content proved above. -/
+theorem existsUnique_intrinsicComplexLieExponentialFamily :
+    ∃! Φ : ℂ × GroupLieAlgebra I G → G,
+      (∀ v : GroupLieAlgebra I G, Φ (0, v) = 1) ∧
+      (∀ (v : GroupLieAlgebra I G) (z w : ℂ),
+        Φ (z + w, v) = Φ (z, v) * Φ (w, v)) ∧
+      MDifferentiable (𝓘(ℂ).prod 𝓘(ℂ, E)) I
+        (fun p : ℂ × E =>
+          Φ (p.1, complexLieAlgebraEquiv (G := G) I p.2)) ∧
+      (∀ v : GroupLieAlgebra I G,
+        HasMFDerivAt 𝓘(ℂ) I (fun z : ℂ => Φ (z, v)) 0
+          ((ContinuousLinearMap.id ℂ ℂ).smulRight v)) := by
+  let e : E ≃ₗ[ℂ] GroupLieAlgebra I G :=
+    complexLieAlgebraEquiv (G := G) I
+  refine ⟨(fun p : ℂ × GroupLieAlgebra I G =>
+    canonicalComplexFlow (G := G) I (e.symm p.2) p.1), ?_, ?_⟩
+  · refine ⟨?_, ?_, ?_, ?_⟩
+    · intro v
+      simp [e]
+    · intro v z w
+      simpa [e] using
+        canonicalComplexFlow_add_parameter (G := G) I (e.symm v) z w
+    · simpa [e] using
+        (canonicalComplexFlow_mdifferentiable_joint (G := G) I)
+    · intro v
+      simpa [e] using
+        canonicalComplexFlow_hasMFDerivAt_zero (G := G) I (e.symm v)
+  · intro Φ hΦ
+    funext p
+    exact complexLieExponential_eq_canonical (G := G) I
+      (hΦ.1 p.2) (hΦ.2.1 p.2) (hΦ.2.2.2 p.2) p.1
+
 end Analytic
 end Mumford
