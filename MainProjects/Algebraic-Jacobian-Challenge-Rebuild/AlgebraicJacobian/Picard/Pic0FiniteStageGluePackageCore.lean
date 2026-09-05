@@ -64,11 +64,6 @@ def N (D : Pic0FiniteStageGlueContext C F) := D.triple.N
 def thetaN (D : Pic0FiniteStageGlueContext C F) := D.triple.thetaN
 def tripleComparison (D : Pic0FiniteStageGlueContext C F) := D.triple.comparison
 
-@[simp] theorem tripleComparison_family (D : Pic0FiniteStageGlueContext C F) :
-    D.triple.comparison =
-      pic0FiniteStageTripleModelComparisonFamily
-        C D.L D.n D.m D.relation D.e D.M D.mapM D.comparison := rfl
-
 end Pic0FiniteStageGlueContext
 
 end
