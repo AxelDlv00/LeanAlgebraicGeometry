@@ -209,10 +209,11 @@ theorem canonicalComplexExponentialPeriodLattice_finrank
   exact ZLattice.rank ℝ
     (canonicalComplexExponentialPeriodLattice (G := G) I)
 
-/-- The candidate period lattice has rank twice the intrinsic complex tangent
-dimension.  This is a dimension identity for the conditional candidate; it
-does not identify that candidate with the source-level holomorphic
-exponential. -/
+/-- The candidate period lattice has rank twice the complex dimension of the
+chosen model space `E`.  This is a dimension identity for the conditional
+candidate; it does not identify that candidate with the source-level
+holomorphic exponential or assert that `E` is an independently constructed
+intrinsic tangent object. -/
 theorem canonicalComplexExponentialPeriodLattice_finrank_eq_two_mul_complex
     :
     Module.finrank ℤ (canonicalComplexExponentialPeriodLattice (G := G) I) =
@@ -220,8 +221,8 @@ theorem canonicalComplexExponentialPeriodLattice_finrank_eq_two_mul_complex
   rw [canonicalComplexExponentialPeriodLattice_finrank (G := G) I]
   exact Uniformization.finrank_real_eq_two_mul_finrank_complex
 
-/-- If the complex tangent model has genus dimension `g`, the candidate period
-lattice has the expected rank `2 * g`. -/
+/-- Under a caller-supplied identification of the model-space dimension with a
+genus `g`, the candidate period lattice has rank `2 * g`. -/
 theorem canonicalComplexExponentialPeriodLattice_finrank_eq_two_mul
     {g : ℕ} (hgenus : Module.finrank ℂ E = g) :
     Module.finrank ℤ (canonicalComplexExponentialPeriodLattice (G := G) I) =
