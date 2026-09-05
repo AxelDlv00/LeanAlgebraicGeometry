@@ -956,7 +956,7 @@
     },
     "states": {
       "blocked": 144,
-      "closed": 1263,
+      "closed": 1313,
       "formalized_open": 3,
       "informal": 485,
       "ready": 342
@@ -4526,7 +4526,7 @@
     },
     {
       "chapter": "Curves",
-      "comment_count": 8,
+      "comment_count": 11,
       "dep_count": 0,
       "descendant_count": 4,
       "group": "c123",
