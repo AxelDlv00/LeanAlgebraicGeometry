@@ -401,6 +401,36 @@ theorem pullbackOverlapIsoTriple_hom_snd [Finite G]
         (quotientOverlapOpen act p hact i l).ι ≫
       (quotientOverlapOpen act p hact i l).ι)
 
+@[reassoc]
+theorem pullbackOverlapIsoTriple_inv_fst [Finite G]
+    (p : X ⟶ Spec (CommRingCat.of k))
+    (hact : ∀ g : G, (act g).hom ≫ p = p)
+    (i j l : StableAffineOpen act) :
+    letI := sectionsAlgebra p i.U
+    letI := sectionsMulSemiringAction act i.stable
+    letI := sectionsSMulCommClass act p hact i.stable
+    (pullbackOverlapIsoTriple act p hact i j l).inv ≫
+        pullback.fst (quotientOverlapι act p hact i j)
+          (quotientOverlapι act p hact i l) =
+      tripleToOverlapLeft act p hact i j l := by
+  rw [← pullbackOverlapIsoTriple_hom_fst]
+  simp
+
+@[reassoc]
+theorem pullbackOverlapIsoTriple_inv_snd [Finite G]
+    (p : X ⟶ Spec (CommRingCat.of k))
+    (hact : ∀ g : G, (act g).hom ≫ p = p)
+    (i j l : StableAffineOpen act) :
+    letI := sectionsAlgebra p i.U
+    letI := sectionsMulSemiringAction act i.stable
+    letI := sectionsSMulCommClass act p hact i.stable
+    (pullbackOverlapIsoTriple act p hact i j l).inv ≫
+        pullback.snd (quotientOverlapι act p hact i j)
+          (quotientOverlapι act p hact i l) =
+      tripleToOverlapRight act p hact i j l := by
+  rw [← pullbackOverlapIsoTriple_hom_snd]
+  simp
+
 end StableAffineOpen
 end StableGroupAction
 end MilneLib
