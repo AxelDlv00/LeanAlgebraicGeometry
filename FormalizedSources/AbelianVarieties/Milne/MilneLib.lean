@@ -21,6 +21,7 @@ import MilneLib.InvariantLocalizationTransitions
 import MilneLib.InvariantQuotientNormOpen
 import MilneLib.InvariantQuotientOpen
 import MilneLib.InvariantQuotientOpenEmbedding
+import MilneLib.InvariantQuotientOpenImmersion
 import MilneLib.InvariantQuotientRestriction
 import MilneLib.InvariantQuotientOverlap
 import MilneLib.InvariantQuotientStableOverlap
