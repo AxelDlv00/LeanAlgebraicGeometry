@@ -4,6 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: The Milne Contributors
 -/
 import Mathlib.RingTheory.Flat.FaithfullyFlat.Algebra
+import Mathlib.RingTheory.Finiteness.Descent
 import Mathlib.RingTheory.TensorProduct.Basic
 
 /-!
@@ -235,6 +236,18 @@ noncomputable def descentEquiv [Module.Flat A B] : B ⊗[A] D.descended ≃ₗ[B
 
 @[simp] theorem descentEquiv_tmul [Module.Flat A B] (b : B) (m : D.descended) :
     D.descentEquiv (b ⊗ₜ m) = b • (m : M) := rfl
+
+/-- Finite generation descends along a faithfully flat descent datum.  The
+comparison equivalence identifies the base change of the descended module
+with the given finite `B`-module, after which the standard faithfully-flat
+tensor-product finiteness theorem applies. -/
+theorem finite_descended_of_finite [Module.FaithfullyFlat A B]
+    [Module.Finite B M] :
+    Module.Finite A D.descended := by
+  letI : Module.Flat A B := Module.FaithfullyFlat.toFlat
+  have hTensor : Module.Finite B (B ⊗[A] D.descended) := by
+    exact (Module.Finite.equiv_iff D.descentEquiv).mpr inferInstance
+  exact Module.Finite.of_finite_tensorProduct_of_faithfullyFlat B
 
 section Amitsur
 
