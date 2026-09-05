@@ -149,7 +149,6 @@ theorem chartMap_preimage_basicOpen_eval
   rw [r.chartMap_preimage_basicOpen]
   exact congrArg (fun z => a.chart.U.toScheme.basicOpen z) (r.chartEval_X j).symm
 
-set_option maxHeartbeats 800000 in
 -- The canonical Proj restriction expands through a large glued cover.
 /-- Restricting the canonical chart map to its denominator standard open is
 the affine map supplied by `toBasicOpenOfGlobalSections`. -/
@@ -191,7 +190,6 @@ theorem chartMap_morphismRestrict_denominator
   all_goals simp only [f]
   all_goals rfl
 
-set_option maxHeartbeats 800000 in
 -- The canonical-cover normalization and affine transport require extra elaboration.
 /-- The canonical chart map is the normalized affine coordinate map attached
 to the regularized sections. -/
