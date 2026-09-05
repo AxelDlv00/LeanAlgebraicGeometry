@@ -5,6 +5,7 @@ Authors: The Hartshorne Contributors
 -/
 
 import HartshorneLib.Chapter4Nonspecial
+import HartshorneLib.Chapter4SmoothProperDevissage
 
 /-!
 # Hartshorne IV.3.2: numerical linear-system criteria
@@ -149,6 +150,92 @@ theorem exists_divisorSection_not_mem_twoDevissage_of_veryAmple
   obtain ⟨g, hgD, hgnot⟩ := SetLike.exists_of_lt
     (divisorSections_twoDevissage_lt_of_veryAmple hD x y hx hy)
   exact ⟨⟨g, hgD⟩, hgnot⟩
+
+/-- Very ampleness implies numerical base-point-freeness.  The proof uses the
+equal-point instance of the two-point condition, so the tangent-direction
+part of the criterion is retained rather than discarded. -/
+theorem basePointFreeLinearSystem_of_veryAmple
+    {D : CurveDivisor k X} (hD : VeryAmpleLinearSystem D) :
+    BasePointFreeLinearSystem D := by
+  intro x hx
+  have hdrop := hD x x hx hx
+  have hupper1 := h0_le_h0_sub_point_add_one_of_smoothProperIntegralCurve hx D
+  have hupper2 := h0_le_h0_sub_point_add_one_of_smoothProperIntegralCurve hx
+    (CurveDivisor.devissageDivisor hx D)
+  have hdrop1 :
+      (CategoryTheory.Sheaf.h0 (divisorSheaf D) : ℤ) -
+        CategoryTheory.Sheaf.h0
+          (divisorSheaf (CurveDivisor.devissageDivisor hx D)) = 1 := by
+    omega
+  exact hdrop1
+
+/-- Under very ampleness, each successive deletion in the ordered two-point
+dévissage has numerical drop one. -/
+theorem h0_sub_point_sub_point_eq_one_of_veryAmple
+    {D : CurveDivisor k X} (hD : VeryAmpleLinearSystem D)
+    (x y : X.left) (hx : x ≠ genericPoint X.left)
+    (hy : y ≠ genericPoint X.left) :
+    (CategoryTheory.Sheaf.h0
+        (divisorSheaf (CurveDivisor.devissageDivisor hx D)) : ℤ) -
+      CategoryTheory.Sheaf.h0
+        (divisorSheaf (CurveDivisor.devissageDivisor hy
+          (CurveDivisor.devissageDivisor hx D))) = 1 := by
+  have hbp : BasePointFreeLinearSystem D :=
+    basePointFreeLinearSystem_of_veryAmple hD
+  have hone := hbp x hx
+  have htot := hD x y hx hy
+  omega
+
+/-- The equal-point specialization gives a strict second dévissage step,
+which is the intrinsic two-jet/tangent witness used in the very-ample
+criterion. -/
+theorem divisorSections_twoDevissage_lt_of_veryAmple_same
+    {D : CurveDivisor k X} (hD : VeryAmpleLinearSystem D)
+    (x : X.left) (hx : x ≠ genericPoint X.left) :
+    divisorSections (CurveDivisor.devissageDivisor hx
+      (CurveDivisor.devissageDivisor hx D)) (⊤ : X.left.Opens) <
+      divisorSections (CurveDivisor.devissageDivisor hx D) ⊤ := by
+  have hdrop := hD x x hx hx
+  have hupper := h0_le_h0_sub_point_add_one_of_smoothProperIntegralCurve hx D
+  have hltH :
+      CategoryTheory.Sheaf.h0
+          (divisorSheaf (CurveDivisor.devissageDivisor hx
+            (CurveDivisor.devissageDivisor hx D))) <
+        CategoryTheory.Sheaf.h0
+          (divisorSheaf (CurveDivisor.devissageDivisor hx D)) := by
+    omega
+  let eSmall := CategoryTheory.Sheaf.HModule.linearEquiv₀ isTerminalTop
+    (divisorSheaf (CurveDivisor.devissageDivisor hx
+      (CurveDivisor.devissageDivisor hx D)))
+  let eBig := CategoryTheory.Sheaf.HModule.linearEquiv₀ isTerminalTop
+    (divisorSheaf (CurveDivisor.devissageDivisor hx D))
+  have hlt :
+      Module.finrank k
+          ((divisorSheaf (CurveDivisor.devissageDivisor hx
+            (CurveDivisor.devissageDivisor hx D))).obj.obj
+            (Opposite.op (⊤ : X.left.Opens))) <
+        Module.finrank k
+          ((divisorSheaf (CurveDivisor.devissageDivisor hx D)).obj.obj
+            (Opposite.op (⊤ : X.left.Opens))) := by
+    rw [← eSmall.finrank_eq, ← eBig.finrank_eq]
+    exact hltH
+  exact Submodule.lt_of_le_of_finrank_lt_finrank
+    (divisorSections_mono
+      (devissageDivisor_le hx (CurveDivisor.devissageDivisor hx D))
+      (⊤ : X.left.Opens)) hlt
+
+/-- A very ample system has a section in `D - x` which is not in `D - 2x`.
+This records tangent separation without asserting a separate two-jet model. -/
+theorem exists_tangent_section_witness_of_veryAmple
+    {D : CurveDivisor k X} (hD : VeryAmpleLinearSystem D)
+    (x : X.left) (hx : x ≠ genericPoint X.left) :
+    ∃ s : divisorSections (CurveDivisor.devissageDivisor hx D) ⊤,
+      (s : X.left.functionField) ∉
+        divisorSections (CurveDivisor.devissageDivisor hx
+          (CurveDivisor.devissageDivisor hx D)) ⊤ := by
+  obtain ⟨g, hgsmall, hgnested⟩ := SetLike.exists_of_lt
+    (divisorSections_twoDevissage_lt_of_veryAmple_same hD x hx)
+  exact ⟨⟨g, hgsmall⟩, hgnested⟩
 
 /-- Degree at least `2g` implies numerical base-point-freeness (IV.3.2). -/
 theorem basePointFreeLinearSystem_of_degree_ge_two_mul_genus
