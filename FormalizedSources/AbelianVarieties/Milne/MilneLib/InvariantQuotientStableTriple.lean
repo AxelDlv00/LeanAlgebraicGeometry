@@ -152,6 +152,42 @@ noncomputable def tripleCoordinateIso (i j l : StableAffineOpen act) :
       (show ((i.U ⊓ j.U) ⊓ (i.U ⊓ l.U)) ≤ i.U from
         (inf_le_left.trans inf_le_left)))
 
+/-- Restricting the affine-coordinate presentation of a triple intersection
+to its left pairwise intersection agrees with the pairwise presentation. -/
+@[reassoc]
+theorem tripleCoordinateIso_inv_ι_eq_left
+    (i j l : StableAffineOpen act) :
+    (tripleCoordinateIso act i j l).inv ≫
+        (tripleCoordinateOpen act i j l).ι =
+      X.homOfLE inf_le_left ≫
+        (overlapCoordinateIso act i j).inv ≫
+          (overlapCoordinateOpen act i j).ι := by
+  apply (cancel_mono i.affine.fromSpec).1
+  dsimp only [IsAffineOpen.fromSpec]
+  simp only [tripleCoordinateIso, tripleCoordinateOpen, overlapCoordinateIso,
+    overlapCoordinateOpen, Iso.trans_inv, Category.assoc,
+    Scheme.Hom.preimageIso_inv_ι_assoc]
+  rw [Scheme.Opens.isoOfLE_inv_ι, Scheme.Opens.isoOfLE_inv_ι,
+    Scheme.homOfLE_ι]
+
+/-- Restricting the affine-coordinate presentation of a triple intersection
+to its right pairwise intersection agrees with the pairwise presentation. -/
+@[reassoc]
+theorem tripleCoordinateIso_inv_ι_eq_right
+    (i j l : StableAffineOpen act) :
+    (tripleCoordinateIso act i j l).inv ≫
+        (tripleCoordinateOpen act i j l).ι =
+      X.homOfLE inf_le_right ≫
+        (overlapCoordinateIso act i l).inv ≫
+          (overlapCoordinateOpen act i l).ι := by
+  apply (cancel_mono i.affine.fromSpec).1
+  dsimp only [IsAffineOpen.fromSpec]
+  simp only [tripleCoordinateIso, tripleCoordinateOpen, overlapCoordinateIso,
+    overlapCoordinateOpen, Iso.trans_inv, Category.assoc,
+    Scheme.Hom.preimageIso_inv_ι_assoc]
+  rw [Scheme.Opens.isoOfLE_inv_ι, Scheme.Opens.isoOfLE_inv_ι,
+    Scheme.homOfLE_ι]
+
 /-- The affine invariant quotient map on the coordinate triple open. -/
 noncomputable def tripleCoordinateQuotientMap [Finite G]
     (p : X ⟶ Spec (CommRingCat.of k))
@@ -290,6 +326,28 @@ theorem tripleToOverlapLeft_fac [Finite G]
     quotientOverlap quotientTriple
   exact Scheme.homOfLE_ι _ (quotientTripleOpen_le_overlapLeft act p hact i j l)
 
+/-- The pinned triple quotient projection restricts to the pinned left
+pairwise quotient projection. -/
+@[reassoc]
+theorem tripleQuotientMap_tripleToOverlapLeft [Finite G]
+    (p : X ⟶ Spec (CommRingCat.of k))
+    (hact : ∀ g : G, (act g).hom ≫ p = p)
+    (i j l : StableAffineOpen act) :
+    letI := sectionsAlgebra p i.U
+    letI := sectionsMulSemiringAction act i.stable
+    letI := sectionsSMulCommClass act p hact i.stable
+    tripleQuotientMap act p hact i j l ≫
+        tripleToOverlapLeft act p hact i j l =
+      X.homOfLE inf_le_left ≫ overlapQuotientMap act p hact i j := by
+  letI := sectionsAlgebra p i.U
+  letI := sectionsMulSemiringAction act i.stable
+  letI := sectionsSMulCommClass act p hact i.stable
+  rw [← cancel_mono (quotientOverlapι act p hact i j)]
+  rw [Category.assoc, tripleToOverlapLeft_fac]
+  rw [tripleQuotientMap_fac, Category.assoc, overlapQuotientMap_fac]
+  rw [← Category.assoc, tripleCoordinateIso_inv_ι_eq_left]
+  simp only [Category.assoc]
+
 /-- Restriction from the triple overlap to its second pairwise overlap. -/
 noncomputable def tripleToOverlapRight [Finite G]
     (p : X ⟶ Spec (CommRingCat.of k))
@@ -322,6 +380,28 @@ theorem tripleToOverlapRight_fac [Finite G]
   unfold tripleToOverlapRight quotientOverlapι quotientTripleι
     quotientOverlap quotientTriple
   exact Scheme.homOfLE_ι _ (quotientTripleOpen_le_overlapRight act p hact i j l)
+
+/-- The pinned triple quotient projection restricts to the pinned right
+pairwise quotient projection. -/
+@[reassoc]
+theorem tripleQuotientMap_tripleToOverlapRight [Finite G]
+    (p : X ⟶ Spec (CommRingCat.of k))
+    (hact : ∀ g : G, (act g).hom ≫ p = p)
+    (i j l : StableAffineOpen act) :
+    letI := sectionsAlgebra p i.U
+    letI := sectionsMulSemiringAction act i.stable
+    letI := sectionsSMulCommClass act p hact i.stable
+    tripleQuotientMap act p hact i j l ≫
+        tripleToOverlapRight act p hact i j l =
+      X.homOfLE inf_le_right ≫ overlapQuotientMap act p hact i l := by
+  letI := sectionsAlgebra p i.U
+  letI := sectionsMulSemiringAction act i.stable
+  letI := sectionsSMulCommClass act p hact i.stable
+  rw [← cancel_mono (quotientOverlapι act p hact i l)]
+  rw [Category.assoc, tripleToOverlapRight_fac]
+  rw [tripleQuotientMap_fac, Category.assoc, overlapQuotientMap_fac]
+  rw [← Category.assoc, tripleCoordinateIso_inv_ι_eq_right]
+  simp only [Category.assoc]
 
 /-- The pullback of the two pairwise quotient opens in chart `i` is the
 descended triple open. -/
