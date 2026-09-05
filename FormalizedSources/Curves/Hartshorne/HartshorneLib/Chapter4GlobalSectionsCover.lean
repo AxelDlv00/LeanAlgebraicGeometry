@@ -129,6 +129,152 @@ lemma coordinateOpenCover_restricted_map_preimage_basicOpen
     X.left.basicOpen (data.sections j) = ⊤
   simp
 
+noncomputable local instance coordinateGlobalSectionsAlgebra :
+    Algebra k Γ(X.left, ⊤) :=
+  (X.left.overAlgebraMap k (⊤ : X.left.Opens)).toAlgebra
+
+omit [IsAlgClosed k] [IsIntegral X.left] [SmoothOfRelativeDimension 1 X.hom]
+  [IsProper X.hom] in
+/-- The explicit map from a coordinate principal open to the corresponding
+standard affine chart of projective space. -/
+noncomputable def coordinateChartMap
+    (data : GlobalSectionsProjectiveMapData (k := k) (X := X) n)
+    (j : Fin (n + 1)) :
+    (data.coordinateOpenCover).X j ⟶
+      Proj.basicOpen
+        (MvPolynomial.homogeneousSubmodule (Fin (n + 1)) k)
+        (MvPolynomial.X j) :=
+  let f : MvPolynomial (Fin (n + 1)) k →+* Γ(X.left, ⊤) :=
+    (MvPolynomial.aeval data.sections).toRingHom
+  let hcoordinate :
+      X.left.basicOpen (data.sections j) =
+        X.left.basicOpen (f (MvPolynomial.X j)) := by
+    simp [f]
+  (X.left.isoOfEq hcoordinate).hom ≫
+    Proj.toBasicOpenOfGlobalSections
+      (MvPolynomial.homogeneousSubmodule (Fin (n + 1)) k) f rfl
+      Nat.zero_lt_one
+      ((MvPolynomial.mem_homogeneousSubmodule _ _).mpr
+        (MvPolynomial.isHomogeneous_X k j))
+
+omit [IsAlgClosed k] [IsIntegral X.left] [SmoothOfRelativeDimension 1 X.hom]
+  [IsProper X.hom] in
+/-- The explicit coordinate-chart map followed by the standard-open inclusion
+is the restriction of the canonical map to that member of the source cover. -/
+@[reassoc]
+theorem coordinateChartMap_ι
+    (data : GlobalSectionsProjectiveMapData (k := k) (X := X) n)
+    (j : Fin (n + 1)) :
+    data.coordinateChartMap j ≫
+        (Proj.basicOpen
+          (MvPolynomial.homogeneousSubmodule (Fin (n + 1)) k)
+          (MvPolynomial.X j)).ι =
+      (data.coordinateOpenCover).f j ≫ data.map := by
+  rw [coordinateChartMap, coordinateOpenCover_f]
+  let f : MvPolynomial (Fin (n + 1)) k →+* Γ(X.left, ⊤) :=
+    (MvPolynomial.aeval data.sections).toRingHom
+  have hf :
+      (HomogeneousIdeal.irrelevant
+        (MvPolynomial.homogeneousSubmodule (Fin (n + 1)) k)).toIdeal.map f = ⊤ :=
+    data.irrelevant_span
+  have hdeg : MvPolynomial.X j ∈
+      MvPolynomial.homogeneousSubmodule (Fin (n + 1)) k 1 :=
+    (MvPolynomial.mem_homogeneousSubmodule _ _).mpr
+      (MvPolynomial.isHomogeneous_X k j)
+  have hpre :=
+    Proj.fromOfGlobalSections_preimage_basicOpen
+      (MvPolynomial.homogeneousSubmodule (Fin (n + 1)) k) f hf
+      Nat.zero_lt_one hdeg
+  have hrestrict :=
+    Proj.fromOfGlobalSections_morphismRestrict
+      (MvPolynomial.homogeneousSubmodule (Fin (n + 1)) k) f hf
+      Nat.zero_lt_one hdeg
+  have hraw :
+      Proj.toBasicOpenOfGlobalSections
+          (MvPolynomial.homogeneousSubmodule (Fin (n + 1)) k) f rfl
+          Nat.zero_lt_one hdeg ≫
+        (Proj.basicOpen
+          (MvPolynomial.homogeneousSubmodule (Fin (n + 1)) k)
+          (MvPolynomial.X j)).ι =
+      (X.left.basicOpen (f (MvPolynomial.X j))).ι ≫
+        Proj.fromOfGlobalSections
+          (MvPolynomial.homogeneousSubmodule (Fin (n + 1)) k) f hf := by
+    apply (cancel_epi (X.left.isoOfEq hpre).hom).mp
+    rw [← Category.assoc, ← hrestrict, morphismRestrict_ι,
+      Scheme.isoOfEq_hom_ι_assoc]
+  change
+    (X.left.isoOfEq (show
+      X.left.basicOpen (data.sections j) =
+        X.left.basicOpen (f (MvPolynomial.X j)) by simp [f])).hom ≫
+      (Proj.toBasicOpenOfGlobalSections
+          (MvPolynomial.homogeneousSubmodule (Fin (n + 1)) k) f rfl
+          Nat.zero_lt_one hdeg ≫
+        (Proj.basicOpen
+          (MvPolynomial.homogeneousSubmodule (Fin (n + 1)) k)
+          (MvPolynomial.X j)).ι) =
+    (X.left.basicOpen (data.sections j)).ι ≫
+      Proj.fromOfGlobalSections
+        (MvPolynomial.homogeneousSubmodule (Fin (n + 1)) k) f hf
+  rw [hraw, Scheme.isoOfEq_hom_ι_assoc]
+
+omit [IsAlgClosed k] [IsIntegral X.left] [SmoothOfRelativeDimension 1 X.hom]
+  [IsProper X.hom] in
+/-- The same chart factor obtained formally by restricting the composite from
+the corresponding source-cover member. -/
+noncomputable def restrictedCoordinateChartMap
+    (data : GlobalSectionsProjectiveMapData (k := k) (X := X) n)
+    (j : Fin (n + 1)) :
+    (data.coordinateOpenCover).X j ⟶
+      Proj.basicOpen
+        (MvPolynomial.homogeneousSubmodule (Fin (n + 1)) k)
+        (MvPolynomial.X j) :=
+  ((data.coordinateOpenCover).X j).topIso.inv ≫
+    (((data.coordinateOpenCover).X j).isoOfEq
+      (data.coordinateOpenCover_restricted_map_preimage_basicOpen j)).inv ≫
+    (((data.coordinateOpenCover).f j ≫ data.map) ∣_
+      Proj.basicOpen
+        (MvPolynomial.homogeneousSubmodule (Fin (n + 1)) k)
+        (MvPolynomial.X j))
+
+omit [IsAlgClosed k] [IsIntegral X.left] [SmoothOfRelativeDimension 1 X.hom]
+  [IsProper X.hom] in
+@[reassoc]
+theorem restrictedCoordinateChartMap_ι
+    (data : GlobalSectionsProjectiveMapData (k := k) (X := X) n)
+    (j : Fin (n + 1)) :
+    data.restrictedCoordinateChartMap j ≫
+        (Proj.basicOpen
+          (MvPolynomial.homogeneousSubmodule (Fin (n + 1)) k)
+          (MvPolynomial.X j)).ι =
+      (data.coordinateOpenCover).f j ≫ data.map := by
+  let U : (projectiveSpace k n).Opens := Proj.basicOpen
+    (MvPolynomial.homogeneousSubmodule (Fin (n + 1)) k)
+    (MvPolynomial.X j)
+  let q := (data.coordinateOpenCover).f j ≫ data.map
+  have htop : q ⁻¹ᵁ U = ⊤ :=
+    data.coordinateOpenCover_restricted_map_preimage_basicOpen j
+  rw [restrictedCoordinateChartMap]
+  change
+    ((data.coordinateOpenCover).X j).topIso.inv ≫
+      (((data.coordinateOpenCover).X j).isoOfEq htop).inv ≫
+        ((q ∣_ U) ≫ U.ι) = q
+  simp only [morphismRestrict_ι, Scheme.isoOfEq_inv_ι_assoc,
+    Scheme.toIso_inv_ι_assoc]
+
+omit [IsAlgClosed k] [IsIntegral X.left] [SmoothOfRelativeDimension 1 X.hom]
+  [IsProper X.hom] in
+/-- The restriction factor through the standard projective chart is exactly
+the chart map constructed from localized global sections. -/
+theorem restrictedCoordinateChartMap_eq_coordinateChartMap
+    (data : GlobalSectionsProjectiveMapData (k := k) (X := X) n)
+    (j : Fin (n + 1)) :
+    data.restrictedCoordinateChartMap j = data.coordinateChartMap j := by
+  apply (cancel_mono
+    (Proj.basicOpen
+      (MvPolynomial.homogeneousSubmodule (Fin (n + 1)) k)
+      (MvPolynomial.X j)).ι).mp
+  rw [restrictedCoordinateChartMap_ι, coordinateChartMap_ι]
+
 end GlobalSectionsProjectiveMapData
 
 end
