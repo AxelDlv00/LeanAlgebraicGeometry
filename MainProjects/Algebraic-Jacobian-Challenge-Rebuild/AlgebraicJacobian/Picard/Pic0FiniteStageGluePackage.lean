@@ -109,7 +109,7 @@ theorem finiteType_pic0FiniteStageChartBaseChangeRing
     (finitePresentation_pic0FiniteStageChartBaseChangeRing
       C L n m relation M N U)
 
-/-- The unique affine presentation derived from the canonical finite-stage context. -/
+/-- The affine presentation derived from the supplied finite-stage context. -/
 noncomputable def presentation
     {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
     (P : Pic0FiniteStageGluePackage C F) :
