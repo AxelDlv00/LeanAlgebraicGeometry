@@ -9,6 +9,8 @@ import MilneLib.Isogeny
 import MilneLib.IsogenyDescent
 import MilneLib.IsogenyCharacterization
 import MilneLib.ModuleDescent
+import MilneLib.AlgebraDescent
+import MilneLib.AffineSchemeDescent
 import MilneLib.Descent
 import MilneLib.InvariantQuotient
 import MilneLib.InvariantQuotientTransitions
