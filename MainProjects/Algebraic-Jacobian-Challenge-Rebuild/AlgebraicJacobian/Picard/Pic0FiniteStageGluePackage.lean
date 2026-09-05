@@ -4,8 +4,6 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: The AlgebraicJacobian Contributors
 -/
 import AlgebraicJacobian.Picard.Pic0FiniteStageGlueDataAssembly
-import AlgebraicJacobian.Picard.Pic0FiniteStageTransitionModels
-import AlgebraicJacobian.Picard.Pic0FiniteStageTripleTransitionModels
 
 /-!
 # A canonical finite-stage Picard glue package
@@ -33,23 +31,6 @@ variable {k : Type u} [Field k] (C : Over (Spec (.of k)))
 variable [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
   [GeometricallyIrreducible C.hom] [IsSepClosed k]
 
-/-- The finite-stage models and canonical triple-transition data used to glue the
-descended Picard atlas. -/
-structure Pic0FiniteStageGluePackage
-    (F : Type u) [Field F] [Algebra F k] [Algebra.IsAlgebraic F k] where
-  models : Pic0FiniteStageTransitionModelsData C F
-  N : DatG0.FinSubext models.M.1 k
-  thetaN : forall p : Pic0FiniteStageTripleTransitionIndex C,
-    Pic0FiniteStageTripleTransitionFamilyMap
-      C models.L models.n models.m models.relation models.M models.mapM N p
-  comparison : forall p : Pic0FiniteStageTripleTransitionIndex C,
-    Pic0FiniteStageTripleTransitionFamilyComparison
-      C models.L models.n models.m models.relation models.M models.mapM
-        (pic0FiniteStageTripleModelComparisonFamily
-          C models.L models.n models.m models.relation models.e
-            models.M models.mapM models.comparison)
-        N p (thetaN p)
-
 namespace Pic0FiniteStageGluePackage
 
 /-- Construct the complete glue package from a finite-stage transition model. -/
@@ -62,7 +43,16 @@ noncomputable def ofModels
       (pic0FiniteStageTripleModelComparisonFamily
         C D.L D.n D.m D.relation D.e D.M D.mapM D.comparison)
   exact {
-    models := D
+    L := D.L
+    n := D.n
+    m := D.m
+    relation := D.relation
+    e := D.e
+    M := D.M
+    mapM := D.mapM
+    modelComparison := D.comparison
+    openImmersion := D.openImmersion
+    inverse := D.inverse
     N := T.N
     thetaN := T.thetaN
     comparison := T.comparison
@@ -115,17 +105,9 @@ theorem finiteType_pic0FiniteStageChartBaseChangeRing
 noncomputable def presentation
     {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
     (P : Pic0FiniteStageGluePackage C F) :
-    AlgebraicJacobian.AffineRingGluePresentation P.N.1 := by
-  letI : Algebra.IsAlgebraic P.models.L.1 k := by infer_instance
-  letI : Algebra.IsAlgebraic P.models.M.1 k := by infer_instance
-  refine pic0FiniteStageAffineRingGluePresentation
-    C P.models.L P.models.n P.models.m P.models.relation P.models.M
-      P.models.mapM P.N P.models.e P.models.comparison
-      P.models.openImmersion P.thetaN ?_
-  rintro ⟨U, V, W⟩
-  simpa only [Pic0FiniteStageTripleTransitionFamilyComparison,
-    pic0FiniteStageTransportedTripleTransitionOfModels] using
-      P.comparison (U, (V, W))
+    AlgebraicJacobian.AffineRingGluePresentation P.N.1 :=
+  pic0FiniteStageAffineRingGluePresentation
+    C P
 
 /-- The scheme glue datum underlying the canonical presentation. -/
 noncomputable def glueData
