@@ -699,7 +699,7 @@
     },
     "states": {
       "blocked": 116,
-      "closed": 894,
+      "closed": 899,
       "formalized_open": 0,
       "informal": 212,
       "ready": 96
@@ -730,6 +730,7 @@
       "Mumford.Analytic.canonicalComplexExponentialAddHomBranchAt_symm: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Mumford.Analytic.canonicalComplexExponentialAddHom_apply: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Mumford.Analytic.canonicalComplexExponentialAddHom_continuous: Lean declaration is not referenced by any blueprint \\lean{...}",
+      "Mumford.Analytic.canonicalComplexExponentialAddHom_isAddQuotientCoveringMap: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Mumford.Analytic.canonicalComplexExponentialAddHom_isLocalHomeomorph: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Mumford.Analytic.canonicalComplexExponentialAddHom_isLocallyInjective: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Mumford.Analytic.canonicalComplexExponentialAddHom_surjective: Lean declaration is not referenced by any blueprint \\lean{...}",
@@ -743,6 +744,7 @@
       "Mumford.Analytic.canonicalComplexExponentialPeriodLattice_finrank_eq_two_mul: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Mumford.Analytic.canonicalComplexExponentialPeriodLattice_finrank_eq_two_mul_complex: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Mumford.Analytic.canonicalComplexExponentialPeriodLattice_isZLattice: Lean declaration is not referenced by any blueprint \\lean{...}",
+      "Mumford.Analytic.canonicalComplexExponentialPeriodLattice_toAddSubgroup: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Mumford.Analytic.canonicalComplexExponentialQuotientContinuousAddEquiv: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Mumford.Analytic.canonicalComplexExponentialQuotientContinuousAddEquiv_apply: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Mumford.Analytic.canonicalComplexExponentialQuotientContinuousAddEquiv_mk: Lean declaration is not referenced by any blueprint \\lean{...}",
@@ -752,9 +754,7 @@
       "Mumford.Analytic.canonicalComplexExponential_add: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Mumford.Analytic.canonicalComplexExponential_conjugation: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Mumford.Analytic.canonicalComplexExponential_continuous: Lean declaration is not referenced by any blueprint \\lean{...}",
-      "Mumford.Analytic.canonicalComplexExponential_exists_nhds_injOn: Lean declaration is not referenced by any blueprint \\lean{...}",
-      "Mumford.Analytic.canonicalComplexExponential_exists_nhds_injOn_at: Lean declaration is not referenced by any blueprint \\lean{...}",
-      "Mumford.Analytic.canonicalComplexExponential_hasMFDerivAt_zero: Lean declaration is not referenced by any blueprint \\lean{...}"
+      "Mumford.Analytic.canonicalComplexExponential_exists_nhds_injOn: Lean declaration is not referenced by any blueprint \\lean{...}"
     ]
   },
   "nodes": [
@@ -4791,7 +4791,7 @@
     },
     {
       "chapter": "Analytic Theory",
-      "comment_count": 12,
+      "comment_count": 13,
       "dep_count": 0,
       "descendant_count": 2,
       "group": "c140",
