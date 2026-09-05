@@ -48,8 +48,9 @@ structure Pic0FiniteStageGluePackage
 
 namespace Pic0FiniteStageGluePackage
 
-@[simp]
-theorem modelComparison_eq
+/-- Compatibility projection for consumers written against the pre-inheritance package.
+The inherited `comparison` field is the canonical pair-transition certificate. -/
+def modelComparison
     {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
     (P : Pic0FiniteStageGluePackage C F) (q : Pic0FiniteStageMapIndex C) :
     Pic0FiniteStageTransitionModelComparison C P.L P.n P.m P.relation P.e P.M P.mapM q :=
