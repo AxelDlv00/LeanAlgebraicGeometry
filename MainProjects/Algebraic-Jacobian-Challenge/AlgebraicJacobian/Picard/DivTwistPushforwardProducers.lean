@@ -4,6 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: The AlgebraicJacobian Contributors
 -/
 import AlgebraicJacobian.Picard.DivCurvePushforwardProducers
+import AlgebraicJacobian.Picard.DivLocallyClosed
 
 /-!
 # Finite sections of twisted divisor pushforwards
@@ -74,6 +75,138 @@ theorem isFinitePresentation_pushforward_twist_of_curve
   apply Modules.isFinitePresentation_of_finite_sections
   intro V hV
   exact module_finite_sections_pushforward_twist_of_curve L hL x hFp hV
+
+/-! ## Flatness and the rank-stratum bridge -/
+
+set_option maxHeartbeats 2500000 in
+-- The affine-cover transport through a line-bundle trivialisation is the
+-- only expensive part of this flatness producer; keep its larger heartbeat
+-- budget local to the proof rather than raising the module-wide default.
+/-- Tensoring a flat sheaf by a locally trivial line bundle preserves flatness
+over an arbitrary base morphism, provided the tensor target's finite
+presentation is supplied.  The explicit finite-presentation input keeps this
+lightweight producer independent of the downstream Grassmannian embedding. -/
+theorem coherentSheafFlat_tensorObj_left_of_isLocallyTrivial_with_finitePresentation
+    {B Y : Scheme.{u}} (q : Y ⟶ B) (L F : Y.Modules)
+    (hL : LineBundle.IsLocallyTrivial L)
+    (hTFp : (Modules.tensorObj L F).IsFinitePresentation)
+    (hF : CoherentSheafFlat q F) :
+    CoherentSheafFlat q (Modules.tensorObj L F) := by
+  letI : (Modules.tensorObj L F).IsFinitePresentation := hTFp
+  choose U hUaff hxU _hUtop using fun y : Y =>
+    exists_isAffineOpen_mem_and_subset (x := q.base y)
+      (U := (⊤ : B.Opens)) (by trivial)
+  choose W hxW hWaff hWle hWiso using fun y : Y =>
+    hL.exists_affine_trivializing_le (x := y) (W := q ⁻¹ᵁ U y) (hxU y)
+  intro U0 hU0 W0 hW0 e0
+  refine flat_section_of_affine_cover q (Modules.tensorObj L F) W hWaff U hUaff hWle
+    (fun y => ⟨y, hxW y⟩) ?_ hU0 hW0 e0
+  intro y
+  letI : Module Γ(B, U y) Γ((Modules.tensorObj L F), W y) :=
+    Module.compHom _ (q.appLE (U y) (W y) (hWle y)).hom
+  letI : Module Γ(B, U y) Γ(F, W y) :=
+    Module.compHom _ (q.appLE (U y) (W y) (hWle y)).hom
+  haveI : Module.Flat Γ(B, U y) Γ(F, W y) := hF (hUaff y) (hWaff y) (hWle y)
+  let eL : L.restrict (W y).ι ≅
+      SheafOfModules.unit (W y : Scheme).ringCatSheaf := (hWiso y).some
+  let eRes : (Modules.tensorObj L F).restrict (W y).ι ≅ F.restrict (W y).ι :=
+    Modules.tensorObj_restrict_iso (W y).ι L F ≪≫
+      Modules.tensorObjIsoOfIso eL (Iso.refl _) ≪≫
+      Modules.tensorObj_left_unitor _
+  let eX := Modules.sectionLinearEquivOfRestrictIso (W y) eRes
+  letI : Algebra Γ(B, U y) Γ(Y, W y) :=
+    (q.appLE (U y) (W y) (hWle y)).hom.toAlgebra
+  letI : IsScalarTower Γ(B, U y) Γ(Y, W y) Γ(F, W y) :=
+    IsScalarTower.of_algebraMap_smul (fun _ _ => rfl)
+  letI : IsScalarTower Γ(B, U y) Γ(Y, W y)
+      Γ((Modules.tensorObj L F), W y) :=
+    IsScalarTower.of_algebraMap_smul (fun _ _ => rfl)
+  letI : LinearMap.CompatibleSMul Γ((Modules.tensorObj L F), W y) Γ(F, W y)
+      Γ(B, U y) Γ(Y, W y) :=
+    ⟨fun f c z => by
+      rw [← IsScalarTower.algebraMap_smul (Γ(Y, W y)) c z,
+        ← IsScalarTower.algebraMap_smul (Γ(Y, W y)) c (f z), f.map_smul]⟩
+  exact Module.Flat.of_linearEquiv (M := Γ(F, W y))
+    (eX.restrictScalars (Γ(B, U y)))
+
+/-! The support-descent transport below turns this tensor-flatness result into
+identity-flatness of the actual pushforward target. -/
+
+/-- The twisted divisor pushforward is flat over an arbitrary test base.  The
+proof descends to the finite schematic support, applies affine pushforward
+flatness there, and transports back through the support-descent isomorphism. -/
+theorem coherentSheafFlat_id_pushforward_twist_of_curve
+    [SmoothOfRelativeDimension 1 π] [GeometricallyIntegral π] [IsProper π]
+    (L : X.Modules) (hL : LineBundle.IsLocallyTrivial L)
+    (x : DivFamily π T)
+    (hFp : (x.twist L).IsFinitePresentation) :
+    CoherentSheafFlat (𝟙 (T.left : Scheme.{u}))
+      ((Modules.pushforward (pullback.snd π T.hom)).obj (x.twist L)) := by
+  letI : (x.twist L).IsFinitePresentation := hFp
+  letI : (x.twist L).IsQuasicoherent := inferInstance
+  let q := pullback.snd π T.hom
+  let i := Modules.schematicSupportι (x.twist L)
+  have hfin : IsFinite (i ≫ q) := twist_isFiniteSupport_of_curve L hL x
+  letI : IsFinite (i ≫ q) := hfin
+  letI : IsAffineHom (i ≫ q) := inferInstance
+  letI : IsAffineHom i :=
+    inferInstanceAs (IsAffineHom (Modules.annihilator (x.twist L)).subschemeι)
+  let N := (Modules.pullback i).obj (x.twist L)
+  have hdesc : x.twist L ≅ (Modules.pushforward i).obj N :=
+    Modules.schematicSupportDescentIso (x.twist L)
+  haveI : N.IsQuasicoherent := pullback_isQuasicoherent_hom i
+    (x.twist L) inferInstance
+  have htwflat : CoherentSheafFlat q (x.twist L) := by
+    dsimp [DivFamily.twist]
+    exact coherentSheafFlat_tensorObj_left_of_isLocallyTrivial_with_finitePresentation q
+      ((Modules.pullback (pullback.fst π T.hom)).obj L) x.F
+      (hL.pullback (pullback.fst π T.hom)) hFp x.flat
+  have h1 : CoherentSheafFlat q ((Modules.pushforward i).obj N) :=
+    coherentSheafFlat_of_iso q hdesc htwflat
+  have h2 : CoherentSheafFlat (i ≫ q) N :=
+    Scheme.CoherentSheafFlat.of_pushforward_of_isAffineHom i q N h1
+  have h3 : CoherentSheafFlat (𝟙 (T.left : Scheme.{u}))
+      ((Modules.pushforward (i ≫ q)).obj N) :=
+    Scheme.CoherentSheafFlat.pushforward_of_isAffineHom (i ≫ q)
+      (𝟙 (T.left : Scheme.{u})) N (by
+        intro U hU V hV eV
+        have hcomp :
+            ((i ≫ q) ≫ (𝟙 (T.left : Scheme.{u}))).appLE U V eV =
+              (i ≫ q).appLE U V eV := by
+          rw [← Scheme.Hom.appLE_comp_appLE (i ≫ q)
+            (𝟙 (T.left : Scheme.{u})) U U V le_rfl eV]
+          rw [Scheme.id_appLE]
+          simp
+        rw [hcomp]
+        exact h2 hU hV eV)
+  intro U hU V hV eV
+  exact coherentSheafFlat_of_iso (𝟙 (T.left : Scheme.{u}))
+    ((Modules.pushforwardComp i q).app N ≪≫
+      (Modules.pushforward q).mapIso hdesc.symm) h3 hU hV eV
+
+/-- Curve-specialised rank producer for the twisted pushforward.  Once the
+point-rank comparison with fibre `H⁰` is supplied, the finite-presentation and
+flatness producers above feed the finite-flat criterion on a locally noetherian
+test base.  The point-rank premise is intentionally explicit: it is the
+remaining base-change/Nakayama obligation, not a hidden representability
+assumption. -/
+theorem pushforward_twist_isLocallyFreeOfRank_of_pointRank
+    [SmoothOfRelativeDimension 1 π] [GeometricallyIntegral π] [IsProper π]
+    [IsLocallyNoetherian (T.left : Scheme.{u})]
+    (L : X.Modules) (hL : LineBundle.IsLocallyTrivial L)
+    (x : DivFamily π T) (hFp : (x.twist L).IsFinitePresentation)
+    {d : ℕ}
+    (hRank : ∀ t : (T.left : Scheme.{u}),
+      Modules.pointRank (T.left : Scheme.{u})
+        ((Modules.pushforward (pullback.snd π T.hom)).obj (x.twist L)) t = d) :
+    SheafOfModules.IsLocallyFreeOfRank
+      ((Modules.pushforward (pullback.snd π T.hom)).obj (x.twist L)) d := by
+  letI : (x.twist L).IsFinitePresentation := hFp
+  letI : ((Modules.pushforward (pullback.snd π T.hom)).obj (x.twist L)).IsFinitePresentation :=
+    isFinitePresentation_pushforward_twist_of_curve L hL x hFp
+  exact Modules.isLocallyFreeOfRank_of_finitePresentation_flat_pointRank
+    ((Modules.pushforward (pullback.snd π T.hom)).obj (x.twist L))
+    (coherentSheafFlat_id_pushforward_twist_of_curve L hL x hFp) hRank
 
 end DivFamily
 
