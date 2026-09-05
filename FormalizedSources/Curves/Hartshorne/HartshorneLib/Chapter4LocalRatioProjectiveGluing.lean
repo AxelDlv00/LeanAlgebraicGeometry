@@ -4,20 +4,18 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: The Hartshorne Contributors
 -/
 
-import HartshorneLib.Chapter4LocalRatioProjectiveChart
+import HartshorneLib.Chapter4LocalRatioCanonicalBridge
 
 /-!
 # Hartshorne IV.3.1: gluing normalized local-ratio charts
 
 An indexed family of regularized local-ratio charts whose opens cover the
 curve and whose divisor-section values agree defines a global morphism to
-projective space.  The local maps in this module are the explicit normalized
-`ProjectiveCoordinates.fromOpen` maps, so their pullback compatibility follows
-from `LocalRatioRegularization.overlap_fromOpen_eq`.
-
-Identifying these explicit maps with the canonical
-`LocalRatioRegularization.chartMap` remains a separate comparison theorem for
-`Proj.fromOfGlobalSections`.
+projective space.  The local maps are first glued in their explicit normalized
+`ProjectiveCoordinates.fromOpen` form, so their pullback compatibility follows
+from `LocalRatioRegularization.overlap_fromOpen_eq`.  The canonical comparison
+then identifies every restriction of the glued map with the corresponding
+`Proj.fromOfGlobalSections` chart map.
 -/
 
 set_option autoImplicit false
@@ -101,6 +99,27 @@ theorem chartOpenCover_ι_gluedFromOpen
       fromOpenFamily a r hcover i := by
   exact Scheme.Cover.ι_glueMorphisms (chartOpenCover a hcover)
     (fromOpenFamily a r hcover) (fromOpenFamily_compat a r hcover hsame) i
+
+/-- The glued morphism restricts to the canonical `Proj.fromOfGlobalSections`
+map on every member of the local-ratio cover. -/
+@[reassoc]
+theorem chartOpenCover_ι_gluedFromOpen_eq_chartMap
+    (hsame : ∀ i j, (a i).SameSectionValues (a j)) (i : ι) :
+    (chartOpenCover a hcover).f i ≫ gluedFromOpen a r hcover hsame =
+      (r i).chartMap := by
+  rw [chartOpenCover_ι_gluedFromOpen]
+  exact (r i).chartMap_eq_fromOpen.symm
+
+/-- The morphism obtained by gluing the local-ratio charts is over the
+coefficient field. -/
+@[reassoc (attr := simp)]
+theorem gluedFromOpen_over
+    (hsame : ∀ i j, (a i).SameSectionValues (a j)) :
+    gluedFromOpen a r hcover hsame ≫ projectiveSpaceStructureMap k n = X.hom := by
+  apply Scheme.Cover.hom_ext (chartOpenCover a hcover)
+  intro i
+  rw [← Category.assoc, chartOpenCover_ι_gluedFromOpen_eq_chartMap]
+  exact (r i).chartMap_over
 
 end LocalRatioProjectiveGluing
 
