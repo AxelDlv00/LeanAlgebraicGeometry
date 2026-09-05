@@ -195,9 +195,9 @@ private theorem assemblyTripleTransition_face
   let D := P
   let N := P.N
   let thetaN := P.thetaN
-  let comparison := P.comparison
+  let comparison := P.tripleComparison
   let Q := pic0FiniteStageTripleTransitionFacePackage
-    C D.L D.n D.m D.relation D.M D.mapM D.e D.modelComparison
+    C D.L D.n D.m D.relation D.M D.mapM D.e D.modelComparison_eq
       N U V W thetaN fun p => by
         simpa only [Pic0FiniteStageTripleTransitionFamilyComparison,
           pic0FiniteStageTransportedTripleTransitionOfModels] using comparison p
@@ -262,10 +262,10 @@ private theorem assemblyTripleTransition_cocycle
   let D := P
   let N := P.N
   let Q := pic0FiniteStageTripleModelComparisonFamily
-    C D.L D.n D.m D.relation D.e D.M D.mapM D.modelComparison
+    C D.L D.n D.m D.relation D.e D.M D.mapM D.modelComparison_eq
   have hcycle := pic0FiniteStageTripleTransitionModel_cocycle
     C D.L D.n D.m D.relation D.M D.mapM Q N
-      P.thetaN P.comparison U V W
+      P.thetaN P.tripleComparison U V W
   exact conjugateAlgHom_threeCycle
     (assemblyTensorEquiv C P U V W)
     (assemblyTensorEquiv C P V W U)
@@ -315,13 +315,13 @@ noncomputable def pic0FiniteStageAffineRingGluePresentation
     (R := N.1) A B tau theta ?_ ?_ ?_ ?_ ?_
   · intro U
     exact isIso_pic0FiniteStageRestrictionBaseChange_diagonal
-      C D.L D.n D.m D.relation D.e D.M D.mapM D.modelComparison N U
+    C D.L D.n D.m D.relation D.e D.M D.mapM D.modelComparison_eq N U
   · intro U V
     exact isOpenImmersion_pic0FiniteStageRestrictionBaseChange
       C D.L D.n D.m D.relation D.M D.mapM D.openImmersion N U V
   · intro U
     exact pic0FiniteStageTransitionBaseChange_self
-      C D.L D.n D.m D.relation D.e D.M D.mapM D.modelComparison N U
+      C D.L D.n D.m D.relation D.e D.M D.mapM D.modelComparison_eq N U
   · intro U V W
     exact assemblyTripleTransition_face C P U V W
   · intro U V W

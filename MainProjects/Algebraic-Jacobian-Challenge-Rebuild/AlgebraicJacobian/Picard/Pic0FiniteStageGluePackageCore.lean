@@ -33,33 +33,29 @@ variable [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
 /-- The finite-stage models and canonical triple-transition data used to glue the
 descended Picard atlas. -/
 structure Pic0FiniteStageGluePackage
-    (F : Type u) [Field F] [Algebra F k] [Algebra.IsAlgebraic F k] where
-  L : DatG0.FinSubext F k
-  n : Pic0FiniteStageRingIndex C → ℕ
-  m : Pic0FiniteStageRingIndex C → ℕ
-  relation : ∀ j, Fin (m j) → MvPolynomial (Fin (n j)) L.1
-  e : ∀ j,
-    k ⊗[L.1] DatG0.FiniteRelationAlgebra L.1 (n j) (m j) (relation j) ≃ₐ[k]
-      Pic0FiniteStageRing C j
-  M : DatG0.FinSubext L.1 k
-  mapM : ∀ q : Pic0FiniteStageMapIndex C,
-    Pic0FiniteStageTransitionModelMap C L n m relation M q
-  modelComparison : ∀ q : Pic0FiniteStageMapIndex C,
-    Pic0FiniteStageTransitionModelComparison C L n m relation e M mapM q
-  openImmersion : ∀ i : Pic0FiniteStageRestrictionIndex C,
-    Pic0FiniteStageTransitionOpenImmersion C L n m relation M mapM i
-  inverse : ∀ U V : Pic0FiniteStageChartIndex C,
-    Pic0FiniteStageTransitionInverse C L n m relation M mapM U V
+    (F : Type u) [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
+    extends Pic0FiniteStageTransitionModelsData C F where
   N : DatG0.FinSubext M.1 k
   thetaN : forall p : Pic0FiniteStageTripleTransitionIndex C,
     Pic0FiniteStageTripleTransitionFamilyMap
       C L n m relation M mapM N p
-  comparison : forall p : Pic0FiniteStageTripleTransitionIndex C,
+  tripleComparison : forall p : Pic0FiniteStageTripleTransitionIndex C,
     Pic0FiniteStageTripleTransitionFamilyComparison
       C L n m relation M mapM
         (pic0FiniteStageTripleModelComparisonFamily
-          C L n m relation e M mapM modelComparison)
+          C L n m relation e M mapM comparison)
         N p (thetaN p)
+
+namespace Pic0FiniteStageGluePackage
+
+@[simp]
+theorem modelComparison_eq
+    {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
+    (P : Pic0FiniteStageGluePackage C F) (q : Pic0FiniteStageMapIndex C) :
+    Pic0FiniteStageTransitionModelComparison C P.L P.n P.m P.relation P.e P.M P.mapM q :=
+  P.comparison q
+
+end Pic0FiniteStageGluePackage
 
 end
 

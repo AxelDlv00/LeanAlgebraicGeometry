@@ -8,6 +8,7 @@ import MilneLib.RigidityCorollaries
 import MilneLib.Isogeny
 import MilneLib.IsogenyDescent
 import MilneLib.IsogenyCharacterization
+import MilneLib.ModuleDescent
 import MilneLib.Descent
 import MilneLib.InvariantQuotient
 import MilneLib.InvariantQuotientTransitions

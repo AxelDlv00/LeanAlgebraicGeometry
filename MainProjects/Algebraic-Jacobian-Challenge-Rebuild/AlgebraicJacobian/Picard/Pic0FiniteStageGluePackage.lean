@@ -50,12 +50,12 @@ noncomputable def ofModels
     e := D.e
     M := D.M
     mapM := D.mapM
-    modelComparison := D.comparison
+    comparison := D.comparison
     openImmersion := D.openImmersion
     inverse := D.inverse
     N := T.N
     thetaN := T.thetaN
-    comparison := T.comparison
+    tripleComparison := T.comparison
   }
 
 /-- A finite-presentation witness for a scalar-extended finite-stage chart ring. -/
