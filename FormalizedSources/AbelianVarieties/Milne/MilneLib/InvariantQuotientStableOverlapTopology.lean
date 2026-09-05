@@ -169,6 +169,169 @@ theorem overlapFixedRestrictionMap_isOpenEmbedding_range [Finite G]
       (overlapCoordinateOpen_stable act i j)
   simpa only [overlapFixedRestrictionMap, φ, hφ, quotientOverlapOpen] using h
 
+/-- The right-chart analogue of the restriction range calculation. -/
+theorem range_specMap_sectionsRestriction_overlap_right
+    (p : X ⟶ Spec (CommRingCat.of k))
+    (hact : ∀ g : G, (act g).hom ≫ p = p)
+    (i j : StableAffineOpen act) :
+    letI := sectionsAlgebra p i.U
+    letI := sectionsAlgebra p j.U
+    letI := sectionsAlgebra p (i.U ⊓ j.U)
+    letI := sectionsMulSemiringAction act i.stable
+    letI := sectionsMulSemiringAction act j.stable
+    letI := sectionsMulSemiringAction act (overlap_stable act i j)
+    letI := sectionsSMulCommClass act p hact i.stable
+    letI := sectionsSMulCommClass act p hact j.stable
+    letI := sectionsSMulCommClass act p hact (overlap_stable act i j)
+    Set.range (Spec.map
+      (X.presheaf.map
+        (homOfLE (show i.U ⊓ j.U ≤ j.U from inf_le_right)).op)).base =
+      (overlapCoordinateOpen act j i : Set _) := by
+  letI := sectionsAlgebra p i.U
+  letI := sectionsAlgebra p j.U
+  letI := sectionsAlgebra p (i.U ⊓ j.U)
+  letI := sectionsMulSemiringAction act i.stable
+  letI := sectionsMulSemiringAction act j.stable
+  letI := sectionsMulSemiringAction act (overlap_stable act i j)
+  letI := sectionsSMulCommClass act p hact i.stable
+  letI := sectionsSMulCommClass act p hact j.stable
+  letI := sectionsSMulCommClass act p hact (overlap_stable act i j)
+  let f := Spec.map
+    (X.presheaf.map
+      (homOfLE (show i.U ⊓ j.U ≤ j.U from inf_le_right)).op)
+  have hcomp :
+      (overlap_affine act i j).isoSpec.hom ≫ f =
+        (Scheme.isoOfEq X (inf_comm i.U j.U)).hom ≫
+          (overlapCoordinateIso act j i).inv ≫
+            (overlapCoordinateOpen act j i).ι := by
+    exact overlapIsoSpec_hom_comp_rightSourceMap act p hact i j
+  have hs0 := (ConcreteCategory.bijective_of_isIso
+    (overlap_affine act i j).isoSpec.hom.base).2
+  calc
+    Set.range f.base =
+        Set.range ((overlap_affine act i j).isoSpec.hom ≫ f).base := by
+      rw [Scheme.Hom.comp_base, TopCat.coe_comp, hs0.range_comp]
+    _ = Set.range
+        (((Scheme.isoOfEq X (inf_comm i.U j.U)).hom ≫
+          (overlapCoordinateIso act j i).inv ≫
+            (overlapCoordinateOpen act j i).ι).base) := by
+      rw [hcomp]
+    _ = (overlapCoordinateOpen act j i : Set _) := by
+      have hs : Function.Surjective
+          ((overlapCoordinateIso act j i).inv.base ∘
+            (Scheme.isoOfEq X (inf_comm i.U j.U)).hom.base) := by
+        have hs0 := (ConcreteCategory.bijective_of_isIso
+          ((Scheme.isoOfEq X (inf_comm i.U j.U)).hom ≫
+            (overlapCoordinateIso act j i).inv).base).2
+        simpa only [Scheme.Hom.comp_base, TopCat.coe_comp] using hs0
+      change Set.range
+        ((overlapCoordinateOpen act j i).ι.base ∘
+          (overlapCoordinateIso act j i).inv.base ∘
+            (Scheme.isoOfEq X (inf_comm i.U j.U)).hom.base) =
+        (overlapCoordinateOpen act j i : Set _)
+      rw [hs.range_comp, Scheme.Opens.range_ι]
+
+/-- The fixed-ring spectrum map from the actual overlap to the right chart. -/
+noncomputable def overlapFixedRestrictionMapRight
+    (p : X ⟶ Spec (CommRingCat.of k))
+    (hact : ∀ g : G, (act g).hom ≫ p = p)
+    (i j : StableAffineOpen act) :
+    letI := sectionsAlgebra p i.U
+    letI := sectionsAlgebra p j.U
+    letI := sectionsAlgebra p (i.U ⊓ j.U)
+    letI := sectionsMulSemiringAction act i.stable
+    letI := sectionsMulSemiringAction act j.stable
+    letI := sectionsMulSemiringAction act (overlap_stable act i j)
+    letI := sectionsSMulCommClass act p hact i.stable
+    letI := sectionsSMulCommClass act p hact j.stable
+    letI := sectionsSMulCommClass act p hact (overlap_stable act i j)
+    Spec (CommRingCat.of
+      (FixedPoints.subalgebra k Γ(X, i.U ⊓ j.U) G)) ⟶
+        Spec (CommRingCat.of
+          (FixedPoints.subalgebra k Γ(X, j.U) G)) := by
+  letI := sectionsAlgebra p i.U
+  letI := sectionsAlgebra p j.U
+  letI := sectionsAlgebra p (i.U ⊓ j.U)
+  letI := sectionsMulSemiringAction act i.stable
+  letI := sectionsMulSemiringAction act j.stable
+  letI := sectionsMulSemiringAction act (overlap_stable act i j)
+  letI := sectionsSMulCommClass act p hact i.stable
+  letI := sectionsSMulCommClass act p hact j.stable
+  letI := sectionsSMulCommClass act p hact (overlap_stable act i j)
+  exact Spec.map (CommRingCat.ofHom
+    (InvariantLocalization.equivariantFixedRingHom
+      (k := k) (G := G) (sectionsRestrictionAlgHom p inf_le_right).toRingHom
+      (sectionsRestrictionAlgHom_equivariant act p hact j.stable
+        (overlap_stable act i j) inf_le_right)))
+
+/-- The right fixed restriction map is the right quotient leg of the
+canonical overlap cone. -/
+theorem overlapFixedRestrictionMapRight_eq_rightQuotientMap
+    (p : X ⟶ Spec (CommRingCat.of k))
+    (hact : ∀ g : G, (act g).hom ≫ p = p)
+    (i j : StableAffineOpen act) :
+    letI := sectionsAlgebra p i.U
+    letI := sectionsAlgebra p j.U
+    letI := sectionsAlgebra p (i.U ⊓ j.U)
+    letI := sectionsMulSemiringAction act i.stable
+    letI := sectionsMulSemiringAction act j.stable
+    letI := sectionsMulSemiringAction act (overlap_stable act i j)
+    letI := sectionsSMulCommClass act p hact i.stable
+    letI := sectionsSMulCommClass act p hact j.stable
+    letI := sectionsSMulCommClass act p hact (overlap_stable act i j)
+    overlapFixedRestrictionMapRight act p hact i j =
+      (overlapCone act p hact i j).rightQuotientMap.left := by
+  rfl
+
+/-- The right fixed-ring spectrum map is an open embedding with range the
+descended overlap open in quotient chart \`j\`. -/
+theorem overlapFixedRestrictionMapRight_isOpenEmbedding_range [Finite G]
+    (p : X ⟶ Spec (CommRingCat.of k))
+    (hact : ∀ g : G, (act g).hom ≫ p = p)
+    (i j : StableAffineOpen act) :
+    letI := sectionsAlgebra p i.U
+    letI := sectionsAlgebra p j.U
+    letI := sectionsAlgebra p (i.U ⊓ j.U)
+    letI := sectionsMulSemiringAction act i.stable
+    letI := sectionsMulSemiringAction act j.stable
+    letI := sectionsMulSemiringAction act (overlap_stable act i j)
+    letI := sectionsSMulCommClass act p hact i.stable
+    letI := sectionsSMulCommClass act p hact j.stable
+    letI := sectionsSMulCommClass act p hact (overlap_stable act i j)
+    IsOpenEmbedding (overlapFixedRestrictionMapRight act p hact i j).base ∧
+      Set.range (overlapFixedRestrictionMapRight act p hact i j).base =
+        (quotientOverlapOpen act p hact j i : Set _) := by
+  letI := sectionsAlgebra p i.U
+  letI := sectionsAlgebra p j.U
+  letI := sectionsAlgebra p (i.U ⊓ j.U)
+  letI := sectionsMulSemiringAction act i.stable
+  letI := sectionsMulSemiringAction act j.stable
+  letI := sectionsMulSemiringAction act (overlap_stable act i j)
+  letI := sectionsSMulCommClass act p hact i.stable
+  letI := sectionsSMulCommClass act p hact j.stable
+  letI := sectionsSMulCommClass act p hact (overlap_stable act i j)
+  let φ := (sectionsRestrictionAlgHom p
+    (show i.U ⊓ j.U ≤ j.U from inf_le_right)).toRingHom
+  have hφ : ∀ (g : G) (b : Γ(X, j.U)), g • φ b = φ (g • b) :=
+    sectionsRestrictionAlgHom_equivariant act p hact j.stable
+      (overlap_stable act i j) inf_le_right
+  have hSpec : IsOpenEmbedding
+      (Spec.map (CommRingCat.ofHom φ)).base := by
+    change IsOpenEmbedding
+      (Spec.map (X.presheaf.map (homOfLE
+        (show i.U ⊓ j.U ≤ j.U from inf_le_right)).op)).base
+    exact (isOpenImmersion_specMap_sectionsRestriction
+      j.affine (overlap_affine act i j) inf_le_right).base_open
+  have hRange :
+      (overlapCoordinateOpen act j i : Set _) =
+        Set.range (Spec.map (CommRingCat.ofHom φ)).base := by
+    exact (range_specMap_sectionsRestriction_overlap_right act p hact i j).symm
+  have h := InvariantLocalization.equivariantFixedSpecMap_isOpenEmbedding
+    (k := k) (G := G) φ hφ hSpec
+      (overlapCoordinateOpen act j i) hRange
+      (overlapCoordinateOpen_stable act j i)
+  simpa only [overlapFixedRestrictionMapRight, φ, hφ, quotientOverlapOpen] using h
+
 end StableAffineOpen
 end StableGroupAction
 end MilneLib
