@@ -11,7 +11,9 @@ import HartshorneLib.Chapter4ResidueDegree
 /-!
 # The jump module at a closed point
 
-The one-point quotient in divisor dévissage is canonically the residue field.
+The one-point quotient in divisor dévissage is identified with the residue
+field through a chosen uniformizer; invariant dimension and zero/nonzero
+consequences do not depend on that coordinate.
 -/
 
 set_option autoImplicit false
