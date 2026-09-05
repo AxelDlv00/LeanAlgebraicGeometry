@@ -19,8 +19,9 @@ source-level holomorphic exponential.  A finite-dimensional real vector group
 which maps continuously and surjectively onto a compact Hausdorff additive
 group has a kernel spanning the whole vector space.  Applying this observation
 to the real-flow candidate upgrades its previously proved discrete kernel to a
-full `ℤ`-lattice.  The quotient statements below are topological and additive;
-the missing jointly holomorphic one-parameter-family theorem remains external.
+full `ℤ`-lattice.  The open-quotient and lattice consequences are
+topological and additive; the missing jointly holomorphic one-parameter-family
+theorem remains external.
 -/
 
 set_option autoImplicit false
