@@ -28,6 +28,7 @@ import MilneLib.InvariantQuotientStableOverlap
 import MilneLib.InvariantQuotientStableOverlapTopology
 import MilneLib.InvariantQuotientStableOverlapCompat
 import MilneLib.InvariantQuotientStableOverlapOpenIso
+import MilneLib.InvariantQuotientFixedSections
 import MilneLib.QuotientGlueData
 import MilneLib.InvariantQuotientStableAtlas
 import MilneLib.InvariantQuotientStableTriple
