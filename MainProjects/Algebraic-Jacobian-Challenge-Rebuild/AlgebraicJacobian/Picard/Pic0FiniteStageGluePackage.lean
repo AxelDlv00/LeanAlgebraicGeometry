@@ -122,7 +122,6 @@ theorem finiteType_pic0FiniteStageChartBaseChangeRing
     (finitePresentation_pic0FiniteStageChartBaseChangeRing
       C L n m relation M N U)
 
-/-- The affine gluing presentation computed from the package's canonical data. -/
 /-- The scheme glue datum underlying the canonical presentation. -/
 noncomputable def glueData
     {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
