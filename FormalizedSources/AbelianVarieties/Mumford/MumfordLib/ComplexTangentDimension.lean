@@ -21,6 +21,15 @@ namespace Uniformization
 
 noncomputable section
 
+/-- Restricting scalars from `ℂ` to `ℝ` doubles the finite dimension.
+
+This is the intrinsic dimension calculation used by the analytic Lie-group
+boundary: it does not choose coordinates or a genus model. -/
+theorem finrank_real_eq_two_mul_finrank_complex
+    {V : Type*} [AddCommGroup V] [Module ℂ V] :
+    Module.finrank ℝ V = 2 * Module.finrank ℂ V := by
+  exact finrank_real_of_complex V
+
 namespace ComplexVectorLatticeExponentialData
 
 /-- The chosen tangent space has complex dimension `g`. -/

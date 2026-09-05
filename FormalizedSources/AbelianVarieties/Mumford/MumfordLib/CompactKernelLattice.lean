@@ -6,6 +6,7 @@ Authors: The Mumford Contributors
 
 import MumfordLib.ComplexLieCommutativity
 import MumfordLib.ComplexLieFlowRegularity
+import MumfordLib.ComplexTangentDimension
 import MumfordLib.ComplexUniformization
 import Mathlib.Algebra.Module.ZLattice.Basic
 import Mathlib.Topology.ContinuousMap.Basic
@@ -207,6 +208,26 @@ theorem canonicalComplexExponentialPeriodLattice_finrank
     canonicalComplexExponentialPeriodLattice_isZLattice (G := G) I
   exact ZLattice.rank ℝ
     (canonicalComplexExponentialPeriodLattice (G := G) I)
+
+/-- The candidate period lattice has rank twice the intrinsic complex tangent
+dimension.  This is a dimension identity for the conditional candidate; it
+does not identify that candidate with the source-level holomorphic
+exponential. -/
+theorem canonicalComplexExponentialPeriodLattice_finrank_eq_two_mul_complex
+    :
+    Module.finrank ℤ (canonicalComplexExponentialPeriodLattice (G := G) I) =
+      2 * Module.finrank ℂ E := by
+  rw [canonicalComplexExponentialPeriodLattice_finrank (G := G) I]
+  exact Uniformization.finrank_real_eq_two_mul_finrank_complex
+
+/-- If the complex tangent model has genus dimension `g`, the candidate period
+lattice has the expected rank `2 * g`. -/
+theorem canonicalComplexExponentialPeriodLattice_finrank_eq_two_mul
+    {g : ℕ} (hgenus : Module.finrank ℂ E = g) :
+    Module.finrank ℤ (canonicalComplexExponentialPeriodLattice (G := G) I) =
+      2 * g := by
+  rw [canonicalComplexExponentialPeriodLattice_finrank_eq_two_mul_complex
+    (G := G) I, hgenus]
 
 end Analytic
 end Mumford
