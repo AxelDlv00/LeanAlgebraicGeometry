@@ -21,3 +21,12 @@
 {"at": "2026-09-04T12:40:29.205150+00:00", "actor": "system", "field": "status", "from": "queued", "to": "running", "note": "started by Horizon run"}
 {"at": "2026-09-04T18:11:05.262009+00:00", "actor": "system", "field": "status", "from": "running", "to": "queued", "note": "Horizon session ended without the agent recording a terminal status; returned to queued"}
 {"at": "2026-09-04T18:31:47.961810+00:00", "actor": "system", "field": "status", "from": "queued", "to": "running", "note": "started by Horizon run"}
+{"at": "2026-09-04T22:20:45.770957+00:00", "actor": "system", "field": "status", "from": "running", "to": "queued", "note": "Horizon session ended without the agent recording a terminal status; returned to queued"}
+{"at": "2026-09-04T22:27:58.739679+00:00", "actor": "system", "field": "status", "from": "queued", "to": "running", "note": "started by Horizon run"}
+{"at": "2026-09-05T03:04:32.165156+00:00", "actor": "system", "field": "status", "from": "running", "to": "queued", "note": "Horizon session ended without the agent recording a terminal status; returned to queued"}
+{"at": "2026-09-05T03:07:30.180700+00:00", "actor": "system", "field": "status", "from": "queued", "to": "running", "note": "started by Horizon run"}
+{"at": "2026-09-05T05:42:44.927815+00:00", "actor": "horizon", "field": "edited", "from": "", "to": "", "note": "roadmap_refs, inbox_refs updated", "provenance": {"run": "0213", "session": "0026-horizon-ajc-kleiman-picard", "role": "horizon", "round": "12", "rounds": "24", "task": "ajc-kleiman-picard", "task_title": "AJC: Kleiman Picard scheme representability", "projects": "Algebraic-Jacobian-Challenge"}}
+{"at": "2026-09-05T06:30:18.930827+00:00", "actor": "system", "field": "status", "from": "running", "to": "queued", "note": "Horizon session ended without the agent recording a terminal status; returned to queued"}
+{"at": "2026-09-05T06:32:40.966362+00:00", "actor": "system", "field": "status", "from": "queued", "to": "running", "note": "started by Horizon run"}
+{"at": "2026-09-05T14:30:52.445045+00:00", "actor": "system", "field": "status", "from": "running", "to": "queued", "note": "Horizon session ended without the agent recording a terminal status; returned to queued"}
+{"at": "2026-09-05T14:32:40.567881+00:00", "actor": "system", "field": "status", "from": "queued", "to": "running", "note": "started by Horizon run"}

@@ -2,20 +2,26 @@ id: AJC.picrep.divgrassmannian
 title: 'D2'': Grassmannian comparison for the degree-d divisor functor'
 projects:
 - Algebraic-Jacobian-Challenge
-summary: 'ACTIVE, partial. The curve fibre-H0/rank transport is now closed: fiberH0_twist_eq_fiberDeg_of_curve
-  derives fibre H0 of a line-bundle twist from finite schematic support on every smooth
-  proper geometrically integral relative curve, with no rational-point binder. Remaining
-  D2 producers are arbitrary-test-base finite locally free pushforward rank, the post-pushforward
-  evaluation epimorphism, and the pullback-natural DivFunctorDeg-to-Grassmannian class.
-  The affine finite-presentation consumer experiment was preserved but not landed
-  after bounded checks timed out; next refactor the generic finite-support pushforward
-  finite-presentation proof out of DivGrassmannianEmbedding.'
-status: pending
+summary: 'ACTIVE, partial. Commits 665414aa86 and b50d32bebd kernel-check the final
+  Kleiman sb:Q step: subsingleton kernel Ext^1 lifts sections and yields epimorphy
+  of the pushed twisted divisor quotient over an affine test. This is the exact conditional
+  hquot interface for grassmannianEval_epi, but no theorem applies it there yet, and
+  DivFamily.zero remains the only constructed family. The uniform Ext^1 producer is
+  still missing because CurveDivisor/divisorSheaf cohomology and Scheme.Modules twists
+  lack the comparison in I-2327. Commit 5e41dbcf86 adds only the object-level canonical
+  twist pullback isomorphism. Remaining D2'' work includes positive-degree DivFamily
+  construction, hbase, arbitrary-test rank/local-freeness integration, quotient/evaluation
+  naturality and coherence, monicity, and the representing Grassmannian object. fgaPicardRepresentability
+  remains open; no rational-point binder was introduced.'
+status: active
 kind: proof
 priority: normal
 depends_on: []
-inbox_refs: []
-task_refs: []
+inbox_refs:
+- I-0491
+- I-1697
+task_refs:
+- ajc-kleiman-picard
 scope:
   projects:
   - Algebraic-Jacobian-Challenge
@@ -33,8 +39,14 @@ metadata:
       item'
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.picrep
-  updated_at: '2026-09-04T10:38:25.018661+00:00'
+  updated_at: '2026-09-05T20:25:30.418055+00:00'
   pinned_commits:
+  - b50d32bebd
+  - 5e41dbcf86
+  - 665414aa86
+  - f8789b843f
+  - 366db3fe05
+  - 6ba8b83f63
   - 97e5f48aff
   - dde18df1c3
   - e503971311
@@ -61,3 +73,4 @@ metadata:
   - '8246704134'
   - 03be5f1be
   - 71ea0b839
+  owner: ajc-kleiman-picard
