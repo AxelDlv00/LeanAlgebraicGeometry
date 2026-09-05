@@ -5,6 +5,7 @@ Authors: The Mumford Contributors
 -/
 
 import MumfordLib.ComplexLieAdjoint
+import MumfordLib.ComplexLieExponentialUniqueness
 import MumfordLib.RealLieFlowParameter
 import MumfordLib.ComplexLieFlowParameter
 import Mathlib.Analysis.Calculus.InverseFunctionTheorem.ContDiff
@@ -20,10 +21,10 @@ import Mathlib.Topology.Connected.Clopen
 The compact-holomorphic argument in `ComplexLieAdjoint` makes the derivative
 of every conjugation map equal to the identity.  This file proves the
 local-to-global generation step in Mumford's argument, records useful
-conditional exponential interfaces, and then closes commutativity with the
-canonical real flow.  The real inverse-function argument suffices for
-commutativity; construction of the source's holomorphic exponential remains a
-separate input for analytic uniformization.
+conditional exponential interfaces, and closes commutativity through the
+canonical holomorphic exponential and its naturality.  Real invariant flows
+construct that exponential and prove its global range; complex regularity and
+one-parameter uniqueness supply the functoriality used here.
 -/
 
 set_option autoImplicit false
@@ -649,10 +650,9 @@ theorem canonicalRealFlow_time_one_surjective
 /-!
 ### Consuming the named complex exponential candidate
 
-The real flow already supplies the global range statement.  The next bridge
-transports it across the identity-on-vectors map used by
-`canonicalComplexExponential`, and then records the resulting commutativity
-route using the bundled multiplicative exponential API. -/
+The real flow supplies the global range statement.  Complex one-parameter
+uniqueness supplies naturality, and the resulting exponential data feeds the
+central-generator commutativity argument. -/
 
 /-- The named complex exponential candidate is surjective because its
 underlying real time-one flow is surjective. -/
@@ -678,14 +678,13 @@ theorem canonicalComplexExponentialMonoidHom_surjective
   simpa using hv
 
 /-! The canonical candidate can be supplied to the explicit exponential
-    interface.  This is a conditional interface package: it records the
-    properties proved for the real-flow candidate, without asserting that it
-    is the source's uniquely integrated holomorphic exponential. -/
+    interface.  Its construction comes from real invariant flows, while its
+    complex regularity, uniqueness, and naturality are proved separately. -/
 
+set_option backward.isDefEq.respectTransparency false in
 /-- Conjugation naturality for every complex parameter of the canonical flow.
-The statement is in the chosen model coordinates: centrality comes from the
-real flow used to define the candidate, while the compact adjoint calculation
-identifies the transported tangent vector. -/
+The statement is in the chosen model coordinates.  It follows from uniqueness
+of holomorphic one-parameter subgroups and the compact adjoint calculation. -/
 theorem canonicalComplexFlow_conjugation
     [CompleteSpace E] [T2Space G]
     [I.Boundaryless] [CompactSpace G] [PreconnectedSpace G]
@@ -694,17 +693,21 @@ theorem canonicalComplexFlow_conjugation
       canonicalComplexFlow (G := G) I
         ((complexLieAdjoint (G := G) I x) v) z := by
   rw [complexLieAdjoint_eq_id (G := G) I x]
-  change complexLieConjugation x
-      (canonicalRealFlow (G := G) I
-        (complexToRealLieAlgebraMap I (z • v)) 1) =
-    canonicalRealFlow (G := G) I
-      (complexToRealLieAlgebraMap I (z • v)) 1
-  exact congrFun
-    (complexLieConjugation_comp_integralCurve_eq (G := G) I
-      (canonicalRealFlow_spec (G := G) I
-        (complexToRealLieAlgebraMap I (z • v))).2.1
-      (canonicalRealFlow_spec (G := G) I
-        (complexToRealLieAlgebraMap I (z • v))).1 x) 1
+  let F : G →* G := (MulAut.conj x).toMonoidHom
+  have hFfun : (F : G → G) = complexLieConjugation x := by
+    funext y
+    simp [F, complexLieConjugation, MulAut.conj_apply]
+  have hF : MDifferentiable I I F := by
+    rw [hFfun]
+    have hc : ContMDiff I I ω (complexLieConjugation x) :=
+      (contMDiff_const.mul contMDiff_id).mul contMDiff_const.inv
+    exact hc.mdifferentiable (by simp)
+  have hderiv_v : mfderiv I I F 1 v = v := by
+    rw [hFfun, mfderiv_complexLieConjugation_one_eq_id (G := G) I x]
+    rfl
+  have hnat := complexLieExponential_naturality I I F hF v z
+  rw [hderiv_v, hFfun] at hnat
+  exact hnat
 
 /-- Conjugation naturality for the canonical time-one exponential candidate,
 obtained by specializing `canonicalComplexFlow_conjugation`. -/
@@ -719,8 +722,8 @@ theorem canonicalComplexExponential_conjugation
   simpa only [canonicalComplexExponential,
     canonicalComplexFlow_eq_exponential_smul, one_smul] using h
 
-/-- The canonical real-flow exponential packaged as the explicit conditional
-complex exponential interface used by the commutativity argument. -/
+/-- The canonical holomorphic exponential packaged as the explicit interface
+used by the commutativity argument. -/
 noncomputable def canonicalComplexLieExponentialData
     [CompleteSpace E] [T2Space G]
     [I.Boundaryless] [CompactSpace G] [PreconnectedSpace G] :
@@ -734,9 +737,7 @@ noncomputable def canonicalComplexLieExponentialData
   conjugation_exp := canonicalComplexExponential_conjugation (G := G) I
 
 /-- The canonical complex exponential gives a direct central-generator proof
-of commutativity.  This is a consumer of the named candidate, while the
-source-level holomorphic exponential and its lattice kernel remain separate
-analytic inputs. -/
+of commutativity. -/
 theorem complexLieGroup_isMulCommutative_of_canonicalComplexExponential
     [CompleteSpace E] [T2Space G]
     [I.Boundaryless] [CompactSpace G] [PreconnectedSpace G] :
@@ -744,9 +745,8 @@ theorem complexLieGroup_isMulCommutative_of_canonicalComplexExponential
   exact complexLieGroup_isMulCommutative_of_exponential (G := G) I
     (canonicalComplexLieExponentialData (G := G) I)
 
-/-- Every compact connected complex Lie group is commutative.  Canonical real
-flows give a central identity neighborhood, and connectedness propagates its
-commutativity to the whole group. -/
+/-- Every compact connected complex Lie group is commutative.  Holomorphic
+exponential naturality makes its generating image central. -/
 theorem complexLieGroup_isMulCommutative
     [T2Space G]
     [I.Boundaryless] [CompactSpace G] [PreconnectedSpace G] :
@@ -754,15 +754,8 @@ theorem complexLieGroup_isMulCommutative
   letI : FiniteDimensional ℂ E :=
     FiniteDimensional.of_locallyCompact_manifold G I
   letI : CompleteSpace E := FiniteDimensional.complete ℂ E
-  letI : IsTopologicalGroup G := topologicalGroup_of_lieGroup I ⊤
-  let s : Set G := Set.range
-    (fun v : GroupLieAlgebra (complexToRealModel I) G =>
-      canonicalRealFlow (G := G) I v 1)
-  apply isMulCommutative_of_central_nhds (s := s)
-  · intro z hz x
-    obtain ⟨v, rfl⟩ := hz
-    exact (canonicalRealFlow_spec (G := G) I v).2.2.2 x 1
-  · exact canonicalRealFlow_time_one_mem_interior (G := G) I
+  exact complexLieGroup_isMulCommutative_of_canonicalComplexExponential
+    (G := G) I
 
 end Analytic
 end Mumford
