@@ -848,7 +848,7 @@
     },
     "states": {
       "blocked": 124,
-      "closed": 796,
+      "closed": 805,
       "formalized_open": 0,
       "informal": 254,
       "ready": 138
@@ -884,6 +884,7 @@
       "Algebra.DescentDatum.descended_toSubmodule: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Algebra.DescentDatum.descentEquiv: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Algebra.DescentDatum.descentEquiv_tmul: Lean declaration is not referenced by any blueprint \\lean{...}",
+      "Algebra.DescentDatum.finiteType_descended_of_finiteType: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Algebra.DescentDatum.mem_descended: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Algebra.DescentDatum.schemeBaseChangeIso: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Algebra.DescentDatum.schemeBaseChangeIso_hom_structureMap: Lean declaration is not referenced by any blueprint \\lean{...}",
@@ -902,8 +903,7 @@
       "MilneLib.GroupVariety.hom_additive_decomp_of_rigidity: Lean declaration is not referenced by any blueprint \\lean{...}",
       "MilneLib.GroupVariety.hom_additive_decomp_of_rigidity_arbitraryField: Lean declaration is not referenced by any blueprint \\lean{...}",
       "MilneLib.GroupVariety.isIntegral_of_retract: Lean declaration is not referenced by any blueprint \\lean{...}",
-      "MilneLib.GroupVariety.isIntegral_tensorObj_left_of_geometricallyIntegral: Lean declaration is not referenced by any blueprint \\lean{...}",
-      "MilneLib.GroupVariety.isIrreducible_pointTranslationIso_preimage_iff: Lean declaration is not referenced by any blueprint \\lean{...}"
+      "MilneLib.GroupVariety.isIntegral_tensorObj_left_of_geometricallyIntegral: Lean declaration is not referenced by any blueprint \\lean{...}"
     ]
   },
   "nodes": [
@@ -6564,7 +6564,7 @@
     },
     {
       "chapter": "Jacobian Varieties",
-      "comment_count": 4,
+      "comment_count": 5,
       "dep_count": 0,
       "descendant_count": 27,
       "group": "c198",
