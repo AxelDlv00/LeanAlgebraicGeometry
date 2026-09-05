@@ -57,6 +57,7 @@ import HartshorneLib.Chapter4SkyscraperCohomology
 import HartshorneLib.Chapter4DivisorDevissage
 import HartshorneLib.Chapter4DivisorDevissageExact
 import HartshorneLib.Chapter4DivisorModuleFiber
+import HartshorneLib.Chapter4DivisorModuleFiberLinear
 import HartshorneLib.Chapter4DivisorFiberBridge
 import HartshorneLib.Chapter4DivisorSheafOrder
 import HartshorneLib.Chapter4ResidueDegree
