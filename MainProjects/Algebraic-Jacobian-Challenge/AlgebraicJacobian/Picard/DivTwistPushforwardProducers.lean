@@ -5,6 +5,7 @@ Authors: The AlgebraicJacobian Contributors
 -/
 import AlgebraicJacobian.Picard.DivCurvePushforwardProducers
 import AlgebraicJacobian.Picard.DivLocallyClosed
+import AlgebraicJacobian.Picard.FiniteSupportPushforwardFiber
 
 /-!
 # Finite sections of twisted divisor pushforwards
@@ -207,6 +208,76 @@ theorem pushforward_twist_isLocallyFreeOfRank_of_pointRank
   exact Modules.isLocallyFreeOfRank_of_finitePresentation_flat_pointRank
     ((Modules.pushforward (pullback.snd π T.hom)).obj (x.twist L))
     (coherentSheafFlat_id_pushforward_twist_of_curve L hL x hFp) hRank
+
+/-! ## The affine curve rank producer -/
+
+set_option maxHeartbeats 1000000 in
+-- Normalizing the pullback/tensor pushforward carrier exceeds the default budget.
+set_option backward.isDefEq.respectTransparency false in
+/-- For a twisted divisor family on a smooth proper geometrically integral
+curve, the point rank of the pushforward equals the degree of the divisor
+fibre.  Finite schematic support gives pushforward base change, the affine
+`ΓSpecIso` transport identifies its module fibre with `pointRank`, and the
+finite-support twist calculation identifies fibre `H⁰` with `fiberDeg`.
+
+This is the rank calculation used in Kleiman, *The Picard scheme*, Section 3,
+`sb:Q` and `ex:DivC`; it has no rational-point hypothesis. -/
+theorem pointRank_pushforward_twist_eq_fiberDeg_of_curve
+    {R : CommRingCat.{u}} {S X : Scheme.{u}} {π : X ⟶ S}
+    [SmoothOfRelativeDimension 1 π] [GeometricallyIntegral π] [IsProper π]
+    (f : Spec R ⟶ S) (L : X.Modules) (hL : LineBundle.IsLocallyTrivial L)
+    (x : DivFamily π (Over.mk f)) (t : PrimeSpectrum R) :
+    Modules.pointRank (Spec R)
+        ((Modules.pushforward (pullback.snd π f)).obj (x.twist L)) t =
+      x.fiberDeg t := by
+  let LT := (Modules.pullback (pullback.fst π (Over.mk f).hom)).obj L
+  haveI : LT.IsFinitePresentation :=
+    (hL.pullback (pullback.fst π (Over.mk f).hom)).isFinitePresentation
+  haveI : LT.IsQuasicoherent := inferInstance
+  haveI : x.F.IsFinitePresentation := x.isFinitePresentation
+  haveI : x.F.IsQuasicoherent := inferInstance
+  haveI : (x.twist L).IsQuasicoherent := by
+    dsimp [DivFamily.twist]
+    exact Modules.tensorObj_isQuasicoherent LT x.F
+  let q := pullback.snd π (Over.mk f).hom
+  haveI : QuasiCompact q := by
+    dsimp [q]
+    infer_instance
+  haveI : QuasiSeparated q := by
+    dsimp [q]
+    infer_instance
+  exact (Modules.pointRank_pushforward_eq_fiberH0_of_isFinite_schematicSupport
+    q (x.twist L) (twist_isFiniteSupport_of_curve L hL x) t).trans
+      (fiberH0_twist_eq_fiberDeg_of_curve L hL x t)
+
+set_option maxHeartbeats 1000000 in
+-- The locally-free target expands the same nested pullback/tensor carrier.
+set_option backward.isDefEq.respectTransparency false in
+/-- **Affine curve D2 rank producer.**  A constant-degree divisor family on a
+smooth proper geometrically integral curve has a finite locally free twisted
+pushforward of that degree over every noetherian affine test base.
+
+This discharges the explicit point-rank premise of
+`pushforward_twist_isLocallyFreeOfRank_of_pointRank`.  It is the finite locally
+free module entering Kleiman's divisor-to-Grassmannian construction and does
+not assume that the curve has a rational point. -/
+theorem pushforward_twist_isLocallyFreeOfRank_of_curve
+    {R : CommRingCat.{u}} {S X : Scheme.{u}} {π : X ⟶ S}
+    [SmoothOfRelativeDimension 1 π] [GeometricallyIntegral π] [IsProper π]
+    (f : Spec R ⟶ S) [IsNoetherianRing R]
+    (L : X.Modules) (hL : LineBundle.IsLocallyTrivial L)
+    (x : DivFamily π (Over.mk f))
+    (hFp : (x.twist L).IsFinitePresentation)
+    {d : ℕ} (hx : x.HasFiberDeg d) :
+    SheafOfModules.IsLocallyFreeOfRank
+      ((Modules.pushforward (pullback.snd π f)).obj (x.twist L)) d := by
+  letI : IsLocallyNoetherian (Over.mk f).left := by
+    change IsLocallyNoetherian (Spec R)
+    infer_instance
+  apply pushforward_twist_isLocallyFreeOfRank_of_pointRank L hL x hFp
+  intro t
+  exact (pointRank_pushforward_twist_eq_fiberDeg_of_curve f L hL x t).trans
+    (hx t)
 
 end DivFamily
 
