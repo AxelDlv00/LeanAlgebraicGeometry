@@ -7,7 +7,10 @@ summary: 'Commits 2ef2333cdb, c68c6bf54c, and ffcbb833f7 close the fixed finite-
   jump and exact divisor order, an exact-order LocalRatioOpen, a LocalRatioRegularization,
   and the selected opens form an indexed cover under an explicit Nonempty NonGenericPoint
   hypothesis; the compatible family now feeds gluedFromOpen and yields a projective
-  morphism over Spec k. Remaining source-facing work: derive non-generic-point existence
+  morphism over Spec k. Verification completed with the full 8,676-job Horizon check,
+  focused declaration checks showing only standard axioms, and an honesty review classifying
+  the advance as honest partial progress with a substantive consumer chain and explicit
+  non-vacuity hypothesis. Remaining source-facing work: derive non-generic-point existence
   from the smooth proper curve hypotheses, connect the numerical BasePointFreeLinearSystem
   predicate to geometric fiber/evaluation base-point-freeness, and prove the very-ample
   two-point/tangent criterion. The IV.3.1 blueprint node remains empty.'
@@ -37,7 +40,7 @@ metadata:
   parent: Hartshorne
   owner: fs-hartshorne
   milestone: Hartshorne
-  updated_at: '2026-09-05T12:20:03.095867+00:00'
+  updated_at: '2026-09-05T13:36:40.921866+00:00'
   pinned_commits:
   - ffcbb833f7
   - c68c6bf54c
