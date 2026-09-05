@@ -44,6 +44,17 @@ noncomputable def sectionsAlgEquivOfEq
   exact AlgEquiv.refl
 
 omit [X.IsSeparated] in
+/-- Equality transport on sections is reversed by the inverse equivalence. -/
+theorem sectionsAlgEquivOfEq_symm
+    (p : X ⟶ Spec (CommRingCat.of k)) {U V : X.Opens} (e : U = V) :
+    letI := sectionsAlgebra p U
+    letI := sectionsAlgebra p V
+    sectionsAlgEquivOfEq p e =
+      (sectionsAlgEquivOfEq p e.symm).symm := by
+  subst V
+  rfl
+
+omit [X.IsSeparated] in
 /-- Equality transport on sections intertwines the actions restricted to the
 two equal stable opens. -/
 theorem sectionsAlgEquivOfEq_equivariant
@@ -83,6 +94,18 @@ noncomputable def overlapSectionsAlgEquiv
     letI := sectionsAlgebra p (i.U ⊓ j.U)
     Γ(X, j.U ⊓ i.U) ≃ₐ[k] Γ(X, i.U ⊓ j.U) :=
   sectionsAlgEquivOfEq p (inf_comm j.U i.U)
+
+/-- Reversing the ordered overlap twice gives the original section
+equivalence. -/
+theorem overlapSectionsAlgEquiv_symm
+    (p : X ⟶ Spec (CommRingCat.of k))
+    (i j : StableAffineOpen act) :
+    letI := sectionsAlgebra p (j.U ⊓ i.U)
+    letI := sectionsAlgebra p (i.U ⊓ j.U)
+    overlapSectionsAlgEquiv act p i j =
+      (overlapSectionsAlgEquiv act p j i).symm := by
+  unfold overlapSectionsAlgEquiv
+  apply sectionsAlgEquivOfEq_symm
 
 /-- The section-algebra overlap reversal is equivariant. -/
 theorem overlapSectionsAlgEquiv_equivariant
@@ -172,6 +195,37 @@ theorem overlapFixedSectionsAlgEquiv_coe
         FixedPoints.subalgebra k Γ(X, i.U ⊓ j.U) G) : Γ(X, i.U ⊓ j.U)) =
       overlapSectionsAlgEquiv act p i j (s : Γ(X, j.U ⊓ i.U)) := by
   rfl
+
+/-- The induced equivalence of fixed overlap rings is involutive under
+reversal of the ordered pair. -/
+theorem overlapFixedSectionsAlgEquiv_symm
+    (p : X ⟶ Spec (CommRingCat.of k))
+    (hact : ∀ g : G, (act g).hom ≫ p = p)
+    (i j : StableAffineOpen act) :
+    letI := sectionsAlgebra p (j.U ⊓ i.U)
+    letI := sectionsAlgebra p (i.U ⊓ j.U)
+    letI := sectionsMulSemiringAction act (overlap_stable act j i)
+    letI := sectionsMulSemiringAction act (overlap_stable act i j)
+    letI := sectionsSMulCommClass act p hact (overlap_stable act j i)
+    letI := sectionsSMulCommClass act p hact (overlap_stable act i j)
+    overlapFixedSectionsAlgEquiv act p hact i j =
+      (overlapFixedSectionsAlgEquiv act p hact j i).symm := by
+  letI := sectionsAlgebra p (j.U ⊓ i.U)
+  letI := sectionsAlgebra p (i.U ⊓ j.U)
+  letI := sectionsMulSemiringAction act (overlap_stable act j i)
+  letI := sectionsMulSemiringAction act (overlap_stable act i j)
+  letI := sectionsSMulCommClass act p hact (overlap_stable act j i)
+  letI := sectionsSMulCommClass act p hact (overlap_stable act i j)
+  apply AlgEquiv.ext
+  intro x
+  apply (overlapFixedSectionsAlgEquiv act p hact j i).injective
+  rw [AlgEquiv.apply_symm_apply]
+  apply Subtype.ext
+  simp only [overlapFixedSectionsAlgEquiv_coe]
+  rw [show overlapSectionsAlgEquiv act p j i =
+      (overlapSectionsAlgEquiv act p i j).symm from
+    overlapSectionsAlgEquiv_symm act p j i]
+  exact (overlapSectionsAlgEquiv act p i j).symm_apply_apply _
 
 /-- On invariant sections, overlap reversal carries the reversed left
 restriction from chart `j` to the original right restriction. -/
@@ -295,6 +349,46 @@ theorem fixedOverlapIso_hom
       Spec.map (CommRingCat.ofHom
         (overlapFixedSectionsAlgEquiv act p hact i j).toRingEquiv.toRingHom) := by
   rfl
+
+/-- Reversing the ordered overlap reverses the induced spectrum
+isomorphism. -/
+theorem fixedOverlapIso_symm
+    (p : X ⟶ Spec (CommRingCat.of k))
+    (hact : ∀ g : G, (act g).hom ≫ p = p)
+    (i j : StableAffineOpen act) :
+    letI := sectionsAlgebra p i.U
+    letI := sectionsAlgebra p j.U
+    letI := sectionsAlgebra p (i.U ⊓ j.U)
+    letI := sectionsAlgebra p (j.U ⊓ i.U)
+    letI := sectionsMulSemiringAction act i.stable
+    letI := sectionsMulSemiringAction act j.stable
+    letI := sectionsMulSemiringAction act (overlap_stable act i j)
+    letI := sectionsMulSemiringAction act (overlap_stable act j i)
+    letI := sectionsSMulCommClass act p hact i.stable
+    letI := sectionsSMulCommClass act p hact j.stable
+    letI := sectionsSMulCommClass act p hact (overlap_stable act i j)
+    letI := sectionsSMulCommClass act p hact (overlap_stable act j i)
+    fixedOverlapIso act p hact i j =
+      (fixedOverlapIso act p hact j i).symm := by
+  letI := sectionsAlgebra p i.U
+  letI := sectionsAlgebra p j.U
+  letI := sectionsAlgebra p (i.U ⊓ j.U)
+  letI := sectionsAlgebra p (j.U ⊓ i.U)
+  letI := sectionsMulSemiringAction act i.stable
+  letI := sectionsMulSemiringAction act j.stable
+  letI := sectionsMulSemiringAction act (overlap_stable act i j)
+  letI := sectionsMulSemiringAction act (overlap_stable act j i)
+  letI := sectionsSMulCommClass act p hact i.stable
+  letI := sectionsSMulCommClass act p hact j.stable
+  letI := sectionsSMulCommClass act p hact (overlap_stable act i j)
+  letI := sectionsSMulCommClass act p hact (overlap_stable act j i)
+  apply Iso.ext
+  rw [fixedOverlapIso_hom]
+  change Spec.map (CommRingCat.ofHom
+      (overlapFixedSectionsAlgEquiv act p hact i j).toRingEquiv.toRingHom) =
+    Spec.map (CommRingCat.ofHom
+      (overlapFixedSectionsAlgEquiv act p hact j i).symm.toRingEquiv.toRingHom)
+  rw [← overlapFixedSectionsAlgEquiv_symm act p hact i j]
 
 /-- The fixed-overlap reversal followed by the left leg of the reversed cone is
 the right leg of the original cone. -/

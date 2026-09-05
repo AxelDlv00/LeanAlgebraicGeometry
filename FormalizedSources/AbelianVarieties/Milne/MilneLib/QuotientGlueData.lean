@@ -128,6 +128,115 @@ theorem quotientOverlapSwapIso_hom_comp_ι_eq_rightQuotientMap [Finite G]
 
 /-! ## The diagonal overlap -/
 
+/-- Reversing a self-overlap is the identity isomorphism.  This is the
+diagonal transition required by `Scheme.GlueData`. -/
+theorem quotientOverlapSwapIso_self [Finite G]
+    (p : X ⟶ Spec (CommRingCat.of k))
+    (hact : ∀ g : G, (act g).hom ≫ p = p)
+    (i : StableAffineOpen act) :
+    letI := sectionsAlgebra p i.U
+    letI := sectionsMulSemiringAction act i.stable
+    letI := sectionsSMulCommClass act p hact i.stable
+    quotientOverlapSwapIso act p hact i i = Iso.refl _ := by
+  letI := sectionsAlgebra p i.U
+  letI := sectionsMulSemiringAction act i.stable
+  letI := sectionsSMulCommClass act p hact i.stable
+  apply Iso.ext
+  apply (cancel_mono (quotientOverlapι act p hact i i)).1
+  rw [quotientOverlapSwapIso_hom_comp_ι]
+  have hAlg : overlapFixedSectionsAlgEquiv act p hact i i =
+      (AlgEquiv.refl : _ ≃ₐ[k] _) := by
+    ext x
+    rfl
+  rw [← fixedOverlapQuotientIsoRight_hom_comp_ι act p hact i i]
+  have hfixed : fixedOverlapIso act p hact i i = Iso.refl _ := by
+    apply Iso.ext
+    rw [fixedOverlapIso_hom, hAlg]
+    simp
+  rw [fixedOverlapQuotientIsoRight, hfixed]
+  simp only [Iso.trans_hom, Iso.refl_hom, Category.id_comp,
+    Iso.inv_hom_id_assoc]
+
+/-- The two overlap reversals compose to the identity.  This is the
+off-diagonal involution coherence for the eventual gluing transitions. -/
+theorem quotientOverlapSwapIso_trans_swapIso [Finite G]
+    (p : X ⟶ Spec (CommRingCat.of k))
+    (hact : ∀ g : G, (act g).hom ≫ p = p)
+    (i j : StableAffineOpen act) :
+    letI := sectionsAlgebra p i.U
+    letI := sectionsAlgebra p j.U
+    letI := sectionsAlgebra p (i.U ⊓ j.U)
+    letI := sectionsAlgebra p (j.U ⊓ i.U)
+    letI := sectionsMulSemiringAction act i.stable
+    letI := sectionsMulSemiringAction act j.stable
+    letI := sectionsMulSemiringAction act (overlap_stable act i j)
+    letI := sectionsMulSemiringAction act (overlap_stable act j i)
+    letI := sectionsSMulCommClass act p hact i.stable
+    letI := sectionsSMulCommClass act p hact j.stable
+    letI := sectionsSMulCommClass act p hact (overlap_stable act i j)
+    letI := sectionsSMulCommClass act p hact (overlap_stable act j i)
+    quotientOverlapSwapIso act p hact i j ≪≫
+      quotientOverlapSwapIso act p hact j i = Iso.refl _ := by
+  letI := sectionsAlgebra p i.U
+  letI := sectionsAlgebra p j.U
+  letI := sectionsAlgebra p (i.U ⊓ j.U)
+  letI := sectionsAlgebra p (j.U ⊓ i.U)
+  letI := sectionsMulSemiringAction act i.stable
+  letI := sectionsMulSemiringAction act j.stable
+  letI := sectionsMulSemiringAction act (overlap_stable act i j)
+  letI := sectionsMulSemiringAction act (overlap_stable act j i)
+  letI := sectionsSMulCommClass act p hact i.stable
+  letI := sectionsSMulCommClass act p hact j.stable
+  letI := sectionsSMulCommClass act p hact (overlap_stable act i j)
+  letI := sectionsSMulCommClass act p hact (overlap_stable act j i)
+  apply Iso.ext
+  apply (cancel_mono (quotientOverlapι act p hact i j)).1
+  simp only [Iso.trans_hom, Iso.refl_hom]
+  rw [Category.assoc, quotientOverlapSwapIso_hom_comp_ι]
+  rw [quotientOverlapSwapIso, Iso.trans_hom, Iso.symm_hom,
+    fixedOverlapQuotientIsoRight, Iso.trans_hom]
+  simp only [Category.assoc, Iso.hom_inv_id_assoc]
+  rw [fixedOverlapIso_hom_comp_rightFixedRestrictionMap]
+  rw [← fixedOverlapQuotientIso_hom_comp_ι act p hact i j]
+  simp only [Iso.inv_hom_id_assoc, Category.id_comp]
+
+/-- The reversal attached to an ordered overlap is the inverse of the
+reversal attached to the opposite order. -/
+theorem quotientOverlapSwapIso_symm [Finite G]
+    (p : X ⟶ Spec (CommRingCat.of k))
+    (hact : ∀ g : G, (act g).hom ≫ p = p)
+    (i j : StableAffineOpen act) :
+    letI := sectionsAlgebra p i.U
+    letI := sectionsAlgebra p j.U
+    letI := sectionsAlgebra p (i.U ⊓ j.U)
+    letI := sectionsAlgebra p (j.U ⊓ i.U)
+    letI := sectionsMulSemiringAction act i.stable
+    letI := sectionsMulSemiringAction act j.stable
+    letI := sectionsMulSemiringAction act (overlap_stable act i j)
+    letI := sectionsMulSemiringAction act (overlap_stable act j i)
+    letI := sectionsSMulCommClass act p hact i.stable
+    letI := sectionsSMulCommClass act p hact j.stable
+    letI := sectionsSMulCommClass act p hact (overlap_stable act i j)
+    letI := sectionsSMulCommClass act p hact (overlap_stable act j i)
+    quotientOverlapSwapIso act p hact i j =
+      (quotientOverlapSwapIso act p hact j i).symm := by
+  letI := sectionsAlgebra p i.U
+  letI := sectionsAlgebra p j.U
+  letI := sectionsAlgebra p (i.U ⊓ j.U)
+  letI := sectionsAlgebra p (j.U ⊓ i.U)
+  letI := sectionsMulSemiringAction act i.stable
+  letI := sectionsMulSemiringAction act j.stable
+  letI := sectionsMulSemiringAction act (overlap_stable act i j)
+  letI := sectionsMulSemiringAction act (overlap_stable act j i)
+  letI := sectionsSMulCommClass act p hact i.stable
+  letI := sectionsSMulCommClass act p hact j.stable
+  letI := sectionsSMulCommClass act p hact (overlap_stable act i j)
+  letI := sectionsSMulCommClass act p hact (overlap_stable act j i)
+  apply Iso.ext
+  dsimp [quotientOverlapSwapIso, fixedOverlapQuotientIsoRight]
+  rw [← fixedOverlapIso_symm act p hact i j]
+  simp only [Iso.trans_hom, Category.assoc]
+
 /-- The descended self-overlap is the whole quotient chart.  Consequently its
 open inclusion is an isomorphism, supplying the diagonal `f_id` input for a
 cross-chart gluing datum. -/
