@@ -737,9 +737,12 @@ theorem complexLieGroup_isMulCommutative_of_canonicalComplexExponential
 flows give a central identity neighborhood, and connectedness propagates its
 commutativity to the whole group. -/
 theorem complexLieGroup_isMulCommutative
-    [CompleteSpace E] [T2Space G]
+    [T2Space G]
     [I.Boundaryless] [CompactSpace G] [PreconnectedSpace G] :
     IsMulCommutative G := by
+  letI : FiniteDimensional ℂ E :=
+    FiniteDimensional.of_locallyCompact_manifold G I
+  letI : CompleteSpace E := FiniteDimensional.complete ℂ E
   letI : IsTopologicalGroup G := topologicalGroup_of_lieGroup I ⊤
   let s : Set G := Set.range
     (fun v : GroupLieAlgebra (complexToRealModel I) G =>
