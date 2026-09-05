@@ -2,14 +2,11 @@ id: Mumford
 title: Mumford Abelian Varieties formalization
 projects:
 - Mumford
-summary: Advance source-faithful Mumford analytic formalization. Verified model-level
-  complex-flow naturality and a canonical additive exponential whose discrete period
-  kernel yields a quotient and ordinary covering map. Complex commutativity is kernel-checked,
-  but remains unattached to the frozen source theorem because its real-flow route
-  and explicit topological hypotheses differ from the intrinsic jointly holomorphic
-  route. Source exponential existence/uniqueness, source lattice identification, quotient
-  complex-Lie structure, and holomorphic uniformization remain open; the roadmap stays
-  active.
+summary: Advance source-faithful Mumford analytic formalization. The compact connected
+  complex-Lie commutativity node is now reviewer-approved, linked to Mumford.Analytic.complexLieGroup_isMulCommutative,
+  and graph lean_ok; its intrinsic jointly holomorphic exponential family is consumed
+  load-bearingly. Source lattice identification, quotient complex-Lie structure, and
+  holomorphic uniformization remain open, so the roadmap stays active.
 status: active
 kind: proof
 priority: normal
@@ -32,8 +29,11 @@ metadata:
     task_title: Advance Mumford Abelian Varieties formalization
     projects: Mumford
   owner: fs-mumford
-  updated_at: '2026-09-05T17:20:22.392083+00:00'
+  updated_at: '2026-09-05T22:37:59.831639+00:00'
   pinned_commits:
+  - a24e70a441
+  - 8461ab7214
+  - 444c9a8e20
   - 88ac56942b
   - c96411a1f1
   - ea407e2104
