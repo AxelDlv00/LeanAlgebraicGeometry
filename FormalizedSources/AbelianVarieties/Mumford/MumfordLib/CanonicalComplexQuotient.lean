@@ -76,6 +76,42 @@ theorem canonicalComplexExponentialQuotientHomeomorph_mk (v : E) :
     (canonicalComplexExponentialPeriodLatticeQuotient (G := G) I)
     (canonicalComplexExponential_isOpenQuotientMap (G := G) I) v
 
+/- The quotient relation is exactly the equality relation induced by the
+   canonical exponential.  This representative criterion is used when
+   passing between local branches and the global lattice quotient. -/
+theorem canonicalComplexExponentialQuotient_mk_eq_mk_iff (v w : E) :
+    QuotientAddGroup.mk'
+        (canonicalComplexExponentialPeriodLattice (G := G) I).toAddSubgroup v =
+      QuotientAddGroup.mk'
+        (canonicalComplexExponentialPeriodLattice (G := G) I).toAddSubgroup w ↔
+      canonicalComplexExponential (G := G) I v =
+        canonicalComplexExponential (G := G) I w := by
+  change (↑v : E ⧸
+      (canonicalComplexExponentialPeriodLattice (G := G) I).toAddSubgroup) =
+      (↑w : E ⧸
+        (canonicalComplexExponentialPeriodLattice (G := G) I).toAddSubgroup) ↔ _
+  rw [QuotientAddGroup.eq_iff_sub_mem]
+  rw [canonicalComplexExponentialPeriodLattice_toAddSubgroup (G := G) I]
+  rw [AddMonoidHom.mem_ker]
+  change canonicalComplexExponentialAddHom (G := G) I (v - w) = 0 ↔ _
+  rw [map_sub]
+  constructor
+  · intro h
+    have hmul :
+        Additive.ofMul (canonicalComplexExponential (G := G) I v) -
+            Additive.ofMul (canonicalComplexExponential (G := G) I w) = 0 := by
+      simpa [canonicalComplexExponentialAddHom_apply] using h
+    have hmul' :
+        Additive.ofMul (canonicalComplexExponential (G := G) I v) =
+            Additive.ofMul (canonicalComplexExponential (G := G) I w) :=
+      sub_eq_zero.mp hmul
+    exact Additive.ofMul.injective hmul'
+  · intro h
+    change Additive.ofMul (canonicalComplexExponential (G := G) I v) -
+      Additive.ofMul (canonicalComplexExponential (G := G) I w) = 0
+    rw [h]
+    exact sub_self _
+
 /-! The local-homeomorphism bridge gives canonical inverse branches on the
     additive target.  These are topological model-level branches, not the
     holomorphic charts of the source uniformization theorem. -/
