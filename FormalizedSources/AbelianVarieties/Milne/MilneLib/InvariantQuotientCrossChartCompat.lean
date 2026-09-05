@@ -86,6 +86,218 @@ theorem affineInvariantQuotientIso_preimage_quotientOpenOfStable_basicOpen
     quotientOpenOfStable_basicOpen_fixed]
   exact affineInvariantQuotientIso_preimage_basicOpen e hEquiv b
 
+/-! ## Isomorphisms on corresponding basic opens -/
+
+/-- An equivariant affine coordinate equivalence restricts to the corresponding
+source basic opens. -/
+noncomputable def affineCoordinateBasicOpenIso
+    [Finite G]
+    (e : B ≃ₐ[k] A)
+    (hEquiv : ∀ (g : G) (b : B), g • e b = e (g • b))
+    (b : FixedPoints.subalgebra k B G) :
+    let bA := equivariantFixedRingEquiv (k := k) (G := G)
+      e.toRingEquiv hEquiv b
+    let U : (Spec (CommRingCat.of A)).Opens :=
+      PrimeSpectrum.basicOpen (bA : A)
+    let V : (Spec (CommRingCat.of B)).Opens :=
+      PrimeSpectrum.basicOpen (b : B)
+    U.toScheme ≅ V.toScheme := by
+  let bA := equivariantFixedRingEquiv (k := k) (G := G)
+    e.toRingEquiv hEquiv b
+  let U : (Spec (CommRingCat.of A)).Opens :=
+    PrimeSpectrum.basicOpen (bA : A)
+  let V : (Spec (CommRingCat.of B)).Opens :=
+    PrimeSpectrum.basicOpen (b : B)
+  let s := Spec.map e.toRingEquiv.toCommRingCatIso.hom
+  have hSource : s ⁻¹ᵁ V = U := by
+    dsimp [s, U, V, bA]
+    rw [AlgebraicGeometry.SpecMap_preimage_basicOpen]
+    change PrimeSpectrum.basicOpen (e (b : B)) =
+      PrimeSpectrum.basicOpen
+        ((equivariantFixedRingEquiv (k := k) (G := G)
+          e.toRingEquiv hEquiv b : _) : A)
+    rw [equivariantFixedRingEquiv_apply_coe]
+    rfl
+  exact ((Spec (CommRingCat.of A)).isoOfEq hSource.symm).trans
+    (s.preimageIso V)
+
+/-- The restricted source isomorphism agrees with the ambient affine
+coordinate isomorphism after the open inclusions. -/
+@[reassoc]
+theorem affineCoordinateBasicOpenIso_hom_ι
+    [Finite G]
+    (e : B ≃ₐ[k] A)
+    (hEquiv : ∀ (g : G) (b : B), g • e b = e (g • b))
+    (b : FixedPoints.subalgebra k B G) :
+    let bA := equivariantFixedRingEquiv (k := k) (G := G)
+      e.toRingEquiv hEquiv b
+    let U : (Spec (CommRingCat.of A)).Opens :=
+      PrimeSpectrum.basicOpen (bA : A)
+    let V : (Spec (CommRingCat.of B)).Opens :=
+      PrimeSpectrum.basicOpen (b : B)
+    (affineCoordinateBasicOpenIso (k := k) (G := G) e hEquiv b).hom ≫ V.ι =
+      U.ι ≫ Spec.map (CommRingCat.ofHom e.toRingEquiv.toRingHom) := by
+  dsimp
+  unfold affineCoordinateBasicOpenIso
+  simp
+
+/-- The invariant quotient-chart isomorphism restricts to the quotient opens
+descended from corresponding invariant basic opens. -/
+noncomputable def affineInvariantQuotientBasicOpenIso
+    [Finite G]
+    (e : B ≃ₐ[k] A)
+    (hEquiv : ∀ (g : G) (b : B), g • e b = e (g • b))
+    (b : FixedPoints.subalgebra k B G) :
+    let bA := equivariantFixedRingEquiv (k := k) (G := G)
+      e.toRingEquiv hEquiv b
+    let U : (Spec (CommRingCat.of A)).Opens :=
+      PrimeSpectrum.basicOpen (bA : A)
+    let V : (Spec (CommRingCat.of B)).Opens :=
+      PrimeSpectrum.basicOpen (b : B)
+    let hU : ∀ (g : G), (specAction G A g).hom ⁻¹ᵁ U = U :=
+      fun g => specAction_preimage_basicOpen_fixed bA g
+    let hV : ∀ (g : G), (specAction G B g).hom ⁻¹ᵁ V = V :=
+      fun g => specAction_preimage_basicOpen_fixed b g
+    let WU := quotientOpenOfStable (k := k) (A := A) (G := G) U hU
+    let WV := quotientOpenOfStable (k := k) (A := B) (G := G) V hV
+    WU.toScheme ≅ WV.toScheme := by
+  let bA := equivariantFixedRingEquiv (k := k) (G := G)
+    e.toRingEquiv hEquiv b
+  let U : (Spec (CommRingCat.of A)).Opens :=
+    PrimeSpectrum.basicOpen (bA : A)
+  let V : (Spec (CommRingCat.of B)).Opens :=
+    PrimeSpectrum.basicOpen (b : B)
+  let hU : ∀ (g : G), (specAction G A g).hom ⁻¹ᵁ U = U :=
+    fun g => specAction_preimage_basicOpen_fixed bA g
+  let hV : ∀ (g : G), (specAction G B g).hom ⁻¹ᵁ V = V :=
+    fun g => specAction_preimage_basicOpen_fixed b g
+  let WU := quotientOpenOfStable (k := k) (A := A) (G := G) U hU
+  let WV := quotientOpenOfStable (k := k) (A := B) (G := G) V hV
+  let t := affineInvariantQuotientIso (k := k) (G := G)
+    e.toRingEquiv hEquiv
+  have hQuotient : t.hom ⁻¹ᵁ WV = WU := by
+    dsimp [t, WU, WV, U, V, hU, hV, bA]
+    exact affineInvariantQuotientIso_preimage_quotientOpenOfStable_basicOpen
+      (k := k) (G := G) e hEquiv b
+  exact ((Spec (CommRingCat.of
+      (FixedPoints.subalgebra k A G))).isoOfEq hQuotient.symm).trans
+    (t.hom.preimageIso WV)
+
+/-- The restricted quotient isomorphism agrees with the ambient invariant
+quotient-chart isomorphism after the open inclusions. -/
+@[reassoc]
+theorem affineInvariantQuotientBasicOpenIso_hom_ι
+    [Finite G]
+    (e : B ≃ₐ[k] A)
+    (hEquiv : ∀ (g : G) (b : B), g • e b = e (g • b))
+    (b : FixedPoints.subalgebra k B G) :
+    let bA := equivariantFixedRingEquiv (k := k) (G := G)
+      e.toRingEquiv hEquiv b
+    let U : (Spec (CommRingCat.of A)).Opens :=
+      PrimeSpectrum.basicOpen (bA : A)
+    let V : (Spec (CommRingCat.of B)).Opens :=
+      PrimeSpectrum.basicOpen (b : B)
+    let hU : ∀ (g : G), (specAction G A g).hom ⁻¹ᵁ U = U :=
+      fun g => specAction_preimage_basicOpen_fixed bA g
+    let hV : ∀ (g : G), (specAction G B g).hom ⁻¹ᵁ V = V :=
+      fun g => specAction_preimage_basicOpen_fixed b g
+    let WU := quotientOpenOfStable (k := k) (A := A) (G := G) U hU
+    let WV := quotientOpenOfStable (k := k) (A := B) (G := G) V hV
+    (affineInvariantQuotientBasicOpenIso
+        (k := k) (G := G) e hEquiv b).hom ≫ WV.ι =
+      WU.ι ≫ (affineInvariantQuotientIso (k := k) (G := G)
+        e.toRingEquiv hEquiv).hom := by
+  dsimp
+  unfold affineInvariantQuotientBasicOpenIso
+  simp
+
+/-- The affine invariant quotient maps on corresponding basic opens commute
+with the restricted source and quotient isomorphisms. -/
+@[reassoc]
+theorem affineInvariantQuotientMapRestrict_basicOpen_iso_naturality
+    [Finite G]
+    (e : B ≃ₐ[k] A)
+    (hEquiv : ∀ (g : G) (b : B), g • e b = e (g • b))
+    (b : FixedPoints.subalgebra k B G) :
+    let bA := equivariantFixedRingEquiv (k := k) (G := G)
+      e.toRingEquiv hEquiv b
+    let U : (Spec (CommRingCat.of A)).Opens :=
+      PrimeSpectrum.basicOpen (bA : A)
+    let V : (Spec (CommRingCat.of B)).Opens :=
+      PrimeSpectrum.basicOpen (b : B)
+    let hU : ∀ (g : G), (specAction G A g).hom ⁻¹ᵁ U = U :=
+      fun g => specAction_preimage_basicOpen_fixed bA g
+    let hV : ∀ (g : G), (specAction G B g).hom ⁻¹ᵁ V = V :=
+      fun g => specAction_preimage_basicOpen_fixed b g
+    affineInvariantQuotientMapRestrictStable
+        (k := k) (A := A) (G := G) U hU ≫
+      (affineInvariantQuotientBasicOpenIso
+        (k := k) (G := G) e hEquiv b).hom =
+    (affineCoordinateBasicOpenIso (k := k) (G := G) e hEquiv b).hom ≫
+      affineInvariantQuotientMapRestrictStable
+        (k := k) (A := B) (G := G) V hV := by
+  dsimp
+  let bA : FixedPoints.subalgebra k A G :=
+    equivariantFixedRingEquiv (k := k) (G := G)
+      e.toRingEquiv hEquiv b
+  let U : (Spec (CommRingCat.of A)).Opens :=
+    PrimeSpectrum.basicOpen (bA : A)
+  let V : (Spec (CommRingCat.of B)).Opens :=
+    PrimeSpectrum.basicOpen (b : B)
+  let hU : ∀ (g : G), (specAction G A g).hom ⁻¹ᵁ U = U :=
+    fun g => specAction_preimage_basicOpen_fixed bA g
+  let hV : ∀ (g : G), (specAction G B g).hom ⁻¹ᵁ V = V :=
+    fun g => specAction_preimage_basicOpen_fixed b g
+  let qA := affineInvariantQuotientMapRestrictStable
+    (k := k) (A := A) (G := G) U hU
+  let qB := affineInvariantQuotientMapRestrictStable
+    (k := k) (A := B) (G := G) V hV
+  let WU := quotientOpenOfStable (k := k) (A := A) (G := G) U hU
+  let WV := quotientOpenOfStable (k := k) (A := B) (G := G) V hV
+  let s := Spec.map (CommRingCat.ofHom e.toRingEquiv.toRingHom)
+  let t := (affineInvariantQuotientIso (k := k) (G := G)
+    e.toRingEquiv hEquiv).hom
+  change qA ≫ (affineInvariantQuotientBasicOpenIso
+      (k := k) (G := G) e hEquiv b).hom =
+    (affineCoordinateBasicOpenIso
+      (k := k) (G := G) e hEquiv b).hom ≫ qB
+  apply (cancel_mono WV.ι).1
+  calc
+    (qA ≫ (affineInvariantQuotientBasicOpenIso
+        (k := k) (G := G) e hEquiv b).hom) ≫ WV.ι =
+        qA ≫ ((affineInvariantQuotientBasicOpenIso
+          (k := k) (G := G) e hEquiv b).hom ≫ WV.ι) :=
+      Category.assoc _ _ _
+    _ = qA ≫ (WU.ι ≫ t) := by
+      rw [affineInvariantQuotientBasicOpenIso_hom_ι]
+    _ = (qA ≫ WU.ι) ≫ t := (Category.assoc _ _ _).symm
+    _ = (U.ι ≫ affineInvariantQuotientMap
+        (k := k) (A := A) (G := G)) ≫ t := by
+      rw [affineInvariantQuotientMapRestrictStable_fac]
+    _ = U.ι ≫ (affineInvariantQuotientMap
+        (k := k) (A := A) (G := G) ≫ t) := Category.assoc _ _ _
+    _ = U.ι ≫ (s ≫ affineInvariantQuotientMap
+        (k := k) (A := B) (G := G)) := by
+      rw [affineInvariantQuotientMap_comp_iso]
+    _ = (U.ι ≫ s) ≫ affineInvariantQuotientMap
+        (k := k) (A := B) (G := G) :=
+      (Category.assoc _ _ _).symm
+    _ = ((affineCoordinateBasicOpenIso
+          (k := k) (G := G) e hEquiv b).hom ≫ V.ι) ≫
+        affineInvariantQuotientMap
+          (k := k) (A := B) (G := G) := by
+      rw [affineCoordinateBasicOpenIso_hom_ι]
+    _ = (affineCoordinateBasicOpenIso
+          (k := k) (G := G) e hEquiv b).hom ≫
+        (V.ι ≫ affineInvariantQuotientMap
+          (k := k) (A := B) (G := G)) := Category.assoc _ _ _
+    _ = (affineCoordinateBasicOpenIso
+          (k := k) (G := G) e hEquiv b).hom ≫ (qB ≫ WV.ι) := by
+      rw [affineInvariantQuotientMapRestrictStable_fac]
+    _ = ((affineCoordinateBasicOpenIso
+          (k := k) (G := G) e hEquiv b).hom ≫ qB) ≫ WV.ι :=
+      (Category.assoc _ _ _).symm
+
 /-! ## The restricted overlap square -/
 
 /-- For stable opens in two equivariantly equivalent affine presentations, the
