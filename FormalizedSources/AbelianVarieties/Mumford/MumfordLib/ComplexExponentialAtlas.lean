@@ -5,17 +5,22 @@ Authors: The Mumford Contributors
 -/
 
 import MumfordLib.ComplexQuotientAtlas
+import Mathlib.Analysis.Calculus.ContDiff.Operations
+import Mathlib.Analysis.Normed.Module.Connected
 
 /-!
 # Local exponential branches
 
 The quotient atlas gives local inverses of the ambient quotient projection.  We
 transport these branches across the quotient homeomorphism to obtain local
-inverse branches of the exponential itself.  All assertions here are
-topological and additive; no holomorphic structure is used.
+inverse branches of the exponential itself.  The branch construction is
+topological and additive; overlap regularity is recovered from fixed-period
+translations.
 -/
 
 set_option autoImplicit false
+
+open scoped ContDiff
 
 namespace Mumford
 namespace Uniformization
@@ -383,6 +388,31 @@ theorem exponentialBranchTransition_eq_add_of_isPreconnected
     _ = (d.exponentialBranchTransition v w y₀ - y₀) + y := by
       rw [hyconst]
     _ = y + (d.exponentialBranchTransition v w y₀ - y₀) := by abel
+
+/-- Every overlap transition is analytic on its open source.  Locally, the
+    discrete-period argument identifies it with one fixed translation. -/
+theorem exponentialBranchTransition_contDiffOn
+    {V X : Type*} [NormedAddCommGroup V] [NormedSpace ℂ V]
+    [AddCommGroup X] [TopologicalSpace X] [T2Space X] [ContinuousAdd X]
+    {g : ℕ} (d : ComplexVectorLatticeExponentialData V X g) (v w : V) :
+    ContDiffOn ℂ ω (d.exponentialBranchTransition v w)
+      (d.exponentialBranchTransition v w).source := by
+  apply contDiffOn_of_locally_contDiffOn
+  intro y hy
+  obtain ⟨ε, hε, hεsub⟩ :=
+    (Metric.isOpen_iff.mp (d.exponentialBranchTransition_source_isOpen v w)) y hy
+  refine ⟨Metric.ball y ε, Metric.isOpen_ball, Metric.mem_ball_self hε, ?_⟩
+  obtain ⟨period, hperiod⟩ :=
+    d.exponentialBranchTransition_eq_add_of_isPreconnected v w
+      Metric.isPreconnected_ball hεsub (Metric.mem_ball_self hε)
+  have htranslation :
+      ContDiffOn ℂ ω (fun z : V => z + (period : V))
+        ((d.exponentialBranchTransition v w).source ∩ Metric.ball y ε) :=
+    (contDiff_id.add (contDiff_const : ContDiff ℂ ω
+      (fun _ : V => (period : V)))).contDiffOn
+  apply htranslation.congr
+  intro z hz
+  exact hperiod z hz.2
 
 theorem exponentialBranchTransition_symm_continuousOn
     {V X : Type*} [NormedAddCommGroup V] [NormedSpace ℂ V]
