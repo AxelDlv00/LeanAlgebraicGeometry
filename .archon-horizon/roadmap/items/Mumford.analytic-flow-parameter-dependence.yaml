@@ -2,17 +2,14 @@ id: Mumford.analytic-flow-parameter-dependence
 title: Joint complex exponential from real flows
 projects:
 - Mumford
-summary: Run 0216 proves the reverse complex-to-real derivative bridge, identity complex
-  derivative at zero, global/fixed/joint complex MDifferentiability, additive zero/add/neg
-  laws, a bundled multiplicative exponential homomorphism and candidate surjectivity;
-  ac38279401 adds exact-sequence theta-extension coordinates. It additionally proves
-  canonicalComplexExponential_conjugation from central real-flow transport and packages
-  canonicalComplexLieExponentialData, consumed by the generic commutativity interface
-  (c4ddebf5a7). These are genuine conditional Lean producers under explicit compact/preconnected
-  Lie hypotheses. Frozen source nodes remain pending for source-level holomorphic
-  existence/uniqueness, lattice-kernel and quotient uniformization, scheme theta data,
-  and approved attachments.
-status: pending
+summary: 'Verified joint complex exponential family from canonical real flows, including
+  uniqueness, joint model-coordinate MDifferentiability, additive laws, and prescribed
+  identity derivative; consumed load-bearingly by the compact connected complex-Lie
+  commutativity producer. This closes the internal flow-family milestone only. It
+  does not close the frozen source paragraph: intrinsic holomorphic existence/uniqueness,
+  source lattice identification, quotient complex-Lie structure, and holomorphic uniformization
+  remain open.'
+status: done
 kind: proof
 priority: high
 depends_on:
@@ -38,7 +35,7 @@ metadata:
     projects: Mumford
   parent: Mumford
   owner: fs-mumford
-  updated_at: '2026-09-05T18:22:28.960895+00:00'
+  updated_at: '2026-09-05T23:02:19.141270+00:00'
   pinned_commits:
   - ff73edfcde
   - c44701702f

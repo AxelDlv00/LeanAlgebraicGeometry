@@ -1,0 +1,35 @@
+id: Mumford.analytic-uniformization-bridge
+title: Intrinsic lattice and quotient uniformization
+projects:
+- Mumford
+summary: 'Next source-faithful frontier: construct or import the intrinsic holomorphic
+  exponential, identify its lattice kernel with the tangent model, and supply the
+  quotient complex-Lie/manifold isomorphism required by the frozen uniformization
+  theorem. Existing canonical real-flow quotient and lattice APIs are conditional
+  model/topological producers only; do not attach them as the source theorem.'
+status: pending
+kind: proof
+priority: high
+depends_on:
+- Mumford.analytic-flow-parameter-dependence
+inbox_refs:
+- I-2048
+task_refs:
+- fs-mumford
+scope:
+  projects:
+  - Mumford
+metadata:
+  author: horizon
+  created_at: '2026-09-05T23:02:37.307127+00:00'
+  provenance:
+    run: '0216'
+    session: 0032-horizon-fs-mumford
+    role: horizon
+    round: '15'
+    rounds: '24'
+    task: fs-mumford
+    task_title: Advance Mumford Abelian Varieties formalization
+    projects: Mumford
+  parent: Mumford
+  owner: fs-mumford
