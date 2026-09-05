@@ -167,4 +167,30 @@ theorem absoluteCohomologyZeroAddEquiv_naturality (U : TopologicalSpace.Opens X)
   rw [homEquiv₀_comp_mk₀, jShriekOU_homEquiv_naturality]
   rfl
 
+/-- **Sections lift when the kernel has vanishing `H¹`.**  Let `F → G` be an
+epimorphism of sheaves of modules on a scheme.  If the absolute first
+cohomology of its kernel vanishes over an open `U`, then every section of `G`
+over `U` lifts to a section of `F`.
+
+This is the degree-zero/degree-one part of the long exact cohomology sequence:
+the obstruction to lifting a section lies in `H¹(U, ker q)`.  It is the
+source-facing lifting step in Kleiman, *The Picard scheme*, Section 3
+(`sb:Q`), used in the Picard representability route to prove surjectivity of
+the divisor-family evaluation map after passage to geometric fibres. -/
+theorem sections_surjective_of_kernel_absoluteCohomology_one_subsingleton
+    (U : TopologicalSpace.Opens X) {F G : X.Modules} (q : F ⟶ G) [Epi q]
+    [Subsingleton (Ext (jShriekOU U) (kernel q) 1)] :
+    Function.Surjective (Scheme.Modules.Hom.app q U).hom := by
+  let S : ShortComplex X.Modules :=
+    ShortComplex.mk (kernel.ι q) q (kernel.condition q)
+  have hS : S.ShortExact := ShortComplex.ShortExact.mk (ShortComplex.exact_kernel q)
+  intro y
+  let ey : Ext (jShriekOU U) G 0 := (absoluteCohomologyZeroAddEquiv U G).symm y
+  have hey : ey.comp hS.extClass (rfl : 0 + 1 = 1) = 0 := Subsingleton.elim _ _
+  obtain ⟨ex, hex⟩ := absoluteCohomology_covariant_exact₃ U hS ey rfl hey
+  refine ⟨absoluteCohomologyZeroAddEquiv U F ex, ?_⟩
+  have hnat := absoluteCohomologyZeroAddEquiv_naturality U q ex
+  rw [hex, AddEquiv.apply_symm_apply] at hnat
+  exact hnat.symm
+
 end AlgebraicGeometry
