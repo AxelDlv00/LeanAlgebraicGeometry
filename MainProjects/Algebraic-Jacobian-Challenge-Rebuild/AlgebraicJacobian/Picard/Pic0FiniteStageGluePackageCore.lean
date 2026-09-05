@@ -37,13 +37,14 @@ variable [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
 structure Pic0FiniteStageGlueContext
     (F : Type u) [Field F] [Algebra F k] [Algebra.IsAlgebraic F k] where
   models : Pic0FiniteStageTransitionModelsData C F
-  Q : ∀ p : Pic0FiniteStageTripleTransitionIndex C,
-    k ⊗[models.M.1]
-        Pic0FiniteStageTripleTransitionModelTarget
-          C models.L models.n models.m models.relation models.M models.mapM p ≃ₐ[k]
-      Pic0FiniteStageTripleRing C p.1 p.2.1 p.2.2
+  /-- The triple-transition family is always indexed by the canonical comparison
+  equivalences supplied by `models`; arbitrary comparison families are not valid
+  package data because the assembly equations refer to this canonical family. -/
   triple : Pic0FiniteStageTripleTransitionFamilyData
-    C models.L models.n models.m models.relation models.M models.mapM Q
+    C models.L models.n models.m models.relation models.M models.mapM
+      (pic0FiniteStageTripleModelComparisonFamily
+        C models.L models.n models.m models.relation models.e models.M
+          models.mapM models.comparison)
 
 namespace Pic0FiniteStageGlueContext
 
@@ -62,6 +63,11 @@ def inverse (D : Pic0FiniteStageGlueContext C F) := D.models.inverse
 def N (D : Pic0FiniteStageGlueContext C F) := D.triple.N
 def thetaN (D : Pic0FiniteStageGlueContext C F) := D.triple.thetaN
 def tripleComparison (D : Pic0FiniteStageGlueContext C F) := D.triple.comparison
+
+@[simp] theorem tripleComparison_family (D : Pic0FiniteStageGlueContext C F) :
+    D.triple.comparison =
+      pic0FiniteStageTripleModelComparisonFamily
+        C D.L D.n D.m D.relation D.e D.M D.mapM D.comparison := rfl
 
 end Pic0FiniteStageGlueContext
 

@@ -8,12 +8,9 @@ import AlgebraicJacobian.Picard.Pic0FiniteStageGlueDataAssembly
 /-!
 # A canonical finite-stage Picard glue package
 
-The simultaneous pair- and triple-transition descent theorems produce one coherent
-finite-stage model.  The package below stores that model once and indexes its triple
-transition data directly by the comparison family determined by the model.
-
-In particular, there is no freely chosen comparison family, equality witness identifying
-it with the canonical family, or second wrapper around the resulting package.
+The package stores only the finite-stage transition context.  Its affine presentation
+and scheme glue datum are derived from that context, so every consumer sees the same
+canonical charts, overlaps, and transition maps.
 -/
 
 set_option autoImplicit false
@@ -38,7 +35,6 @@ same proof-sensitive `Scheme.GlueData` and map data instead of rebuilding them. 
 structure Pic0FiniteStageGluePackage
     (F : Type u) [Field F] [Algebra F k] [Algebra.IsAlgebraic F k] where
   context : Pic0FiniteStageGlueContext C F
-  presentation : AlgebraicJacobian.AffineRingGluePresentation context.N.1
 
 namespace Pic0FiniteStageGluePackage
 
@@ -64,20 +60,14 @@ noncomputable def ofModels
     {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
     (D : Pic0FiniteStageTransitionModelsData C F) :
     Pic0FiniteStageGluePackage C F := by
-  let T := Pic0FiniteStageTripleTransitionFamilyData.of_comparisons
-    C D.L D.n D.m D.relation D.M D.mapM
-      (pic0FiniteStageTripleModelComparisonFamily
-        C D.L D.n D.m D.relation D.e D.M D.mapM D.comparison)
   let context : Pic0FiniteStageGlueContext C F := {
     models := D
-    Q := pic0FiniteStageTripleModelComparisonFamily
-      C D.L D.n D.m D.relation D.e D.M D.mapM D.comparison
-    triple := T
+    triple := Pic0FiniteStageTripleTransitionFamilyData.of_comparisons
+      C D.L D.n D.m D.relation D.M D.mapM
+        (pic0FiniteStageTripleModelComparisonFamily
+          C D.L D.n D.m D.relation D.e D.M D.mapM D.comparison)
   }
-  exact {
-    context := context
-    presentation := pic0FiniteStageAffineRingGluePresentation C context
-  }
+  exact { context := context }
 
 /-- A finite-presentation witness for a scalar-extended finite-stage chart ring. -/
 theorem finitePresentation_pic0FiniteStageChartBaseChangeRing
@@ -121,6 +111,13 @@ theorem finiteType_pic0FiniteStageChartBaseChangeRing
     (pic0FiniteStageChartBaseChangeAlgebra C L n m relation M N U)
     (finitePresentation_pic0FiniteStageChartBaseChangeRing
       C L n m relation M N U)
+
+/-- The unique affine presentation derived from the canonical finite-stage context. -/
+noncomputable def presentation
+    {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
+    (P : Pic0FiniteStageGluePackage C F) :
+    AlgebraicJacobian.AffineRingGluePresentation P.N.1 :=
+  pic0FiniteStageAffineRingGluePresentation C P.context
 
 /-- The scheme glue datum underlying the canonical presentation. -/
 noncomputable def glueData
