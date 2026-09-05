@@ -55,6 +55,14 @@ noncomputable def finiteStableAffineCover [Finite G] [CompactSpace X]
     (h : OrbitsInAffineOpen act) : Scheme.OpenCover X :=
   (sourceOpenCover act h).finiteSubcover
 
+/-- The stable affine chart selected at an index of the compact finite
+subcover.  This retains the affineness and stability data that the underlying
+`Scheme.OpenCover` forgets. -/
+noncomputable def finiteStableAffineChart [Finite G] [CompactSpace X]
+    (h : OrbitsInAffineOpen act)
+    (i : (finiteStableAffineCover act h).I₀) : StableAffineOpen act :=
+  Scheme.Cover.idx (sourceOpenCover act h) (i.1 : X)
+
 noncomputable instance finiteStableAffineCover_fintype [Finite G] [CompactSpace X]
     (h : OrbitsInAffineOpen act) :
     Fintype (finiteStableAffineCover act h).I₀ := by
@@ -65,7 +73,7 @@ noncomputable instance finiteStableAffineCover_fintype [Finite G] [CompactSpace 
 theorem finiteStableAffineCover_X [Finite G] [CompactSpace X]
     (h : OrbitsInAffineOpen act) (i : (finiteStableAffineCover act h).I₀) :
     (finiteStableAffineCover act h).X i =
-      (Scheme.Cover.idx (sourceOpenCover act h) (i.1 : X)).U.toScheme := by
+      (finiteStableAffineChart act h i).U.toScheme := by
   change ((sourceOpenCover act h).finiteSubcover).X i =
     (Scheme.Cover.idx (sourceOpenCover act h) (i.1 : X)).U.toScheme
   rw [Scheme.OpenCover.finiteSubcover_X]
@@ -75,7 +83,7 @@ theorem finiteStableAffineCover_X [Finite G] [CompactSpace X]
 theorem finiteStableAffineCover_f [Finite G] [CompactSpace X]
     (h : OrbitsInAffineOpen act) (i : (finiteStableAffineCover act h).I₀) :
     (finiteStableAffineCover act h).f i =
-      (Scheme.Cover.idx (sourceOpenCover act h) (i.1 : X)).U.ι := by
+      (finiteStableAffineChart act h i).U.ι := by
   change ((sourceOpenCover act h).finiteSubcover).f i =
     (Scheme.Cover.idx (sourceOpenCover act h) (i.1 : X)).U.ι
   rw [Scheme.OpenCover.finiteSubcover_f]
