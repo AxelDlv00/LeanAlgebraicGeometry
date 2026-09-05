@@ -2,10 +2,12 @@ id: Hartshorne.iv3-chart-gluing
 title: IV.3.1 local-ratio chart restriction and gluing
 projects:
 - Hartshorne
-summary: Commits 502e0d0ba5 and 6cf724b66c add the strict divisor-section rank-drop
-  witness and explicit conditional coordinate-chart restriction/factor identities;
-  65ab6f9814 records graph sync. The Scheme.Cover gluing consumer, divisor-section
-  globalization, and source IV.3.1 basepoint-free/very-ample producer remain open.
+summary: 'Commits 6e890f0b96 and d3b80bd4fe prove canonical Scheme.Cover gluing consumers.
+  Commits b18b80bbd0 and dc23b04050 derive a nonzero local jump, exact divisor order,
+  and a finite-complement exact-order denominator open from numerical basepoint-freeness;
+  97ceb70280 exports the producers. Remaining: select exact-order coordinates from
+  one fixed finite section basis, assemble the indexed regularized cover, and prove
+  the geometric base-point-free and very-ample equivalences of IV.3.1.'
 status: active
 kind: proof
 priority: high
@@ -32,8 +34,13 @@ metadata:
   parent: Hartshorne
   owner: fs-hartshorne
   milestone: Hartshorne
-  updated_at: '2026-09-05T06:49:02.254860+00:00'
+  updated_at: '2026-09-05T09:35:33.749899+00:00'
   pinned_commits:
+  - 97ceb70280
+  - dc23b04050
+  - b18b80bbd0
+  - d3b80bd4fe
+  - 6e890f0b96
   - 65ab6f9814
   - 6cf724b66c
   - 502e0d0ba5
