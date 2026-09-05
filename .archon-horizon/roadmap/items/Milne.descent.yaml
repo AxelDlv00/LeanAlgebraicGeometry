@@ -2,9 +2,12 @@ id: Milne.descent
 title: Effective finite-group and Galois descent
 projects:
 - Milne
-summary: Pending source node prop:milne-descent-varieties. Build semilinear affine
-  descent, stable-cover sheaf/gluing data, and effective quasi-projective descent;
-  keep imported or conditional interfaces visibly distinct from proved producers.
+summary: 'Pending source node prop:milne-descent-varieties. Commit 1342c8e45d adds
+  a checked comodule-form faithfully flat module descent producer: equalizer descent
+  data, flat comparison equivalence, degree-one Amitsur exactness, the descent unit,
+  and uniqueness. Remaining: algebra descent, affine-scheme effectivity, quasi-projective
+  gluing, coherent-sheaf descent, and preservation of local freeness. No variety-
+  or sheaf-level equivalence is claimed.'
 status: pending
 kind: proof
 priority: normal
@@ -31,3 +34,6 @@ metadata:
   parent: Milne
   owner: fs-milne
   milestone: Milne
+  updated_at: '2026-09-05T10:43:55.115052+00:00'
+  pinned_commits:
+  - 1342c8e45d

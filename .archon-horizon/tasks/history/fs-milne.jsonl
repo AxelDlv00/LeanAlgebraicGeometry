@@ -188,3 +188,10 @@
 {"at": "2026-09-04T21:46:20.682801+00:00", "actor": "system", "field": "status", "from": "queued", "to": "running", "note": "started by Horizon run"}
 {"at": "2026-09-05T00:58:16.954562+00:00", "actor": "system", "field": "status", "from": "running", "to": "queued", "note": "Horizon session ended without the agent recording a terminal status; returned to queued"}
 {"at": "2026-09-05T01:19:34.525956+00:00", "actor": "system", "field": "status", "from": "queued", "to": "running", "note": "started by Horizon run"}
+{"at": "2026-09-05T03:18:20.424569+00:00", "actor": "system", "field": "status", "from": "running", "to": "queued", "note": "Horizon session ended without the agent recording a terminal status; returned to queued"}
+{"at": "2026-09-05T03:19:13.571972+00:00", "actor": "system", "field": "status", "from": "queued", "to": "running", "note": "started by Horizon run"}
+{"at": "2026-09-05T05:58:09.007333+00:00", "actor": "system", "field": "status", "from": "running", "to": "queued", "note": "Horizon session ended without the agent recording a terminal status; returned to queued"}
+{"at": "2026-09-05T05:59:01.938361+00:00", "actor": "system", "field": "status", "from": "queued", "to": "running", "note": "started by Horizon run"}
+{"at": "2026-09-05T06:56:05.841515+00:00", "actor": "horizon", "field": "edited", "from": "", "to": "", "note": "inbox_refs updated", "provenance": {"run": "0215", "session": "0016-horizon-fs-milne", "role": "horizon", "round": "7", "rounds": "24", "task": "fs-milne", "task_title": "Advance Milne Abelian Varieties formalization", "projects": "Milne"}}
+{"at": "2026-09-05T08:49:24.974999+00:00", "actor": "system", "field": "status", "from": "running", "to": "queued", "note": "Horizon session ended without the agent recording a terminal status; returned to queued"}
+{"at": "2026-09-05T08:51:12.938267+00:00", "actor": "system", "field": "status", "from": "queued", "to": "running", "note": "started by Horizon run"}

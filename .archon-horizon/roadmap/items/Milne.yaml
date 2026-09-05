@@ -2,13 +2,13 @@ id: Milne
 title: Milne Abelian Varieties formalization
 projects:
 - Milne
-summary: Source-faithful Milne frontier. The affine finite-group quotient core, stable
-  affine neighborhoods, characteristic-free invariant localization, descended stable
-  opens, and finite-cover reconstruction data are verified. This round adds fixed-localization
-  cocycle laws, geometric basic-chart transition squares, actual structure-sheaf localization
-  equivalences with restriction naturality, and identification of the affine quotient
-  map on local sections with fixed-subring inclusion. Global finite quotients, symmetric
-  powers, descent, and the remaining abelian-variety geometry remain downstream milestones.
+summary: Source-faithful Milne frontier. The affine finite-group quotient core and
+  its stable-localization/sheaf-topology substrate remain verified. This round adds
+  canonical reversal of ordered invariant-section overlap spectra with both restriction-leg
+  identities, and a complete faithfully flat module-descent producer with flat effectivity
+  and Amitsur uniqueness. Full MilneLib builds. Global finite quotients still require
+  scheme open immersions and quotient-open gluing; algebra/scheme/sheaf descent, symmetric
+  powers, and remaining abelian-variety geometry remain pending.
 status: active
 kind: proof
 priority: high
@@ -33,8 +33,10 @@ metadata:
     projects: Milne
   owner: fs-milne
   milestone: Milne
-  updated_at: '2026-09-04T21:06:38.281175+00:00'
+  updated_at: '2026-09-05T10:44:27.728320+00:00'
   pinned_commits:
+  - 1342c8e45d
+  - 87bdaf3fc7
   - 8ea75a2a7a
   - bf8c03bc33
   - b897c8243ac044161d37e820e63dfac598e5d4de

@@ -848,7 +848,7 @@
     },
     "states": {
       "blocked": 124,
-      "closed": 606,
+      "closed": 713,
       "formalized_open": 0,
       "informal": 254,
       "ready": 138
@@ -896,14 +896,14 @@
       "MilneLib.GroupVariety.ringKrullDim_stalk_eq_of_closedPoints: Lean declaration is not referenced by any blueprint \\lean{...}",
       "MilneLib.GroupVariety.ringKrullDim_stalk_eq_of_pointTranslation: Lean declaration is not referenced by any blueprint \\lean{...}",
       "MilneLib.GroupVariety.snd_left_isClosedMap: Lean declaration is not referenced by any blueprint \\lean{...}",
+      "MilneLib.InvariantLocalization.AffineTripleTensor: Lean declaration is not referenced by any blueprint \\lean{...}",
+      "MilneLib.InvariantLocalization.BaseCompatibleChartMaps.For: Lean declaration is not referenced by any blueprint \\lean{...}",
+      "MilneLib.InvariantLocalization.BaseCompatibleChartMaps.For.toSource: Lean declaration is not referenced by any blueprint \\lean{...}",
+      "MilneLib.InvariantLocalization.BaseCompatibleChartMaps.f_globalMap: Lean declaration is not referenced by any blueprint \\lean{...}",
+      "MilneLib.InvariantLocalization.BaseCompatibleChartMaps.globalMap: Lean declaration is not referenced by any blueprint \\lean{...}",
+      "MilneLib.InvariantLocalization.BaseCompatibleChartMaps.globalMap_comp_base: Lean declaration is not referenced by any blueprint \\lean{...}",
       "MilneLib.InvariantLocalization.EquivariantAffineOverlapOver: Lean declaration is not referenced by any blueprint \\lean{...}",
-      "MilneLib.InvariantLocalization.EquivariantAffineOverlapOver.leftQuotientMap: Lean declaration is not referenced by any blueprint \\lean{...}",
-      "MilneLib.InvariantLocalization.EquivariantAffineOverlapOver.leftSourceMap: Lean declaration is not referenced by any blueprint \\lean{...}",
-      "MilneLib.InvariantLocalization.EquivariantAffineOverlapOver.quotientMap_comp_leftQuotientMap: Lean declaration is not referenced by any blueprint \\lean{...}",
-      "MilneLib.InvariantLocalization.EquivariantAffineOverlapOver.quotientMap_comp_rightQuotientMap: Lean declaration is not referenced by any blueprint \\lean{...}",
-      "MilneLib.InvariantLocalization.EquivariantAffineOverlapOver.rightQuotientMap: Lean declaration is not referenced by any blueprint \\lean{...}",
-      "MilneLib.InvariantLocalization.EquivariantAffineOverlapOver.rightSourceMap: Lean declaration is not referenced by any blueprint \\lean{...}",
-      "MilneLib.InvariantLocalization.affineInvariantQuotientIso: Lean declaration is not referenced by any blueprint \\lean{...}"
+      "MilneLib.InvariantLocalization.EquivariantAffineOverlapOver.QuotientLegPair: Lean declaration is not referenced by any blueprint \\lean{...}"
     ]
   },
   "nodes": [
@@ -4099,7 +4099,7 @@
     },
     {
       "chapter": "Geometry of Abelian Varieties",
-      "comment_count": 10,
+      "comment_count": 16,
       "dep_count": 0,
       "descendant_count": 1,
       "group": "c148",
@@ -6564,7 +6564,7 @@
     },
     {
       "chapter": "Jacobian Varieties",
-      "comment_count": 1,
+      "comment_count": 2,
       "dep_count": 0,
       "descendant_count": 27,
       "group": "c198",
@@ -6767,7 +6767,7 @@
     },
     {
       "chapter": "Jacobian Varieties",
-      "comment_count": 8,
+      "comment_count": 10,
       "dep_count": 0,
       "descendant_count": 25,
       "group": "c200",
