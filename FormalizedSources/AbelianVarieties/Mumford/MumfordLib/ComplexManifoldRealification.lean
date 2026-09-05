@@ -40,6 +40,65 @@ def complexToRealModel (I : ModelWithCorners ℂ E H) :
     I.continuous I.continuous_symm
     (by simpa only [I.target_eq] using I.nonempty_interior)
 
+/-! The tangent fibre at the identity is a non-reducible type synonym in
+    Mathlib.  This named equivalence records the underlying real-vector
+    identification once, so flow and local-generation arguments can consume
+    it without rebuilding identity maps at each use site. -/
+
+/-- The identity-on-vectors map from the complex model to the tangent space of
+the realified group at the identity, regarded as a real-linear map. -/
+def complexToRealLieAlgebraMap
+    {G : Type*} (I : ModelWithCorners ℂ E H)
+    [TopologicalSpace G] [ChartedSpace H G] [Group G] :
+    E →ₗ[ℝ] GroupLieAlgebra (complexToRealModel I) G :=
+  { toFun := fun v => v
+    map_add' := by
+      intro v w
+      rfl
+    map_smul' := by
+      intro c v
+      rfl }
+
+/-- Real-linear identification of the complex model with the tangent space at
+the identity of the realified group.
+
+This is a representation bridge only; it does not equip the tangent fibre
+with a new norm or a complex-manifold structure. -/
+def complexToRealLieAlgebraEquiv
+    {G : Type*} (I : ModelWithCorners ℂ E H)
+    [TopologicalSpace G] [ChartedSpace H G] [Group G] :
+    E ≃ₗ[ℝ] GroupLieAlgebra (complexToRealModel I) G :=
+  { toFun := complexToRealLieAlgebraMap I
+    invFun := fun v => v
+    left_inv := by
+      intro v
+      rfl
+    right_inv := by
+      intro v
+      rfl
+    map_add' := by
+      intro v w
+      exact (complexToRealLieAlgebraMap I).map_add v w
+    map_smul' := by
+      intro c v
+      exact (complexToRealLieAlgebraMap I).map_smul c v }
+
+@[simp]
+theorem complexToRealLieAlgebraEquiv_apply
+    {G : Type*} [TopologicalSpace G] [ChartedSpace H G] [Group G]
+    (I : ModelWithCorners ℂ E H) (v : E) :
+    complexToRealLieAlgebraEquiv (G := G) I v =
+      complexToRealLieAlgebraMap I v :=
+  rfl
+
+@[simp]
+theorem complexToRealLieAlgebraEquiv_symm_apply
+    {G : Type*} [TopologicalSpace G] [ChartedSpace H G] [Group G]
+    (I : ModelWithCorners ℂ E H)
+    (v : GroupLieAlgebra (complexToRealModel I) G) :
+    (complexToRealLieAlgebraEquiv (G := G) I).symm v = v :=
+  rfl
+
 /-- Every complex-smooth coordinate change is smooth for the realified model. -/
 theorem contDiffGroupoid_complex_le_real
     (I : ModelWithCorners ℂ E H) (n : ℕ∞ω) :

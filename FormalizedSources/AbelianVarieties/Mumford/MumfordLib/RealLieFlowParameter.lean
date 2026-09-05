@@ -190,9 +190,7 @@ theorem canonicalRealFlow_time_one_contMDiff
   let b : Module.Basis (Fin (Module.finrank ℝ V)) ℝ V :=
     Module.finBasisOfFinrankEq ℝ V rfl
   let e : E →ₗ[ℝ] V :=
-    { toFun := fun x => x
-      map_add' := by intro x y; rfl
-      map_smul' := by intro c x; rfl }
+    (complexToRealLieAlgebraEquiv I).toLinearMap
   let l : List (Fin (Module.finrank ℝ V)) :=
     List.ofFn (fun i => i)
   have hfactor (i : Fin (Module.finrank ℝ V)) :
@@ -268,7 +266,8 @@ theorem canonicalRealFlow_time_one_contMDiff
   have hmain := hprod l
   rw [← heq] at hmain
   with_reducible_and_instances
-    simpa [e] using hmain
+    simpa [e, complexToRealLieAlgebraEquiv,
+      complexToRealLieAlgebraMap] using hmain
 
 /-- If the time-one flow map is genuinely real differentiable at the origin,
 then its derivative there is the identity.  This isolates the derivative

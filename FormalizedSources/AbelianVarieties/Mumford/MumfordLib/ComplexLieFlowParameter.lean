@@ -32,18 +32,6 @@ variable {E H G : Type*}
   [TopologicalSpace G] [ChartedSpace H G] [Group G]
   [LieGroup I ω G]
 
-/-- The identity map from the complex model space to the tangent space of the
-realified Lie group, regarded as a real-linear map. -/
-def complexToRealLieAlgebraMap :
-    E →ₗ[ℝ] GroupLieAlgebra (complexToRealModel I) G :=
-  { toFun := fun v => v
-    map_add' := by
-      intro v w
-      rfl
-    map_smul' := by
-      intro c v
-      rfl }
-
 /-- The complex-parameterized flow obtained from the real flow at time one. -/
 def canonicalComplexFlow
     [CompleteSpace E] [T2Space G] [I.Boundaryless]

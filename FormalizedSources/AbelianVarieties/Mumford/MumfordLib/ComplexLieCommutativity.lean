@@ -417,12 +417,7 @@ theorem canonicalRealFlow_time_one_mem_interior
       (fun v : GroupLieAlgebra (complexToRealModel I) G =>
         canonicalRealFlow (G := G) I v 1)) := by
   let e : E ≃ₗ[ℝ] GroupLieAlgebra (complexToRealModel I) G :=
-    { toFun := fun x => @id E x
-      invFun := fun x => @id E x
-      left_inv := by intro x; rfl
-      right_inv := by intro x; rfl
-      map_add' := by intro x y; rfl
-      map_smul' := by intro c x; rfl }
+    complexToRealLieAlgebraEquiv I
   let f : E → G := fun v => canonicalRealFlow (G := G) I v 1
   let exp : GroupLieAlgebra (complexToRealModel I) G → G :=
     fun v => canonicalRealFlow (G := G) I v 1
@@ -454,11 +449,13 @@ theorem canonicalRealFlow_time_one_mem_interior
     apply Set.Subset.antisymm
     · rintro z ⟨v, rfl⟩
       refine ⟨e v, ?_⟩
-      dsimp [exp, f, e]
+      simp [exp, f, e, complexToRealLieAlgebraEquiv,
+        complexToRealLieAlgebraMap]
     · rintro z ⟨v, rfl⟩
       obtain ⟨u, rfl⟩ := e.surjective v
       refine ⟨u, ?_⟩
-      dsimp [exp, f, e]
+      simp [exp, f, e, complexToRealLieAlgebraEquiv,
+        complexToRealLieAlgebraMap]
   rw [← hrange]
   exact hlocal_one
 
