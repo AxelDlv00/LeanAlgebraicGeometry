@@ -165,10 +165,10 @@ model.  This is the compact-target lattice theorem applied to the verified
 real-flow candidate; it is intentionally not attached to the frozen source
 uniformization node. -/
 theorem canonicalComplexExponentialPeriodLattice_isZLattice
-    (hdisc : DiscreteTopology
-      (canonicalComplexExponentialPeriodLattice (G := G) I)) :
+    :
     @IsZLattice ℝ inferInstance E inferInstance inferInstance
-      (canonicalComplexExponentialPeriodLattice (G := G) I) hdisc := by
+      (canonicalComplexExponentialPeriodLattice (G := G) I)
+      (canonicalComplexExponentialPeriodLattice_discreteTopology (G := G) I) := by
   letI : IsTopologicalGroup G := topologicalGroup_of_lieGroup I ⊤
   letI : FiniteDimensional ℂ E :=
     FiniteDimensional.of_locallyCompact_manifold G I
@@ -181,7 +181,8 @@ theorem canonicalComplexExponentialPeriodLattice_isZLattice
     change T2Space G
     infer_instance
   letI : DiscreteTopology
-      (canonicalComplexExponentialPeriodLattice (G := G) I) := hdisc
+      (canonicalComplexExponentialPeriodLattice (G := G) I) :=
+    canonicalComplexExponentialPeriodLattice_discreteTopology (G := G) I
   apply IsZLattice.mk
   exact span_ker_toIntSubmodule_eq_top_of_compact_target
     (f := canonicalComplexExponentialAddHom (G := G) I)
@@ -191,18 +192,18 @@ theorem canonicalComplexExponentialPeriodLattice_isZLattice
 /-- The integral rank of the canonical period lattice is the real dimension of
 the tangent model. -/
 theorem canonicalComplexExponentialPeriodLattice_finrank
-    (hdisc : DiscreteTopology
-      (canonicalComplexExponentialPeriodLattice (G := G) I)) :
+    :
     Module.finrank ℤ (canonicalComplexExponentialPeriodLattice (G := G) I) =
       Module.finrank ℝ E := by
   letI : DiscreteTopology
-      (canonicalComplexExponentialPeriodLattice (G := G) I) := hdisc
+      (canonicalComplexExponentialPeriodLattice (G := G) I) :=
+    canonicalComplexExponentialPeriodLattice_discreteTopology (G := G) I
   letI : FiniteDimensional ℂ E :=
     FiniteDimensional.of_locallyCompact_manifold G I
   letI : FiniteDimensional ℝ E := FiniteDimensional.complexToReal E
   letI : IsZLattice ℝ
       (canonicalComplexExponentialPeriodLattice (G := G) I) :=
-    canonicalComplexExponentialPeriodLattice_isZLattice (G := G) I hdisc
+    canonicalComplexExponentialPeriodLattice_isZLattice (G := G) I
   exact ZLattice.rank ℝ
     (canonicalComplexExponentialPeriodLattice (G := G) I)
 
