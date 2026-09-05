@@ -447,8 +447,23 @@ theorem affineInvariantQuotient_basicOpen_crossChart
     s.resLE V U hSource ≫
       affineInvariantQuotientMapRestrictStable
         (k := k) (A := B) (G := G) V hV
-  exact affineInvariantQuotientMapRestrictStable_resLE_naturality
-    (k := k) (G := G) e hEquiv hU hV hSource hQuotient
+  have hQuotientIso :
+      (affineInvariantQuotientBasicOpenIso
+          (k := k) (G := G) e hEquiv b).hom =
+        t.resLE WV WU hQuotient := by
+    apply (cancel_mono WV.ι).1
+    rw [affineInvariantQuotientBasicOpenIso_hom_ι,
+      Scheme.Hom.resLE_comp_ι]
+  have hSourceIso :
+      (affineCoordinateBasicOpenIso
+          (k := k) (G := G) e hEquiv b).hom =
+        s.resLE V U hSource := by
+    apply (cancel_mono V.ι).1
+    rw [affineCoordinateBasicOpenIso_hom_ι,
+      Scheme.Hom.resLE_comp_ι]
+  rw [← hQuotientIso, ← hSourceIso]
+  exact affineInvariantQuotientMapRestrict_basicOpen_iso_naturality
+    (k := k) (G := G) e hEquiv b
 
 end InvariantLocalization
 end MilneLib
