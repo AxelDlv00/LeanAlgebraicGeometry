@@ -29,6 +29,8 @@ variable {k : Type u} [Field k] [IsAlgClosed k]
 variable {X : Over (Spec (CommRingCat.of k))} [IsIntegral X.left]
   [SmoothOfRelativeDimension 1 X.hom] [IsProper X.hom]
 
+attribute [local instance] functionFieldOverModule
+
 /-- Numerical base-point-freeness: deleting any closed point lowers `h⁰` by one.
 
 This is the section-dimension formulation of Hartshorne IV.3.1.
@@ -50,6 +52,46 @@ def VeryAmpleLinearSystem (D : CurveDivisor k X) : Prop :=
           (divisorSheaf
             (CurveDivisor.devissageDivisor hy
               (CurveDivisor.devissageDivisor hx D))) = 2
+
+/-- The numerical base-point-free condition makes the sections of `D - x` a
+proper subspace of the global divisor sections of `D`. -/
+theorem divisorSections_devissage_lt_of_basePointFree
+    {D : CurveDivisor k X} (hD : BasePointFreeLinearSystem D)
+    (x : X.left) (hx : x ≠ genericPoint X.left) :
+    divisorSections (CurveDivisor.devissageDivisor hx D) (⊤ : X.left.Opens) <
+      divisorSections D ⊤ := by
+  have hdrop := hD x hx
+  have hltH :
+      CategoryTheory.Sheaf.h0
+          (divisorSheaf (CurveDivisor.devissageDivisor hx D)) <
+        CategoryTheory.Sheaf.h0 (divisorSheaf D) := by
+    omega
+  let eSmall := CategoryTheory.Sheaf.HModule.linearEquiv₀ isTerminalTop
+    (divisorSheaf (CurveDivisor.devissageDivisor hx D))
+  let eBig := CategoryTheory.Sheaf.HModule.linearEquiv₀ isTerminalTop
+    (divisorSheaf D)
+  have hlt :
+      Module.finrank k
+          ((divisorSheaf (CurveDivisor.devissageDivisor hx D)).obj.obj
+            (Opposite.op (⊤ : X.left.Opens))) <
+        Module.finrank k
+          ((divisorSheaf D).obj.obj (Opposite.op (⊤ : X.left.Opens))) := by
+    rw [← eSmall.finrank_eq, ← eBig.finrank_eq]
+    exact hltH
+  exact Submodule.lt_of_le_of_finrank_lt_finrank
+    (divisorSections_mono (devissageDivisor_le hx D) ⊤) hlt
+
+/-- A numerical base-point-free system has a global divisor section whose class
+modulo the sections of `D - x` is nonzero. -/
+theorem exists_divisorSection_not_mem_devissage_of_basePointFree
+    {D : CurveDivisor k X} (hD : BasePointFreeLinearSystem D)
+    (x : X.left) (hx : x ≠ genericPoint X.left) :
+    ∃ s : divisorSections D (⊤ : X.left.Opens),
+      (s : X.left.functionField) ∉
+        divisorSections (CurveDivisor.devissageDivisor hx D) ⊤ := by
+  obtain ⟨g, hgD, hgnot⟩ := SetLike.exists_of_lt
+    (divisorSections_devissage_lt_of_basePointFree hD x hx)
+  exact ⟨⟨g, hgD⟩, hgnot⟩
 
 /-- Degree at least `2g` implies numerical base-point-freeness (IV.3.2). -/
 theorem basePointFreeLinearSystem_of_degree_ge_two_mul_genus
