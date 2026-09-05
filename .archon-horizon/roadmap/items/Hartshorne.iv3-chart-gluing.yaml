@@ -2,18 +2,15 @@ id: Hartshorne.iv3-chart-gluing
 title: IV.3.1 local-ratio chart restriction and gluing
 projects:
 - Hartshorne
-summary: 'Commits 2ef2333cdb, c68c6bf54c, and ffcbb833f7 close the fixed finite-basis
-  chart-producing route: every non-generic point gets a basis coordinate with nonzero
-  jump and exact divisor order, an exact-order LocalRatioOpen, a LocalRatioRegularization,
-  and the selected opens form an indexed cover under an explicit Nonempty NonGenericPoint
-  hypothesis; the compatible family now feeds gluedFromOpen and yields a projective
-  morphism over Spec k. Verification completed with the full 8,676-job Horizon check,
-  focused declaration checks showing only standard axioms, and an honesty review classifying
-  the advance as honest partial progress with a substantive consumer chain and explicit
-  non-vacuity hypothesis. Remaining source-facing work: derive non-generic-point existence
-  from the smooth proper curve hypotheses, connect the numerical BasePointFreeLinearSystem
-  predicate to geometric fiber/evaluation base-point-freeness, and prove the very-ample
-  two-point/tangent criterion. The IV.3.1 blueprint node remains empty.'
+summary: 'Commits ae79789974 and 248dcf8a16 add a kernel-checked non-generic-point
+  witness for integral smooth curves, an unconditional fixed-basis local-ratio cover
+  and glued-map interface (unconditional only with respect to the prior Nonempty NonGenericPoint
+  input; a finite basis and the existing numerical BasePointFreeLinearSystem hypothesis
+  are still supplied), and numerical one-point criteria equivalent to nonzero local
+  jumps, rank-one surjectivity, and nonzero normalized stalk residues. Focused and
+  umbrella project builds plus standard-axiom checks pass. The source-facing IV.3.1
+  node remains empty: the scheme-theoretic fiber/evaluation/base-locus meaning, two-point/tangent
+  very-ampleness criterion, and final canonical chart/gluing theorem are still outstanding.'
 status: active
 kind: proof
 priority: high
@@ -40,8 +37,10 @@ metadata:
   parent: Hartshorne
   owner: fs-hartshorne
   milestone: Hartshorne
-  updated_at: '2026-09-05T13:36:40.921866+00:00'
+  updated_at: '2026-09-05T18:00:26.437626+00:00'
   pinned_commits:
+  - 248dcf8a16
+  - ae79789974
   - ffcbb833f7
   - c68c6bf54c
   - 2ef2333cdb
