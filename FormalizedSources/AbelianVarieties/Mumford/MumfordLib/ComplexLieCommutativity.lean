@@ -693,7 +693,36 @@ theorem canonicalComplexFlow_conjugation
       canonicalComplexFlow (G := G) I
         ((complexLieAdjoint (G := G) I x) v) z := by
   rw [complexLieAdjoint_eq_id (G := G) I x]
+  let e : E ≃ₗ[ℂ] GroupLieAlgebra I G :=
+    complexLieAlgebraEquiv (G := G) I
+  let Φ : ℂ × GroupLieAlgebra I G → G := fun p =>
+    canonicalComplexFlow (G := G) I (e.symm p.2) p.1
   let F : G →* G := (MulAut.conj x).toMonoidHom
+  let Ψ : ℂ × GroupLieAlgebra I G → G := fun p => F (Φ p)
+  let P : (ℂ × GroupLieAlgebra I G → G) → Prop := fun Ξ =>
+    (∀ w : GroupLieAlgebra I G, Ξ (0, w) = 1) ∧
+    (∀ (w : GroupLieAlgebra I G) (a b : ℂ),
+      Ξ (a + b, w) = Ξ (a, w) * Ξ (b, w)) ∧
+    MDifferentiable (𝓘(ℂ).prod 𝓘(ℂ, E)) I
+      (fun p : ℂ × E => Ξ (p.1, e p.2)) ∧
+    (∀ w : GroupLieAlgebra I G,
+      HasMFDerivAt 𝓘(ℂ) I (fun a : ℂ => Ξ (a, w)) 0
+        ((ContinuousLinearMap.id ℂ ℂ).smulRight w))
+  have hunique : ∃! Ξ, P Ξ := by
+    simpa [P, e] using
+      (existsUnique_intrinsicComplexLieExponentialFamily (G := G) I)
+  have hΦ : P Φ := by
+    refine ⟨?_, ?_, ?_, ?_⟩
+    · intro w
+      simp [Φ]
+    · intro w a b
+      simpa [Φ] using
+        canonicalComplexFlow_add_parameter (G := G) I (e.symm w) a b
+    · simpa [Φ, e] using
+        (canonicalComplexFlow_mdifferentiable_joint (G := G) I)
+    · intro w
+      simpa [Φ, e] using
+        canonicalComplexFlow_hasMFDerivAt_zero (G := G) I (e.symm w)
   have hFfun : (F : G → G) = complexLieConjugation x := by
     funext y
     simp [F, complexLieConjugation, MulAut.conj_apply]
@@ -702,12 +731,43 @@ theorem canonicalComplexFlow_conjugation
     have hc : ContMDiff I I ω (complexLieConjugation x) :=
       (contMDiff_const.mul contMDiff_id).mul contMDiff_const.inv
     exact hc.mdifferentiable (by simp)
-  have hderiv_v : mfderiv I I F 1 v = v := by
-    rw [hFfun, mfderiv_complexLieConjugation_one_eq_id (G := G) I x]
-    rfl
-  have hnat := complexLieExponential_naturality I I F hF v z
-  rw [hderiv_v, hFfun] at hnat
-  exact hnat
+  have hFderiv : HasMFDerivAt I I F 1
+      (ContinuousLinearMap.id ℂ E) := by
+    have h := (hF 1).hasMFDerivAt
+    have hd : mfderiv I I F 1 = ContinuousLinearMap.id ℂ E := by
+      rw [hFfun, mfderiv_complexLieConjugation_one_eq_id (G := G) I x]
+    exact h.congr_mfderiv hd
+  have hΨ : P Ψ := by
+    refine ⟨?_, ?_, ?_, ?_⟩
+    · intro w
+      simp [Ψ, hΦ.1 w]
+    · intro w a b
+      dsimp [Ψ]
+      rw [hΦ.2.1 w a b, F.map_mul]
+    · have hcomp := hF.comp hΦ.2.2.1
+      simpa [Ψ, Function.comp_def] using hcomp
+    · intro w
+      have hFderiv' : HasMFDerivAt I I F (Φ (0, w))
+          (ContinuousLinearMap.id ℂ E) := by
+        rw [hΦ.1 w]
+        exact hFderiv
+      have hcomp := hFderiv'.comp 0 (hΦ.2.2.2 w)
+      have hmap :
+          (ContinuousLinearMap.id ℂ E).comp
+              ((ContinuousLinearMap.id ℂ ℂ).smulRight w) =
+            (ContinuousLinearMap.id ℂ ℂ).smulRight w := by
+        apply ContinuousLinearMap.ext
+        intro c
+        change c • (w : E) = c • (w : E)
+        rfl
+      exact (hcomp.congr_mfderiv hmap : HasMFDerivAt 𝓘(ℂ) I
+        (fun a : ℂ => Ψ (a, w)) 0
+          ((ContinuousLinearMap.id ℂ ℂ).smulRight w))
+  have heq : Ψ = Φ := hunique.unique hΨ hΦ
+  have hpoint := congrFun heq (z, e v)
+  dsimp [Ψ, Φ] at hpoint
+  rw [hFfun] at hpoint
+  simpa [e] using hpoint
 
 /-- Conjugation naturality for the canonical time-one exponential candidate,
 obtained by specializing `canonicalComplexFlow_conjugation`. -/
