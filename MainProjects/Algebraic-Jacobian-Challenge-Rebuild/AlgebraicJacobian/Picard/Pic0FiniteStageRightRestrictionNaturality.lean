@@ -231,7 +231,7 @@ theorem rightRestrictionFinalBaseChangeEquivPinned_naturality
         (pic0FiniteStageFinalBaseChangeForwardPinned
           C P.L P.n P.m P.relation P.e P.M P.N (Sum.inl V) x)
   exact pic0FiniteStageFinalBaseChangeEquivPinned_naturality
-    C P.L P.n P.m P.relation P.e P.M P.mapM P.modelComparison P.N
+    C P.L P.n P.m P.relation P.e P.M P.mapM P.comparison P.N
       (Sum.inl (Sum.inr (U, V))) x
 
 set_option synthInstance.maxHeartbeats 3200000 in
