@@ -104,9 +104,9 @@ theorem mapM_transition_comp_restrictionLeft_eq_right
       (Sum.inr (U, V)))
     (pic0FiniteStageTransportedMap C P.L P.n P.m P.relation P.e
       (Sum.inl (Sum.inr (U, V))))
-  · exact P.modelComparison (Sum.inl (Sum.inl (V, U)))
-  · exact P.modelComparison (Sum.inr (U, V))
-  · exact P.modelComparison (Sum.inl (Sum.inr (U, V)))
+  · exact P.comparison (Sum.inl (Sum.inl (V, U)))
+  · exact P.comparison (Sum.inr (U, V))
+  · exact P.comparison (Sum.inl (Sum.inr (U, V)))
   · exact transportedMap_transition_comp_restrictionLeft_eq_right C P U V
 
 set_option synthInstance.maxHeartbeats 3200000 in

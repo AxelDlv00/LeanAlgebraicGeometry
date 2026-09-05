@@ -97,7 +97,7 @@ theorem restrictionBaseChangeMap_naturality
   apply DFunLike.ext _ _
   intro x
   exact pic0FiniteStageFinalBaseChangeEquivPinned_naturality
-    C P.L P.n P.m P.relation P.e P.M P.mapM P.modelComparison P.N
+    C P.L P.n P.m P.relation P.e P.M P.mapM P.comparison P.N
       (Sum.inl (Sum.inl (U, V))) x
 
 /-- The spectrum of the exact left restriction, followed by the chart's affine
