@@ -699,7 +699,7 @@
     },
     "states": {
       "blocked": 116,
-      "closed": 881,
+      "closed": 885,
       "formalized_open": 0,
       "informal": 212,
       "ready": 96
@@ -732,6 +732,8 @@
       "Mumford.Analytic.canonicalComplexExponentialPeriodLatticeQuotient: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Mumford.Analytic.canonicalComplexExponentialPeriodLattice_discreteTopology: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Mumford.Analytic.canonicalComplexExponentialPeriodLattice_finrank: Lean declaration is not referenced by any blueprint \\lean{...}",
+      "Mumford.Analytic.canonicalComplexExponentialPeriodLattice_finrank_eq_two_mul: Lean declaration is not referenced by any blueprint \\lean{...}",
+      "Mumford.Analytic.canonicalComplexExponentialPeriodLattice_finrank_eq_two_mul_complex: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Mumford.Analytic.canonicalComplexExponentialPeriodLattice_isZLattice: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Mumford.Analytic.canonicalComplexExponentialQuotientContinuousAddEquiv: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Mumford.Analytic.canonicalComplexExponentialQuotientContinuousAddEquiv_apply: Lean declaration is not referenced by any blueprint \\lean{...}",
@@ -752,9 +754,7 @@
       "Mumford.Analytic.canonicalComplexExponential_zero: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Mumford.Analytic.canonicalComplexFlow: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Mumford.Analytic.canonicalComplexFlow_add_parameter: Lean declaration is not referenced by any blueprint \\lean{...}",
-      "Mumford.Analytic.canonicalComplexFlow_contMDiff_of_vector: Lean declaration is not referenced by any blueprint \\lean{...}",
-      "Mumford.Analytic.canonicalComplexFlow_continuous_joint: Lean declaration is not referenced by any blueprint \\lean{...}",
-      "Mumford.Analytic.canonicalComplexFlow_eq_exponential_smul: Lean declaration is not referenced by any blueprint \\lean{...}"
+      "Mumford.Analytic.canonicalComplexFlow_contMDiff_of_vector: Lean declaration is not referenced by any blueprint \\lean{...}"
     ]
   },
   "nodes": [
@@ -4820,7 +4820,7 @@
     },
     {
       "chapter": "Analytic Theory",
-      "comment_count": 15,
+      "comment_count": 16,
       "dep_count": 1,
       "descendant_count": 1,
       "group": "c140",
