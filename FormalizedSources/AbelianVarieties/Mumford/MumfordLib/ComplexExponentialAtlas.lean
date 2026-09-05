@@ -345,6 +345,45 @@ theorem exponentialBranchTransition_continuousOn
       (d.exponentialBranchTransition v w).source :=
   (d.exponentialBranchTransition v w).continuousOn
 
+/- On a preconnected overlap, the transition is one fixed translation by an
+   ambient period.  This strengthens the pointwise period statement to the
+   locally constant deck-translation law used by quotient atlases. -/
+theorem exponentialBranchTransition_eq_add_of_isPreconnected
+    {V X : Type*} [NormedAddCommGroup V] [NormedSpace ℂ V]
+    [AddCommGroup X] [TopologicalSpace X] [T2Space X] [ContinuousAdd X]
+    {g : ℕ} (d : ComplexVectorLatticeExponentialData V X g)
+    (v w : V) {s : Set V}
+    (hs : IsPreconnected s)
+    (hsub : s ⊆ (d.exponentialBranchTransition v w).source)
+    {y₀ : V} (hy₀ : y₀ ∈ s) :
+    ∃ period : d.ambientPeriodLattice,
+      ∀ y ∈ s,
+        d.exponentialBranchTransition v w y = y + (period : V) := by
+  let f : V → V := fun y => d.exponentialBranchTransition v w y - y
+  have hf : ContinuousOn f s := by
+    exact
+      ((d.exponentialBranchTransition_continuousOn v w).mono hsub).sub
+        continuousOn_id
+  have hmaps : Set.MapsTo f s (d.ambientPeriodLattice : Set V) := by
+    intro y hy
+    exact d.exponentialBranchTransition_sub_mem_ambientPeriodLattice v w
+      (hsub hy)
+  have hconst : ∀ y ∈ s, f y = f y₀ := by
+    intro y hy
+    exact IsPreconnected.constant_of_mapsTo hs d.ambientPeriodLattice_isDiscrete
+      hf hmaps hy hy₀
+  let period : d.ambientPeriodLattice := ⟨f y₀, hmaps hy₀⟩
+  refine ⟨period, ?_⟩
+  intro y hy
+  have hyconst : f y = f y₀ := hconst y hy
+  dsimp [f, period] at hyconst ⊢
+  calc
+    d.exponentialBranchTransition v w y =
+        (d.exponentialBranchTransition v w y - y) + y := by abel
+    _ = (d.exponentialBranchTransition v w y₀ - y₀) + y := by
+      rw [hyconst]
+    _ = y + (d.exponentialBranchTransition v w y₀ - y₀) := by abel
+
 theorem exponentialBranchTransition_symm_continuousOn
     {V X : Type*} [NormedAddCommGroup V] [NormedSpace ℂ V]
     [AddCommGroup X] [TopologicalSpace X] [T2Space X] [ContinuousAdd X]

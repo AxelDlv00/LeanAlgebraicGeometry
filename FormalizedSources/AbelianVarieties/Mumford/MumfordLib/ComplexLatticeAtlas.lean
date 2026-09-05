@@ -407,6 +407,46 @@ theorem exponentialBranchTransition_exists_period
     y + (d.exponentialBranchTransition z w y - y)
   exact (add_sub_cancel y (d.exponentialBranchTransition z w y)).symm
 
+/- On a preconnected overlap, the period relating two branches is independent
+   of the point.  This is the deck-translation form of the local transition
+   law; the discreteness of the period lattice is the essential input. -/
+theorem exponentialBranchTransition_eq_add_of_isPreconnected
+    {X : Type*} [AddCommGroup X] [TopologicalSpace X]
+    [T2Space X] [ContinuousAdd X] {g : ℕ}
+    (d : ComplexLatticeExponentialData X g)
+    (z w : GenusComplexVector g) {s : Set (GenusComplexVector g)}
+    (hs : IsPreconnected s)
+    (hsub : s ⊆ (d.exponentialBranchTransition z w).source)
+    {y₀ : GenusComplexVector g} (hy₀ : y₀ ∈ s) :
+    ∃ period : d.periodLattice,
+      ∀ y ∈ s,
+        d.exponentialBranchTransition z w y = y + (period : GenusComplexVector g) := by
+  let f : GenusComplexVector g → GenusComplexVector g :=
+    fun y => d.exponentialBranchTransition z w y - y
+  have hf : ContinuousOn f s := by
+    exact
+      (((d.exponentialBranchTransition z w).continuousOn).mono hsub).sub
+        continuousOn_id
+  have hmaps : Set.MapsTo f s
+      (d.periodLattice.toAddSubgroup : Set (GenusComplexVector g)) := by
+    intro y hy
+    exact d.exponentialBranchTransition_sub_mem_periodLattice z w (hsub hy)
+  have hconst : ∀ y ∈ s, f y = f y₀ := by
+    intro y hy
+    exact IsPreconnected.constant_of_mapsTo hs d.periodLattice_isDiscrete
+      hf hmaps hy hy₀
+  let period : d.periodLattice := ⟨f y₀, hmaps hy₀⟩
+  refine ⟨period, ?_⟩
+  intro y hy
+  have hyconst : f y = f y₀ := hconst y hy
+  dsimp [f, period] at hyconst ⊢
+  calc
+    d.exponentialBranchTransition z w y =
+        (d.exponentialBranchTransition z w y - y) + y := by abel
+    _ = (d.exponentialBranchTransition z w y₀ - y₀) + y := by
+      rw [hyconst]
+    _ = y + (d.exponentialBranchTransition z w y₀ - y₀) := by abel
+
 theorem exponentialBranchTransition_self_apply
     {X : Type*} [AddCommGroup X] [TopologicalSpace X]
     [T2Space X] [ContinuousAdd X] {g : ℕ}
