@@ -182,6 +182,60 @@ theorem canonicalComplexFlow_add_parameter
     (complexToRealLieAlgebraMap I (z • v))
     (complexToRealLieAlgebraMap I (w • v)) 1
 
+/-- Scaling the tangent vector reparameterizes the complex flow.  This is the
+    complex analogue of `canonicalRealFlow_smul`, with the scalar absorbed
+    into the parameter rather than into real time. -/
+theorem canonicalComplexFlow_smul_vector
+    [CompleteSpace E] [T2Space G] [I.Boundaryless]
+    [CompactSpace G] [PreconnectedSpace G] (v : E) (c z : ℂ) :
+    canonicalComplexFlow (G := G) I (c • v) z =
+      canonicalComplexFlow (G := G) I v (z * c) := by
+  rw [canonicalComplexFlow_eq_exponential_smul,
+    canonicalComplexFlow_eq_exponential_smul]
+  congr 1
+  rw [smul_smul]
+
+/-- Multiplication of complex parameters is compatible with rescaling the
+    tangent vector.  This is useful when changing coordinates on local flow
+    branches. -/
+theorem canonicalComplexFlow_mul_parameter
+    [CompleteSpace E] [T2Space G] [I.Boundaryless]
+    [CompactSpace G] [PreconnectedSpace G] (v : E) (z w : ℂ) :
+    canonicalComplexFlow (G := G) I v (z * w) =
+      canonicalComplexFlow (G := G) I (w • v) z := by
+  symm
+  exact canonicalComplexFlow_smul_vector (G := G) I v w z
+
+/-- Negating the complex parameter gives the inverse point on the same flow. -/
+theorem canonicalComplexFlow_neg_parameter
+    [CompleteSpace E] [T2Space G] [I.Boundaryless]
+    [CompactSpace G] [PreconnectedSpace G] (v : E) (z : ℂ) :
+    canonicalComplexFlow (G := G) I v (-z) =
+      (canonicalComplexFlow (G := G) I v z)⁻¹ := by
+  have h := canonicalComplexFlow_add_parameter (G := G) I v z (-z)
+  have hz : z + (-z) = 0 := add_neg_cancel z
+  rw [hz, canonicalComplexFlow_zero_parameter] at h
+  exact (mul_eq_one_iff_eq_inv').mp h.symm
+
+/-- Values of the complex exponential commute because its source is additive. -/
+theorem canonicalComplexExponential_commute
+    [CompleteSpace E] [T2Space G] [I.Boundaryless]
+    [CompactSpace G] [PreconnectedSpace G] (v w : E) :
+    Commute
+      (canonicalComplexExponential (G := G) I v)
+      (canonicalComplexExponential (G := G) I w) := by
+  rw [Commute]
+  calc
+    canonicalComplexExponential (G := G) I v *
+        canonicalComplexExponential (G := G) I w =
+        canonicalComplexExponential (G := G) I (v + w) :=
+      (canonicalComplexExponential_add (G := G) I v w).symm
+    _ = canonicalComplexExponential (G := G) I (w + v) := by
+      rw [add_comm]
+    _ = canonicalComplexExponential (G := G) I w *
+        canonicalComplexExponential (G := G) I v :=
+      canonicalComplexExponential_add (G := G) I w v
+
 /-- On real parameters, the complex flow agrees with the original real flow. -/
 theorem canonicalComplexFlow_ofReal
     [CompleteSpace E] [T2Space G] [I.Boundaryless]
