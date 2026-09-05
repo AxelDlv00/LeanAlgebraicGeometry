@@ -142,6 +142,29 @@ theorem fixedSubalgebraBasicOpenIso_transition
   rw [Spec.map_comp, ← Category.assoc, invariantBasicOpenIso_transition,
     Category.assoc]
 
+/-- The fixed-localized ring transition associated to an inclusion of
+invariant basic opens induces an open immersion on spectra. -/
+theorem fixedAwayTransition_specMap_isOpenImmersion
+    [Finite G]
+    {b c : FixedPoints.subalgebra k A G}
+    (hcb : PrimeSpectrum.basicOpen c ≤ PrimeSpectrum.basicOpen b) :
+    IsOpenImmersion
+      (Spec.map (CommRingCat.ofHom
+        (fixedAwayTransition (k := k) (A := A) (G := G) hcb))) := by
+  let m := Spec.map (CommRingCat.ofHom
+    (fixedAwayTransition (k := k) (A := A) (G := G) hcb))
+  have hm : m =
+      (fixedSubalgebraBasicOpenIso (k := k) (A := A) (G := G) c).inv ≫
+        (Spec (CommRingCat.of (FixedPoints.subalgebra k A G))).homOfLE hcb ≫
+          (fixedSubalgebraBasicOpenIso (k := k) (A := A) (G := G) b).hom := by
+    rw [← cancel_epi
+      (fixedSubalgebraBasicOpenIso (k := k) (A := A) (G := G) c).hom]
+    simp only [Iso.hom_inv_id_assoc]
+    exact fixedSubalgebraBasicOpenIso_transition hcb
+  change IsOpenImmersion m
+  rw [hm]
+  infer_instance
+
 /-! ## Composition and identity laws -/
 
 @[simp, reassoc]
