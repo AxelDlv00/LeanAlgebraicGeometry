@@ -153,5 +153,59 @@ theorem basePointFreeLinearSystem_iff_jumpProj_surjective
   · intro h x hx
     exact (jump_surjective_iff_exists_ne_zero hx D).mp (h x hx)
 
+/-! ## Residue realization of the local jump -/
+
+/-- The quotient class of a local divisor section is carried by the canonical
+`jumpEquivResidueField` to the residue of its normalized function-field
+representative.  This is an intrinsic local residue statement; it is not yet
+the scheme-theoretic line-bundle evaluation map from the source proposition. -/
+theorem jumpProj_ne_zero_iff_jumpToResidue_ne_zero
+    {x : X.left} (hx : x ≠ genericPoint X.left)
+    (D : CurveDivisor k X) {U : X.left.Opens} (hxU : x ∈ U)
+    (s : divisorSections D U) :
+    jumpProj hx D U hxU s ≠ 0 ↔
+      jumpToResidue (X := X) hx D
+        ⟨(s : X.left.functionField),
+          divisorSections_le_pointLattice hx D U hxU s.2⟩ ≠ 0 := by
+  have hEq :
+      jumpEquivResidueField (X := X) hx D
+          (jumpProj hx D U hxU s) =
+        jumpToResidue (X := X) hx D
+          ⟨(s : X.left.functionField),
+            divisorSections_le_pointLattice hx D U hxU s.2⟩ := rfl
+  constructor
+  · intro h hz
+    apply h
+    apply (jumpEquivResidueField (X := X) hx D).injective
+    rw [hEq, hz]
+    simp
+  · intro h hz
+    apply h
+    rw [← hEq, hz]
+    simp
+
+/-- The numerical one-point condition has a residue-level formulation: every
+non-generic point admits a global divisor section whose normalized local
+residue is nonzero.  The remaining geometric bridge is the identification of
+this normalized residue with the usual line-bundle evaluation map. -/
+theorem basePointFreeLinearSystem_iff_exists_jumpToResidue_ne_zero
+    (D : CurveDivisor k X) :
+    BasePointFreeLinearSystem D ↔
+      ∀ (x : X.left) (hx : x ≠ genericPoint X.left),
+        ∃ s : divisorSections D (⊤ : X.left.Opens),
+          jumpToResidue (X := X) hx D
+            ⟨(s : X.left.functionField),
+              divisorSections_le_pointLattice hx D ⊤ (by simp) s.2⟩ ≠ 0 := by
+  rw [basePointFreeLinearSystem_iff_exists_jumpProj_ne_zero]
+  constructor
+  · intro h x hx
+    obtain ⟨s, hs⟩ := h x hx
+    exact ⟨s, (jumpProj_ne_zero_iff_jumpToResidue_ne_zero
+      (U := (⊤ : X.left.Opens)) hx D (by simp) s).mp hs⟩
+  · intro h x hx
+    obtain ⟨s, hs⟩ := h x hx
+    exact ⟨s, (jumpProj_ne_zero_iff_jumpToResidue_ne_zero
+      (U := (⊤ : X.left.Opens)) hx D (by simp) s).mpr hs⟩
+
 end
 end Hartshorne
