@@ -290,6 +290,10 @@
       "target": "mumford-thm-line-bundle-theta-group"
     },
     {
+      "source": "mumford-lem-rigidity-form-I",
+      "target": "mumford-cor-pointed-hom-linear"
+    },
+    {
       "source": "mumford-lem-reduced-norm-simple-algebra",
       "target": "mumford-thm-degree-tate-determinant"
     },
@@ -699,10 +703,10 @@
     },
     "states": {
       "blocked": 116,
-      "closed": 899,
+      "closed": 900,
       "formalized_open": 0,
-      "informal": 212,
-      "ready": 96
+      "informal": 211,
+      "ready": 95
     },
     "warnings": [
       "Mumford.Analytic.ComplexLieExponentialData: Lean declaration is not referenced by any blueprint \\lean{...}",
@@ -3749,8 +3753,8 @@
       "chapter": "Algebraic Theory via Varieties",
       "comment_count": 3,
       "dep_count": 0,
-      "descendant_count": 2,
-      "group": "c104",
+      "descendant_count": 3,
+      "group": "c105",
       "has_sorry": false,
       "hgraph_id": "ed5f5726c302",
       "id": "mumford-lem-rigidity-form-I",
@@ -3762,7 +3766,7 @@
       "mathlib_ok": false,
       "order": 37,
       "proved": true,
-      "rdep_count": 1,
+      "rdep_count": 2,
       "review_count": 0,
       "sources": [
         "M:ch2:II.4"
@@ -3779,7 +3783,7 @@
       "comment_count": 0,
       "dep_count": 1,
       "descendant_count": 1,
-      "group": "c104",
+      "group": "c105",
       "has_sorry": false,
       "hgraph_id": "c0db840949a3",
       "id": "mumford-cor-morphism-translation",
@@ -3808,7 +3812,7 @@
       "comment_count": 0,
       "dep_count": 1,
       "descendant_count": 0,
-      "group": "c104",
+      "group": "c105",
       "has_sorry": false,
       "hgraph_id": "7edc396c7c01",
       "id": "mumford-cor-abelian-commutative",
@@ -3834,27 +3838,27 @@
     },
     {
       "chapter": "Algebraic Theory via Varieties",
-      "comment_count": 1,
-      "dep_count": 0,
+      "comment_count": 2,
+      "dep_count": 1,
       "descendant_count": 0,
-      "group": "ch:Algebraic Theory via Varieties",
+      "group": "c105",
       "has_sorry": false,
       "hgraph_id": "79aaa6794163",
       "id": "mumford-cor-pointed-hom-linear",
-      "lean_file": null,
-      "lean_name": null,
-      "lean_source": null,
-      "lean_status": "empty",
+      "lean_file": "MumfordLib/RigidityCorollaries.lean",
+      "lean_name": "Mumford.GroupScheme.pointedProductHomEquiv",
+      "lean_source": "noncomputable def pointedProductHomEquiv\n    {K : Type u} [Field K]\n    {V W : Over (Spec (.of K))}\n    [IsProper V.hom]\n    [GeometricallyIntegral V.hom]\n    [GeometricallyIntegral W.hom]\n    [LocallyOfFiniteType W.hom]\n    {A : Over (Spec (.of K))}\n    [GrpObj A] [IsSeparated A.hom]\n    (v\u2080 : \ud835\udfd9_ (Over (Spec (.of K))) \u27f6 V)\n    (w\u2080 : \ud835\udfd9_ (Over (Spec (.of K))) \u27f6 W) :\n    PointedHom V A v\u2080 \u03b7[A] \u00d7 PointedHom W A w\u2080 \u03b7[A] \u2243\n      PointedHom (V \u2297 W) A (lift v\u2080 w\u2080) \u03b7[A] where\n  toFun p := \u27e8(fst V W \u226b p.1.1) * (snd V W \u226b p.2.1), by\n    rw [MonObj.comp_mul, lift_fst_assoc, lift_snd_assoc,\n      p.1.property, p.2.property]\n    have h\u03b7 : (\u03b7[A] : \ud835\udfd9_ (Over (Spec (.of K))) \u27f6 A) = 1 := by\n      rw [Hom.one_def]\n      simp\n    rw [h\u03b7, _root_.one_mul]\u27e9\n  invFun h :=\n    (\u27e8lift (\ud835\udfd9 V) (toUnit V \u226b w\u2080) \u226b h.1, by\n      rw [\u2190 Category.assoc, comp_lift, Category.comp_id, \u2190 Category.assoc,\n        toUnit_unique (v\u2080 \u226b toUnit V) (\ud835\udfd9 _), Category.id_comp, h.property]\u27e9,\n     \u27e8lift (toUnit W \u226b v\u2080) (\ud835\udfd9 W) \u226b h.1, by\n      rw [\u2190 Category.assoc, comp_lift, Category.comp_id, \u2190 Category.assoc,\n        toUnit_unique (w\u2080 \u226b toUnit W) (\ud835\udfd9 _), Category.id_comp, h.property]\u27e9)\n  left_inv p := by\n    have hu := hom_additive_decomp_axis_unique (kbar := K)\n      v\u2080 w\u2080 ((fst V W \u226b p.1.1) * (snd V W \u226b p.2.1))\n      p.1.1 p.2.1 p.1.property p.2.property rfl\n    apply Prod.ext\n    \u00b7 apply Subtype.ext\n      change (lift (\ud835\udfd9 V) (toUnit V \u226b w\u2080) \u226b\n        ((fst V W \u226b p.1.1) * (snd V W \u226b p.2.1))) = p.1.1\n      exact hu.1.symm\n    \u00b7 apply Subtype.ext\n      change (lift (toUnit W \u226b v\u2080) (\ud835\udfd9 W) \u226b\n        ((fst V W \u226b p.1.1) * (snd V W \u226b p.2.1))) = p.2.1\n      exact hu.2.symm\n  right_inv h := by\n    apply Subtype.ext\n    exact (hom_additive_decomp_of_rigidity_arbitraryField\n      v\u2080 w\u2080 h.1 h.property).symm\n\n/- Proper geometrically integral group schemes are commutative.  This proof\n   records the rigidity route explicitly: inversion is pointed, hence a\n   homomorphism, and inversion of a product reverses its factors. -/",
+      "lean_status": "lean_ok",
       "level": "fine",
       "mathlib_ok": false,
       "order": 40,
-      "proved": false,
+      "proved": true,
       "rdep_count": 0,
       "review_count": 0,
       "sources": [
         "M:ch2:II.4"
       ],
-      "state": "ready",
+      "state": "closed",
       "statement": "For pointed complete varieties $S,T$ and an abelian variety $X$,\n\\[\n \\Hom(S,X)\\times\\Hom(T,X)\\xrightarrow{\\sim}\\Hom(S\\times T,X),\n \\qquad(f,g)\\mapsto[(s,t)\\mapsto f(s)+g(t)].\n\\]",
       "title": "Linearity of maps into an abelian variety",
       "type": "corollary",
