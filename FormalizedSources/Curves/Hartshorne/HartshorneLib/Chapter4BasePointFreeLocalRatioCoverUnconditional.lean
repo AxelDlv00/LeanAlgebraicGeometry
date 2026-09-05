@@ -66,6 +66,10 @@ noncomputable def gluedMap_of_smoothCurve
 by `ProjectiveMapProducer`, while the chosen basis supplies its homogeneous
 coordinate index.  The target dimension is retained as a field of the
 producer and is recovered from the basis by `ProjectiveMapProducer.target_dimension`.
+
+The selected indices, opens, and regularizations are obtained with
+`Classical.choose`, so this is a choice-dependent construction rather than a
+canonical map.
 -/
 noncomputable def projectiveMapProducer_of_smoothCurve
     (basis : Module.Basis (Fin (n + 1)) k (CurveDivisorSectionSpace D))
@@ -124,6 +128,27 @@ theorem chartOpenCover_ι_projectiveMapProducer_of_smoothCurve
     (r := fun x : NonGenericPoint X => selectedRegularization (D := D) basis hD x)
     (hcover := selectedCoordinates_isOpenCover_of_smoothCurve basis hD)
     (selectedCoordinates_sameSectionValues (D := D) basis hD) i
+
+/-- The packaged map is uniquely determined by the selected normalized chart
+restrictions.  This is the descent uniqueness statement used when a later
+construction supplies another candidate global projective morphism. -/
+theorem projectiveMapProducer_of_smoothCurve_eq_of_chart_restrictions
+    (basis : Module.Basis (Fin (n + 1)) k (CurveDivisorSectionSpace D))
+    (hD : BasePointFreeLinearSystem D)
+    (f : X.left ⟶ projectiveSpace k n)
+    (hf : ∀ i : NonGenericPoint X,
+      (LocalRatioProjectiveGluing.chartOpenCover
+          (fun x : NonGenericPoint X => selectedCoordinates (D := D) basis hD x)
+          (selectedCoordinates_isOpenCover_of_smoothCurve basis hD)).f i ≫ f =
+        (selectedRegularization (D := D) basis hD i).chartMap) :
+    f = (projectiveMapProducer_of_smoothCurve (D := D) basis hD).map := by
+  apply Scheme.Cover.hom_ext
+    (LocalRatioProjectiveGluing.chartOpenCover
+      (fun x : NonGenericPoint X => selectedCoordinates (D := D) basis hD x)
+      (selectedCoordinates_isOpenCover_of_smoothCurve basis hD))
+  intro i
+  rw [hf i, ← chartOpenCover_ι_projectiveMapProducer_of_smoothCurve]
+  rfl
 
 end BasePointFreeLocalRatioCover
 
