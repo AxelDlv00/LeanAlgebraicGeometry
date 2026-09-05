@@ -10,8 +10,10 @@ status: active
 kind: proof
 priority: high
 depends_on: []
-inbox_refs: []
-task_refs: []
+inbox_refs:
+- I-2297
+task_refs:
+- fs-hartshorne
 scope:
   projects:
   - Hartshorne
@@ -30,7 +32,7 @@ metadata:
   parent: Hartshorne
   owner: fs-hartshorne
   milestone: Hartshorne
-  updated_at: '2026-09-05T05:58:12.384544+00:00'
+  updated_at: '2026-09-05T06:49:02.254860+00:00'
   pinned_commits:
   - 65ab6f9814
   - 6cf724b66c
