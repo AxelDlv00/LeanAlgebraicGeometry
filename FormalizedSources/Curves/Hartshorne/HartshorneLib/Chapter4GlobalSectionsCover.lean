@@ -275,6 +275,74 @@ theorem restrictedCoordinateChartMap_eq_coordinateChartMap
       (MvPolynomial.X j)).ι).mp
   rw [restrictedCoordinateChartMap_ι, coordinateChartMap_ι]
 
+omit [IsAlgClosed k] [IsIntegral X.left] [SmoothOfRelativeDimension 1 X.hom]
+  [IsProper X.hom] in
+/-- The coordinate-chart maps, regarded as maps into the common projective
+target rather than into their individual standard opens. -/
+noncomputable def coordinateChartFamily
+    (data : GlobalSectionsProjectiveMapData (k := k) (X := X) n)
+    (j : Fin (n + 1)) :
+    (data.coordinateOpenCover).X j ⟶ projectiveSpace k n :=
+  data.coordinateChartMap j ≫
+    (Proj.basicOpen
+      (MvPolynomial.homogeneousSubmodule (Fin (n + 1)) k)
+      (MvPolynomial.X j)).ι
+
+omit [IsAlgClosed k] [IsIntegral X.left] [SmoothOfRelativeDimension 1 X.hom]
+  [IsProper X.hom] in
+/-- The coordinate-chart family agrees on every pairwise pullback, hence is
+valid descent data for the coordinate open cover. -/
+theorem coordinateChartFamily_compat
+    (data : GlobalSectionsProjectiveMapData (k := k) (X := X) n) :
+    ∀ (i j : Fin (n + 1)),
+      pullback.fst ((data.coordinateOpenCover).f i)
+          ((data.coordinateOpenCover).f j) ≫ data.coordinateChartFamily i =
+      pullback.snd ((data.coordinateOpenCover).f i)
+          ((data.coordinateOpenCover).f j) ≫ data.coordinateChartFamily j := by
+  dsimp [coordinateOpenCover]
+  intro i j
+  change pullback.fst ((data.coordinateOpenCover).f i)
+      ((data.coordinateOpenCover).f j) ≫
+      (data.coordinateChartMap i ≫
+        (Proj.basicOpen
+          (MvPolynomial.homogeneousSubmodule (Fin (n + 1)) k)
+          (MvPolynomial.X i)).ι) =
+    pullback.snd ((data.coordinateOpenCover).f i)
+      ((data.coordinateOpenCover).f j) ≫
+      (data.coordinateChartMap j ≫
+        (Proj.basicOpen
+          (MvPolynomial.homogeneousSubmodule (Fin (n + 1)) k)
+          (MvPolynomial.X j)).ι)
+  rw [coordinateChartMap_ι, coordinateChartMap_ι]
+  exact pullback.condition_assoc data.map
+
+omit [IsAlgClosed k] [IsIntegral X.left] [SmoothOfRelativeDimension 1 X.hom]
+  [IsProper X.hom] in
+/-- Glue the explicit coordinate-chart maps along the coordinate open cover. -/
+noncomputable def gluedCoordinateChartMap
+    (data : GlobalSectionsProjectiveMapData (k := k) (X := X) n) :
+    X.left ⟶ projectiveSpace k n :=
+  data.coordinateOpenCover.glueMorphisms data.coordinateChartFamily
+    data.coordinateChartFamily_compat
+
+omit [IsAlgClosed k] [IsIntegral X.left] [SmoothOfRelativeDimension 1 X.hom]
+  [IsProper X.hom] in
+/-- Gluing the localized coordinate-chart maps reconstructs the canonical
+`Proj.fromOfGlobalSections` morphism. -/
+theorem gluedCoordinateChartMap_eq_map
+    (data : GlobalSectionsProjectiveMapData (k := k) (X := X) n) :
+    data.gluedCoordinateChartMap = data.map := by
+  apply Scheme.Cover.hom_ext
+    (X.left.openCoverOfIsOpenCover
+      (fun i : Fin (n + 1) => X.left.basicOpen (data.sections i))
+      data.basicOpen_iSup_eq_top)
+  intro (i : Fin (n + 1))
+  change (data.coordinateOpenCover).f i ≫ data.gluedCoordinateChartMap =
+    (data.coordinateOpenCover).f i ≫ data.map
+  rw [gluedCoordinateChartMap, Scheme.Cover.ι_glueMorphisms,
+    coordinateChartFamily]
+  exact data.coordinateChartMap_ι i
+
 end GlobalSectionsProjectiveMapData
 
 end
