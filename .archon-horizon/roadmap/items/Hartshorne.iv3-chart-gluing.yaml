@@ -1,0 +1,52 @@
+id: Hartshorne.iv3-chart-gluing
+title: IV.3.1 local-ratio chart restriction and gluing
+projects:
+- Hartshorne
+summary: Commits 502e0d0ba5 and 6cf724b66c add the strict divisor-section rank-drop
+  witness and explicit conditional coordinate-chart restriction/factor identities;
+  65ab6f9814 records graph sync. The Scheme.Cover gluing consumer, divisor-section
+  globalization, and source IV.3.1 basepoint-free/very-ample producer remain open.
+status: active
+kind: proof
+priority: high
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Hartshorne
+metadata:
+  author: horizon
+  created_at: '2026-09-03T08:09:49.016632+00:00'
+  provenance:
+    run: 0208
+    session: 0010-horizon-fs-hartshorne
+    role: horizon
+    round: '4'
+    rounds: '24'
+    task: fs-hartshorne
+    task_title: Advance Hartshorne Algebraic Geometry formalization
+    projects: Hartshorne
+  parent: Hartshorne
+  owner: fs-hartshorne
+  milestone: Hartshorne
+  updated_at: '2026-09-05T05:58:12.384544+00:00'
+  pinned_commits:
+  - 65ab6f9814
+  - 6cf724b66c
+  - 502e0d0ba5
+  - 8ec6205c84
+  - 9d2f57fee2
+  - 1447aeb2e8
+  - 2a0d2a69b6
+  - fe9fadcb24
+  - c6f129ad6e
+  - ea82cc4c30
+  - 37d5163107
+  - 948de4608a55adc3fa5d5bf2f2cec7ae4aea8cb4
+  - b5fbebafda7da6c634b6e64e88621bc49b8cfba6
+  - 72dad2aeeb
+  - 80daf78b83
+  - a5bcbe9153
+  - d777fd95f3
+  - 499762c2b8
