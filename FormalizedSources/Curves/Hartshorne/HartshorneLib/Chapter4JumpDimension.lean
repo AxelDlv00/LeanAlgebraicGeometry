@@ -270,7 +270,9 @@ lemma jumpToResidue_ker {x : X.left} (hx : x ≠ genericPoint X.left)
     show (-1 : ℤ) + CurveDivisor.coeffAt hx D =
       CurveDivisor.coeffAt hx D - 1 by ring]
 
-/-- The one-point jump module is canonically the residue field. -/
+/-- The one-point jump module is identified with the residue field using the
+chosen uniformizer.  The resulting zero/nonzero and dimension statements are
+independent of that coordinate choice. -/
 noncomputable def jumpEquivResidueField {x : X.left} (hx : x ≠ genericPoint X.left)
     (D : CurveDivisor k X) : jumpModule hx D ≃ₗ[k] X.left.residueField x :=
   (Submodule.quotEquivOfEq _ _ (jumpToResidue_ker (X := X) hx D).symm).trans
