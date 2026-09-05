@@ -93,6 +93,63 @@ theorem exists_divisorSection_not_mem_devissage_of_basePointFree
     (divisorSections_devissage_lt_of_basePointFree hD x hx)
   exact ⟨⟨g, hgD⟩, hgnot⟩
 
+/-! ### Two-point separation witnesses -/
+
+/-- The numerical very-ampleness condition makes the sections of `D - x - y`
+a proper subspace of the global divisor sections of `D`.
+
+The points are allowed to coincide.  In that case the statement is the
+two-jet (tangent-direction) part of the numerical criterion, while this API
+deliberately records only the resulting strict section-space inclusion. -/
+theorem divisorSections_twoDevissage_lt_of_veryAmple
+    {D : CurveDivisor k X} (hD : VeryAmpleLinearSystem D)
+    (x y : X.left) (hx : x ≠ genericPoint X.left)
+    (hy : y ≠ genericPoint X.left) :
+    divisorSections (CurveDivisor.devissageDivisor hy
+      (CurveDivisor.devissageDivisor hx D)) (⊤ : X.left.Opens) <
+      divisorSections D ⊤ := by
+  have hdrop := hD x y hx hy
+  have hltH :
+      CategoryTheory.Sheaf.h0
+          (divisorSheaf (CurveDivisor.devissageDivisor hy
+            (CurveDivisor.devissageDivisor hx D))) <
+        CategoryTheory.Sheaf.h0 (divisorSheaf D) := by
+    omega
+  let eSmall := CategoryTheory.Sheaf.HModule.linearEquiv₀ isTerminalTop
+    (divisorSheaf (CurveDivisor.devissageDivisor hy
+      (CurveDivisor.devissageDivisor hx D)))
+  let eBig := CategoryTheory.Sheaf.HModule.linearEquiv₀ isTerminalTop
+    (divisorSheaf D)
+  have hlt :
+      Module.finrank k
+          ((divisorSheaf (CurveDivisor.devissageDivisor hy
+            (CurveDivisor.devissageDivisor hx D))).obj.obj
+            (Opposite.op (⊤ : X.left.Opens))) <
+        Module.finrank k
+          ((divisorSheaf D).obj.obj (Opposite.op (⊤ : X.left.Opens))) := by
+    rw [← eSmall.finrank_eq, ← eBig.finrank_eq]
+    exact hltH
+  have hle1 := divisorSections_mono (devissageDivisor_le hx D)
+    (⊤ : X.left.Opens)
+  have hle2 := divisorSections_mono
+    (devissageDivisor_le hy (CurveDivisor.devissageDivisor hx D))
+    (⊤ : X.left.Opens)
+  exact Submodule.lt_of_le_of_finrank_lt_finrank (hle2.trans hle1) hlt
+
+/-- A numerically very ample system has a global divisor section outside the
+sections obtained after deleting two (possibly equal) points. -/
+theorem exists_divisorSection_not_mem_twoDevissage_of_veryAmple
+    {D : CurveDivisor k X} (hD : VeryAmpleLinearSystem D)
+    (x y : X.left) (hx : x ≠ genericPoint X.left)
+    (hy : y ≠ genericPoint X.left) :
+    ∃ s : divisorSections D (⊤ : X.left.Opens),
+      (s : X.left.functionField) ∉
+        divisorSections (CurveDivisor.devissageDivisor hy
+          (CurveDivisor.devissageDivisor hx D)) ⊤ := by
+  obtain ⟨g, hgD, hgnot⟩ := SetLike.exists_of_lt
+    (divisorSections_twoDevissage_lt_of_veryAmple hD x y hx hy)
+  exact ⟨⟨g, hgD⟩, hgnot⟩
+
 /-- Degree at least `2g` implies numerical base-point-freeness (IV.3.2). -/
 theorem basePointFreeLinearSystem_of_degree_ge_two_mul_genus
     (sd : CurveSerreDualityData (k := k) (X := X))
