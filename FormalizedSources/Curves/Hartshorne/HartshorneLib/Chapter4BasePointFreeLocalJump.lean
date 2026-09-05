@@ -109,5 +109,24 @@ theorem exists_divisorSection_orderAt_eq_of_basePointFree
   obtain ⟨s, hs⟩ := exists_jumpProj_ne_zero_of_basePointFree hD x hx
   exact ⟨s, orderAt_eq_divisorBound_of_jumpProj_ne_zero hx D (U := ⊤) (by simp) s hs⟩
 
+/-- The equal-point very-ample witness has exact order at the chosen point
+after the first dévissage step.  This is the intrinsic tangent (two-jet)
+separation datum used by the later projective-chart construction. -/
+theorem exists_tangent_order_witness_of_veryAmple
+    {D : CurveDivisor k X} (hD : VeryAmpleLinearSystem D)
+    (x : X.left) (hx : x ≠ genericPoint X.left) :
+    ∃ s : divisorSections (CurveDivisor.devissageDivisor hx D) ⊤,
+      orderAt X.hom hx (s : X.left.functionField) =
+        divisorBound (CurveDivisor.devissageDivisor hx D) hx := by
+  obtain ⟨g, hgsmall, hgnested⟩ := SetLike.exists_of_lt
+    (divisorSections_twoDevissage_lt_of_veryAmple_same hD x hx)
+  let s : divisorSections (CurveDivisor.devissageDivisor hx D) ⊤ :=
+    ⟨g, hgsmall⟩
+  have hjump : jumpProj hx (CurveDivisor.devissageDivisor hx D) ⊤ trivial s ≠ 0 :=
+    (jumpProj_ne_zero_iff_not_mem_divisorSections_devissage hx
+      (CurveDivisor.devissageDivisor hx D) s).mpr hgnested
+  exact ⟨s, orderAt_eq_divisorBound_of_jumpProj_ne_zero hx
+    (CurveDivisor.devissageDivisor hx D) (U := ⊤) (by simp) s hjump⟩
+
 end
 end Hartshorne
