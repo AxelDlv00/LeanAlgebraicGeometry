@@ -35,6 +35,7 @@ import HartshorneLib.Chapter2LineBundles
 import HartshorneLib.Chapter2LineBundleAPI
 import HartshorneLib.Chapter2LineBundlePullback
 import HartshorneLib.Chapter2ModuleKSheaf
+import HartshorneLib.Chapter4SchemeModuleFiber
 import HartshorneLib.Chapter2Cohomology
 import HartshorneLib.Chapter2CohomologyFunctoriality
 import HartshorneLib.Chapter2OverOpen
@@ -47,6 +48,7 @@ import HartshorneLib.Chapter2Chi
 import HartshorneLib.Chapter2ChiSlice
 import HartshorneLib.Chapter4DivisorSheaf
 import HartshorneLib.Chapter4DivisorSheafZero
+import HartshorneLib.Chapter4DivisorModule
 import HartshorneLib.Chapter4ChiBase
 import HartshorneLib.Chapter4DivisorMultiplication
 import HartshorneLib.Chapter4DivisorSheafMul
