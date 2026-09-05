@@ -56,6 +56,25 @@ theorem module_finite_sections_pushforward_twist_of_curve
     (pullback.snd π T.hom) (x.twist L)
     (twist_isFiniteSupport_of_curve L hL x) hV
 
+/-- On a locally noetherian test object, the finite sections producer upgrades
+the twisted divisor pushforward to finite presentation.  This is the
+coherence input for the later finite-flat/local-free Grassmannian step; the
+finite presentation of the twist itself remains an explicit hypothesis. -/
+theorem isFinitePresentation_pushforward_twist_of_curve
+    [SmoothOfRelativeDimension 1 π] [GeometricallyIntegral π] [IsProper π]
+    [IsLocallyNoetherian (T.left : Scheme.{u})]
+    (L : X.Modules) (hL : LineBundle.IsLocallyTrivial L)
+    (x : DivFamily π T)
+    (hFp : (x.twist L).IsFinitePresentation) :
+    ((Modules.pushforward (pullback.snd π T.hom)).obj (x.twist L)).IsFinitePresentation := by
+  letI : (x.twist L).IsFinitePresentation := hFp
+  letI : (x.twist L).IsQuasicoherent := inferInstance
+  letI : ((Modules.pushforward (pullback.snd π T.hom)).obj (x.twist L)).IsQuasicoherent :=
+    Modules.pushforward_isQuasicoherent (pullback.snd π T.hom) (x.twist L)
+  apply Modules.isFinitePresentation_of_finite_sections
+  intro V hV
+  exact module_finite_sections_pushforward_twist_of_curve L hL x hFp hV
+
 end DivFamily
 
 end Scheme
