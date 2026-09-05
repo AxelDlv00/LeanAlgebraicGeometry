@@ -23,6 +23,7 @@ import MilneLib.InvariantQuotientRestriction
 import MilneLib.InvariantQuotientOverlap
 import MilneLib.InvariantQuotientStableOverlap
 import MilneLib.InvariantQuotientStableOverlapTopology
+import MilneLib.InvariantQuotientStableOverlapCompat
 import MilneLib.InvariantQuotientSections
 import MilneLib.InvariantQuotientOrder
 import MilneLib.InvariantQuotientGlue
