@@ -703,7 +703,7 @@
     },
     "states": {
       "blocked": 116,
-      "closed": 900,
+      "closed": 911,
       "formalized_open": 0,
       "informal": 211,
       "ready": 95
@@ -755,10 +755,10 @@
       "Mumford.Analytic.canonicalComplexExponentialQuotientHomeomorph: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Mumford.Analytic.canonicalComplexExponentialQuotientHomeomorph_eq_quotientAddEquiv: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Mumford.Analytic.canonicalComplexExponentialQuotientHomeomorph_mk: Lean declaration is not referenced by any blueprint \\lean{...}",
+      "Mumford.Analytic.canonicalComplexExponentialQuotient_mk_eq_mk_iff: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Mumford.Analytic.canonicalComplexExponential_add: Lean declaration is not referenced by any blueprint \\lean{...}",
-      "Mumford.Analytic.canonicalComplexExponential_conjugation: Lean declaration is not referenced by any blueprint \\lean{...}",
-      "Mumford.Analytic.canonicalComplexExponential_continuous: Lean declaration is not referenced by any blueprint \\lean{...}",
-      "Mumford.Analytic.canonicalComplexExponential_exists_nhds_injOn: Lean declaration is not referenced by any blueprint \\lean{...}"
+      "Mumford.Analytic.canonicalComplexExponential_commute: Lean declaration is not referenced by any blueprint \\lean{...}",
+      "Mumford.Analytic.canonicalComplexExponential_conjugation: Lean declaration is not referenced by any blueprint \\lean{...}"
     ]
   },
   "nodes": [
