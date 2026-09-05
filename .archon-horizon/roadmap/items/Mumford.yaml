@@ -2,15 +2,14 @@ id: Mumford
 title: Mumford Abelian Varieties formalization
 projects:
 - Mumford
-summary: Advance source-faithful Mumford analytic formalization. Canonical real flows
-  have fixed-time additivity, regularity, derivative-at-zero, local generation, surjective
-  time-one parametrization, and a verified compact connected complex-Lie commutativity
-  consumer. The candidate realified exponential now has a continuous surjective additive
-  presentation, an open quotient map, and a discrete kernel upgraded to a full real
-  Z-lattice with rank identity finrank_Z L = finrank_R E (commits 8d88019805, 160eee5056,
-  6ddc4bb5cd, d874b6720a). Genuine source-level jointly holomorphic exponential existence/uniqueness,
-  genus/dimension identification, lattice quotient, and approved frozen-source attachments
-  remain open.
+summary: Advance source-faithful Mumford analytic formalization. Canonical model-level
+  complex flows now have a verified naturality theorem for differentiable multiplicative
+  maps, and the conditional candidate period lattice has rank 2 * finrank_C E (with
+  an explicit caller-supplied genus specialization). These are model-space/conditional
+  producers; the frozen source uniformization node remains open because intrinsic
+  jointly holomorphic exponential existence, source lattice identification, and quotient
+  Lie isomorphism are not yet proved. The broader roadmap stays active during concurrent
+  cross-project work.
 status: active
 kind: proof
 priority: normal
@@ -33,8 +32,11 @@ metadata:
     task_title: Advance Mumford Abelian Varieties formalization
     projects: Mumford
   owner: fs-mumford
-  updated_at: '2026-09-05T04:13:53.784267+00:00'
+  updated_at: '2026-09-05T06:20:10.019173+00:00'
   pinned_commits:
+  - ea407e2104
+  - b20d1901ab
+  - 72418b17bd
   - 90564ba652020f1e667f726b07476863c58f3eef
   - 61a7771587f59243c91e1f3dccf49dd98e2ce36d
   - d874b6720a
