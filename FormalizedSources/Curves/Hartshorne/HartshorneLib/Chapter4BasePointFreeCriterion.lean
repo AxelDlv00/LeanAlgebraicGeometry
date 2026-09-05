@@ -31,6 +31,7 @@ variable {X : Over (Spec (CommRingCat.of k))} [IsIntegral X.left]
   [SmoothOfRelativeDimension 1 X.hom] [IsProper X.hom]
 
 attribute [local instance] functionFieldOverModule
+  AlgebraicGeometry.Scheme.residueFieldOverModule
 
 /-- Numerical base-point-freeness is equivalent to a nonzero local jump of
 some global divisor section at every non-generic point. -/
@@ -206,6 +207,104 @@ theorem basePointFreeLinearSystem_iff_exists_jumpToResidue_ne_zero
     obtain ⟨s, hs⟩ := h x hx
     exact ⟨s, (jumpProj_ne_zero_iff_jumpToResidue_ne_zero
       (U := (⊤ : X.left.Opens)) hx D (by simp) s).mpr hs⟩
+
+/-! ## The sheaf-theoretic evaluation bridge -/
+
+/-- The degree-zero divisor-sheaf class evaluated in the canonical one-point
+skyscraper quotient.
+
+This is the map induced by the sheaf morphism `devissageπ`: its target is the
+intrinsic fiber quotient `jumpModule`, rather than a choice of local
+trivialization of a line bundle. -/
+noncomputable def divisorSectionJumpEvaluation
+    {x : X.left} (hx : x ≠ genericPoint X.left)
+    (D : CurveDivisor k X) :
+    CurveDivisorSectionSpace D →ₗ[k] jumpModule hx D :=
+  (skyModuleGammaEquiv (X := X) x (jumpModule hx D)).toLinearMap.comp
+    (CategoryTheory.Sheaf.HModule.map (devissageπ hx D) 0)
+
+/-- On global divisor sections, the sheaf-theoretic evaluation is the local
+jump projection. -/
+@[simp] theorem divisorSectionJumpEvaluation_apply
+    {x : X.left} (hx : x ≠ genericPoint X.left)
+    (D : CurveDivisor k X) (v : CurveDivisorSectionSpace D) :
+    divisorSectionJumpEvaluation hx D v =
+      jumpProj hx D ⊤ trivial
+        (divisorSectionSpaceEquiv (D := D) v) := by
+  rw [divisorSectionJumpEvaluation, LinearMap.comp_apply]
+  change
+    (eqToHom (skyModule_obj_of_mem' (X := X) (jumpModule hx D) (by simp))).hom
+        (CategoryTheory.Sheaf.HModule.linearEquiv₀
+          (isTerminalTop : IsTerminal (⊤ : X.left.Opens))
+          (skyModule (X := X) x (jumpModule hx D))
+          (CategoryTheory.Sheaf.HModule.map (devissageπ hx D) 0 v)) = _
+  rw [← CategoryTheory.Sheaf.HModule.linearEquiv₀_naturality]
+  rw [devissageπ_app_hom_apply_of_mem hx D
+    (Opposite.op (⊤ : X.left.Opens)) (by simp)]
+  rw [← ConcreteCategory.comp_apply]
+  rw [eqToHom_trans]
+  simp only [divisorSectionSpaceEquiv]
+  apply congrArg (jumpProj hx D ⊤ trivial)
+  apply Subtype.ext
+  rfl
+
+/-- The intrinsic residue-valued evaluation of a global divisor section.
+
+It is obtained from `divisorSectionJumpEvaluation` by the canonical
+`jumpEquivResidueField`; no line-bundle frame is chosen. -/
+noncomputable def divisorSectionResidueEvaluation
+    {x : X.left} (hx : x ≠ genericPoint X.left)
+    (D : CurveDivisor k X) :
+    divisorSections D (⊤ : X.left.Opens) →ₗ[k] X.left.residueField x :=
+  (jumpEquivResidueField (X := X) hx D).toLinearMap.comp
+    ((divisorSectionJumpEvaluation (X := X) hx D).comp
+      (divisorSectionSpaceEquiv (D := D)).symm.toLinearMap)
+
+@[simp] theorem divisorSectionResidueEvaluation_apply
+    {x : X.left} (hx : x ≠ genericPoint X.left)
+    (D : CurveDivisor k X) (s : divisorSections D (⊤ : X.left.Opens)) :
+    divisorSectionResidueEvaluation hx D s =
+      jumpEquivResidueField (X := X) hx D
+        (jumpProj hx D ⊤ trivial s) := by
+  simp [divisorSectionResidueEvaluation]
+
+/-- The kernel of intrinsic residue evaluation is exactly the global section
+space after subtracting the chosen point. -/
+theorem divisorSectionResidueEvaluation_eq_zero_iff_mem_devissage
+    {x : X.left} (hx : x ≠ genericPoint X.left)
+    (D : CurveDivisor k X) (s : divisorSections D (⊤ : X.left.Opens)) :
+    divisorSectionResidueEvaluation hx D s = 0 ↔
+      (s : X.left.functionField) ∈
+        divisorSections (CurveDivisor.devissageDivisor hx D) ⊤ := by
+  rw [divisorSectionResidueEvaluation_apply]
+  rw [(jumpEquivResidueField (X := X) hx D).map_eq_zero_iff]
+  rw [← not_iff_not]
+  exact jumpProj_ne_zero_iff_not_mem_divisorSections_devissage hx D s
+
+/-- Numerical base-point-freeness is equivalent to surjectivity of the
+intrinsic residue evaluation at every non-generic point.  The evaluation here
+is the canonical skyscraper quotient of `𝒪(D)`; identifying it with a chosen
+line-bundle fiber is a separate geometric lift. -/
+theorem basePointFreeLinearSystem_iff_divisorSectionResidueEvaluation_surjective
+    (D : CurveDivisor k X) :
+    BasePointFreeLinearSystem D ↔
+      ∀ (x : X.left) (hx : x ≠ genericPoint X.left),
+        Function.Surjective (divisorSectionResidueEvaluation hx D) := by
+  rw [basePointFreeLinearSystem_iff_jumpProj_surjective]
+  constructor
+  · intro h x hx r
+    obtain ⟨j, hj⟩ := (jumpEquivResidueField (X := X) hx D).surjective r
+    obtain ⟨s, hs⟩ := h x hx j
+    refine ⟨s, ?_⟩
+    rw [divisorSectionResidueEvaluation_apply, hs]
+    exact hj
+  · intro h x hx j
+    obtain ⟨s, hs⟩ := h x hx
+      ((jumpEquivResidueField (X := X) hx D) j)
+    refine ⟨s, ?_⟩
+    apply (jumpEquivResidueField (X := X) hx D).injective
+    rw [← hs]
+    rw [divisorSectionResidueEvaluation_apply]
 
 end
 end Hartshorne
