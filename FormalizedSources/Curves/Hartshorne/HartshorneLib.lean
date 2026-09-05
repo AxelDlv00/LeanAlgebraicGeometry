@@ -111,6 +111,8 @@ import HartshorneLib.Chapter4LocalRatioProjectiveChart
 import HartshorneLib.Chapter4LocalRatioCanonicalBridge
 import HartshorneLib.Chapter4GlobalSectionsCover
 import HartshorneLib.Chapter4LocalRatioProjectiveGluing
+import HartshorneLib.Chapter4BasePointFreeLocalJump
+import HartshorneLib.Chapter4BasePointFreeDenominatorOpen
 
 /-!
 # HartshorneLib
