@@ -113,6 +113,8 @@ import HartshorneLib.Chapter4GlobalSectionsCover
 import HartshorneLib.Chapter4LocalRatioProjectiveGluing
 import HartshorneLib.Chapter4BasePointFreeLocalJump
 import HartshorneLib.Chapter4BasePointFreeDenominatorOpen
+import HartshorneLib.Chapter4BasisJumpWitness
+import HartshorneLib.Chapter4BasePointFreeLocalRatioCover
 
 /-!
 # HartshorneLib
