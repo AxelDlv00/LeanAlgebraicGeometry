@@ -180,6 +180,57 @@ theorem complexLieExponential_eq_canonical
   exact (canonicalComplexFlow_add_parameter (G := G) I v
     (z.re : ℂ) ((z.im : ℂ) * Complex.I)).symm
 
+/-- A differentiable multiplicative map transports the canonical complex flow
+by its derivative at the identity.  This is a model-level naturality bridge:
+the source and target tangent vectors are represented in the chosen manifold
+models, and no intrinsic exponential or source uniformization is asserted. -/
+theorem complexLieExponential_naturality
+    {E₁ H₁ E₂ H₂ G₁ G₂ : Type*}
+    [NormedAddCommGroup E₁] [NormedSpace ℂ E₁]
+    [NormedAddCommGroup E₂] [NormedSpace ℂ E₂]
+    [TopologicalSpace H₁] [TopologicalSpace H₂]
+    (I₁ : ModelWithCorners ℂ E₁ H₁) (I₂ : ModelWithCorners ℂ E₂ H₂)
+    [TopologicalSpace G₁] [ChartedSpace H₁ G₁] [Group G₁]
+    [TopologicalSpace G₂] [ChartedSpace H₂ G₂] [Group G₂]
+    [LieGroup I₁ ω G₁] [LieGroup I₂ ω G₂]
+    [CompleteSpace E₁] [T2Space G₁] [I₁.Boundaryless]
+    [CompactSpace G₁] [PreconnectedSpace G₁]
+    [CompleteSpace E₂] [T2Space G₂] [I₂.Boundaryless]
+    [CompactSpace G₂] [PreconnectedSpace G₂]
+    (F : G₁ →* G₂) (hF : MDifferentiable I₁ I₂ F) (v : E₁) (z : ℂ) :
+    F (canonicalComplexFlow I₁ v z) =
+      canonicalComplexFlow I₂ (mfderiv I₁ I₂ F 1 v) z := by
+  let phi : ℂ → G₂ := fun z => F (canonicalComplexFlow I₁ v z)
+  have hzero : phi 0 = 1 := by
+    change F (canonicalComplexExponential I₁ (0 • v)) = 1
+    rw [zero_smul, canonicalComplexExponential_zero, F.map_one]
+  have hadd : ∀ z w : ℂ, phi (z + w) = phi z * phi w := by
+    intro z w
+    change F (canonicalComplexExponential I₁ ((z + w) • v)) =
+      F (canonicalComplexExponential I₁ (z • v)) *
+        F (canonicalComplexExponential I₁ (w • v))
+    rw [add_smul, canonicalComplexExponential_add, F.map_mul]
+  have hderiv : HasMFDerivAt 𝓘(ℂ) I₂ phi 0
+      ((ContinuousLinearMap.id ℂ ℂ).smulRight (mfderiv I₁ I₂ F 1 v)) := by
+    have hF' : HasMFDerivAt I₁ I₂ F
+        (canonicalComplexFlow I₁ v 0) (mfderiv I₁ I₂ F 1) := by
+      rw [canonicalComplexFlow_zero_parameter]
+      exact (hF 1).hasMFDerivAt
+    have hflow := canonicalComplexFlow_hasMFDerivAt_zero (G := G₁) I₁ v
+    have hcomp := hF'.comp 0 hflow
+    have hmap :
+        (mfderiv I₁ I₂ F 1).comp
+            ((ContinuousLinearMap.id ℂ ℂ).smulRight v) =
+          (ContinuousLinearMap.id ℂ ℂ).smulRight
+            (mfderiv I₁ I₂ F 1 v) := by
+      ext
+      simp [ContinuousLinearMap.comp_apply]
+    change HasMFDerivAt 𝓘(ℂ) I₂
+      (fun x : ℂ => F (canonicalComplexFlow I₁ v x)) 0
+      ((ContinuousLinearMap.id ℂ ℂ).smulRight (mfderiv I₁ I₂ F 1 v))
+    exact hcomp.congr_mfderiv hmap
+  exact complexLieExponential_eq_canonical (G := G₂) I₂ hzero hadd hderiv z
+
 /-- For each vector in the chosen model, the canonical complex flow is the
 unique holomorphic additive one-parameter map with that prescribed tangent
 vector. -/
