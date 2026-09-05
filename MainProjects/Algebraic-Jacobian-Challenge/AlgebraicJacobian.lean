@@ -236,6 +236,7 @@ import AlgebraicJacobian.Picard.DivTwistRank
 -- Curve-specialized finite support, identity-flatness, and finite-presentation
 -- pushforward producers used by the D2'/D3' divisor-to-Grassmannian route.
 import AlgebraicJacobian.Picard.DivCurvePushforwardProducers
+import AlgebraicJacobian.Picard.DivTwistPushforwardProducers
 -- Headline leaf B in the etale formulation (run 0084 r2, ajc-p2): leaf B implies the
 -- reducedness obligation, so the headline's five are not independent; plus what leaf
 -- B's own residue is (an affine-chart Omega-rank count, not a tangent space).

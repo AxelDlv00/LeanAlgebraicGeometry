@@ -7,7 +7,7 @@ document for a declaration or cone that is still open.  Status as of 2026-07-27.
 ## Live
 
 - `pic-representability-campaign.md` (72 KB) — the plan of record for
-  `instHasPicScheme` (D3 Milne–Kollár route, with the milestone DAG).  The largest
+  `fgaPicardRepresentability` (D3 Milne–Kollár route, with the milestone DAG).  The largest
   open cone; 18 live references in the tree.
 - `milne-lemma-3.3.md` — verbatim Milne source plus the four-substep Lean
   decomposition.  **No longer open:** the lemma is proved in `Albanese/Milne33.lean`
