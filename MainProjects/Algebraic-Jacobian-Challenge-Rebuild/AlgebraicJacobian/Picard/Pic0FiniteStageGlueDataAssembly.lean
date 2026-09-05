@@ -36,11 +36,6 @@ private noncomputable def conjugateAlgHom
     (eA : A ≃ₐ[R] A') (eB : B ≃ₐ[R] B') (f : A →ₐ[R] B) : A' →ₐ[R] B' :=
   eB.toAlgHom.comp (f.comp eA.symm.toAlgHom)
 
-private noncomputable def algHomIdTarget
-    {R A B : Type u} [CommSemiring R] [Semiring A] [Semiring B]
-    [Algebra R A] [Algebra R B] (_e : A ≃ₐ[R] B) : B →ₐ[R] B :=
-  AlgHom.id R B
-
 private theorem conjugateAlgHom_threeCycle
     {R A B D A' B' D' : Type u}
     [CommSemiring R]
@@ -93,189 +88,62 @@ private theorem conjugateAlgHom_face
     _ = left' (tau x) := DFunLike.congr_fun hleft (tau x)
     _ = left' (tau' x) := congrArg left' (DFunLike.congr_fun htau x)
 
+private noncomputable def scalarExtendedAffineRingGluePresentation
+    {R K J : Type u} [CommRing R] [CommRing K] [Algebra R K]
+    (A : J → Type u) (B : J → J → Type u)
+    [∀ i, CommRing (A i)] [∀ i j, CommRing (B i j)]
+    [∀ i, Algebra R (A i)] [∀ i j, Algebra R (B i j)]
+    (r : ∀ i j, A i →ₐ[R] B i j)
+    (tau : ∀ i j, B j i →ₐ[R] B i j)
+    (theta : ∀ i j k,
+      (K ⊗[R] Pic0FiniteStageTensorPushoutRing (r j k) (r j i)) →ₐ[K]
+        K ⊗[R] Pic0FiniteStageTensorPushoutRing (r i j) (r i k))
+    (fId : ∀ i, IsIso (Spec.map (CommRingCat.ofHom
+      (AlgebraicJacobian.scalarExtensionMapOfAlgHom (K := K) (r i i)).toRingHom)))
+    (fOpen : ∀ i j, IsOpenImmersion (Spec.map (CommRingCat.ofHom
+      (AlgebraicJacobian.scalarExtensionMapOfAlgHom (K := K) (r i j)).toRingHom)))
+    (tauId : ∀ i, AlgebraicJacobian.scalarExtensionMapOfAlgHom (K := K) (tau i i) =
+      AlgHom.id K (K ⊗[R] B i i))
+    (thetaFac : ∀ i j k, (theta i j k).comp
+        (AlgebraicJacobian.scalarExtensionMapOfAlgHom (K := K)
+          (finiteStageTensorPushoutFaceRight (r j k) (r j i))) =
+      (AlgebraicJacobian.scalarExtensionMapOfAlgHom (K := K)
+        (finiteStageTensorPushoutFaceLeft (r i j) (r i k))).comp
+          (AlgebraicJacobian.scalarExtensionMapOfAlgHom (K := K) (tau i j)))
+    (thetaCocycle : ∀ i j k,
+      (theta i j k).comp ((theta j k i).comp (theta k i j)) =
+        AlgHom.id K (K ⊗[R] Pic0FiniteStageTensorPushoutRing (r i j) (r i k))) :
+    AlgebraicJacobian.AffineRingGluePresentation K := by
+  let AK := fun i => K ⊗[R] A i
+  let BK := fun i j => K ⊗[R] B i j
+  let rK := fun i j => AlgebraicJacobian.scalarExtensionMapOfAlgHom (K := K) (r i j)
+  let tauK := fun i j => AlgebraicJacobian.scalarExtensionMapOfAlgHom (K := K) (tau i j)
+  letI (i j : J) : Algebra (AK i) (BK i j) := pic0FiniteStageAlgebraOfMap (rK i j)
+  letI (i j : J) : IsScalarTower K (AK i) (BK i j) := pic0FiniteStageTowerOfMap (rK i j)
+  let e := fun i j k => finiteStageTensorPushoutScalarExtension_named (K := K) (r i j) (r i k)
+  let thetaK := fun i j k => conjugateAlgHom (e j k i) (e i j k) (theta i j k)
+  refine AlgebraicJacobian.affineRingGluePresentation AK BK tauK thetaK fId fOpen tauId ?_ ?_
+  · intro i j k
+    exact conjugateAlgHom_face (e j k i) (e i j k)
+      (AlgebraicJacobian.scalarExtensionMapOfAlgHom (K := K)
+        (finiteStageTensorPushoutFaceRight (r j k) (r j i)))
+      (theta i j k) (tauK i j)
+      (AlgebraicJacobian.scalarExtensionMapOfAlgHom (K := K)
+        (finiteStageTensorPushoutFaceLeft (r i j) (r i k)))
+      (AlgebraicJacobian.affineTensorIncludeRight AK BK j k i) (tauK i j)
+      (AlgebraicJacobian.affineTensorIncludeLeft AK BK i j k)
+      (finiteStageTensorPushoutScalarExtension_faceRight_map (K := K) (r j k) (r j i))
+      rfl
+      (finiteStageTensorPushoutScalarExtension_faceLeft_map (K := K) (r i j) (r i k))
+      (thetaFac i j k)
+  · intro i j k
+    exact conjugateAlgHom_threeCycle (e i j k) (e j k i) (e k i j)
+      (theta i j k) (theta j k i) (theta k i j) (thetaCocycle i j k)
+
 variable {k : Type u} [Field k] (C : Over (Spec (.of k)))
 variable [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
   [GeometricallyIrreducible C.hom] [IsSepClosed k]
 
-private noncomputable abbrev assemblyChartRing
-    {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
-    (P : Pic0FiniteStageGluePackage C F) (U : Pic0FiniteStageChartIndex C) :=
-  Pic0FiniteStageChartBaseChangeRing
-    C P.L P.n P.m P.relation P.M P.N U
-
-private noncomputable abbrev assemblyOverlapRing
-    {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
-    (P : Pic0FiniteStageGluePackage C F) (U V : Pic0FiniteStageChartIndex C) :=
-  Pic0FiniteStageOverlapBaseChangeRing
-    C P.L P.n P.m P.relation P.M P.N U V
-
-private noncomputable def assemblyRestriction
-    {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
-    (P : Pic0FiniteStageGluePackage C F) (U V : Pic0FiniteStageChartIndex C) :=
-  pic0FiniteStageRestrictionBaseChange
-    C P.L P.n P.m P.relation P.M P.mapM P.N U V
-
-private noncomputable def assemblyTransition
-    {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
-    (P : Pic0FiniteStageGluePackage C F) (U V : Pic0FiniteStageChartIndex C) :=
-  pic0FiniteStageTransitionBaseChange
-    C P.L P.n P.m P.relation P.M P.mapM P.N U V
-
-private noncomputable def assemblyTensorEquiv
-    {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
-    (P : Pic0FiniteStageGluePackage C F) (U V W : Pic0FiniteStageChartIndex C) :=
-  finiteStageTensorPushoutScalarExtension_named (K := P.N.1)
-    (pic0FiniteStageRestrictionLeftModel
-      C P.L P.n P.m P.relation P.M P.mapM U V)
-    (pic0FiniteStageRestrictionLeftModel
-      C P.L P.n P.m P.relation P.M P.mapM U W)
-
-private noncomputable def assemblyTensorFaceRight
-    {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
-    (P : Pic0FiniteStageGluePackage C F) (U V W : Pic0FiniteStageChartIndex C) :=
-  @finiteStageTensorPushoutFaceRight
-    P.N.1 (assemblyChartRing C P U)
-    (assemblyOverlapRing C P U V) (assemblyOverlapRing C P U W)
-    (IntermediateField.toField P.N.1).toCommRing
-    (pic0FiniteStageChartBaseChangeCommRing
-      C P.L P.n P.m P.relation P.M P.N U)
-    (pic0FiniteStageOverlapBaseChangeCommRing
-      C P.L P.n P.m P.relation P.M P.N U V)
-    (pic0FiniteStageOverlapBaseChangeCommRing
-      C P.L P.n P.m P.relation P.M P.N U W)
-    (pic0FiniteStageChartBaseChangeAlgebra
-      C P.L P.n P.m P.relation P.M P.N U)
-    (pic0FiniteStageOverlapBaseChangeAlgebra
-      C P.L P.n P.m P.relation P.M P.N U V)
-    (pic0FiniteStageOverlapBaseChangeAlgebra
-      C P.L P.n P.m P.relation P.M P.N U W)
-    (assemblyRestriction C P U V) (assemblyRestriction C P U W)
-
-private noncomputable def assemblyTensorFaceLeft
-    {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
-    (P : Pic0FiniteStageGluePackage C F) (U V W : Pic0FiniteStageChartIndex C) :=
-  @finiteStageTensorPushoutFaceLeft
-    P.N.1 (assemblyChartRing C P U)
-    (assemblyOverlapRing C P U V) (assemblyOverlapRing C P U W)
-    (IntermediateField.toField P.N.1).toCommRing
-    (pic0FiniteStageChartBaseChangeCommRing
-      C P.L P.n P.m P.relation P.M P.N U)
-    (pic0FiniteStageOverlapBaseChangeCommRing
-      C P.L P.n P.m P.relation P.M P.N U V)
-    (pic0FiniteStageOverlapBaseChangeCommRing
-      C P.L P.n P.m P.relation P.M P.N U W)
-    (pic0FiniteStageChartBaseChangeAlgebra
-      C P.L P.n P.m P.relation P.M P.N U)
-    (pic0FiniteStageOverlapBaseChangeAlgebra
-      C P.L P.n P.m P.relation P.M P.N U V)
-    (pic0FiniteStageOverlapBaseChangeAlgebra
-      C P.L P.n P.m P.relation P.M P.N U W)
-    (assemblyRestriction C P U V) (assemblyRestriction C P U W)
-
-set_option synthInstance.maxHeartbeats 400000 in
-set_option maxHeartbeats 1600000 in
--- The equivalences pin the instances, but Lean must normalize both tensor-pushout carriers.
-private noncomputable def assemblyTripleTransition
-    {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
-    (P : Pic0FiniteStageGluePackage C F) (U V W : Pic0FiniteStageChartIndex C) :=
-  conjugateAlgHom
-    (assemblyTensorEquiv C P V W U) (assemblyTensorEquiv C P U V W)
-    (P.thetaN (U, (V, W)))
-
-set_option synthInstance.maxHeartbeats 400000 in
-set_option maxHeartbeats 12800000 in
--- The face proof compares the named scalar-extension and literal pushout presentations.
-private theorem assemblyTripleTransition_face
-    {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
-    (P : Pic0FiniteStageGluePackage C F) (U V W : Pic0FiniteStageChartIndex C) :
-    (assemblyTripleTransition C P U V W).comp
-        (assemblyTensorFaceRight C P V W U) =
-      (assemblyTensorFaceLeft C P U V W).comp
-        (assemblyTransition C P U V) := by
-  let D := P
-  let N := P.N
-  let thetaN := P.thetaN
-  let comparison := P.tripleComparison
-  let Q := pic0FiniteStageTripleTransitionFacePackage
-    C D.L D.n D.m D.relation D.M D.mapM D.e D.modelComparison_eq
-      N U V W thetaN fun p => by
-        simpa only [Pic0FiniteStageTripleTransitionFamilyComparison,
-          pic0FiniteStageTransportedTripleTransitionOfModels] using comparison p
-  have hright :
-      (assemblyTensorEquiv C P V W U).toAlgHom.comp Q.rightN =
-        assemblyTensorFaceRight C P V W U := by
-    change
-      (finiteStageTensorPushoutScalarExtension_named (K := N.1)
-        (pic0FiniteStageRestrictionLeftModel
-          C D.L D.n D.m D.relation D.M D.mapM V W)
-        (pic0FiniteStageRestrictionLeftModel
-          C D.L D.n D.m D.relation D.M D.mapM V U)).toAlgHom.comp
-          (AlgebraicJacobian.scalarExtensionMapOfAlgHom
-            (R := D.M.1) (K := N.1)
-              (pic0FiniteStageTripleModelFaceRight
-                C D.L D.n D.m D.relation D.M D.mapM V W U)) = _
-    exact finiteStageTensorPushoutScalarExtension_faceRight_map
-      (K := N.1)
-      (pic0FiniteStageRestrictionLeftModel
-        C D.L D.n D.m D.relation D.M D.mapM V W)
-      (pic0FiniteStageRestrictionLeftModel
-        C D.L D.n D.m D.relation D.M D.mapM V U)
-  have htau : Q.tauN = assemblyTransition C P U V := by
-    rfl
-  have hleft :
-      (assemblyTensorEquiv C P U V W).toAlgHom.comp Q.leftN =
-        assemblyTensorFaceLeft C P U V W := by
-    change
-      (finiteStageTensorPushoutScalarExtension_named (K := N.1)
-        (pic0FiniteStageRestrictionLeftModel
-          C D.L D.n D.m D.relation D.M D.mapM U V)
-        (pic0FiniteStageRestrictionLeftModel
-          C D.L D.n D.m D.relation D.M D.mapM U W)).toAlgHom.comp
-          (AlgebraicJacobian.scalarExtensionMapOfAlgHom
-            (R := D.M.1) (K := N.1)
-              (pic0FiniteStageTripleModelFaceLeft
-                C D.L D.n D.m D.relation D.M D.mapM U V W)) = _
-    exact finiteStageTensorPushoutScalarExtension_faceLeft_map
-      (K := N.1)
-      (pic0FiniteStageRestrictionLeftModel
-        C D.L D.n D.m D.relation D.M D.mapM U V)
-      (pic0FiniteStageRestrictionLeftModel
-        C D.L D.n D.m D.relation D.M D.mapM U W)
-  exact conjugateAlgHom_face
-    (assemblyTensorEquiv C P V W U) (assemblyTensorEquiv C P U V W)
-    Q.rightN Q.thetaN Q.tauN Q.leftN
-    (assemblyTensorFaceRight C P V W U)
-    (assemblyTransition C P U V)
-    (assemblyTensorFaceLeft C P U V W)
-    hright htau hleft Q.face
-
-set_option synthInstance.maxHeartbeats 400000 in
-set_option maxHeartbeats 12800000 in
--- The cyclic composite normalizes three conjugated tensor-pushout transitions.
-private theorem assemblyTripleTransition_cocycle
-    {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
-    (P : Pic0FiniteStageGluePackage C F) (U V W : Pic0FiniteStageChartIndex C) :
-    (assemblyTripleTransition C P U V W).comp
-        ((assemblyTripleTransition C P V W U).comp
-          (assemblyTripleTransition C P W U V)) =
-      algHomIdTarget (assemblyTensorEquiv C P U V W) := by
-  let D := P
-  let N := P.N
-  let Q := pic0FiniteStageTripleModelComparisonFamily
-    C D.L D.n D.m D.relation D.e D.M D.mapM D.modelComparison_eq
-  have hcycle := pic0FiniteStageTripleTransitionModel_cocycle
-    C D.L D.n D.m D.relation D.M D.mapM Q N
-      P.thetaN P.tripleComparison U V W
-  exact conjugateAlgHom_threeCycle
-    (assemblyTensorEquiv C P U V W)
-    (assemblyTensorEquiv C P V W U)
-    (assemblyTensorEquiv C P W U V)
-    (P.thetaN (U, (V, W))) (P.thetaN (V, (W, U)))
-    (P.thetaN (W, (U, V))) hcycle
-
-set_option synthInstance.maxHeartbeats 1600000 in
-set_option maxHeartbeats 12800000 in
--- The constructor aligns five proof-independent fields with the pinned ring presentation.
 /-- Assemble the canonical finite-stage charts and transitions into one affine gluing
 presentation. The triple-transition comparison is indexed by the comparison family
 canonically determined by the package's transition model. -/
@@ -284,48 +152,34 @@ noncomputable def pic0FiniteStageAffineRingGluePresentation
     (P : Pic0FiniteStageGluePackage C F) :
     @AlgebraicJacobian.AffineRingGluePresentation P.N.1
       (IntermediateField.toField P.N.1).toCommRing := by
-  let D := P
-  let N := P.N
-  letI : CommRing N.1 := (IntermediateField.toField N.1).toCommRing
-  letI : Algebra.IsAlgebraic D.L.1 k := by infer_instance
-  letI : Algebra.IsAlgebraic D.M.1 k := by infer_instance
-  let A := assemblyChartRing C P
-  let B := assemblyOverlapRing C P
-  letI (U : Pic0FiniteStageChartIndex C) : CommRing (A U) :=
-    pic0FiniteStageChartBaseChangeCommRing
-      C D.L D.n D.m D.relation D.M N U
-  letI (U V : Pic0FiniteStageChartIndex C) : CommRing (B U V) :=
-    pic0FiniteStageOverlapBaseChangeCommRing
-      C D.L D.n D.m D.relation D.M N U V
-  letI (U : Pic0FiniteStageChartIndex C) : Algebra N.1 (A U) :=
-    pic0FiniteStageChartBaseChangeAlgebra
-      C D.L D.n D.m D.relation D.M N U
-  letI (U V : Pic0FiniteStageChartIndex C) : Algebra N.1 (B U V) :=
-    pic0FiniteStageOverlapBaseChangeAlgebra
-      C D.L D.n D.m D.relation D.M N U V
-  let r := assemblyRestriction C P
-  letI (U V : Pic0FiniteStageChartIndex C) : Algebra (A U) (B U V) :=
-    pic0FiniteStageAlgebraOfMap (r U V)
-  letI (U V : Pic0FiniteStageChartIndex C) : IsScalarTower N.1 (A U) (B U V) := by
-    letI : Algebra (A U) (B U V) := pic0FiniteStageAlgebraOfMap (r U V)
-    exact pic0FiniteStageTowerOfMap (r U V)
-  let tau := assemblyTransition C P
-  let theta := assemblyTripleTransition C P
-  refine AlgebraicJacobian.affineRingGluePresentation
-    (R := N.1) A B tau theta ?_ ?_ ?_ ?_ ?_
+  refine scalarExtendedAffineRingGluePresentation
+    (R := P.M.1) (K := P.N.1)
+    (Pic0FiniteStageChartModelRing C P.L P.n P.m P.relation P.M)
+    (Pic0FiniteStageOverlapModelRing C P.L P.n P.m P.relation P.M)
+    (pic0FiniteStageRestrictionLeftModel C P.L P.n P.m P.relation P.M P.mapM)
+    (fun U V => P.mapM (Sum.inr (U, V)))
+    (fun U V W => P.thetaN (U, (V, W))) ?_ ?_ ?_ ?_ ?_
   · intro U
     exact isIso_pic0FiniteStageRestrictionBaseChange_diagonal
-    C D.L D.n D.m D.relation D.e D.M D.mapM D.modelComparison_eq N U
+      C P.L P.n P.m P.relation P.e P.M P.mapM P.comparison P.N U
   · intro U V
     exact isOpenImmersion_pic0FiniteStageRestrictionBaseChange
-      C D.L D.n D.m D.relation D.M D.mapM D.openImmersion N U V
+      C P.L P.n P.m P.relation P.M P.mapM P.openImmersion P.N U V
   · intro U
     exact pic0FiniteStageTransitionBaseChange_self
-      C D.L D.n D.m D.relation D.e D.M D.mapM D.modelComparison_eq N U
+      C P.L P.n P.m P.relation P.e P.M P.mapM P.comparison P.N U
   · intro U V W
-    exact assemblyTripleTransition_face C P U V W
+    exact (pic0FiniteStageTripleTransitionFacePackage
+      C P.L P.n P.m P.relation P.M P.mapM P.e P.comparison
+      P.N U V W P.thetaN (fun p => by
+        simpa only [Pic0FiniteStageTripleTransitionFamilyComparison,
+          pic0FiniteStageTransportedTripleTransitionOfModels] using P.tripleComparison p)).face
   · intro U V W
-    exact assemblyTripleTransition_cocycle C P U V W
+    exact pic0FiniteStageTripleTransitionModel_cocycle
+      C P.L P.n P.m P.relation P.M P.mapM
+      (pic0FiniteStageTripleModelComparisonFamily
+        C P.L P.n P.m P.relation P.e P.M P.mapM P.comparison)
+      P.N P.thetaN P.tripleComparison U V W
 
 end
 
