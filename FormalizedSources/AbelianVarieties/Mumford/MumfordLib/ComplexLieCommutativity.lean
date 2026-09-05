@@ -682,9 +682,32 @@ theorem canonicalComplexExponentialMonoidHom_surjective
     properties proved for the real-flow candidate, without asserting that it
     is the source's uniquely integrated holomorphic exponential. -/
 
-/-- Conjugation naturality for the canonical time-one exponential candidate.
-The left side is unchanged because the real flow is central, while the compact
-adjoint calculation identifies the right-hand tangent vector with the input. -/
+/-- Conjugation naturality for every complex parameter of the canonical flow.
+The statement is in the chosen model coordinates: centrality comes from the
+real flow used to define the candidate, while the compact adjoint calculation
+identifies the transported tangent vector. -/
+theorem canonicalComplexFlow_conjugation
+    [CompleteSpace E] [T2Space G]
+    [I.Boundaryless] [CompactSpace G] [PreconnectedSpace G]
+    (x : G) (v : E) (z : ℂ) :
+    complexLieConjugation x (canonicalComplexFlow (G := G) I v z) =
+      canonicalComplexFlow (G := G) I
+        ((complexLieAdjoint (G := G) I x) v) z := by
+  rw [complexLieAdjoint_eq_id (G := G) I x]
+  change complexLieConjugation x
+      (canonicalRealFlow (G := G) I
+        (complexToRealLieAlgebraMap I (z • v)) 1) =
+    canonicalRealFlow (G := G) I
+      (complexToRealLieAlgebraMap I (z • v)) 1
+  exact congrFun
+    (complexLieConjugation_comp_integralCurve_eq (G := G) I
+      (canonicalRealFlow_spec (G := G) I
+        (complexToRealLieAlgebraMap I (z • v))).2.1
+      (canonicalRealFlow_spec (G := G) I
+        (complexToRealLieAlgebraMap I (z • v))).1 x) 1
+
+/-- Conjugation naturality for the canonical time-one exponential candidate,
+obtained by specializing `canonicalComplexFlow_conjugation`. -/
 theorem canonicalComplexExponential_conjugation
     [CompleteSpace E] [T2Space G]
     [I.Boundaryless] [CompactSpace G] [PreconnectedSpace G]
@@ -692,18 +715,9 @@ theorem canonicalComplexExponential_conjugation
     complexLieConjugation x (canonicalComplexExponential (G := G) I v) =
       canonicalComplexExponential (G := G) I
         ((complexLieAdjoint (G := G) I x) v) := by
-  rw [complexLieAdjoint_eq_id (G := G) I x]
-  change complexLieConjugation x
-      (canonicalRealFlow (G := G) I
-        (complexToRealLieAlgebraMap I v) 1) =
-    canonicalRealFlow (G := G) I
-      (complexToRealLieAlgebraMap I v) 1
-  exact congrFun
-    (complexLieConjugation_comp_integralCurve_eq (G := G) I
-      (canonicalRealFlow_spec (G := G) I
-        (complexToRealLieAlgebraMap I v)).2.1
-      (canonicalRealFlow_spec (G := G) I
-        (complexToRealLieAlgebraMap I v)).1 x) 1
+  have h := canonicalComplexFlow_conjugation (G := G) I x v (1 : ℂ)
+  simpa only [canonicalComplexExponential,
+    canonicalComplexFlow_eq_exponential_smul, one_smul] using h
 
 /-- The canonical real-flow exponential packaged as the explicit conditional
 complex exponential interface used by the commutativity argument. -/
