@@ -436,6 +436,53 @@ noncomputable def overlapCone
         sectionsRestrictionAlgHom_equivariant act p hact j.stable
           (overlap_stable act i j) inf_le_right }
 
+/-- Under the canonical affine presentations, the left source leg of the
+overlap cone is exactly the inclusion of the coordinate open representing
+`i.U ⊓ j.U`. -/
+@[reassoc]
+theorem overlapIsoSpec_hom_comp_leftSourceMap
+    (p : X ⟶ Spec (CommRingCat.of k))
+    (hact : ∀ g : G, (act g).hom ≫ p = p)
+    (i j : StableAffineOpen act) :
+    letI := sectionsAlgebra p i.U
+    letI := sectionsAlgebra p j.U
+    letI := sectionsAlgebra p (i.U ⊓ j.U)
+    letI := sectionsMulSemiringAction act i.stable
+    letI := sectionsMulSemiringAction act j.stable
+    letI := sectionsMulSemiringAction act (overlap_stable act i j)
+    letI := sectionsSMulCommClass act p hact i.stable
+    letI := sectionsSMulCommClass act p hact j.stable
+    letI := sectionsSMulCommClass act p hact (overlap_stable act i j)
+    (overlap_affine act i j).isoSpec.hom ≫
+        (overlapCone act p hact i j).leftSourceMap.left =
+      (overlapCoordinateIso act i j).inv ≫
+        (overlapCoordinateOpen act i j).ι := by
+  letI := sectionsAlgebra p i.U
+  letI := sectionsAlgebra p j.U
+  letI := sectionsAlgebra p (i.U ⊓ j.U)
+  letI := sectionsMulSemiringAction act i.stable
+  letI := sectionsMulSemiringAction act j.stable
+  letI := sectionsMulSemiringAction act (overlap_stable act i j)
+  letI := sectionsSMulCommClass act p hact i.stable
+  letI := sectionsSMulCommClass act p hact j.stable
+  letI := sectionsSMulCommClass act p hact (overlap_stable act i j)
+  change (overlap_affine act i j).isoSpec.hom ≫
+      Spec.map (X.presheaf.map (homOfLE inf_le_left).op) =
+    (overlapCoordinateIso act i j).inv ≫
+      (overlapCoordinateOpen act i j).ι
+  rw [← cancel_mono i.affine.fromSpec]
+  simp only [Category.assoc]
+  rw [i.affine.map_fromSpec (overlap_affine act i j)
+    (homOfLE inf_le_left).op]
+  rw [← (overlap_affine act i j).isoSpec_inv_ι]
+  simp only [Iso.hom_inv_id_assoc]
+  unfold overlapCoordinateIso
+  rw [Iso.trans_inv]
+  dsimp [overlapCoordinateOpen]
+  rw [← i.affine.isoSpec_inv_ι]
+  simp only [Category.assoc]
+  rw [Scheme.Hom.preimageIso_inv_ι_assoc, Scheme.Opens.isoOfLE_inv_ι]
+
 /-- The left source leg of the canonical affine overlap cone is an open
 immersion. -/
 theorem overlapCone_leftSourceMap_isOpenImmersion
