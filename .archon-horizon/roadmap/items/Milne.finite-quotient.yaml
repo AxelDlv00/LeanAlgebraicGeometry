@@ -2,21 +2,13 @@ id: Milne.finite-quotient
 title: Global finite quotient by gluing affine charts
 projects:
 - Milne
-summary: 'Pending source node prop:milne-finite-quotient. Stable quotient opens, order/equality
-  reflection, finite-cover reconstruction data, functorial chart transitions, within-one-affine-ring
-  localization cocycle laws, stable-affine section actions, separated affine overlap
-  charts, Spec(k)-slice fixed-ring transitions, conditional pairwise overlap cones,
-  and restricted quotient-map transport are verified. Commit a3a8f3916b supplies ring-level
-  triple-tensor transitions, factorization/cocycle proofs, and conditional Scheme.GlueData;
-  b2fc3124b6 proves that the affine quotient preimage of the descended intersection
-  of two stable opens is the source intersection. Commit 841890b05c supplies invariant
-  basic-open transport for globally equivariantly equivalent affine presentations,
-  and bf8c03bc33 supplies the restricted quotient-map consumer for a descended stable
-  open. These are local transport producers only: they do not construct arbitrary
-  common affine overlaps, open immersions, comparison isomorphisms, cocycles, or a
-  global quotient. Remaining: compare overlaps from different affine coordinate rings,
-  instantiate supplied data from the finite quotient, then prove global topology/sheaf
-  clauses, arbitrary-target universal property, and free-action etaleness.'
+summary: 'Pending source node prop:milne-finite-quotient. Verified local producers
+  now include stable-affine section actions, the actual section-ring overlap cone
+  for i.U ⊓ j.U, its left source-leg coordinate-open identity (8ee83d5d8a), fixed-localization
+  transitions, and restricted quotient-map transport. These remain local: no fixed-ring
+  comparison with the descended chart open, symmetric right identity, overlap isomorphism,
+  triple cocycle, or global Scheme.GlueData exists. Next: construct that comparison
+  and cocycle before global quotient gluing.'
 status: pending
 kind: proof
 priority: high
@@ -43,8 +35,10 @@ metadata:
   parent: Milne
   owner: fs-milne
   milestone: Milne
-  updated_at: '2026-09-05T00:15:07.313175+00:00'
+  updated_at: '2026-09-05T03:08:42.904491+00:00'
   pinned_commits:
+  - 36c8f31c3b
+  - 8ee83d5d8a
   - 36646e7c91
   - bf8c03bc33
   - 841890b05c
