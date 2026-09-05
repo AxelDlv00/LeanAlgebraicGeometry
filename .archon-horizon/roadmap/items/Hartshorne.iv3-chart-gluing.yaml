@@ -2,15 +2,14 @@ id: Hartshorne.iv3-chart-gluing
 title: IV.3.1 local-ratio chart restriction and gluing
 projects:
 - Hartshorne
-summary: 'Commits 009b011f56 and df58be6634 package the unconditional smooth-curve
-  local-ratio glued morphism with a chosen H0 basis, prove its target-dimension and
-  selected-chart restriction laws, and prove descent uniqueness from those restrictions.
-  Commit e73cefd86f removes the two stale 800000-heartbeat overrides from the canonical
-  chart bridge; the Hartshorne benchmark is now zero and the 8680-job umbrella build
-  passes with standard axioms only. The IV.3.1 source node remains open: the ordinary
-  Scheme.Modules fiber/evaluation and base-locus bridge, closed-immersion theorem,
-  and final canonical Proj/Cover gluing; the current producer is an explicit choice-dependent
-  conditional interface, not a canonical line-bundle construction.'
+summary: 'Commits a68f3b1066 and c2aa15dec6 add a canonical ordinary Scheme.Modules
+  stalk-fiber/evaluation API and lift the bounded-rational-function divisor sheaf
+  to an actual O_X-module; d49f7a0921 corrects the IV.3.1 proof''s surjectivity polarity.
+  The 8,681-job umbrella build passes with standard axioms only. These are independent
+  intrinsic producers: the ordinary fiber has not yet been identified with jumpModule/jumpProj,
+  divisorModule is not yet proved locally invertible, and the geometric base-locus,
+  first-jet/tangent, closed-immersion, and final source IV.3.1 bridges remain open.
+  Existing local-ratio gluing remains explicit and choice-dependent.'
 status: active
 kind: proof
 priority: high
@@ -37,8 +36,11 @@ metadata:
   parent: Hartshorne
   owner: fs-hartshorne
   milestone: Hartshorne
-  updated_at: '2026-09-05T20:32:01.929914+00:00'
+  updated_at: '2026-09-05T21:43:26.833893+00:00'
   pinned_commits:
+  - c2aa15dec6
+  - d49f7a0921
+  - a68f3b1066a2b5986181d6e7e7757894a13365fc
   - e73cefd86f
   - df58be6634
   - 009b011f56
