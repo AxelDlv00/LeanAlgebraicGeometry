@@ -87,12 +87,12 @@ theorem isMIntegralCurve_of_oneParameterSubgroup_of_hasMFDerivAt
   have hq :
       HasMFDerivAt 𝓘(ℝ, ℝ) 𝓘(ℝ, ℝ) (fun u : ℝ => u - t) t
         (ContinuousLinearMap.id ℝ ℝ) := by
-    convert ((hasFDerivAt_id t).sub_const t).hasMFDerivAt using 1 <;> simp
+    convert ((hasFDerivAt_id t).sub_const t).hasMFDerivAt using 1; simp
   have hc0_at :
       HasMFDerivAt 𝓘(ℝ, ℝ) I (L ∘ γ) ((fun u : ℝ => u - t) t)
         ((1 : ℝ →L[ℝ] ℝ).smulRight
           (mulInvariantVectorField v (γ t))) := by
-    convert hLcomp using 1 <;> simp
+    convert hLcomp using 1; simp
   have hct := HasMFDerivAt.comp (x := t)
     (f := fun u : ℝ => u - t) (g := L ∘ γ) hc0_at hq
   have heq : (L ∘ γ) ∘ (fun u : ℝ => u - t) = γ := by
