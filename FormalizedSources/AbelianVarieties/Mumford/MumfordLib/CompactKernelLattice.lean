@@ -162,8 +162,47 @@ theorem canonicalComplexExponential_isOpenQuotientMap :
       (canonicalComplexExponentialAddHom_surjective (G := G) I)
       (canonicalComplexExponentialAddHom_continuous (G := G) I)⟩
 
+/-! The translated local-injectivity theorem is now exposed in the additive
+    target used by the period-lattice APIs. -/
+
+/-- The canonical additive exponential is locally injective everywhere. -/
+theorem canonicalComplexExponentialAddHom_isLocallyInjective :
+    IsLocallyInjective (canonicalComplexExponentialAddHom (G := G) I) := by
+  rw [isLocallyInjective_iff_nhds]
+  intro x
+  obtain ⟨U, hU, hUinj⟩ :=
+    canonicalComplexExponential_exists_nhds_injOn_at (G := G) I x
+  refine ⟨U, hU, ?_⟩
+  intro y hy z hz h
+  apply hUinj hy hz
+  exact Additive.ofMul.injective h
+
+/-- The canonical additive exponential is a topological local homeomorphism.
+This is a candidate-level consequence of local injectivity and the open
+quotient theorem; it carries no holomorphic quotient structure. -/
+theorem canonicalComplexExponentialAddHom_isLocalHomeomorph :
+    IsLocalHomeomorph (canonicalComplexExponentialAddHom (G := G) I) := by
+  apply isLocalHomeomorph_iff_isOpenEmbedding_restrict.mpr
+  intro x
+  obtain ⟨U, hU, hUinj⟩ :=
+    (isLocallyInjective_iff_nhds.mp
+      (canonicalComplexExponentialAddHom_isLocallyInjective (G := G) I)) x
+  obtain ⟨O, hOU, hOopen, hxO⟩ := mem_nhds_iff.mp hU
+  have hOinj : Set.InjOn
+      (canonicalComplexExponentialAddHom (G := G) I) O :=
+    hUinj.mono hOU
+  have hcont : Continuous
+      (O.restrict (canonicalComplexExponentialAddHom (G := G) I)) :=
+    (canonicalComplexExponentialAddHom_continuous (G := G) I).continuousOn.restrict
+  have hopen : IsOpenMap
+      (O.restrict (canonicalComplexExponentialAddHom (G := G) I)) :=
+    (canonicalComplexExponential_isOpenQuotientMap (G := G) I).isOpenMap.restrict hOopen
+  refine ⟨O, hOopen.mem_nhds hxO, ?_⟩
+  exact Topology.IsOpenEmbedding.of_continuous_injective_isOpenMap hcont
+    (Set.injOn_iff_injective.mp hOinj) hopen
+
 /-- The canonical period kernel is a full real `ℤ`-lattice in the tangent
-model.  This is the compact-target lattice theorem applied to the verified
+   model.  This is the compact-target lattice theorem applied to the verified
 real-flow candidate; it is intentionally not attached to the frozen source
 uniformization node. -/
 theorem canonicalComplexExponentialPeriodLattice_isZLattice

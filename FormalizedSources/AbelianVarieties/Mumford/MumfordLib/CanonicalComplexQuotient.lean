@@ -5,6 +5,7 @@ Authors: The Mumford Contributors
 -/
 
 import MumfordLib.CompactKernelLattice
+import Mathlib.Topology.IsLocalHomeomorph
 
 /-!
 # The canonical candidate quotient
@@ -74,6 +75,56 @@ theorem canonicalComplexExponentialQuotientHomeomorph_mk (v : E) :
   exact Uniformization.PeriodLatticeQuotient.quotientHomeomorph_mk
     (canonicalComplexExponentialPeriodLatticeQuotient (G := G) I)
     (canonicalComplexExponential_isOpenQuotientMap (G := G) I) v
+
+/-! The local-homeomorphism bridge gives canonical inverse branches on the
+    additive target.  These are topological model-level branches, not the
+    holomorphic charts of the source uniformization theorem. -/
+
+/-- A chosen local inverse branch of the canonical additive exponential at a
+given tangent representative. -/
+noncomputable def canonicalComplexExponentialAddHomBranchAt (x : E) :
+    OpenPartialHomeomorph (Additive G) E :=
+  (canonicalComplexExponentialAddHom_isLocalHomeomorph (G := G) I).localInverseAt x
+
+@[simp]
+theorem canonicalComplexExponentialAddHomBranchAt_apply (x : E) :
+    canonicalComplexExponentialAddHomBranchAt (G := G) I x
+        (canonicalComplexExponentialAddHom (G := G) I x) = x :=
+  IsLocalHomeomorph.localInverseAt_apply_self
+    (canonicalComplexExponentialAddHom_isLocalHomeomorph (G := G) I)
+
+theorem canonicalComplexExponentialAddHomBranchAt_symm (x : E) :
+    ((canonicalComplexExponentialAddHomBranchAt (G := G) I x).symm :
+      E → Additive G) =
+      canonicalComplexExponentialAddHom (G := G) I :=
+  IsLocalHomeomorph.localInverseAt_symm
+    (canonicalComplexExponentialAddHom_isLocalHomeomorph (G := G) I) x
+
+theorem canonicalComplexExponentialAddHomBranchAt_source_mem (x : E) :
+    canonicalComplexExponentialAddHom (G := G) I x ∈
+      (canonicalComplexExponentialAddHomBranchAt (G := G) I x).source :=
+  IsLocalHomeomorph.apply_self_mem_localInverseAt_source
+    (canonicalComplexExponentialAddHom_isLocalHomeomorph (G := G) I)
+
+theorem canonicalComplexExponentialAddHomBranchAt_apply_of_mem
+    (x : E) {y : Additive G}
+    (hy : y ∈ (canonicalComplexExponentialAddHomBranchAt (G := G) I x).source) :
+    canonicalComplexExponentialAddHom (G := G) I
+        (canonicalComplexExponentialAddHomBranchAt (G := G) I x y) = y := by
+  exact IsLocalHomeomorph.apply_localInverseAt_of_mem
+    (canonicalComplexExponentialAddHom_isLocalHomeomorph (G := G) I) hy
+
+theorem canonicalComplexExponentialAddHomBranchAt_source_iUnion_eq_univ :
+    (⋃ x : E,
+      (canonicalComplexExponentialAddHomBranchAt (G := G) I x).source) =
+      Set.univ := by
+  apply Set.eq_univ_of_forall
+  intro y
+  obtain ⟨x, hx⟩ :=
+    canonicalComplexExponentialAddHom_surjective (G := G) I y
+  refine Set.mem_iUnion.2 ⟨x, ?_⟩
+  rw [← hx]
+  exact canonicalComplexExponentialAddHomBranchAt_source_mem (G := G) I x
 
 /-- The topological quotient map has the same underlying function as the
 algebraic first-isomorphism equivalence. -/
