@@ -137,6 +137,57 @@ theorem existsUnique_zsmulTorsion_add_eq
   apply add_right_cancel (b := (p : X))
   exact hs.trans ht.symm
 
+/- A pair of chosen points gives a fibre equivalence without assuming that the
+   ambient group is divisible.  This is the torsor construction used when
+   surjectivity of multiplication is available only for the particular
+   fibres under consideration. -/
+noncomputable def zsmulDivisionFiberEquivBetween_of_nonempty
+    {X : Type*} [AddCommGroup X]
+    {n : ℤ} {x y : X}
+    (p : zsmulDivisionFiber X n x) (q : zsmulDivisionFiber X n y) :
+    zsmulDivisionFiber X n x ≃ zsmulDivisionFiber X n y := by
+  let f : zsmulDivisionFiber X n x → zsmulDivisionFiber X n y := fun a =>
+    ⟨(q : X) - (p : X) + (a : X), by
+      rw [zsmul_add, zsmul_sub, q.property, p.property, a.property]
+      abel⟩
+  let g : zsmulDivisionFiber X n y → zsmulDivisionFiber X n x := fun b =>
+    ⟨(p : X) - (q : X) + (b : X), by
+      rw [zsmul_add, zsmul_sub, p.property, q.property, b.property]
+      abel⟩
+  exact
+    { toFun := f
+      invFun := g
+      left_inv := by
+        intro a
+        apply Subtype.ext
+        dsimp [f, g]
+        abel
+      right_inv := by
+        intro b
+        apply Subtype.ext
+        dsimp [f, g]
+        abel }
+
+@[simp]
+theorem zsmulDivisionFiberEquivBetween_of_nonempty_apply
+    {X : Type*} [AddCommGroup X]
+    {n : ℤ} {x y : X}
+    (p : zsmulDivisionFiber X n x) (q : zsmulDivisionFiber X n y)
+    (a : zsmulDivisionFiber X n x) :
+    ((zsmulDivisionFiberEquivBetween_of_nonempty p q) a : X) =
+      (q : X) - (p : X) + (a : X) := by
+  rfl
+
+/- The cardinality comparison only needs the two fibres to be inhabited; the
+   divisible-group theorem below is a convenient specialization. -/
+theorem zsmulDivisionFiber_card_eq_of_nonempty
+    {X : Type*} [AddCommGroup X]
+    {n : ℤ} {x y : X}
+    (p : zsmulDivisionFiber X n x) (q : zsmulDivisionFiber X n y) :
+    Nat.card (zsmulDivisionFiber X n x) =
+      Nat.card (zsmulDivisionFiber X n y) := by
+  exact Nat.card_congr (zsmulDivisionFiberEquivBetween_of_nonempty p q)
+
 /-- All fibres of multiplication by a fixed nonzero integer have the same
 cardinality in a divisible group. -/
 theorem zsmulDivisionFiber_card_eq
@@ -144,7 +195,11 @@ theorem zsmulDivisionFiber_card_eq
     (n : ℤ) (x y : X) (hn : n ≠ 0) :
     Nat.card (zsmulDivisionFiber X n x) =
       Nat.card (zsmulDivisionFiber X n y) := by
-  exact Nat.card_congr (zsmulDivisionFiberEquivBetween n x y hn)
+  let p : zsmulDivisionFiber X n x :=
+    ⟨DivisibleBy.div x n, DivisibleBy.div_cancel x hn⟩
+  let q : zsmulDivisionFiber X n y :=
+    ⟨DivisibleBy.div y n, DivisibleBy.div_cancel y hn⟩
+  exact zsmulDivisionFiber_card_eq_of_nonempty p q
 
 /-- Finiteness of one nonzero-integer division fibre is equivalent to
 finiteness of every other fibre. -/
