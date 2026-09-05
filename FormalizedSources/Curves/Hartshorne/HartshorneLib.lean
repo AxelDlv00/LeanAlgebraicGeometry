@@ -101,7 +101,6 @@ import HartshorneLib.Chapter4LinearSystemDimension
 import HartshorneLib.Chapter4LinearSystemInvariance
 import HartshorneLib.Chapter4ProjectiveLinearSystem
 import HartshorneLib.Chapter4ProjectiveMapProducer
-import HartshorneLib.Chapter4GlobalSectionsCover
 import HartshorneLib.Chapter4ProjectiveCoordinateAdapter
 import HartshorneLib.Chapter4DivisorSectionCoordinates
 import HartshorneLib.Chapter4GlobalizationBoundary
@@ -110,6 +109,7 @@ import HartshorneLib.Chapter4LocalRatioRegularization
 import HartshorneLib.Chapter4LocalRatioCocycle
 import HartshorneLib.Chapter4LocalRatioProjectiveChart
 import HartshorneLib.Chapter4LocalRatioCanonicalBridge
+import HartshorneLib.Chapter4GlobalSectionsCover
 import HartshorneLib.Chapter4LocalRatioProjectiveGluing
 
 /-!

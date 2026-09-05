@@ -4,7 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: The Hartshorne Contributors
 -/
 
-import HartshorneLib.Chapter4ProjectiveMapProducer
+import HartshorneLib.Chapter4LocalRatioCanonicalBridge
 
 /-!
 # Hartshorne IV.3.1: basic-open covers from projective coordinates
@@ -112,6 +112,22 @@ lemma coordinateOpenCover_f
     (data.coordinateOpenCover).f i =
       (X.left.basicOpen (data.sections i)).ι := by
   rfl
+
+omit [IsAlgClosed k] [IsIntegral X.left] [SmoothOfRelativeDimension 1 X.hom]
+  [IsProper X.hom] in
+/-- The restriction of the canonical map to a coordinate chart lands in the
+corresponding standard projective chart. -/
+lemma coordinateOpenCover_restricted_map_preimage_basicOpen
+    (data : GlobalSectionsProjectiveMapData (k := k) (X := X) n)
+    (j : Fin (n + 1)) :
+    ((data.coordinateOpenCover).f j ≫ data.map) ⁻¹ᵁ
+        Proj.basicOpen (MvPolynomial.homogeneousSubmodule (Fin (n + 1)) k)
+          (MvPolynomial.X j) = ⊤ := by
+  rw [coordinateOpenCover_f, Scheme.Hom.comp_preimage,
+    data.map_preimage_basicOpen]
+  change (X.left.basicOpen (data.sections j)).ι ⁻¹ᵁ
+    X.left.basicOpen (data.sections j) = ⊤
+  simp
 
 end GlobalSectionsProjectiveMapData
 
