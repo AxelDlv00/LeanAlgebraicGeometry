@@ -2,13 +2,14 @@ id: Milne.finite-quotient
 title: Global finite quotient by gluing affine charts
 projects:
 - Milne
-summary: 'Pending source node prop:milne-finite-quotient. Verified producers now include
+summary: 'Pending source node prop:milne-finite-quotient. Verified producers include
   the invariant principal-open basis, symmetric fixed-ring overlap maps with exact
-  ranges, and commit 87bdaf3fc7, which canonically reverses the two ordered invariant-section
-  overlap spectra and proves both restriction-leg identities. This is pairwise common-presentation
-  compatibility only. Remaining: IsOpenImmersion and identification with descended
-  quotient opens, actual overlap transitions and triple cocycle, global Scheme.GlueData
-  and quotient topology/sheaf/finiteness, arbitrary-target universality, and free-action
+  ranges, canonical reversal of ordered invariant-section overlap spectra with both
+  restriction-leg identities, and commit 9c99dbd87c, which turns bijective localization-away
+  maps into scheme-level principal-chart IsOpenImmersion statements. Remaining: prove
+  fixed-localization bijectivity from the quotient data, identify descended quotient
+  opens, actual overlap transitions and triple cocycle, global Scheme.GlueData and
+  quotient topology/sheaf/finiteness, arbitrary-target universality, and free-action
   etaleness.'
 status: pending
 kind: proof
@@ -36,8 +37,9 @@ metadata:
   parent: Milne
   owner: fs-milne
   milestone: Milne
-  updated_at: '2026-09-05T10:43:10.515903+00:00'
+  updated_at: '2026-09-05T14:46:20.556165+00:00'
   pinned_commits:
+  - 9c99dbd87c
   - 87bdaf3fc7
   - 59daf9435c
   - dd2a6fd248
