@@ -2,12 +2,15 @@ id: Hartshorne.iv3-chart-gluing
 title: IV.3.1 local-ratio chart restriction and gluing
 projects:
 - Hartshorne
-summary: 'Commits 6e890f0b96 and d3b80bd4fe prove canonical Scheme.Cover gluing consumers.
-  Commits b18b80bbd0 and dc23b04050 derive a nonzero local jump, exact divisor order,
-  and a finite-complement exact-order denominator open from numerical basepoint-freeness;
-  97ceb70280 exports the producers. Remaining: select exact-order coordinates from
-  one fixed finite section basis, assemble the indexed regularized cover, and prove
-  the geometric base-point-free and very-ample equivalences of IV.3.1.'
+summary: 'Commits 2ef2333cdb, c68c6bf54c, and ffcbb833f7 close the fixed finite-basis
+  chart-producing route: every non-generic point gets a basis coordinate with nonzero
+  jump and exact divisor order, an exact-order LocalRatioOpen, a LocalRatioRegularization,
+  and the selected opens form an indexed cover under an explicit Nonempty NonGenericPoint
+  hypothesis; the compatible family now feeds gluedFromOpen and yields a projective
+  morphism over Spec k. Remaining source-facing work: derive non-generic-point existence
+  from the smooth proper curve hypotheses, connect the numerical BasePointFreeLinearSystem
+  predicate to geometric fiber/evaluation base-point-freeness, and prove the very-ample
+  two-point/tangent criterion. The IV.3.1 blueprint node remains empty.'
 status: active
 kind: proof
 priority: high
@@ -34,8 +37,11 @@ metadata:
   parent: Hartshorne
   owner: fs-hartshorne
   milestone: Hartshorne
-  updated_at: '2026-09-05T09:35:33.749899+00:00'
+  updated_at: '2026-09-05T12:20:03.095867+00:00'
   pinned_commits:
+  - ffcbb833f7
+  - c68c6bf54c
+  - 2ef2333cdb
   - 97ceb70280
   - dc23b04050
   - b18b80bbd0

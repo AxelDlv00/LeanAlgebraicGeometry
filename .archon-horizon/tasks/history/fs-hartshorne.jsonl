@@ -185,3 +185,5 @@
 {"at": "2026-09-05T06:18:00.899883+00:00", "actor": "system", "field": "status", "from": "running", "to": "queued", "note": "Horizon session ended without the agent recording a terminal status; returned to queued"}
 {"at": "2026-09-05T06:18:57.716647+00:00", "actor": "system", "field": "status", "from": "queued", "to": "running", "note": "started by Horizon run"}
 {"at": "2026-09-05T06:49:02.159797+00:00", "actor": "horizon", "field": "edited", "from": "", "to": "", "note": "roadmap_refs, inbox_refs updated", "provenance": {"run": "0214", "session": "0014-horizon-fs-hartshorne", "role": "horizon", "round": "6", "rounds": "24", "task": "fs-hartshorne", "task_title": "Advance Hartshorne Algebraic Geometry formalization", "projects": "Hartshorne"}}
+{"at": "2026-09-05T09:45:00.014333+00:00", "actor": "system", "field": "status", "from": "running", "to": "queued", "note": "Horizon session ended without the agent recording a terminal status; returned to queued"}
+{"at": "2026-09-05T09:46:16.780955+00:00", "actor": "system", "field": "status", "from": "queued", "to": "running", "note": "started by Horizon run"}
