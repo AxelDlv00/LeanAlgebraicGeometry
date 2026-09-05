@@ -1,1 +1,0 @@
-{"markdown": "Finalization check complete: there are no uncommitted Milne source changes. The remaining ledger modifications are concurrent `.archon-horizon` control-plane updates from other runs, so I did not stage or commit them. Milne remains durably recorded in `234ba6e482` (with the prior `c6573876a9` unit).\n", "recommendation": ""}

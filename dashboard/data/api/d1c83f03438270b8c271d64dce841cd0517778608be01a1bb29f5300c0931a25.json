@@ -1,1 +1,1 @@
-{"path": "MilneLib/Basic.lean", "size": 89, "content": "/-!\n# MilneLib.Basic\n\nPlaceholder root module. Replace with real formalization units.\n-/\n"}
+{"path": "MilneLib/Basic.lean", "size": 248, "content": "/-!\n# MilneLib.Basic\n\nFoundational entry point for the Milne library.  The substantive declarations\nare split across the topic modules imported by `MilneLib.lean`; this module is\nkept as a stable base import for clients and the umbrella facade.\n-/\n"}
