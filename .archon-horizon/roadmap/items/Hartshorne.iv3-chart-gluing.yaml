@@ -2,15 +2,13 @@ id: Hartshorne.iv3-chart-gluing
 title: IV.3.1 local-ratio chart restriction and gluing
 projects:
 - Hartshorne
-summary: 'Commits ae79789974 and 248dcf8a16 add a kernel-checked non-generic-point
-  witness for integral smooth curves, an unconditional fixed-basis local-ratio cover
-  and glued-map interface (unconditional only with respect to the prior Nonempty NonGenericPoint
-  input; a finite basis and the existing numerical BasePointFreeLinearSystem hypothesis
-  are still supplied), and numerical one-point criteria equivalent to nonzero local
-  jumps, rank-one surjectivity, and nonzero normalized stalk residues. Focused and
-  umbrella project builds plus standard-axiom checks pass. The source-facing IV.3.1
-  node remains empty: the scheme-theoretic fiber/evaluation/base-locus meaning, two-point/tangent
-  very-ampleness criterion, and final canonical chart/gluing theorem are still outstanding.'
+summary: 'Commit 009b011f56 packages the unconditional smooth-curve local-ratio glued
+  morphism with a chosen H0 basis as a ProjectiveMapProducer, proves its basis/target-dimension
+  projections, and identifies each selected normalized chart restriction. Focused
+  module and 8680-job umbrella builds pass with standard axioms only. The IV.3.1 source
+  node remains open: the ordinary Scheme.Modules fiber/evaluation and base-locus bridge,
+  closed-immersion theorem, and final canonical Proj/Cover gluing; the older canonical
+  morphism-restriction bridge remains an explicitly unconsumed, high-heartbeat boundary.'
 status: active
 kind: proof
 priority: high
@@ -37,8 +35,17 @@ metadata:
   parent: Hartshorne
   owner: fs-hartshorne
   milestone: Hartshorne
-  updated_at: '2026-09-05T18:00:26.437626+00:00'
+  updated_at: '2026-09-05T20:23:57.971223+00:00'
   pinned_commits:
+  - 009b011f56
+  - '8527537650'
+  - be760e7bda
+  - 6b1117abf6
+  - 7bad89613e
+  - a74489c8bc
+  - 7e7f213090
+  - 6106b914b0
+  - 42c9e2f4a0
   - 248dcf8a16
   - ae79789974
   - ffcbb833f7
