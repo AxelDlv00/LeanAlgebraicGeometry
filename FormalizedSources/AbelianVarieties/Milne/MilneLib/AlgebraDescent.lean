@@ -6,7 +6,7 @@ Authors: The Milne Contributors
 import MilneLib.ModuleDescent
 
 /-!
-# Faithfully flat descent of commutative algebras
+# Flat descent of commutative algebras
 
 This file upgrades the existing effectivity theorem for module descent to
 commutative algebras.  It is the affine-local algebraic input for effective

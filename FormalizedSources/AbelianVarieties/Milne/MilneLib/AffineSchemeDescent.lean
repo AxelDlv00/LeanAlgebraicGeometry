@@ -11,7 +11,7 @@ import Mathlib.AlgebraicGeometry.Pullbacks
 
 This file applies `Spec` to the equalizer algebra constructed by
 `Algebra.DescentDatum`.  It packages affine algebra effectivity as an
-isomorphism in the category of schemes over the faithfully flat chart.
+isomorphism in the category of schemes over the supplied flat chart.
 
 ## Main declarations
 
