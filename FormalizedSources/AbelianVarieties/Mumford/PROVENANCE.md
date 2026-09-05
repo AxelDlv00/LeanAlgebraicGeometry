@@ -68,10 +68,11 @@ this project.  Stable labels, concise printed-coordinate `\\dcref` anchors, and
 explicit `\\uses` edges follow the hgraph blueprint conventions.  The retired
 `\\group` metadata is intentionally absent.  Every labeled mathematical node
 carries a `\\dcref` coordinate; page ranges remain in the source manifest and
-  provenance record.  Four nodes currently carry verified Lean
+  provenance record.  Five nodes currently carry verified Lean
   correspondences: the Form-I rigidity lemma, the translation corollary, and
   the commutativity corollary in `blueprint/src/ch02-source-part1.tex`, together
-  with the finite-generation node in `blueprint/src/ch06-source-part1.tex`.
+  with the finite-generation node in `blueprint/src/ch06-source-part1.tex` and
+  the pointed-Hom node in `blueprint/src/ch02-source-part1.tex`.
   Remaining nodes have no `\\lean` or `\\leanok` annotations unless and until
   an approved source-level correspondence is established.
 
