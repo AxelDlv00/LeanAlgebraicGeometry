@@ -30,21 +30,40 @@ variable {k : Type u} [Field k] (C : Over (Spec (.of k)))
 variable [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
   [GeometricallyIrreducible C.hom] [IsSepClosed k]
 
-/-- The finite-stage models and canonical triple-transition data used to glue the
-descended Picard atlas. -/
-structure Pic0FiniteStageGluePackage
-    (F : Type u) [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
-    extends Pic0FiniteStageTransitionModelsData C F where
-  N : DatG0.FinSubext M.1 k
-  thetaN : forall p : Pic0FiniteStageTripleTransitionIndex C,
-    Pic0FiniteStageTripleTransitionFamilyMap
-      C L n m relation M mapM N p
-  tripleComparison : forall p : Pic0FiniteStageTripleTransitionIndex C,
-    Pic0FiniteStageTripleTransitionFamilyComparison
-      C L n m relation M mapM
-        (pic0FiniteStageTripleModelComparisonFamily
-          C L n m relation e M mapM comparison)
-        N p (thetaN p)
+/- The finite-stage models and canonical triple-transition data used to glue the
+   descended Picard atlas.  The comparison family is pinned once at this
+   boundary, so downstream declarations do not re-elaborate its dependent
+   tensor carriers. -/
+structure Pic0FiniteStageGlueContext
+    (F : Type u) [Field F] [Algebra F k] [Algebra.IsAlgebraic F k] where
+  models : Pic0FiniteStageTransitionModelsData C F
+  Q : ∀ p : Pic0FiniteStageTripleTransitionIndex C,
+    k ⊗[models.M.1]
+        Pic0FiniteStageTripleTransitionModelTarget
+          C models.L models.n models.m models.relation models.M models.mapM p ≃ₐ[k]
+      Pic0FiniteStageTripleRing C p.1 p.2.1 p.2.2
+  triple : Pic0FiniteStageTripleTransitionFamilyData
+    C models.L models.n models.m models.relation models.M models.mapM Q
+
+namespace Pic0FiniteStageGlueContext
+
+variable {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
+
+def L (D : Pic0FiniteStageGlueContext C F) := D.models.L
+def n (D : Pic0FiniteStageGlueContext C F) := D.models.n
+def m (D : Pic0FiniteStageGlueContext C F) := D.models.m
+def relation (D : Pic0FiniteStageGlueContext C F) := D.models.relation
+def e (D : Pic0FiniteStageGlueContext C F) := D.models.e
+def M (D : Pic0FiniteStageGlueContext C F) := D.models.M
+def mapM (D : Pic0FiniteStageGlueContext C F) := D.models.mapM
+def comparison (D : Pic0FiniteStageGlueContext C F) := D.models.comparison
+@[reducible] def openImmersion (D : Pic0FiniteStageGlueContext C F) := D.models.openImmersion
+def inverse (D : Pic0FiniteStageGlueContext C F) := D.models.inverse
+def N (D : Pic0FiniteStageGlueContext C F) := D.triple.N
+def thetaN (D : Pic0FiniteStageGlueContext C F) := D.triple.thetaN
+def tripleComparison (D : Pic0FiniteStageGlueContext C F) := D.triple.comparison
+
+end Pic0FiniteStageGlueContext
 
 end
 

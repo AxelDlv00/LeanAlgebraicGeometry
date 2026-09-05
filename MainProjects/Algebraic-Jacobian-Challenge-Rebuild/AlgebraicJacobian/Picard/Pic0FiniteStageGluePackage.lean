@@ -31,7 +31,33 @@ variable {k : Type u} [Field k] (C : Over (Spec (.of k)))
 variable [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
   [GeometricallyIrreducible C.hom] [IsSepClosed k]
 
+/-- A finite-stage context together with its selected affine gluing presentation.
+
+The presentation is stored once at this boundary.  Consumers therefore share the
+same proof-sensitive `Scheme.GlueData` and map data instead of rebuilding them. -/
+structure Pic0FiniteStageGluePackage
+    (F : Type u) [Field F] [Algebra F k] [Algebra.IsAlgebraic F k] where
+  context : Pic0FiniteStageGlueContext C F
+  presentation : AlgebraicJacobian.AffineRingGluePresentation context.N.1
+
 namespace Pic0FiniteStageGluePackage
+
+variable {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
+
+def models (P : Pic0FiniteStageGluePackage C F) := P.context.models
+def L (P : Pic0FiniteStageGluePackage C F) := P.context.L
+def n (P : Pic0FiniteStageGluePackage C F) := P.context.n
+def m (P : Pic0FiniteStageGluePackage C F) := P.context.m
+def relation (P : Pic0FiniteStageGluePackage C F) := P.context.relation
+def e (P : Pic0FiniteStageGluePackage C F) := P.context.e
+def M (P : Pic0FiniteStageGluePackage C F) := P.context.M
+def mapM (P : Pic0FiniteStageGluePackage C F) := P.context.mapM
+def comparison (P : Pic0FiniteStageGluePackage C F) := P.context.comparison
+def openImmersion (P : Pic0FiniteStageGluePackage C F) := P.context.openImmersion
+def inverse (P : Pic0FiniteStageGluePackage C F) := P.context.inverse
+def N (P : Pic0FiniteStageGluePackage C F) := P.context.N
+def thetaN (P : Pic0FiniteStageGluePackage C F) := P.context.thetaN
+def tripleComparison (P : Pic0FiniteStageGluePackage C F) := P.context.tripleComparison
 
 /-- Construct the complete glue package from a finite-stage transition model. -/
 noncomputable def ofModels
@@ -42,20 +68,15 @@ noncomputable def ofModels
     C D.L D.n D.m D.relation D.M D.mapM
       (pic0FiniteStageTripleModelComparisonFamily
         C D.L D.n D.m D.relation D.e D.M D.mapM D.comparison)
+  let context : Pic0FiniteStageGlueContext C F := {
+    models := D
+    Q := pic0FiniteStageTripleModelComparisonFamily
+      C D.L D.n D.m D.relation D.e D.M D.mapM D.comparison
+    triple := T
+  }
   exact {
-    L := D.L
-    n := D.n
-    m := D.m
-    relation := D.relation
-    e := D.e
-    M := D.M
-    mapM := D.mapM
-    comparison := D.comparison
-    openImmersion := D.openImmersion
-    inverse := D.inverse
-    N := T.N
-    thetaN := T.thetaN
-    tripleComparison := T.comparison
+    context := context
+    presentation := pic0FiniteStageAffineRingGluePresentation C context
   }
 
 /-- A finite-presentation witness for a scalar-extended finite-stage chart ring. -/
@@ -102,13 +123,6 @@ theorem finiteType_pic0FiniteStageChartBaseChangeRing
       C L n m relation M N U)
 
 /-- The affine gluing presentation computed from the package's canonical data. -/
-noncomputable def presentation
-    {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
-    (P : Pic0FiniteStageGluePackage C F) :
-    AlgebraicJacobian.AffineRingGluePresentation P.N.1 :=
-  pic0FiniteStageAffineRingGluePresentation
-    C P
-
 /-- The scheme glue datum underlying the canonical presentation. -/
 noncomputable def glueData
     {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]

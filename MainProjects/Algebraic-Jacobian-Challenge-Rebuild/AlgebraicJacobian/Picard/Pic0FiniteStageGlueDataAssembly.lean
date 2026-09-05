@@ -99,31 +99,31 @@ variable [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
 
 private noncomputable abbrev assemblyChartRing
     {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
-    (P : Pic0FiniteStageGluePackage C F) (U : Pic0FiniteStageChartIndex C) :=
+    (P : Pic0FiniteStageGlueContext C F) (U : Pic0FiniteStageChartIndex C) :=
   Pic0FiniteStageChartBaseChangeRing
     C P.L P.n P.m P.relation P.M P.N U
 
 private noncomputable abbrev assemblyOverlapRing
     {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
-    (P : Pic0FiniteStageGluePackage C F) (U V : Pic0FiniteStageChartIndex C) :=
+    (P : Pic0FiniteStageGlueContext C F) (U V : Pic0FiniteStageChartIndex C) :=
   Pic0FiniteStageOverlapBaseChangeRing
     C P.L P.n P.m P.relation P.M P.N U V
 
 private noncomputable def assemblyRestriction
     {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
-    (P : Pic0FiniteStageGluePackage C F) (U V : Pic0FiniteStageChartIndex C) :=
+    (P : Pic0FiniteStageGlueContext C F) (U V : Pic0FiniteStageChartIndex C) :=
   pic0FiniteStageRestrictionBaseChange
     C P.L P.n P.m P.relation P.M P.mapM P.N U V
 
 private noncomputable def assemblyTransition
     {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
-    (P : Pic0FiniteStageGluePackage C F) (U V : Pic0FiniteStageChartIndex C) :=
+    (P : Pic0FiniteStageGlueContext C F) (U V : Pic0FiniteStageChartIndex C) :=
   pic0FiniteStageTransitionBaseChange
     C P.L P.n P.m P.relation P.M P.mapM P.N U V
 
 private noncomputable def assemblyTensorEquiv
     {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
-    (P : Pic0FiniteStageGluePackage C F) (U V W : Pic0FiniteStageChartIndex C) :=
+    (P : Pic0FiniteStageGlueContext C F) (U V W : Pic0FiniteStageChartIndex C) :=
   finiteStageTensorPushoutScalarExtension_named (K := P.N.1)
     (pic0FiniteStageRestrictionLeftModel
       C P.L P.n P.m P.relation P.M P.mapM U V)
@@ -132,7 +132,7 @@ private noncomputable def assemblyTensorEquiv
 
 private noncomputable def assemblyTensorFaceRight
     {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
-    (P : Pic0FiniteStageGluePackage C F) (U V W : Pic0FiniteStageChartIndex C) :=
+    (P : Pic0FiniteStageGlueContext C F) (U V W : Pic0FiniteStageChartIndex C) :=
   @finiteStageTensorPushoutFaceRight
     P.N.1 (assemblyChartRing C P U)
     (assemblyOverlapRing C P U V) (assemblyOverlapRing C P U W)
@@ -153,7 +153,7 @@ private noncomputable def assemblyTensorFaceRight
 
 private noncomputable def assemblyTensorFaceLeft
     {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
-    (P : Pic0FiniteStageGluePackage C F) (U V W : Pic0FiniteStageChartIndex C) :=
+    (P : Pic0FiniteStageGlueContext C F) (U V W : Pic0FiniteStageChartIndex C) :=
   @finiteStageTensorPushoutFaceLeft
     P.N.1 (assemblyChartRing C P U)
     (assemblyOverlapRing C P U V) (assemblyOverlapRing C P U W)
@@ -177,7 +177,7 @@ set_option maxHeartbeats 1600000 in
 -- The equivalences pin the instances, but Lean must normalize both tensor-pushout carriers.
 private noncomputable def assemblyTripleTransition
     {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
-    (P : Pic0FiniteStageGluePackage C F) (U V W : Pic0FiniteStageChartIndex C) :=
+    (P : Pic0FiniteStageGlueContext C F) (U V W : Pic0FiniteStageChartIndex C) :=
   conjugateAlgHom
     (assemblyTensorEquiv C P V W U) (assemblyTensorEquiv C P U V W)
     (P.thetaN (U, (V, W)))
@@ -187,7 +187,7 @@ set_option maxHeartbeats 12800000 in
 -- The face proof compares the named scalar-extension and literal pushout presentations.
 private theorem assemblyTripleTransition_face
     {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
-    (P : Pic0FiniteStageGluePackage C F) (U V W : Pic0FiniteStageChartIndex C) :
+    (P : Pic0FiniteStageGlueContext C F) (U V W : Pic0FiniteStageChartIndex C) :
     (assemblyTripleTransition C P U V W).comp
         (assemblyTensorFaceRight C P V W U) =
       (assemblyTensorFaceLeft C P U V W).comp
@@ -254,7 +254,7 @@ set_option maxHeartbeats 12800000 in
 -- The cyclic composite normalizes three conjugated tensor-pushout transitions.
 private theorem assemblyTripleTransition_cocycle
     {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
-    (P : Pic0FiniteStageGluePackage C F) (U V W : Pic0FiniteStageChartIndex C) :
+    (P : Pic0FiniteStageGlueContext C F) (U V W : Pic0FiniteStageChartIndex C) :
     (assemblyTripleTransition C P U V W).comp
         ((assemblyTripleTransition C P V W U).comp
           (assemblyTripleTransition C P W U V)) =
@@ -281,7 +281,7 @@ presentation. The triple-transition comparison is indexed by the comparison fami
 canonically determined by the package's transition model. -/
 noncomputable def pic0FiniteStageAffineRingGluePresentation
     {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
-    (P : Pic0FiniteStageGluePackage C F) :
+    (P : Pic0FiniteStageGlueContext C F) :
     @AlgebraicJacobian.AffineRingGluePresentation P.N.1
       (IntermediateField.toField P.N.1).toCommRing := by
   let D := P
