@@ -28,10 +28,7 @@ variable {k : Type u} [Field k] (C : Over (Spec (.of k)))
 variable [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
   [GeometricallyIrreducible C.hom] [IsSepClosed k]
 
-/-- A finite-stage context together with its selected affine gluing presentation.
-
-The presentation is stored once at this boundary.  Consumers therefore share the
-same proof-sensitive `Scheme.GlueData` and map data instead of rebuilding them. -/
+/-- A finite-stage context whose affine presentation is derived canonically below. -/
 structure Pic0FiniteStageGluePackage
     (F : Type u) [Field F] [Algebra F k] [Algebra.IsAlgebraic F k] where
   context : Pic0FiniteStageGlueContext C F
