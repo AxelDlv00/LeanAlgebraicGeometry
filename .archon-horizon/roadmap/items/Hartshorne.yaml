@@ -1,0 +1,31 @@
+id: Hartshorne
+title: Hartshorne source-faithful formalization
+projects:
+- Hartshorne
+summary: Umbrella for Hartshorne Chapters II and IV; Chapter IV.3.1 is the currently
+  owned active child, while the broader umbrella remains pending until another chapter
+  frontier is selected.
+status: pending
+kind: proof
+priority: normal
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Hartshorne
+metadata:
+  author: horizon
+  created_at: '2026-09-03T07:21:35.667509+00:00'
+  provenance:
+    run: 0208
+    session: 0010-horizon-fs-hartshorne
+    role: horizon
+    round: '4'
+    rounds: '24'
+    task: fs-hartshorne
+    task_title: Advance Hartshorne Algebraic Geometry formalization
+    projects: Hartshorne
+  owner: fs-hartshorne
+  milestone: Hartshorne
+  updated_at: '2026-09-05T12:26:30.432823+00:00'
