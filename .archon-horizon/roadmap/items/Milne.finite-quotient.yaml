@@ -2,10 +2,9 @@ id: Milne.finite-quotient
 title: Global finite quotient by gluing affine charts
 projects:
 - Milne
-summary: Global finite quotient by gluing affine charts. Local stable-affine overlap
-  fixed-section maps now have scheme-level IsOpenImmersion instances via fixed localization;
-  global GlueData, structure-sheaf comparison, finiteness/universality, and free-action
-  etale clauses remain.
+summary: Stable-affine overlap spectra are identified with the descended quotient-open
+  subschemes; global GlueData transitions, triple cocycle, structure-sheaf comparison,
+  finiteness, and universality remain open.
 status: pending
 kind: proof
 priority: high
@@ -32,8 +31,9 @@ metadata:
   parent: Milne
   owner: fs-milne
   milestone: Milne
-  updated_at: '2026-09-05T18:23:38.398679+00:00'
+  updated_at: '2026-09-05T19:21:54.976081+00:00'
   pinned_commits:
+  - cca019a5827b5cd10e59e65bec543ef9147b1150
   - e626450f08
   - ac3698e5e3
   - 9c99dbd87c

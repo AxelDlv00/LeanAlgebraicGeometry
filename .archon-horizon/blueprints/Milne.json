@@ -848,7 +848,7 @@
     },
     "states": {
       "blocked": 124,
-      "closed": 786,
+      "closed": 796,
       "formalized_open": 0,
       "informal": 254,
       "ready": 138
@@ -4099,7 +4099,7 @@
     },
     {
       "chapter": "Geometry of Abelian Varieties",
-      "comment_count": 18,
+      "comment_count": 19,
       "dep_count": 0,
       "descendant_count": 1,
       "group": "c148",

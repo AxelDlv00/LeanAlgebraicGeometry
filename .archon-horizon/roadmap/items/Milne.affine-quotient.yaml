@@ -9,8 +9,7 @@ summary: 'Done in MilneLib/InvariantQuotient.lean: fixed-point integrality, fini
 status: done
 kind: proof
 priority: high
-depends_on:
-- Milne
+depends_on: []
 inbox_refs: []
 task_refs:
 - fs-milne
@@ -32,3 +31,4 @@ metadata:
   parent: Milne
   owner: fs-milne
   milestone: Milne
+  updated_at: '2026-09-05T05:38:37.572017+00:00'
