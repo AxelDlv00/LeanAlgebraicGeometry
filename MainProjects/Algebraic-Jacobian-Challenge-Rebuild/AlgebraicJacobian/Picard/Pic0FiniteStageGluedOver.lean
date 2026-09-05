@@ -50,54 +50,6 @@ theorem presentation_mapData
     P.presentation.mapData = P.gluedMapData :=
   rfl
 
-/-! The old wrapper stored `GluedMapData P.glueData` directly.  That repeated the
-dependent glue construction at every use site.  Reuse the pinned presentation instead:
-the carrier and map are now indexed by one selected value, with no producer proofs in the
-consumer-facing type. -/
-abbrev GluedOverData
-    {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
-    (P : Pic0FiniteStageGluePackage C F) :=
-  AlgebraicJacobian.AffineRingGluePresentation P.N.1
-
-namespace GluedOverData
-
-/-- The structure map carried by the selected presentation. -/
-def map
-    {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
-    {P : Pic0FiniteStageGluePackage C F}
-    (Q : GluedOverData C P) : Q.glueData.glued ⟶ Spec (.of P.N.1) :=
-  AlgebraicJacobian.AffineRingGluePresentation.map Q
-
-/-- The selected glue as an object of the slice over its finite-stage field. -/
-def «over»
-    {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
-    {P : Pic0FiniteStageGluePackage C F}
-    (Q : GluedOverData C P) : Over (Spec (.of P.N.1)) :=
-  AlgebraicJacobian.AffineRingGluePresentation.over Q
-
-@[simp]
-theorem map_eq
-    {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
-    {P : Pic0FiniteStageGluePackage C F}
-    (Q : GluedOverData C P) : Q.map = Q.mapData.map :=
-  rfl
-
-/-- The chart-factor equation exposed without opening the generic map package. -/
-theorem chartMap_factor
-    {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
-    {P : Pic0FiniteStageGluePackage C F}
-    (Q : GluedOverData C P) (U : Q.glueData.J) :
-    Q.glueData.ι U ≫ Q.map = Q.mapData.chartMap U := by
-  exact AlgebraicJacobian.AffineRingGluePresentation.chartMap_factor Q U
-
-end GluedOverData
-
-/-- The canonical finite-stage glue package, built once from `P.gluedMapData`. -/
-noncomputable def gluedOverData
-    {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
-    (P : Pic0FiniteStageGluePackage C F) : GluedOverData C P :=
-  P.presentation
-
 /-- The structure map from the finite-stage glued scheme to its field of definition. -/
 noncomputable def gluedMap
     {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
@@ -126,22 +78,22 @@ noncomputable def chartBaseChangeMap
     (U : Pic0FiniteStageChartIndex C) :
     P.glueData.U U ⟶ Spec (.of P.N.1) :=
   letI : CommRing
-      (Pic0FiniteStageChartBaseChangeRing C P.models.L P.models.n P.models.m P.models.relation P.models.M P.N U) :=
+      (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U) :=
     pic0FiniteStageChartBaseChangeCommRing
-      C P.models.L P.models.n P.models.m P.models.relation P.models.M P.N U
+      C P.L P.n P.m P.relation P.M P.N U
   letI : Algebra P.N.1
-      (Pic0FiniteStageChartBaseChangeRing C P.models.L P.models.n P.models.m P.models.relation P.models.M P.N U) :=
+      (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U) :=
     pic0FiniteStageChartBaseChangeAlgebra
-      C P.models.L P.models.n P.models.m P.models.relation P.models.M P.N U
+      C P.L P.n P.m P.relation P.M P.N U
   Spec.map (CommRingCat.ofHom
     (@algebraMap P.N.1
       (Pic0FiniteStageChartBaseChangeRing
-        C P.models.L P.models.n P.models.m P.models.relation P.models.M P.N U)
+        C P.L P.n P.m P.relation P.M P.N U)
       (inferInstance : CommSemiring P.N.1)
       (pic0FiniteStageChartBaseChangeCommRing
-        C P.models.L P.models.n P.models.m P.models.relation P.models.M P.N U).toSemiring
+        C P.L P.n P.m P.relation P.M P.N U).toSemiring
       (pic0FiniteStageChartBaseChangeAlgebra
-        C P.models.L P.models.n P.models.m P.models.relation P.models.M P.N U)))
+        C P.L P.n P.m P.relation P.M P.N U)))
 
 @[simp]
 theorem gluedMapData_chartMap

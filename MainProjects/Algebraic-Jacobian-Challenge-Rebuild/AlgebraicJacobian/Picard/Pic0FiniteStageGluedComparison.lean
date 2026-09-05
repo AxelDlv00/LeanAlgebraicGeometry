@@ -488,11 +488,6 @@ theorem finiteStageBaseChangeIso_hom_structureMap
         (gluingGluedIso_hom_structureMap C P)
     _ = pullback.snd P.gluedMap
           (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k))) := by
-      change (baseChangeGluingIso C P).hom ≫
-          Scheme.Pullback.p2 P.presentation.glueData.openCover P.presentation.map
-            (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k))) =
-        pullback.snd P.presentation.map
-          (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k)))
       exact baseChangeGluingIso_hom_p2 C P
 
 end Pic0FiniteStageGluePackage

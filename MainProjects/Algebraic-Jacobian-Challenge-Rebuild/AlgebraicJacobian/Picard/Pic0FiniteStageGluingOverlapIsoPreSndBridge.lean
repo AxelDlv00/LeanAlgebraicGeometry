@@ -40,6 +40,34 @@ theorem glueData_t_comp_f_eq_spec_rightRestriction
     P.glueData.t U V ≫ P.glueData.f V U =
       Spec.map (CommRingCat.ofHom
         (rightRestrictionBaseChangeRingHom C P U V)) := by
+  letI : CommRing
+      (Pic0FiniteStageOverlapBaseChangeRing
+        C P.L P.n P.m P.relation
+          P.M P.N V U) :=
+    pic0FiniteStageOverlapBaseChangeCommRing
+      C P.L P.n P.m P.relation
+        P.M P.N V U
+  letI : CommRing
+      (Pic0FiniteStageOverlapBaseChangeRing
+        C P.L P.n P.m P.relation
+          P.M P.N U V) :=
+    pic0FiniteStageOverlapBaseChangeCommRing
+      C P.L P.n P.m P.relation
+        P.M P.N U V
+  letI : Algebra P.N.1
+      (Pic0FiniteStageOverlapBaseChangeRing
+        C P.L P.n P.m P.relation
+          P.M P.N V U) :=
+    pic0FiniteStageOverlapBaseChangeAlgebra
+      C P.L P.n P.m P.relation
+        P.M P.N V U
+  letI : Algebra P.N.1
+      (Pic0FiniteStageOverlapBaseChangeRing
+        C P.L P.n P.m P.relation
+          P.M P.N U V) :=
+    pic0FiniteStageOverlapBaseChangeAlgebra
+      C P.L P.n P.m P.relation
+        P.M P.N U V
   rw [glueData_t C P U V, glueData_f C P V U]
   calc
     _ = Spec.map (CommRingCat.ofHom

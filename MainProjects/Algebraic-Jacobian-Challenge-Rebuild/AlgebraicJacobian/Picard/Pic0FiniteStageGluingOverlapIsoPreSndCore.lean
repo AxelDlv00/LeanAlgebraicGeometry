@@ -39,9 +39,9 @@ theorem glueData_t
     (P : Pic0FiniteStageGluePackage C F)
     (U V : Pic0FiniteStageChartIndex C) :
     P.glueData.t U V =
-      Spec.map (CommRingCat.ofHom
-        (pic0FiniteStageTransitionBaseChange
-          C P.L P.n P.m P.relation P.M P.mapM P.N U V).toRingHom) := by
+      Spec.map (pic0FiniteStageTransitionBaseChangeRingHom
+        C P.L P.n P.m P.relation
+          P.M P.mapM P.N U V) := by
   rfl
 
 set_option synthInstance.maxHeartbeats 3200000 in

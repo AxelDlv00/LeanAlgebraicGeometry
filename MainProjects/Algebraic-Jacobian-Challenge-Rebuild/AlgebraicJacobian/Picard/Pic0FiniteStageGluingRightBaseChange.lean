@@ -43,45 +43,45 @@ theorem rightRestrictionBaseChangeMap_fst
       pullback.fst _ _ ≫ Spec.map (CommRingCat.ofHom
         (rightRestrictionBaseChangeRingHom C P U V)) := by
   letI : CommRing
-      (Pic0FiniteStageChartBaseChangeRing C P.models.L P.models.n P.models.m P.models.relation P.models.M P.N V) :=
+      (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N V) :=
     pic0FiniteStageChartBaseChangeCommRing
-      C P.models.L P.models.n P.models.m P.models.relation P.models.M P.N V
+      C P.L P.n P.m P.relation P.M P.N V
   letI : CommSemiring
-      (Pic0FiniteStageChartBaseChangeRing C P.models.L P.models.n P.models.m P.models.relation P.models.M P.N V) :=
+      (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N V) :=
     (inferInstance : CommRing
-      (Pic0FiniteStageChartBaseChangeRing C P.models.L P.models.n P.models.m P.models.relation P.models.M P.N V)).toCommSemiring
+      (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N V)).toCommSemiring
   letI : Semiring
-      (Pic0FiniteStageChartBaseChangeRing C P.models.L P.models.n P.models.m P.models.relation P.models.M P.N V) :=
+      (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N V) :=
     (inferInstance : CommSemiring
-      (Pic0FiniteStageChartBaseChangeRing C P.models.L P.models.n P.models.m P.models.relation P.models.M P.N V)).toSemiring
+      (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N V)).toSemiring
   letI : Algebra P.N.1
-      (Pic0FiniteStageChartBaseChangeRing C P.models.L P.models.n P.models.m P.models.relation P.models.M P.N V) :=
+      (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N V) :=
     pic0FiniteStageChartBaseChangeAlgebra
-      C P.models.L P.models.n P.models.m P.models.relation P.models.M P.N V
+      C P.L P.n P.m P.relation P.M P.N V
   letI : CommRing
-      (Pic0FiniteStageOverlapBaseChangeRing C P.models.L P.models.n P.models.m P.models.relation P.models.M P.N U V) :=
+      (Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M P.N U V) :=
     pic0FiniteStageOverlapBaseChangeCommRing
-      C P.models.L P.models.n P.models.m P.models.relation P.models.M P.N U V
+      C P.L P.n P.m P.relation P.M P.N U V
   letI : CommSemiring
-      (Pic0FiniteStageOverlapBaseChangeRing C P.models.L P.models.n P.models.m P.models.relation P.models.M P.N U V) :=
+      (Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M P.N U V) :=
     (inferInstance : CommRing
       (Pic0FiniteStageOverlapBaseChangeRing
-        C P.models.L P.models.n P.models.m P.models.relation P.models.M P.N U V)).toCommSemiring
+        C P.L P.n P.m P.relation P.M P.N U V)).toCommSemiring
   letI : Semiring
-      (Pic0FiniteStageOverlapBaseChangeRing C P.models.L P.models.n P.models.m P.models.relation P.models.M P.N U V) :=
+      (Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M P.N U V) :=
     (inferInstance : CommSemiring
       (Pic0FiniteStageOverlapBaseChangeRing
-        C P.models.L P.models.n P.models.m P.models.relation P.models.M P.N U V)).toSemiring
+        C P.L P.n P.m P.relation P.M P.N U V)).toSemiring
   letI : Algebra P.N.1
-      (Pic0FiniteStageOverlapBaseChangeRing C P.models.L P.models.n P.models.m P.models.relation P.models.M P.N U V) :=
+      (Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M P.N U V) :=
     pic0FiniteStageOverlapBaseChangeAlgebra
-      C P.models.L P.models.n P.models.m P.models.relation P.models.M P.N U V
+      C P.L P.n P.m P.relation P.M P.N U V
   unfold rightRestrictionBaseChangeMap
   exact affineBaseChangeMap_fst P.N.1 k
     (Pic0FiniteStageChartBaseChangeRing
-      C P.models.L P.models.n P.models.m P.models.relation P.models.M P.N V)
+      C P.L P.n P.m P.relation P.M P.N V)
     (Pic0FiniteStageOverlapBaseChangeRing
-      C P.models.L P.models.n P.models.m P.models.relation P.models.M P.N U V)
+      C P.L P.n P.m P.relation P.M P.N U V)
     (rightRestrictionBaseChangeAlgHomPinned C P U V)
 
 set_option synthInstance.maxHeartbeats 3200000 in
@@ -96,45 +96,45 @@ theorem rightRestrictionBaseChangeMap_snd
     rightRestrictionBaseChangeMap C P U V ≫ pullback.snd _ _ =
       pullback.snd _ _ := by
   letI : CommRing
-      (Pic0FiniteStageChartBaseChangeRing C P.models.L P.models.n P.models.m P.models.relation P.models.M P.N V) :=
+      (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N V) :=
     pic0FiniteStageChartBaseChangeCommRing
-      C P.models.L P.models.n P.models.m P.models.relation P.models.M P.N V
+      C P.L P.n P.m P.relation P.M P.N V
   letI : CommSemiring
-      (Pic0FiniteStageChartBaseChangeRing C P.models.L P.models.n P.models.m P.models.relation P.models.M P.N V) :=
+      (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N V) :=
     (inferInstance : CommRing
-      (Pic0FiniteStageChartBaseChangeRing C P.models.L P.models.n P.models.m P.models.relation P.models.M P.N V)).toCommSemiring
+      (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N V)).toCommSemiring
   letI : Semiring
-      (Pic0FiniteStageChartBaseChangeRing C P.models.L P.models.n P.models.m P.models.relation P.models.M P.N V) :=
+      (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N V) :=
     (inferInstance : CommSemiring
-      (Pic0FiniteStageChartBaseChangeRing C P.models.L P.models.n P.models.m P.models.relation P.models.M P.N V)).toSemiring
+      (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N V)).toSemiring
   letI : Algebra P.N.1
-      (Pic0FiniteStageChartBaseChangeRing C P.models.L P.models.n P.models.m P.models.relation P.models.M P.N V) :=
+      (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N V) :=
     pic0FiniteStageChartBaseChangeAlgebra
-      C P.models.L P.models.n P.models.m P.models.relation P.models.M P.N V
+      C P.L P.n P.m P.relation P.M P.N V
   letI : CommRing
-      (Pic0FiniteStageOverlapBaseChangeRing C P.models.L P.models.n P.models.m P.models.relation P.models.M P.N U V) :=
+      (Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M P.N U V) :=
     pic0FiniteStageOverlapBaseChangeCommRing
-      C P.models.L P.models.n P.models.m P.models.relation P.models.M P.N U V
+      C P.L P.n P.m P.relation P.M P.N U V
   letI : CommSemiring
-      (Pic0FiniteStageOverlapBaseChangeRing C P.models.L P.models.n P.models.m P.models.relation P.models.M P.N U V) :=
+      (Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M P.N U V) :=
     (inferInstance : CommRing
       (Pic0FiniteStageOverlapBaseChangeRing
-        C P.models.L P.models.n P.models.m P.models.relation P.models.M P.N U V)).toCommSemiring
+        C P.L P.n P.m P.relation P.M P.N U V)).toCommSemiring
   letI : Semiring
-      (Pic0FiniteStageOverlapBaseChangeRing C P.models.L P.models.n P.models.m P.models.relation P.models.M P.N U V) :=
+      (Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M P.N U V) :=
     (inferInstance : CommSemiring
       (Pic0FiniteStageOverlapBaseChangeRing
-        C P.models.L P.models.n P.models.m P.models.relation P.models.M P.N U V)).toSemiring
+        C P.L P.n P.m P.relation P.M P.N U V)).toSemiring
   letI : Algebra P.N.1
-      (Pic0FiniteStageOverlapBaseChangeRing C P.models.L P.models.n P.models.m P.models.relation P.models.M P.N U V) :=
+      (Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M P.N U V) :=
     pic0FiniteStageOverlapBaseChangeAlgebra
-      C P.models.L P.models.n P.models.m P.models.relation P.models.M P.N U V
+      C P.L P.n P.m P.relation P.M P.N U V
   unfold rightRestrictionBaseChangeMap
   exact affineBaseChangeMap_snd P.N.1 k
     (Pic0FiniteStageChartBaseChangeRing
-      C P.models.L P.models.n P.models.m P.models.relation P.models.M P.N V)
+      C P.L P.n P.m P.relation P.M P.N V)
     (Pic0FiniteStageOverlapBaseChangeRing
-      C P.models.L P.models.n P.models.m P.models.relation P.models.M P.N U V)
+      C P.L P.n P.m P.relation P.M P.N U V)
     (rightRestrictionBaseChangeAlgHomPinned C P U V)
 
 end Pic0FiniteStageGluePackage

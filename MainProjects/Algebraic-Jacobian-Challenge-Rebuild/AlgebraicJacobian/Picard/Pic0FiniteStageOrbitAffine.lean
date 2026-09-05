@@ -14,7 +14,7 @@ import AlgebraicJacobian.Picard.Pic0GaloisAction
 
 An immersion of the finite-stage glued representative into finite relative projective space
 gives the finite-in-affine property, so every orbit of its canonical finite-Galois action lies
-in an affine open.  This file records the legacy producers at the exact carrier `P.gluedOver`
+in an affine open.  This file records the canonical producers at the exact carrier `P.gluedOver`
 used by finite-stage descent.  The projectivity entry point remains as a compatibility wrapper.
 -/
 

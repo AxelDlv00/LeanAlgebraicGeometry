@@ -61,24 +61,6 @@ structure Pic0FiniteStageGluePackage
           C L n m relation e M mapM modelComparison)
         N p (thetaN p)
 
-/-- Compatibility view for consumers that still need the transition-model record.
-
-This is a value-level adapter, not a second stored package field; the canonical data lives
-in the flat fields above. -/
-noncomputable def Pic0FiniteStageGluePackage.models
-    {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
-    (P : Pic0FiniteStageGluePackage C F) : Pic0FiniteStageTransitionModelsData C F :=
-  { L := P.L
-    n := P.n
-    m := P.m
-    relation := P.relation
-    e := P.e
-    M := P.M
-    mapM := P.mapM
-    comparison := P.modelComparison
-    openImmersion := P.openImmersion
-    inverse := P.inverse }
-
 end
 
 end AlgebraicGeometry

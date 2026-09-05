@@ -5,6 +5,7 @@ Authors: The AlgebraicJacobian Contributors
 -/
 import AlgebraicJacobian.Descent.FiniteGaloisQuotientGeometry
 import AlgebraicJacobian.Picard.Pic0FiniteGaloisRepresentable
+import AlgebraicJacobian.Picard.Pic0FiniteStageOrbitAffine
 import AlgebraicJacobian.Picard.Pic0FiniteStageStableAffineCover
 import AlgebraicJacobian.Picard.JacobianDataHandoff
 
@@ -17,7 +18,7 @@ packages the existing conditional representability theorem into the exact
 `PicRepDatum` and `JacobianData` interfaces, without hiding either the local
 representer or the orbit-in-an-affine-open hypothesis.
 
-The finite-stage specializations below import the orbit-affineness producer directly. They
+The finite-stage specializations below consume the canonical orbit-affineness producer. They
 remain conditional on the displayed projectivity witness; this module does not assert the
 missing arbitrary-field `pic0_representableBy` theorem.
 -/
@@ -123,15 +124,15 @@ noncomputable def picRepDatum_finiteStageGaloisDescent_of_isProjective
     (Ck : Over (Spec (CommRingCat.of k)))
     [SmoothOfRelativeDimension 1 Ck.hom] [IsProper Ck.hom]
     [GeometricallyIrreducible Ck.hom] [IsSepClosed k]
-    (P : Pic0FiniteStageStableGluePackage Ck F)
-    [Algebra K P.context.triple.N.1] [FiniteDimensional K P.context.triple.N.1]
-    [IsGalois K P.context.triple.N.1]
-    (rep : (pic0TypeFunctor ((baseChange K P.context.triple.N.1).obj C)).RepresentableBy
-      P.presentation.over)
-    (hproj : P.presentation.map.IsProjective) :
+    (P : Pic0FiniteStageGluePackage Ck F)
+    [Algebra K P.N.1] [FiniteDimensional K P.N.1]
+    [IsGalois K P.N.1]
+    (rep : (pic0TypeFunctor ((baseChange K P.N.1).obj C)).RepresentableBy
+      P.gluedOver)
+    (hproj : P.gluedMap.IsProjective) :
     PicRepDatum K K C := by
   letI : (pic0SemilinearGalActionOfRepresentableBy C rep).OrbitsInAffineOpen :=
-    pic0FiniteStageStableOrbitsInAffineOpen_of_isProjective C Ck P rep hproj
+    pic0FiniteStageOrbitsInAffineOpen_of_isProjective C Ck P rep hproj
   exact
     { J := StableAffineOpen.gluedQuotientOver
         (pic0SemilinearGalActionOfRepresentableBy C rep)
@@ -139,7 +140,7 @@ noncomputable def picRepDatum_finiteStageGaloisDescent_of_isProjective
       lft :=
         locallyOfFiniteType_pic0FiniteGaloisDescent C rep
           (by
-            change LocallyOfFiniteType P.presentation.map
+            change LocallyOfFiniteType P.gluedMap
             exact hproj.locallyOfFiniteType) }
 
 /-- Finite-stage projectivity packages the conditional finite Galois descent directly as
@@ -153,21 +154,21 @@ noncomputable def jacobianData_finiteStageGaloisDescent_of_isProjective
     (Ck : Over (Spec (CommRingCat.of k)))
     [SmoothOfRelativeDimension 1 Ck.hom] [IsProper Ck.hom]
     [GeometricallyIrreducible Ck.hom] [IsSepClosed k]
-    (P : Pic0FiniteStageStableGluePackage Ck F)
-    [Algebra K P.context.triple.N.1] [FiniteDimensional K P.context.triple.N.1]
-    [IsGalois K P.context.triple.N.1]
-    (rep : (pic0TypeFunctor ((baseChange K P.context.triple.N.1).obj C)).RepresentableBy
-      P.presentation.over)
-    (hproj : P.presentation.map.IsProjective) :
+    (P : Pic0FiniteStageGluePackage Ck F)
+    [Algebra K P.N.1] [FiniteDimensional K P.N.1]
+    [IsGalois K P.N.1]
+    (rep : (pic0TypeFunctor ((baseChange K P.N.1).obj C)).RepresentableBy
+      P.gluedOver)
+    (hproj : P.gluedMap.IsProjective) :
     JacobianData C :=
   (picRepDatum_finiteStageGaloisDescent_of_isProjective C Ck P rep hproj).toJacobianData
     (by
       letI : (pic0SemilinearGalActionOfRepresentableBy C rep).OrbitsInAffineOpen :=
-        pic0FiniteStageStableOrbitsInAffineOpen_of_isProjective C Ck P rep hproj
+        pic0FiniteStageOrbitsInAffineOpen_of_isProjective C Ck P rep hproj
       exact quasiCompact_pic0FiniteGaloisDescent C rep
         (by
-          change QuasiCompact P.presentation.map
-          letI : IsProper P.presentation.map := hproj.isProper
+          change QuasiCompact P.gluedMap
+          letI : IsProper P.gluedMap := hproj.isProper
           infer_instance))
 
 end
