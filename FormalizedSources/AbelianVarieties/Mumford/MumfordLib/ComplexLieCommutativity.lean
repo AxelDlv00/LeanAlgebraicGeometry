@@ -495,6 +495,56 @@ theorem canonicalComplexExponential_exists_nhds_injOn
     canonicalRealFlow (G := G) I z 1
   exact hyz
 
+/-! Translation of the zero-neighborhood gives local injectivity at every
+    tangent point.  This is the form used by later covering-space arguments. -/
+theorem canonicalComplexExponential_exists_nhds_injOn_at
+    [CompleteSpace E] [T2Space G]
+    [I.Boundaryless] [CompactSpace G] [PreconnectedSpace G]
+    (x : E) :
+    ∃ U ∈ 𝓝 x,
+      Set.InjOn (canonicalComplexExponential (G := G) I) U := by
+  obtain ⟨U₀, hU₀, hU₀inj⟩ :=
+    canonicalComplexExponential_exists_nhds_injOn (G := G) I
+  let U : Set E := (fun y : E => y - x) ⁻¹' U₀
+  have hU : U ∈ 𝓝 x := by
+    change (fun y : E => y - x) ⁻¹' U₀ ∈ 𝓝 x
+    have hcont : ContinuousAt (fun y : E => y - x) x :=
+      (continuous_id.sub (continuous_const : Continuous (fun _ : E => x))).continuousAt
+    exact hcont.preimage_mem_nhds (by simpa using hU₀)
+  refine ⟨U, hU, ?_⟩
+  intro y hy z hz hyz
+  have hy' : y - x ∈ U₀ := hy
+  have hz' : z - x ∈ U₀ := hz
+  have htranslate (v : E) :
+      canonicalComplexExponential (G := G) I (v - x) =
+        canonicalComplexExponential (G := G) I v *
+          (canonicalComplexExponential (G := G) I x)⁻¹ := by
+    have hv :
+        canonicalComplexExponential (G := G) I v =
+          canonicalComplexExponential (G := G) I (v - x) *
+            canonicalComplexExponential (G := G) I x := by
+      simpa [sub_add_cancel] using
+        (canonicalComplexExponential_add (G := G) I (v - x) x)
+    calc
+      canonicalComplexExponential (G := G) I (v - x) =
+          (canonicalComplexExponential (G := G) I (v - x) *
+            canonicalComplexExponential (G := G) I x) *
+              (canonicalComplexExponential (G := G) I x)⁻¹ := by
+            simp
+      _ = canonicalComplexExponential (G := G) I v *
+            (canonicalComplexExponential (G := G) I x)⁻¹ := by rw [hv]
+  apply sub_left_injective
+  apply hU₀inj hy' hz'
+  calc
+    canonicalComplexExponential (G := G) I (y - x) =
+        canonicalComplexExponential (G := G) I y *
+          (canonicalComplexExponential (G := G) I x)⁻¹ :=
+      htranslate y
+    _ = canonicalComplexExponential (G := G) I z *
+          (canonicalComplexExponential (G := G) I x)⁻¹ := by rw [hyz]
+    _ = canonicalComplexExponential (G := G) I (z - x) :=
+      (htranslate z).symm
+
 /-! Local injectivity at the identity propagates to every point of the kernel
     by additive translation.  This is the topological consequence needed before
     one can ask for a full period-lattice certificate. -/
