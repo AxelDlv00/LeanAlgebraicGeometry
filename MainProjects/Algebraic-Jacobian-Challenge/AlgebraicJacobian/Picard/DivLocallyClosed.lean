@@ -5,6 +5,7 @@ Authors: The AlgebraicJacobian Contributors
 -/
 import AlgebraicJacobian.Picard.DivPushforwardFlat
 import AlgebraicJacobian.Picard.AffineOpenStalkLocalization
+import AlgebraicJacobian.Picard.GlueDescent
 import AlgebraicJacobian.Picard.LineBundleCoherence
 import AlgebraicJacobian.Cohomology.QcohTildeSections
 
@@ -142,6 +143,37 @@ theorem rankStratum_isLocallyFreeOfRank {S : Scheme.{u}}
       (pullback (stratumι G e hcov)).obj G :=
     ((pullbackComp (stratumι G e hcov) (chartLocus F e).ι).app F).symm
   exact isLocallyFreeOfRank_of_iso_general E hfree
+
+/-- A finitely presented module sheaf that is flat with constant point rank is
+locally free of that rank.  This is the arbitrary-base finite-flat bridge used
+in the Picard/Grassmannian construction: the identity of the base factors
+through the corresponding universal rank stratum, whose pulled-back module is
+already locally free. -/
+theorem isLocallyFreeOfRank_of_finitePresentation_flat_pointRank
+    {S : Scheme.{u}} [IsLocallyNoetherian S]
+    (F : S.Modules) [F.IsFinitePresentation] {e : ℕ}
+    (hflat : Scheme.CoherentSheafFlat (𝟙 S) F)
+    (hrank : ∀ s : S, pointRank S F s = e) :
+    SheafOfModules.IsLocallyFreeOfRank F e := by
+  haveI : F.IsQuasicoherent := inferInstance
+  have hflat_id : Scheme.CoherentSheafFlat (𝟙 S)
+      ((pullback (𝟙 S)).obj F) :=
+    coherentSheafFlat_of_iso (𝟙 S) ((pullbackId S).app F).symm hflat
+  have hrank_id : ∀ s : S, pointRank S F ((𝟙 S : S ⟶ S).base s) = e := by
+    intro s
+    simpa using hrank s
+  obtain ⟨l, hl, _⟩ :=
+    existsUnique_factor_rankStratum F e (𝟙 S) hflat_id hrank_id
+  have hstratum : SheafOfModules.IsLocallyFreeOfRank
+      ((pullback (rankStratumι F e)).obj F) e :=
+    rankStratum_isLocallyFreeOfRank F e
+  have hlpull : SheafOfModules.IsLocallyFreeOfRank
+      ((pullback l).obj ((pullback (rankStratumι F e)).obj F)) e :=
+    pullback_isLocallyFreeOfRank l hstratum
+  let E : (pullback l).obj ((pullback (rankStratumι F e)).obj F) ≅ F :=
+    (pullbackComp l (rankStratumι F e)).app F ≪≫
+      (pullbackCongr hl).app F ≪≫ (pullbackId S).app F
+  exact isLocallyFreeOfRank_of_iso_general E.symm hlpull
 
 /-- The locally closed locus on which a module has rank one. -/
 noncomputable abbrev lineBundleLocus {S : Scheme.{u}} (F : S.Modules)
