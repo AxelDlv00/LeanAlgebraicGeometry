@@ -14,10 +14,10 @@ The canonical exponential is defined from real invariant flows.  This module
 proves that it is also the unique additive complex-parameter map with the
 prescribed identity derivative.  The proof restricts a competing map to the
 real axis and the imaginary axis, applies real integral-curve uniqueness, and
-then uses the decomposition `z = z.re + z.im * I`.  The statements use the
-explicit manifold model `I`; they are a source-proximate producer and do not
-identify the intrinsic tangent space or the jointly parameterized source
-family.
+then uses the decomposition `z = z.re + z.im * I`.  The core argument uses the
+explicit manifold model `I`; the final theorem transports it to the intrinsic
+tangent fibre and records the jointly parameterized family, with regularity
+expressed in those model coordinates.
 -/
 
 set_option autoImplicit false
