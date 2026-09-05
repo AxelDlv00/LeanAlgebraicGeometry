@@ -11,6 +11,7 @@ import MumfordLib.ComplexUniformization
 import Mathlib.Algebra.Module.ZLattice.Basic
 import Mathlib.Topology.ContinuousMap.Basic
 import Mathlib.Topology.Algebra.Module.ContinuousLinearMap.Quotient
+import Mathlib.Topology.Covering.Quotient
 
 /-!
 # Compact targets and the canonical period kernel
@@ -200,6 +201,33 @@ theorem canonicalComplexExponentialAddHom_isLocalHomeomorph :
   refine ⟨O, hOopen.mem_nhds hxO, ?_⟩
   exact Topology.IsOpenEmbedding.of_continuous_injective_isOpenMap hcont
     (Set.injOn_iff_injective.mp hOinj) hopen
+
+@[simp]
+theorem canonicalComplexExponentialPeriodLattice_toAddSubgroup :
+    (canonicalComplexExponentialPeriodLattice (G := G) I).toAddSubgroup =
+      (canonicalComplexExponentialAddHom (G := G) I).ker := by
+  exact AddSubgroup.toIntSubmodule_toAddSubgroup
+    (canonicalComplexExponentialAddHom (G := G) I).ker
+
+/-- The canonical additive exponential is the quotient covering associated to
+its discrete period kernel. -/
+theorem canonicalComplexExponentialAddHom_isAddQuotientCoveringMap :
+    IsAddQuotientCoveringMap
+      (canonicalComplexExponentialAddHom (G := G) I)
+      (canonicalComplexExponentialPeriodLattice (G := G) I).toAddSubgroup := by
+  letI : IsTopologicalGroup G := topologicalGroup_of_lieGroup I ⊤
+  rw [canonicalComplexExponentialPeriodLattice_toAddSubgroup (G := G) I]
+  exact
+    (canonicalComplexExponential_isOpenQuotientMap (G := G) I).isQuotientMap
+      |>.isAddQuotientCoveringMap_of_isDiscrete_ker_addMonoidHom
+        (canonicalComplexExponential_kernel_isDiscrete (G := G) I)
+
+/-- The canonical complex exponential is a covering map. -/
+theorem canonicalComplexExponential_isCoveringMap :
+    IsCoveringMap (canonicalComplexExponential (G := G) I) := by
+  change IsCoveringMap (canonicalComplexExponentialAddHom (G := G) I)
+  exact
+    (canonicalComplexExponentialAddHom_isAddQuotientCoveringMap (G := G) I).isCoveringMap
 
 /-- The canonical period kernel is a full real `ℤ`-lattice in the tangent
    model.  This is the compact-target lattice theorem applied to the verified
