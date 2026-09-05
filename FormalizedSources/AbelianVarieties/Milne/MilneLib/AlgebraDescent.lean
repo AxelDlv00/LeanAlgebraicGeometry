@@ -127,6 +127,15 @@ theorem descentEquiv_tmul (D : DescentDatum A B R) [Module.Flat A B]
     D.descentEquiv (b ⊗ₜ x) = b • (x : R) :=
   D.comparison_tmul b x
 
+/-- Finite type descends from the faithfully flat base change algebra. -/
+theorem finiteType_descended_of_finiteType (D : DescentDatum A B R)
+    [Module.FaithfullyFlat A B] [Algebra.FiniteType B R] :
+    Algebra.FiniteType A D.descended := by
+  letI : Algebra.FiniteType B (B ⊗[A] D.descended) :=
+    Algebra.FiniteType.equiv (R := B) (A := R)
+      (B := B ⊗[A] D.descended) (by infer_instance) D.descentEquiv.symm
+  exact Algebra.FiniteType.of_finiteType_tensorProduct_of_faithfullyFlat (T := B)
+
 variable {S T : Type u} [CommRing S] [CommRing T]
   [Algebra A S] [Algebra B S] [IsScalarTower A B S]
   [Algebra A T] [Algebra B T] [IsScalarTower A B T]
