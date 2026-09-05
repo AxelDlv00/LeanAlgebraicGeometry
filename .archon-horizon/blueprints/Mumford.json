@@ -699,7 +699,7 @@
     },
     "states": {
       "blocked": 116,
-      "closed": 885,
+      "closed": 894,
       "formalized_open": 0,
       "informal": 212,
       "ready": 96
@@ -722,8 +722,16 @@
       "Mumford.Analytic.MDifferentiableAt.restrict_scalars_complex: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Mumford.Analytic.canonicalComplexExponential: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Mumford.Analytic.canonicalComplexExponentialAddHom: Lean declaration is not referenced by any blueprint \\lean{...}",
+      "Mumford.Analytic.canonicalComplexExponentialAddHomBranchAt: Lean declaration is not referenced by any blueprint \\lean{...}",
+      "Mumford.Analytic.canonicalComplexExponentialAddHomBranchAt_apply: Lean declaration is not referenced by any blueprint \\lean{...}",
+      "Mumford.Analytic.canonicalComplexExponentialAddHomBranchAt_apply_of_mem: Lean declaration is not referenced by any blueprint \\lean{...}",
+      "Mumford.Analytic.canonicalComplexExponentialAddHomBranchAt_source_iUnion_eq_univ: Lean declaration is not referenced by any blueprint \\lean{...}",
+      "Mumford.Analytic.canonicalComplexExponentialAddHomBranchAt_source_mem: Lean declaration is not referenced by any blueprint \\lean{...}",
+      "Mumford.Analytic.canonicalComplexExponentialAddHomBranchAt_symm: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Mumford.Analytic.canonicalComplexExponentialAddHom_apply: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Mumford.Analytic.canonicalComplexExponentialAddHom_continuous: Lean declaration is not referenced by any blueprint \\lean{...}",
+      "Mumford.Analytic.canonicalComplexExponentialAddHom_isLocalHomeomorph: Lean declaration is not referenced by any blueprint \\lean{...}",
+      "Mumford.Analytic.canonicalComplexExponentialAddHom_isLocallyInjective: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Mumford.Analytic.canonicalComplexExponentialAddHom_surjective: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Mumford.Analytic.canonicalComplexExponentialMonoidHom: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Mumford.Analytic.canonicalComplexExponentialMonoidHom_apply: Lean declaration is not referenced by any blueprint \\lean{...}",
@@ -745,16 +753,8 @@
       "Mumford.Analytic.canonicalComplexExponential_conjugation: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Mumford.Analytic.canonicalComplexExponential_continuous: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Mumford.Analytic.canonicalComplexExponential_exists_nhds_injOn: Lean declaration is not referenced by any blueprint \\lean{...}",
-      "Mumford.Analytic.canonicalComplexExponential_hasMFDerivAt_zero: Lean declaration is not referenced by any blueprint \\lean{...}",
-      "Mumford.Analytic.canonicalComplexExponential_isOpenQuotientMap: Lean declaration is not referenced by any blueprint \\lean{...}",
-      "Mumford.Analytic.canonicalComplexExponential_kernel_isDiscrete: Lean declaration is not referenced by any blueprint \\lean{...}",
-      "Mumford.Analytic.canonicalComplexExponential_mdifferentiable: Lean declaration is not referenced by any blueprint \\lean{...}",
-      "Mumford.Analytic.canonicalComplexExponential_neg: Lean declaration is not referenced by any blueprint \\lean{...}",
-      "Mumford.Analytic.canonicalComplexExponential_surjective: Lean declaration is not referenced by any blueprint \\lean{...}",
-      "Mumford.Analytic.canonicalComplexExponential_zero: Lean declaration is not referenced by any blueprint \\lean{...}",
-      "Mumford.Analytic.canonicalComplexFlow: Lean declaration is not referenced by any blueprint \\lean{...}",
-      "Mumford.Analytic.canonicalComplexFlow_add_parameter: Lean declaration is not referenced by any blueprint \\lean{...}",
-      "Mumford.Analytic.canonicalComplexFlow_contMDiff_of_vector: Lean declaration is not referenced by any blueprint \\lean{...}"
+      "Mumford.Analytic.canonicalComplexExponential_exists_nhds_injOn_at: Lean declaration is not referenced by any blueprint \\lean{...}",
+      "Mumford.Analytic.canonicalComplexExponential_hasMFDerivAt_zero: Lean declaration is not referenced by any blueprint \\lean{...}"
     ]
   },
   "nodes": [
@@ -4791,7 +4791,7 @@
     },
     {
       "chapter": "Analytic Theory",
-      "comment_count": 11,
+      "comment_count": 12,
       "dep_count": 0,
       "descendant_count": 2,
       "group": "c140",
