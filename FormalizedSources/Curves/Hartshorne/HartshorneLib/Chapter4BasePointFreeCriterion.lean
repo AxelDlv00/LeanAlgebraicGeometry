@@ -156,10 +156,11 @@ theorem basePointFreeLinearSystem_iff_jumpProj_surjective
 
 /-! ## Residue realization of the local jump -/
 
-/-- The quotient class of a local divisor section is carried by the canonical
-`jumpEquivResidueField` to the residue of its normalized function-field
-representative.  This is an intrinsic local residue statement; it is not yet
-the scheme-theoretic line-bundle evaluation map from the source proposition. -/
+/-- The quotient class of a local divisor section is carried by the chosen,
+uniformizer-based `jumpEquivResidueField` to the residue of its normalized
+function-field representative.  This is an intrinsic local residue statement;
+it is not yet the scheme-theoretic line-bundle evaluation map from the source
+proposition. -/
 theorem jumpProj_ne_zero_iff_jumpToResidue_ne_zero
     {x : X.left} (hx : x ≠ genericPoint X.left)
     (D : CurveDivisor k X) {U : X.left.Opens} (hxU : x ∈ U)
