@@ -20,9 +20,10 @@ kernel's degree-one absolute cohomology makes the quotient surjective on
 sections.  Affine quasi-coherent descent then makes its pushforward an
 epimorphism.
 
-This is the exact-sequence argument in Kleiman, *The Picard scheme*, `sb:Q`,
-TeX lines 1926--1934.  The vanishing hypothesis remains explicit here; its
-uniform geometric producer is a separate obligation.
+This isolates the terminal long-exact-sequence lifting substep corresponding
+to Kleiman, *The Picard scheme*, `sb:Q`, TeX lines 1926--1934.  Kleiman first
+derives a stronger higher-direct-image vanishing statement from fibrewise
+`H^1`; that uniform geometric producer remains a separate obligation here.
 -/
 
 set_option autoImplicit false
@@ -36,6 +37,10 @@ namespace AlgebraicGeometry
 namespace Scheme
 
 namespace Modules
+
+/- These local helpers mirror results in `DivGrassmannianEmbedding`.  They stay
+private here because importing that analytic module makes this focused
+cohomological producer inherit its hour-long elaboration path. -/
 
 private theorem tensorObj_functoriality_epi_right_for_divGrassmannianH1
     {X : Scheme.{u}} {M N N' : X.Modules} (g : N ⟶ N') [hg : Epi g] :
@@ -136,7 +141,9 @@ The long exact absolute-cohomology sequence then makes the quotient surjective
 on global sections, and affine quasi-coherent descent reflects that
 surjectivity to an epimorphism of pushed module sheaves.
 
-This is Kleiman, *The Picard scheme*, `sb:Q`, TeX lines 1926--1934. -/
+This is the terminal LES lifting substep corresponding to Kleiman,
+*The Picard scheme*, `sb:Q`, TeX lines 1926--1934; the preceding fibrewise
+`H^1`-to-higher-direct-image vanishing argument is not asserted here. -/
 theorem pushforward_twistQuotientMap_epi_of_kernel_absoluteCohomology_one_subsingleton
     {R : CommRingCat.{u}} {S X : Scheme.{u}} {π : X ⟶ S} [IsProper π]
     (f : Spec R ⟶ S) (L : X.Modules) (hL : LineBundle.IsLocallyTrivial L)
