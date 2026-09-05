@@ -60,26 +60,26 @@ theorem transportedMap_transition_comp_restrictionLeft_eq_right
     {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
     (P : Pic0FiniteStageGluePackage C F)
     (U V : Pic0FiniteStageChartIndex C) :
-    (pic0FiniteStageTransportedMap C P.L P.n P.m P.relation P.e
+    (pic0FiniteStageTransportedMap C P.models.L P.models.n P.models.m P.models.relation P.models.e
         (Sum.inr (U, V))).comp
-        (pic0FiniteStageTransportedMap C P.L P.n P.m P.relation P.e
+        (pic0FiniteStageTransportedMap C P.models.L P.models.n P.models.m P.models.relation P.models.e
           (Sum.inl (Sum.inl (V, U)))) =
-      pic0FiniteStageTransportedMap C P.L P.n P.m P.relation P.e
+      pic0FiniteStageTransportedMap C P.models.L P.models.n P.models.m P.models.relation P.models.e
         (Sum.inl (Sum.inr (U, V))) := by
   have hExact := transition_comp_restrictionLeft_eq_restrictionRight C U V
   apply DFunLike.ext _ _
   intro x
   change
-    (P.e (Sum.inr (U, V))).symm
+    (P.models.e (Sum.inr (U, V))).symm
       (pic0FiniteStageTransition C (U, V)
-        ((P.e (Sum.inr (V, U)))
-          ((P.e (Sum.inr (V, U))).symm
-            (pic0FiniteStageRestrictionLeft C V U ((P.e (Sum.inl V)) x))))) =
-    (P.e (Sum.inr (U, V))).symm
-      (pic0FiniteStageRestrictionRight C U V ((P.e (Sum.inl V)) x))
-  rw [(P.e (Sum.inr (V, U))).apply_symm_apply]
-  exact congrArg (P.e (Sum.inr (U, V))).symm
-    (DFunLike.congr_fun hExact ((P.e (Sum.inl V)) x))
+        ((P.models.e (Sum.inr (V, U)))
+          ((P.models.e (Sum.inr (V, U))).symm
+            (pic0FiniteStageRestrictionLeft C V U ((P.models.e (Sum.inl V)) x))))) =
+    (P.models.e (Sum.inr (U, V))).symm
+      (pic0FiniteStageRestrictionRight C U V ((P.models.e (Sum.inl V)) x))
+  rw [(P.models.e (Sum.inr (V, U))).apply_symm_apply]
+  exact congrArg (P.models.e (Sum.inr (U, V))).symm
+    (DFunLike.congr_fun hExact ((P.models.e (Sum.inl V)) x))
 
 set_option synthInstance.maxHeartbeats 3200000 in
 -- The reflected maps retain distinct dependent tensor-product instances.
@@ -91,22 +91,22 @@ theorem mapM_transition_comp_restrictionLeft_eq_right
     {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
     (P : Pic0FiniteStageGluePackage C F)
     (U V : Pic0FiniteStageChartIndex C) :
-    (P.mapM (Sum.inr (U, V))).comp
-        (P.mapM (Sum.inl (Sum.inl (V, U)))) =
-      P.mapM (Sum.inl (Sum.inr (U, V))) := by
-  apply DatG0.tensorProduct_algHom_comp_eq_of_baseChange P.M
-    (P.mapM (Sum.inl (Sum.inl (V, U))))
-    (P.mapM (Sum.inr (U, V)))
-    (P.mapM (Sum.inl (Sum.inr (U, V))))
-    (pic0FiniteStageTransportedMap C P.L P.n P.m P.relation P.e
+    (P.models.mapM (Sum.inr (U, V))).comp
+        (P.models.mapM (Sum.inl (Sum.inl (V, U)))) =
+      P.models.mapM (Sum.inl (Sum.inr (U, V))) := by
+  apply DatG0.tensorProduct_algHom_comp_eq_of_baseChange P.models.M
+    (P.models.mapM (Sum.inl (Sum.inl (V, U))))
+    (P.models.mapM (Sum.inr (U, V)))
+    (P.models.mapM (Sum.inl (Sum.inr (U, V))))
+    (pic0FiniteStageTransportedMap C P.models.L P.models.n P.models.m P.models.relation P.models.e
       (Sum.inl (Sum.inl (V, U))))
-    (pic0FiniteStageTransportedMap C P.L P.n P.m P.relation P.e
+    (pic0FiniteStageTransportedMap C P.models.L P.models.n P.models.m P.models.relation P.models.e
       (Sum.inr (U, V)))
-    (pic0FiniteStageTransportedMap C P.L P.n P.m P.relation P.e
+    (pic0FiniteStageTransportedMap C P.models.L P.models.n P.models.m P.models.relation P.models.e
       (Sum.inl (Sum.inr (U, V))))
-  · exact P.hmapM (Sum.inl (Sum.inl (V, U)))
-  · exact P.hmapM (Sum.inr (U, V))
-  · exact P.hmapM (Sum.inl (Sum.inr (U, V)))
+  · exact P.models.comparison (Sum.inl (Sum.inl (V, U)))
+  · exact P.models.comparison (Sum.inr (U, V))
+  · exact P.models.comparison (Sum.inl (Sum.inr (U, V)))
   · exact transportedMap_transition_comp_restrictionLeft_eq_right C P U V
 
 set_option synthInstance.maxHeartbeats 3200000 in
@@ -120,12 +120,12 @@ theorem scalarExtension_transition_comp_restrictionLeft_eq_right
     {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
     (P : Pic0FiniteStageGluePackage C F)
     (U V : Pic0FiniteStageChartIndex C) :
-    (AlgebraicJacobian.scalarExtensionMapOfAlgHom (R := P.M.1) (K := P.N.1)
-      (P.mapM (Sum.inr (U, V)))).comp
-      (AlgebraicJacobian.scalarExtensionMapOfAlgHom (R := P.M.1) (K := P.N.1)
-        (P.mapM (Sum.inl (Sum.inl (V, U))))) =
-    AlgebraicJacobian.scalarExtensionMapOfAlgHom (R := P.M.1) (K := P.N.1)
-      (P.mapM (Sum.inl (Sum.inr (U, V)))) := by
+    (AlgebraicJacobian.scalarExtensionMapOfAlgHom (R := P.models.M.1) (K := P.N.1)
+      (P.models.mapM (Sum.inr (U, V)))).comp
+      (AlgebraicJacobian.scalarExtensionMapOfAlgHom (R := P.models.M.1) (K := P.N.1)
+        (P.models.mapM (Sum.inl (Sum.inl (V, U))))) =
+    AlgebraicJacobian.scalarExtensionMapOfAlgHom (R := P.models.M.1) (K := P.N.1)
+      (P.models.mapM (Sum.inl (Sum.inr (U, V)))) := by
   rw [AlgebraicJacobian.scalarExtensionMapOfAlgHom_comp,
     mapM_transition_comp_restrictionLeft_eq_right C P U V]
   rfl

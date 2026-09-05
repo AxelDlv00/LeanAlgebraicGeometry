@@ -72,7 +72,7 @@ theorem glueData_f_comp_inclusion_comp_gluedMap
     (U V : Pic0FiniteStageChartIndex C) :
     P.glueData.f U V ≫ P.glueData.ι U ≫ P.gluedMap =
       overlapBaseChangeMap C P U V := by
-  rw [glueData_f_pinned C P U V, glueData_ι_gluedMap C P U]
+  rw [glueData_f C P U V, glueData_ι_gluedMap C P U]
   exact restrictionSpecMap_comp_chartBaseChangeMap C P U V
 
 set_option synthInstance.maxHeartbeats 3200000 in
@@ -112,8 +112,7 @@ theorem gluingOverlapIso_pre_fst
         (fun q => (gluingOverlapFlatteningIso C P U V).hom ≫ q)
         (pullback_congrHom_hom_fst_assoc
           (glueData_f_comp_inclusion_comp_gluedMap C P U V) rfl
-          (Spec.map (CommRingCat.ofHom
-            (restrictionBaseChangeRingHom C P U V))))).symm
+          (Spec.map (restrictionBaseChangeHom C P U V)))).symm
     refine Eq.trans ?_
       (congrArg
         (fun q =>
@@ -121,7 +120,7 @@ theorem gluingOverlapIso_pre_fst
             pullback.fst
               (P.glueData.f U V ≫ P.glueData.ι U ≫ P.gluedMap)
               (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k))) ≫ q)
-        (glueData_f_pinned C P U V))
+        (glueData_f C P U V))
     exact (gluingOverlapFlatteningIso_hom_comp_fst_comp_f C P U V).symm
   · simp only [Category.assoc]
     refine Eq.trans

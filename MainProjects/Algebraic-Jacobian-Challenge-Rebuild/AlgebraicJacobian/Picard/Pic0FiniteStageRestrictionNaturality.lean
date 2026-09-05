@@ -45,59 +45,59 @@ theorem restrictionBaseChangeMap_naturality
       (overlapRingBaseChangeIso C P U V).hom ≫
         Spec.map (CommRingCat.ofHom
           (exactRestrictionAlgHom C U V).toRingHom) := by
-  letI : Algebra.IsAlgebraic P.L.1 k := by infer_instance
-  letI : Algebra.IsAlgebraic P.M.1 k := by infer_instance
+  letI : Algebra.IsAlgebraic P.models.L.1 k := by infer_instance
+  letI : Algebra.IsAlgebraic P.models.M.1 k := by infer_instance
   /- Pin the chart and overlap carrier witnesses before specializing the generic
      affine-base-change square.  These carriers are reducible tensors, but the
      generic theorem compares their instance arguments definitionally. -/
   letI : CommRing
-      (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U) :=
+      (Pic0FiniteStageChartBaseChangeRing C P.models.L P.models.n P.models.m P.models.relation P.models.M P.N U) :=
     pic0FiniteStageChartBaseChangeCommRing
-      C P.L P.n P.m P.relation P.M P.N U
+      C P.models.L P.models.n P.models.m P.models.relation P.models.M P.N U
   letI : CommSemiring
-      (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U) :=
+      (Pic0FiniteStageChartBaseChangeRing C P.models.L P.models.n P.models.m P.models.relation P.models.M P.N U) :=
     (inferInstance : CommRing
-      (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U)).toCommSemiring
+      (Pic0FiniteStageChartBaseChangeRing C P.models.L P.models.n P.models.m P.models.relation P.models.M P.N U)).toCommSemiring
   letI : Semiring
-      (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U) :=
+      (Pic0FiniteStageChartBaseChangeRing C P.models.L P.models.n P.models.m P.models.relation P.models.M P.N U) :=
     (inferInstance : CommSemiring
-      (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U)).toSemiring
+      (Pic0FiniteStageChartBaseChangeRing C P.models.L P.models.n P.models.m P.models.relation P.models.M P.N U)).toSemiring
   letI : Algebra P.N.1
-      (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U) :=
+      (Pic0FiniteStageChartBaseChangeRing C P.models.L P.models.n P.models.m P.models.relation P.models.M P.N U) :=
     pic0FiniteStageChartBaseChangeAlgebra
-      C P.L P.n P.m P.relation P.M P.N U
+      C P.models.L P.models.n P.models.m P.models.relation P.models.M P.N U
   letI : CommRing
-      (Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M P.N U V) :=
+      (Pic0FiniteStageOverlapBaseChangeRing C P.models.L P.models.n P.models.m P.models.relation P.models.M P.N U V) :=
     pic0FiniteStageOverlapBaseChangeCommRing
-      C P.L P.n P.m P.relation P.M P.N U V
+      C P.models.L P.models.n P.models.m P.models.relation P.models.M P.N U V
   letI : CommSemiring
-      (Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M P.N U V) :=
+      (Pic0FiniteStageOverlapBaseChangeRing C P.models.L P.models.n P.models.m P.models.relation P.models.M P.N U V) :=
     (inferInstance : CommRing
-      (Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M P.N U V)).toCommSemiring
+      (Pic0FiniteStageOverlapBaseChangeRing C P.models.L P.models.n P.models.m P.models.relation P.models.M P.N U V)).toCommSemiring
   letI : Semiring
-      (Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M P.N U V) :=
+      (Pic0FiniteStageOverlapBaseChangeRing C P.models.L P.models.n P.models.m P.models.relation P.models.M P.N U V) :=
     (inferInstance : CommSemiring
-      (Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M P.N U V)).toSemiring
+      (Pic0FiniteStageOverlapBaseChangeRing C P.models.L P.models.n P.models.m P.models.relation P.models.M P.N U V)).toSemiring
   letI : Algebra P.N.1
-      (Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M P.N U V) :=
+      (Pic0FiniteStageOverlapBaseChangeRing C P.models.L P.models.n P.models.m P.models.relation P.models.M P.N U V) :=
     pic0FiniteStageOverlapBaseChangeAlgebra
-      C P.L P.n P.m P.relation P.M P.N U V
+      C P.models.L P.models.n P.models.m P.models.relation P.models.M P.N U V
   apply affineBaseChangeIso_trans_naturality
     P.N.1 k
-    (P.N.1 ⊗[P.M.1]
-      Pic0FiniteStageChartModelRing C P.L P.n P.m P.relation P.M U)
-    (P.N.1 ⊗[P.M.1]
-      Pic0FiniteStageOverlapModelRing C P.L P.n P.m P.relation P.M U V)
+    (P.N.1 ⊗[P.models.M.1]
+      Pic0FiniteStageChartModelRing C P.models.L P.models.n P.models.m P.models.relation P.models.M U)
+    (P.N.1 ⊗[P.models.M.1]
+      Pic0FiniteStageOverlapModelRing C P.models.L P.models.n P.models.m P.models.relation P.models.M U V)
     (Pic0FiniteStageRing C (Sum.inl U))
     (Pic0FiniteStageRing C (Sum.inr (U, V)))
-    (restrictionBaseChangeAlgHomPinned C P U V)
+    (restrictionBaseChangeAlgHom C P U V)
     (chartFinalBaseChangeEquiv C P U)
     (overlapFinalBaseChangeEquiv C P U V)
     (exactRestrictionAlgHom C U V)
   apply DFunLike.ext _ _
   intro x
   exact pic0FiniteStageFinalBaseChangeEquivPinned_naturality
-    C P.L P.n P.m P.relation P.e P.M P.mapM P.hmapM P.N
+    C P.models.L P.models.n P.models.m P.models.relation P.models.e P.models.M P.models.mapM P.models.comparison P.N
       (Sum.inl (Sum.inl (U, V))) x
 
 /-- The spectrum of the exact left restriction, followed by the chart's affine

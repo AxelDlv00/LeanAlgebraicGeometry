@@ -220,6 +220,26 @@ noncomputable def pic0FiniteStageTransitionBaseChange
   AlgebraicJacobian.scalarExtensionMapOfAlgHom
     (R := M.1) (K := N.1) (mapM (Sum.inr (U, V)))
 
+/-- The scalar-extended transition as a bundled commutative-ring morphism. -/
+noncomputable def pic0FiniteStageTransitionBaseChangeRingHom
+    {F : Type u} [Field F] [Algebra F k]
+    (L : DatG0.FinSubext F k)
+    (n m : Pic0FiniteStageRingIndex C -> Nat)
+    (relation : forall j, Fin (m j) -> MvPolynomial (Fin (n j)) L.1)
+    (M : DatG0.FinSubext L.1 k)
+    (mapM : forall q : Pic0FiniteStageMapIndex C,
+      Pic0FiniteStageModelRing C L n m relation M
+          (Pic0FiniteStageMapSource C q) →ₐ[M.1]
+        Pic0FiniteStageModelRing C L n m relation M
+          (Pic0FiniteStageMapTarget C q))
+    (N : DatG0.FinSubext M.1 k)
+    (U V : Pic0FiniteStageChartIndex C) :=
+  @CommRingCat.ofHom _ _
+    (pic0FiniteStageOverlapBaseChangeCommRing C L n m relation M N V U)
+    (pic0FiniteStageOverlapBaseChangeCommRing C L n m relation M N U V)
+    (pic0FiniteStageTransitionBaseChange
+      C L n m relation M mapM N U V).toRingHom
+
 /-- The scalar-extended left restriction as a bundled commutative-ring morphism.
 
 This is the stable scheme-facing API: its source and target remember the same hierarchy

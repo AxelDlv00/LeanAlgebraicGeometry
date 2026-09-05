@@ -43,20 +43,20 @@ noncomputable def rightRestrictionBaseChangeAlgHom
     {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
     (P : Pic0FiniteStageGluePackage C F) (U V : Pic0FiniteStageChartIndex C) :
     @AlgHom P.N.1
-      (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N V)
-      (Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M P.N U V)
+      (Pic0FiniteStageChartBaseChangeRing C P.models.L P.models.n P.models.m P.models.relation P.models.M P.N V)
+      (Pic0FiniteStageOverlapBaseChangeRing C P.models.L P.models.n P.models.m P.models.relation P.models.M P.N U V)
       (inferInstance : CommSemiring P.N.1)
       (pic0FiniteStageChartBaseChangeCommRing
-        C P.L P.n P.m P.relation P.M P.N V).toSemiring
+        C P.models.L P.models.n P.models.m P.models.relation P.models.M P.N V).toSemiring
       (pic0FiniteStageOverlapBaseChangeCommRing
-        C P.L P.n P.m P.relation P.M P.N U V).toSemiring
+        C P.models.L P.models.n P.models.m P.models.relation P.models.M P.N U V).toSemiring
       (pic0FiniteStageChartBaseChangeAlgebra
-        C P.L P.n P.m P.relation P.M P.N V)
+        C P.models.L P.models.n P.models.m P.models.relation P.models.M P.N V)
       (pic0FiniteStageOverlapBaseChangeAlgebra
-        C P.L P.n P.m P.relation P.M P.N U V) :=
+        C P.models.L P.models.n P.models.m P.models.relation P.models.M P.N U V) :=
   AlgebraicJacobian.scalarExtensionMapOfAlgHom
-    (R := P.M.1) (K := P.N.1)
-    (P.mapM (Sum.inl (Sum.inr (U, V))))
+    (R := P.models.M.1) (K := P.N.1)
+    (P.models.mapM (Sum.inl (Sum.inr (U, V))))
 
 set_option synthInstance.maxHeartbeats 3200000 in
 -- The pinned wrapper fixes both dependent tensor-product structures.
@@ -67,17 +67,17 @@ noncomputable def rightRestrictionBaseChangeAlgHomPinned
     {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
     (P : Pic0FiniteStageGluePackage C F) (U V : Pic0FiniteStageChartIndex C) :
     @AlgHom P.N.1
-      (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N V)
-      (Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M P.N U V)
+      (Pic0FiniteStageChartBaseChangeRing C P.models.L P.models.n P.models.m P.models.relation P.models.M P.N V)
+      (Pic0FiniteStageOverlapBaseChangeRing C P.models.L P.models.n P.models.m P.models.relation P.models.M P.N U V)
       (inferInstance : CommSemiring P.N.1)
       (pic0FiniteStageChartBaseChangeCommRing
-        C P.L P.n P.m P.relation P.M P.N V).toSemiring
+        C P.models.L P.models.n P.models.m P.models.relation P.models.M P.N V).toSemiring
       (pic0FiniteStageOverlapBaseChangeCommRing
-        C P.L P.n P.m P.relation P.M P.N U V).toSemiring
+        C P.models.L P.models.n P.models.m P.models.relation P.models.M P.N U V).toSemiring
       (pic0FiniteStageChartBaseChangeAlgebra
-        C P.L P.n P.m P.relation P.M P.N V)
+        C P.models.L P.models.n P.models.m P.models.relation P.models.M P.N V)
       (pic0FiniteStageOverlapBaseChangeAlgebra
-        C P.L P.n P.m P.relation P.M P.N U V) :=
+        C P.models.L P.models.n P.models.m P.models.relation P.models.M P.N U V) :=
   rightRestrictionBaseChangeAlgHom C P U V
 
 set_option synthInstance.maxHeartbeats 3200000 in
@@ -88,24 +88,24 @@ noncomputable def rightRestrictionBaseChangeRingHom
     {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
     (P : Pic0FiniteStageGluePackage C F) (U V : Pic0FiniteStageChartIndex C) :
     @RingHom
-      (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N V)
-      (Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M P.N U V)
+      (Pic0FiniteStageChartBaseChangeRing C P.models.L P.models.n P.models.m P.models.relation P.models.M P.N V)
+      (Pic0FiniteStageOverlapBaseChangeRing C P.models.L P.models.n P.models.m P.models.relation P.models.M P.N U V)
       (pic0FiniteStageChartBaseChangeCommRing
-        C P.L P.n P.m P.relation P.M P.N V).toNonAssocSemiring
+        C P.models.L P.models.n P.models.m P.models.relation P.models.M P.N V).toNonAssocSemiring
       (pic0FiniteStageOverlapBaseChangeCommRing
-        C P.L P.n P.m P.relation P.M P.N U V).toNonAssocSemiring :=
+        C P.models.L P.models.n P.models.m P.models.relation P.models.M P.N U V).toNonAssocSemiring :=
   @AlgHom.toRingHom P.N.1
-    (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N V)
-    (Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M P.N U V)
+    (Pic0FiniteStageChartBaseChangeRing C P.models.L P.models.n P.models.m P.models.relation P.models.M P.N V)
+    (Pic0FiniteStageOverlapBaseChangeRing C P.models.L P.models.n P.models.m P.models.relation P.models.M P.N U V)
     (inferInstance : CommSemiring P.N.1)
     (pic0FiniteStageChartBaseChangeCommRing
-      C P.L P.n P.m P.relation P.M P.N V).toSemiring
+      C P.models.L P.models.n P.models.m P.models.relation P.models.M P.N V).toSemiring
     (pic0FiniteStageOverlapBaseChangeCommRing
-      C P.L P.n P.m P.relation P.M P.N U V).toSemiring
+      C P.models.L P.models.n P.models.m P.models.relation P.models.M P.N U V).toSemiring
     (pic0FiniteStageChartBaseChangeAlgebra
-      C P.L P.n P.m P.relation P.M P.N V)
+      C P.models.L P.models.n P.models.m P.models.relation P.models.M P.N V)
     (pic0FiniteStageOverlapBaseChangeAlgebra
-      C P.L P.n P.m P.relation P.M P.N U V)
+      C P.models.L P.models.n P.models.m P.models.relation P.models.M P.N U V)
     (rightRestrictionBaseChangeAlgHomPinned C P U V)
 
 set_option synthInstance.maxHeartbeats 3200000 in
@@ -118,8 +118,8 @@ theorem rightRestrictionBaseChangeAlgHom_eq_direct
     (P : Pic0FiniteStageGluePackage C F) (U V : Pic0FiniteStageChartIndex C) :
     rightRestrictionBaseChangeAlgHom C P U V =
       AlgebraicJacobian.scalarExtensionMapOfAlgHom
-        (R := P.M.1) (K := P.N.1)
-        (P.mapM (Sum.inl (Sum.inr (U, V)))) := by
+        (R := P.models.M.1) (K := P.N.1)
+        (P.models.mapM (Sum.inl (Sum.inr (U, V)))) := by
   rfl
 
 end Pic0FiniteStageGluePackage
