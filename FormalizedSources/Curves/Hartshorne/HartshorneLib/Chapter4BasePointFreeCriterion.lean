@@ -248,10 +248,12 @@ jump projection. -/
   apply Subtype.ext
   rfl
 
-/-- The intrinsic residue-valued evaluation of a global divisor section.
+/-- A residue-coordinate evaluation of a global divisor section.
 
-It is obtained from `divisorSectionJumpEvaluation` by the canonical
-`jumpEquivResidueField`; no line-bundle frame is chosen. -/
+It is obtained from `divisorSectionJumpEvaluation` by the existing
+uniformizer-based equivalence `jumpEquivResidueField`.  Thus the residue
+coordinate depends on that choice (the zero-kernel and surjectivity statements
+do not), and no line-bundle frame is chosen. -/
 noncomputable def divisorSectionResidueEvaluation
     {x : X.left} (hx : x ≠ genericPoint X.left)
     (D : CurveDivisor k X) :
@@ -282,8 +284,8 @@ theorem divisorSectionResidueEvaluation_eq_zero_iff_mem_devissage
   exact jumpProj_ne_zero_iff_not_mem_divisorSections_devissage hx D s
 
 /-- Numerical base-point-freeness is equivalent to surjectivity of the
-intrinsic residue evaluation at every non-generic point.  The evaluation here
-is the canonical skyscraper quotient of `𝒪(D)`; identifying it with a chosen
+residue-coordinate evaluation at every non-generic point.  The underlying map
+is the intrinsic skyscraper quotient of `𝒪(D)`; identifying it with a chosen
 line-bundle fiber is a separate geometric lift. -/
 theorem basePointFreeLinearSystem_iff_divisorSectionResidueEvaluation_surjective
     (D : CurveDivisor k X) :
