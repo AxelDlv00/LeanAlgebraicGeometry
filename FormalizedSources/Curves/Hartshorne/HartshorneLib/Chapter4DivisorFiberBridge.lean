@@ -36,6 +36,34 @@ variable {k : Type u} [Field k] [IsAlgClosed k]
 variable {X : Over (Spec (CommRingCat.of k))} [IsIntegral X.left]
   [SmoothOfRelativeDimension 1 X.hom] [IsProper X.hom]
 
+/-! ## Valuation support for the lower lattice -/
+
+omit [IsAlgClosed k] [IsProper X.hom] in
+/-- Multiplication by an element of order at most `ofAdd (-1)` lowers a
+point-lattice bound by one.  This is the valuation calculation used when a
+maximal-ideal scalar is shown to kill a local jump. -/
+lemma pointLattice_mul_mem_sub_one {x : X.left}
+    (hx : x ≠ genericPoint X.left) {n : ℤ} {r g : X.left.functionField}
+    (hr : orderAt X.hom hx r ≤
+      ((Multiplicative.ofAdd (-1 : ℤ) : Multiplicative ℤ) :
+        WithZero (Multiplicative ℤ)))
+    (hg : g ∈ pointLattice (X := X) hx n) :
+    r * g ∈ pointLattice (X := X) hx (n - 1) := by
+  rw [mem_pointLattice] at hg ⊢
+  rw [map_mul]
+  calc
+    orderAt X.hom hx r * orderAt X.hom hx g ≤
+        ((Multiplicative.ofAdd (-1 : ℤ) : Multiplicative ℤ) :
+          WithZero (Multiplicative ℤ)) *
+          ((Multiplicative.ofAdd n : Multiplicative ℤ) :
+            WithZero (Multiplicative ℤ)) := by
+      exact mul_le_mul' hr hg
+    _ = ((Multiplicative.ofAdd (n - 1) : Multiplicative ℤ) :
+          WithZero (Multiplicative ℤ)) := by
+      rw [← WithZero.coe_mul, ← ofAdd_add]
+      congr 1
+      ring_nf
+
 /-! ## Quotient descent for additive maps -/
 
 /-- Descend an additive map through a submodule quotient when it vanishes on
