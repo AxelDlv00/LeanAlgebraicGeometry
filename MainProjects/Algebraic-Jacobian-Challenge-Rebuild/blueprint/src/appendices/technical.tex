@@ -159,9 +159,10 @@ still-sorry-bearing headline assembly are recorded below.\\
     \texttt{pic0RepresentableBy\_finiteStageBaseChange} is not a
     representability theorem over the finite stage.  Only (UC) followed by
     (Y) may cross R6.
-  \item \texttt{Pic0FiniteStageStableGluePackage} is not the R5--R7 carrier.
-    Until a checked legacy-to-stable carrier isomorphism exists, its stable
-    orbit wrappers cannot be spliced into this route.
+  \item The canonical \texttt{Pic0FiniteStageGluePackage} is the sole
+    finite-stage carrier on R5--R7.  Orbit and descent consumers use it
+    directly; no context wrapper, stable wrapper, or carrier transport is
+    part of the selected route.
   \item The Lean functor \texttt{pic0TypeFunctor} means the degree-zero
     etale-sheafified Picard functor.  No theorem currently identifies it with
     Kleiman's connected identity component, so those phrases are not
