@@ -610,5 +610,43 @@ theorem affineInvariantQuotientMap_mem_range_app_iff_fixed_basicOpen [Finite G]
   rw [affineInvariantQuotientMap_app_basicOpen_range (k := k) (A := A) (G := G) b]
   rfl
 
+/-- Every inverse image of an open in the affine invariant quotient is stable. -/
+theorem affineInvariantQuotientMap_preimage_isStableOpen
+    (U : (Spec (CommRingCat.of (FixedPoints.subalgebra k A G))).Opens) :
+    StableGroupAction.IsStableOpen (specAction G A)
+      ((affineInvariantQuotientMap (k := k) (A := A) (G := G)) ⁻¹ᵁ U) :=
+  StableGroupAction.isStableOpen_preimage_of_invariant (specAction G A)
+    affineInvariantQuotientMap specAction_hom_affineInvariantQuotientMap U
+
+/-- On every open of the affine quotient, the image of section pullback is
+exactly the sections fixed by the geometric group action. -/
+theorem affineInvariantQuotientMap_mem_range_app_iff_actApp [Finite G]
+    (U : (Spec (CommRingCat.of (FixedPoints.subalgebra k A G))).Opens)
+    (s : Γ(Spec (CommRingCat.of A),
+      (affineInvariantQuotientMap (k := k) (A := A) (G := G)) ⁻¹ᵁ U)) :
+    s ∈ Set.range ((affineInvariantQuotientMap (k := k) (A := A) (G := G)).app U).hom ↔
+      ∀ g : G, (StableGroupAction.actApp (specAction G A)
+        (affineInvariantQuotientMap_preimage_isStableOpen U) g).hom s = s := by
+  let X := Spec (CommRingCat.of A)
+  let q := affineInvariantQuotientMap (k := k) (A := A) (G := G)
+  constructor
+  · rintro ⟨t, rfl⟩ g
+    exact congrArg (fun f => f.hom t)
+      (StableGroupAction.app_actApp_of_invariant (specAction G A) q
+        specAction_hom_affineInvariantQuotientMap U g)
+  · intro hs
+    apply (affineInvariantQuotientMap_mem_range_app_iff_fixed_basicOpen U s).mpr
+    intro b hb
+    apply (invariantSourceBasicOpenPreimageSectionsEquiv_mem_fixedAway_iff b
+      (affineInvariantQuotientMap_preimage_isStableOpen (PrimeSpectrum.basicOpen b)) _).mpr
+    intro g
+    have hn := congrArg (fun f => f.hom s)
+      (StableGroupAction.actApp_map (specAction G A)
+        (affineInvariantQuotientMap_preimage_isStableOpen U)
+        (affineInvariantQuotientMap_preimage_isStableOpen (PrimeSpectrum.basicOpen b))
+        ((Opens.map q.base).monotone hb) g)
+    exact hn.symm.trans
+      (congrArg (X.presheaf.map ((Opens.map q.base).map (homOfLE hb)).op).hom (hs g))
+
 end InvariantLocalization
 end MilneLib
