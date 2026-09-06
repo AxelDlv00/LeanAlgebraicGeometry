@@ -8,7 +8,7 @@ import MilneLib.InvariantQuotient
 import Mathlib.FieldTheory.Galois.IsGaloisGroup
 
 /-!
-# Function fields of finite invariant quotients
+# Fraction fields of finite invariant rings
 
 The finite-group action on a domain extends canonically to its fraction field,
 which is Galois over the fraction field of the fixed subalgebra. Faithfulness
@@ -60,9 +60,9 @@ theorem fixedSubalgebra_fractionRing_isGaloisGroup [FaithfulSMul G A] :
   letI : IsGaloisGroup G S A := fixedSubalgebra_isGaloisGroup
   exact IsGaloisGroup.to_isFractionRing G S A (FractionRing S) (FractionRing A)
 
-/-- The function field of a finite invariant quotient is a Galois extension of
-the function field of the quotient.  The action is replaced internally by its
-finite image, so no faithfulness hypothesis on `G` is needed. -/
+/-- The fraction field of a domain is Galois over the fraction field of its
+fixed subalgebra. The action is replaced internally by its finite image, so no
+faithfulness hypothesis on `G` is needed. -/
 theorem fixedSubalgebra_fractionRing_isGalois :
     let S := FixedPoints.subalgebra k A G
     letI : Algebra S A := inferInstance
@@ -105,8 +105,8 @@ theorem fixedSubalgebra_fractionRing_isGalois :
     IsGaloisGroup.to_isFractionRing H S A (FractionRing S) (FractionRing A)
   exact IsGaloisGroup.isGalois H (FractionRing S) (FractionRing A)
 
-/-- In particular, the function-field extension of a finite invariant quotient
-is separable. -/
+/-- The fraction field of a domain is separable over the fraction field of its
+fixed subalgebra under a finite group action. -/
 theorem fixedSubalgebra_fractionRing_isSeparable :
     let S := FixedPoints.subalgebra k A G
     letI : Algebra S A := inferInstance
