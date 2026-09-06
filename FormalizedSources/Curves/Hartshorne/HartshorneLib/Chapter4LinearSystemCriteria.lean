@@ -259,5 +259,20 @@ theorem veryAmpleLinearSystem_of_degree_ge_two_mul_genus_plus_one
   exact h0_divisorSheaf_sub_two_points_sub_eq_two_of_degree_ge_two_mul_genus_plus_one
     (k := k) (X := X) sd hD hx hy
 
+/-- The degree bound from IV.3.2 supplies an explicit repeated-point tangent
+witness at every non-generic point. -/
+theorem exists_tangent_section_witness_of_degree_ge_two_mul_genus_plus_one
+    (sd : CurveSerreDualityData (k := k) (X := X))
+    {D : CurveDivisor k X}
+    (hD : 2 * (curveGenus (k := k) (X := X) : ℤ) + 1 ≤
+      CurveDivisor.degree D)
+    (x : X.left) (hx : x ≠ genericPoint X.left) :
+    ∃ s : divisorSections (CurveDivisor.devissageDivisor hx D) ⊤,
+      (s : X.left.functionField) ∉
+        divisorSections (CurveDivisor.devissageDivisor hx
+          (CurveDivisor.devissageDivisor hx D)) ⊤ := by
+  exact exists_tangent_section_witness_of_veryAmple
+    (veryAmpleLinearSystem_of_degree_ge_two_mul_genus_plus_one sd hD) x hx
+
 end
 end Hartshorne
