@@ -53,6 +53,23 @@ theorem isLineBundle_pullback_twistingSheafOne :
         (ProjectiveTwist.twistingSheafOne (k := k) (J := Fin (n + 1)))) := by
   exact ProjectiveTwist.isLineBundle_twistingSheafOne.pullback f
 
+/-! ### Selected denominator charts
+
+The global pullback is the object used by the projective morphism.  Its
+restriction to each selected local-ratio chart is the local object used in
+the eventual cocycle comparison with the denominator presentation of
+`divisorModule D`.
+-/
+
+theorem isLineBundle_restrict_pullback_twistingSheafOne
+    (x : NonGenericPoint X) :
+    IsLineBundle
+      ((Scheme.Modules.restrictFunctor
+          (selectedCoordinates (D := D) basis hD x).chart.U.ι).obj
+        ((Scheme.Modules.pullback f).obj
+          (ProjectiveTwist.twistingSheafOne (k := k) (J := Fin (n + 1))))) := by
+  exact (isLineBundle_pullback_twistingSheafOne basis hD).restrict _
+
 end BasePointFreeLocalRatioCover
 
 end
