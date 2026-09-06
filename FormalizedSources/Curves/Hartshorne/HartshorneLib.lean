@@ -52,6 +52,7 @@ import HartshorneLib.Chapter4DivisorModule
 import HartshorneLib.Chapter4ChiBase
 import HartshorneLib.Chapter4DivisorMultiplication
 import HartshorneLib.Chapter4DivisorSheafMul
+import HartshorneLib.Chapter4DivisorModuleMul
 import HartshorneLib.Chapter4Skyscraper
 import HartshorneLib.Chapter4SkyscraperCohomology
 import HartshorneLib.Chapter4DivisorDevissage
