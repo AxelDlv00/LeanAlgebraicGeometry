@@ -534,6 +534,200 @@ theorem quotientTripleRotationIso_hom_comp_ι [Finite G]
   have hι := fixedTripleQuotientIso_hom_comp_ι act p hact j l i
   exact congrArg (fun f => (F.inv ≫ S.hom) ≫ f) hι
 
+/-! ## Cyclic coherence of quotient rotations -/
+
+private lemma iso_cyclic_conjugation
+    {C : Type u} [Category C]
+    {A₁ A₂ A₃ Q₁ Q₂ Q₃ : C}
+    (F₁ : A₁ ≅ Q₁) (F₂ : A₂ ≅ Q₂) (F₃ : A₃ ≅ Q₃)
+    (S₁ : A₁ ≅ A₂) (S₂ : A₂ ≅ A₃) (S₃ : A₃ ≅ A₁)
+    (hS : S₁ ≪≫ S₂ ≪≫ S₃ = Iso.refl A₁) :
+    (F₁.symm ≪≫ S₁ ≪≫ F₂) ≪≫
+        (F₂.symm ≪≫ S₂ ≪≫ F₃) ≪≫
+        (F₃.symm ≪≫ S₃ ≪≫ F₁) = Iso.refl Q₁ := by
+  apply Iso.ext
+  simp only [Iso.trans_hom, Iso.symm_hom, Category.assoc]
+  simp only [Iso.hom_inv_id_assoc]
+  have hh := congrArg Iso.hom hS
+  simpa using congrArg (fun f => F₁.inv ≫ f ≫ F₁.hom) hh
+
+private lemma iso_transition_cocycle
+    {C : Type u} [Category C]
+    {A₁ A₂ A₃ Q₁ Q₂ Q₃ : C}
+    (F₁ : A₁ ≅ Q₁) (F₂ : A₂ ≅ Q₂) (F₃ : A₃ ≅ Q₃)
+    (R₁ : Q₁ ≅ Q₂) (R₂ : Q₂ ≅ Q₃) (R₃ : Q₃ ≅ Q₁)
+    (hR : R₁ ≪≫ R₂ ≪≫ R₃ = Iso.refl Q₁) :
+    (F₁.hom ≫ R₁.hom ≫ F₂.inv) ≫
+        (F₂.hom ≫ R₂.hom ≫ F₃.inv) ≫
+        (F₃.hom ≫ R₃.hom ≫ F₁.inv) = 𝟙 A₁ := by
+  simp only [Category.assoc]
+  have hh := congrArg Iso.hom hR
+  simpa using congrArg (fun f => F₁.hom ≫ f ≫ F₁.inv) hh
+
+/-- The three quotient-open rotations satisfy the cyclic cocycle.  This is the
+coherence needed when the triple charts are used as the transition objects of
+a quotient gluing datum. -/
+theorem quotientTripleRotation_cocycle [Finite G]
+    (p : X ⟶ Spec (CommRingCat.of k))
+    (hact : ∀ g : G, (act g).hom ≫ p = p)
+    (i j l : StableAffineOpen act) :
+    let m := overlap act j l
+    let n := overlap act l i
+    let o := overlap act i j
+    letI := sectionsAlgebra p i.U
+    letI := sectionsAlgebra p j.U
+    letI := sectionsAlgebra p l.U
+    letI := sectionsAlgebra p m.U
+    letI := sectionsAlgebra p n.U
+    letI := sectionsAlgebra p o.U
+    letI := sectionsAlgebra p (i.U ⊓ m.U)
+    letI := sectionsAlgebra p (j.U ⊓ n.U)
+    letI := sectionsAlgebra p (l.U ⊓ o.U)
+    letI := sectionsMulSemiringAction act i.stable
+    letI := sectionsMulSemiringAction act j.stable
+    letI := sectionsMulSemiringAction act l.stable
+    letI := sectionsMulSemiringAction act m.stable
+    letI := sectionsMulSemiringAction act n.stable
+    letI := sectionsMulSemiringAction act o.stable
+    letI := sectionsMulSemiringAction act (overlap_stable act i m)
+    letI := sectionsMulSemiringAction act (overlap_stable act j n)
+    letI := sectionsMulSemiringAction act (overlap_stable act l o)
+    letI := sectionsSMulCommClass act p hact i.stable
+    letI := sectionsSMulCommClass act p hact j.stable
+    letI := sectionsSMulCommClass act p hact l.stable
+    letI := sectionsSMulCommClass act p hact m.stable
+    letI := sectionsSMulCommClass act p hact n.stable
+    letI := sectionsSMulCommClass act p hact o.stable
+    letI := sectionsSMulCommClass act p hact (overlap_stable act i m)
+    letI := sectionsSMulCommClass act p hact (overlap_stable act j n)
+    letI := sectionsSMulCommClass act p hact (overlap_stable act l o)
+    quotientTripleRotationIso act p hact i j l ≪≫
+      quotientTripleRotationIso act p hact j l i ≪≫
+      quotientTripleRotationIso act p hact l i j = Iso.refl _ := by
+  let F₁ := fixedTripleQuotientIso act p hact i j l
+  let F₂ := fixedTripleQuotientIso act p hact j l i
+  let F₃ := fixedTripleQuotientIso act p hact l i j
+  let S₁ := fixedTripleSourceRotationIso act p hact i j l
+  let S₂ := fixedTripleSourceRotationIso act p hact j l i
+  let S₃ := fixedTripleSourceRotationIso act p hact l i j
+  change (F₁.symm ≪≫ S₁ ≪≫ F₂) ≪≫
+      (F₂.symm ≪≫ S₂ ≪≫ F₃) ≪≫
+      (F₃.symm ≪≫ S₃ ≪≫ F₁) = Iso.refl _
+  have hS : S₁ ≪≫ S₂ ≪≫ S₃ = Iso.refl _ := by
+    simpa only [S₁, S₂, S₃] using
+      (fixedTripleSourceRotation_cocycle act p hact i j l)
+  exact iso_cyclic_conjugation F₁ F₂ F₃ S₁ S₂ S₃ hS
+
+/-! ## Quotient-open transition maps -/
+
+/-- The transition map between the two quotient-open pullbacks obtained by
+rotating an ordered triple.  The pullback presentations make this a map of
+the actual quotient opens, rather than only an equality between their affine
+coordinate presentations. -/
+noncomputable def quotientTripleTransition [Finite G]
+    (p : X ⟶ Spec (CommRingCat.of k))
+    (hact : ∀ g : G, (act g).hom ≫ p = p)
+    (i j l : StableAffineOpen act) :
+    let m := overlap act j l
+    let n := overlap act l i
+    letI := sectionsAlgebra p i.U
+    letI := sectionsAlgebra p j.U
+    letI := sectionsAlgebra p m.U
+    letI := sectionsAlgebra p n.U
+    letI := sectionsAlgebra p (i.U ⊓ m.U)
+    letI := sectionsAlgebra p (j.U ⊓ n.U)
+    letI := sectionsMulSemiringAction act i.stable
+    letI := sectionsMulSemiringAction act j.stable
+    letI := sectionsMulSemiringAction act m.stable
+    letI := sectionsMulSemiringAction act n.stable
+    letI := sectionsMulSemiringAction act (overlap_stable act i m)
+    letI := sectionsMulSemiringAction act (overlap_stable act j n)
+    letI := sectionsSMulCommClass act p hact i.stable
+    letI := sectionsSMulCommClass act p hact j.stable
+    letI := sectionsSMulCommClass act p hact m.stable
+    letI := sectionsSMulCommClass act p hact n.stable
+    letI := sectionsSMulCommClass act p hact (overlap_stable act i m)
+    letI := sectionsSMulCommClass act p hact (overlap_stable act j n)
+    pullback (quotientOverlapι act p hact i j)
+        (quotientOverlapι act p hact i l) ⟶
+      pullback (quotientOverlapι act p hact j l)
+        (quotientOverlapι act p hact j i) := by
+  let m := overlap act j l
+  let n := overlap act l i
+  letI := sectionsAlgebra p i.U
+  letI := sectionsAlgebra p j.U
+  letI := sectionsAlgebra p m.U
+  letI := sectionsAlgebra p n.U
+  letI := sectionsAlgebra p (i.U ⊓ m.U)
+  letI := sectionsAlgebra p (j.U ⊓ n.U)
+  letI := sectionsMulSemiringAction act i.stable
+  letI := sectionsMulSemiringAction act j.stable
+  letI := sectionsMulSemiringAction act m.stable
+  letI := sectionsMulSemiringAction act n.stable
+  letI := sectionsMulSemiringAction act (overlap_stable act i m)
+  letI := sectionsMulSemiringAction act (overlap_stable act j n)
+  letI := sectionsSMulCommClass act p hact i.stable
+  letI := sectionsSMulCommClass act p hact j.stable
+  letI := sectionsSMulCommClass act p hact m.stable
+  letI := sectionsSMulCommClass act p hact n.stable
+  letI := sectionsSMulCommClass act p hact (overlap_stable act i m)
+  letI := sectionsSMulCommClass act p hact (overlap_stable act j n)
+  exact (pullbackOverlapIsoTriple act p hact i j l).hom ≫
+    (quotientTripleRotationIso act p hact i j l).hom ≫
+      (pullbackOverlapIsoTriple act p hact j l i).inv
+
+/-- The quotient-open transitions satisfy the usual three-chart cocycle. -/
+theorem quotientTripleTransition_cocycle [Finite G]
+    (p : X ⟶ Spec (CommRingCat.of k))
+    (hact : ∀ g : G, (act g).hom ≫ p = p)
+    (i j l : StableAffineOpen act) :
+    let m := overlap act j l
+    let n := overlap act l i
+    let o := overlap act i j
+    letI := sectionsAlgebra p i.U
+    letI := sectionsAlgebra p j.U
+    letI := sectionsAlgebra p l.U
+    letI := sectionsAlgebra p m.U
+    letI := sectionsAlgebra p n.U
+    letI := sectionsAlgebra p o.U
+    letI := sectionsAlgebra p (i.U ⊓ m.U)
+    letI := sectionsAlgebra p (j.U ⊓ n.U)
+    letI := sectionsAlgebra p (l.U ⊓ o.U)
+    letI := sectionsMulSemiringAction act i.stable
+    letI := sectionsMulSemiringAction act j.stable
+    letI := sectionsMulSemiringAction act l.stable
+    letI := sectionsMulSemiringAction act m.stable
+    letI := sectionsMulSemiringAction act n.stable
+    letI := sectionsMulSemiringAction act o.stable
+    letI := sectionsMulSemiringAction act (overlap_stable act i m)
+    letI := sectionsMulSemiringAction act (overlap_stable act j n)
+    letI := sectionsMulSemiringAction act (overlap_stable act l o)
+    letI := sectionsSMulCommClass act p hact i.stable
+    letI := sectionsSMulCommClass act p hact j.stable
+    letI := sectionsSMulCommClass act p hact l.stable
+    letI := sectionsSMulCommClass act p hact m.stable
+    letI := sectionsSMulCommClass act p hact n.stable
+    letI := sectionsSMulCommClass act p hact o.stable
+    letI := sectionsSMulCommClass act p hact (overlap_stable act i m)
+    letI := sectionsSMulCommClass act p hact (overlap_stable act j n)
+    letI := sectionsSMulCommClass act p hact (overlap_stable act l o)
+    quotientTripleTransition act p hact i j l ≫
+      quotientTripleTransition act p hact j l i ≫
+      quotientTripleTransition act p hact l i j = 𝟙 _ := by
+  let F₁ := pullbackOverlapIsoTriple act p hact i j l
+  let F₂ := pullbackOverlapIsoTriple act p hact j l i
+  let F₃ := pullbackOverlapIsoTriple act p hact l i j
+  let R₁ := quotientTripleRotationIso act p hact i j l
+  let R₂ := quotientTripleRotationIso act p hact j l i
+  let R₃ := quotientTripleRotationIso act p hact l i j
+  change (F₁.hom ≫ R₁.hom ≫ F₂.inv) ≫
+      (F₂.hom ≫ R₂.hom ≫ F₃.inv) ≫
+      (F₃.hom ≫ R₃.hom ≫ F₁.inv) = 𝟙 _
+  have hR : R₁ ≪≫ R₂ ≪≫ R₃ = Iso.refl _ := by
+    simpa only [R₁, R₂, R₃] using
+      (quotientTripleRotation_cocycle act p hact i j l)
+  exact iso_transition_cocycle F₁ F₂ F₃ R₁ R₂ R₃ hR
+
 end StableAffineOpen
 end StableGroupAction
 end MilneLib
