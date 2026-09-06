@@ -21,6 +21,8 @@ The main results prove that this identification carries actual presheaf
 restriction maps to the fixed-localized transition maps constructed in
 `InvariantLocalizationTransitions`, and that the affine quotient map on
 sections is the inclusion of the fixed subring into the full localization.
+On arbitrary opens, sheaf gluing and the comparison with geometric pullback
+identify its image with the fixed subring of actual structure-sheaf sections.
 -/
 
 set_option autoImplicit false
@@ -647,6 +649,28 @@ theorem affineInvariantQuotientMap_mem_range_app_iff_actApp [Finite G]
         ((Opens.map q.base).monotone hb) g)
     exact hn.symm.trans
       (congrArg (X.presheaf.map ((Opens.map q.base).map (homOfLE hb)).op).hom (hs g))
+
+/-- The section-image statement as equality with the intrinsic fixed subring
+for the left action on sections. -/
+theorem affineInvariantQuotientMap_app_range [Finite G]
+    (U : (Spec (CommRingCat.of (FixedPoints.subalgebra k A G))).Opens) :
+    letI := StableGroupAction.sectionsMulSemiringAction (specAction G A)
+      (affineInvariantQuotientMap_preimage_isStableOpen U)
+    ((affineInvariantQuotientMap (k := k) (A := A) (G := G)).app U).hom.range =
+      FixedPoints.subring Γ(Spec (CommRingCat.of A),
+        (affineInvariantQuotientMap (k := k) (A := A) (G := G)) ⁻¹ᵁ U) G := by
+  letI := StableGroupAction.sectionsMulSemiringAction (specAction G A)
+    (affineInvariantQuotientMap_preimage_isStableOpen U)
+  ext s
+  change s ∈ Set.range ((affineInvariantQuotientMap (k := k) (A := A) (G := G)).app U).hom ↔
+    ∀ g : G, (StableGroupAction.actApp (specAction G A)
+      (affineInvariantQuotientMap_preimage_isStableOpen U) g⁻¹).hom s = s
+  rw [affineInvariantQuotientMap_mem_range_app_iff_actApp]
+  constructor
+  · intro hs g
+    exact hs g⁻¹
+  · intro hs g
+    simpa only [inv_inv] using hs g⁻¹
 
 end InvariantLocalization
 end MilneLib
