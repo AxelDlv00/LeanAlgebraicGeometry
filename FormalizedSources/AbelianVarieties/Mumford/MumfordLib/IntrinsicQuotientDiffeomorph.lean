@@ -224,4 +224,80 @@ theorem intrinsicComplexExponentialQuotientDiffeomorph_add
   rw [map_add]
   rfl
 
+/- The quotient identification preserves the identity element. -/
+theorem intrinsicComplexExponentialQuotientDiffeomorph_zero
+    {g : ℕ} (coordinate : E ≃L[ℂ] GenusComplexVector g) :
+    let e : E ≃ₗ[ℂ] GroupLieAlgebra I G :=
+      complexLieAlgebraEquiv (G := G) I
+    letI : NormedAddCommGroup (GroupLieAlgebra I G) :=
+      NormedAddCommGroup.induced _ _
+        e.symm.toLinearMap.toAddMonoidHom e.symm.injective
+    letI : NormedSpace ℂ (GroupLieAlgebra I G) :=
+      NormedSpace.induced ℂ _ _ e.symm.toLinearMap
+    letI : UniformSpace (GroupLieAlgebra I G) :=
+      @PseudoMetricSpace.toUniformSpace (GroupLieAlgebra I G) inferInstance
+    letI : TopologicalSpace (GroupLieAlgebra I G) :=
+      @UniformSpace.toTopologicalSpace (GroupLieAlgebra I G) inferInstance
+    let d := intrinsicComplexVectorLatticeExponentialData
+      (G := G) I coordinate
+    intrinsicComplexExponentialQuotientDiffeomorph (G := G) I coordinate 0 = 1 := by
+  let e : E ≃ₗ[ℂ] GroupLieAlgebra I G :=
+    complexLieAlgebraEquiv (G := G) I
+  letI : NormedAddCommGroup (GroupLieAlgebra I G) :=
+    NormedAddCommGroup.induced _ _
+      e.symm.toLinearMap.toAddMonoidHom e.symm.injective
+  letI : NormedSpace ℂ (GroupLieAlgebra I G) :=
+    NormedSpace.induced ℂ _ _ e.symm.toLinearMap
+  letI : UniformSpace (GroupLieAlgebra I G) :=
+    @PseudoMetricSpace.toUniformSpace (GroupLieAlgebra I G) inferInstance
+  letI : TopologicalSpace (GroupLieAlgebra I G) :=
+    @UniformSpace.toTopologicalSpace (GroupLieAlgebra I G) inferInstance
+  let d := intrinsicComplexVectorLatticeExponentialData (G := G) I coordinate
+  have h := intrinsicComplexExponentialQuotientDiffeomorph_mk
+    (G := G) I coordinate (0 : GroupLieAlgebra I G)
+  simpa using h
+
+/- The quotient identification preserves inversion. -/
+theorem intrinsicComplexExponentialQuotientDiffeomorph_neg
+    {g : ℕ} (coordinate : E ≃L[ℂ] GenusComplexVector g) :
+    let e : E ≃ₗ[ℂ] GroupLieAlgebra I G :=
+      complexLieAlgebraEquiv (G := G) I
+    letI : NormedAddCommGroup (GroupLieAlgebra I G) :=
+      NormedAddCommGroup.induced _ _
+        e.symm.toLinearMap.toAddMonoidHom e.symm.injective
+    letI : NormedSpace ℂ (GroupLieAlgebra I G) :=
+      NormedSpace.induced ℂ _ _ e.symm.toLinearMap
+    letI : UniformSpace (GroupLieAlgebra I G) :=
+      @PseudoMetricSpace.toUniformSpace (GroupLieAlgebra I G) inferInstance
+    letI : TopologicalSpace (GroupLieAlgebra I G) :=
+      @UniformSpace.toTopologicalSpace (GroupLieAlgebra I G) inferInstance
+    let d := intrinsicComplexVectorLatticeExponentialData
+      (G := G) I coordinate
+    ∀ q : GroupLieAlgebra I G ⧸ d.ambientPeriodLattice,
+      intrinsicComplexExponentialQuotientDiffeomorph (G := G) I coordinate (-q) =
+        (intrinsicComplexExponentialQuotientDiffeomorph (G := G) I coordinate q)⁻¹ := by
+  let e : E ≃ₗ[ℂ] GroupLieAlgebra I G :=
+    complexLieAlgebraEquiv (G := G) I
+  letI : NormedAddCommGroup (GroupLieAlgebra I G) :=
+    NormedAddCommGroup.induced _ _
+      e.symm.toLinearMap.toAddMonoidHom e.symm.injective
+  letI : NormedSpace ℂ (GroupLieAlgebra I G) :=
+    NormedSpace.induced ℂ _ _ e.symm.toLinearMap
+  letI : UniformSpace (GroupLieAlgebra I G) :=
+    @PseudoMetricSpace.toUniformSpace (GroupLieAlgebra I G) inferInstance
+  letI : TopologicalSpace (GroupLieAlgebra I G) :=
+    @UniformSpace.toTopologicalSpace (GroupLieAlgebra I G) inferInstance
+  let d := intrinsicComplexVectorLatticeExponentialData (G := G) I coordinate
+  change ∀ q : GroupLieAlgebra I G ⧸ d.ambientPeriodLattice, _
+  intro q
+  obtain ⟨v, hv⟩ := QuotientAddGroup.mk'_surjective d.ambientPeriodLattice q
+  rw [← hv]
+  change intrinsicComplexExponentialQuotientDiffeomorph (G := G) I coordinate
+      (QuotientAddGroup.mk' d.ambientPeriodLattice (-v)) =
+    (intrinsicComplexExponentialQuotientDiffeomorph (G := G) I coordinate
+      (QuotientAddGroup.mk' d.ambientPeriodLattice v))⁻¹
+  rw [intrinsicComplexExponentialQuotientDiffeomorph_mk,
+    intrinsicComplexExponentialQuotientDiffeomorph_mk,
+    intrinsicComplexExponential_neg]
+
 end Mumford.Analytic

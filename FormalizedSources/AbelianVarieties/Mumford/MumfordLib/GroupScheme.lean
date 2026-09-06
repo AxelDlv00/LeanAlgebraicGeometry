@@ -446,6 +446,26 @@ completeness (properness) and geometric integrality separately. -/
 def IsAbelianVariety (G : Over (Spec (.of K))) [GrpObj G] : Prop :=
   IsProper G.hom ∧ GeometricallyIntegral G.hom
 
+/- The geometric hypotheses expose the standard scheme properties used by
+   the later algebraic arguments. -/
+theorem isIntegral_left_of_isAbelianVariety
+    (G : Over (Spec (.of K))) [GrpObj G] (hG : IsAbelianVariety G) :
+    IsIntegral G.left := by
+  letI : GeometricallyIntegral G.hom := hG.2
+  exact GeometricallyIntegral.isIntegral_of_subsingleton G.hom
+
+theorem isReduced_left_of_isAbelianVariety
+    (G : Over (Spec (.of K))) [GrpObj G] (hG : IsAbelianVariety G) :
+    IsReduced G.left := by
+  letI : IsIntegral G.left := isIntegral_left_of_isAbelianVariety G hG
+  infer_instance
+
+theorem locallyOfFiniteType_of_isAbelianVariety
+    (G : Over (Spec (.of K))) [GrpObj G] (hG : IsAbelianVariety G) :
+    LocallyOfFiniteType G.hom := by
+  letI : IsProper G.hom := hG.1
+  exact IsProper.toLocallyOfFiniteType
+
 theorem isCommMonObj_of_isAbelianVariety
     (G : Over (Spec (.of K))) [GrpObj G] (hG : IsAbelianVariety G) :
     IsCommMonObj G := by
