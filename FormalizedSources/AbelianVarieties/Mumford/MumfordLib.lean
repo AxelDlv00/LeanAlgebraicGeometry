@@ -34,6 +34,7 @@ import MumfordLib.CanonicalComplexQuotient
 import MumfordLib.ComplexVectorLatticeTopology
 import MumfordLib.ComplexQuotientAtlas
 import MumfordLib.ComplexExponentialAtlas
+import MumfordLib.ComplexLatticeLieGroup
 import MumfordLib.IntrinsicComplexUniformization
 import MumfordLib.ComplexLatticeAtlas
 import MumfordLib.ArbitraryLatticeTorsion
