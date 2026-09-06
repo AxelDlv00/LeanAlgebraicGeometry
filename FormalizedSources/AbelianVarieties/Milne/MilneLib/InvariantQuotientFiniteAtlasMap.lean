@@ -46,7 +46,9 @@ noncomputable def finiteStableQuotientChartMap
   letI := sectionsAlgebra p C.U
   letI := sectionsMulSemiringAction act C.stable
   letI := sectionsSMulCommClass act p hact C.stable
-  rw [finiteStableAffineCover_X act h i]
+  dsimp [finiteStableAffineCover, finiteStableAffineChart]
+  change C.U.toScheme ⟶
+    (finiteStableQuotientCrossChartDatum act p hact h).U i
   exact stableAffineQuotientMap act p hact C
 
 /-- A finite-cover source-map package, conditional on the displayed overlap
