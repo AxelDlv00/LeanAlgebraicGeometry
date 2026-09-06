@@ -2,14 +2,14 @@ id: Milne
 title: Milne Abelian Varieties formalization
 projects:
 - Milne
-summary: Source-faithful Milne frontier. The affine finite-group quotient core, stable-localization/sheaf-topology
-  substrate, principal-chart open-immersion implication, and stable-affine overlap
-  quotient identifications are verified. This round adds faithfully-flat finite module/algebra
-  descent producers and canonical overlap transition isomorphisms for explicitly supplied
-  data. Global finite quotients still require Scheme.GlueData chart transitions, triple
-  cocycles, structure-sheaf comparison, finiteness, and universality; finite-Galois,
-  quasi-projective, coherent-sheaf descent, symmetric-power existence, and remaining
-  abelian-variety geometry remain pending. No source-node completion is claimed.
+summary: Source-faithful Milne frontier. The affine finite-group quotient core, stable-localization
+  and invariant-sheaf chart substrate, flat module/algebra descent producers, and
+  canonical finite stable-affine quotient GlueData are verified. Its canonical projection
+  is surjective, quotient on topology, orbit-exact on points, and finite under [LocallyOfFiniteType
+  p]. The finite-quotient source theorem still needs invariant structure-sheaf effectivity,
+  target variety properties, universality/uniqueness, and free-action etaleness; finite-Galois
+  and coherent-sheaf descent, symmetric-power existence, and remaining abelian-variety
+  geometry also remain pending. No source-node completion is claimed.
 status: active
 kind: proof
 priority: high
@@ -34,8 +34,10 @@ metadata:
     projects: Milne
   owner: fs-milne
   milestone: Milne
-  updated_at: '2026-09-05T22:33:13.813845+00:00'
+  updated_at: '2026-09-06T09:23:10.136795+00:00'
   pinned_commits:
+  - 5bd74c9f017967524997cba2f77bde8b9667b4c2
+  - 935c2b2c1f471bface1e35c7bd5eb05ad839aa42
   - d68da97136
   - a73a33d965
   - cca019a5827b5cd10e59e65bec543ef9147b1150
