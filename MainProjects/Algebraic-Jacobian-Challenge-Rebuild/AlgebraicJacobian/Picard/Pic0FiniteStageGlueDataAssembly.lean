@@ -180,7 +180,7 @@ private noncomputable def assemblyTripleTransition
     (P : Pic0FiniteStageGlueContext C F) (U V W : Pic0FiniteStageChartIndex C) :=
   conjugateAlgHom
     (assemblyTensorEquiv C P V W U) (assemblyTensorEquiv C P U V W)
-    (P.thetaN (U, (V, W)))
+    (Pic0FiniteStageGlueContext.thetaN C P (U, (V, W)))
 
 set_option synthInstance.maxHeartbeats 400000 in
 set_option maxHeartbeats 12800000 in
@@ -194,7 +194,7 @@ private theorem assemblyTripleTransition_face
         (assemblyTransition C P U V) := by
   let D := P
   let N := P.N
-  let thetaN := P.thetaN
+  let thetaN := Pic0FiniteStageGlueContext.thetaN C P
   let comparison := P.tripleComparison
   let Q := pic0FiniteStageTripleTransitionFacePackage
     C D.L D.n D.m D.relation D.M D.mapM D.e D.comparison
@@ -265,13 +265,15 @@ private theorem assemblyTripleTransition_cocycle
     C D.L D.n D.m D.relation D.e D.M D.mapM D.comparison
   have hcycle := pic0FiniteStageTripleTransitionModel_cocycle
     C D.L D.n D.m D.relation D.M D.mapM Q N
-      P.thetaN P.tripleComparison U V W
+      Pic0FiniteStageGlueContext.thetaN C P
+        (Pic0FiniteStageGlueContext.tripleComparison C P) U V W
   exact conjugateAlgHom_threeCycle
     (assemblyTensorEquiv C P U V W)
     (assemblyTensorEquiv C P V W U)
     (assemblyTensorEquiv C P W U V)
-    (P.thetaN (U, (V, W))) (P.thetaN (V, (W, U)))
-    (P.thetaN (W, (U, V))) hcycle
+    (Pic0FiniteStageGlueContext.thetaN C P (U, (V, W)))
+    (Pic0FiniteStageGlueContext.thetaN C P (V, (W, U)))
+    (Pic0FiniteStageGlueContext.thetaN C P (W, (U, V))) hcycle
 
 set_option synthInstance.maxHeartbeats 1600000 in
 set_option maxHeartbeats 12800000 in
