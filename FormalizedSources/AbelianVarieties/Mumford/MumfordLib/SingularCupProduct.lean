@@ -174,7 +174,10 @@ theorem singularCochainCupOne_cocycle
   apply integralSingularCochain_ext
   intro σ
   rw [singularCochainCupOne_coboundary_eval]
-  simp [singularCochainCupOne]
+  rw [singularCochainCupOne_eval, singularCochainCupOne_eval,
+    singularCochainCupOne_eval, singularCochainCupOne_eval]
+  simp only [Fin.isValue, Nat.reduceAdd, ModuleCat.hom_comp, LinearMap.coe_comp,
+    Function.comp_apply, Limits.comp_zero, ModuleCat.hom_zero, LinearMap.zero_apply]
   have h20 :
       (TopCat.toSSet.obj X).δ 2 ((TopCat.toSSet.obj X).δ 0 σ) =
         (TopCat.toSSet.obj X).δ 0 ((TopCat.toSSet.obj X).δ 3 σ) := by
