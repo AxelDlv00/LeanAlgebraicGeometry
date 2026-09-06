@@ -13,7 +13,9 @@ import MilneLib.InvariantQuotientAtlasMap
 This module connects the concrete stable-affine quotient charts to the generic
 source-cover descent interface.  The first bridge is the canonical affine
 invariant-quotient projection.  Its restriction to an actual chart
-intersection factors through the descended quotient overlap.
+intersection factors through the descended quotient overlap.  The transported
+chart map also retains the surjectivity and quotient-topology properties of the
+affine invariant quotient.
 -/
 
 set_option autoImplicit false
@@ -46,6 +48,42 @@ noncomputable def stableAffineQuotientMap
   letI := sectionsSMulCommClass act p hact i.stable
   exact i.affine.isoSpec.hom ≫
     affineInvariantQuotientMap (k := k) (A := Γ(X, i.U)) (G := G)
+
+/-- The invariant quotient projection of a stable affine chart is surjective. -/
+theorem stableAffineQuotientMap_surjective
+    (p : X ⟶ Spec (CommRingCat.of k))
+    (hact : ∀ g : G, (act g).hom ≫ p = p)
+    (i : StableAffineOpen act) :
+    letI := sectionsAlgebra p i.U
+    letI := sectionsMulSemiringAction act i.stable
+    letI := sectionsSMulCommClass act p hact i.stable
+    Function.Surjective (stableAffineQuotientMap act p hact i).base := by
+  letI := sectionsAlgebra p i.U
+  letI := sectionsMulSemiringAction act i.stable
+  letI := sectionsSMulCommClass act p hact i.stable
+  change Function.Surjective
+    ((affineInvariantQuotientMap (k := k) (A := Γ(X, i.U)) (G := G)).base ∘
+      i.affine.isoSpec.hom.base)
+  exact affineInvariantQuotientMap_surjective.comp
+    i.affine.isoSpec.hom.homeomorph.surjective
+
+/-- The topology on a stable affine quotient chart is the quotient topology. -/
+theorem stableAffineQuotientMap_isQuotientMap
+    (p : X ⟶ Spec (CommRingCat.of k))
+    (hact : ∀ g : G, (act g).hom ≫ p = p)
+    (i : StableAffineOpen act) :
+    letI := sectionsAlgebra p i.U
+    letI := sectionsMulSemiringAction act i.stable
+    letI := sectionsSMulCommClass act p hact i.stable
+    Topology.IsQuotientMap (stableAffineQuotientMap act p hact i).base := by
+  letI := sectionsAlgebra p i.U
+  letI := sectionsMulSemiringAction act i.stable
+  letI := sectionsSMulCommClass act p hact i.stable
+  change Topology.IsQuotientMap
+    ((affineInvariantQuotientMap (k := k) (A := Γ(X, i.U)) (G := G)).base ∘
+      i.affine.isoSpec.hom.base)
+  exact affineInvariantQuotientMap_isQuotientMap.comp
+    i.affine.isoSpec.hom.homeomorph.isQuotientMap
 
 omit [Finite G] in
 /-- Restricting the affine presentation of a stable chart to an intersection
