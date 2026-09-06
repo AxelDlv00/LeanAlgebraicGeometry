@@ -15,7 +15,8 @@ the generic stable-chart overlap calculation supplies the exact pullback
 compatibility required by `SourceChartMaps`.  This module consequently removes
 the conditional compatibility argument from the finite-cover projection and
 proves that the resulting global projection is surjective and carries the
-quotient topology.
+quotient topology.  It also identifies each source chart as the exact inverse
+image, and hence the pullback, of its corresponding glued quotient chart.
 -/
 
 set_option autoImplicit false
@@ -208,6 +209,106 @@ theorem finiteStableCanonicalQuotientProjection_isQuotientMap :
     exact ((finiteStableAffineCover act h).f i).continuous.isOpen_preimage _ hU
   · intro hU
     exact (finiteStableCanonicalQuotientProjection act p hact h).continuous.isOpen_preimage U hU
+
+/-- On a selected source chart, the canonical projection pulls a glued target
+chart back to the actual intersection of the two stable affine charts. -/
+theorem finiteStableQuotientChartProjection_preimage_opensRange
+    (i j : (finiteStableAffineCover act h).I₀) :
+    (finiteStableQuotientChartMap act p hact h j ≫
+        (finiteStableQuotientCrossChartDatum act p hact h).toGlueData.ι j) ⁻¹ᵁ
+      ((finiteStableQuotientCrossChartDatum act p hact h).toGlueData.ι i).opensRange =
+      (finiteStableAffineChart act h j).U.ι ⁻¹ᵁ
+        (finiteStableAffineChart act h i).U := by
+  letI := sectionsAlgebra p (finiteStableAffineChart act h j).U
+  letI := sectionsMulSemiringAction act
+    (finiteStableAffineChart act h j).stable
+  letI := sectionsSMulCommClass act p hact
+    (finiteStableAffineChart act h j).stable
+  rw [Scheme.Hom.comp_preimage]
+  change stableAffineQuotientMap act p hact
+      (finiteStableAffineChart act h j) ⁻¹ᵁ
+      ((stableQuotientGlueData act p hact
+          (finiteStableAffineChart act h)).ι j ⁻¹ᵁ
+        ((stableQuotientGlueData act p hact
+          (finiteStableAffineChart act h)).ι i).opensRange) = _
+  calc
+    _ = stableAffineQuotientMap act p hact
+          (finiteStableAffineChart act h j) ⁻¹ᵁ
+        quotientOverlapOpen act p hact
+          (finiteStableAffineChart act h j)
+          (finiteStableAffineChart act h i) :=
+      congrArg
+        (fun U => stableAffineQuotientMap act p hact
+          (finiteStableAffineChart act h j) ⁻¹ᵁ U)
+        (stableQuotientGlueData_chart_preimage_opensRange act p hact
+          (finiteStableAffineChart act h) i j)
+    _ = (finiteStableAffineChart act h j).U.ι ⁻¹ᵁ
+          ((finiteStableAffineChart act h j).U ⊓
+            (finiteStableAffineChart act h i).U) :=
+      stableAffineQuotientMap_preimage_quotientOverlapOpen act p hact
+        (finiteStableAffineChart act h j) (finiteStableAffineChart act h i)
+    _ = (finiteStableAffineChart act h j).U.ι ⁻¹ᵁ
+          (finiteStableAffineChart act h i).U := by
+      have htop :
+          (finiteStableAffineChart act h j).U.ι ⁻¹ᵁ
+              (finiteStableAffineChart act h j).U = ⊤ := by
+        calc
+          _ = (finiteStableAffineChart act h j).U.ι ⁻¹ᵁ
+                (finiteStableAffineChart act h j).U.ι.opensRange :=
+            congrArg
+              (fun U => (finiteStableAffineChart act h j).U.ι ⁻¹ᵁ U)
+              (Scheme.Opens.opensRange_ι
+                (finiteStableAffineChart act h j).U).symm
+          _ = ⊤ := Scheme.Hom.preimage_opensRange _
+      rw [Scheme.Hom.preimage_inf, htop, top_inf_eq]
+
+/-- The inverse image of a glued quotient chart under the global canonical
+projection is exactly the stable affine source chart from which it was built. -/
+theorem finiteStableCanonicalQuotientProjection_preimage_opensRange
+    (i : (finiteStableAffineCover act h).I₀) :
+    finiteStableCanonicalQuotientProjection act p hact h ⁻¹ᵁ
+        ((finiteStableQuotientCrossChartDatum act p hact h).toGlueData.ι i).opensRange =
+      (finiteStableAffineChart act h i).U := by
+  ext x
+  obtain ⟨j, y, rfl⟩ := (finiteStableAffineCover act h).exists_eq x
+  change finiteStableCanonicalQuotientProjection act p hact h
+        ((finiteStableAffineCover act h).f j y) ∈
+          ((finiteStableQuotientCrossChartDatum act p hact h).toGlueData.ι i).opensRange ↔
+      (finiteStableAffineCover act h).f j y ∈
+        (finiteStableAffineChart act h i).U
+  rw [← Scheme.Hom.comp_apply,
+    finiteStableCover_f_finiteStableCanonicalQuotientProjection,
+    finiteStableAffineCover_f]
+  change y ∈
+        (finiteStableQuotientChartMap act p hact h j ≫
+          (finiteStableQuotientCrossChartDatum act p hact h).toGlueData.ι j) ⁻¹ᵁ
+            ((finiteStableQuotientCrossChartDatum act p hact h).toGlueData.ι i).opensRange ↔
+      y ∈ (finiteStableAffineChart act h j).U.ι ⁻¹ᵁ
+        (finiteStableAffineChart act h i).U
+  rw [finiteStableQuotientChartProjection_preimage_opensRange]
+  rfl
+
+set_option backward.isDefEq.respectTransparency false in
+/-- Each stable source chart is the pullback of its glued quotient chart along
+the global canonical projection. -/
+theorem finiteStableQuotientChart_isPullback
+    (i : (finiteStableAffineCover act h).I₀) :
+    IsPullback
+      (finiteStableQuotientChartMap act p hact h i)
+      ((finiteStableAffineCover act h).f i)
+      ((finiteStableQuotientCrossChartDatum act p hact h).toGlueData.ι i)
+      (finiteStableCanonicalQuotientProjection act p hact h) := by
+  let D := finiteStableQuotientGlueData act p hact h
+  change IsPullback
+    (finiteStableQuotientChartMap act p hact h i)
+    ((finiteStableAffineCover act h).f i) (D.ι i)
+    (finiteStableCanonicalQuotientProjection act p hact h)
+  letI := Scheme.GlueData.ι_isOpenImmersion D i
+  apply IsOpenImmersion.isPullback
+  · exact finiteStableCover_f_finiteStableCanonicalQuotientProjection
+      act p hact h i
+  · rw [finiteStableCanonicalQuotientProjection_preimage_opensRange]
+    simp only [finiteStableAffineCover_f, Scheme.Opens.opensRange_ι]
 
 end FiniteCover
 
