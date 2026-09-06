@@ -66,6 +66,59 @@ theorem germ_mem_range_stalkMap_of_affine_factorization
       simp only [Category.assoc])
   exact heq
 
+/-- Surjectivity on stalks of a map through an affine chart expresses every
+source germ as a fraction of pullbacks of affine functions. -/
+theorem exists_stalk_fraction_of_affine_factorization
+    {Z Y : Scheme.{u}} (U : Z.Opens) (A : CommRingCat.{u})
+    (h : A ⟶ Γ(Z, U)) (j : Spec A ⟶ Y) (p : U)
+    (hsurj : Function.Surjective
+      ((U.toSpecΓ ≫ Spec.map h ≫ j).stalkMap p).hom)
+    (z : Z.presheaf.stalk p.1) :
+    ∃ a b : A,
+      IsUnit ((Z.presheaf.germ U p.1 p.2).hom (h.hom b)) ∧
+        z * (Z.presheaf.germ U p.1 p.2).hom (h.hom b) =
+          (Z.presheaf.germ U p.1 p.2).hom (h.hom a) := by
+  let f : U.toScheme ⟶ Spec A := U.toSpecΓ ≫ Spec.map h
+  let e := U.ι.stalkMap p
+  letI : Algebra A ((Spec A).presheaf.stalk (f p)) :=
+    StructureSheaf.stalkAlgebra A (f p)
+  letI : IsLocalization.AtPrime ((Spec A).presheaf.stalk (f p)) (f p).asIdeal :=
+    StructureSheaf.IsLocalization.to_stalk A (f p)
+  have happ : (Scheme.ΓSpecIso A).inv ≫ f.appTop = h ≫ U.topIso.inv := by
+    dsimp only [f]
+    rw [Scheme.Hom.comp_appTop, Scheme.Opens.toSpecΓ_appTop]
+    simp only [← Category.assoc, Scheme.ΓSpecIso_naturality,
+      Iso.inv_hom_id, Category.id_comp]
+  have hcomm (a : A) :
+      (f.stalkMap p).hom (algebraMap A ((Spec A).presheaf.stalk (f p)) a) =
+        e.hom ((Z.presheaf.germ U p.1 p.2).hom (h.hom a)) := by
+    change (f.stalkMap p).hom
+      ((Spec A).presheaf.germ ⊤ (f p) trivial ((Scheme.ΓSpecIso A).inv a)) = _
+    rw [Scheme.Hom.germ_stalkMap_apply]
+    exact congrArg (fun g : A ⟶ U.toScheme.presheaf.stalk p => g.hom a)
+      (show (Scheme.ΓSpecIso A).inv ≫ f.appTop ≫
+          U.toScheme.presheaf.germ ⊤ p trivial =
+        h ≫ Z.presheaf.germ U p.1 p.2 ≫ e by
+        rw [show e = U.ι.stalkMap p from rfl, open_germ_stalkMap,
+          ← Category.assoc, happ]
+        simp only [Category.assoc])
+  obtain ⟨t, ht⟩ := hsurj (e.hom z)
+  let s := (j.stalkMap (f p)).hom t
+  have hs : (f.stalkMap p).hom s = e.hom z := by
+    change ((f ≫ j).stalkMap p).hom t = _ at ht
+    rw [Scheme.Hom.stalkMap_comp] at ht
+    exact ht
+  obtain ⟨⟨a, b⟩, hab⟩ := IsLocalization.surj (f p).asIdeal.primeCompl s
+  refine ⟨a, b, ?_, ?_⟩
+  · have hu := (IsLocalization.map_units ((Spec A).presheaf.stalk (f p)) b).map
+      (f.stalkMap p).hom
+    rw [hcomm] at hu
+    exact (isUnit_map_iff e.hom _).mp hu
+  · apply (ConcreteCategory.bijective_of_isIso e).1
+    have heq := congrArg (f.stalkMap p).hom hab
+    exact (e.hom.map_mul z _).trans (by
+      simpa only [map_mul, hs, hcomm] using heq)
+
 variable {k : Type u} [Field k] [IsAlgClosed k]
 variable {X : Over (Spec (CommRingCat.of k))} [IsIntegral X.left]
   [SmoothOfRelativeDimension 1 X.hom] [IsProper X.hom]
@@ -113,6 +166,62 @@ theorem germ_regularizedLinearForm_mem_range_stalkMap
   rw [hz] at hrange
   rw [r.chartMap_eq_fromOpen]
   exact hrange
+
+/-- If a local-ratio chart is surjective on stalks, its coordinate germs
+express every source germ as a fraction of polynomial expressions. -/
+theorem exists_polynomial_stalk_fraction_of_surjective
+    (r : LocalRatioRegularization a) (p : a.chart.U)
+    (hsurj : Function.Surjective (r.chartMap.stalkMap p).hom)
+    (z : X.left.presheaf.stalk p.1) :
+    let g := (X.left.presheaf.germ a.chart.U p.1 p.2).hom
+    let ψ := MvPolynomial.eval₂Hom (g.comp (X.left.overAlgebraMap k a.chart.U))
+      (fun j => g (r.regularized j))
+    ∃ P Q : MvPolynomial (Fin (n + 1)) k,
+      IsUnit (ψ Q) ∧ z * ψ Q = ψ P := by
+  letI : Algebra k Γ(X.left, a.chart.U) :=
+    (X.left.overAlgebraMap k a.chart.U).toAlgebra
+  let A := HomogeneousLocalization.Away
+    (MvPolynomial.homogeneousSubmodule (Fin (n + 1)) k)
+    (MvPolynomial.X a.denominator_index)
+  let h : A →+* Γ(X.left, a.chart.U) :=
+    ProjectiveCoordinates.chartHom (k := k) a.denominator_index r.regularized
+      r.regularized_denominator_eq_one
+  let g := (X.left.presheaf.germ a.chart.U p.1 p.2).hom
+  let ψ := MvPolynomial.eval₂Hom (g.comp (X.left.overAlgebraMap k a.chart.U))
+    (fun j => g (r.regularized j))
+  have heval (P : MvPolynomial (Fin (n + 1)) k) :
+      g (ProjectiveCoordinates.eval (k := k) r.regularized P) = ψ P := by
+    induction P using MvPolynomial.induction_on with
+    | C c =>
+        simp only [ProjectiveCoordinates.eval, ψ, MvPolynomial.eval₂Hom_C,
+          RingHom.comp_apply]
+        rfl
+    | add P Q hP hQ => simp only [map_add, hP, hQ]
+    | mul_X P j hP =>
+        simp only [map_mul, ProjectiveCoordinates.eval_X, hP]
+        simp only [ψ, MvPolynomial.eval₂Hom_X']
+  have hrepresent (w : A) : ∃ P : MvPolynomial (Fin (n + 1)) k, g (h w) = ψ P := by
+    obtain ⟨m, P, hP, rfl⟩ := HomogeneousLocalization.Away.mk_surjective
+      (MvPolynomial.homogeneousSubmodule (Fin (n + 1)) k)
+      (ProjectiveCoordinates.X_mem_deg_one a.denominator_index) w
+    refine ⟨P, ?_⟩
+    rw [show h = ProjectiveCoordinates.chartHom (k := k) a.denominator_index
+      r.regularized r.regularized_denominator_eq_one from rfl,
+      ProjectiveCoordinates.chartHom_mk]
+    exact heval P
+  obtain ⟨v, w, hw, hv⟩ := exists_stalk_fraction_of_affine_factorization a.chart.U
+    (CommRingCat.of A) (CommRingCat.ofHom h)
+    (Proj.awayι (MvPolynomial.homogeneousSubmodule (Fin (n + 1)) k)
+      (MvPolynomial.X a.denominator_index)
+      (ProjectiveCoordinates.X_mem_deg_one a.denominator_index) Nat.zero_lt_one)
+    p (by rw [r.chartMap_eq_fromOpen] at hsurj; exact hsurj) z
+  obtain ⟨P, hP⟩ := hrepresent v
+  obtain ⟨Q, hQ⟩ := hrepresent w
+  refine ⟨P, Q, ?_, ?_⟩
+  · exact hQ ▸ hw
+  · change z * ψ Q = ψ P
+    rw [← hQ, ← hP]
+    exact hv
 
 end LocalRatioRegularization
 
