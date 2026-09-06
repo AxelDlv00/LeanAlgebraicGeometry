@@ -6,6 +6,8 @@ Authors: The Mumford Contributors
 
 import MumfordLib.CanonicalComplexQuotient
 import MumfordLib.ComplexExponentialAtlas
+import MumfordLib.IntrinsicComplexUniformization
+import MumfordLib.LocalDiffeomorphDescent
 import MumfordLib.TranslationTopology
 import Mathlib.Geometry.Manifold.Diffeomorph
 import Mathlib.Geometry.Manifold.LocalDiffeomorph
@@ -13,12 +15,12 @@ import Mathlib.Geometry.Manifold.LocalDiffeomorph
 /-!
 # Diffeomorphic quotient bridge for the canonical candidate
 
-The quotient atlas already provides local diffeomorphisms for the quotient
-projection.  This file supplies the complementary all-point local result:
-after translating the identity-neighborhood inverse-function certificate for
-the canonical exponential, the candidate is a local diffeomorphism everywhere.
-The statements are deliberately about the canonical candidate and its explicit
-model quotient; they do not assert a source-level uniformization theorem.
+The quotient projection and the canonical exponential are local complex
+diffeomorphisms. Smooth descent along these maps makes the induced quotient
+equivalence a complex `C¹` diffeomorphism, respecting the group operations.
+The quotient uses its explicit lattice branch atlas and the target uses its
+original Lie-group charts. The tangent model has a supplied complex coordinate;
+the source-level identification with the intrinsic exponential remains separate.
 -/
 
 set_option autoImplicit false
@@ -123,6 +125,113 @@ theorem canonicalComplexExponential_isLocalDiffeomorph
       (canonicalComplexExponential (G := G) I) := by
   intro x
   exact canonicalComplexExponential_isLocalDiffeomorphAt_of_additive I x
+
+section Quotient
+
+open Uniformization ComplexVectorLatticeExponentialData
+
+variable {E H G : Type*}
+  [NormedAddCommGroup E] [NormedSpace ℂ E]
+  [TopologicalSpace H] (I : ModelWithCorners ℂ E H)
+  [TopologicalSpace G] [ChartedSpace H G] [CommGroup G]
+  [LieGroup I ω G]
+  [CompleteSpace E] [T2Space G] [I.Boundaryless]
+  [CompactSpace G] [PreconnectedSpace G]
+
+/-- The canonical exponential identifies its period quotient, equipped with
+the lattice branch atlas, with the original complex Lie group by a complex
+`C¹` diffeomorphism. The supplied coordinate only selects the lattice atlas. -/
+noncomputable def canonicalComplexExponentialQuotientDiffeomorph
+    {g : ℕ} (coordinate : E ≃L[ℂ] GenusComplexVector g) :
+    let d := canonicalComplexVectorLatticeExponentialData (G := G) I coordinate
+    letI : ChartedSpace E (E ⧸ d.ambientPeriodLattice) :=
+      analyticQuotientChartedSpace d
+    Diffeomorph (𝓘(ℂ, E)) I (E ⧸ d.ambientPeriodLattice) G 1 := by
+  let d := canonicalComplexVectorLatticeExponentialData (G := G) I coordinate
+  letI : ChartedSpace E (E ⧸ d.ambientPeriodLattice) :=
+    analyticQuotientChartedSpace d
+  let e : (E ⧸ d.ambientPeriodLattice) ≃ G :=
+    d.quotientAddEquiv.toEquiv.trans Additive.toMul
+  let p : E → E ⧸ d.ambientPeriodLattice := QuotientAddGroup.mk
+  have he (v : E) : e (p v) = canonicalComplexExponential (G := G) I v := by
+    change Additive.toMul
+      (d.quotientAddEquiv (QuotientAddGroup.mk' d.ambientPeriodLattice v)) = _
+    rw [d.quotientAddEquiv_mk]
+    rfl
+  have he_comp : (e : (E ⧸ d.ambientPeriodLattice) → G) ∘ p =
+      canonicalComplexExponential (G := G) I := funext he
+  have he_symm_comp : (e.symm : G → E ⧸ d.ambientPeriodLattice) ∘
+      canonicalComplexExponential (G := G) I = p := by
+    funext v
+    exact e.symm_apply_eq.mpr (he v).symm
+  have hp : IsLocalDiffeomorph (𝓘(ℂ, E)) (𝓘(ℂ, E)) ω p :=
+    analyticQuotient_mk_isLocalDiffeomorph d
+  have hexp := canonicalComplexExponential_isLocalDiffeomorph (G := G) I
+  refine { toEquiv := e, contMDiff_toFun := ?_, contMDiff_invFun := ?_ }
+  · apply contMDiff_of_comp_surjective_localDiffeomorph
+      (show (1 : ℕ∞ω) ≤ ω from le_top) hp
+      (QuotientAddGroup.mk'_surjective d.ambientPeriodLattice)
+    rw [he_comp]
+    exact hexp.contMDiff
+  · apply contMDiff_of_comp_surjective_localDiffeomorph le_rfl hexp
+      (canonicalComplexExponential_surjective (G := G) I)
+    rw [he_symm_comp]
+    exact hp.contMDiff.of_le le_top
+
+/-- The quotient diffeomorphism is the first-isomorphism equivalence on points. -/
+@[simp]
+theorem canonicalComplexExponentialQuotientDiffeomorph_apply
+    {g : ℕ} (coordinate : E ≃L[ℂ] GenusComplexVector g)
+    (q : E ⧸ (canonicalComplexVectorLatticeExponentialData
+      (G := G) I coordinate).ambientPeriodLattice) :
+    canonicalComplexExponentialQuotientDiffeomorph (G := G) I coordinate q =
+      Additive.toMul ((canonicalComplexVectorLatticeExponentialData
+        (G := G) I coordinate).quotientAddEquiv q) := rfl
+
+/-- The quotient diffeomorphism sends a tangent representative to its exponential. -/
+@[simp]
+theorem canonicalComplexExponentialQuotientDiffeomorph_mk
+    {g : ℕ} (coordinate : E ≃L[ℂ] GenusComplexVector g) (v : E) :
+    canonicalComplexExponentialQuotientDiffeomorph (G := G) I coordinate
+        (QuotientAddGroup.mk' (canonicalComplexVectorLatticeExponentialData
+          (G := G) I coordinate).ambientPeriodLattice v) =
+      canonicalComplexExponential (G := G) I v := by
+  rw [canonicalComplexExponentialQuotientDiffeomorph_apply,
+    quotientAddEquiv_mk]
+  rfl
+
+/-- The inverse recovers the period class of any exponential preimage. -/
+@[simp]
+theorem canonicalComplexExponentialQuotientDiffeomorph_symm_exp
+    {g : ℕ} (coordinate : E ≃L[ℂ] GenusComplexVector g) (v : E) :
+    letI : ChartedSpace E (E ⧸ (canonicalComplexVectorLatticeExponentialData
+        (G := G) I coordinate).ambientPeriodLattice) :=
+      analyticQuotientChartedSpace
+        (canonicalComplexVectorLatticeExponentialData (G := G) I coordinate)
+    (canonicalComplexExponentialQuotientDiffeomorph (G := G) I coordinate).symm
+        (canonicalComplexExponential (G := G) I v) =
+      QuotientAddGroup.mk' (canonicalComplexVectorLatticeExponentialData
+        (G := G) I coordinate).ambientPeriodLattice v := by
+  letI : ChartedSpace E (E ⧸ (canonicalComplexVectorLatticeExponentialData
+      (G := G) I coordinate).ambientPeriodLattice) :=
+    analyticQuotientChartedSpace
+      (canonicalComplexVectorLatticeExponentialData (G := G) I coordinate)
+  rw [← canonicalComplexExponentialQuotientDiffeomorph_mk I coordinate v]
+  exact (canonicalComplexExponentialQuotientDiffeomorph
+    (G := G) I coordinate).symm_apply_apply _
+
+/-- The complex diffeomorphism carries quotient addition to the original group law. -/
+theorem canonicalComplexExponentialQuotientDiffeomorph_add
+    {g : ℕ} (coordinate : E ≃L[ℂ] GenusComplexVector g)
+    (q r : E ⧸ (canonicalComplexVectorLatticeExponentialData
+      (G := G) I coordinate).ambientPeriodLattice) :
+    canonicalComplexExponentialQuotientDiffeomorph (G := G) I coordinate (q + r) =
+      canonicalComplexExponentialQuotientDiffeomorph (G := G) I coordinate q *
+        canonicalComplexExponentialQuotientDiffeomorph (G := G) I coordinate r := by
+  simp only [canonicalComplexExponentialQuotientDiffeomorph_apply, map_add]
+  rfl
+
+end Quotient
 
 end
 end Analytic
