@@ -77,4 +77,33 @@ def compactComplexLieGroupFundamentalGroupPeriodEquiv :
   rw [hperiod] at h
   exact h
 
+/- The additive presentation is the form consumed by integral cohomology:
+   characters of the fundamental group become linear maps on the period
+   lattice.  It is derived from the multiplicative equivalence above, so no
+   additional choice of generators is introduced. -/
+def compactComplexLieGroupFundamentalGroupPeriodAddEquiv :
+    letI : FiniteDimensional ℂ E :=
+      FiniteDimensional.of_locallyCompact_manifold G I
+    letI : CompleteSpace E := FiniteDimensional.complete ℂ E
+    letI : IsMulCommutative G := complexLieGroup_isMulCommutative (G := G) I
+    letI : CommGroup G := inferInstance
+    Additive (FundamentalGroup G 1) ≃+
+      intrinsicComplexExponentialPeriodLattice (G := G) I := by
+  letI : FiniteDimensional ℂ E :=
+    FiniteDimensional.of_locallyCompact_manifold G I
+  letI : CompleteSpace E := FiniteDimensional.complete ℂ E
+  letI : IsMulCommutative G := complexLieGroup_isMulCommutative (G := G) I
+  letI : CommGroup G := inferInstance
+  exact (compactComplexLieGroupFundamentalGroupPeriodEquiv (G := G) I).toAdditive.trans
+    (AddEquiv.additiveMultiplicative _)
+
+@[simp]
+theorem compactComplexLieGroupFundamentalGroupPeriodAddEquiv_apply
+    (γ : Additive (FundamentalGroup G 1)) :
+    (compactComplexLieGroupFundamentalGroupPeriodAddEquiv (G := G) I γ :
+      GroupLieAlgebra I G) =
+      ((compactComplexLieGroupFundamentalGroupPeriodEquiv (G := G) I γ.toMul).toAdd :
+        GroupLieAlgebra I G) :=
+  rfl
+
 end Mumford.Analytic
