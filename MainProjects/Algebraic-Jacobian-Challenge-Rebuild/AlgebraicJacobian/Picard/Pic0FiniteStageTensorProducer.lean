@@ -57,7 +57,7 @@ theorem exists_pic0Subgroup_tensorStage
     have halg : algebraMap (S.stage ⊗[F] B) (K ⊗[F] B) = φ.toRingHom := rfl
     exact RingHom.faithfullyFlat_algebraMap_iff.mpr (halg.symm ▸ inferInstance)
   have hzero : lamS ∈ pic0Subgroup C (overSpec F (S.stage ⊗[F] B)) := by
-    apply mem_pic0Subgroup_of_faithfullyFlat C hff lamS
+    apply mem_pic0Subgroup_of_faithfullyFlat (C := C) φ hff lamS
     rw [hmap]
     exact x.property
   refine ⟨S, ⟨lamS, hzero⟩, ?_⟩

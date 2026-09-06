@@ -188,8 +188,6 @@ theorem exists_picEtAff_tensorStage_data
           (R := M.1) (K := D.stage.stage) fM
         have hnat := DatG0.etaleCoverPushoutCarrierEquiv_symm_naturality
           (M := M.1) (S := D.stage.stage) (R := R) (T := TS) E₀
-        change cS.symm.toAlgHom.comp fS' =
-          gS.comp (Algebra.IsPushout.equiv M.1 D.stage.stage R TS).toAlgHom at hnat
         have hself :
             (Algebra.IsPushout.equiv M.1 D.stage.stage R TS).toAlgHom =
               AlgHom.id D.stage.stage TS := by
@@ -207,22 +205,13 @@ theorem exists_picEtAff_tensorStage_data
               rw [Algebra.TensorProduct.tmul_mul_tmul]
               simp
         rw [hself] at hnat
-        have hnat' : cS.symm.toAlgHom.comp fS' = gS := by
-          calc
-            cS.symm.toAlgHom.comp fS' =
-                gS.comp (AlgHom.id D.stage.stage TS) := hnat
-            _ = gS := by
-              apply AlgHom.ext
-              intro z
-              rfl
         have hS : cSM.comp gS = fS := by
-          calc
-            cSM.comp gS = cSM.comp (cS.symm.toAlgHom.restrictScalars M.1).comp fS' := by
-              rw [hnat']
-            _ = fS := by
-              apply AlgHom.ext
-              intro z
-              rfl
+          apply AlgHom.ext
+          intro z
+          have hz := DFunLike.congr_fun hnat z
+          change cS.symm (fS' z) = gS z at hz
+          change cS (gS z) = fS z
+          rw [← hz, cS.apply_symm_apply]
         have hTower : nS.comp fS = fK.comp nR := by
           have h := AlgebraicJacobian.scalarExtensionMapOfAlgHom_tower fM
           simpa only [nS, nR, fS, fK, DatG0.FiniteStageData.tensorMap] using h
@@ -265,7 +254,7 @@ theorem exists_picEtAff_tensorStage_data
       _ = (baseFieldShuffle F M.1 C (K ⊗[F] B)).symm
           (PicEtAff.mapAlg CM φM
             (PicEtAff.mk CM (E₀.baseChange TS) ξS)) := by
-          rfl
+          simp only [y, MulEquiv.apply_symm_apply]
       _ = (baseFieldShuffle F M.1 C (K ⊗[F] B)).symm
           (PicEtAff.mk CM (E₀.baseChange (K ⊗[F] B)) ξM) := by
           rw [hcore]
