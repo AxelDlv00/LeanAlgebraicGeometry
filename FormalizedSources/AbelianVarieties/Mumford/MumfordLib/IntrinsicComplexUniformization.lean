@@ -6,6 +6,7 @@ Authors: The Mumford Contributors
 
 import MumfordLib.CanonicalComplexQuotient
 import MumfordLib.ComplexExponentialAtlas
+import MumfordLib.ComplexLatticeLieGroup
 
 /-!
 # The intrinsic quotient of the canonical exponential candidate
@@ -285,6 +286,46 @@ theorem intrinsicComplexVectorLatticeExponentialData_quotient_isManifold
     @UniformSpace.toTopologicalSpace (GroupLieAlgebra I G) inferInstance
   let d := intrinsicComplexVectorLatticeExponentialData (G := G) I coordinate
   exact ComplexVectorLatticeExponentialData.analyticQuotient_isManifold d
+
+/- The same intrinsic quotient carries the explicit smooth additive-group
+   structure supplied by the branch atlas.  The charted-space value remains
+   local to the declaration, so this does not install a global instance. -/
+theorem intrinsicComplexVectorLatticeExponentialData_quotient_isLieAddGroup
+    {g : ℕ} (coordinate : E ≃L[ℂ] GenusComplexVector g) :
+    let e : E ≃ₗ[ℂ] GroupLieAlgebra I G :=
+      complexLieAlgebraEquiv (G := G) I
+    letI : NormedAddCommGroup (GroupLieAlgebra I G) :=
+      NormedAddCommGroup.induced _ _
+        e.symm.toLinearMap.toAddMonoidHom e.symm.injective
+    letI : NormedSpace ℂ (GroupLieAlgebra I G) :=
+      NormedSpace.induced ℂ _ _ e.symm.toLinearMap
+    letI : UniformSpace (GroupLieAlgebra I G) :=
+      @PseudoMetricSpace.toUniformSpace (GroupLieAlgebra I G) inferInstance
+    letI : TopologicalSpace (GroupLieAlgebra I G) :=
+      @UniformSpace.toTopologicalSpace (GroupLieAlgebra I G) inferInstance
+    let d := intrinsicComplexVectorLatticeExponentialData
+      (G := G) I coordinate
+    letI : ChartedSpace (GroupLieAlgebra I G)
+        (GroupLieAlgebra I G ⧸ d.ambientPeriodLattice) :=
+      ComplexVectorLatticeExponentialData.analyticQuotientChartedSpace d
+    LieAddGroup (𝓘(ℂ, GroupLieAlgebra I G)) ω
+      (GroupLieAlgebra I G ⧸ d.ambientPeriodLattice) := by
+  let e : E ≃ₗ[ℂ] GroupLieAlgebra I G :=
+    complexLieAlgebraEquiv (G := G) I
+  letI : NormedAddCommGroup (GroupLieAlgebra I G) :=
+    NormedAddCommGroup.induced _ _
+      e.symm.toLinearMap.toAddMonoidHom e.symm.injective
+  letI : NormedSpace ℂ (GroupLieAlgebra I G) :=
+    NormedSpace.induced ℂ _ _ e.symm.toLinearMap
+  letI : UniformSpace (GroupLieAlgebra I G) :=
+    @PseudoMetricSpace.toUniformSpace (GroupLieAlgebra I G) inferInstance
+  letI : TopologicalSpace (GroupLieAlgebra I G) :=
+    @UniformSpace.toTopologicalSpace (GroupLieAlgebra I G) inferInstance
+  let d := intrinsicComplexVectorLatticeExponentialData (G := G) I coordinate
+  letI : ChartedSpace (GroupLieAlgebra I G)
+      (GroupLieAlgebra I G ⧸ d.ambientPeriodLattice) :=
+    ComplexVectorLatticeExponentialData.analyticQuotientChartedSpace d
+  exact ComplexVectorLatticeExponentialData.analyticQuotientLieAddGroup d
 
 end Analytic
 end Mumford
