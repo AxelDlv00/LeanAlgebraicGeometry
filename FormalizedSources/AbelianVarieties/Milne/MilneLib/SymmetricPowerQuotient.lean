@@ -173,4 +173,37 @@ noncomputable def affineSymmetricPowerData
   letI := relativePower_isAffine V n
   exact symmetricPowerDataOfOrbits V n (permutation_orbitsInAffineOpen_of_isAffine V n)
 
+/-- Over a noetherian affine base, a quasi-compact separated scheme of finite
+type has a finite symmetric quotient whenever its permutation orbits lie in
+affine opens. The power-level geometric hypotheses are proved from the input
+scheme, and the quotient is again quasi-compact, separated, and of finite type. -/
+theorem exists_finite_symmetricPowerData [IsNoetherianRing k]
+    (V : Over (Spec (CommRingCat.of k))) (n : ℕ)
+    [LocallyOfFiniteType V.hom] [QuasiCompact V.hom] [IsSeparated V.hom]
+    (h : OrbitsInAffineOpen (permutationAutHomOverLeft V n)) :
+    ∃ D : SymmetricPowerData V n,
+      IsFinite D.projection.left ∧ Function.Surjective D.projection.left ∧
+        LocallyOfFiniteType D.carrier.hom ∧ QuasiCompact D.carrier.hom ∧
+          IsSeparated D.carrier.hom := by
+  letI := relativePower_locallyOfFiniteType V n
+  letI := relativePower_quasiCompact V n
+  letI := relativePower_isSeparated V n
+  letI : (relativePower V n).left.IsSeparated :=
+    (HasAffineProperty.iff_of_isAffine (P := @IsSeparated)
+      (f := (relativePower V n).hom)).mp inferInstance
+  letI : CompactSpace (relativePower V n).left :=
+    QuasiCompact.compactSpace_of_compactSpace (relativePower V n).hom
+  refine ⟨symmetricPowerDataOfOrbits V n h,
+    symmetricPowerQuotientProjection_isFinite V n h,
+    symmetricPowerQuotientProjection_surjective V n h, ?_, ?_, ?_⟩
+  · exact finiteStableQuotientBaseMap_locallyOfFiniteType (quotientPermutationAction V n)
+      (relativePower V n).hom (quotientPermutationAction_comp_base V n)
+        (quotientPermutationAction_orbits V n h)
+  · exact finiteStableQuotientBaseMap_quasiCompact (quotientPermutationAction V n)
+      (relativePower V n).hom (quotientPermutationAction_comp_base V n)
+        (quotientPermutationAction_orbits V n h)
+  · exact finiteStableQuotientBaseMap_isSeparated (quotientPermutationAction V n)
+      (relativePower V n).hom (quotientPermutationAction_comp_base V n)
+        (quotientPermutationAction_orbits V n h)
+
 end MilneLib
