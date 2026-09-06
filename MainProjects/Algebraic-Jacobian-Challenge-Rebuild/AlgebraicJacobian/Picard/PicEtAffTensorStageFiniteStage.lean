@@ -253,7 +253,7 @@ theorem exists_picEtAff_tensorStage_data
         (baseFieldShuffle F M.1 C (K ⊗[F] B)).symm
             (PicEtAff.mk CM (E₀.baseChange (K ⊗[F] B)) ξM) =
           PicEtAff.mk C (E₀.baseChange (K ⊗[F] B)) ξK := by
-      rw [hξM, baseFieldShuffle_mk]
+      rw [← baseFieldShuffle_mk]
       exact (baseFieldShuffle F M.1 C (K ⊗[F] B)).symm_apply_apply _
     calc
       PicEtAff.mapAlg C (DatG0.tensorStageNestedAmbientMap M D.stage) y =
