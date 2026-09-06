@@ -53,6 +53,30 @@ def zsmulTorsionSubgroup (X : Type*) [AddCommGroup X] (n : ℤ) : AddSubgroup X 
     simp only [Set.mem_setOf_eq] at ha ⊢
     rw [zsmul_neg, ha, neg_zero]
 
+/- A real module has no nontrivial torsion for a nonzero integer scalar. -/
+theorem zsmulTorsionSubgroup_subsingleton_of_realModule
+    {X : Type*} [AddCommGroup X] [Module ℝ X] [Module.IsTorsionFree ℝ X]
+    {n : ℤ} (hn : n ≠ 0) :
+    Subsingleton (zsmulTorsionSubgroup X n) := by
+  have hcast : (n : ℝ) ≠ 0 := by
+    exact_mod_cast hn
+  have hreg : IsSMulRegular X (n : ℝ) :=
+    (IsRegular.of_ne_zero hcast).isSMulRegular
+  constructor
+  intro x y
+  apply Subtype.ext
+  have hx' := x.property
+  have hy' := y.property
+  change n • (x : X) = 0 at hx'
+  change n • (y : X) = 0 at hy'
+  have hx : (n : ℝ) • (x : X) = 0 := by
+    simpa only [Int.cast_smul_eq_zsmul] using hx'
+  have hy : (n : ℝ) • (y : X) = 0 := by
+    simpa only [Int.cast_smul_eq_zsmul] using hy'
+  have hx0 : (x : X) = 0 := hreg.right_eq_zero_of_smul hx
+  have hy0 : (y : X) = 0 := hreg.right_eq_zero_of_smul hy
+  rw [hx0, hy0]
+
 /- At a natural scalar, the signed subgroup has the usual `n`-torsion
    membership predicate. -/
 theorem zsmulTorsionSubgroup_natCast_mem_iff

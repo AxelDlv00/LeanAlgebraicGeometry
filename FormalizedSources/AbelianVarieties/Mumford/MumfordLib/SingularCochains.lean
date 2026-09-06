@@ -79,4 +79,59 @@ theorem singularSimplexChain_boundary_one
 
 end Boundary
 
+section Cochains
+
+variable {X : TopCat} {n : ℕ}
+
+/-- Integral singular `n`-cochains, represented as ModuleCat morphisms into the
+ integers.  This is the concrete dual interface for a future degree-one
+ loop-evaluation construction. -/
+abbrev IntegralSingularCochain (X : TopCat) (n : ℕ) : Type _ :=
+  (IntegralSingularChainComplex X).X n ⟶ ModuleCat.of ℤ ℤ
+
+/-- The singular coboundary is precomposition with the chain differential. -/
+def singularCochainCoboundary
+    (φ : IntegralSingularCochain X n) :
+    IntegralSingularCochain X (n + 1) :=
+  (IntegralSingularChainComplex X).d (n + 1) n ≫ φ
+
+@[simp]
+theorem singularCochainCoboundary_eq_zero_iff (φ : IntegralSingularCochain X n) :
+    singularCochainCoboundary (X := X) (n := n) φ = 0 ↔
+      (IntegralSingularChainComplex X).d (n + 1) n ≫ φ = 0 := by
+  rfl
+
+/-- Coboundaries compose to zero, by the defining relation of the singular
+chain complex. -/
+theorem singularCochainCoboundary_squared
+    (φ : IntegralSingularCochain X n) :
+    singularCochainCoboundary
+        (X := X) (n := n + 1)
+        (singularCochainCoboundary (X := X) (n := n) φ) = 0 := by
+  simp [singularCochainCoboundary]
+
+/-- A cocycle is a cochain annihilating the next chain boundary. -/
+def IntegralSingularCocycle (X : TopCat) (n : ℕ) : Type _ :=
+  { φ : IntegralSingularCochain X n //
+      singularCochainCoboundary (X := X) (n := n) φ = 0 }
+
+@[simp]
+theorem IntegralSingularCocycle.coe_coboundary
+    (φ : IntegralSingularCocycle X n) :
+    singularCochainCoboundary (X := X) (n := n) φ.1 = 0 :=
+  φ.property
+
+/-- A cocycle annihilates every simplex boundary morphism. -/
+theorem IntegralSingularCocycle.annihilates_simplex_boundary
+    (φ : IntegralSingularCocycle X n)
+    (σ : (TopCat.toSSet.obj X).obj (Opposite.op ⦋n + 1⦌)) :
+    singularSimplexChain σ ≫
+        (IntegralSingularChainComplex X).d (n + 1) n ≫ φ.1 = 0 := by
+  change singularSimplexChain σ ≫
+      singularCochainCoboundary (X := X) (n := n) φ.val = 0
+  rw [φ.property]
+  simp
+
+end Cochains
+
 end Mumford.Analytic
