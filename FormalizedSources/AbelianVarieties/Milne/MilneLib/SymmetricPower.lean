@@ -313,6 +313,22 @@ theorem factor_unique (D : SymmetricPowerData V n)
     u = D.factor h hsym :=
   (D.desc h hsym).choose_spec.2 u hu
 
+/-! The universal property can also be used as a direct characterization of
+    a candidate factor.  This form is convenient when proving compatibility
+    equations for maps between supplied quotient presentations. -/
+
+theorem factor_eq_iff_projection_comp
+    (D : SymmetricPowerData V n)
+    {T : Over S} (h : relativePower V n ⟶ T) (hsym : IsSymmetric V n h)
+    (u : D.carrier ⟶ T) :
+    D.factor h hsym = u ↔ D.projection ≫ u = h := by
+  constructor
+  · intro hu
+    rw [← hu]
+    exact D.projection_comp_factor h hsym
+  · intro hu
+    exact (D.factor_unique h hsym u hu).symm
+
 /-! Factoring is stable under postcomposition, as required for the quotient
     map functoriality below. -/
 
@@ -320,8 +336,8 @@ theorem factor_comp (D : SymmetricPowerData V n)
     {T U : Over S} (h : relativePower V n ⟶ T) (k : T ⟶ U)
     (hsym : IsSymmetric V n h) :
     D.factor (h ≫ k) (hsym.comp n) = D.factor h hsym ≫ k := by
-  apply (D.factor_unique (h ≫ k) (hsym.comp n)
-    (D.factor h hsym ≫ k) ?_).symm
+  apply (D.factor_eq_iff_projection_comp (h ≫ k) (hsym.comp n)
+    (D.factor h hsym ≫ k)).2
   rw [← Category.assoc, D.projection_comp_factor]
 
 end SymmetricPowerData
