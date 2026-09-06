@@ -2,8 +2,8 @@ id: AJCR.review-plan.p7-galois-descent.base-change.glued-comparison
 title: Certify finiteStageBaseChangeIso at the root
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: 'Verified: finiteStageBaseChangeIso and gluingGluedIso consume the pinned
-  projection API; Pic0FiniteStageGluedComparison and both critical roots compile.'
+summary: ChartBaseChange structure-map and explicit P.N-algebra witnesses now kernel-check;
+  commit 757926cf4a.
 status: done
 kind: proof
 priority: urgent
@@ -27,7 +27,7 @@ metadata:
     projects: Algebraic-Jacobian-Challenge-Rebuild,Algebraic-Jacobian-Challenge
   parent: AJCR.review-plan.p7-galois-descent.base-change.snd
   milestone: AJCR.review-plan
-  updated_at: '2026-09-02T06:26:26.751176+00:00'
+  updated_at: '2026-09-06T20:58:48.724067+00:00'
   pinned_commits:
   - c17ac0d02d
   - 8ff1d6a6d3
