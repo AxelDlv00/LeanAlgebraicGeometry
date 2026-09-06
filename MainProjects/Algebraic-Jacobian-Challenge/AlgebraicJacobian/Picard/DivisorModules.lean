@@ -5,6 +5,7 @@ Authors: The AlgebraicJacobian Contributors
 -/
 import AlgebraicJacobian.RiemannRoch.Ledger.DivisorSheafQcoh
 import AlgebraicJacobian.RiemannRoch.Ledger.FiberBound
+import AlgebraicJacobian.RiemannRoch.Ledger.FixedFiberDegree
 import AlgebraicJacobian.Cohomology.StructureSheafModuleK.QuasicoherentDegreeOneVanishing
 
 /-!
@@ -158,5 +159,41 @@ theorem exists_bound_hModule_one_divisorModules_of_isFinite_toP1
     (Sheaf.HModule.mapEquiv (divisorModulesFieldSheafIso K C D) 1).toEquiv).mpr (hb D hD)
 
 end FieldComparison
+
+/-- One degree bound makes the constructed divisor modules acyclic in degree one
+over every extension field. The bound is chosen before the extension field. -/
+theorem exists_uniform_bound_hModule_one_divisorModules
+    (C : Over (Spec (CommRingCat.of K)))
+    [IsProper C.hom] [SmoothOfRelativeDimension 1 C.hom] [GeometricallyIrreducible C.hom] :
+    ∃ b : ℤ, ∀ (κ : Type u) [Field κ] [Algebra K κ],
+      letI : (baseChangeField C κ).left.Over (Spec (CommRingCat.of κ)) :=
+        .ofHom (baseChangeField C κ).hom
+      haveI : SmoothOfRelativeDimension 1
+          ((baseChangeField C κ).left ↘ Spec (CommRingCat.of κ)) :=
+        inferInstanceAs (SmoothOfRelativeDimension 1 (baseChangeField C κ).hom)
+      haveI : LocallyOfFiniteType
+          ((baseChangeField C κ).left ↘ Spec (CommRingCat.of κ)) :=
+        inferInstanceAs (LocallyOfFiniteType (baseChangeField C κ).hom)
+      haveI : QuasiCompact ((baseChangeField C κ).left ↘ Spec (CommRingCat.of κ)) :=
+        inferInstanceAs (QuasiCompact (baseChangeField C κ).hom)
+      ∀ D : (baseChangeField C κ).left.CurveDivisor, b ≤ CurveDivisor.deg κ D →
+        Subsingleton (Sheaf.HModule
+          (toModuleKSheafOfModules (baseChangeField C κ) (divisorModules κ D)) 1) := by
+  obtain ⟨b, hb⟩ := FiberCoordinateData.uniformVanishing_fixedCoordinate C
+  refine ⟨b, ?_⟩
+  intro κ _ _
+  letI : (baseChangeField C κ).left.Over (Spec (CommRingCat.of κ)) :=
+    .ofHom (baseChangeField C κ).hom
+  haveI : SmoothOfRelativeDimension 1
+      ((baseChangeField C κ).left ↘ Spec (CommRingCat.of κ)) :=
+    inferInstanceAs (SmoothOfRelativeDimension 1 (baseChangeField C κ).hom)
+  haveI : LocallyOfFiniteType ((baseChangeField C κ).left ↘ Spec (CommRingCat.of κ)) :=
+    inferInstanceAs (LocallyOfFiniteType (baseChangeField C κ).hom)
+  haveI : QuasiCompact ((baseChangeField C κ).left ↘ Spec (CommRingCat.of κ)) :=
+    inferInstanceAs (QuasiCompact (baseChangeField C κ).hom)
+  intro D hD
+  exact (Equiv.subsingleton_congr
+    (Sheaf.HModule.mapEquiv
+      (divisorModulesFieldSheafIso κ (baseChangeField C κ) D) 1).toEquiv).mpr (hb κ D hD)
 
 end AlgebraicGeometry.Scheme
