@@ -2,9 +2,13 @@ id: Milne.finite-quotient
 title: Global finite quotient by gluing affine charts
 projects:
 - Milne
-summary: Stable-affine overlap spectra are identified with the descended quotient-open
-  subschemes; global GlueData transitions, triple cocycle, structure-sheaf comparison,
-  finiteness, and universality remain open.
+summary: Finite stable-affine charts assemble into Scheme.GlueData, and the canonical
+  compact finite-cover projection is now proved globally surjective and quotient on
+  underlying topological spaces. Each glued target chart has exactly its corresponding
+  stable source chart as inverse image, with a Cartesian chart square. Orbit-fibre
+  identification, invariant structure-sheaf equality, finiteness under the variety
+  finite-type hypotheses, universality/uniqueness, and free-action etaleness remain
+  open.
 status: pending
 kind: proof
 priority: high
@@ -31,8 +35,13 @@ metadata:
   parent: Milne
   owner: fs-milne
   milestone: Milne
-  updated_at: '2026-09-05T22:33:15.158137+00:00'
+  updated_at: '2026-09-06T08:20:45.141546+00:00'
   pinned_commits:
+  - 9f4fa2e0f1
+  - df75d5d228
+  - 57d4e63075
+  - 60cee91170
+  - bc726aca64
   - d68da97136
   - a73a33d965
   - cca019a5827b5cd10e59e65bec543ef9147b1150
