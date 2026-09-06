@@ -4,7 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: The Hartshorne Contributors
 -/
 
-import HartshorneLib.Chapter2LineBundles
+import HartshorneLib.Chapter2LineBundleAPI
 import HartshorneLib.Chapter4DivisorSheafZero
 
 /-!
@@ -264,6 +264,54 @@ noncomputable def divisorModule (D : CurveDivisor k X) : X.left.Modules where
 lemma divisorModule_presheaf (D : CurveDivisor k X) :
     (divisorModule D).presheaf = divisorAbPresheaf D :=
   divisorPresheafOfModules_presheaf D
+
+/-! ## The zero divisor -/
+
+/-- The generic-point germ comparison from the structure sheaf to the
+zero-divisor sheaf, promoted to a morphism of `O_X`-modules. -/
+noncomputable def moduleToDivisorModuleZero :
+    SheafOfModules.unit X.left.ringCatSheaf ⟶
+      divisorModule (X := X) (0 : CurveDivisor k X) where
+  val := PresheafOfModules.homMk
+    { app := fun U => AddCommGrpCat.ofHom
+        (moduleToDivisorZeroPresheafApp (X := X) U.unop).toAddMonoidHom
+      naturality := fun {U V} i => by
+        have h := (moduleToDivisorZeroPresheaf (X := X)).naturality i
+        exact congrArg (fun f => (forget₂ (ModuleCat k) AddCommGrpCat).map f) h }
+    (fun U r s => by
+      change moduleToDivisorZeroPresheafApp (X := X) U.unop
+          ((show Γ(X.left, U.unop) from r) *
+            (show Γ(X.left, U.unop) from s)) =
+        divisorSectionAction (0 : CurveDivisor k X) U.unop
+          (show Γ(X.left, U.unop) from r)
+          (moduleToDivisorZeroPresheafApp (X := X) U.unop
+            (show Γ(X.left, U.unop) from s))
+      by_cases hU : (U.unop : Set X.left).Nonempty
+      · apply Subtype.ext
+        rw [divisorSectionAction_coe_of_nonempty (0 : CurveDivisor k X) U.unop hU,
+          moduleToDivisorZeroPresheafApp_coe_of_nonempty (X := X) hU,
+          moduleToDivisorZeroPresheafApp_coe_of_nonempty (X := X) hU]
+        exact map_mul _ _ _
+      · letI := divisorSections_subsingleton_of_empty
+          (X := X) (D := (0 : CurveDivisor k X)) hU
+        exact Subsingleton.elim _ _)
+
+/-- The divisor module of the zero divisor is the structure sheaf as an
+`O_X`-module. -/
+noncomputable def divisorModuleZeroIso :
+    SheafOfModules.unit X.left.ringCatSheaf ≅
+      divisorModule (X := X) (0 : CurveDivisor k X) := by
+  letI : IsIso (moduleToDivisorModuleZero (k := k) (X := X)) := by
+    apply Scheme.Modules.Hom.isIso_iff_isIso_app.mpr
+    intro U
+    rw [ConcreteCategory.isIso_iff_bijective]
+    exact moduleToDivisorZeroPresheafApp_bijective (X := X) U
+  exact asIso (moduleToDivisorModuleZero (k := k) (X := X))
+
+/-- The zero-divisor module is a line bundle. -/
+theorem isLineBundle_divisorModule_zero :
+    IsLineBundle (divisorModule (X := X) (0 : CurveDivisor k X)) :=
+  isLineBundle_of_iso_unit (divisorModuleZeroIso (k := k) (X := X)).symm
 
 end
 
