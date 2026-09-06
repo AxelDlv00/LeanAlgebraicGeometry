@@ -493,6 +493,202 @@ theorem canonicalComplexExponential_exists_nhds_injOn
     canonicalRealFlow (G := G) I z 1
   exact hyz
 
+/-! ### Complex regularity and the local analytic inverse
+
+The real flow construction already gives a real `C¹` time-one map, while the
+parameter argument gives complex differentiability of the named candidate.
+The normed-space scalar-restriction bridge in
+`ComplexManifoldRealification` upgrades the extended-chart representative to
+complex `C¹`.  Restricting the ordinary normed-space inverse-function theorem
+and composing with the existing group chart then produces a genuine manifold
+local diffeomorphism.  This is the local analytic input for uniformization; it
+does not identify the global quotient with `G`. -/
+
+/-- The canonical exponential written in its identity chart is complex `C¹`.
+
+The real `C¹` statement is used only on the neighborhood where the target
+chart is defined, and complex differentiability is supplied on that same
+neighborhood. -/
+theorem canonicalComplexExponential_chart_contDiffAt
+    [CompleteSpace E] [T2Space G]
+    [I.Boundaryless] [CompactSpace G] [PreconnectedSpace G] :
+    ContDiffAt ℂ 1
+      ((extChartAt I ((canonicalComplexExponential (G := G) I) 0)) ∘
+        (canonicalComplexExponential (G := G) I)) 0 := by
+  let f : E → G := canonicalComplexExponential (G := G) I
+  let e := extChartAt I (f 0)
+  let g : E → E := e ∘ f
+  have hf_real : ContMDiff 𝓘(ℝ, E) (complexToRealModel I) 1 f := by
+    change ContMDiff 𝓘(ℝ, E) (complexToRealModel I) 1
+      (fun v : E => canonicalRealFlow (G := G) I v 1)
+    exact canonicalRealFlow_time_one_contMDiff (G := G) I
+  have hf_complex : MDifferentiable 𝓘(ℂ, E) I f := by
+    simpa [f] using (canonicalComplexExponential_mdifferentiable (G := G) I)
+  have hg_real : ContDiffAt ℝ 1 g 0 := by
+    have he_real : ContMDiffAt (complexToRealModel I) 𝓘(ℝ, E) 1
+        (extChartAt (complexToRealModel I) (f 0)) (f 0) :=
+      contMDiffAt_extChartAt
+    have hcomp := he_real.comp 0 hf_real.contMDiffAt
+    have hcomp' : ContMDiffAt 𝓘(ℝ, E) 𝓘(ℝ, E) 1
+        ((extChartAt (complexToRealModel I) (f 0)) ∘ f) 0 := by
+      exact hcomp
+    exact contMDiffAt_iff_contDiffAt.mp hcomp'
+  have hf_continuous : Continuous f := hf_real.continuous
+  have hsource : f ⁻¹' (chartAt H (f 0)).source ∈ 𝓝 (0 : E) :=
+    hf_continuous.continuousAt.preimage_mem_nhds
+      (chart_source_mem_nhds H (f 0))
+  have hg_complex : ∀ᶠ y in 𝓝 (0 : E), DifferentiableAt ℂ g y := by
+    filter_upwards [hsource] with y hy
+    have he_complex : MDifferentiableAt I 𝓘(ℂ, E) e (f y) :=
+      mdifferentiableAt_extChartAt hy
+    exact (he_complex.comp y (hf_complex y)).differentiableAt
+  have hg : ContDiffAt ℂ 1 g 0 :=
+    contDiffAt_one_of_real_of_complex hg_real hg_complex
+  simpa [f, e, g] using hg
+
+/-- The canonical exponential is a complex `C¹` map at the identity.
+
+This is a chartwise regularity certificate for the existing complex Lie-group
+structure, rather than a transported or newly chosen manifold structure. -/
+theorem canonicalComplexExponential_contMDiffAt
+    [CompleteSpace E] [T2Space G]
+    [I.Boundaryless] [CompactSpace G] [PreconnectedSpace G] :
+    ContMDiffAt 𝓘(ℂ, E) I 1
+      (canonicalComplexExponential (G := G) I) 0 := by
+  rw [contMDiffAt_iff_target]
+  refine ⟨?_, ?_⟩
+  · have hreal : ContMDiff 𝓘(ℝ, E) (complexToRealModel I) 1
+        (canonicalComplexExponential (G := G) I) := by
+      change ContMDiff 𝓘(ℝ, E) (complexToRealModel I) 1
+        (fun v : E => canonicalRealFlow (G := G) I v 1)
+      exact canonicalRealFlow_time_one_contMDiff (G := G) I
+    exact hreal.continuous.continuousAt
+  · exact (canonicalComplexExponential_chart_contDiffAt (G := G) I).contMDiffAt
+
+/-- The canonical exponential is a complex local diffeomorphism at the
+identity.
+
+The proof takes the complex `C¹` extended-chart representative, applies the
+normed-space inverse-function theorem, restricts to the open set on which the
+original exponential lands in the chart, and packages the resulting inverse
+with that chart as a `PartialDiffeomorph`. -/
+theorem canonicalComplexExponential_isLocalDiffeomorphAt
+    [CompleteSpace E] [T2Space G]
+    [I.Boundaryless] [CompactSpace G] [PreconnectedSpace G] :
+    IsLocalDiffeomorphAt 𝓘(ℂ, E) I 1
+      (canonicalComplexExponential (G := G) I) 0 := by
+  let f : E → G := canonicalComplexExponential (G := G) I
+  let e := extChartAt I (f 0)
+  let g : E → E := e ∘ f
+  have hg : ContDiffAt ℂ 1 g 0 := by
+    simpa [f, e, g] using
+      (canonicalComplexExponential_chart_contDiffAt (G := G) I)
+  have hf_complex : MDifferentiable 𝓘(ℂ, E) I f := by
+    simpa [f] using (canonicalComplexExponential_mdifferentiable (G := G) I)
+  have hf_md : MDifferentiableAt 𝓘(ℂ, E) I f 0 := hf_complex 0
+  have he_md : MDifferentiableAt I 𝓘(ℂ, E) e (f 0) :=
+    mdifferentiableAt_extChartAt (mem_chart_source H (f 0))
+  have hg_mfderiv :
+      mfderiv 𝓘(ℂ, E) 𝓘(ℂ, E) g 0 =
+        (mfderiv I 𝓘(ℂ, E) e (f 0)).comp
+          (mfderiv 𝓘(ℂ, E) I f 0) := by
+    exact mfderiv_comp 0 he_md hf_md
+  have hderiv_f : mfderiv 𝓘(ℂ, E) I f 0 = ContinuousLinearMap.id ℂ E := by
+    exact (canonicalComplexExponential_hasMFDerivAt_zero (G := G) I).mfderiv
+  have hg_invertible : (fderiv ℂ g 0).IsInvertible := by
+    rw [← mfderiv_eq_fderiv, hg_mfderiv, hderiv_f]
+    exact (isInvertible_mfderiv_extChartAt
+      (I := I) (x := f 0) (y := f 0)
+        (mem_extChartAt_source (I := I) (f 0))).comp
+      ⟨ContinuousLinearEquiv.refl ℂ E, rfl⟩
+  obtain ⟨g', hg'⟩ := hg_invertible
+  have hg_hasFDeriv : HasFDerivAt g (g' : E →L[ℂ] E) 0 := by
+    rw [hg']
+    exact (hg.differentiableAt one_ne_zero).hasFDerivAt
+  let φ : OpenPartialHomeomorph E E :=
+    hg.toOpenPartialHomeomorph g hg_hasFDeriv one_ne_zero
+  have hφ0 : (0 : E) ∈ φ.source :=
+    hg.mem_toOpenPartialHomeomorph_source hg_hasFDeriv one_ne_zero
+  have hφ0_target : g 0 ∈ φ.target :=
+    hg.image_mem_toOpenPartialHomeomorph_target hg_hasFDeriv one_ne_zero
+  have hφinv : ContDiffAt ℂ 1 (φ.symm : E → E) (g 0) := by
+    have hpoint : φ.symm (g 0) = 0 := φ.left_inv hφ0
+    apply φ.contDiffAt_symm (f₀' := g') hφ0_target
+    · simpa [φ, hpoint] using hg_hasFDeriv
+    · simpa [φ, hpoint] using hg
+  let s : Set E := f ⁻¹' e.source
+  have hf_real : ContMDiff 𝓘(ℝ, E) (complexToRealModel I) 1 f := by
+    change ContMDiff 𝓘(ℝ, E) (complexToRealModel I) 1
+      (fun v : E => canonicalRealFlow (G := G) I v 1)
+    exact canonicalRealFlow_time_one_contMDiff (G := G) I
+  have hs_open : IsOpen s := by
+    exact (isOpen_extChartAt_source (I := I) (f 0)).preimage
+      hf_real.continuous
+  let φs : OpenPartialHomeomorph E E := φ.restrOpen s hs_open
+  have hφs0 : (0 : E) ∈ φs.source := by
+    rw [OpenPartialHomeomorph.restrOpen_source]
+    exact ⟨hφ0, mem_extChartAt_source (I := I) (f 0)⟩
+  have hφs0_target : g 0 ∈ φs.target := φs.map_source hφs0
+  have hφs_inv : ContDiffAt ℂ 1 (φs.symm : E → E) (g 0) := by
+    have hpoint : φs.symm (g 0) = 0 := φs.left_inv hφs0
+    apply φs.contDiffAt_symm (f₀' := g') hφs0_target
+    · simpa [φs, φ, hpoint] using hg_hasFDeriv
+    · simpa [φs, φ, hpoint] using hg
+  let ψ : OpenPartialHomeomorph E E := φs.restrContDiff ℂ 1 (by norm_num)
+  have hψ0 : (0 : E) ∈ ψ.source := by
+    rw [OpenPartialHomeomorph.restrContDiff_source]
+    exact ⟨hφs0, hg, hφs_inv⟩
+  have hψ_smooth : ContDiffOn ℂ 1 (ψ : E → E) ψ.source := by
+    have hbase := φs.contDiffOn_restrContDiff_source (𝕜 := ℂ)
+      (n := (1 : ℕ∞ω)) (by norm_num)
+    apply hbase.congr
+    intro y hy
+    exact OpenPartialHomeomorph.restrContDiff_apply ℂ φs 1 (by norm_num) y
+  have hψ_inv_smooth : ContDiffOn ℂ 1 (ψ.symm : E → E) ψ.target := by
+    have hbase := φs.contDiffOn_restrContDiff_target (𝕜 := ℂ)
+      (n := (1 : ℕ∞ω)) (by norm_num)
+    apply hbase.congr
+    intro y hy
+    exact OpenPartialHomeomorph.restrContDiff_symm_apply ℂ φs 1
+      (by norm_num) y
+  let Pψ : PartialDiffeomorph 𝓘(ℂ, E) 𝓘(ℂ, E) E E 1 :=
+    PartialDiffeomorph.mk ψ.toPartialEquiv ψ.open_source ψ.open_target
+      hψ_smooth.contMDiffOn hψ_inv_smooth.contMDiffOn
+  let χ : PartialDiffeomorph 𝓘(ℂ, E) I E G 1 :=
+    PartialDiffeomorph.mk e.symm
+      (by simpa [e] using (isOpen_extChartAt_target (I := I) (f 0)))
+      (by simpa [e] using (isOpen_extChartAt_source (I := I) (f 0)))
+      (by
+        simpa [e] using
+          (contMDiffOn_extChartAt_symm (I := I) (n := (1 : ℕ∞ω)) (f 0)))
+      (by
+        simpa [e] using
+          (contMDiffOn_extChartAt (I := I) (n := (1 : ℕ∞ω)) (x := f 0)))
+  let P : PartialDiffeomorph 𝓘(ℂ, E) I E G 1 := Pψ.trans χ
+  have hP0 : (0 : E) ∈ P.source := by
+    change 0 ∈ (Pψ.toPartialEquiv.trans χ.toPartialEquiv).source
+    rw [PartialEquiv.trans_source]
+    refine ⟨hψ0, ?_⟩
+    change ψ 0 ∈ e.symm.source
+    change g 0 ∈ e.target
+    exact e.map_source (mem_extChartAt_source (I := I) (f 0))
+  refine ⟨P, hP0, ?_⟩
+  intro y hy
+  change f y = e.symm (ψ y)
+  have hyψ : y ∈ ψ.source := hy.1
+  have hyφs : y ∈ φs.source := by
+    rw [OpenPartialHomeomorph.restrContDiff_source] at hyψ
+    exact hyψ.1
+  have hy_s : y ∈ s := by
+    rw [OpenPartialHomeomorph.restrOpen_source] at hyφs
+    exact hyφs.2
+  have hy_e : f y ∈ e.source := hy_s
+  have hy_eq : ψ y = g y := by
+    change ψ y = φ y
+    rfl
+  rw [hy_eq]
+  exact (e.left_inv hy_e).symm
+
 /-! Translation of the zero-neighborhood gives local injectivity at every
     tangent point.  This is the form used by later covering-space arguments. -/
 theorem canonicalComplexExponential_exists_nhds_injOn_at

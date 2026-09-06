@@ -262,6 +262,93 @@ theorem ContMDiff.restrict_scalars_complex
   rw [contMDiff_iff] at hf ⊢
   exact ⟨hf.1, fun x y => (hf.2 x y).restrict_scalars ℝ⟩
 
+/-!
+The next bridge is deliberately stated for normed spaces rather than for
+manifolds with corners.  The real `C¹` hypothesis supplies continuity of the
+real Fréchet derivative; complex differentiability identifies that derivative
+with the scalar restriction of the complex derivative.  Since scalar
+restriction preserves the operator norm, this gives continuity of the complex
+derivative without assuming finite-dimensionality. -/
+
+/-- A real `C¹` map which is also complex differentiable is complex `C¹`.
+
+This is a normed-space bridge only: it does not provide a manifold chart
+structure or assert a holomorphic regularity theorem for an arbitrary
+manifold map.  The real `ContDiff` hypothesis is retained explicitly because
+it is what makes the complex derivative continuous in the general Banach-space
+setting. -/
+theorem contDiff_one_of_real_of_complex
+    {E F : Type*}
+    [NormedAddCommGroup E] [NormedSpace ℂ E]
+    [NormedAddCommGroup F] [NormedSpace ℂ F]
+    {f : E → F}
+    (hreal : ContDiff ℝ 1 f)
+    (hcomplex : Differentiable ℂ f) :
+    ContDiff ℂ 1 f := by
+  rw [contDiff_one_iff_fderiv]
+  refine ⟨hcomplex, ?_⟩
+  have hreal' : Continuous (fderiv ℝ f) :=
+    (contDiff_one_iff_fderiv.mp hreal).2
+  rw [Metric.continuous_iff] at hreal' ⊢
+  intro x ε hε
+  rcases hreal' x ε hε with ⟨δ, hδ, hbound⟩
+  refine ⟨δ, hδ, ?_⟩
+  intro y hy
+  calc
+    dist (fderiv ℂ f y) (fderiv ℂ f x)
+        = ‖fderiv ℂ f y - fderiv ℂ f x‖ := dist_eq_norm _ _
+    _ = ‖(fderiv ℂ f y - fderiv ℂ f x).restrictScalars ℝ‖ := by
+      rw [ContinuousLinearMap.norm_restrictScalars]
+    _ = ‖fderiv ℝ f y - fderiv ℝ f x‖ := by
+      change ‖(fderiv ℂ f y).restrictScalars ℝ -
+        (fderiv ℂ f x).restrictScalars ℝ‖ = _
+      rw [(hcomplex y).fderiv_restrictScalars ℝ,
+        (hcomplex x).fderiv_restrictScalars ℝ]
+    _ = dist (fderiv ℝ f y) (fderiv ℝ f x) := (dist_eq_norm _ _).symm
+    _ < ε := hbound y hy
+
+/-- Pointwise version of `contDiff_one_of_real_of_complex`.
+
+If a map is real `C¹` at `x` and is complex differentiable on some
+neighborhood of `x`, then it is complex `C¹` at `x`.  As above, this is a
+normed-space statement; it makes no claim about manifold charts. -/
+theorem contDiffAt_one_of_real_of_complex
+    {E F : Type*}
+    [NormedAddCommGroup E] [NormedSpace ℂ E]
+    [NormedAddCommGroup F] [NormedSpace ℂ F]
+    {f : E → F} {x : E}
+    (hreal : ContDiffAt ℝ 1 f x)
+    (hcomplex : ∀ᶠ y in nhds x, DifferentiableAt ℂ f y) :
+    ContDiffAt ℂ 1 f x := by
+  rcases (contDiffAt_one_iff.mp hreal) with ⟨f', u, hxu, hcont, hderiv⟩
+  have hs : u ∩ {y | DifferentiableAt ℂ f y} ∈ nhds x :=
+    Filter.inter_mem hxu hcomplex
+  apply contDiffAt_one_iff.mpr
+  refine ⟨fderiv ℂ f, u ∩ {y | DifferentiableAt ℂ f y}, hs, ?_, ?_⟩
+  · rw [Metric.continuousOn_iff]
+    intro b hb ε hε
+    rcases (Metric.continuousOn_iff.mp hcont) b hb.1 ε hε with
+      ⟨δ, hδ, hbound⟩
+    refine ⟨δ, hδ, ?_⟩
+    intro a ha hab
+    have hfa : fderiv ℝ f a = f' a := (hderiv a ha.1).fderiv
+    have hfb : fderiv ℝ f b = f' b := (hderiv b hb.1).fderiv
+    calc
+      dist (fderiv ℂ f a) (fderiv ℂ f b)
+          = ‖fderiv ℂ f a - fderiv ℂ f b‖ := dist_eq_norm _ _
+      _ = ‖(fderiv ℂ f a - fderiv ℂ f b).restrictScalars ℝ‖ := by
+        rw [ContinuousLinearMap.norm_restrictScalars]
+      _ = ‖fderiv ℝ f a - fderiv ℝ f b‖ := by
+        change ‖(fderiv ℂ f a).restrictScalars ℝ -
+          (fderiv ℂ f b).restrictScalars ℝ‖ = _
+        rw [ha.2.fderiv_restrictScalars ℝ, hb.2.fderiv_restrictScalars ℝ]
+      _ = dist (f' a) (f' b) := by
+        rw [hfa, hfb]
+        exact (dist_eq_norm _ _).symm
+      _ < ε := hbound a ha.1 hab
+  · intro y hy
+    exact hy.2.hasFDerivAt
+
 /-- Realification commutes with products of complex models. -/
 theorem complexToRealModel_prod
     {E' H' : Type*}
