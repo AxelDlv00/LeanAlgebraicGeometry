@@ -4,7 +4,8 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: The Milne Contributors
 -/
 
-import MilneLib.InvariantQuotientFiniteAtlasCanonical
+import MilneLib.InvariantQuotientFiniteAtlasFinite
+import MilneLib.InvariantQuotientFiniteAtlasOrbit
 import MilneLib.InvariantQuotientStableBaseMap
 
 /-!
@@ -118,6 +119,53 @@ theorem finiteStableAffineCover_f_finiteStableCanonicalQuotientProjectionOver
     (finiteStableQuotientCrossChartDatum act p hact h)
     (finiteStableQuotientBaseMapData act p hact h)
     (finiteStableCanonicalBaseCompatibleChartMaps act p hact h) i
+
+set_option backward.isDefEq.respectTransparency false in
+/-- The glued quotient target is locally of finite type over a noetherian
+affine base whenever the source is. -/
+theorem finiteStableQuotientBaseMap_locallyOfFiniteType
+    [IsNoetherianRing k] [LocallyOfFiniteType p] :
+    LocallyOfFiniteType
+      ((finiteStableQuotientBaseMapData act p hact h).map
+        (finiteStableQuotientCrossChartDatum act p hact h)) := by
+  let D := finiteStableQuotientCrossChartDatum act p hact h
+  let B := finiteStableQuotientBaseMapData act p hact h
+  apply IsZariskiLocalAtSource.of_openCover (P := @LocallyOfFiniteType)
+    D.toGlueData.openCover
+  intro i
+  change LocallyOfFiniteType (D.toGlueData.ι i ≫ B.map D)
+  rw [InvariantLocalization.InvariantQuotientCrossChartDatum.BaseMapData.ι_map]
+  let C := finiteStableAffineChart act h i
+  letI := sectionsAlgebra p C.U
+  letI := sectionsMulSemiringAction act C.stable
+  letI := sectionsSMulCommClass act p hact C.stable
+  letI : Algebra.FiniteType k Γ(X, C.U) :=
+    sectionsAlgebra_finiteType_of_locallyOfFiniteType p C.U C.affine
+  letI : Algebra.FiniteType k (FixedPoints.subalgebra k Γ(X, C.U) G) :=
+    fixedSubalgebra_finiteType_over_base
+  change LocallyOfFiniteType
+    (Spec.map (CommRingCat.ofHom
+      (algebraMap k (FixedPoints.subalgebra k Γ(X, C.U) G))))
+  exact (HasRingHomProperty.Spec_iff (P := @LocallyOfFiniteType)).mpr
+    (RingHom.finiteType_algebraMap.mpr inferInstance)
+
+/-- The finite stable-cover quotient target is quasi-compact: it is a
+continuous image of the compact source. -/
+theorem finiteStableQuotientGlueData_compactSpace :
+    CompactSpace (finiteStableQuotientGlueData act p hact h).glued := by
+  exact Function.Surjective.compactSpace
+    (finiteStableCanonicalQuotientProjection act p hact h).continuous
+    (finiteStableCanonicalQuotientProjection act p hact h).surjective
+
+/-- The structure map of the glued quotient target is quasi-compact. Together
+with `finiteStableQuotientBaseMap_locallyOfFiniteType`, this gives a finite-type
+quotient target over a noetherian affine base. -/
+theorem finiteStableQuotientBaseMap_quasiCompact :
+    QuasiCompact
+      ((finiteStableQuotientBaseMapData act p hact h).map
+        (finiteStableQuotientCrossChartDatum act p hact h)) := by
+  letI := finiteStableQuotientGlueData_compactSpace act p hact h
+  infer_instance
 
 end FiniteCover
 
