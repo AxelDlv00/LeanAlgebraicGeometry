@@ -132,6 +132,19 @@ theorem IntegralSingularCocycle.annihilates_simplex_boundary
   rw [φ.property]
   simp
 
+/- The degree-two boundary formula is the concrete cocycle relation used when
+   comparing evaluations on concatenated paths. -/
+theorem IntegralSingularCocycle.annihilates_two_simplex_boundary
+    (φ : IntegralSingularCocycle X 1)
+    (σ : (TopCat.toSSet.obj X).obj (Opposite.op ⦋2⦌)) :
+    singularSimplexChain ((TopCat.toSSet.obj X).δ 0 σ) ≫ φ.1 -
+        singularSimplexChain ((TopCat.toSSet.obj X).δ 1 σ) ≫ φ.1 +
+        singularSimplexChain ((TopCat.toSSet.obj X).δ 2 σ) ≫ φ.1 = 0 := by
+  have h := φ.annihilates_simplex_boundary σ
+  rw [← Category.assoc] at h
+  rw [singularSimplexChain_boundary_one] at h
+  simpa [Category.assoc, sub_eq_add_neg] using h
+
 end Cochains
 
 end Mumford.Analytic
