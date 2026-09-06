@@ -72,6 +72,47 @@ noncomputable abbrev stableQuotientGlueData
     (C : J → StableAffineOpen act) : Scheme.GlueData :=
   (stableQuotientCrossChartDatum act p hact C).toGlueData
 
+/-- In a glued quotient chart, the inverse image of another chart is exactly
+the descended overlap open used in the gluing datum. -/
+theorem stableQuotientGlueData_chart_preimage_opensRange
+    (p : X ⟶ Spec (CommRingCat.of k))
+    (hact : ∀ g : G, (act g).hom ≫ p = p)
+    (C : J → StableAffineOpen act)
+    (i j : J) :
+    letI := sectionsAlgebra p (C j).U
+    letI := sectionsMulSemiringAction act (C j).stable
+    letI := sectionsSMulCommClass act p hact (C j).stable
+    (stableQuotientGlueData act p hact C).ι j ⁻¹ᵁ
+        ((stableQuotientGlueData act p hact C).ι i).opensRange =
+      quotientOverlapOpen act p hact (C j) (C i) := by
+  letI := sectionsAlgebra p (C j).U
+  letI := sectionsMulSemiringAction act (C j).stable
+  letI := sectionsSMulCommClass act p hact (C j).stable
+  calc
+    _ = ((stableQuotientGlueData act p hact C).f j i).opensRange := by
+      have hp := IsPullback.of_isLimit
+        ((stableQuotientGlueData act p hact C).vPullbackConeIsLimit j i)
+      rw [← Scheme.Hom.opensRange_pullbackFst]
+      have hfst := hp.isoPullback_hom_fst
+      change hp.isoPullback.hom ≫
+          pullback.fst ((stableQuotientGlueData act p hact C).ι j)
+            ((stableQuotientGlueData act p hact C).ι i) =
+        (stableQuotientGlueData act p hact C).f j i at hfst
+      have hrange :
+          (hp.isoPullback.hom ≫
+            pullback.fst ((stableQuotientGlueData act p hact C).ι j)
+              ((stableQuotientGlueData act p hact C).ι i)).opensRange =
+          (pullback.fst ((stableQuotientGlueData act p hact C).ι j)
+            ((stableQuotientGlueData act p hact C).ι i)).opensRange := by
+        rw [Scheme.Hom.opensRange_comp, Scheme.Hom.opensRange_of_isIso]
+        apply TopologicalSpace.Opens.ext
+        exact Set.image_univ
+      rw [← hrange]
+      congr 1
+    _ = quotientOverlapOpen act p hact (C j) (C i) := by
+      change (quotientOverlapι act p hact (C j) (C i)).opensRange = _
+      exact TopologicalSpace.Opens.ext Subtype.range_val
+
 section FiniteCover
 
 variable [CompactSpace X]
