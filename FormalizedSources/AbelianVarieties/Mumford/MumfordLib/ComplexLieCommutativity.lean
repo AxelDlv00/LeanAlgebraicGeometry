@@ -580,9 +580,13 @@ theorem canonicalComplexExponential_isLocalDiffeomorphAt
   let f : E → G := canonicalComplexExponential (G := G) I
   let e := extChartAt I (f 0)
   let g : E → E := e ∘ f
+  have hf_contMDiffAt :
+      ContMDiffAt 𝓘(ℂ, E) I 1 f 0 := by
+    simpa [f] using
+      (canonicalComplexExponential_contMDiffAt (G := G) I)
   have hg : ContDiffAt ℂ 1 g 0 := by
-    simpa [f, e, g] using
-      (canonicalComplexExponential_chart_contDiffAt (G := G) I)
+    have htarget := (contMDiffAt_iff_target.mp hf_contMDiffAt).2
+    exact contMDiffAt_iff_contDiffAt.mp (by simpa [e, g] using htarget)
   have hf_complex : MDifferentiable 𝓘(ℂ, E) I f := by
     simpa [f] using (canonicalComplexExponential_mdifferentiable (G := G) I)
   have hf_md : MDifferentiableAt 𝓘(ℂ, E) I f 0 := hf_complex 0
