@@ -6,6 +6,7 @@ Authors: The AlgebraicJacobian Contributors
 import AlgebraicJacobian.Picard.DivGrassmannianBaseChange
 import AlgebraicJacobian.Picard.DivGrassmannianH1
 import AlgebraicJacobian.Picard.DivLocallyClosed
+import AlgebraicJacobian.Picard.DivTwistFaithfulness
 
 /-!
 # The universal Grassmannian candidate for a divisor
@@ -204,6 +205,54 @@ theorem grassmannianCandidateQuotient_comp_isoTwist_hom
       (grassmannianCandidateIsoTwistOfKernelCounitEpi
         L x hEpi hLocFree hgen).hom = x.twistQuotientMap L :=
   grassmannianCandidateQuotient_comp_candidateToTwist L x hEpi hLocFree
+
+set_option backward.isDefEq.respectTransparency false in
+/-- The divisor-to-Grassmannian comparison is injective on families whose
+twisted ideals are relatively generated.  Equality of Grassmannian classes
+identifies the reconstructed quotients; their quotient-compatible
+reconstruction isomorphisms and cancellation of the line-bundle twist then
+identify the original divisor families.
+
+This specializes the reconstruction argument of Nitsure, Section 5, to the
+campaign's D2 divisor comparison.  Uniform production of the evaluation and
+generation hypotheses is not asserted here. -/
+theorem rel_of_grassmannianClass_eq_of_kernel_counit_epi
+    (L : X.Modules) (hL : LineBundle.IsLocallyTrivial L)
+    (x y : DivFamily π T) [IsLocallyNoetherian S]
+    [QuasiCompact π] [QuasiSeparated π] [Flat T.hom] {d : ℕ}
+    (hxEpi : Epi (x.grassmannianEval L))
+    (hyEpi : Epi (y.grassmannianEval L))
+    (hxLocFree : SheafOfModules.IsLocallyFreeOfRank
+      ((Modules.pushforward (pullback.snd π T.hom)).obj (x.twist L)) d)
+    (hyLocFree : SheafOfModules.IsLocallyFreeOfRank
+      ((Modules.pushforward (pullback.snd π T.hom)).obj (y.twist L)) d)
+    (hxgen : Epi ((Modules.pullbackPushforwardAdjunction
+      (pullback.snd π T.hom)).counit.app (kernel (x.twistQuotientMap L))))
+    (hygen : Epi ((Modules.pullbackPushforwardAdjunction
+      (pullback.snd π T.hom)).counit.app (kernel (y.twistQuotientMap L))))
+    (h : x.grassmannianClass L hxEpi hxLocFree =
+      y.grassmannianClass L hyEpi hyLocFree) : x.Rel y := by
+  haveI : L.IsFinitePresentation := hL.isFinitePresentation
+  haveI : L.IsQuasicoherent := inferInstance
+  haveI : IsIso ((canonicalBaseChangeMap
+      (IsPullback.of_hasPullback π T.hom)).app L) :=
+    canonicalBaseChangeMap_isIso (IsPullback.of_hasPullback π T.hom) L
+  have hxy : (x.grassmannianQuotient L hxEpi hxLocFree).Rel
+      (y.grassmannianQuotient L hyEpi hyLocFree) := Quotient.exact h
+  obtain ⟨e, he⟩ := LocallyFreeQuotient.candidateQuotient_rel L hxy
+  let ex := grassmannianCandidateIsoTwistOfKernelCounitEpi L x hxEpi hxLocFree hxgen
+  let ey := grassmannianCandidateIsoTwistOfKernelCounitEpi L y hyEpi hyLocFree hygen
+  have hx : LocallyFreeQuotient.candidateQuotient L
+      (x.grassmannianQuotient L hxEpi hxLocFree) ≫ ex.hom =
+      x.twistQuotientMap L :=
+    grassmannianCandidateQuotient_comp_isoTwist_hom L x hxEpi hxLocFree hxgen
+  have hy : LocallyFreeQuotient.candidateQuotient L
+      (y.grassmannianQuotient L hyEpi hyLocFree) ≫ ey.hom =
+      y.twistQuotientMap L :=
+    grassmannianCandidateQuotient_comp_isoTwist_hom L y hyEpi hyLocFree hygen
+  apply rel_of_twistQuotientMap_iso L hL (ex.symm ≪≫ e ≪≫ ey)
+  simp only [Iso.trans_hom, Iso.symm_hom]
+  rw [← hx, Category.assoc, Iso.hom_inv_id_assoc, ← Category.assoc, he, hy]
 
 end DivFamily
 
