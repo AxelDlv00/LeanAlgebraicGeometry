@@ -38,6 +38,9 @@ chart restrictions needed to compare it with the complete-linear-system map.
 The pullback isomorphism and its coordinate-section law are intentionally
 fields of the certificate: they are the interface a future extraction theorem
 must construct from an arbitrary identification `f*O(1) ≅ O(D)`.
+The stored basis is a full basis of `H⁰(O(D))`; consequently this is a
+conditional complete-linear-system interface, rather than an extraction theorem
+for a bare projective embedding.
 -/
 structure ArbitraryProjectiveEmbeddingCertificate (D : CurveDivisor k X) where
   n : ℕ
