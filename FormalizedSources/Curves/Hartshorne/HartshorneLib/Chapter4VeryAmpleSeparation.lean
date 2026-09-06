@@ -106,6 +106,19 @@ lemma divisorSections_inf_le_twoDevissage_of_ne {D : CurveDivisor k X}
         divisorBound_devissageDivisor_of_ne hx hz hzx' D]
       exact hxmem'
 
+/-- For distinct points, the sections vanishing at both points are exactly the
+intersection of the two one-point section spaces. -/
+theorem divisorSections_twoDevissage_eq_inf_of_ne {D : CurveDivisor k X}
+    (x y : X.left) (hx : x ≠ genericPoint X.left)
+    (hy : y ≠ genericPoint X.left) (hxy : x ≠ y) :
+    divisorSections (CurveDivisor.devissageDivisor hy
+      (CurveDivisor.devissageDivisor hx D)) (⊤ : X.left.Opens) =
+      divisorSections (CurveDivisor.devissageDivisor hx D) ⊤ ⊓
+        divisorSections (CurveDivisor.devissageDivisor hy D) ⊤ := by
+  apply le_antisymm
+  · exact divisorSections_twoDevissage_le_inf x y hx hy
+  · exact divisorSections_inf_le_twoDevissage_of_ne x y hx hy hxy
+
 /-- Under very ampleness the two-point section space is strictly smaller than
 the first one-point space. -/
 lemma twoDevissage_lt_first {D : CurveDivisor k X}
