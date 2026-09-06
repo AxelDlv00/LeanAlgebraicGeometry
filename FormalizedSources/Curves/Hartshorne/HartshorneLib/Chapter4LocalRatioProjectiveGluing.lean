@@ -110,6 +110,20 @@ theorem chartOpenCover_ι_gluedFromOpen_eq_chartMap
   rw [chartOpenCover_ι_gluedFromOpen]
   exact (r i).chartMap_eq_fromOpen.symm
 
+/-- The glued morphism is uniquely determined by its normalized chart
+restrictions. This is the cover-level uniqueness statement used when a
+candidate projective map is presented by the same local ratio charts. -/
+theorem gluedFromOpen_eq_of_restrictions
+    (hsame : ∀ i j, (a i).SameSectionValues (a j))
+    (f : X.left ⟶ projectiveSpace k n)
+    (hf : ∀ i,
+      (chartOpenCover a hcover).f i ≫ f = fromOpenFamily a r hcover i) :
+    gluedFromOpen a r hcover hsame = f := by
+  apply Scheme.Cover.hom_ext (chartOpenCover a hcover)
+  intro i
+  rw [chartOpenCover_ι_gluedFromOpen]
+  exact (hf i).symm
+
 /-- The morphism obtained by gluing the local-ratio charts is over the
 coefficient field. -/
 @[reassoc (attr := simp)]
