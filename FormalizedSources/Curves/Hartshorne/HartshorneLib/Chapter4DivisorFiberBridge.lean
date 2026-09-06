@@ -5,6 +5,7 @@ Authors: The Hartshorne Contributors
 -/
 
 import HartshorneLib.Chapter4DivisorModuleFiber
+import HartshorneLib.Chapter4DivisorModuleFiberLinear
 
 /-!
 # Additive descent from a divisor-module stalk to its ordinary fiber
@@ -64,6 +65,35 @@ lemma pointLattice_mul_mem_sub_one {x : X.left}
       congr 1
       ring_nf
 
+private lemma ord_lt_one_iff_bridge (z : WithZero (Multiplicative ℤ)) : z < 1 ↔
+    z ≤ ((Multiplicative.ofAdd (-1 : ℤ) : Multiplicative ℤ) :
+      WithZero (Multiplicative ℤ)) := by
+  induction z using WithZero.recZeroCoe with
+  | zero => exact iff_of_true zero_lt_one zero_le
+  | coe w =>
+    rw [← WithZero.coe_one, WithZero.coe_lt_coe, WithZero.coe_le_coe, ← ofAdd_zero,
+      ← ofAdd_toAdd w, Multiplicative.ofAdd_lt, Multiplicative.ofAdd_le]
+    omega
+
+omit [IsAlgClosed k] [IsProper X.hom] in
+/-- A maximal-ideal scalar has order at most `ofAdd (-1)` after passage to the
+function field. -/
+lemma orderAt_algebraMap_le_neg_one_of_mem_maximalIdeal {x : X.left}
+    (hx : x ≠ genericPoint X.left) {r : X.left.presheaf.stalk x}
+    (hr : r ∈ IsLocalRing.maximalIdeal (X.left.presheaf.stalk x)) :
+    orderAt X.hom hx
+        (algebraMap (X.left.presheaf.stalk x) X.left.functionField r) ≤
+      ((Multiplicative.ofAdd (-1 : ℤ) : Multiplicative ℤ) :
+        WithZero (Multiplicative ℤ)) := by
+  letI := smoothCurve_stalk_isDiscreteValuationRing X.hom hx
+  letI := smoothCurve_stalk_isDedekindDomain X.hom hx
+  set v₀ : IsDedekindDomain.HeightOneSpectrum (X.left.presheaf.stalk x) :=
+    stalkHeightOne X.left x with hv₀
+  have hord : orderAt X.hom hx = v₀.valuation X.left.functionField := rfl
+  apply (ord_lt_one_iff_bridge _).mp
+  rw [hord, IsDedekindDomain.HeightOneSpectrum.valuation_lt_one_iff_mem]
+  exact hr
+
 /-! ## Quotient descent for additive maps -/
 
 /-- Descend an additive map through a submodule quotient when it vanishes on
@@ -93,6 +123,35 @@ noncomputable def divisorStalkMaximalAction {x : X.left}
   IsLocalRing.maximalIdeal (X.left.presheaf.stalk x) •
     (⊤ : Submodule (X.left.presheaf.stalk x)
       (Scheme.Modules.Stalk (divisorModule D) x))
+
+/-- The divisor-module jump vanishes on the maximal-ideal action in its stalk.
+This is the intrinsic kernel statement needed to descend the jump through the
+ordinary scheme-module fiber. -/
+lemma stalkJump_zero_of_mem_divisorStalkMaximalAction {x : X.left}
+    (hx : x ≠ genericPoint X.left) (D : CurveDivisor k X)
+    (m : Scheme.Modules.Stalk (divisorModule D) x)
+    (hm : m ∈ divisorStalkMaximalAction (X := X) D) :
+    stalkJump hx D m = 0 := by
+  rw [stalkJump_eq_zero_iff_mem_lower_lattice hx D]
+  refine Submodule.smul_induction_on hm ?_ ?_
+  · intro r hr m₀ hm₀
+    have hupper : stalkVal D x m₀ ∈
+        pointLattice (X := X) hx (CurveDivisor.coeffAt hx D) :=
+      stalkVal_mem_pointLattice hx D m₀
+    have horder : orderAt X.hom hx
+        (algebraMap (X.left.presheaf.stalk x) X.left.functionField r) ≤
+          ((Multiplicative.ofAdd (-1 : ℤ) : Multiplicative ℤ) :
+            WithZero (Multiplicative ℤ)) :=
+      orderAt_algebraMap_le_neg_one_of_mem_maximalIdeal hx hr
+    have hprod := pointLattice_mul_mem_sub_one hx horder hupper
+    have hlin := (stalkValLinearMap (X := X) D x).map_smul r m₀
+    change (stalkValLinearMap (X := X) D x) (r • m₀) ∈
+      pointLattice (X := X) hx (CurveDivisor.coeffAt hx D - 1)
+    rw [hlin, Algebra.smul_def]
+    exact hprod
+  · intro y z hy hz
+    rw [map_add]
+    exact (pointLattice (X := X) hx (CurveDivisor.coeffAt hx D - 1)).add_mem hy hz
 
 /-! ## The bridge and its generator formula -/
 
