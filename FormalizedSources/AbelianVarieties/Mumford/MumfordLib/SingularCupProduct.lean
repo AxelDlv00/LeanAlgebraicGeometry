@@ -7,7 +7,7 @@ Authors: The Mumford Contributors
 import MumfordLib.SingularCochainExtension
 
 /-!
-# The degree-zero singular cup product
+# Degree-zero and degree-one singular cup products
 
 The Alexander--Whitney cup product in bidegree `(0, 0)` is pointwise
 multiplication on vertices.  This file records that concrete operation on
