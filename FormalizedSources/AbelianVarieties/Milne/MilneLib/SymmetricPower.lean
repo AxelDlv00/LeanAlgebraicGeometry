@@ -595,6 +595,25 @@ theorem canonicalIso_hom_unique
       D.factor_unique E.projection E.projection_symmetric u hu
     _ = (canonicalIso D E).hom := rfl
 
+@[simp]
+theorem canonicalIso_refl
+    {S : Scheme.{u}} {V : Over S} {n : ℕ}
+    (D : SymmetricPowerData V n) :
+    canonicalIso D D = Iso.refl D.carrier := by
+  apply Iso.ext
+  exact (canonicalIso_hom_unique D D (𝟙 D.carrier) (by simp)).symm
+
+theorem canonicalIso_trans
+    {S : Scheme.{u}} {V : Over S} {n : ℕ}
+    (D E F : SymmetricPowerData V n) :
+    canonicalIso D E ≪≫ canonicalIso E F = canonicalIso D F := by
+  apply Iso.ext
+  apply canonicalIso_hom_unique D F
+  change D.projection ≫
+      ((canonicalIso D E).hom ≫ (canonicalIso E F).hom) = F.projection
+  rw [← Category.assoc, projection_comp_canonicalIso_hom,
+    projection_comp_canonicalIso_hom]
+
 end SymmetricPowerData
 
 end Functoriality
