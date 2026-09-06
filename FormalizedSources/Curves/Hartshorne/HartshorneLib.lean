@@ -129,6 +129,7 @@ import HartshorneLib.Chapter4BasePointFreeCriterion
 import HartshorneLib.Chapter4OrdinaryFiberBasePointFree
 import HartshorneLib.Chapter4OrdinaryFiberVeryAmple
 import HartshorneLib.Chapter4TwoPointFiberEvaluation
+import HartshorneLib.Chapter4FiberSeparationCriterion
 import HartshorneLib.Chapter4DivisorModuleLocal
 
 /-!
