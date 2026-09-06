@@ -2,9 +2,10 @@ id: Hartshorne.iv3-projective-serre-twist
 title: Construct O(1) on projective space
 projects:
 - Hartshorne
-summary: Construct the actual projective module with standard-chart generators and
-  coordinate transition maps; reuse workspace SerreTwist patterns within Hartshorne.
-status: pending
+summary: Constructed O(1) as a structure-sheaf module from standard coordinate transitions;
+  proved chart trivializations, line-bundle property, and compatible coordinate sections.
+  HartshorneLib passes 8717 jobs with standard-only axioms.
+status: done
 kind: proof
 priority: normal
 depends_on: []
@@ -28,3 +29,6 @@ metadata:
     projects: Hartshorne
   parent: Hartshorne.iv3-tautological-pullback
   owner: fs-hartshorne
+  updated_at: '2026-09-06T17:07:32.273319+00:00'
+  pinned_commits:
+  - dbd01d1788

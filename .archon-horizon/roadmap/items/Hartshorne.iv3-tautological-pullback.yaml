@@ -2,10 +2,10 @@ id: Hartshorne.iv3-tautological-pullback
 title: Identify the projective pullback of O(1) with O(D)
 projects:
 - Hartshorne
-summary: Denominator division now constructs O(D) chart trivializations and matches
-  the actual regularized coordinates; selected base-point-free charts supply exact
-  order. Rejected assumed-pullback/globalization wrapper removed. Next construct the
-  projective O(1) module, identify transition maps, and glue its pullback comparison.
+summary: O(1), its chart frames and coordinate sections are constructed; denominator
+  transition maps and actual chart-map pullbacks of normalized coordinates are proved.
+  The first unmet producer is the global section-compatible isomorphism f*O(1) = O(D),
+  assembled from these chart identifications.
 status: active
 kind: proof
 priority: normal
@@ -31,7 +31,8 @@ metadata:
     projects: Hartshorne
   parent: Hartshorne.iv3-chart-gluing
   owner: fs-hartshorne
-  updated_at: '2026-09-06T16:12:59.803150+00:00'
+  updated_at: '2026-09-06T17:07:56.271348+00:00'
   pinned_commits:
+  - dbd01d1788
   - 8d9cb4bc28
   - bfa99de3fd
