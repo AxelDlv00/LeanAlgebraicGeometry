@@ -41,19 +41,19 @@ theorem permutationAutHomOverLeft_comp_base
   change (permute V n σ⁻¹).left ≫ (relativePower V n).hom = _
   exact Over.w (permute V n σ⁻¹)
 
-private noncomputable def quotientPermutationAction
+noncomputable def quotientPermutationAction
     (V : Over (Spec (CommRingCat.of k))) (n : ℕ) :
     ULift.{u} (Equiv.Perm (Fin n)) →* Aut (relativePower V n).left :=
   (permutationAutHomOverLeft V n).comp MulEquiv.ulift.toMonoidHom
 
-private theorem quotientPermutationAction_comp_base
+theorem quotientPermutationAction_comp_base
     (V : Over (Spec (CommRingCat.of k))) (n : ℕ)
     (σ : ULift.{u} (Equiv.Perm (Fin n))) :
     ((quotientPermutationAction V n) σ).hom ≫ (relativePower V n).hom =
       (relativePower V n).hom :=
   permutationAutHomOverLeft_comp_base V n σ.down
 
-private theorem quotientPermutationAction_orbits
+theorem quotientPermutationAction_orbits
     (V : Over (Spec (CommRingCat.of k))) (n : ℕ)
     (h : OrbitsInAffineOpen (permutationAutHomOverLeft V n)) :
     OrbitsInAffineOpen (quotientPermutationAction V n) := by
