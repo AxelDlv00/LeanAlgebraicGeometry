@@ -56,4 +56,31 @@ noncomputable def chartLocalEquation (x : DivFamily π T)
     Γ((U : Scheme), ⊤) :=
   CartierKernel.localEquation (chartQuotient x U) (Iso.refl _) e
 
+/-! The local equation is useful only once its scalar action is exposed.  The
+generic Cartier-kernel lemma supplies exactly that bridge for the chart
+quotient, with no additional regularity assumptions. -/
+
+/-- The chart local equation recovers the kernel inclusion as scalar
+multiplication on the chart unit. -/
+theorem chartLocalEquation_scalar (x : DivFamily π T)
+    (U : (pullback π T.hom).Opens)
+    (e : kernel (chartQuotient x U) ≅
+      SheafOfModules.unit (U : Scheme).ringCatSheaf) :
+    Grassmannian.scalarEnd (chartLocalEquation x U e) =
+      e.inv ≫ kernel.ι (chartQuotient x U) ≫ (Iso.refl _).hom := by
+  exact CartierKernel.localEquation_scalar (chartQuotient x U) (Iso.refl _) e
+
+/-- Evaluation of the chart kernel inclusion on a section is multiplication by
+the canonical local equation. -/
+theorem chartLocalEquation_apply (x : DivFamily π T)
+    (U : (pullback π T.hom).Opens)
+    (e : kernel (chartQuotient x U) ≅
+      SheafOfModules.unit (U : Scheme).ringCatSheaf)
+    (s : (U : Scheme).ringCatSheaf.obj.obj (op ⊤)) :
+    ((e.inv ≫ kernel.ι (chartQuotient x U) ≫ (Iso.refl _).hom).val.app (op ⊤)) s =
+      s * (U : Scheme).ringCatSheaf.obj.map (homOfLE le_top).op
+        (chartLocalEquation x U e) := by
+  exact CartierKernel.localEquation_apply_of_scalar
+    (chartQuotient x U) (Iso.refl _) e (chartLocalEquation_scalar x U e) ⊤ s
+
 end AlgebraicGeometry.Scheme.DivFamily
