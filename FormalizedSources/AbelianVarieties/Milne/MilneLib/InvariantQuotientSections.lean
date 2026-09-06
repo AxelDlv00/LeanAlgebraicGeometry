@@ -6,6 +6,7 @@ Authors: The Milne Contributors
 
 import MilneLib.InvariantLocalizationTransitions
 import MilneLib.InvariantQuotientOpen
+import MilneLib.StableAffineSections
 import Mathlib.Topology.Sheaves.SheafCondition.UniqueGluing
 
 /-!
@@ -45,6 +46,21 @@ theorem specRestriction_comp_algebraMap
   exact congrArg CommRingCat.Hom.hom
     (StructureSheaf.algebraMap_self_map R (Opposite.op V) (Opposite.op U)
       (homOfLE hVU).op)
+
+/-- Pullback along a spectrum map, followed by restriction, agrees with the
+given ring map on the images of coordinate-ring elements. -/
+theorem specMap_appLE_comp_algebraMap {R S : CommRingCat} (f : R ⟶ S)
+    (U : (Spec R).Opens) (V : (Spec S).Opens)
+    (h : V ≤ (Spec.map f) ⁻¹ᵁ U) :
+    ((Spec.map f).appLE U V h).hom.comp (algebraMap R Γ(Spec R, U)) =
+      (algebraMap S Γ(Spec S, V)).comp f.hom := by
+  have hc : ((Spec.map f).app U).hom.comp (algebraMap R Γ(Spec R, U)) =
+      (algebraMap S Γ(Spec S, (Spec.map f) ⁻¹ᵁ U)).comp f.hom := by
+    exact congrArg CommRingCat.Hom.hom (StructureSheaf.toOpen_comp_comap f.hom U)
+  change (((Spec S).presheaf.map (homOfLE h).op).hom.comp
+      ((Spec.map f).app U).hom).comp (algebraMap R Γ(Spec R, U)) = _
+  rw [RingHom.comp_assoc, hc, ← RingHom.comp_assoc,
+    specRestriction_comp_algebraMap]
 
 /-- Sections of the quotient structure sheaf on the invariant basic open
 defined by `b`. -/
@@ -289,6 +305,66 @@ theorem invariantSourceBasicOpenPreimageSectionsEquiv_comp_algebraMap
     algebraMap A (Localization.Away (b : A))
   rw [invariantSourceBasicOpenPreimageEquiv_comp_algebraMap,
     sourceBasicOpenSectionsEquiv_comp_algebraMap]
+
+/-- The localization presentation intertwines geometric section pullback with
+the localized ring action. The inverse occurs because `Spec` is contravariant. -/
+theorem invariantSourceBasicOpenPreimageSectionsEquiv_actApp
+    (b : FixedPoints.subalgebra k A G)
+    (hU : StableGroupAction.IsStableOpen (specAction G A)
+      ((affineInvariantQuotientMap (k := k) (A := A) (G := G)) ⁻¹ᵁ
+        PrimeSpectrum.basicOpen b)) (g : G) :
+    (invariantSourceBasicOpenPreimageSectionsEquiv b).toRingHom.comp
+        (StableGroupAction.actApp (specAction G A) hU g).hom =
+      (awayMap (b : A) b.property g⁻¹).comp
+        (invariantSourceBasicOpenPreimageSectionsEquiv b).toRingHom := by
+  let U := (affineInvariantQuotientMap (k := k) (A := A) (G := G)) ⁻¹ᵁ
+    PrimeSpectrum.basicOpen b
+  have he (a : A) : invariantSourceBasicOpenPreimageSectionsEquiv b
+      (algebraMap A (invariantSourceBasicOpenPreimageSections b) a) =
+      algebraMap A (Localization.Away (b : A)) a :=
+    RingHom.congr_fun (invariantSourceBasicOpenPreimageSectionsEquiv_comp_algebraMap b) a
+  let e : invariantSourceBasicOpenPreimageSections b ≃ₐ[A] Localization.Away (b : A) :=
+    { invariantSourceBasicOpenPreimageSectionsEquiv b with commutes' := he }
+  letI : IsLocalization.Away (b : A) (invariantSourceBasicOpenPreimageSections b) :=
+    IsLocalization.isLocalization_of_algEquiv (Submonoid.powers (b : A)) e.symm
+  have hc := specMap_appLE_comp_algebraMap
+    (CommRingCat.ofHom (MulSemiringAction.toRingHom G A g⁻¹)) U U (hU g).ge
+  refine IsLocalization.ringHom_ext (Submonoid.powers (b : A)) ?_
+  ext a
+  change invariantSourceBasicOpenPreimageSectionsEquiv b
+      ((StableGroupAction.actApp (specAction G A) hU g).hom
+        (algebraMap A (invariantSourceBasicOpenPreimageSections b) a)) =
+    awayMap (b : A) b.property g⁻¹
+      (invariantSourceBasicOpenPreimageSectionsEquiv b
+        (algebraMap A (invariantSourceBasicOpenPreimageSections b) a))
+  rw [show (StableGroupAction.actApp (specAction G A) hU g).hom
+      (algebraMap A (invariantSourceBasicOpenPreimageSections b) a) =
+      algebraMap A (invariantSourceBasicOpenPreimageSections b) (g⁻¹ • a) from
+    RingHom.congr_fun hc a]
+  rw [he, he, awayMap_algebraMap]
+
+/-- Fixed elements in the localization presentation are exactly the sections
+fixed by geometric pullback on the corresponding stable open. -/
+theorem invariantSourceBasicOpenPreimageSectionsEquiv_mem_fixedAway_iff
+    (b : FixedPoints.subalgebra k A G)
+    (hU : StableGroupAction.IsStableOpen (specAction G A)
+      ((affineInvariantQuotientMap (k := k) (A := A) (G := G)) ⁻¹ᵁ
+        PrimeSpectrum.basicOpen b))
+    (s : invariantSourceBasicOpenPreimageSections b) :
+    invariantSourceBasicOpenPreimageSectionsEquiv b s ∈ fixedAway (b : A) b.property ↔
+      ∀ g : G, (StableGroupAction.actApp (specAction G A) hU g).hom s = s := by
+  rw [mem_fixedAway]
+  have he (g : G) := RingHom.congr_fun
+    (invariantSourceBasicOpenPreimageSectionsEquiv_actApp b hU g) s
+  constructor
+  · intro hs g
+    apply (invariantSourceBasicOpenPreimageSectionsEquiv b).injective
+    exact (he g).trans (hs g⁻¹)
+  · intro hs g
+    have h := (he g⁻¹).symm.trans
+      (congrArg (invariantSourceBasicOpenPreimageSectionsEquiv b) (hs g⁻¹))
+    simpa only [inv_inv, RingHom.comp_apply, RingEquiv.toRingHom_eq_coe,
+      RingEquiv.coe_toRingHom] using h
 
 /-- On an invariant basic open, the affine quotient map on structure-sheaf
 sections commutes with the coordinate-ring inclusion. -/
