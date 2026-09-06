@@ -7,6 +7,7 @@ import AlgebraicJacobian.Descent.FiniteGaloisQuotientGeometry
 import AlgebraicJacobian.Picard.Pic0FiniteGaloisRepresentable
 import AlgebraicJacobian.Picard.Pic0FiniteStageOrbitAffine
 import AlgebraicJacobian.Picard.Pic0FiniteStageStableAffineCover
+import AlgebraicJacobian.Picard.Pic0FiniteStageRepresentability
 import AlgebraicJacobian.Picard.JacobianDataHandoff
 
 /-!
@@ -166,6 +167,61 @@ noncomputable def jacobianData_finiteStageGaloisDescent_of_isProjective
       letI : (pic0SemilinearGalActionOfRepresentableBy C rep).OrbitsInAffineOpen :=
         pic0FiniteStageOrbitsInAffineOpen_of_isProjective C Ck P rep hproj
       exact quasiCompact_pic0FiniteGaloisDescent C rep
+        (by
+          change QuasiCompact P.gluedMap
+          letI : IsProper P.gluedMap := hproj.isProper
+          infer_instance))
+
+/-! ## Composition with the binder-free finite-stage Yoneda producer -/
+
+/-- Compose the all-test finite-stage Yoneda certificate with the finite-Galois quotient.
+
+The `Pic0FiniteStageTestEquiv` is the substantive finite-stage producer: it identifies maps
+into the literal carrier `P.gluedOver` with Picard-zero families on every finite-stage test.
+Once that certificate and projectivity of the glued carrier are supplied, the existing
+finite-Galois quotient construction gives a `PicRepDatum` over the original field without
+changing the selected carrier at the finite stage.
+-/
+noncomputable def picRepDatum_finiteStageGaloisDescent_of_testEquiv
+    (C : Over (Spec (CommRingCat.of K)))
+    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+    [GeometricallyIrreducible C.hom]
+    (Ck : Over (Spec (CommRingCat.of k)))
+    [SmoothOfRelativeDimension 1 Ck.hom] [IsProper Ck.hom]
+    [GeometricallyIrreducible Ck.hom] [IsSepClosed k]
+    (P : Pic0FiniteStageGluePackage Ck F)
+    [Algebra K P.N.1] [FiniteDimensional K P.N.1]
+    [IsGalois K P.N.1]
+    (data : Pic0FiniteStageTestEquiv C Ck P)
+    (hproj : P.gluedMap.IsProjective) :
+    PicRepDatum K K C :=
+  picRepDatum_finiteStageGaloisDescent_of_isProjective C Ck P
+    (pic0RepresentableBy_finiteStage_of_testEquiv C Ck P data) hproj
+
+/-- The same composition as `JacobianData`, retaining the exact finite-stage carrier in the
+`PicRepDatum` used to construct the quotient. -/
+noncomputable def jacobianData_finiteStageGaloisDescent_of_testEquiv
+    (C : Over (Spec (CommRingCat.of K)))
+    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+    [GeometricallyIrreducible C.hom]
+    (Ck : Over (Spec (CommRingCat.of k)))
+    [SmoothOfRelativeDimension 1 Ck.hom] [IsProper Ck.hom]
+    [GeometricallyIrreducible Ck.hom] [IsSepClosed k]
+    (P : Pic0FiniteStageGluePackage Ck F)
+    [Algebra K P.N.1] [FiniteDimensional K P.N.1]
+    [IsGalois K P.N.1]
+    (data : Pic0FiniteStageTestEquiv C Ck P)
+    (hproj : P.gluedMap.IsProjective) :
+    JacobianData C :=
+  (picRepDatum_finiteStageGaloisDescent_of_testEquiv C Ck P data hproj).toJacobianData
+    (by
+      letI :
+          (pic0SemilinearGalActionOfRepresentableBy C
+            (pic0RepresentableBy_finiteStage_of_testEquiv C Ck P data)).OrbitsInAffineOpen :=
+        pic0FiniteStageOrbitsInAffineOpen_of_isProjective C Ck P
+          (pic0RepresentableBy_finiteStage_of_testEquiv C Ck P data) hproj
+      exact quasiCompact_pic0FiniteGaloisDescent C
+        (pic0RepresentableBy_finiteStage_of_testEquiv C Ck P data)
         (by
           change QuasiCompact P.gluedMap
           letI : IsProper P.gluedMap := hproj.isProper
