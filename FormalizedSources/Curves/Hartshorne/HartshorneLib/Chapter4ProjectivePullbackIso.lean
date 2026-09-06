@@ -95,5 +95,60 @@ theorem exists_closedImmersion_pullbackTwisting_iso_of_veryAmple
   exact ⟨m, gluedMap_of_smoothCurve b hbase, gluedMap_of_smoothCurve_over b hbase,
     gluedMap_isClosedImmersion_of_veryAmple b hvery, ⟨pullbackTwistingIsoDivisor b hbase⟩⟩
 
+/-- A concrete projective embedding certificate records the basis, the
+base-point-free proof, and the actual glued map. It is deliberately tied to
+the canonical complete-linear-system construction; arbitrary embeddings still
+require a separate pullback-section extraction theorem. -/
+structure ProjectiveEmbeddingCertificate (D : CurveDivisor k X) where
+  n : ℕ
+  basis : Module.Basis (Fin (n + 1)) k (CurveDivisorSectionSpace D)
+  hbase : BasePointFreeLinearSystem D
+  map : X.left ⟶ projectiveSpace k n
+  map_over : map ≫ projectiveSpaceStructureMap k n = X.hom
+  map_eq_glued : map = gluedMap_of_smoothCurve basis hbase
+  closedImmersion : IsClosedImmersion map
+  pullbackIso : (Scheme.Modules.pullback map).obj
+      (ProjectiveTwist.twistingSheafOne (k := k) (J := Fin (n + 1))) ≅ divisorModule D
+  pullbackIso_coordinateSection : ∀ (W : (projectiveSpace k n).Opens) (j : Fin (n + 1)),
+    pullbackIso.hom.app (map ⁻¹ᵁ W)
+        (((Scheme.Modules.pullbackPushforwardAdjunction map).unit.app
+          (ProjectiveTwist.twistingSheafOne (k := k) (J := Fin (n + 1)))).app W
+            (ProjectiveTwist.coordinateSection j W)) =
+      (show Γ(divisorModule D, map ⁻¹ᵁ W) from divisorSectionsRes D le_top
+        (basisSections basis j))
+
+/-- Every numerically very ample divisor has a concrete embedding certificate. -/
+def projectiveEmbeddingCertificate_of_veryAmple
+    (hvery : VeryAmpleLinearSystem D) :
+    ProjectiveEmbeddingCertificate D := by
+  classical
+  let hbase := basePointFreeLinearSystem_of_veryAmple hvery
+  let hbases := exists_basis_of_basePointFree hbase
+  let n := Classical.choose hbases
+  let basis := Classical.choice (Classical.choose_spec hbases)
+  let map := gluedMap_of_smoothCurve basis hbase
+  exact
+    { n := n
+      basis := basis
+      hbase := hbase
+      map := map
+      map_over := gluedMap_of_smoothCurve_over basis hbase
+      map_eq_glued := rfl
+      closedImmersion := gluedMap_isClosedImmersion_of_veryAmple basis hvery
+      pullbackIso := pullbackTwistingIsoDivisor basis hbase
+      pullbackIso_coordinateSection := pullbackTwistingIsoDivisor_coordinateSection
+        basis hbase }
+
+/-- A projective embedding certificate recovers the numerical very-ampleness
+criterion through the closed-immersion converse. -/
+theorem veryAmple_of_projectiveEmbeddingCertificate
+    (c : ProjectiveEmbeddingCertificate D) :
+    VeryAmpleLinearSystem D := by
+  have hclosed : IsClosedImmersion (gluedMap_of_smoothCurve c.basis c.hbase) := by
+    rw [← c.map_eq_glued]
+    exact c.closedImmersion
+  letI := hclosed
+  exact veryAmple_of_gluedMap_isClosedImmersion c.basis c.hbase
+
 end
 end Hartshorne.BasePointFreeLocalRatioCover
