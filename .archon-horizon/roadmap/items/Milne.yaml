@@ -2,12 +2,13 @@ id: Milne
 title: Milne Abelian Varieties formalization
 projects:
 - Milne
-summary: 'Affine quotient and canonical global projection are proved, including finite/surjective
-  orbit quotient, invariant sections, finite-type and reduced/integral target properties,
-  and target separatedness (c59518629a). Next: global invariant-morphism factorization
-  and free-action etaleness; symmetric-power construction and geometric Galois descent
-  follow. Conditional symmetric-power coherence is available. I-2317 topic migration
-  remains a dedicated deferred unit.'
+summary: 'Canonical finite quotient geometry and arbitrary-target factorization are
+  proved. f57854df05/8f58e7faf2 derive finite symmetric quotients from finite-type
+  separated input with affine orbits explicit; 3038c3002c proves Galois/separable
+  fixed-subalgebra fraction fields. Full MilneLib build and honesty audit pass. Next:
+  affine-orbit geometry and canonical affine-chart/function-field bridge (I-2353);
+  free-action etaleness and geometric Galois descent remain open. I-2317 layout migration
+  stays deferred.'
 status: active
 kind: proof
 priority: high
@@ -32,8 +33,12 @@ metadata:
     projects: Milne
   owner: fs-milne
   milestone: Milne
-  updated_at: '2026-09-06T15:15:24.930384+00:00'
+  updated_at: '2026-09-06T17:17:46.338616+00:00'
   pinned_commits:
+  - 3038c3002c
+  - 8f58e7faf2
+  - f57854df05
+  - 6477a5389e
   - 5bd74c9f017967524997cba2f77bde8b9667b4c2
   - 935c2b2c1f471bface1e35c7bd5eb05ad839aa42
   - d68da97136

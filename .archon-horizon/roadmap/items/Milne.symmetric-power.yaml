@@ -2,18 +2,17 @@ id: Milne.symmetric-power
 title: Symmetric-power quotient and factorization
 projects:
 - Milne
-summary: Pending source node prop:milne-symmetric-power. Relative-power permutations
-  form a verified Aut-valued action. The general finite-quotient constructor now supplies
-  quotient topology, orbit fibres, finite projection, and the invariant section-image
-  theorem once its hypotheses are instantiated. Remaining symmetric-power input is
-  the non-affine product-action orbit-in-affine argument and geometric hypotheses,
-  followed by the still-open separatedness/universal factorization and source separability
-  conclusions. SymmetricPowerData is supplied data, not an existence theorem.
+summary: 'f57854df05 and 8f58e7faf2 discharge relative-power finite-type, quasi-compactness
+  and separatedness and construct finite surjective symmetric quotients from finite-type
+  separated input over a noetherian affine base, with affine orbits explicit. 3038c3002c
+  proves Galois/separable fixed-subalgebra fraction fields. Next: general-variety
+  affine-orbit production and canonical affine-chart/function-field identification
+  (I-2353). Full MilneLib build and honesty audit pass; III.3.1 stays empty.'
 status: pending
 kind: proof
 priority: high
 depends_on:
-- Milne.finite-quotient
+- Milne.finite-quotient.factorization
 inbox_refs: []
 task_refs:
 - fs-milne
@@ -35,7 +34,12 @@ metadata:
   parent: Milne
   owner: fs-milne
   milestone: Milne
-  updated_at: '2026-09-06T14:45:53.595203+00:00'
+  updated_at: '2026-09-06T17:17:44.899803+00:00'
   pinned_commits:
+  - 3038c3002c
+  - 8f58e7faf2
+  - f57854df05
+  - 6477a5389e
+  - 43b0510
   - 36646e7c91
   - 8ea75a2a7a

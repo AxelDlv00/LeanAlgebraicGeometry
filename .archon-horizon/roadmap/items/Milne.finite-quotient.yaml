@@ -2,11 +2,10 @@ id: Milne.finite-quotient
 title: Global finite quotient by gluing affine charts
 projects:
 - Milne
-summary: 'The canonical glued quotient has a finite surjective invariant projection,
-  orbit fibres, intrinsic invariant sections, finite-type target over a noetherian
-  affine base, reduced/integral target transfer, and separatedness (c59518629a, horizon
-  check MilneLib passed). Source I.8.10 remains incomplete: construct invariant-morphism
-  factorization and prove free-action etaleness.'
+summary: The canonical glued quotient has finite surjective invariant projection,
+  orbit fibres, invariant sections on every open, target finite-type/reduced/integral/separated
+  properties, and arbitrary-scheme invariant-morphism factorization (6fa0b91a6c).
+  The source I.8.10 proposition remains incomplete at free-action etaleness.
 status: pending
 kind: proof
 priority: high
@@ -33,8 +32,9 @@ metadata:
   parent: Milne
   owner: fs-milne
   milestone: Milne
-  updated_at: '2026-09-06T15:15:26.483707+00:00'
+  updated_at: '2026-09-06T16:37:23.185120+00:00'
   pinned_commits:
+  - 6fa0b91a6c
   - c59518629a
   - ed5a526316
   - d70f8f17b1
