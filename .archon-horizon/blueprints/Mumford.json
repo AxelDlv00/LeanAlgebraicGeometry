@@ -702,10 +702,10 @@
       "\\uses": ""
     },
     "states": {
-      "blocked": 116,
-      "closed": 912,
+      "blocked": 115,
+      "closed": 918,
       "formalized_open": 0,
-      "informal": 211,
+      "informal": 210,
       "ready": 95
     },
     "warnings": [
@@ -4802,20 +4802,20 @@
       "has_sorry": false,
       "hgraph_id": "fc445e6aa095",
       "id": "mumford-frag-commutative",
-      "lean_file": null,
-      "lean_name": null,
-      "lean_source": null,
-      "lean_status": "empty",
+      "lean_file": "MumfordLib/ComplexLieCommutativity.lean",
+      "lean_name": "Mumford.Analytic.complexLieGroup_isMulCommutative",
+      "lean_source": "theorem complexLieGroup_isMulCommutative\n    [T2Space G]\n    [I.Boundaryless] [CompactSpace G] [PreconnectedSpace G] :\n    IsMulCommutative G := by\n  letI : FiniteDimensional \u2102 E :=\n    FiniteDimensional.of_locallyCompact_manifold G I\n  letI : CompleteSpace E := FiniteDimensional.complete \u2102 E\n  exact complexLieGroup_isMulCommutative_of_canonicalComplexExponential\n    (G := G) I",
+      "lean_status": "lean_ok",
       "level": "medium",
       "mathlib_ok": false,
       "order": 0,
-      "proved": false,
+      "proved": true,
       "rdep_count": 1,
       "review_count": 0,
       "sources": [
         "M:ch1:I.1"
       ],
-      "state": "ready",
+      "state": "closed",
       "statement": "Let $X$ be a compact connected complex Lie group.  Then $X$ is commutative.",
       "title": "Commutativity of a compact connected complex Lie group",
       "type": "theorem",
@@ -4844,7 +4844,7 @@
       "sources": [
         "M:ch1:I.1"
       ],
-      "state": "blocked",
+      "state": "ready",
       "statement": "The exponential map $\\exp:V\\to X$ is a surjective homomorphism of complex\nLie groups with kernel a lattice $U$ in $V$, and induces an isomorphism\n$V/U\\simeq X$.",
       "title": "Uniformization",
       "type": "theorem",
