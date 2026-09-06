@@ -9,9 +9,11 @@ import HartshorneLib.Chapter4ProjectiveMapTangent
 import HartshorneLib.Chapter4FiniteInjectiveStalks
 import HartshorneLib.Chapter4GenericStalkSurjectivity
 import HartshorneLib.Chapter4ResidueMap
+import HartshorneLib.Chapter4ProjectivePointConverse
+import HartshorneLib.Chapter4ProjectiveTangentConverse
 
 /-!
-# Numerical very ampleness gives a projective closed immersion
+# The projective closed-immersion criterion for a complete linear system
 
 The fixed-basis projective morphism is finite and injective on points. At
 closed points, tangent separation supplies maximal-ideal generation and the
@@ -19,7 +21,10 @@ ground field supplies residue-field surjectivity. Finite local Nakayama gives
 stalk surjectivity there, and specialization gives it at the generic point.
 The resulting finite monomorphism is a closed immersion.
 
-This proves the forward geometric implication in Hartshorne IV.3.1.
+Conversely, a closed immersion separates distinct points and is surjective on
+stalks, which gives the repeated-point dimension drop. Thus for every complete
+basis of a base-point-free system, the associated morphism is a closed immersion
+if and only if the numerical very-ampleness criterion holds.
 -/
 
 set_option autoImplicit false
@@ -92,6 +97,70 @@ theorem gluedMap_isClosedImmersion_of_veryAmple
   letI : Mono f :=
     SurjectiveOnStalks.mono_of_injective (gluedMap_injective_of_veryAmple basis hD)
   exact (IsClosedImmersion.iff_isFinite_and_mono f).mpr ⟨inferInstance, inferInstance⟩
+
+/-- A closed immersion of the actual complete linear-system map forces the
+two-point dimension drops, including the repeated-point tangent condition. -/
+theorem veryAmple_of_gluedMap_isClosedImmersion
+    (basis : Module.Basis (Fin (n + 1)) k (CurveDivisorSectionSpace D))
+    (hbase : BasePointFreeLinearSystem D)
+    [IsClosedImmersion (gluedMap_of_smoothCurve (D := D) basis hbase)] :
+    VeryAmpleLinearSystem D := by
+  intro x y hx hy
+  by_cases hxy : x = y
+  · subst y
+    have hfirst := hbase x hx
+    have hsecond := h0_sub_h0_twoDevissage_eq_one_of_gluedMap_stalkMap_surjective
+      basis hbase ⟨x, hx⟩
+      (SurjectiveOnStalks.stalkMap_surjective
+        (gluedMap_of_smoothCurve (D := D) basis hbase) x)
+    omega
+  · exact h0_sub_h0_twoDevissage_eq_two_of_gluedMap_isClosedImmersion
+      basis hbase x y hx hy hxy
+
+/-- For a fixed complete basis of a base-point-free divisor system, the
+associated projective morphism is a closed immersion exactly when deleting
+any two closed points, possibly equal, lowers the section dimension by two. -/
+theorem gluedMap_isClosedImmersion_iff_veryAmple
+    (basis : Module.Basis (Fin (n + 1)) k (CurveDivisorSectionSpace D))
+    (hbase : BasePointFreeLinearSystem D) :
+    IsClosedImmersion (gluedMap_of_smoothCurve (D := D) basis hbase) ↔
+      VeryAmpleLinearSystem D := by
+  constructor
+  · intro h
+    letI := h
+    exact veryAmple_of_gluedMap_isClosedImmersion basis hbase
+  · intro hD
+    exact gluedMap_isClosedImmersion_of_veryAmple basis hD
+
+/-- A base-point-free complete system has a nonempty finite basis, hence a
+projective target of dimension one less than its section dimension. -/
+theorem exists_basis_of_basePointFree (hD : BasePointFreeLinearSystem D) :
+    ∃ n, Nonempty (Module.Basis (Fin (n + 1)) k (CurveDivisorSectionSpace D)) := by
+  letI : Module.Finite k (CurveDivisorSectionSpace D) :=
+    (hasFiniteDivisorCohomology_of_smoothProperIntegralCurve (k := k) X D).1
+  obtain ⟨q⟩ := nonempty_nonGenericPoint_of_smoothCurve (X := X)
+  have hdrop := hD q.1 q.2
+  have hpos : 0 < CategoryTheory.Sheaf.h0 (divisorSheaf D) := by omega
+  refine ⟨CategoryTheory.Sheaf.h0 (divisorSheaf D) - 1,
+    ⟨Module.finBasisOfFinrankEq k _ ?_⟩⟩
+  change CategoryTheory.Sheaf.h0 (divisorSheaf D) = _
+  omega
+
+/-- Numerical very ampleness is equivalent to existence of a complete basis
+whose associated base-point-free projective morphism is a closed immersion.
+The basis and the base-point-free proof are supplied by the forward direction. -/
+theorem veryAmple_iff_exists_gluedMap_isClosedImmersion :
+    VeryAmpleLinearSystem D ↔
+      ∃ (n : ℕ) (basis : Module.Basis (Fin (n + 1)) k (CurveDivisorSectionSpace D))
+        (hbase : BasePointFreeLinearSystem D),
+        IsClosedImmersion (gluedMap_of_smoothCurve (D := D) basis hbase) := by
+  constructor
+  · intro hD
+    let hbase := basePointFreeLinearSystem_of_veryAmple hD
+    obtain ⟨n, ⟨basis⟩⟩ := exists_basis_of_basePointFree hbase
+    exact ⟨n, basis, hbase, gluedMap_isClosedImmersion_of_veryAmple basis hD⟩
+  · rintro ⟨n, basis, hbase, hclosed⟩
+    exact (gluedMap_isClosedImmersion_iff_veryAmple basis hbase).mp hclosed
 
 end BasePointFreeLocalRatioCover
 
