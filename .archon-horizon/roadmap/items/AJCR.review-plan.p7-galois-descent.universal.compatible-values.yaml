@@ -2,13 +2,12 @@ id: AJCR.review-plan.p7-galois-descent.universal.compatible-values
 title: Compatible pinned atlas classes on one finite Galois stage
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: Instantiate the checked pinned-value theorem on the tensor ring models of
-  the intended finite-stage package, then prove both restriction equations after a
-  common finite Galois enlargement retaining earlier coefficients. The output must
-  be actual compatible degree-zero chart and overlap classes, ready to glue on the
-  literal P.gluedOver. Do not assume compatibility or a TestEquiv. PicEtAff.mapAlg_injective
-  requires a bijective algebra map and cannot be used as arbitrary faithfully-flat
-  reflection.
+summary: 'Checked: PicEtAff faithfully-flat injectivity and exists_pic0Subgroup_tensorStage_compatible
+  reflect ambient equations at a common finite stage; exists_pic0FiniteStageUniversalRingClass_compatible_tensorStage
+  derives both pinned restrictions given tensor ring models and algebra-map comparisons
+  (1d01c8dce2). Next instantiate actual transition models, retain final glue coefficients,
+  enlarge to a finite Galois stage, and hand compatible affine classes to gluing on
+  literal P.gluedOver. No Galois or glued-carrier claim is proved yet.'
 status: active
 kind: proof
 priority: normal
@@ -36,3 +35,9 @@ metadata:
     task_title: 'Phase 7: finite-Galois descent of Pic^0'
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.review-plan.p7-galois-descent.universal.glue-equivalence
+  updated_at: '2026-09-06T16:53:45.899634+00:00'
+  pinned_commits:
+  - 1d01c8dce2
+  - edcf0866c9
+  - 58b1e39c02
+  - 098e682d41
