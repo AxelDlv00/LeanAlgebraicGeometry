@@ -95,6 +95,113 @@ noncomputable def divisorModules (D : X.CurveDivisor) : X.Modules := by
         (forget₂ (ModuleCat.{u} K) AddCommGrpCat.{u})).obj
         (X.divisorSheaf K D)).property }
 
+/-- The generic-germ comparison is linear for regular functions on each open. -/
+lemma moduleToDivisorZeroPresheafApp_qsmul (U : X.Opens) (r s : Γ(X, U)) :
+    moduleToDivisorZeroPresheafApp K U (r * s) =
+      QcohOn.qsmul (F := X.divisorSheaf K 0) le_rfl r
+        (moduleToDivisorZeroPresheafApp K U s) := by
+  by_cases hU : (U : Set X).Nonempty
+  · apply divisorSection_ext K
+    rw [divisorVal_qsmul K (genericPoint_mem_of_nonempty hU)]
+    change (moduleToDivisorZeroPresheafApp K U (r * s) : X.functionField) =
+      (X.presheaf.germ U (genericPoint X) (genericPoint_mem_of_nonempty hU)).hom r *
+        (moduleToDivisorZeroPresheafApp K U s : X.functionField)
+    rw [moduleToDivisorZeroPresheafApp_coe_of_nonempty K hU,
+      moduleToDivisorZeroPresheafApp_coe_of_nonempty K hU, map_mul]
+  · haveI := divisorSections_subsingleton_of_empty K (D := 0) hU
+    exact Subsingleton.elim _ _
+
+/-- Regular sections map to the zero-divisor module by their generic germs. -/
+noncomputable def moduleToDivisorModulesZero :
+    Modules.Hom (SheafOfModules.unit X.ringCatSheaf)
+      (divisorModules K (0 : X.CurveDivisor)) where
+  val := PresheafOfModules.homMk
+    { app := fun U => AddCommGrpCat.ofHom
+        (moduleToDivisorZeroPresheafApp K U.unop).toAddMonoidHom
+      naturality := fun {U V} i => by
+        exact congrArg (fun f => (forget₂ (ModuleCat K) AddCommGrpCat).map f)
+          ((moduleToDivisorZeroPresheaf K).naturality i) }
+    (fun U r s => moduleToDivisorZeroPresheafApp_qsmul K U.unop r s)
+
+@[simp]
+lemma moduleToDivisorModulesZero_app_apply (U : X.Opens) (s : Γ(X, U)) :
+    (moduleToDivisorModulesZero K).app U s =
+      moduleToDivisorZeroPresheafApp K U s := rfl
+
+/-- The zero-divisor module is the structure sheaf, with inverse given by generic germs. -/
+noncomputable def divisorModulesZeroIso :
+    divisorModules K (0 : X.CurveDivisor) ≅ SheafOfModules.unit X.ringCatSheaf := by
+  letI : @IsIso X.Modules _ _ _ (moduleToDivisorModulesZero K (X := X)) := by
+    apply (Modules.Hom.isIso_iff_isIso_app
+      (φ := moduleToDivisorModulesZero K (X := X))).mpr
+    intro U
+    rw [ConcreteCategory.isIso_iff_bijective]
+    exact moduleToDivisorZeroPresheafApp_bijective K U
+  exact (asIso (C := X.Modules) (moduleToDivisorModulesZero K)).symm
+
+/-- The inverse zero-divisor comparison sends a regular function to its generic germ. -/
+lemma divisorVal_divisorModulesZeroIso_inv {U : X.Opens} (hU : (U : Set X).Nonempty)
+    (s : Γ(X, U)) :
+    divisorVal K ((divisorModulesZeroIso K).inv.app U s) =
+      (X.presheaf.germ U (genericPoint X) (genericPoint_mem_of_nonempty hU)).hom s :=
+  moduleToDivisorZeroPresheafApp_coe_of_nonempty K hU s
+
+/-- Multiplication by a rational function commutes with the regular-function action. -/
+lemma divisorMulPresheafApp_qsmul (g : X.functionFieldˣ) (D : X.CurveDivisor)
+    (U : X.Opens) (r : Γ(X, U)) (s : (X.divisorSheaf K D).obj.obj (op U)) :
+    divisorMulPresheafApp K g D U (QcohOn.qsmul le_rfl r s) =
+      QcohOn.qsmul (F := X.divisorSheaf K
+        (D - divOf (X ↘ Spec (CommRingCat.of K)) g)) le_rfl r
+        (divisorMulPresheafApp K g D U s) := by
+  by_cases hU : (U : Set X).Nonempty
+  · apply divisorSection_ext K
+    change divisorVal K ((divisorMulPresheaf K g D).app (op U)
+        (QcohOn.qsmul le_rfl r s)) =
+      divisorVal K (QcohOn.qsmul (F := X.divisorSheaf K
+        (D - divOf (X ↘ Spec (CommRingCat.of K)) g)) le_rfl r
+          ((divisorMulPresheaf K g D).app (op U) s))
+    rw [divisorVal_mulEquiv K g D hU,
+      divisorVal_qsmul K (genericPoint_mem_of_nonempty hU),
+      divisorVal_qsmul K (genericPoint_mem_of_nonempty hU),
+      divisorVal_mulEquiv K g D hU]
+    exact mul_left_comm _ _ _
+  · haveI := divisorSections_subsingleton_of_empty K
+      (D := D - divOf (X ↘ Spec (CommRingCat.of K)) g) hU
+    exact Subsingleton.elim _ _
+
+/-- Multiplication by a function-field unit as a morphism of structure-sheaf modules. -/
+noncomputable def divisorMulModules (g : X.functionFieldˣ) (D : X.CurveDivisor) :
+    divisorModules K D ⟶ divisorModules K (D - divOf (X ↘ Spec (CommRingCat.of K)) g) where
+  val := PresheafOfModules.homMk
+    { app := fun U => AddCommGrpCat.ofHom
+        (divisorMulPresheafApp K g D U.unop).toAddMonoidHom
+      naturality := fun {U V} i => by
+        exact congrArg (fun f => (forget₂ (ModuleCat K) AddCommGrpCat).map f)
+          ((divisorMulPresheaf K g D).naturality i) }
+    (fun U r s => divisorMulPresheafApp_qsmul K g D U.unop r s)
+
+@[simp]
+lemma divisorMulModules_app_apply (g : X.functionFieldˣ) (D : X.CurveDivisor)
+    (U : X.Opens) (s : Γ(divisorModules K D, U)) :
+    (divisorMulModules K g D).app U s = divisorMulPresheafApp K g D U s := rfl
+
+/-- Multiplication by a rational function gives an isomorphism of divisor modules. -/
+noncomputable def mulEquivDivisorModules (g : X.functionFieldˣ) (D : X.CurveDivisor) :
+    divisorModules K D ≅ divisorModules K (D - divOf (X ↘ Spec (CommRingCat.of K)) g) := by
+  letI : IsIso (divisorMulModules K g D) := by
+    rw [Modules.Hom.isIso_iff_isIso_app]
+    intro U
+    rw [ConcreteCategory.isIso_iff_bijective]
+    exact divisorMulPresheafApp_bijective K g D U
+  exact asIso (divisorMulModules K g D)
+
+/-- On a nonempty open, the module isomorphism multiplies rational section values by `g`. -/
+lemma divisorVal_mulEquivDivisorModules (g : X.functionFieldˣ) (D : X.CurveDivisor)
+    {U : X.Opens} (hU : (U : Set X).Nonempty) (s : Γ(divisorModules K D, U)) :
+    divisorVal K ((mulEquivDivisorModules K g D).hom.app U s) =
+      (g : X.functionField) * divisorVal K s :=
+  divisorMulPresheafApp_coe_of_nonempty K g D hU s
+
 /-- On an affine open, divisor-module sections localize along each basic open. -/
 theorem divisorModules_isLocalizedModule (D : X.CurveDivisor)
     {U : X.Opens} (hU : IsAffineOpen U) (g : Γ(X, U)) :
