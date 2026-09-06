@@ -136,6 +136,7 @@ import HartshorneLib.Chapter4FiberSeparationCriterion
 import HartshorneLib.Chapter4DivisorModuleLocal
 import HartshorneLib.Chapter4ProjectivePointSeparation
 import HartshorneLib.Chapter4ProjectiveMapFinite
+import HartshorneLib.Chapter4LocalRatioTangent
 
 /-!
 # HartshorneLib
