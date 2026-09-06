@@ -134,6 +134,7 @@ import HartshorneLib.Chapter4OrdinaryFiberVeryAmple
 import HartshorneLib.Chapter4TwoPointFiberEvaluation
 import HartshorneLib.Chapter4FiberSeparationCriterion
 import HartshorneLib.Chapter4DivisorModuleLocal
+import HartshorneLib.Chapter4ProjectivePointSeparation
 
 /-!
 # HartshorneLib
