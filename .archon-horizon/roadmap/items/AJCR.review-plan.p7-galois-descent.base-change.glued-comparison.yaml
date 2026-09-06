@@ -2,8 +2,8 @@ id: AJCR.review-plan.p7-galois-descent.base-change.glued-comparison
 title: Certify finiteStageBaseChangeIso at the root
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: ChartBaseChange structure-map and explicit P.N-algebra witnesses now kernel-check;
-  commit 757926cf4a.
+summary: Verified focused chart base-change producer; commit 757926cf4a. The root
+  universal-class/representability consumer remains blocked.
 status: done
 kind: proof
 priority: urgent
@@ -27,7 +27,8 @@ metadata:
     projects: Algebraic-Jacobian-Challenge-Rebuild,Algebraic-Jacobian-Challenge
   parent: AJCR.review-plan.p7-galois-descent.base-change.snd
   milestone: AJCR.review-plan
-  updated_at: '2026-09-06T20:58:48.724067+00:00'
+  updated_at: '2026-09-06T21:10:40.208865+00:00'
   pinned_commits:
+  - 757926cf4a
   - c17ac0d02d
   - 8ff1d6a6d3
