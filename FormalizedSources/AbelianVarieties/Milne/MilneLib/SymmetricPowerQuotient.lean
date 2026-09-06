@@ -102,6 +102,17 @@ theorem symmetricPowerQuotientProjection_isSymmetric :
       (symmetricPowerQuotientProjection V n h).left at hs
   simpa only [inv_inv, Over.comp_left] using hs
 
+/-! The concrete projection also exposes the symmetry equation directly.  This
+form is convenient for quotient-map calculations that do not need to unfold
+the `IsSymmetric` predicate. -/
+
+@[reassoc]
+theorem symmetricPowerQuotientProjection_comp_permute
+    (σ : Equiv.Perm (Fin n)) :
+    permute V n σ ≫ symmetricPowerQuotientProjection V n h =
+      symmetricPowerQuotientProjection V n h :=
+  symmetricPowerQuotientProjection_isSymmetric V n h σ
+
 /-- A symmetric map to any scheme over the base descends uniquely through the
 invariant-ring quotient. The base square descends by cancellation of the
 epimorphic quotient projection. -/
