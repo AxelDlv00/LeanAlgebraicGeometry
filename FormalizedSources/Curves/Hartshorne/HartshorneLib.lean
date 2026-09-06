@@ -148,6 +148,7 @@ import HartshorneLib.Chapter4DenominatorTransition
 import HartshorneLib.Chapter4ProjectiveCoordinatePullback
 import HartshorneLib.Chapter4ProjectiveTwistingSheaf
 import HartshorneLib.Chapter4DenominatorCocycle
+import HartshorneLib.Chapter4DenominatorGluing
 
 /-!
 # HartshorneLib
