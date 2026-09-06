@@ -167,13 +167,28 @@ theorem projectiveMapProducer_of_smoothCurve_eq_of_chart_restrictions
           (selectedCoordinates_isOpenCover_of_smoothCurve basis hD)).f i ≫ f =
         (selectedRegularization (D := D) basis hD i).chartMap) :
     f = (projectiveMapProducer_of_smoothCurve (D := D) basis hD).map := by
-  apply Scheme.Cover.hom_ext
-    (LocalRatioProjectiveGluing.chartOpenCover
-      (fun x : NonGenericPoint X => selectedCoordinates (D := D) basis hD x)
-      (selectedCoordinates_isOpenCover_of_smoothCurve basis hD))
-  intro i
-  rw [hf i, ← chartOpenCover_ι_projectiveMapProducer_of_smoothCurve]
-  rfl
+  have hf' : ∀ i : NonGenericPoint X,
+      (LocalRatioProjectiveGluing.chartOpenCover
+          (fun x : NonGenericPoint X => selectedCoordinates (D := D) basis hD x)
+          (selectedCoordinates_isOpenCover_of_smoothCurve basis hD)).f i ≫ f =
+        LocalRatioProjectiveGluing.fromOpenFamily
+          (fun x : NonGenericPoint X => selectedCoordinates (D := D) basis hD x)
+          (fun x : NonGenericPoint X => selectedRegularization (D := D) basis hD x)
+          (selectedCoordinates_isOpenCover_of_smoothCurve basis hD) i := by
+    intro i
+    rw [hf i]
+    exact (selectedRegularization (D := D) basis hD i).chartMap_eq_fromOpen
+  have huniq := LocalRatioProjectiveGluing.gluedFromOpen_eq_of_restrictions
+    (a := fun x : NonGenericPoint X => selectedCoordinates (D := D) basis hD x)
+    (r := fun x : NonGenericPoint X => selectedRegularization (D := D) basis hD x)
+    (hcover := selectedCoordinates_isOpenCover_of_smoothCurve basis hD)
+    (selectedCoordinates_sameSectionValues (D := D) basis hD) f hf'
+  change f = LocalRatioProjectiveGluing.gluedFromOpen
+    (fun x : NonGenericPoint X => selectedCoordinates (D := D) basis hD x)
+    (fun x : NonGenericPoint X => selectedRegularization (D := D) basis hD x)
+    (selectedCoordinates_isOpenCover_of_smoothCurve basis hD)
+    (selectedCoordinates_sameSectionValues (D := D) basis hD)
+  exact huniq.symm
 
 /-- Any covering regularized family with the fixed basis section values gives
 the same map as the selected smooth-curve construction.  This removes dependence
