@@ -1,10 +1,11 @@
 import AlgebraicJacobian.Picard.DivFunctorDef
+import AlgebraicJacobian.Picard.CartierKernelLocalEquation
 
 set_option autoImplicit false
 
 universe u
 
-open CategoryTheory Limits
+open CategoryTheory Limits Opposite
 
 namespace AlgebraicGeometry.Scheme.DivFamily
 
@@ -45,5 +46,14 @@ theorem exists_chart_kernel_iso (x : DivFamily π T) (z : (pullback π T.hom : S
         SheafOfModules.unit (U : Scheme).ringCatSheaf) := by
   obtain ⟨U, hzU, hU, ⟨e⟩⟩ := x.kerLocallyTrivial z
   exact ⟨U, hzU, hU, ⟨chartKernelIso x U e⟩⟩
+
+/-- The canonical equation of an actual divisor-family kernel on a trivializing
+chart, together with its scalar action on every chart section. -/
+noncomputable def chartLocalEquation (x : DivFamily π T)
+    (U : (pullback π T.hom).Opens)
+    (e : kernel (chartQuotient x U) ≅
+      SheafOfModules.unit (U : Scheme).ringCatSheaf) :
+    Γ((U : Scheme), ⊤) :=
+  CartierKernel.localEquation (chartQuotient x U) (Iso.refl _) e
 
 end AlgebraicGeometry.Scheme.DivFamily
