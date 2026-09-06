@@ -164,7 +164,7 @@ theorem exponentialBranch_symm_continuousOn
 /-- Two local quotient representatives differ by an ambient period. -/
 theorem quotientLocalBranchAt_sub_mem_ambientPeriodLattice
     {V X : Type*} [NormedAddCommGroup V] [NormedSpace ℂ V]
-    [AddCommGroup X] [TopologicalSpace X] [T2Space X] [ContinuousAdd X]
+    [AddCommGroup X] [TopologicalSpace X]
     {g : ℕ} (d : ComplexVectorLatticeExponentialData V X g)
     (v w : V) {q : V ⧸ d.ambientPeriodLattice}
     (hqv : q ∈ (d.quotientLocalBranchAt v).source)
@@ -511,7 +511,7 @@ quotient or prove the source-level uniformization theorem.
 
 theorem quotientBranchTransition_sub_mem_ambientPeriodLattice
     {V X : Type*} [NormedAddCommGroup V] [NormedSpace ℂ V]
-    [AddCommGroup X] [TopologicalSpace X] [T2Space X] [ContinuousAdd X]
+    [AddCommGroup X] [TopologicalSpace X]
     {g : ℕ} (d : ComplexVectorLatticeExponentialData V X g)
     (v w : V) {y : V}
     (hy : y ∈ ((d.quotientLocalBranchAt v).symm.trans
@@ -533,7 +533,7 @@ theorem quotientBranchTransition_sub_mem_ambientPeriodLattice
 
 theorem quotientBranchTransition_eq_add_of_isPreconnected
     {V X : Type*} [NormedAddCommGroup V] [NormedSpace ℂ V]
-    [AddCommGroup X] [TopologicalSpace X] [T2Space X] [ContinuousAdd X]
+    [AddCommGroup X] [TopologicalSpace X]
     {g : ℕ} (d : ComplexVectorLatticeExponentialData V X g)
     (v w : V) {s : Set V}
     (hs : IsPreconnected s)
@@ -583,7 +583,7 @@ theorem quotientBranchTransition_eq_add_of_isPreconnected
 
 theorem quotientBranchTransition_contDiffOn
     {V X : Type*} [NormedAddCommGroup V] [NormedSpace ℂ V]
-    [AddCommGroup X] [TopologicalSpace X] [T2Space X] [ContinuousAdd X]
+    [AddCommGroup X] [TopologicalSpace X]
     {g : ℕ} (d : ComplexVectorLatticeExponentialData V X g)
     (v w : V) :
     ContDiffOn ℂ ω
@@ -614,7 +614,7 @@ theorem quotientBranchTransition_contDiffOn
 @[reducible]
 noncomputable def analyticQuotientChartedSpace
     {V X : Type*} [NormedAddCommGroup V] [NormedSpace ℂ V]
-    [AddCommGroup X] [TopologicalSpace X] [T2Space X] [ContinuousAdd X]
+    [AddCommGroup X] [TopologicalSpace X]
     {g : ℕ} (d : ComplexVectorLatticeExponentialData V X g) :
     ChartedSpace V (V ⧸ d.ambientPeriodLattice) where
   atlas := Set.range d.quotientLocalBranchAt
@@ -638,7 +638,7 @@ noncomputable def analyticQuotientChartedSpace
 arbitrary tangent-space lattice quotient. -/
 theorem analyticQuotient_isManifold
     {V X : Type*} [NormedAddCommGroup V] [NormedSpace ℂ V]
-    [AddCommGroup X] [TopologicalSpace X] [T2Space X] [ContinuousAdd X]
+    [AddCommGroup X] [TopologicalSpace X]
     {g : ℕ} (d : ComplexVectorLatticeExponentialData V X g) :
     @IsManifold ℂ _ V _ _ V _
       (𝓘(ℂ, V)) ω
@@ -656,7 +656,7 @@ theorem analyticQuotient_isManifold
 branch atlas. -/
 theorem analyticQuotient_mk_contMDiff
     {V X : Type*} [NormedAddCommGroup V] [NormedSpace ℂ V]
-    [AddCommGroup X] [TopologicalSpace X] [T2Space X] [ContinuousAdd X]
+    [AddCommGroup X] [TopologicalSpace X]
     {g : ℕ} (d : ComplexVectorLatticeExponentialData V X g) :
     letI : ChartedSpace V (V ⧸ d.ambientPeriodLattice) :=
       analyticQuotientChartedSpace d
@@ -691,7 +691,7 @@ theorem analyticQuotient_mk_contMDiff
 /- Each branch packages the quotient projection as a partial diffeomorphism. -/
 noncomputable def analyticQuotient_mk_partialDiffeomorph
     {V X : Type*} [NormedAddCommGroup V] [NormedSpace ℂ V]
-    [AddCommGroup X] [TopologicalSpace X] [T2Space X] [ContinuousAdd X]
+    [AddCommGroup X] [TopologicalSpace X]
     {g : ℕ} (d : ComplexVectorLatticeExponentialData V X g) (v : V) :
     letI : ChartedSpace V (V ⧸ d.ambientPeriodLattice) :=
       analyticQuotientChartedSpace d
@@ -720,7 +720,7 @@ noncomputable def analyticQuotient_mk_partialDiffeomorph
 
 theorem analyticQuotient_mk_isLocalDiffeomorphAt
     {V X : Type*} [NormedAddCommGroup V] [NormedSpace ℂ V]
-    [AddCommGroup X] [TopologicalSpace X] [T2Space X] [ContinuousAdd X]
+    [AddCommGroup X] [TopologicalSpace X]
     {g : ℕ} (d : ComplexVectorLatticeExponentialData V X g) (x : V) :
     letI : ChartedSpace V (V ⧸ d.ambientPeriodLattice) :=
       analyticQuotientChartedSpace d
@@ -744,7 +744,7 @@ theorem analyticQuotient_mk_isLocalDiffeomorphAt
 
 theorem analyticQuotient_mk_isLocalDiffeomorph
     {V X : Type*} [NormedAddCommGroup V] [NormedSpace ℂ V]
-    [AddCommGroup X] [TopologicalSpace X] [T2Space X] [ContinuousAdd X]
+    [AddCommGroup X] [TopologicalSpace X]
     {g : ℕ} (d : ComplexVectorLatticeExponentialData V X g) :
     letI : ChartedSpace V (V ⧸ d.ambientPeriodLattice) :=
       analyticQuotientChartedSpace d
