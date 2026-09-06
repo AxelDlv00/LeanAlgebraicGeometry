@@ -983,6 +983,47 @@ theorem uniformGeneration_fixedCoordinate
   uniformGeneration_of_uniformBaseDivisor C
     (uniformBaseDivisor_fixedCoordinate C)
 
+/-- **The fixed-coordinate generation bound is explicit.**
+
+The existential `UniformGeneration C` records a threshold but hides which one
+the fixed-coordinate construction supplies.  The proof of
+`uniformGeneration_of_uniformBaseDivisor` uses exactly
+`d + genus C`; specializing it to `fixedCoordinateDegree C` gives the bound
+needed by the degree-indexed Grassmannian evaluation construction. -/
+theorem uniformGeneration_fixedCoordinate_at_threshold
+    {k : Type u} [Field k]
+    (C : Over (Spec (CommRingCat.of k)))
+    [IsProper C.hom] [SmoothOfRelativeDimension 1 C.hom]
+    [GeometricallyIntegral C.hom] :
+    ∀ (κ : Type u) [Field κ] [Algebra k κ],
+      letI : (Scheme.baseChangeField C κ).left.Over
+          (Spec (CommRingCat.of κ)) :=
+        .ofHom (Scheme.baseChangeField C κ).hom
+      haveI : SmoothOfRelativeDimension 1
+          ((Scheme.baseChangeField C κ).left ↘ Spec (CommRingCat.of κ)) :=
+        inferInstanceAs
+          (SmoothOfRelativeDimension 1 (Scheme.baseChangeField C κ).hom)
+      ∀ {x : (Scheme.baseChangeField C κ).left}
+        (hx : x ≠ genericPoint (Scheme.baseChangeField C κ).left)
+        (D : (Scheme.baseChangeField C κ).left.CurveDivisor),
+        fixedCoordinateDegree C + (genus C : ℤ) ≤
+            Scheme.CurveDivisor.deg κ
+              (D - Scheme.CurveDivisor.single hx 1) →
+          Function.Surjective (Sheaf.HModule.map
+            (devissageSES κ hx D).g 0) := by
+  intro κ _ _
+  letI : (Scheme.baseChangeField C κ).left.Over
+      (Spec (CommRingCat.of κ)) :=
+    .ofHom (Scheme.baseChangeField C κ).hom
+  haveI : SmoothOfRelativeDimension 1
+      ((Scheme.baseChangeField C κ).left ↘ Spec (CommRingCat.of κ)) :=
+    inferInstanceAs (SmoothOfRelativeDimension 1 (Scheme.baseChangeField C κ).hom)
+  intro x hx D hD
+  obtain ⟨D₀, hvan, hdeg⟩ := uniformBaseDivisor_fixedCoordinate C κ
+  have hchi : Sheaf.chi ((Scheme.baseChangeField C κ).left.moduleKSheaf κ) =
+      1 - (genus C : ℤ) := chi_baseChangeField_eq_curve C κ
+  exact surjective_eval_of_deg_ge κ hvan hx D (by rw [hchi]; omega)
+
 end FiberCoordinateData
 
 namespace Adelic
