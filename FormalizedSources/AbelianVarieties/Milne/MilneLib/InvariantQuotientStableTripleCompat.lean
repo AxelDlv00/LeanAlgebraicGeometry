@@ -11,9 +11,9 @@ import MilneLib.InvariantQuotientStableTriple
 
 The same geometric triple intersection can be written in three cyclic orders.
 This file records the resulting comparison at the fixed-section level and
-transports it to the descended open quotient charts.  The only identifications
-used here are equality transport on section rings and the already constructed
-pairwise fixed-section presentation.
+gives each descended triple quotient chart a local fixed-section presentation.
+The only identifications used here are equality transport on section rings and
+the already constructed pairwise fixed-section presentation.
 -/
 
 set_option autoImplicit false
