@@ -124,6 +124,18 @@ theorem gluedFromOpen_eq_of_restrictions
   rw [chartOpenCover_ι_gluedFromOpen]
   exact (hf i).symm
 
+/-- The canonical chart maps also determine the glued morphism.  This is the
+chart-facing form of uniqueness used by embedding certificates. -/
+theorem gluedFromOpen_eq_of_chart_restrictions
+    (hsame : ∀ i j, (a i).SameSectionValues (a j))
+    (f : X.left ⟶ projectiveSpace k n)
+    (hf : ∀ i, (chartOpenCover a hcover).f i ≫ f = (r i).chartMap) :
+    gluedFromOpen a r hcover hsame = f := by
+  apply gluedFromOpen_eq_of_restrictions a r hcover hsame f
+  intro i
+  rw [hf i]
+  exact (r i).chartMap_eq_fromOpen
+
 /-- The morphism obtained by gluing the local-ratio charts is over the
 coefficient field. -/
 @[reassoc (attr := simp)]

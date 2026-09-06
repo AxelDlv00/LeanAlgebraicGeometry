@@ -65,6 +65,22 @@ structure ArbitraryProjectiveEmbeddingCertificate (D : CurveDivisor k X) where
         (selectedCoordinates_isOpenCover_of_smoothCurve basis hbase)).f i ≫ map =
       (selectedRegularization (D := D) basis hbase i).chartMap
 
+/-- The normalized chart restrictions identify an arbitrary certified map with
+the explicit local-ratio gluing before it is compared with the fixed-basis
+smooth-curve producer. -/
+theorem ArbitraryProjectiveEmbeddingCertificate.map_eq_localRatioGluing
+    (c : ArbitraryProjectiveEmbeddingCertificate D) :
+    c.map = LocalRatioProjectiveGluing.gluedFromOpen
+      (fun x : NonGenericPoint X =>
+        selectedCoordinates (D := D) c.basis c.hbase x)
+      (fun x : NonGenericPoint X =>
+        selectedRegularization (D := D) c.basis c.hbase x)
+      (selectedCoordinates_isOpenCover_of_smoothCurve c.basis c.hbase)
+      (selectedCoordinates_sameSectionValues (D := D) c.basis c.hbase) := by
+  symm
+  apply LocalRatioProjectiveGluing.gluedFromOpen_eq_of_chart_restrictions
+  exact c.chart_restrictions
+
 /-- The normalized restrictions force the arbitrary map to be the canonical
 complete-linear-system map. -/
 theorem ArbitraryProjectiveEmbeddingCertificate.map_eq_glued
