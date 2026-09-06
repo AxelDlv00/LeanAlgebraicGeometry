@@ -2,19 +2,15 @@ id: AJC.picrep.divgrassmannian
 title: 'D2'': Grassmannian comparison for the degree-d divisor functor'
 projects:
 - Algebraic-Jacobian-Challenge
-summary: 'ACTIVE, partial. 30ddedbbc0 constructs an actual Grassmannian quotient over
-  a noetherian affine test on a smooth proper geometrically integral curve over any
-  field: canonical flat base change and kernel Ext1 lifting give evaluation epi, and
-  the curve rank producer gives local freeness. 4fc01fd80e proves canonical base-change
-  pasting and evaluation compatibility for arbitrary test morphisms, consuming the
-  prior twisted-quotient naturality theorem. Next: identify the existing finite-support
-  base-change isomorphism with canonicalBaseChangeMap, then derive quotient-class
-  naturality. The finite-support geometry is already proved; Flat of the transition
-  is not needed. Also open: positive-degree DivFamily construction, uniform kernel
-  Ext1 vanishing and the cohomology-carrier comparison (I-2327), monicity and a representing
-  Grassmannian object. Narrow builds and standard-axiom audits pass. No representing
-  scheme or PicEt producer is claimed; fgaPicardRepresentability remains open with
-  no rational-point binder.'
+summary: 'ACTIVE, partial. Constructed quasi-coherent O(D) and identified its underlying
+  field sheaf (166ffb5790, 38b0530ce0); the degree bound transports uniformly across
+  field extensions (957552a1c4). Restriction of scalars preserves kernels and epimorphisms,
+  giving global-section lifting (ebef25f77d) and D2 evaluation epimorphy from total-pullback
+  kernel HModule H1 (d5a1557fb9). Prior canonical base-change/naturality and candidate
+  epi results remain available. Next: construct D_x from local Cartier generators,
+  identify kernel(x.q) with O(-D_x) and its twist with O(A-D_x), prove deg(D_x)=d,
+  and pass fibrewise vanishing to the relative family. I-2327, D2, and fgaPicardRepresentability
+  remain open; no PicEt representing scheme was produced.'
 status: active
 kind: proof
 priority: normal
@@ -41,8 +37,13 @@ metadata:
       item'
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.picrep
-  updated_at: '2026-09-06T13:57:51.633952+00:00'
+  updated_at: '2026-09-06T16:07:56.749128+00:00'
   pinned_commits:
+  - 38b0530ce0
+  - d5a1557fb9
+  - ebef25f77d
+  - 957552a1c4
+  - 166ffb5790
   - 4fc01fd80e
   - 30ddedbbc0
   - 3111dc5c3b
