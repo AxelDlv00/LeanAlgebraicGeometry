@@ -193,6 +193,24 @@ theorem localDivisor_deg_zero
     CurveDivisor.deg K (localDivisor K q eO eI) = 0 := by
   exact AlgebraicGeometry.deg_divOf K (localEquationUnit q eO eI)
 
+/-- A nonpositive uniform divisor-module bound applies to every principal Cartier
+kernel, after using the degree-zero calculation above. -/
+theorem subsingleton_hModule_one_kernel_of_nonpositive_divisor_bound
+    [IsProper C.hom] [GeometricallyIrreducible C.hom]
+    {E F : C.left.Modules} (q : E ⟶ F)
+    (eO : E ≅ SheafOfModules.unit C.left.ringCatSheaf)
+    (eI : kernel q ≅ SheafOfModules.unit C.left.ringCatSheaf)
+    {b : ℤ} (hb0 : b ≤ 0)
+    (hb : ∀ D : C.left.CurveDivisor, b ≤ CurveDivisor.deg K D →
+      Subsingleton (Sheaf.HModule
+        (toModuleKSheafOfModules C (divisorModules K D)) 1)) :
+    Subsingleton (Sheaf.HModule (toModuleKSheafOfModules C (kernel q)) 1) := by
+  apply subsingleton_hModule_one_kernel_of_divisor_bound K q eO eI hb
+  apply hb0.trans_eq
+  rw [sub_eq_add_neg, CurveDivisor.deg_add, CurveDivisor.deg_zero,
+    CurveDivisor.deg_neg, localDivisor_deg_zero K q eO eI]
+  simp
+
 end
 
 end AlgebraicGeometry.Scheme.CartierKernel
