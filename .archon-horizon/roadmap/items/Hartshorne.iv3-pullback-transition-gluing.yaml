@@ -2,9 +2,10 @@ id: Hartshorne.iv3-pullback-transition-gluing
 title: Glue the section-compatible pullback isomorphism
 projects:
 - Hartshorne
-summary: Identify projective-chart pullbacks with denominator trivializations, prove
-  overlap compatibility, and glue f*O(1) = O(D) with its coordinate-section identities.
-status: pending
+summary: Proved pullback commutes with transition gluing on refined open covers; applied
+  the local-frame criterion to the actual complete-linear-system pullback and composed
+  with the divisor cocycle presentation.
+status: done
 kind: proof
 priority: normal
 depends_on:
@@ -30,3 +31,7 @@ metadata:
     projects: Hartshorne
   parent: Hartshorne.iv3-tautological-pullback
   owner: fs-hartshorne
+  updated_at: '2026-09-06T19:45:23.235419+00:00'
+  pinned_commits:
+  - 698b32418f
+  - 312561aa2b

@@ -2,10 +2,11 @@ id: Hartshorne.iv3-tautological-pullback
 title: Identify the projective pullback of O(1) with O(D)
 projects:
 - Hartshorne
-summary: Projective O(1), denominator cocycle, and divisor presentation are verified;
-  the pulled-back O(1) is now established as a line bundle. The section-compatible
-  pullback isomorphism remains the first unmet producer.
-status: active
+summary: The actual complete-linear-system morphism has section-compatible pullback
+  of O(1) isomorphic to divisorModule D. Numerical very ampleness now constructs an
+  over-k closed immersion with this isomorphism, without a prechosen basis. Full HartshorneLib
+  passed 8725 jobs; independent honesty and standard-axiom audit passed.
+status: done
 kind: proof
 priority: normal
 depends_on:
@@ -30,8 +31,10 @@ metadata:
     projects: Hartshorne
   parent: Hartshorne.iv3-chart-gluing
   owner: fs-hartshorne
-  updated_at: '2026-09-06T18:45:25.302298+00:00'
+  updated_at: '2026-09-06T19:45:24.730851+00:00'
   pinned_commits:
+  - 698b32418f
+  - f7a0c245b1
   - c2e3a4062f
   - dbd01d1788
   - 8d9cb4bc28

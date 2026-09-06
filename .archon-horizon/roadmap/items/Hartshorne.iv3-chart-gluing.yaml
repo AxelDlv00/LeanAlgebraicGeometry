@@ -2,11 +2,11 @@ id: Hartshorne.iv3-chart-gluing
 title: IV.3.1 local-ratio chart restriction and gluing
 projects:
 - Hartshorne
-summary: For a fixed complete basis on a smooth proper integral curve over an algebraically
-  closed field, numerical very ampleness now proves that the actual glued local-ratio
-  projective morphism is a closed immersion. Auxiliary denominator choices are independent.
-  The reverse geometric-to-numerical implication of IV.3.1 remains open; the frozen
-  source node is not marked complete.
+summary: The associated complete-linear-system map is a closed immersion iff the numerical
+  criterion holds; its actual pullback of O(1) is now identified with O(D), including
+  coordinate sections. Numerical very ampleness therefore gives an intrinsic divisor
+  embedding. Next recover numerical separation from an arbitrary projective embedding
+  with this pullback; ha-ch4-p31 remains empty.
 status: active
 kind: proof
 priority: high
@@ -33,8 +33,9 @@ metadata:
   parent: Hartshorne
   owner: fs-hartshorne
   milestone: Hartshorne
-  updated_at: '2026-09-06T15:01:35.722206+00:00'
+  updated_at: '2026-09-06T19:45:26.205872+00:00'
   pinned_commits:
+  - 698b32418f
   - a6da590bb8
   - 51808996fa
   - 1659065af2
