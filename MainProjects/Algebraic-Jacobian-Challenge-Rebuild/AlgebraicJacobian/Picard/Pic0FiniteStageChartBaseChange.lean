@@ -43,8 +43,7 @@ theorem glueData_ι_gluedMap
     (U : Pic0FiniteStageChartIndex C) :
     P.glueData.ι U ≫ P.gluedMap =
       chartBaseChangeMap C P U := by
-  simpa only [gluedMap_presentation, presentation_glueData] using
-    P.presentation.chartMap_factor U
+  convert P.presentation.chartMap_factor U using 1 <;> rfl
 
 set_option synthInstance.maxHeartbeats 3200000 in
 -- The composite infers the same nested tensor-product instances as the ring comparison.
@@ -113,6 +112,9 @@ noncomputable def chartBaseChangeIso
         (Sum.inl U)) :=
     pic0FiniteStageFinalScalarExtensionAlgebra C P.L P.n P.m P.relation P.M P.N
       (Sum.inl U)
+  letI : Algebra P.N.1
+      (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U) :=
+    pic0FiniteStageChartBaseChangeAlgebra C P.L P.n P.m P.relation P.M P.N U
   exact pullbackSymmetry _ _ ≪≫
       pullbackSpecIso P.N.1 k
         (Pic0FiniteStageChartBaseChangeRing
