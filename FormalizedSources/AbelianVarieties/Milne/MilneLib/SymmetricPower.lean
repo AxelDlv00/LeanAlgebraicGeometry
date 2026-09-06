@@ -212,6 +212,19 @@ def IsSymmetric {S : Scheme.{u}} {T : Over S} (V : Over S) (n : ℕ)
     (h : relativePower V n ⟶ T) : Prop :=
   ∀ σ : Equiv.Perm (Fin n), permute V n σ ≫ h = h
 
+/-- Postcomposition preserves symmetry of a morphism out of a relative power.
+This is the composition rule used when a symmetric quotient projection is
+followed by a target morphism. -/
+theorem IsSymmetric.comp {S : Scheme.{u}} {V T U : Over S} (n : ℕ)
+    {h : relativePower V n ⟶ T} {k : T ⟶ U}
+    (hsym : IsSymmetric V n h) :
+    IsSymmetric V n (h ≫ k) := by
+  intro σ
+  calc
+    permute V n σ ≫ (h ≫ k) =
+        (permute V n σ ≫ h) ≫ k := (Category.assoc _ _ _).symm
+    _ = h ≫ k := by rw [hsym]
+
 /-!
 The source proposition also asserts finiteness, surjectivity, separability, and
 the affine invariant-ring description.  Those geometric properties belong to
