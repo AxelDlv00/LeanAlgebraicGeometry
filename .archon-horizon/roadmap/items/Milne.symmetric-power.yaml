@@ -2,14 +2,13 @@ id: Milne.symmetric-power
 title: Symmetric-power quotient and factorization
 projects:
 - Milne
-summary: Pending source node prop:milne-symmetric-power. Relative-power permutation
-  maps form a composition-verified Aut-valued S_n action. The general finite-quotient
-  constructor now supplies GlueData, quotient topology, orbit fibres, and finite projection
-  once its separatedness, compactness, base-compatibility, orbit-in-affine, and finite-type
-  hypotheses are instantiated. Remaining here are the genuinely non-affine product-action
-  orbit-in-affine argument and those hypotheses, followed by target variety/sheaf
-  effectivity, universal factorization, and the source separability claim. SymmetricPowerData
-  remains supplied conditional data, not an existence theorem.
+summary: Pending source node prop:milne-symmetric-power. Relative-power permutations
+  form a verified Aut-valued action. The general finite-quotient constructor now supplies
+  quotient topology, orbit fibres, finite projection, and the invariant section-image
+  theorem once its hypotheses are instantiated. Remaining symmetric-power input is
+  the non-affine product-action orbit-in-affine argument and geometric hypotheses,
+  followed by the still-open separatedness/universal factorization and source separability
+  conclusions. SymmetricPowerData is supplied data, not an existence theorem.
 status: pending
 kind: proof
 priority: high
@@ -36,7 +35,7 @@ metadata:
   parent: Milne
   owner: fs-milne
   milestone: Milne
-  updated_at: '2026-09-06T09:23:38.320933+00:00'
+  updated_at: '2026-09-06T14:45:53.595203+00:00'
   pinned_commits:
   - 36646e7c91
   - 8ea75a2a7a

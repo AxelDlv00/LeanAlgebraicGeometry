@@ -2,14 +2,12 @@ id: Milne
 title: Milne Abelian Varieties formalization
 projects:
 - Milne
-summary: Source-faithful Milne frontier. The affine finite-group quotient core, stable-localization
-  and invariant-sheaf chart substrate, flat module/algebra descent producers, and
-  canonical finite stable-affine quotient GlueData are verified. Its canonical projection
-  is surjective, quotient on topology, orbit-exact on points, and finite under [LocallyOfFiniteType
-  p]. The finite-quotient source theorem still needs invariant structure-sheaf effectivity,
-  target variety properties, universality/uniqueness, and free-action etaleness; finite-Galois
-  and coherent-sheaf descent, symmetric-power existence, and remaining abelian-variety
-  geometry also remain pending. No source-node completion is claimed.
+summary: 'Affine quotient and canonical global projection are proved, including finite/surjective
+  orbit quotient, invariant sections, finite-type and reduced/integral target properties,
+  and target separatedness (c59518629a). Next: global invariant-morphism factorization
+  and free-action etaleness; symmetric-power construction and geometric Galois descent
+  follow. Conditional symmetric-power coherence is available. I-2317 topic migration
+  remains a dedicated deferred unit.'
 status: active
 kind: proof
 priority: high
@@ -34,7 +32,7 @@ metadata:
     projects: Milne
   owner: fs-milne
   milestone: Milne
-  updated_at: '2026-09-06T09:23:10.136795+00:00'
+  updated_at: '2026-09-06T15:15:24.930384+00:00'
   pinned_commits:
   - 5bd74c9f017967524997cba2f77bde8b9667b4c2
   - 935c2b2c1f471bface1e35c7bd5eb05ad839aa42

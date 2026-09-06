@@ -2,13 +2,11 @@ id: Milne.finite-quotient
 title: Global finite quotient by gluing affine charts
 projects:
 - Milne
-summary: Finite stable-affine charts assemble into Scheme.GlueData. The canonical
-  projection is globally surjective, has the quotient topology, and has fibres exactly
-  the original finite-group orbits; each target chart has the expected source preimage
-  and Cartesian square, and the projection is finite under [LocallyOfFiniteType p].
-  Remaining source obligations are the invariant structure-sheaf equality, proof that
-  the glued target has Milne's required variety properties, arbitrary-target universality/uniqueness,
-  and free-action etaleness. The source node remains EMPTY.
+summary: 'The canonical glued quotient has a finite surjective invariant projection,
+  orbit fibres, intrinsic invariant sections, finite-type target over a noetherian
+  affine base, reduced/integral target transfer, and separatedness (c59518629a, horizon
+  check MilneLib passed). Source I.8.10 remains incomplete: construct invariant-morphism
+  factorization and prove free-action etaleness.'
 status: pending
 kind: proof
 priority: high
@@ -35,8 +33,15 @@ metadata:
   parent: Milne
   owner: fs-milne
   milestone: Milne
-  updated_at: '2026-09-06T09:22:29.216854+00:00'
+  updated_at: '2026-09-06T15:15:26.483707+00:00'
   pinned_commits:
+  - c59518629a
+  - ed5a526316
+  - d70f8f17b1
+  - 16a9311a31
+  - 4521b90a05
+  - a96d5f060d
+  - 76cf346cd25344868d21e9d57b91a3b42c681585
   - 5bd74c9f017967524997cba2f77bde8b9667b4c2
   - 935c2b2c1f471bface1e35c7bd5eb05ad839aa42
   - 9f4fa2e0f1
