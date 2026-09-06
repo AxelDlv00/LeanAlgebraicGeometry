@@ -210,6 +210,36 @@ lemma map_mkSection {V : X.Opens} (h : V ≤ W) :
 
 end SectionConstructor
 
+section LocalSectionConstructor
+
+variable (W : X.Opens) (a : ∀ i : J, Γ(X, U i))
+  (ha : ∀ i j,
+    X.resHom (inf_le_left : U i ⊓ U j ≤ U i) (a i) =
+      (g i j).val * X.resHom (inf_le_right : U i ⊓ U j ≤ U j) (a j))
+
+/-- Matching sections on the whole charts give a section on every open. -/
+noncomputable def mkSectionOfLocal : Γ(gluedModule U g, W) :=
+  mkSection U g W (fun i => X.resHom (inf_le_right : W ⊓ U i ≤ U i) (a i)) (by
+    intro i j
+    have h := congrArg (X.resHom (inclCoc U W i j)) (ha i j)
+    simpa only [map_mul, Scheme.resHom_resHom] using h)
+
+@[simp]
+lemma mkSectionOfLocal_apply (i : J) :
+    (mkSectionOfLocal U g W a ha).val i =
+      X.resHom (inf_le_right : W ⊓ U i ≤ U i) (a i) := rfl
+
+@[simp]
+lemma map_mkSectionOfLocal {V : X.Opens} (h : V ≤ W) :
+    (gluedModule U g).presheaf.map (homOfLE h).op (mkSectionOfLocal U g W a ha) =
+      mkSectionOfLocal U g V a ha := by
+  apply Subtype.ext
+  funext i
+  change X.resHom _ (X.resHom _ (a i)) = X.resHom _ (a i)
+  simp only [Scheme.resHom_resHom]
+
+end LocalSectionConstructor
+
 variable {U g} (hc : IsCocycle U g)
 
 /-- Projection to the chosen component trivializes sections on a chart. -/
@@ -259,6 +289,13 @@ lemma sectionTriv_mkSection (j : J) {W : X.Opens} (hW : W ≤ U j)
     (s : ∀ i : J, Γ(X, W ⊓ U i)) (hs) :
     sectionTriv hc j hW (mkSection U g W s hs) =
       X.resHom (le_inf le_rfl hW) (s j) := rfl
+
+@[simp]
+lemma sectionTriv_mkSectionOfLocal (j : J) {W : X.Opens} (hW : W ≤ U j)
+    (a : ∀ i : J, Γ(X, U i)) (ha) :
+    sectionTriv hc j hW (mkSectionOfLocal U g W a ha) = X.resHom hW (a j) := by
+  change X.resHom _ (X.resHom _ (a j)) = X.resHom _ (a j)
+  simp only [Scheme.resHom_resHom]
 
 lemma sectionTriv_res (j : J) {W' W : X.Opens} (h : W' ≤ W) (hW : W ≤ U j)
     (s : sectionSubmodule U g W) :
