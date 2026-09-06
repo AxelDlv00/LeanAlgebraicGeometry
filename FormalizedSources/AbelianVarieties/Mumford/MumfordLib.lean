@@ -39,6 +39,7 @@ import MumfordLib.ComplexLatticeLieGroup
 import MumfordLib.IntrinsicComplexUniformization
 import MumfordLib.IntrinsicQuotientDiffeomorph
 import MumfordLib.SourceComplexUniformization
+import MumfordLib.SourceComplexTorsion
 import MumfordLib.ComplexLatticeAtlas
 import MumfordLib.ArbitraryLatticeTorsion
 import MumfordLib.ArbitraryLatticeFiniteTorsion
