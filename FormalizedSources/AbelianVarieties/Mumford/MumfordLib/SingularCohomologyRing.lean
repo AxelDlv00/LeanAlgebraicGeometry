@@ -6,8 +6,7 @@ Authors: The Mumford Contributors
 
 import MumfordLib.SingularCocycleCupLaws
 import MumfordLib.SingularCohomologyCupAll
-import Mathlib.Algebra.DirectSum.Ring
-import Mathlib.Algebra.DirectSum.Module
+import Mathlib.Algebra.DirectSum.Algebra
 
 /-!
 # The integral singular cohomology ring
@@ -113,6 +112,57 @@ instance integralSingularCohomologyGRing (X : TopCat) :
     | .negSucc n => -((n + 1) • singularCohomologyOne X)
   intCast_ofNat n := rfl
   intCast_negSucc_ofNat n := rfl
+
+private theorem singularCohomologyCup_zsmul_one_left {p : ℕ} (z : ℤ)
+    (c : IntegralSingularCohomology X p) :
+    singularCohomologyCup X 0 p p (Nat.zero_add p) (z • singularCohomologyOne X) c =
+      z • c := by
+  have h := (singularCohomologyCup X 0 p p (Nat.zero_add p)).toAddMonoidHom.map_zsmul z
+    (singularCohomologyOne X)
+  have he := congrArg (fun f => f c) h
+  change singularCohomologyCup X 0 p p (Nat.zero_add p) (z • singularCohomologyOne X) c =
+    z • singularCohomologyCup X 0 p p (Nat.zero_add p) (singularCohomologyOne X) c at he
+  rw [singularCohomologyCup_one_left] at he
+  exact he
+
+private theorem singularCohomologyCup_zsmul_one_right {p : ℕ} (z : ℤ)
+    (c : IntegralSingularCohomology X p) :
+    singularCohomologyCup X p 0 p rfl c (z • singularCohomologyOne X) = z • c := by
+  have h := (singularCohomologyCup X p 0 p rfl c).toAddMonoidHom.map_zsmul z
+    (singularCohomologyOne X)
+  change singularCohomologyCup X p 0 p rfl c (z • singularCohomologyOne X) =
+    z • singularCohomologyCup X p 0 p rfl c (singularCohomologyOne X) at h
+  rw [singularCohomologyCup_one_right] at h
+  exact h
+
+/-- Integer scalars act componentwise on the integral singular cohomology ring. -/
+instance integralSingularCohomologyGAlgebra (X : TopCat) :
+    DirectSum.GAlgebra ℤ (fun n => (IntegralSingularCohomology X n : Type _)) where
+  toFun := zmultiplesHom (IntegralSingularCohomology X 0) (singularCohomologyOne X)
+  map_one := one_zsmul _
+  map_mul r s := by
+    apply Sigma.ext (Nat.zero_add 0).symm
+    apply heq_of_eq
+    change (r * s) • singularCohomologyOne X =
+      singularCohomologyCup X 0 0 0 rfl (r • singularCohomologyOne X)
+        (s • singularCohomologyOne X)
+    rw [singularCohomologyCup_zsmul_one_left]
+    exact mul_zsmul _ _ _
+  commutes := by
+    rintro r ⟨p, c⟩
+    apply Sigma.ext (Nat.zero_add p)
+    change HEq
+      (singularCohomologyCup X 0 p (0 + p) rfl (r • singularCohomologyOne X) c)
+      (singularCohomologyCup X p 0 p rfl c (r • singularCohomologyOne X))
+    exact (singularCohomologyCup_heq _ _ rfl (Nat.zero_add p)).trans
+      (heq_of_eq ((singularCohomologyCup_zsmul_one_left r c).trans
+        (singularCohomologyCup_zsmul_one_right r c).symm))
+  smul_def := by
+    rintro r ⟨p, c⟩
+    apply Sigma.ext (Nat.zero_add p).symm
+    refine (heq_of_eq (Int.cast_smul_eq_zsmul ℤ r c)).trans ?_
+    exact (heq_of_eq (singularCohomologyCup_zsmul_one_left r c).symm).trans
+      (singularCohomologyCup_heq _ _ (Nat.zero_add p) rfl)
 
 /-- The integral singular cohomology ring, graded by cohomological degree. -/
 abbrev IntegralSingularCohomologyRing (X : TopCat) :=
