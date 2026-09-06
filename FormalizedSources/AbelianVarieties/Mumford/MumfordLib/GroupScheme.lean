@@ -466,6 +466,64 @@ theorem locallyOfFiniteType_of_isAbelianVariety
   letI : IsProper G.hom := hG.1
   exact IsProper.toLocallyOfFiniteType
 
+/-- The underlying scheme of an abelian variety over a field is Jacobson.
+
+Properness supplies local finite type, and the finite-type Jacobson theorem
+over the spectrum of a field transfers the property to the total space. -/
+theorem jacobsonSpace_left_of_isAbelianVariety
+    (G : Over (Spec (.of K))) [GrpObj G] (hG : IsAbelianVariety G) :
+    JacobsonSpace G.left := by
+  letI : LocallyOfFiniteType G.hom :=
+    locallyOfFiniteType_of_isAbelianVariety G hG
+  exact LocallyOfFiniteType.jacobsonSpace G.hom
+
+/-- The underlying scheme of an abelian variety over a field is locally
+Noetherian. -/
+theorem isLocallyNoetherian_left_of_isAbelianVariety
+    (G : Over (Spec (.of K))) [GrpObj G] (hG : IsAbelianVariety G) :
+    IsLocallyNoetherian G.left := by
+  letI : LocallyOfFiniteType G.hom :=
+    locallyOfFiniteType_of_isAbelianVariety G hG
+  exact LocallyOfFiniteType.isLocallyNoetherian G.hom
+
+/-- The underlying scheme of an abelian variety over a field is Noetherian. -/
+theorem isNoetherian_left_of_isAbelianVariety
+    (G : Over (Spec (.of K))) [GrpObj G] (hG : IsAbelianVariety G) :
+    IsNoetherian G.left := by
+  letI : IsProper G.hom := hG.1
+  letI : IsLocallyNoetherian G.left :=
+    isLocallyNoetherian_left_of_isAbelianVariety G hG
+  letI : CompactSpace G.left := compactSpace_of_universallyClosed G.hom
+  exact {}
+
+/-- An abelian variety remains an abelian variety after base change along a
+morphism of field spectra. -/
+theorem IsAbelianVariety.baseChange
+    {L : Type u} [Field L]
+    {G : Over (Spec (.of K))} [GrpObj G]
+    (hG : IsAbelianVariety G)
+    (f : Spec (.of L) ⟶ Spec (.of K)) :
+    letI : GrpObj ((Over.pullback f).obj G) := Functor.grpObjObj
+    IsAbelianVariety ((Over.pullback f).obj G) := by
+  letI : IsProper G.hom := hG.1
+  letI : GeometricallyIntegral G.hom := hG.2
+  constructor
+  · change IsProper (pullback.snd G.hom f)
+    infer_instance
+  · change GeometricallyIntegral (pullback.snd G.hom f)
+    infer_instance
+
+/-- A morphism between abelian varieties is proper. -/
+theorem isProper_left_of_isAbelianVariety
+    {A B : Over (Spec (.of K))} [GrpObj A] [GrpObj B]
+    (hA : IsAbelianVariety A) (hB : IsAbelianVariety B)
+    (f : A ⟶ B) : IsProper f.left := by
+  letI : IsSeparated B.hom := hB.1.toIsSeparated
+  haveI : IsProper (f.left ≫ B.hom) := by
+    rw [Over.w f]
+    exact hA.1
+  exact IsProper.of_comp f.left B.hom
+
 theorem isCommMonObj_of_isAbelianVariety
     (G : Over (Spec (.of K))) [GrpObj G] (hG : IsAbelianVariety G) :
     IsCommMonObj G := by
@@ -482,6 +540,13 @@ theorem smooth_of_isAbelianVariety
   letI : LocallyOfFiniteType G.hom := IsProper.toLocallyOfFiniteType
   letI : GrpObj (Over.mk G.hom) := ‹GrpObj G›
   exact smooth_of_grpObj G.hom
+
+/-- Abelian varieties are flat over their ground field. -/
+theorem flat_of_isAbelianVariety
+    (G : Over (Spec (.of K))) [GrpObj G] (hG : IsAbelianVariety G) :
+    Flat G.hom := by
+  letI : Smooth G.hom := smooth_of_isAbelianVariety G hG
+  infer_instance
 
 end AbelianVariety
 
