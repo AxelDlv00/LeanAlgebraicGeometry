@@ -14,10 +14,9 @@ The ordinary fiber evaluation of the divisor module can be followed by the
 intrinsic additive map from that fiber to the one-point jump quotient.  This
 composite agrees with the existing local jump projection on global divisor
 sections.  Consequently numerical base-point-freeness is equivalent to
-surjectivity of this composite at every non-generic point.
-
-This does not assert that the ordinary fiber evaluation itself is surjective,
-or that the ordinary fiber is equivalent to the jump quotient.
+surjectivity of this composite at every non-generic point.  Since the
+fiber-to-jump map is bijective, this is also equivalent to surjectivity of the
+ordinary fiber evaluation itself.
 -/
 
 set_option autoImplicit false
@@ -79,6 +78,26 @@ lemma divisorModuleFiberJumpEvaluation_surjective_iff {x : X.left}
     rw [divisorModuleFiberJumpEvaluation_apply]
     exact hs
 
+/-- Ordinary fiber evaluation is surjective exactly when its composite with
+the intrinsic fiber-to-jump map is surjective. -/
+lemma fiberEvaluation_surjective_iff_divisorModuleFiberJumpEvaluation_surjective
+    {x : X.left} (hx : x ≠ genericPoint X.left) (D : CurveDivisor k X) :
+    Function.Surjective (Scheme.Modules.fiberEvaluation (divisorModule D) x) ↔
+      Function.Surjective (divisorModuleFiberJumpEvaluation (X := X) hx D) := by
+  constructor
+  · intro heval q
+    obtain ⟨z, hz⟩ :=
+      stalkJumpFiberAddHom_of_divisorModule_surjective (X := X) hx D q
+    obtain ⟨s, hs⟩ := heval z
+    refine ⟨s, ?_⟩
+    change stalkJumpFiberAddHom_of_divisorModule (X := X) hx D
+      (Scheme.Modules.fiberEvaluation (divisorModule D) x s) = q
+    rw [hs, hz]
+  · intro hcomp z
+    obtain ⟨s, hs⟩ := hcomp
+      (stalkJumpFiberAddHom_of_divisorModule (X := X) hx D z)
+    exact ⟨s, stalkJumpFiberAddHom_of_divisorModule_injective hx D hs⟩
+
 /-- Numerical base-point-freeness is equivalent to surjectivity, at every
 non-generic point, of global ordinary-fiber evaluation after passage to the
 intrinsic jump quotient. -/
@@ -90,6 +109,19 @@ theorem basePointFreeLinearSystem_iff_divisorModuleFiberJumpEvaluation_surjectiv
   rw [basePointFreeLinearSystem_iff_jumpProj_surjective]
   exact forall_congr' fun x => forall_congr' fun hx =>
     (divisorModuleFiberJumpEvaluation_surjective_iff (X := X) hx D).symm
+
+/-- Numerical base-point-freeness is equivalent to surjectivity of global
+section evaluation in every ordinary divisor-module fiber. -/
+theorem basePointFreeLinearSystem_iff_divisorModule_fiberEvaluation_surjective
+    (D : CurveDivisor k X) :
+    BasePointFreeLinearSystem D ↔
+      ∀ x : X.left, x ≠ genericPoint X.left →
+        Function.Surjective
+          (Scheme.Modules.fiberEvaluation (divisorModule D) x) := by
+  rw [basePointFreeLinearSystem_iff_divisorModuleFiberJumpEvaluation_surjective]
+  exact forall_congr' fun x => forall_congr' fun hx =>
+    (fiberEvaluation_surjective_iff_divisorModuleFiberJumpEvaluation_surjective
+      (X := X) hx D).symm
 
 end
 end Hartshorne
