@@ -129,6 +129,29 @@ theorem chartOpenCover_ι_projectiveMapProducer_of_smoothCurve
     (hcover := selectedCoordinates_isOpenCover_of_smoothCurve basis hD)
     (selectedCoordinates_sameSectionValues (D := D) basis hD) i
 
+/-- The packaged map has the expected ambient principal-open preimages on
+each selected chart.  This is the preimage compatibility needed when a
+target-local immersion argument restricts the global map to a projective
+basic open; it does not assert any global closed-immersion property. -/
+@[simp]
+theorem chartOpenCover_ι_projectiveMapProducer_of_smoothCurve_preimage_basicOpen
+    (basis : Module.Basis (Fin (n + 1)) k (CurveDivisorSectionSpace D))
+    (hD : BasePointFreeLinearSystem D) (i : NonGenericPoint X)
+    (j : Fin (n + 1)) :
+    ((LocalRatioProjectiveGluing.chartOpenCover
+        (fun x : NonGenericPoint X => selectedCoordinates (D := D) basis hD x)
+        (selectedCoordinates_isOpenCover_of_smoothCurve basis hD)).f i ≫
+        (projectiveMapProducer_of_smoothCurve (D := D) basis hD).map) ⁻¹ᵁ
+      (Proj.basicOpen (MvPolynomial.homogeneousSubmodule (Fin (n + 1)) k)
+        (MvPolynomial.X j)) =
+      (selectedCoordinates (D := D) basis hD i).chart.U.ι ⁻¹ᵁ
+        X.left.basicOpen
+          ((selectedRegularization (D := D) basis hD i).regularized j) := by
+  rw [chartOpenCover_ι_projectiveMapProducer_of_smoothCurve]
+  exact LocalRatioRegularization.chartMap_preimage_basicOpen_ambient
+    (a := selectedCoordinates (D := D) basis hD i)
+    (r := selectedRegularization (D := D) basis hD i) j
+
 /-- The packaged map is uniquely determined by the selected normalized chart
 restrictions.  This is the descent uniqueness statement used when a later
 construction supplies another candidate global projective morphism. -/

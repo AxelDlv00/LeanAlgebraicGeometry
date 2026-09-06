@@ -217,6 +217,79 @@ theorem coordinateChartMap_ι
         (MvPolynomial.homogeneousSubmodule (Fin (n + 1)) k) f hf
   rw [hraw, Scheme.isoOfEq_hom_ι_assoc]
 
+/-! ### Global closed immersion from affine chart producers -/
+
+omit [IsAlgClosed k] [IsIntegral X.left] [SmoothOfRelativeDimension 1 X.hom]
+  [IsProper X.hom] in
+/-- If every affine coordinate chart is a closed immersion, then the
+associated global `Proj.fromOfGlobalSections` map is a closed immersion.
+The target-local step is explicit, and the hypothesis is retained because
+the affine chart generation theorem is a separate geometric producer. -/
+theorem isClosedImmersion_of_coordinateChartMap
+    (data : GlobalSectionsProjectiveMapData (k := k) (X := X) n)
+    (hci : ∀ j : Fin (n + 1),
+      IsClosedImmersion (data.coordinateChartMap j)) :
+    IsClosedImmersion data.map := by
+  let U : Fin (n + 1) → (projectiveSpace k n).Opens := fun j =>
+    Proj.basicOpen (MvPolynomial.homogeneousSubmodule (Fin (n + 1)) k)
+      (MvPolynomial.X j)
+  have hI :
+      (HomogeneousIdeal.irrelevant
+        (MvPolynomial.homogeneousSubmodule (Fin (n + 1)) k)).toIdeal ≤
+      MvPolynomial.idealOfVars (Fin (n + 1)) k := by
+    rw [HomogeneousIdeal.toIdeal_irrelevant_le]
+    intro i hi p hp
+    rw [MvPolynomial.idealOfVars_eq_restrictSupportIdeal]
+    change p ∈ MvPolynomial.restrictSupport k
+      (Finsupp.degree ⁻¹' Set.Ici 1)
+    rw [MvPolynomial.mem_restrictSupport_iff]
+    intro m hm
+    change 1 ≤ Finsupp.degree m
+    have hweight : (Finsupp.weight (fun _ : Fin (n + 1) => 1)) m = i :=
+      (MvPolynomial.mem_homogeneousSubmodule i p).mp hp
+        (MvPolynomial.mem_support_iff.mp hm)
+    have hdeg : Finsupp.degree m = i := by
+      simpa only [Finsupp.degree_eq_weight_one] using hweight
+    omega
+  have hU : ⨆ j, U j = ⊤ := by
+    change (⨆ j : Fin (n + 1),
+      Proj.basicOpen
+        (MvPolynomial.homogeneousSubmodule (Fin (n + 1)) k)
+        (MvPolynomial.X j)) = ⊤
+    exact Proj.iSup_basicOpen_eq_top
+      (MvPolynomial.homogeneousSubmodule (Fin (n + 1)) k)
+      (fun j : Fin (n + 1) => MvPolynomial.X j) hI
+  apply IsZariskiLocalAtTarget.of_iSup_eq_top U hU
+  intro j
+  dsimp [coordinateOpenCover] at *
+  let V : X.left.Opens := X.left.basicOpen (data.sections j)
+  have hpre : data.map ⁻¹ᵁ U j = V := by
+    simpa only [U, V] using data.map_preimage_basicOpen j
+  have hlocal : IsClosedImmersion (data.map ∣_ U j) := by
+    let eV : (data.map ⁻¹ᵁ U j).toScheme ≅
+        (data.coordinateOpenCover).X j := by
+      dsimp [coordinateOpenCover]
+      exact X.left.isoOfEq hpre
+    rw [MorphismProperty.arrow_mk_iso_iff (P := @IsClosedImmersion)
+      (Arrow.isoMk' (data.map ∣_ U j) (data.coordinateChartMap j)
+        eV (Iso.refl _) (by
+          apply (cancel_mono (U j).ι).mp
+          change eV.hom ≫ data.coordinateChartMap j ≫
+              (Proj.basicOpen
+                (MvPolynomial.homogeneousSubmodule (Fin (n + 1)) k)
+                (MvPolynomial.X j)).ι =
+            data.map ∣_ U j ≫ (U j).ι
+          rw [data.coordinateChartMap_ι, morphismRestrict_ι]
+          change eV.hom ≫ (data.coordinateOpenCover).f j ≫ data.map =
+            (data.map ⁻¹ᵁ U j).ι ≫ data.map
+          rw [coordinateOpenCover_f]
+          change (X.left.isoOfEq hpre).hom ≫
+              (X.left.basicOpen (data.sections j)).ι ≫ data.map =
+            (data.map ⁻¹ᵁ U j).ι ≫ data.map
+          rw [Scheme.isoOfEq_hom_ι_assoc]))]
+    exact hci j
+  exact hlocal
+
 omit [IsAlgClosed k] [IsIntegral X.left] [SmoothOfRelativeDimension 1 X.hom]
   [IsProper X.hom] in
 /-- The same chart factor obtained formally by restricting the composite from
