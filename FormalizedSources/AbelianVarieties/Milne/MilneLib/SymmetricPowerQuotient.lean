@@ -7,6 +7,7 @@ Authors: The Milne Contributors
 import MilneLib.SymmetricPower
 import MilneLib.InvariantQuotientFactorization
 import MilneLib.InvariantQuotientFiniteAtlasOver
+import MilneLib.InvariantQuotientFree
 
 /-!
 # Symmetric powers from invariant-ring quotients
@@ -173,6 +174,23 @@ theorem symmetricPowerQuotientProjection_isEtale_of_chart_maps
     (quotientPermutationAction V n) (relativePower V n).hom
     (quotientPermutationAction_comp_base V n)
     (quotientPermutationAction_orbits V n h) hEtale
+
+/-- Geometric freeness of the permutation action makes the symmetric
+projection etale.  The field-valued-point hypothesis is stated on the
+relative-power scheme so it can be transported directly to the finite stable
+quotient atlas. -/
+theorem symmetricPowerQuotientProjection_isEtale_of_field_points
+    (hfree : ∀ (K : Type u) [Field K]
+      (x : Spec (CommRingCat.of K) ⟶ (relativePower V n).left)
+      (σ : ULift.{u} (Equiv.Perm (Fin n))),
+      x ≫ (quotientPermutationAction V n σ).hom = x → σ = 1) :
+    Etale (symmetricPowerQuotientProjection V n h).left := by
+  exact finiteStableCanonicalQuotientProjection_etale_of_field_points
+    (quotientPermutationAction V n)
+    (relativePower V n).hom
+    (quotientPermutationAction_comp_base V n)
+    (quotientPermutationAction_orbits V n h)
+    hfree
 
 /-- Symmetric-power data produced by the finite invariant-ring quotient,
 under the explicit affine-orbit and compactness hypotheses. -/
