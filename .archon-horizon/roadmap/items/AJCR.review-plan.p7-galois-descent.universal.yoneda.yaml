@@ -10,7 +10,8 @@ summary: 'Target: for every test object T over Spec k, construct the natural equ
 status: blocked
 kind: proof
 priority: urgent
-depends_on: []
+depends_on:
+- AJCR.review-plan.p7-galois-descent.universal.glue-equivalence
 inbox_refs: []
 task_refs: []
 scope:
@@ -28,6 +29,6 @@ metadata:
     task: ajcr-roadmap-decomposition
     task_title: AJCR blocked-route decomposition and roadmap repair
     projects: Algebraic-Jacobian-Challenge-Rebuild,Algebraic-Jacobian-Challenge
-  parent: AJCR.review-plan.p7-galois-descent.universal.glue-equivalence
+  parent: AJCR.review-plan.p7-galois-descent.representability.finite-stage
   milestone: AJCR.review-plan
-  updated_at: '2026-09-01T17:35:05.849863+00:00'
+  updated_at: '2026-09-06T16:29:33.876333+00:00'

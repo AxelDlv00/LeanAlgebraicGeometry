@@ -1,0 +1,63 @@
+id: ajcr-p7-galois-descent
+project: Algebraic-Jacobian-Challenge-Rebuild
+objective: 'Advance AJCR Phase 7: finite-Galois descent of the Pic^0 representative
+  to the original field.
+
+
+  Goal: take the finite-stage glued carrier to original-field `pic0_representableBy`
+  (then the same-carrier PicRepDatum/JacobianData handoff if that is in reach). The
+  mathematical gates are:
+
+  1. binder-free finite-stage representability: maps into `P.gluedOver` naturally
+  match `pic0TypeFunctor` families on arbitrary tests;
+
+  2. exact-carrier orbit-affine / projective geometry over the finite Galois stage
+  used by `P`;
+
+  3. effective finite-Galois descent of that representative and universal class to
+  `k`.
+
+
+  WRITE only Algebraic-Jacobian-Challenge-Rebuild. READ AJC, FormalizedSources, and
+  the Phase 7 roadmap (`AJCR.review-plan.p7-galois-descent`) freely. Blueprint frozen
+  except genuine math corrections and honest Lean attachments. No sorry/admit/project
+  axioms in committed math.
+
+
+  Do not mark done after a partial advance. Leave queued/running with the next Phase
+  7 producer. Mark done only if original-field `pic0_representableBy` is kernel-checked
+  on the intended carrier.
+
+
+  P.S. Some glue/package code this lane relies on may be poor quality (nested packages,
+  decorative abbrevs, transport piles, I-2011 dependent-index `gluedCover.J` blocker).
+  Do not spend sessions patching bad packaging. If a glue/package module blocks descent,
+  backup it (`horizon attempt save` / short-lived Archive copy), rewrite from scratch
+  as mathlib-shaped code, and re-point consumers. A clean rewrite usually beats fixing
+  layered glue code. Drop backups once git holds the old text.'
+title: 'Phase 7: finite-Galois descent of Pic^0'
+explanation: ''
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+priority: high
+status: running
+write_set:
+  files: []
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+  declarations: []
+  blueprint_nodes: []
+  workspace: false
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+roadmap_refs:
+- AJCR.review-plan.p7-galois-descent
+inbox_refs:
+- I-2011
+- I-2339
+artifact_refs: []
+created_at: '2026-09-06T02:01:40.697087+00:00'
+updated_at: '2026-09-06T16:29:38.340654+00:00'
+metadata:
+  author: human
