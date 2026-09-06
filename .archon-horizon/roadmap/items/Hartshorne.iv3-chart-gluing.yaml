@@ -2,15 +2,11 @@ id: Hartshorne.iv3-chart-gluing
 title: IV.3.1 local-ratio chart restriction and gluing
 projects:
 - Hartshorne
-summary: 'Exact divisor-fiber evaluation is now identified with the local jump quotient:
-  its kernel is H0(D-x), the raw ordinary-fiber evaluation is surjective exactly at
-  base-point-free points, and vanishing is membership in H0(D-x). The divisor module
-  now has zero and principal-divisor comparison isomorphisms, coefficient-local restriction
-  isomorphisms, local principalizations, and a proved IsLineBundle instance theorem;
-  all choice-dependent coordinates are explicitly labeled. Full HartshorneLib check
-  passes with standard axioms only. IV.3.1 itself remains empty: next prove two-point
-  and repeated-point/first-jet separation, then construct the projective morphism,
-  closed immersion, and chart gluing.'
+summary: For a fixed complete basis on a smooth proper integral curve over an algebraically
+  closed field, numerical very ampleness now proves that the actual glued local-ratio
+  projective morphism is a closed immersion. Auxiliary denominator choices are independent.
+  The reverse geometric-to-numerical implication of IV.3.1 remains open; the frozen
+  source node is not marked complete.
 status: active
 kind: proof
 priority: high
@@ -37,8 +33,19 @@ metadata:
   parent: Hartshorne
   owner: fs-hartshorne
   milestone: Hartshorne
-  updated_at: '2026-09-06T05:02:41.297364+00:00'
+  updated_at: '2026-09-06T15:01:35.722206+00:00'
   pinned_commits:
+  - a6da590bb8
+  - 51808996fa
+  - 1659065af2
+  - 3c24027f13
+  - 6c69ff9b15
+  - 2ad672f41e
+  - 5a8f27dcb9
+  - 296723cbcc
+  - f70cc5cc62
+  - 7b5553b52d
+  - a15ef550cd
   - fd58ecb6b7
   - fb13cd736f
   - 6181eaf71a
