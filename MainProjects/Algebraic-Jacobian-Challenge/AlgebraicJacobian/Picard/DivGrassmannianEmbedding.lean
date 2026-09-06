@@ -6,6 +6,8 @@ Authors: The AlgebraicJacobian Contributors
 import AlgebraicJacobian.Picard.DivPushforwardFlat
 import AlgebraicJacobian.Picard.DivGrassmannianClass
 import AlgebraicJacobian.Picard.FiniteSupportPushforwardFiber
+import AlgebraicJacobian.Picard.TensorFinitePresentation
+import AlgebraicJacobian.Picard.DivTwistPushforwardProducers
 import AlgebraicJacobian.Picard.CurveProjectivity
 import AlgebraicJacobian.Picard.GrassmannianRepresentability
 import AlgebraicJacobian.Picard.RigidPushforwardP1Sheaf
@@ -392,71 +394,6 @@ theorem baseChange_surjective_iff_pullback_appTop
     refine ⟨w, eN.injective ?_⟩
     rw [← hcomm w, hy]
 
-set_option synthInstance.maxHeartbeats 1000000 in
--- Normalizing the shrunken presentation data traverses nested subtype and
--- slice-site equivalences.
-set_option maxRecDepth 10000 in
--- Slice-site presentation transport also traverses two cover refinements and
--- the open-restriction equivalence.
-set_option maxHeartbeats 2000000 in
-/-- Tensoring a finitely presented module sheaf on the left by a locally
-trivial line bundle preserves finite presentation.  The proof refines a
-finite-presentation cover for `F` by a trivializing cover for `L`; on every
-intersection the tensor product is isomorphic to `F`, so its finite
-presentation transports across that isomorphism. -/
-theorem isFinitePresentation_tensorObj_left_of_isLocallyTrivial
-    {X : Scheme.{u}} (L F : X.Modules)
-    (hL : LineBundle.IsLocallyTrivial L) (hF : F.IsFinitePresentation) :
-    (tensorObj L F).IsFinitePresentation := by
-  obtain ⟨q, hq⟩ := hF.exists_quasicoherentData
-  obtain ⟨I, U, _hUaff, hUtop, hUiso⟩ := hL.exists_trivializing_cover
-  let W : q.I × I → X.Opens := fun ij => q.X ij.1 ⊓ U ij.2
-  have hWcover : (Opens.grothendieckTopology X).CoversTop W := by
-    intro V x hx
-    obtain ⟨V', fV, hf, hxV'⟩ := q.coversTop ⊤ x (by trivial)
-    obtain ⟨i, ⟨gi⟩⟩ := hf
-    have hxq : x ∈ q.X i := (leOfHom gi) hxV'
-    have hxU : x ∈ iSup U := by rw [hUtop]; trivial
-    rw [TopologicalSpace.Opens.mem_iSup] at hxU
-    obtain ⟨j, hxj⟩ := hxU
-    exact ⟨V ⊓ W (i, j), homOfLE inf_le_left,
-      ⟨(i, j), ⟨homOfLE inf_le_right⟩⟩, ⟨hx, ⟨hxq, hxj⟩⟩⟩
-  let P : ∀ ij, ((tensorObj L F).over (W ij)).Presentation := fun ij => by
-    let PF : (F.over (W ij)).Presentation :=
-      presentationOverOpens (W ij) F (q.X ij.1)
-        (q.presentation ij.1) inf_le_left
-    let eL : L.restrict (W ij).ι ≅
-        SheafOfModules.unit (W ij : Scheme).ringCatSheaf :=
-      restrictIsoUnitOfLE inf_le_right (hUiso ij.2).some
-    let eRes : (tensorObj L F).restrict (W ij).ι ≅ F.restrict (W ij).ι :=
-      tensorObj_restrict_iso (W ij).ι L F ≪≫
-        tensorObjIsoOfIso eL (Iso.refl _) ≪≫
-        tensorObj_left_unitor _
-    let eOver : (tensorObj L F).over (W ij) ≅ F.over (W ij) :=
-      (restrictOverIso (W ij) (tensorObj L F)).symm ≪≫
-        (overEquivalence (W ij)).functor.mapIso eRes ≪≫
-        restrictOverIso (W ij) F
-    exact SheafOfModules.Presentation.ofIsIso.{u, u, u}
-      eOver.inv PF
-  let qT : (tensorObj L F).QuasicoherentData :=
-    { I := q.I × I
-      X := W
-      coversTop := hWcover
-      presentation := P }
-  have hP : ∀ ij, (P ij).IsFinite := by
-    intro ij
-    dsimp only [P]
-    letI : (q.presentation ij.1).IsFinite := hq.isFinite_presentation _
-    infer_instance
-  have hqT : qT.IsFinitePresentation := by
-    apply SheafOfModules.QuasicoherentData.IsFinitePresentation.mk
-    intro ij
-    exact hP ij
-  have hsh : qT.shrink.IsFinitePresentation :=
-    { isFinite_presentation := fun ij =>
-        hqT.isFinite_presentation (Exists.choose ij.property) }
-  exact { exists_quasicoherentData := ⟨qT.shrink, hsh⟩ }
-
 set_option maxHeartbeats 2500000 in
 -- The affine-locality engine refines both source and base covers through
 -- basic opens before transporting the local section equivalence.
@@ -705,18 +642,6 @@ theorem twistQuotientMap_epi (L : X.Modules) (x : DivFamily π T) :
   letI : Epi (Modules.tensorObj_right_unitor
       ((Modules.pullback (pullback.fst π T.hom)).obj L)).inv := inferInstance
   infer_instance
-
-/-- The D2 twist is finitely presented whenever the fixed twist is a line
-bundle.  Both antecedents are already produced by the construction: local
-triviality survives pullback, and a divisor family carries finite
-presentation of its structure module. -/
-theorem twist_isFinitePresentation
-    (L : X.Modules) (hL : LineBundle.IsLocallyTrivial L)
-    (x : DivFamily π T) :
-    (x.twist L).IsFinitePresentation := by
-  dsimp [twist]
-  exact Modules.isFinitePresentation_tensorObj_left_of_isLocallyTrivial _ _
-    (hL.pullback (pullback.fst π T.hom)) x.isFinitePresentation
 
 /-- Quasi-coherence of the D2 twist, obtained from its finite presentation. -/
 theorem twist_isQuasicoherent

@@ -6,6 +6,7 @@ Authors: The AlgebraicJacobian Contributors
 import AlgebraicJacobian.Picard.DivCurvePushforwardProducers
 import AlgebraicJacobian.Picard.DivLocallyClosed
 import AlgebraicJacobian.Picard.FiniteSupportPushforwardFiber
+import AlgebraicJacobian.Picard.TensorFinitePresentation
 
 /-!
 # Finite sections of twisted divisor pushforwards
@@ -16,10 +17,10 @@ section theorem already work over an arbitrary test object; this file exposes
 their composition for the actual twisted target.  The result is the finite
 module input for the later finite-flat/local-free and evaluation producers.
 
-The finite-presentation fact for the twist is kept as an explicit argument.
-This makes the current boundary visible: the theorem supplies finite sections
-once the tensor finite-presentation producer is available, without importing a
-large downstream embedding module or silently assuming that producer here.
+The finite-presentation fact for the twist is supplied by the line-bundle
+coherence module from local triviality and finite presentation of the divisor
+module.  This keeps the arbitrary-test-base rank producer independent of the
+much larger downstream embedding module.
 
 No generation, rank, representability, or rational-point hypothesis is hidden
 in this declaration.
@@ -42,6 +43,17 @@ namespace DivFamily
 
 variable {S X : Scheme.{u}} {π : X ⟶ S} {T : Over S}
 
+/-- The locally trivial D2 twist is finitely presented.  This is the intrinsic
+producer consumed by finite-support pushforward and flatness; callers do not
+need to supply a separate presentation hypothesis. -/
+theorem twist_isFinitePresentation
+    (L : X.Modules) (hL : LineBundle.IsLocallyTrivial L)
+    (x : DivFamily π T) :
+    (x.twist L).IsFinitePresentation := by
+  dsimp [twist]
+  exact Modules.isFinitePresentation_tensorObj_left_of_isLocallyTrivial _ _
+    (hL.pullback (pullback.fst π T.hom)) x.isFinitePresentation
+
 /-- A locally trivial twist of a divisor family has finite pushforward sections
 over every affine open of every test object.  This is the arbitrary-base finite
 module producer used by the D2 Grassmannian route. -/
@@ -49,33 +61,30 @@ theorem module_finite_sections_pushforward_twist_of_curve
     [SmoothOfRelativeDimension 1 π] [GeometricallyIntegral π] [IsProper π]
     (L : X.Modules) (hL : LineBundle.IsLocallyTrivial L)
     (x : DivFamily π T)
-    (hFp : (x.twist L).IsFinitePresentation)
     {V : T.left.Opens} (hV : IsAffineOpen V) :
     Module.Finite Γ(T.left, V)
       Γ((Modules.pushforward (pullback.snd π T.hom)).obj (x.twist L), V) := by
-  letI : (x.twist L).IsFinitePresentation := hFp
+  letI : (x.twist L).IsFinitePresentation := x.twist_isFinitePresentation L hL
   exact Modules.module_finite_sections_pushforward_of_isFinite_schematicSupport
     (pullback.snd π T.hom) (x.twist L)
     (twist_isFiniteSupport_of_curve L hL x) hV
 
 /-- On a locally noetherian test object, the finite sections producer upgrades
 the twisted divisor pushforward to finite presentation.  This is the
-coherence input for the later finite-flat/local-free Grassmannian step; the
-finite presentation of the twist itself remains an explicit hypothesis. -/
+coherence input for the later finite-flat/local-free Grassmannian step. -/
 theorem isFinitePresentation_pushforward_twist_of_curve
     [SmoothOfRelativeDimension 1 π] [GeometricallyIntegral π] [IsProper π]
     [IsLocallyNoetherian (T.left : Scheme.{u})]
     (L : X.Modules) (hL : LineBundle.IsLocallyTrivial L)
-    (x : DivFamily π T)
-    (hFp : (x.twist L).IsFinitePresentation) :
+    (x : DivFamily π T) :
     ((Modules.pushforward (pullback.snd π T.hom)).obj (x.twist L)).IsFinitePresentation := by
-  letI : (x.twist L).IsFinitePresentation := hFp
+  letI : (x.twist L).IsFinitePresentation := x.twist_isFinitePresentation L hL
   letI : (x.twist L).IsQuasicoherent := inferInstance
   letI : ((Modules.pushforward (pullback.snd π T.hom)).obj (x.twist L)).IsQuasicoherent :=
     Modules.pushforward_isQuasicoherent (pullback.snd π T.hom) (x.twist L)
   apply Modules.isFinitePresentation_of_finite_sections
   intro V hV
-  exact module_finite_sections_pushforward_twist_of_curve L hL x hFp hV
+  exact module_finite_sections_pushforward_twist_of_curve L hL x hV
 
 /-! ## Flatness and the rank-stratum bridge -/
 
@@ -139,11 +148,10 @@ flatness there, and transports back through the support-descent isomorphism. -/
 theorem coherentSheafFlat_id_pushforward_twist_of_curve
     [SmoothOfRelativeDimension 1 π] [GeometricallyIntegral π] [IsProper π]
     (L : X.Modules) (hL : LineBundle.IsLocallyTrivial L)
-    (x : DivFamily π T)
-    (hFp : (x.twist L).IsFinitePresentation) :
+    (x : DivFamily π T) :
     CoherentSheafFlat (𝟙 (T.left : Scheme.{u}))
       ((Modules.pushforward (pullback.snd π T.hom)).obj (x.twist L)) := by
-  letI : (x.twist L).IsFinitePresentation := hFp
+  letI : (x.twist L).IsFinitePresentation := x.twist_isFinitePresentation L hL
   letI : (x.twist L).IsQuasicoherent := inferInstance
   let q := pullback.snd π T.hom
   let i := Modules.schematicSupportι (x.twist L)
@@ -161,7 +169,8 @@ theorem coherentSheafFlat_id_pushforward_twist_of_curve
     dsimp [DivFamily.twist]
     exact coherentSheafFlat_tensorObj_left_of_isLocallyTrivial_with_finitePresentation q
       ((Modules.pullback (pullback.fst π T.hom)).obj L) x.F
-      (hL.pullback (pullback.fst π T.hom)) hFp x.flat
+      (hL.pullback (pullback.fst π T.hom))
+      (x.twist_isFinitePresentation L hL) x.flat
   have h1 : CoherentSheafFlat q ((Modules.pushforward i).obj N) :=
     coherentSheafFlat_of_iso q hdesc htwflat
   have h2 : CoherentSheafFlat (i ≫ q) N :=
@@ -195,19 +204,19 @@ theorem pushforward_twist_isLocallyFreeOfRank_of_pointRank
     [SmoothOfRelativeDimension 1 π] [GeometricallyIntegral π] [IsProper π]
     [IsLocallyNoetherian (T.left : Scheme.{u})]
     (L : X.Modules) (hL : LineBundle.IsLocallyTrivial L)
-    (x : DivFamily π T) (hFp : (x.twist L).IsFinitePresentation)
+    (x : DivFamily π T)
     {d : ℕ}
     (hRank : ∀ t : (T.left : Scheme.{u}),
       Modules.pointRank (T.left : Scheme.{u})
         ((Modules.pushforward (pullback.snd π T.hom)).obj (x.twist L)) t = d) :
     SheafOfModules.IsLocallyFreeOfRank
       ((Modules.pushforward (pullback.snd π T.hom)).obj (x.twist L)) d := by
-  letI : (x.twist L).IsFinitePresentation := hFp
+  letI : (x.twist L).IsFinitePresentation := x.twist_isFinitePresentation L hL
   letI : ((Modules.pushforward (pullback.snd π T.hom)).obj (x.twist L)).IsFinitePresentation :=
-    isFinitePresentation_pushforward_twist_of_curve L hL x hFp
+    isFinitePresentation_pushforward_twist_of_curve L hL x
   exact Modules.isLocallyFreeOfRank_of_finitePresentation_flat_pointRank
     ((Modules.pushforward (pullback.snd π T.hom)).obj (x.twist L))
-    (coherentSheafFlat_id_pushforward_twist_of_curve L hL x hFp) hRank
+    (coherentSheafFlat_id_pushforward_twist_of_curve L hL x) hRank
 
 /-! ## The affine curve rank producer -/
 
@@ -267,14 +276,13 @@ theorem pushforward_twist_isLocallyFreeOfRank_of_curve
     (f : Spec R ⟶ S) [IsNoetherianRing R]
     (L : X.Modules) (hL : LineBundle.IsLocallyTrivial L)
     (x : DivFamily π (Over.mk f))
-    (hFp : (x.twist L).IsFinitePresentation)
     {d : ℕ} (hx : x.HasFiberDeg d) :
     SheafOfModules.IsLocallyFreeOfRank
       ((Modules.pushforward (pullback.snd π f)).obj (x.twist L)) d := by
   letI : IsLocallyNoetherian (Over.mk f).left := by
     change IsLocallyNoetherian (Spec R)
     infer_instance
-  apply pushforward_twist_isLocallyFreeOfRank_of_pointRank L hL x hFp
+  apply pushforward_twist_isLocallyFreeOfRank_of_pointRank L hL x
   intro t
   exact (pointRank_pushforward_twist_eq_fiberDeg_of_curve f L hL x t).trans
     (hx t)
