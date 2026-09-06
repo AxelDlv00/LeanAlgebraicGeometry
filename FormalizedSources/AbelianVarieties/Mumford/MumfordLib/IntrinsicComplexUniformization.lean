@@ -132,5 +132,159 @@ theorem canonicalComplexVectorLatticeExponentialData_ambientPeriodLattice
   exact
     (canonicalComplexExponentialPeriodLattice_toAddSubgroup (G := G) I).symm
 
+/-! ### Intrinsic tangent-fibre data
+
+The tangent fibre already carries its manifold topology, but Mathlib does not
+give it a global normed-space instance.  The following definition therefore
+binds the normed and metric-topological structures induced from `E` in its
+result type.  This makes the choice explicit and prevents instance leakage.
+-/
+
+/-- Reparametrize the canonical lattice exponential data onto the identity
+tangent fibre, using only locally bound model-induced structures there. -/
+noncomputable def intrinsicComplexVectorLatticeExponentialData
+    {g : ℕ} (coordinate : E ≃L[ℂ] GenusComplexVector g) :
+    let e : E ≃ₗ[ℂ] GroupLieAlgebra I G :=
+      complexLieAlgebraEquiv (G := G) I
+    letI : NormedAddCommGroup (GroupLieAlgebra I G) :=
+      NormedAddCommGroup.induced _ _
+        e.symm.toLinearMap.toAddMonoidHom e.symm.injective
+    letI : NormedSpace ℂ (GroupLieAlgebra I G) :=
+      NormedSpace.induced ℂ _ _ e.symm.toLinearMap
+    letI : UniformSpace (GroupLieAlgebra I G) :=
+      @PseudoMetricSpace.toUniformSpace (GroupLieAlgebra I G) inferInstance
+    letI : TopologicalSpace (GroupLieAlgebra I G) :=
+      @UniformSpace.toTopologicalSpace (GroupLieAlgebra I G) inferInstance
+    ComplexVectorLatticeExponentialData
+      (GroupLieAlgebra I G) (Additive G) g := by
+  let e : E ≃ₗ[ℂ] GroupLieAlgebra I G :=
+    complexLieAlgebraEquiv (G := G) I
+  letI : NormedAddCommGroup (GroupLieAlgebra I G) :=
+    NormedAddCommGroup.induced _ _
+      e.symm.toLinearMap.toAddMonoidHom e.symm.injective
+  letI : NormedSpace ℂ (GroupLieAlgebra I G) :=
+    NormedSpace.induced ℂ _ _ e.symm.toLinearMap
+  letI : UniformSpace (GroupLieAlgebra I G) :=
+    @PseudoMetricSpace.toUniformSpace (GroupLieAlgebra I G) inferInstance
+  letI : TopologicalSpace (GroupLieAlgebra I G) :=
+    @UniformSpace.toTopologicalSpace (GroupLieAlgebra I G) inferInstance
+  let tangentToModel : GroupLieAlgebra I G ≃L[ℂ] E :=
+    ContinuousLinearEquiv.mk e.symm
+      (continuous_induced_dom : Continuous
+        (e.symm : GroupLieAlgebra I G → E))
+      (by
+        apply continuous_induced_rng.mpr
+        change Continuous (id : E → E)
+        exact continuous_id)
+  exact
+    (canonicalComplexVectorLatticeExponentialData (G := G) I coordinate).reparam
+      tangentToModel
+
+@[simp]
+theorem intrinsicComplexVectorLatticeExponentialData_exponential_apply
+    {g : ℕ} (coordinate : E ≃L[ℂ] GenusComplexVector g)
+    (v : GroupLieAlgebra I G) :
+    let e : E ≃ₗ[ℂ] GroupLieAlgebra I G :=
+      complexLieAlgebraEquiv (G := G) I
+    letI : NormedAddCommGroup (GroupLieAlgebra I G) :=
+      NormedAddCommGroup.induced _ _
+        e.symm.toLinearMap.toAddMonoidHom e.symm.injective
+    letI : NormedSpace ℂ (GroupLieAlgebra I G) :=
+      NormedSpace.induced ℂ _ _ e.symm.toLinearMap
+    letI : UniformSpace (GroupLieAlgebra I G) :=
+      @PseudoMetricSpace.toUniformSpace (GroupLieAlgebra I G) inferInstance
+    letI : TopologicalSpace (GroupLieAlgebra I G) :=
+      @UniformSpace.toTopologicalSpace (GroupLieAlgebra I G) inferInstance
+    (intrinsicComplexVectorLatticeExponentialData
+      (G := G) I coordinate).exponential v =
+      intrinsicComplexExponentialAddHom (G := G) I v := by
+  let e : E ≃ₗ[ℂ] GroupLieAlgebra I G :=
+    complexLieAlgebraEquiv (G := G) I
+  letI : NormedAddCommGroup (GroupLieAlgebra I G) :=
+    NormedAddCommGroup.induced _ _
+      e.symm.toLinearMap.toAddMonoidHom e.symm.injective
+  letI : NormedSpace ℂ (GroupLieAlgebra I G) :=
+    NormedSpace.induced ℂ _ _ e.symm.toLinearMap
+  letI : UniformSpace (GroupLieAlgebra I G) :=
+    @PseudoMetricSpace.toUniformSpace (GroupLieAlgebra I G) inferInstance
+  letI : TopologicalSpace (GroupLieAlgebra I G) :=
+    @UniformSpace.toTopologicalSpace (GroupLieAlgebra I G) inferInstance
+  rfl
+
+/-- The reparametrized data recovers exactly the named intrinsic period
+lattice, not merely an abstract isomorphic copy. -/
+theorem intrinsicComplexVectorLatticeExponentialData_ambientPeriodLattice
+    {g : ℕ} (coordinate : E ≃L[ℂ] GenusComplexVector g) :
+    let e : E ≃ₗ[ℂ] GroupLieAlgebra I G :=
+      complexLieAlgebraEquiv (G := G) I
+    letI : NormedAddCommGroup (GroupLieAlgebra I G) :=
+      NormedAddCommGroup.induced _ _
+        e.symm.toLinearMap.toAddMonoidHom e.symm.injective
+    letI : NormedSpace ℂ (GroupLieAlgebra I G) :=
+      NormedSpace.induced ℂ _ _ e.symm.toLinearMap
+    letI : UniformSpace (GroupLieAlgebra I G) :=
+      @PseudoMetricSpace.toUniformSpace (GroupLieAlgebra I G) inferInstance
+    letI : TopologicalSpace (GroupLieAlgebra I G) :=
+      @UniformSpace.toTopologicalSpace (GroupLieAlgebra I G) inferInstance
+    (intrinsicComplexVectorLatticeExponentialData
+        (G := G) I coordinate).ambientPeriodLattice =
+      (intrinsicComplexExponentialPeriodLattice
+        (G := G) I).toAddSubgroup := by
+  let e : E ≃ₗ[ℂ] GroupLieAlgebra I G :=
+    complexLieAlgebraEquiv (G := G) I
+  letI : NormedAddCommGroup (GroupLieAlgebra I G) :=
+    NormedAddCommGroup.induced _ _
+      e.symm.toLinearMap.toAddMonoidHom e.symm.injective
+  letI : NormedSpace ℂ (GroupLieAlgebra I G) :=
+    NormedSpace.induced ℂ _ _ e.symm.toLinearMap
+  letI : UniformSpace (GroupLieAlgebra I G) :=
+    @PseudoMetricSpace.toUniformSpace (GroupLieAlgebra I G) inferInstance
+  letI : TopologicalSpace (GroupLieAlgebra I G) :=
+    @UniformSpace.toTopologicalSpace (GroupLieAlgebra I G) inferInstance
+  let d := intrinsicComplexVectorLatticeExponentialData (G := G) I coordinate
+  ext v
+  rw [← d.exponential_ker]
+  change d.exponential v = 0 ↔
+    v ∈ intrinsicComplexExponentialPeriodLattice (G := G) I
+  rw [intrinsicComplexVectorLatticeExponentialData_exponential_apply]
+  rw [← AddMonoidHom.mem_ker]
+  rfl
+
+/-- The scoped intrinsic candidate carries the explicit analytic manifold atlas
+on its lattice quotient.  This is the quotient-side part of uniformization;
+the holomorphic identification of this quotient with `G` remains separate. -/
+theorem intrinsicComplexVectorLatticeExponentialData_quotient_isManifold
+    {g : ℕ} (coordinate : E ≃L[ℂ] GenusComplexVector g) :
+    let e : E ≃ₗ[ℂ] GroupLieAlgebra I G :=
+      complexLieAlgebraEquiv (G := G) I
+    letI : NormedAddCommGroup (GroupLieAlgebra I G) :=
+      NormedAddCommGroup.induced _ _
+        e.symm.toLinearMap.toAddMonoidHom e.symm.injective
+    letI : NormedSpace ℂ (GroupLieAlgebra I G) :=
+      NormedSpace.induced ℂ _ _ e.symm.toLinearMap
+    letI : UniformSpace (GroupLieAlgebra I G) :=
+      @PseudoMetricSpace.toUniformSpace (GroupLieAlgebra I G) inferInstance
+    letI : TopologicalSpace (GroupLieAlgebra I G) :=
+      @UniformSpace.toTopologicalSpace (GroupLieAlgebra I G) inferInstance
+    let d := intrinsicComplexVectorLatticeExponentialData
+      (G := G) I coordinate
+    @IsManifold ℂ _ (GroupLieAlgebra I G) _ _ (GroupLieAlgebra I G) _
+      (𝓘(ℂ, GroupLieAlgebra I G)) ω
+      (GroupLieAlgebra I G ⧸ d.ambientPeriodLattice) _
+      (ComplexVectorLatticeExponentialData.analyticQuotientChartedSpace d) := by
+  let e : E ≃ₗ[ℂ] GroupLieAlgebra I G :=
+    complexLieAlgebraEquiv (G := G) I
+  letI : NormedAddCommGroup (GroupLieAlgebra I G) :=
+    NormedAddCommGroup.induced _ _
+      e.symm.toLinearMap.toAddMonoidHom e.symm.injective
+  letI : NormedSpace ℂ (GroupLieAlgebra I G) :=
+    NormedSpace.induced ℂ _ _ e.symm.toLinearMap
+  letI : UniformSpace (GroupLieAlgebra I G) :=
+    @PseudoMetricSpace.toUniformSpace (GroupLieAlgebra I G) inferInstance
+  letI : TopologicalSpace (GroupLieAlgebra I G) :=
+    @UniformSpace.toTopologicalSpace (GroupLieAlgebra I G) inferInstance
+  let d := intrinsicComplexVectorLatticeExponentialData (G := G) I coordinate
+  exact ComplexVectorLatticeExponentialData.analyticQuotient_isManifold d
+
 end Analytic
 end Mumford
