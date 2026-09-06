@@ -110,6 +110,73 @@ theorem quotientOverlapSwapIso_hom_comp_base [Finite G]
             (k := k) (A := Γ(X, i.U)) (G := G) := by
       simp only [Category.assoc, Iso.inv_hom_id_assoc]
 
+/-- The canonical quotient projection of a stable affine chart is over the
+given affine base. -/
+theorem stableAffineQuotientMap_comp_base [Finite G]
+    (p : X ⟶ Spec (CommRingCat.of k))
+    (hact : ∀ g : G, (act g).hom ≫ p = p)
+    (i : StableAffineOpen act) :
+    letI := sectionsAlgebra p i.U
+    letI := sectionsMulSemiringAction act i.stable
+    letI := sectionsSMulCommClass act p hact i.stable
+    stableAffineQuotientMap act p hact i ≫
+        affineInvariantQuotientBaseMap
+          (k := k) (A := Γ(X, i.U)) (G := G) =
+      i.U.ι ≫ p := by
+  letI := sectionsAlgebra p i.U
+  letI := sectionsMulSemiringAction act i.stable
+  letI := sectionsSMulCommClass act p hact i.stable
+  change (i.affine.isoSpec.hom ≫
+      affineInvariantQuotientMap
+        (k := k) (A := Γ(X, i.U)) (G := G)) ≫
+      affineInvariantQuotientBaseMap
+        (k := k) (A := Γ(X, i.U)) (G := G) =
+    i.U.ι ≫ p
+  have hqOver := affineInvariantQuotientMapOver_isOver
+    (k := k) (A := Γ(X, i.U)) (G := G)
+  have hq := hqOver
+  change affineInvariantQuotientMap
+      (k := k) (A := Γ(X, i.U)) (G := G) ≫
+        affineInvariantQuotientBaseMap
+          (k := k) (A := Γ(X, i.U)) (G := G) =
+      affineSpecToBase (k := k) (A := Γ(X, i.U)) at hq
+  calc
+    (i.affine.isoSpec.hom ≫
+        affineInvariantQuotientMap
+          (k := k) (A := Γ(X, i.U)) (G := G)) ≫
+        affineInvariantQuotientBaseMap
+          (k := k) (A := Γ(X, i.U)) (G := G) =
+      i.affine.isoSpec.hom ≫
+        (affineInvariantQuotientMap
+          (k := k) (A := Γ(X, i.U)) (G := G) ≫
+          affineInvariantQuotientBaseMap
+            (k := k) (A := Γ(X, i.U)) (G := G)) :=
+      Category.assoc _ _ _
+    _ = i.affine.isoSpec.hom ≫
+        affineSpecToBase (k := k) (A := Γ(X, i.U)) :=
+      congrArg (fun z => i.affine.isoSpec.hom ≫ z) hq
+    _ = i.U.ι ≫ p := by
+      suffices h : i.affine.isoSpec.hom ≫
+          Spec.map (p.appLE ⊤ i.U le_top) ≫
+            Spec.map (Scheme.ΓSpecIso (CommRingCat.of k)).inv =
+          i.U.ι ≫ p by
+        simpa [i.affine.isoSpec_hom, affineSpecToBase,
+          sectionsAlgebraMapHom, Scheme.Hom.appLE,
+          RingHom.algebraMap_toAlgebra] using h
+      rw [i.affine.isoSpec_hom]
+      have hn := Scheme.Opens.toSpecΓ_SpecMap_appLE p ⊤ i.U le_top
+      calc
+        i.U.toSpecΓ ≫ Spec.map (p.appLE ⊤ i.U le_top) ≫
+              Spec.map (Scheme.ΓSpecIso (CommRingCat.of k)).inv =
+            (p.resLE ⊤ i.U le_top ≫
+              (⊤ : (Spec (CommRingCat.of k)).Opens).toSpecΓ) ≫
+              Spec.map (Scheme.ΓSpecIso (CommRingCat.of k)).inv :=
+          congrArg (fun z => z ≫
+            Spec.map (Scheme.ΓSpecIso (CommRingCat.of k)).inv) hn
+        _ = i.U.ι ≫ p := by
+          rw [Category.assoc]
+          simp
+
 section StableFamily
 
 variable [Finite G] {J : Type u} [Finite J]

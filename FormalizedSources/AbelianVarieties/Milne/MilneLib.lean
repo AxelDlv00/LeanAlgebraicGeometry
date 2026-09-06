@@ -48,6 +48,7 @@ import MilneLib.InvariantQuotientStableAtlasMap
 import MilneLib.InvariantQuotientFiniteAtlasMap
 import MilneLib.InvariantQuotientStableBaseMap
 import MilneLib.InvariantQuotientFiniteAtlasCanonical
+import MilneLib.InvariantQuotientFiniteAtlasOver
 import MilneLib.AffineQuotientOver
 import MilneLib.AffineTensorCarrier
 import MilneLib.Torsion
