@@ -50,6 +50,7 @@ import MilneLib.InvariantQuotientStableBaseMap
 import MilneLib.InvariantQuotientFiniteAtlasCanonical
 import MilneLib.InvariantQuotientFiniteAtlasFinite
 import MilneLib.InvariantQuotientFiniteAtlasOrbit
+import MilneLib.InvariantQuotientFiniteAtlasSections
 import MilneLib.InvariantQuotientEpimorphism
 import MilneLib.InvariantQuotientFiniteAtlasOver
 import MilneLib.AffineQuotientOver
