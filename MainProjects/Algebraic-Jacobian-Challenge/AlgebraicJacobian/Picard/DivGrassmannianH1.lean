@@ -130,6 +130,15 @@ private theorem twistQuotientMap_epi_for_divGrassmannianH1
       ((Modules.pullback (pullback.fst π T.hom)).obj L)).inv := inferInstance
   infer_instance
 
+/-- Core export of the tensor-quotient epimorphism used by the
+Grassmannian candidate layer.  This lives here so the candidate construction
+does not need to import the large analytic embedding module. -/
+theorem twistQuotientMap_epi_core
+    {S X : Scheme.{u}} {π : X ⟶ S} {T : Over S}
+    (L : X.Modules) (x : DivFamily π T) :
+    Epi (x.twistQuotientMap L) :=
+  twistQuotientMap_epi_for_divGrassmannianH1 L x
+
 noncomputable local instance hasExtModulesForDivGrassmannianH1 {Y : Scheme.{u}} :
     CategoryTheory.HasExt.{u + 1, u, u + 1} Y.Modules :=
   CategoryTheory.HasExt.standard _

@@ -83,6 +83,31 @@ theorem grassmannianCandidateQuotient_comp_candidateToTwist
         x.twistQuotientMap L :=
   cokernel.π_desc _ _ _
 
+/-! The comparison is not merely a map out of the Grassmannian candidate: it
+is an epimorphism onto the actual twisted divisor module.  This is the
+categorical cancellation step used when the candidate is later identified
+with the Cartier quotient. -/
+
+/-- **The Grassmannian candidate comparison is epimorphic.**
+
+The candidate quotient is epi by construction, and its composite with the
+comparison is the original twisted divisor quotient, which is epi.  Cancelling
+the first epi factor therefore proves that the comparison itself is epi. -/
+theorem grassmannianCandidateToTwist_epi
+    (L : X.Modules) (x : DivFamily π T) [IsLocallyNoetherian S] {d : ℕ}
+    (hEpi : Epi (x.grassmannianEval L))
+    (hLocFree : SheafOfModules.IsLocallyFreeOfRank
+      ((Modules.pushforward (pullback.snd π T.hom)).obj (x.twist L)) d) :
+    Epi (grassmannianCandidateToTwist L x hEpi hLocFree) := by
+  let q := x.grassmannianQuotient L hEpi hLocFree
+  let c := grassmannianCandidateToTwist L x hEpi hLocFree
+  have hq : Epi (LocallyFreeQuotient.candidateQuotient L q) :=
+    LocallyFreeQuotient.candidateQuotient_epi L q
+  have hcomp : Epi (LocallyFreeQuotient.candidateQuotient L q ≫ c) := by
+    rw [grassmannianCandidateQuotient_comp_candidateToTwist L x hEpi hLocFree]
+    exact twistQuotientMap_epi_core L x
+  exact (epi_comp_iff_of_epi (LocallyFreeQuotient.candidateQuotient L q) c).mp hcomp
+
 end DivFamily
 
 namespace Grassmannian
