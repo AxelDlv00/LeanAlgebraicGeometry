@@ -58,6 +58,25 @@ theorem singularSimplexChain_boundary
     (C := ModuleCat ℤ) (X := TopCat.toSSet.obj X)
       (R := ModuleCat.of ℤ ℤ) σ
 
+@[reassoc (attr := simp)]
+theorem singularSimplexChain_boundary_zero
+    (σ : (TopCat.toSSet.obj X).obj (Opposite.op ⦋1⦌)) :
+    singularSimplexChain σ ≫ (IntegralSingularChainComplex X).d 1 0 =
+      singularSimplexChain ((TopCat.toSSet.obj X).δ 0 σ) -
+        singularSimplexChain ((TopCat.toSSet.obj X).δ 1 σ) := by
+  have h := singularSimplexChain_boundary (X := X) (n := 0) σ
+  simpa [Fin.sum_univ_two, sub_eq_add_neg] using h
+
+@[reassoc (attr := simp)]
+theorem singularSimplexChain_boundary_one
+    (σ : (TopCat.toSSet.obj X).obj (Opposite.op ⦋2⦌)) :
+    singularSimplexChain σ ≫ (IntegralSingularChainComplex X).d 2 1 =
+      singularSimplexChain ((TopCat.toSSet.obj X).δ 0 σ) -
+        singularSimplexChain ((TopCat.toSSet.obj X).δ 1 σ) +
+          singularSimplexChain ((TopCat.toSSet.obj X).δ 2 σ) := by
+  have h := singularSimplexChain_boundary (X := X) (n := 1) σ
+  simpa [Fin.sum_univ_three, sub_eq_add_neg, add_assoc] using h
+
 end Boundary
 
 end Mumford.Analytic
