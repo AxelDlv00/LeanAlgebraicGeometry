@@ -153,6 +153,8 @@ import HartshorneLib.Chapter4ProjectivePullbackLineBundle
 import HartshorneLib.Chapter4ProjectivePullbackComparison
 import HartshorneLib.Chapter4ProjectivePullbackIso
 
+import HartshorneLib.Chapter4ProjectiveEmbeddingChartBridge
+
 /-!
 # HartshorneLib
 
