@@ -103,28 +103,27 @@ algebra structures without transporting every class along a chart equality. -/
 theorem pic0Subgroup_existsUnique_of_chartMaps
     (σ : ∀ i, D.U i ⟶ Spec (.of k))
     (ρ : ∀ i j, D.V (i, j) ⟶ Spec (.of k))
-    (hσ : ∀ i, D.ι i ≫ pi = σ i)
-    (hL : ∀ i j, D.f i j ≫ σ i = ρ i j)
-    (hR : ∀ i j, (D.t i j ≫ D.f j i) ≫ σ j = ρ i j)
+    (incl : ∀ i, Over.mk (σ i) ⟶ Over.mk pi)
+    (hι : ∀ i, (incl i).left = D.ι i)
+    (fL : ∀ i j, Over.mk (ρ i j) ⟶ Over.mk (σ i))
+    (hL : ∀ i j, (fL i j).left = D.f i j)
+    (fR : ∀ i j, Over.mk (ρ i j) ⟶ Over.mk (σ j))
+    (hR : ∀ i j, (fR i j).left = D.t i j ≫ D.f j i)
     (x : ∀ i, pic0Subgroup C (Over.mk (σ i)))
-    (hx : ∀ i j,
-      pic0Map C (Over.homMk (U := Over.mk (ρ i j)) (V := Over.mk (σ i))
-        (D.f i j) (hL i j)) (x i) =
-      pic0Map C (Over.homMk (U := Over.mk (ρ i j)) (V := Over.mk (σ j))
-        (D.t i j ≫ D.f j i) (hR i j)) (x j)) :
-    ∃! s : pic0Subgroup C (Over.mk pi),
-      ∀ i, pic0Map C (Over.homMk (U := Over.mk (σ i)) (V := Over.mk pi)
-        (D.ι i) (hσ i)) s = x i := by
-  let incl (i : D.J) : Over.mk (σ i) ⟶ Over.mk pi :=
-    Over.homMk (D.ι i) (hσ i)
-  letI (i : D.J) : IsOpenImmersion (incl i).left :=
-    inferInstanceAs (IsOpenImmersion (D.ι i))
+    (hx : ∀ i j, pic0Map C (fL i j) (x i) = pic0Map C (fR i j) (x j)) :
+    ∃! s : pic0Subgroup C (Over.mk pi), ∀ i, pic0Map C (incl i) s = x i := by
+  letI (i : D.J) : IsOpenImmersion (incl i).left := by
+    have hi : IsOpenImmersion (D.ι i) := inferInstance
+    exact (hι i).symm ▸ hi
   refine pic0Subgroup_existsUnique_of_cover incl (fun p => ?_) x ?_
   · obtain ⟨i, y, hy⟩ := D.ι_jointly_surjective p
+    change ∃ i, p ∈ Set.range (incl i).left.base
+    simp only [hι]
     exact ⟨i, y, hy⟩
   intro i j Z gi gj h
-  have hleft : gi.left ≫ D.ι i = gj.left ≫ D.ι j :=
+  have hleft : gi.left ≫ (incl i).left = gj.left ≫ (incl j).left :=
     congrArg Over.Hom.left h
+  rw [hι, hι] at hleft
   let cone := PullbackCone.mk gi.left gj.left hleft
   let q : Z.left ⟶ D.V (i, j) := (D.vPullbackConeIsLimit i j).lift cone
   have hqi : q ≫ D.f i j = gi.left :=
@@ -133,22 +132,25 @@ theorem pic0Subgroup_existsUnique_of_chartMaps
     (D.vPullbackConeIsLimit i j).fac cone WalkingCospan.right
   let qOver : Z ⟶ Over.mk (ρ i j) := Over.homMk q (by
     change q ≫ ρ i j = Z.hom
-    rw [← hL i j, ← Category.assoc, hqi]
-    exact gi.w)
-  have hqiOver : qOver ≫ Over.homMk (V := Over.mk (σ i)) (D.f i j) (hL i j) = gi := by
+    have hwL : (fL i j).left ≫ σ i = ρ i j := (fL i j).w
+    exact (congrArg (fun a => q ≫ a) hwL.symm).trans
+      ((Category.assoc q (fL i j).left (σ i)).symm.trans
+        ((congrArg (fun a => a ≫ σ i)
+          ((congrArg (fun a => q ≫ a) (hL i j)).trans hqi)).trans gi.w)))
+  have hqiOver : qOver ≫ fL i j = gi := by
     ext
+    change q ≫ (fL i j).left = gi.left
+    rw [hL]
     exact hqi
-  have hqjOver :
-      qOver ≫ Over.homMk (V := Over.mk (σ j)) (D.t i j ≫ D.f j i) (hR i j) = gj := by
+  have hqjOver : qOver ≫ fR i j = gj := by
     ext
+    change q ≫ (fR i j).left = gj.left
+    rw [hR]
     exact hqj
   apply Subtype.ext
   have hclasses := congrArg (fun z => (pic0Map C qOver z).val) (hx i j)
-  change picEtMap C qOver
-      (picEtMap C (Over.homMk (V := Over.mk (σ i)) (D.f i j) (hL i j)) (x i).val) =
-    picEtMap C qOver
-      (picEtMap C (Over.homMk (V := Over.mk (σ j))
-        (D.t i j ≫ D.f j i) (hR i j)) (x j).val) at hclasses
+  change picEtMap C qOver (picEtMap C (fL i j) (x i).val) =
+    picEtMap C qOver (picEtMap C (fR i j) (x j).val) at hclasses
   rw [← picEtMap_comp, ← picEtMap_comp, hqiOver, hqjOver] at hclasses
   exact hclasses
 
