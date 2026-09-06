@@ -41,9 +41,6 @@ noncomputable def affineModuleGlobalSectionsIso
    the underlying module.  This is the affine finite-type half needed before
    localizing to stalks; no arbitrary-scheme coherent-stalk theorem is used. -/
 set_option backward.isDefEq.respectTransparency false in
-set_option synthInstance.maxHeartbeats 400000 in
--- The tilde--Γ adjunction instance chain needs extra synthesis headroom.
-set_option maxHeartbeats 800000 in
 theorem module_finite_of_tilde_genSections
     {R : CommRingCat.{u}} (N : ModuleCat.{u} R)
     (σ : (AlgebraicGeometry.tilde N).GeneratingSections) [σ.IsFiniteType] :
