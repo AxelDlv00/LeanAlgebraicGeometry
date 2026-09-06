@@ -33,3 +33,8 @@ metadata:
     projects: Mumford
   parent: Mumford
   owner: fs-mumford
+  updated_at: '2026-09-06T00:49:07.546970+00:00'
+  pinned_commits:
+  - dda3677f0d
+  - 62bbf42834
+  - 44a3f63f9b

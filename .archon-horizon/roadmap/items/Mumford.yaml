@@ -29,8 +29,11 @@ metadata:
     task_title: Advance Mumford Abelian Varieties formalization
     projects: Mumford
   owner: fs-mumford
-  updated_at: '2026-09-05T22:37:59.831639+00:00'
+  updated_at: '2026-09-06T01:02:17.291959+00:00'
   pinned_commits:
+  - dda3677f0d
+  - 62bbf42834
+  - 44a3f63f9b
   - a24e70a441
   - 8461ab7214
   - 444c9a8e20
