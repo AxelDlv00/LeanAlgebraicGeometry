@@ -72,6 +72,24 @@ theorem coherentSheafFlat_id_pushforward_of_curve
   intro U hU V hV e
   exact (Scheme.DivFamily.coherentSheafFlat_id_pushforward (T := T) x) hU hV e
 
+/-! The curve-specialized form of the identity-pullback flatness input used by
+`flatLocusStratification_universal`.  The universal flattening statement keeps
+the identity pullback in its module carrier, so exposing this exact shape lets
+the D3' producer consume the curve's finite-fibre theorem without asking each
+caller to rebuild the `pullbackId` transport.
+-/
+theorem coherentSheafFlat_id_pullbackId_pushforward_of_curve
+    [SmoothOfRelativeDimension 1 π] [GeometricallyIntegral π] [IsProper π]
+    (x : DivFamily π T) :
+    CoherentSheafFlat (𝟙 (T.left : Scheme.{u}))
+      ((Modules.pullback (𝟙 (T.left : Scheme.{u}))).obj
+        ((Modules.pushforward (pullback.snd π T.hom)).obj x.F)) := by
+  letI : LocallyQuasiFinite
+      (Modules.schematicSupportι x.F ≫ pullback.snd π T.hom) :=
+    locallyQuasiFinite_support_of_curve T π x
+  intro U hU V hV e
+  exact (Scheme.DivFamily.coherentSheafFlat_id_pullbackId_pushforward (T := T) x) hU hV e
+
 /-- The finite-presentation input for the pushforward tower on a locally
 noetherian test base, with the support finiteness supplied by curve geometry. -/
 theorem isFinitePresentation_pushforward_of_curve
