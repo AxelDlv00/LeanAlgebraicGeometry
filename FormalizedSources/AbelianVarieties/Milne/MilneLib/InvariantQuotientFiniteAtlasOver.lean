@@ -7,14 +7,16 @@ Authors: The Milne Contributors
 import MilneLib.InvariantQuotientFiniteAtlasFinite
 import MilneLib.InvariantQuotientFiniteAtlasOrbit
 import MilneLib.InvariantQuotientStableBaseMap
+import Mathlib.AlgebraicGeometry.Morphisms.Immersion
 
 /-!
 # The finite quotient atlas over its affine base
 
 The canonical finite-cover chart projections and the canonical affine-base
-datum assemble into the existing over-base chart-map consumer.  This produces
-the glued atlas projection together with its base square, while leaving the
-global invariant-sheaf and quotient-universality assertions conditional.
+datum assemble into the existing over-base chart-map consumer. This produces
+the glued atlas projection together with its base square, finite-type target
+properties, and transfer of reducedness, integrality, and separatedness.
+The global quotient universal property remains to be constructed.
 -/
 
 set_option autoImplicit false
@@ -24,6 +26,28 @@ universe u
 open CategoryTheory Limits AlgebraicGeometry
 
 namespace MilneLib
+
+set_option backward.isDefEq.respectTransparency false in
+/-- Separatedness of the source descends through a universally closed,
+surjective morphism over the same base. -/
+theorem isSeparated_of_comp_of_universallyClosed_surjective
+    {X Y S : Scheme.{u}} (q : X ⟶ Y) (p : Y ⟶ S)
+    [UniversallyClosed q] [Surjective q] [IsSeparated (q ≫ p)] :
+    IsSeparated p := by
+  let m := pullback.map (q ≫ p) (q ≫ p) p p q q (𝟙 S) (by simp) (by simp)
+  haveI : UniversallyClosed m := by
+    exact MorphismProperty.pullbackMap (P := @UniversallyClosed)
+      (inferInstance : UniversallyClosed q) (inferInstance : UniversallyClosed q) rfl rfl
+  have hm : pullback.diagonal (q ≫ p) ≫ m = q ≫ pullback.diagonal p := by
+    apply pullback.hom_ext <;> simp [m, pullback.map]
+  haveI : UniversallyClosed (q ≫ pullback.diagonal p) := by
+    rw [← hm]
+    infer_instance
+  haveI : UniversallyClosed (pullback.diagonal p) :=
+    UniversallyClosed.of_comp_surjective q _
+  exact ⟨IsClosedImmersion.of_isPreimmersion _
+    (pullback.diagonal p).isClosedMap.isClosed_range⟩
+
 namespace StableGroupAction
 namespace StableAffineOpen
 
@@ -198,6 +222,25 @@ theorem finiteStableQuotientGlueData_isIntegral [AlgebraicGeometry.IsIntegral X]
   letI := finiteStableQuotientGlueData_isReduced act p hact h
   letI := finiteStableQuotientGlueData_irreducibleSpace act p hact h
   exact isIntegral_of_irreducibleSpace_of_isReduced _
+
+/-- The canonical finite-group quotient is separated over its affine base.
+The finite, surjective projection transfers the separated source diagonal
+to the quotient diagonal. -/
+theorem finiteStableQuotientBaseMap_isSeparated [LocallyOfFiniteType p] :
+    IsSeparated
+      ((finiteStableQuotientBaseMapData act p hact h).map
+        (finiteStableQuotientCrossChartDatum act p hact h)) := by
+  let q := finiteStableCanonicalQuotientProjection act p hact h
+  let b := (finiteStableQuotientBaseMapData act p hact h).map
+    (finiteStableQuotientCrossChartDatum act p hact h)
+  haveI : IsFinite q := finiteStableCanonicalQuotientProjection_isFinite act p hact h
+  haveI : Surjective q := ⟨finiteStableCanonicalQuotientProjection_surjective act p hact h⟩
+  have hq : q ≫ b = p := by
+    exact finiteStableCanonicalQuotientProjectionOver_comp_base act p hact h
+  haveI : IsSeparated (q ≫ b) := by
+    rw [hq]
+    infer_instance
+  exact isSeparated_of_comp_of_universallyClosed_surjective q b
 
 end FiniteCover
 
