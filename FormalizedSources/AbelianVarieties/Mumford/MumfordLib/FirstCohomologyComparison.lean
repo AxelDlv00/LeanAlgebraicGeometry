@@ -7,6 +7,7 @@ Authors: The Mumford Contributors
 import MumfordLib.FirstCohomologyEvaluation
 import MumfordLib.SingularCochainExtension
 import MumfordLib.SingularSimplexPaths
+import MumfordLib.SingularCocycleOfCharacter
 
 /-!
 # First cohomology and characters of the fundamental group
@@ -14,6 +15,9 @@ import MumfordLib.SingularSimplexPaths
 On a path-connected space, a singular one-cocycle that vanishes on all based
 loops is a coboundary: its primitive at a point is evaluation on a connecting
 path from the basepoint.
+Conversely, connecting paths extend every fundamental group character to a
+singular cocycle. Loop evaluation therefore identifies first cohomology with
+the integral characters of the fundamental group.
 
 Reference: Mumford, *Abelian Varieties*, Chapter I, Section 1, p. 3.
 -/
@@ -69,5 +73,38 @@ theorem singularFirstCohomologyToCharacters_injective (x : X) :
     IntegralSingularCocycle.exists_primitive_of_loopEval_eq_zero x ⟨φ.1, φ.2⟩ hφ
   apply (singularFirstCohomologyClass_eq_zero_iff X φ).mpr
   exact ⟨ψ, Subtype.ext hψ⟩
+
+/-- Every integral character of the fundamental group comes from a singular
+cohomology class. -/
+theorem singularFirstCohomologyToCharacters_surjective (x : X) :
+    Function.Surjective (singularFirstCohomologyToCharacters x) := by
+  intro χ
+  let φ := singularCocycleOfCharacter χ
+  refine ⟨singularFirstCohomologyClass X ⟨φ.1, φ.2⟩, ?_⟩
+  apply AddMonoidHom.ext
+  intro p
+  induction p using Path.Homotopic.Quotient.ind with
+  | mk p =>
+    change singularFirstCohomologyLoopEval x
+      (singularFirstCohomologyClass X ⟨φ.1, φ.2⟩) p = _
+    rw [singularFirstCohomologyLoopEval_class]
+    exact singularCocycleOfCharacter_loopEval χ p
+
+/-- First integral singular cohomology of a path-connected space is the
+module of integral characters of its fundamental group. -/
+def singularFirstCohomologyEquivCharacters (x : X) :
+    IntegralSingularCohomology X 1 ≃ₗ[ℤ] (Additive (FundamentalGroup X x) →+ ℤ) :=
+  LinearEquiv.ofBijective (singularFirstCohomologyToCharacters x)
+    ⟨singularFirstCohomologyToCharacters_injective x,
+      singularFirstCohomologyToCharacters_surjective x⟩
+
+/-- The comparison is evaluation of a cocycle representative on a loop. -/
+@[simp]
+theorem singularFirstCohomologyEquivCharacters_apply_class_path (x : X)
+    (φ : singularOneCocycles X) (p : Path x x) :
+    singularFirstCohomologyEquivCharacters x (singularFirstCohomologyClass X φ)
+        (Additive.ofMul (FundamentalGroup.fromPath (Path.Homotopic.Quotient.mk p))) =
+      singularCochainPathEval φ.1 p := by
+  exact singularFirstCohomologyLoopEval_class x φ p
 
 end Mumford.Analytic
