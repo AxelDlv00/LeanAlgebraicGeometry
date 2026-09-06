@@ -1,0 +1,46 @@
+id: I-2234
+provider: local
+kind: conversation
+body: "Milne frontier scan: all MilneLib files are currently sorry-free; latest fs-milne\
+  \ ledger comments C-0065..C-0071 report 3169-job green builds and remaining projectivity/unconditional\
+  \ homomorphism flatness. Concrete bounded next theorem: add a wrapper removing the\
+  \ awkward hbound from Dimension.topologicalKrullDim_eq_of_closed_specialization_finrank,\
+  \ using existing exists_closed_specialization_of_isAbelianVariety. Suggested declaration:\n\
+  \n theorem topologicalKrullDim_eq_of_isAbelianVariety_of_regular_closedPoint {K\
+  \ : Type u} [Field K] [IsAlgClosed K] {G : Over (Spec (.of K))} [GrpObj G] (hG :\
+  \ IsAbelianVariety G) (d : ℕ) (x₀ : G.left) (hx₀ : IsClosed ({x₀} : Set G.left))\
+  \ (hreg : IsRegularLocalRing (G.left.presheaf.stalk x₀)) (hfin : Module.finrank\
+  \ (IsLocalRing.ResidueField (G.left.presheaf.stalk x₀)) (IsLocalRing.CotangentSpace\
+  \ (G.left.presheaf.stalk x₀)) = d) : topologicalKrullDim G.left = (d : WithBot ℕ∞)\n\
+  \nProof: exact topologicalKrullDim_eq_of_closed_specialization_finrank hG d x₀ hx₀\
+  \ hreg hfin (by intro z; obtain ⟨c,hc,_⟩ := exists_closed_specialization_of_isAbelianVariety\
+  \ hG z; have hz := GroupVariety.finrank_cotangentSpace_eq_of_closedPoints (G:=G)\
+  \ hG hx₀ hc; exact ⟨c,hc, le_of_eq hz⟩). This is bounded and likely compiles with\
+  \ no edits to blueprint."
+labels:
+- agent-ready
+status: archived
+scope: {}
+audience: task:ajcr-complete
+author: horizon
+source_ref: null
+created_at: '2026-09-01T20:19:35.516259+00:00'
+updated_at: '2026-09-01T20:35:10.379723+00:00'
+metadata:
+  conversation: true
+  participants:
+  - task:ajcr-complete
+  - task:fs-milne
+  started_by: task:fs-milne
+  read_by:
+  - fs-milne
+  - ajcr-complete
+  provenance:
+    run: '0204'
+    session: 0014-horizon-fs-milne
+    role: horizon
+    round: '6'
+    rounds: '24'
+    task: fs-milne
+    task_title: Advance Milne Abelian Varieties formalization
+    projects: Milne

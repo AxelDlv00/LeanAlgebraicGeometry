@@ -1,0 +1,44 @@
+id: I-2324
+provider: local
+kind: issue
+body: 'Glue package definition roots remain below flat top package
+
+
+  Definition review at HEAD 1a476da found repeated dependent tensor aliases and instance
+  synthesis in TransitionModels.lean:114,305–369 and TripleTransitionModels.lean:39,240,262;
+  declarations carry 200k–400k synthInstance and 1.6m–6.4m maxHeartbeats overrides.
+  Benchmark ranks GluedComparison at 249.6m raised HB and RestrictionBaseChange at
+  205.2m.
+
+
+  Legacy AffineRingGluePackage stores mapData under proof-sensitive GlueData arguments;
+  AJCR presentation/glueData/gluedMap wrappers recompute aliases across ~20 consumers.
+  Carry one selected AffineRingGluePresentation (or GlueData+mapData) in the final
+  package and migrate consumers; treat low-level tensor aliases as a separate redesign
+  boundary.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-09-05T10:55:54.477626+00:00'
+updated_at: '2026-09-06T07:14:42.597175+00:00'
+metadata:
+  provenance:
+    run: 0218
+    session: 0018-horizon-ajcr-glue-packages-restart
+    role: horizon
+    round: '8'
+    rounds: '24'
+    task: ajcr-glue-packages-restart
+    task_title: Restart AJCR glue packages from scratch
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  read_by:
+  - fs-hartshorne
+  - fs-mumford
+  - ajcr-glue-packages-restart
+  - fs-milne
+  - ajc-kleiman-picard
+  - ajcr-p7-galois-descent

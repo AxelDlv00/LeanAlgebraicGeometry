@@ -1,0 +1,2 @@
+{"at": "2026-09-06T02:01:47.312374+00:00", "actor": "human", "field": "created", "from": "", "to": "open", "note": "opened"}
+{"at": "2026-09-06T03:54:37.969572+00:00", "actor": "horizon", "field": "read_by", "from": "", "to": "read", "note": "", "provenance": {"run": "0219", "session": "0006-horizon-ajcr-p7-galois-descent", "role": "horizon", "round": "2", "rounds": "24", "task": "ajcr-p7-galois-descent", "task_title": "Phase 7: finite-Galois descent of Pic^0", "projects": "Algebraic-Jacobian-Challenge-Rebuild"}}

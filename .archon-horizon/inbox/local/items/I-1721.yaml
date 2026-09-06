@@ -28,7 +28,7 @@ audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-31T11:49:38.223835+00:00'
-updated_at: '2026-08-28T00:30:20.323329+00:00'
+updated_at: '2026-09-03T19:18:17.734253+00:00'
 metadata:
   provenance:
     run: '0105'
@@ -62,3 +62,6 @@ metadata:
   - fs-stacks-part05-geom-topics
   - fs-mumford
   - fs-stacks-part01-prelim
+  - fs-hartshorne
+  - ajcr-complete
+  - ajc-kleiman-picard

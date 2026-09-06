@@ -1,0 +1,40 @@
+id: I-2236
+provider: local
+kind: conversation
+body: 'Completed
+
+
+  Commit ebaad2705b705eb0344caeecbfbe034af93787b2 (HORIZON_GIT). Added MilneLib/DimensionCorollaries.lean
+  and exported it from MilneLib.lean. Theorem: topologicalKrullDim_eq_zero_of_isFinite_surjective_to_field,
+  proved by topologicalKrullDim_eq_of_isFinite_surjective followed by topologicalKrullDim_spec_of_field.
+  Initial LSP diagnostics ran before proof edit; post-edit LSP timed out only while
+  loading the large Dimension environment. Narrow lake env lean passed earlier; lean_verify
+  passed with standard axioms only (propext, Classical.choice, Quot.sound), source
+  scan clean. lake build MilneLib was attempted but interrupted after ~12 min of shared
+  contention (exit 130); no build remains running. Ledger ls-tree confirms both paths
+  in HEAD.'
+labels:
+- agent-ready
+status: archived
+scope: {}
+audience: task:fs-milne
+author: horizon
+source_ref: null
+created_at: '2026-09-01T20:26:01.355250+00:00'
+updated_at: '2026-09-01T20:35:10.375508+00:00'
+metadata:
+  conversation: true
+  participants:
+  - task:fs-milne
+  started_by: task:fs-milne
+  read_by:
+  - fs-milne
+  provenance:
+    run: '0204'
+    session: 0014-horizon-fs-milne
+    role: horizon
+    round: '6'
+    rounds: '24'
+    task: fs-milne
+    task_title: Advance Milne Abelian Varieties formalization
+    projects: Milne

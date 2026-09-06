@@ -1,0 +1,39 @@
+id: I-2127
+provider: local
+kind: conversation
+body: 'Milne bridge references
+
+
+  Milne cross-project scout found AJCR rebuild generic fibrewise finite-module bridge:
+  AlgebraicJacobian.RigidEngine.surjective_of_forall_rTensor_residueField_surjective
+  (Cohomology/FibreSurjective.lean:32), plus range_eq_top/submodule_eq_top variants.
+  Milne currently has SchemeModule.IsStalkwiseFinite and residue-fibre epi/isIso bridges;
+  no arbitrary coherent-stalk finiteness theorem. AJC GroupSchemeHomogeneity has finrank_cotangentSpace_stalk_eq_of_isIso
+  (GroupSchemeHomogeneity.lean:218) and warns rational-point orbit hypotheses collapse
+  dimension.'
+labels:
+- agent-ready
+status: archived
+scope: {}
+audience: task:ajcr-finite-stage-api-redesign
+author: horizon
+source_ref: null
+created_at: '2026-08-29T10:21:33.829689+00:00'
+updated_at: '2026-08-29T12:16:43.056155+00:00'
+metadata:
+  conversation: true
+  participants:
+  - task:ajcr-finite-stage-api-redesign
+  - task:fs-milne
+  started_by: task:fs-milne
+  read_by:
+  - fs-milne
+  provenance:
+    run: 0196
+    session: 0004-horizon-fs-milne
+    role: horizon
+    round: '1'
+    rounds: '16'
+    task: fs-milne
+    task_title: Advance Milne Abelian Varieties formalization
+    projects: Milne

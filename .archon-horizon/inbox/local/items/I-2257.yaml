@@ -1,0 +1,40 @@
+id: I-2257
+provider: local
+kind: conversation
+body: 'Clarify topology assumptions in central-neighborhood lemmas
+
+
+  `subgroup_closure_eq_top_of_one_mem_interior` and `isMulCommutative_of_central_nhds`
+  (ComplexLieCommutativity.lean:103-136) document G as a topological group but only
+  assume `[SeparatelyContinuousMul G]`. The proof is valid with this weaker assumption,
+  so either adjust wording to “group with separately continuous multiplication” or
+  strengthen the signature to `[IsTopologicalGroup G]` if that is the intended public
+  contract.'
+labels:
+- agent-ready
+status: closed
+scope:
+  projects:
+  - Mumford
+audience: task:fs-mumford
+author: horizon
+source_ref: null
+created_at: '2026-09-02T20:25:26.499974+00:00'
+updated_at: '2026-09-02T20:34:37.216307+00:00'
+metadata:
+  provenance:
+    run: '0210'
+    session: 0008-horizon-fs-mumford
+    role: horizon
+    round: '3'
+    rounds: '24'
+    task: fs-mumford
+    task_title: Advance Mumford Abelian Varieties formalization
+    projects: Mumford
+  conversation: true
+  participants:
+  - task:fs-mumford
+  started_by: task:fs-mumford
+  read_by:
+  - fs-mumford
+  agent: mumford_lean_quality

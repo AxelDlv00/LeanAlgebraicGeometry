@@ -1,0 +1,66 @@
+id: I-2172
+provider: local
+kind: conversation
+body: 'Sibling API findings (read-only)
+
+
+  Most relevant existing Milne APIs:
+
+  - LocalProperties.lean:67 `quasiFinite_codescendsAlong_faithfullyFlat`; :76 `locallyQuasiFinite_descendsAlong_faithfullyFlat`
+  (`DescendsAlong @LocallyQuasiFinite (@Surjective ⊓ @Flat ⊓ @QuasiCompact)`).
+
+  - Isogeny.lean:279 `IsFinite.of_isProper_of_finite_preimage_singleton`; :289 `IsFinite.of_isProper_of_faithfullyFlat_baseChange`
+  via `MorphismProperty.of_pullback_fst_of_descendsAlong`; :377 `isFinite_iff_finite_residue_fibres_of_isProper`;
+  :394 `isFinite_fiberToSpecResidueField_iff_finite_preimage_singleton`.
+
+  - Isogeny.lean:250/259/268 kernel finiteness, flatness, surjectivity from corresponding
+  map properties; :362 kernel finite iff identity set-fibre finite under properness.
+
+  - Isogeny.lean:663 alg-closed `Isogeny.isFinite_of_isAbelianVariety`; :729 finite+surjective
+  characterization; :746 arbitrary-field criterion with finite residue fibres; :765
+  variant with finite set fibres.
+
+
+  Cross-project analogues:
+
+  - Mumford/MumfordLib/GroupScheme.lean:445 identical `IsAbelianVariety := IsProper
+  G.hom ∧ GeometricallyIntegral G.hom`; :448 commutativity theorem.
+
+  - Mumford/MumfordLib/DivisionFiber.lean:151/176/205 division fibres equivalent to
+  torsion kernels (including Nat specialization).
+
+  - StacksPart05Lib/FiniteType.lean: scheme finite-type composition/base-change/cancellation
+  APIs. Geometry.lean: scheme finite comp/baseChange, proper-of-finite, finite iff
+  proper+affine, finite iff integral+locally finite type.
+
+  - AJC FiniteMapToP1.lean:421-423 uses `LocallyQuasiFinite.of_finite_preimage_singleton`
+  then `IsFinite.of_isProper_of_locallyQuasiFinite`; Pic0EtStructure/Pic0AbelianVariety
+  use `MorphismProperty.of_pullback_snd_of_descendsAlong`.
+
+
+  No edits made; current Milne Isogeny bodies are the closest reusable frontier APIs.'
+labels:
+- agent-ready
+status: archived
+scope: {}
+audience: task:fs-milne
+author: horizon
+source_ref: null
+created_at: '2026-08-30T14:34:00.718460+00:00'
+updated_at: '2026-08-30T14:52:48.091025+00:00'
+metadata:
+  conversation: true
+  participants:
+  - task:fs-milne
+  started_by: task:fs-milne
+  read_by:
+  - fs-milne
+  provenance:
+    run: 0196
+    session: 0032-horizon-fs-milne
+    role: horizon
+    round: '15'
+    rounds: '16'
+    task: fs-milne
+    task_title: Advance Milne Abelian Varieties formalization
+    projects: Milne

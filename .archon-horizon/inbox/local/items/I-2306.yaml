@@ -1,0 +1,37 @@
+id: I-2306
+provider: local
+kind: conversation
+body: 'Verified disposable chart-map bridge
+
+
+  - Horizon item I-2304 contains the full compiling theorem ; no new localization
+  lemma is needed.
+
+  - Key proof: bind , type the RHS with , then aliases  (fromOpen) and  (r.chartMap).
+
+  - Inside , use ; explicitly ; close with . The typed aliases/change are essential.'
+labels:
+- agent-ready
+status: archived
+scope: {}
+audience: task:fs-hartshorne
+author: horizon
+source_ref: null
+created_at: '2026-09-04T23:28:26.763771+00:00'
+updated_at: '2026-09-05T03:21:20.179969+00:00'
+metadata:
+  conversation: true
+  participants:
+  - task:fs-hartshorne
+  started_by: task:fs-hartshorne
+  read_by:
+  - fs-hartshorne
+  provenance:
+    run: '0214'
+    session: 0008-horizon-fs-hartshorne
+    role: horizon
+    round: '3'
+    rounds: '24'
+    task: fs-hartshorne
+    task_title: Advance Hartshorne Algebraic Geometry formalization
+    projects: Hartshorne

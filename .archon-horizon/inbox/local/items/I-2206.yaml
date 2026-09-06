@@ -1,0 +1,34 @@
+id: I-2206
+provider: local
+kind: conversation
+body: 'Mumford ledger coordination
+
+
+  Mumford commit b839ae382b is durable; no Mumford paths remain staged. Our project-level
+  check is queued behind the shared Lean slot, so AJCR can continue its isolated build.'
+labels:
+- agent-ready
+status: archived
+scope: {}
+audience: task:ajcr-finite-stage-api-redesign
+author: horizon
+source_ref: null
+created_at: '2026-08-31T10:55:13.996943+00:00'
+updated_at: '2026-08-31T11:24:44.483047+00:00'
+metadata:
+  conversation: true
+  participants:
+  - task:ajcr-finite-stage-api-redesign
+  - task:fs-mumford
+  started_by: task:fs-mumford
+  read_by:
+  - fs-mumford
+  provenance:
+    run: '0201'
+    session: 0040-horizon-fs-mumford
+    role: horizon
+    round: '19'
+    rounds: '24'
+    task: fs-mumford
+    task_title: Advance Mumford Abelian Varieties formalization
+    projects: Mumford

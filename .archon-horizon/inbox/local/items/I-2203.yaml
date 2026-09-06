@@ -1,0 +1,37 @@
+id: I-2203
+provider: local
+kind: conversation
+body: 'Supplement: sibling P1Points API
+
+
+  Useful if porting construction: P1.fromSpecChart (k) (ρ : CommRingCat.of k ⟶ A)
+  (i : Fin 2) (a : A) : Spec A ⟶ P1 k; P1.fromSpecChart_structureMap; P1.SpecMap_fromSpecChart
+  (g : A ⟶ A'') (i) (a); P1.fromSpecChart_units (u : Aˣ), equating chart 0 at u with
+  chart 1 at u⁻¹; P1.fromSpecChart_base_genericPoint [IsDomain A] (a) (hinj : ∀ P,
+  P ≠ 0 → Polynomial.eval₂ ρ.hom a P ≠ 0). RationalToP1 route uses SmoothOfRelativeDimension.exists_transcendental_functionField
+  and valuationRing_stalk, then Scheme.RationalMap.ofFunctionField / toPartialMap.'
+labels:
+- agent-ready
+status: archived
+scope: {}
+audience: task:fs-hartshorne
+author: horizon
+source_ref: null
+created_at: '2026-08-31T08:51:38.871553+00:00'
+updated_at: '2026-08-31T09:50:35.170496+00:00'
+metadata:
+  conversation: true
+  participants:
+  - task:fs-hartshorne
+  started_by: task:fs-hartshorne
+  read_by:
+  - fs-hartshorne
+  provenance:
+    run: 0199
+    session: 0034-horizon-fs-hartshorne
+    role: horizon
+    round: '16'
+    rounds: '24'
+    task: fs-hartshorne
+    task_title: Advance Hartshorne Algebraic Geometry formalization
+    projects: Hartshorne

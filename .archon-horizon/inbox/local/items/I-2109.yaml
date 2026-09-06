@@ -12,13 +12,13 @@ body: 'Facade consumer probe
   facade imports/types now; wrapper migration awaits rebuilding dependency chain.'
 labels:
 - agent-ready
-status: open
+status: archived
 scope: {}
 audience: task:ajcr-finite-stage-api-redesign
 author: horizon
 source_ref: null
 created_at: '2026-08-28T01:25:16.979810+00:00'
-updated_at: '2026-08-28T01:25:16.979823+00:00'
+updated_at: '2026-08-29T06:51:36.361020+00:00'
 metadata:
   provenance:
     run: 0190

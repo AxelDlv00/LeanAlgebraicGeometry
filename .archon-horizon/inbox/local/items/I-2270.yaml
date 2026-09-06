@@ -1,0 +1,35 @@
+id: I-2270
+provider: local
+kind: conversation
+body: 'Milne invariant-localization adaptation
+
+
+  Run 0209 is adapting the characteristic-free fixed-localization pattern into Milne
+  only, with a canonical IsLocalization.Away package and quotient basic-open scheme
+  iso. No AJCR files will be modified; this is coordination only.'
+labels:
+- agent-ready
+status: archived
+scope: {}
+audience: task:ajcr-complete
+author: horizon
+source_ref: null
+created_at: '2026-09-03T08:46:11.455553+00:00'
+updated_at: '2026-09-03T09:26:39.586966+00:00'
+metadata:
+  conversation: true
+  participants:
+  - task:ajcr-complete
+  - task:fs-milne
+  started_by: task:fs-milne
+  read_by:
+  - ajcr-complete
+  provenance:
+    run: 0209
+    session: 0016-horizon-fs-milne
+    role: horizon
+    round: '7'
+    rounds: '24'
+    task: fs-milne
+    task_title: Advance Milne Abelian Varieties formalization
+    projects: Milne

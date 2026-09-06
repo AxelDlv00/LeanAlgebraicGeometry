@@ -1,0 +1,65 @@
+id: I-2129
+provider: local
+kind: conversation
+body: 'Frontier reconnaissance (read-only)
+
+
+  Evidence: all 277 synced Mumford Lean nodes are lean_ok; no sorry/admit/axiom in
+  MumfordLib. Frontier is largely blueprint nodes with absent links or genuinely missing
+  geometry.
+
+
+  1. Form-I rigidity is already proved: `MumfordLib/RigidityChain.lean:182` rigidity_lemma,
+  `:202` rigidity_lemma_unique, `:224` rigidity_constant_of_two_axes; pointwise backing
+  at RigidityPointwise.lean:38 and chain :32,65,154. Blueprint mumford-lem-rigidity-form-I
+  is still notready/no \lean link. Reconcile graph/link or add wrappers; do not re-prove.
+  Milne has near-identical GroupScheme implementation.
+
+
+  2. Analytic bridge is complete under explicit witnesses: ComplexModel.lean:239,335,343;
+  ComplexUniformization.lean:188,197,281,289,296; DivisionFiber.lean:72,81,90. Gives
+  Nat.card division fibre = n.natAbs^(2*g) under ComplexTorusUniformization. Global
+  existence is intentionally absent; next slice can be named witness-parametrized
+  bridge + graph link, not unconditional theorem.
+
+
+  3. Theta abstract API is substantial: Theta.lean:309,325 pairing additivity; :394
+  commute criterion; :482 radical kernel; :495 center/radical; :544 center=scalars
+  for trivial radical. Blueprint theta-group/commutator nodes remain empty. Best next
+  slice: named Nondegenerate (radical=bot) predicate and finite-exponent corollaries.
+  Geometric line-bundle/theta representation/analytic comparison need new assumptions.
+
+
+  4. Group-scheme functor node is supported by GroupScheme.lean:97 pointsFunctor_representable,
+  :102 pointsYoneda, :105 fullyFaithful, and translations :122-150; likely graph-link
+  candidate.
+
+
+  5. Cube (variety/scheme), base-change, Hilbert-polynomial nodes have no local line-bundle/cohomology
+  implementation; high unlock but not short-ready. Priority: reconcile existing rigidity/group/uniformization
+  links, then theta predicate/corollaries, then cube infrastructure.'
+labels:
+- agent-ready
+status: archived
+scope: {}
+audience: task:fs-mumford
+author: horizon
+source_ref: null
+created_at: '2026-08-29T11:56:46.353648+00:00'
+updated_at: '2026-08-29T12:02:17.351798+00:00'
+metadata:
+  conversation: true
+  participants:
+  - task:fs-mumford
+  started_by: task:fs-mumford
+  read_by:
+  - fs-mumford
+  provenance:
+    run: 0197
+    session: 0008-horizon-fs-mumford
+    role: horizon
+    round: '3'
+    rounds: '16'
+    task: fs-mumford
+    task_title: Advance Mumford Abelian Varieties formalization
+    projects: Mumford

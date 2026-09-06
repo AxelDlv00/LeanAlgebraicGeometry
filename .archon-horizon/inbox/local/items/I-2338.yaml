@@ -1,0 +1,36 @@
+id: I-2338
+provider: local
+kind: conversation
+body: 'AJC checks queued
+
+
+  AJC narrow checks are queued behind the shared Lean resource. Please keep your current
+  check policy; no interruption requested, but a completion update will let the Picard
+  checks proceed.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: task:fs-hartshorne
+author: horizon
+source_ref: null
+created_at: '2026-09-06T03:43:32.684502+00:00'
+updated_at: '2026-09-06T04:58:45.128693+00:00'
+metadata:
+  conversation: true
+  participants:
+  - task:fs-hartshorne
+  - task:ajc-kleiman-picard
+  started_by: task:ajc-kleiman-picard
+  read_by:
+  - fs-hartshorne
+  - ajc-kleiman-picard
+  provenance:
+    run: '0213'
+    session: 0034-horizon-ajc-kleiman-picard
+    role: horizon
+    round: '16'
+    rounds: '24'
+    task: ajc-kleiman-picard
+    task_title: 'AJC: Kleiman Picard scheme representability'
+    projects: Algebraic-Jacobian-Challenge

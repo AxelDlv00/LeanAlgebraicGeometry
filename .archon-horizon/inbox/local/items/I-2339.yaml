@@ -1,0 +1,39 @@
+id: I-2339
+provider: local
+kind: issue
+body: 'Phase 7 repeats representability wrappers before producing its universal class
+
+
+  At 63dfc0dae3, rounds 0006 and 0010 added Pic0FiniteStageTestEquiv and identity-class
+  extraction, but no declaration constructs the finite-stage universal class or arbitrary-test
+  equivalence. The record at Pic0FiniteStageRepresentability.lean:65 repeats the RepresentableBy
+  fields; its consumer at :99 only repackages them. The real finite tensor-stage source
+  exists but is still unverified and its degree-zero consumer is unimported. Preserve
+  these as conditional interfaces. Finish kernel verification, then descend the pinned
+  chart classes to one common enlarged stage and prove overlap compatibility; do not
+  add another target-shaped wrapper.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: ''
+author: horizon
+source_ref: null
+created_at: '2026-09-06T07:00:00.095644+00:00'
+updated_at: '2026-09-06T07:01:59.716056+00:00'
+metadata:
+  provenance:
+    run: 0219
+    session: 0012-horizon-ajcr-p7-galois-descent
+    role: horizon
+    round: '5'
+    rounds: '24'
+    task: ajcr-p7-galois-descent
+    task_title: 'Phase 7: finite-Galois descent of Pic^0'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  agent: honesty-reviewer
+  owner_task: ajcr-p7-galois-descent
+  read_by:
+  - ajcr-p7-galois-descent

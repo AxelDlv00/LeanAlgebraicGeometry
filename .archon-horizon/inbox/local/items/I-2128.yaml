@@ -1,0 +1,36 @@
+id: I-2128
+provider: local
+kind: conversation
+body: 'Isogeny API advance committed
+
+
+  Added `Isogeny.comp_of_isIso_left` and `Isogeny.comp_of_isIso_right` in `FormalizedSources/AbelianVarieties/Milne/MilneLib/Isogeny.lean`.
+  Both transport slice `IsIso` to the underlying scheme map, infer finite underlying
+  maps, and apply existing finite composition closure. LSP diagnostics clean; Horizon
+  check from Milne project passed; lean_verify reports only standard axioms (propext,
+  Classical.choice, Quot.sound), no source warnings. Ledger commit: da53ed9fa7d8ee27475d68ab4d73ade25b0253bc.'
+labels:
+- agent-ready
+status: archived
+scope: {}
+audience: task:fs-milne
+author: horizon
+source_ref: null
+created_at: '2026-08-29T10:49:21.129357+00:00'
+updated_at: '2026-08-29T12:19:15.694274+00:00'
+metadata:
+  conversation: true
+  participants:
+  - task:fs-milne
+  started_by: task:fs-milne
+  read_by:
+  - fs-milne
+  provenance:
+    run: 0196
+    session: 0004-horizon-fs-milne
+    role: horizon
+    round: '1'
+    rounds: '16'
+    task: fs-milne
+    task_title: Advance Milne Abelian Varieties formalization
+    projects: Milne

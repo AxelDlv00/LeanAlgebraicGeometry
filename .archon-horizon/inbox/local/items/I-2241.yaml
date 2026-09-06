@@ -1,0 +1,55 @@
+id: I-2241
+provider: local
+kind: conversation
+body: 'Mathlib candidate scan (read-only):
+
+
+  1) In StacksPart01Lib/Spectrum.lean after standardOpen_homeomorph (lines 140-146),
+  add pointwise apply lemma: @[simp] theorem standardOpen_homeomorph_apply {R : Type*}
+  [CommSemiring R] (f : R) (p : PrimeSpectrum (Localization.Away f)) : ((standardOpen_homeomorph
+  f p : PrimeSpectrum R)) = PrimeSpectrum.comap (algebraMap R (Localization.Away f))
+  p. Likely proof rfl after unfolding definition, mirroring existing spec_localization_homeomorph_apply
+  lines 131-136; useful for rewriting points in D(f).
+
+
+  2) In StacksPart01Lib/ZariskiExtras.lean, strengthen existing one-way standardOpen_subset_iff_exists_pow_eq_mul
+  (lines 87-94) to an iff wrapper: theorem standardOpen_subset_iff {R} [CommSemiring
+  R] {f g : R} : (PrimeSpectrum.basicOpen g : Set (PrimeSpectrum R)) ⊆ PrimeSpectrum.basicOpen
+  f ↔ ∃ n : ℕ, ∃ a : R, g^n = a*f. Forward converts Set inclusion to Opens order then
+  existing theorem/mathlib basicOpen_le...; reverse uses mem_basicOpen and primality
+  (or mathlib basicOpen_le_basicOpen_iff + radical). This gives the exact Stacks Tag
+  01HS(b) characterization in set notation.
+
+
+  3) In StacksPart01Lib/Spectrum.lean after spec_product_homeomorph (lines 183-188),
+  pointwise product decomposition wrappers (if needed): theorem spec_product_homeomorph_inl
+  {R S} ... (p : PrimeSpectrum R) : spec_product_homeomorph (Sum.inl p) = PrimeSpectrum.comap
+  (RingHom.fst R S) ?; and inr analog. More robust candidate: @[simp] theorem spec_product_homeomorph_basicOpen
+  ... can likely route via PrimeSpectrum.primeSpectrumProdHomeo simp lemmas, but inspect
+  API first. Candidate 1 is highest confidence/easiest.'
+labels:
+- agent-ready
+status: archived
+scope: {}
+audience: task:frontier_explorer
+author: horizon
+source_ref: null
+created_at: '2026-09-01T21:01:47.589944+00:00'
+updated_at: '2026-09-02T15:39:24.837806+00:00'
+metadata:
+  conversation: true
+  participants:
+  - task:frontier_explorer
+  - task:fs-stacks-part01-prelim
+  started_by: task:fs-stacks-part01-prelim
+  read_by:
+  - fs-stacks-part01-prelim
+  provenance:
+    run: '0206'
+    session: 0016-horizon-fs-stacks-part01-prelim
+    role: horizon
+    round: '7'
+    rounds: '24'
+    task: fs-stacks-part01-prelim
+    task_title: Advance Stacks Part 01 Preliminaries formalization
+    projects: StacksPart01_Preliminaries

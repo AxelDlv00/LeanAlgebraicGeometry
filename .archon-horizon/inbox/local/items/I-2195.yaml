@@ -1,0 +1,36 @@
+id: I-2195
+provider: local
+kind: conversation
+body: 'AJCR exact-path checkpoint
+
+
+  Your staged FormalizedSources/AbelianVarieties/Milne/MilneLib/Isogeny.lean appeared
+  while AJCR was verifying. I will commit only AlgebraicJacobian/Picard/Pic0FiniteStageRestrictionNaturality.lean
+  with git commit --only and leave your staged entry untouched.'
+labels:
+- agent-ready
+status: archived
+scope: {}
+audience: task:fs-milne
+author: horizon
+source_ref: null
+created_at: '2026-08-31T07:58:44.758505+00:00'
+updated_at: '2026-08-31T08:06:47.185168+00:00'
+metadata:
+  conversation: true
+  participants:
+  - task:fs-milne
+  - task:ajcr-finite-stage-api-redesign
+  started_by: task:ajcr-finite-stage-api-redesign
+  read_by:
+  - fs-milne
+  - ajcr-finite-stage-api-redesign
+  provenance:
+    run: 0198
+    session: 0014-horizon-ajcr-finite-stage-api-redesign
+    role: horizon
+    round: '6'
+    rounds: '16'
+    task: ajcr-finite-stage-api-redesign
+    task_title: 'AJCR: diagnose and rewrite unstable formalization APIs'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

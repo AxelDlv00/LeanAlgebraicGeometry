@@ -13,13 +13,13 @@ body: 'Compile probe results
   missing FinalBaseChange.olean. FiniteStageApi passed in 6.4s. No source edits.'
 labels:
 - agent-ready
-status: open
+status: archived
 scope: {}
 audience: task:ajcr-finite-stage-api-redesign
 author: horizon
 source_ref: null
 created_at: '2026-08-28T01:24:39.035337+00:00'
-updated_at: '2026-08-28T01:24:39.035349+00:00'
+updated_at: '2026-08-29T06:51:34.841834+00:00'
 metadata:
   provenance:
     run: 0190

@@ -1,0 +1,72 @@
+id: I-2182
+provider: local
+kind: conversation
+body: 'API scan findings
+
+
+  Hartshorne already contains adapted, directly reusable APIs:
+
+  - import HartshorneLib.Chapter2TwoCover: AlgebraicGeometry.Scheme.twoCoverSquare,
+  Scheme.twoCoverH1LinearEquiv, and ..._of_cokernel_app_surjective. These take U₀
+  U₁ : X.Opens, hcov : U₀ ⊔ U₁ = ⊤, with local HModule subsingleton or explicit cokernel-app
+  surjectivity.
+
+  - import HartshorneLib.Chapter2AffineCech (via Chapter2QcohSections): AlgebraicGeometry.IsAffineOpen.exists_cech_cobounding
+  (finite basic-open cover; explicit cocycle/coboundary), plus exists_res_eq_pow_mul
+  and exists_pow_mul_eq_zero_of_res_eq_zero; Scheme.exists_cech_cobounding for affine
+  top.
+
+  - import HartshorneLib.Chapter2AffineVanishingQcoh: IsAffineOpen.exists_cech_cobounding_of_qcoh,
+  IsAffineOpen.subsingleton_hModule''_one_of_qcoh, Scheme.subsingleton_hModule_one_of_qcoh.
+
+  - import HartshorneLib.Chapter4FiniteMapSections: Hartshorne.FiniteMapSections.sectionAlgebra
+  (reducible), moduleFinite_of_isFinite and exists_finset_generators_of_isFinite for
+  affine target U under [IsFinite f].
+
+  - import HartshorneLib.Chapter4TwoCoverFiniteness: scheme_diff_eq_moduleDiff, moduleDiffQuotientEquiv,
+  moduleFinite_hModule_one_of_twoCover (+ affine/isFinite affine-cover variants).
+
+  - import HartshorneLib.Chapter2LineBundles / Chapter2LineBundleAPI: Hartshorne.IsLineBundle
+  and pullback/restrict invariance; isLineBundle_unit, isLineBundle_of_iso_unit.
+
+  - divisors: Chapter4PrincipalDivisorDegree gives principalDivisorDegreeHom and degree_principalDivisor_*;
+  Chapter4DivisorClass gives LinearlyEquivalent, DivisorClassGroup, divisorClass and
+  iff lemmas.
+
+  - Chapter4P1Geometry exposes FiniteMapLaurentCover data package and moduleFinite_hModule_one;
+  concrete P1 chart/Laurent facts remain explicit data.
+
+
+  AJCR equivalents useful as source patterns (do not import/edit from Hartshorne):
+  AlgebraicGeometry.TwoCover.diff/H1Cok/delta/h1CokEquiv and compatibility lemmas
+  in MainProjects/.../Cohomology/TwoCover. AffineCech, AffineVanishing, TwistedSheaf,
+  RelativeH1BaseChange, FinitenessP1, Projective/FiniteMapToP1 are source patterns.
+  AJCR is concurrently protected/edited by run 0198 finite-stage-api-redesign; do
+  not touch it. Protection I-0074 says etale-sheafified Picard state is authoritative
+  and no rational-point instance/global smoothProperQuotient. I-2035 FS cross-project-read/single-project-write
+  applies.'
+labels:
+- agent-ready
+status: archived
+scope: {}
+audience: task:fs-hartshorne
+author: horizon
+source_ref: null
+created_at: '2026-08-31T03:38:41.103595+00:00'
+updated_at: '2026-08-31T06:23:11.038436+00:00'
+metadata:
+  conversation: true
+  participants:
+  - task:fs-hartshorne
+  started_by: task:fs-hartshorne
+  read_by:
+  - fs-hartshorne
+  provenance:
+    run: 0199
+    session: 0028-horizon-fs-hartshorne
+    role: horizon
+    round: '13'
+    rounds: '24'
+    task: fs-hartshorne
+    task_title: Advance Hartshorne Algebraic Geometry formalization
+    projects: Hartshorne

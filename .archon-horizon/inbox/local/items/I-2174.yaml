@@ -1,0 +1,51 @@
+id: I-2174
+provider: local
+kind: conversation
+body: "Concrete arbitrary-field composition wrapper (read-only investigation): existing\
+  \ `Isogeny.comp_of_finite` is at `MilneLib/Isogeny.lean:210-225`, requiring `[IsFinite\
+  \ f.left] [IsFinite g.left]` plus `hf hg : Isogeny`. Existing `isFinite_iff_finite_residue_fibres_of_isProper`\
+  \ is lines 377-388. A compilable next declaration can bridge explicit residue-fibre\
+  \ hypotheses to composition:\n\n`theorem Isogeny.comp_of_finite_residue_fibres {K\
+  \ : Type u} [Field K] {A B C : Over (Spec (.of K))} [GrpObj A] [GrpObj B] [GrpObj\
+  \ C] (hA : IsAbelianVariety A) (hB : IsAbelianVariety B) (hC : IsAbelianVariety\
+  \ C) (f : A ⟶ B) (g : B ⟶ C) [IsMonHom f] [IsMonHom g] (hf : Isogeny f) (hg : Isogeny\
+  \ g) (hff : ∀ y : B.left, IsFinite (f.left.fiberToSpecResidueField y)) (hgf : ∀\
+  \ z : C.left, IsFinite (g.left.fiberToSpecResidueField z)) : Isogeny (f ≫ g) :=\
+  \ by\n  letI : IsProper f.left := isProper_left_of_isAbelianVariety hA hB f\n  letI\
+  \ : IsProper g.left := isProper_left_of_isAbelianVariety hB hC g\n  letI : IsFinite\
+  \ f.left := (isFinite_iff_finite_residue_fibres_of_isProper f.left).2 hff\n  letI\
+  \ : IsFinite g.left := (isFinite_iff_finite_residue_fibres_of_isProper g.left).2\
+  \ hgf\n  exact Isogeny.comp_of_finite f g hf hg`\n\nThis is arbitrary-field, fully\
+  \ kernel-checkable, and directly consumes the current residue-fibre API. It does\
+  \ not solve fibre translation, but is a useful reusable unit. Pure group-theoretic\
+  \ generalized-point theorem already exists at lines 128-145: `homFiber_finite_iff_kernel_finite`\
+  \ and `homFiber_finite_of_kernel_finite`; no scheme-level finite-kernel-to-generalized-point\
+  \ bridge is derivable without a new comparison theorem. Existing section-level `isogeny_fibre_finite_of_section`\
+  \ lines 480-509 only handles rational sections. Verification: `horizon check --lean\
+  \ MilneLib/Isogeny.lean` or `lake build MilneLib`."
+labels:
+- agent-ready
+status: archived
+scope: {}
+audience: task:root
+author: horizon
+source_ref: null
+created_at: '2026-08-30T14:42:25.564175+00:00'
+updated_at: '2026-08-30T14:52:48.113899+00:00'
+metadata:
+  conversation: true
+  participants:
+  - task:root
+  - task:fs-milne
+  started_by: task:fs-milne
+  read_by:
+  - fs-milne
+  provenance:
+    run: 0196
+    session: 0032-horizon-fs-milne
+    role: horizon
+    round: '15'
+    rounds: '16'
+    task: fs-milne
+    task_title: Advance Milne Abelian Varieties formalization
+    projects: Milne

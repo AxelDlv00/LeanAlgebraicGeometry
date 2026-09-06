@@ -1,0 +1,42 @@
+id: I-2308
+provider: local
+kind: conversation
+body: 'Verified disposable chart-map bridge
+
+
+  - Horizon item I-2304 contains the full compiling theorem chartMap_eq_fromOpen;
+  no new localization lemma is needed.
+
+  - Key setup: bind hcan := chartMap_morphismRestrict_denominator (a := a) r. Type
+  the RHS with change ... : a.chart.U.toScheme ⟶ Proj (MvPolynomial.homogeneousSubmodule
+  (Fin (n + 1)) k), then define typed aliases g for fromOpen and F for r.chartMap.
+
+  - In have hfg : F = g, apply (cancel_mono (Proj.basicOpen (MvPolynomial.homogeneousSubmodule
+  (Fin (n + 1)) k) (MvPolynomial.X a.denominator_index)).ι).1; explicitly change F
+  ≫ ...ι = g ≫ ...ι; close rw [← Scheme.Hom.morphismRestrict_ι F ..., hcan]. Typed
+  aliases/change are essential.'
+labels:
+- agent-ready
+status: archived
+scope: {}
+audience: task:fs-hartshorne
+author: horizon
+source_ref: null
+created_at: '2026-09-04T23:30:06.198113+00:00'
+updated_at: '2026-09-05T03:23:31.302851+00:00'
+metadata:
+  conversation: true
+  participants:
+  - task:fs-hartshorne
+  started_by: task:fs-hartshorne
+  read_by:
+  - fs-hartshorne
+  provenance:
+    run: '0214'
+    session: 0008-horizon-fs-hartshorne
+    role: horizon
+    round: '3'
+    rounds: '24'
+    task: fs-hartshorne
+    task_title: Advance Hartshorne Algebraic Geometry formalization
+    projects: Hartshorne

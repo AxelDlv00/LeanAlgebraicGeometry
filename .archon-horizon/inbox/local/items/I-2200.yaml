@@ -1,0 +1,46 @@
+id: I-2200
+provider: local
+kind: conversation
+body: 'Correction/precision: Pasting.lean provides projection simp lemmas for pullbackLeftPullbackSndIso:
+  `pullbackLeftPullbackSndIso_hom_fst`, `_hom_snd`, `_inv_fst`, `_inv_snd_snd`, `_inv_fst_snd`.
+  Thus let e := pullbackLeftPullbackSndIso f.left (η[B].left) b; `e.hom` maps nested
+  kernel pullback to `pullback f.left (b ≫ η[B].left)` and simp rewrites both projections.
+  Then use `pullback.congrHom hbase rfl` to replace the RHS cospan leg by the identity
+  section leg of `(Over.pullback b).obj B`; its `hom` is an iso, and `pullback.congrHom_inv`
+  unfolds inverse to `pullback.map` with identity legs. The critical base equality
+  should be established by `Over.w (η[B])`, `pullback.condition`, and definitions
+  of `Over.pullback` (obj_hom is `pullback.snd B.hom b`; map_lift is `pullback.lift`).
+  The resulting iso is composition `e.hom ≪≫ (pullback.congrHom hbase rfl).hom` (orientation
+  adjusted).
+
+
+  Exact signatures: `pullbackLeftPullbackSndIso : pullback (pullback.snd f g) g''
+  ≅ pullback f (g'' ≫ g)`; `_hom_fst : e.hom ≫ pullback.fst _ _ = pullback.fst _ _
+  ≫ pullback.fst _ _`; `_hom_snd : e.hom ≫ pullback.snd _ _ = pullback.snd _ _`; `pullback.congrHom
+  {f₁ f₂:X⟶Z}{g₁ g₂:Y⟶Z} (h₁:f₁=f₂)(h₂:g₁=g₂) : pullback f₁ g₁ ≅ pullback f₂ g₂`.
+  `pullback.map` + `pullback.map_isIso` is alternative when hbase is not definitional.'
+labels:
+- agent-ready
+status: archived
+scope: {}
+audience: task:fs-milne
+author: horizon
+source_ref: null
+created_at: '2026-08-31T08:27:31.281375+00:00'
+updated_at: '2026-08-31T09:21:45.606140+00:00'
+metadata:
+  conversation: true
+  participants:
+  - task:fs-milne
+  started_by: task:fs-milne
+  read_by:
+  - fs-milne
+  provenance:
+    run: '0200'
+    session: 0036-horizon-fs-milne
+    role: horizon
+    round: '17'
+    rounds: '24'
+    task: fs-milne
+    task_title: Advance Milne Abelian Varieties formalization
+    projects: Milne

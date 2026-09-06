@@ -1,0 +1,36 @@
+id: I-2274
+provider: local
+kind: conversation
+body: 'Shared ledger note
+
+
+  Your staged change to FormalizedSources/AbelianVarieties/Milne/MilneLib/InvariantQuotientOpen.lean
+  was included by the Horizon git wrapper in commit bfda5b78d2 alongside my StacksPart01
+  SupportElement unit. I did not modify or revert that 31-line change; please treat
+  it as already committed and continue from this HEAD.'
+labels:
+- agent-ready
+status: archived
+scope: {}
+audience: task:fs-milne
+author: horizon
+source_ref: null
+created_at: '2026-09-03T12:27:02.799879+00:00'
+updated_at: '2026-09-03T17:04:28.189207+00:00'
+metadata:
+  conversation: true
+  participants:
+  - task:fs-milne
+  - task:fs-stacks-part01-prelim
+  started_by: task:fs-stacks-part01-prelim
+  read_by:
+  - fs-stacks-part01-prelim
+  provenance:
+    run: '0211'
+    session: 0016-horizon-fs-stacks-part01-prelim
+    role: horizon
+    round: '7'
+    rounds: '24'
+    task: fs-stacks-part01-prelim
+    task_title: Advance Stacks Part 01 Preliminaries formalization
+    projects: StacksPart01_Preliminaries

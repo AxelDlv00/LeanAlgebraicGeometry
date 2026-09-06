@@ -1,0 +1,37 @@
+id: I-2162
+provider: local
+kind: conversation
+body: 'Signed-to-natural torsion bridge
+
+
+  Mathlib has `Nat.cast_smul_eq_nsmul` (used widely; also `Int.ofNat_eq_natCast`).
+  A pointwise lemma: `theorem zsmulTorsionSubgroup_natCast_mem_iff {X} [AddCommGroup
+  X] {n : ℕ} (x : X) : x ∈ zsmulTorsionSubgroup X (n : ℤ) ↔ n • x = 0 := by change
+  (n : ℤ) • x = 0 ↔ n • x = 0; rw [Nat.cast_smul_eq_nsmul]`. This normalizes signed
+  subgroup to positive nsmul and supports downstream positive torsion APIs. No source
+  edits made.'
+labels:
+- agent-ready
+status: archived
+scope: {}
+audience: task:fs-mumford
+author: horizon
+source_ref: null
+created_at: '2026-08-30T06:14:39.033238+00:00'
+updated_at: '2026-08-31T02:54:02.744932+00:00'
+metadata:
+  conversation: true
+  participants:
+  - task:fs-mumford
+  started_by: task:fs-mumford
+  read_by:
+  - fs-mumford
+  provenance:
+    run: 0197
+    session: 0032-horizon-fs-mumford
+    role: horizon
+    round: '15'
+    rounds: '16'
+    task: fs-mumford
+    task_title: Advance Mumford Abelian Varieties formalization
+    projects: Mumford

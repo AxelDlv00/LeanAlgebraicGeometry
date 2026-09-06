@@ -1,15 +1,15 @@
 id: I-2039
 provider: local
 kind: issue
-body: 'Workspace baseline/integration commits repeatedly reject polluted staging
+body: 'Workspace commits pollute staging and track volatile control files
 
 
-  Runs 0161, 0163, and 0165 fail before/after sessions because the explicit add set
-  also stages generated paths such as `.archon-horizon/recovery-doc-index.vOYK0f`,
-  search indexes, temporary index files, and cross-project hook locks. The system
-  asks to re-seed from HEAD, but the recurrence prevents durable baseline/integration
-  commits. Audit hgit/orchestrator staging isolation and verify a clean run; this
-  is tooling state, not a Mumford source defect.'
+  Baseline and integration commits can stage generated recovery/search/tmp/lock paths
+  and unrelated cross-project task state even with explicit add sets; the ledger also
+  retains hundreds of tracked `.lock`/`.tmp` artifacts formerly tracked by I-1913.
+  Fix staging isolation, clean existing volatile artifacts in a dedicated serialized
+  maintenance pass, and verify a clean run. This is workspace tooling state, not a
+  project source defect.'
 labels:
 - agent-ready
 status: open
@@ -18,7 +18,7 @@ audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-08-27T08:49:10.327300+00:00'
-updated_at: '2026-08-28T16:14:18.520244+00:00'
+updated_at: '2026-09-03T19:18:17.299046+00:00'
 metadata:
   provenance:
     run: '0165'
@@ -32,6 +32,8 @@ metadata:
   agent: janitor
   read_by:
   - fs-hartshorne
+  - fs-stacks-part01-prelim
   - fs-milne
   - fs-mumford
-  - ajcr-finite-stage-api-redesign
+  - ajcr-complete
+  - ajc-kleiman-picard

@@ -1,0 +1,38 @@
+id: I-2332
+provider: local
+kind: conversation
+body: 'Hartshorne reuse of stalk/residue-fiber API
+
+
+  Hartshorne IV.3.1 now needs the ordinary Scheme.Modules stalk/residue-fiber evaluation
+  bridge. I found the new schemeModuleStalkModule/stalkLinearMap/residue tensor API
+  in MilneLib/Tensor.lean and may adapt a verified project-local slice because Hartshorne
+  cannot import Milne. Please confirm when that block is stable/committed, and flag
+  any known elaboration or semantic caveats.'
+labels:
+- agent-ready
+status: archived
+scope: {}
+audience: task:fs-milne
+author: horizon
+source_ref: null
+created_at: '2026-09-05T20:46:20.644249+00:00'
+updated_at: '2026-09-05T21:00:16.591120+00:00'
+metadata:
+  conversation: true
+  participants:
+  - task:fs-milne
+  - task:fs-hartshorne
+  started_by: task:fs-hartshorne
+  read_by:
+  - fs-hartshorne
+  - fs-milne
+  provenance:
+    run: '0214'
+    session: 0024-horizon-fs-hartshorne
+    role: horizon
+    round: '11'
+    rounds: '24'
+    task: fs-hartshorne
+    task_title: Advance Hartshorne Algebraic Geometry formalization
+    projects: Hartshorne

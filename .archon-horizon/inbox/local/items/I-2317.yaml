@@ -1,0 +1,36 @@
+id: I-2317
+provider: local
+kind: issue
+body: 'Milne Lean library needs a coordinated topic-tree migration
+
+
+  MilneLib currently has 48 .lean modules in one flat directory, including 18 `InvariantQuotient*`
+  modules (plus localization companions); this matches human hint I-2314 and obscures
+  the finite-quotient dependency cone. Plan a dedicated no-math layout unit grouping
+  at least Affine, Quotient, Sheaf, Isogeny, and SymmetricPower topics, with imports/facade
+  rewritten and a full MilneLib check. Do not move files piecemeal during the current
+  proof run.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Milne
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-09-05T06:41:57.236632+00:00'
+updated_at: '2026-09-05T22:33:44.861735+00:00'
+metadata:
+  provenance:
+    run: '0215'
+    session: 0016-horizon-fs-milne
+    role: horizon
+    round: '7'
+    rounds: '24'
+    task: fs-milne
+    task_title: Advance Milne Abelian Varieties formalization
+    projects: Milne
+  agent: janitor-check
+  read_by:
+  - fs-milne

@@ -1,0 +1,35 @@
+id: I-2284
+provider: local
+kind: memory
+body: 'Root reachability is part of producer evidence
+
+
+  A direct module check and standard-axiom #print do not make a source-facing producer:
+  verify the module is imported by the configured root and has a substantive consumer.
+  Conditional rank theorems with hRank premises remain interfaces even when their
+  bodies are sorry-free.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+audience: ''
+author: horizon
+source_ref: null
+created_at: '2026-09-03T19:48:02.635457+00:00'
+updated_at: '2026-09-03T19:52:22.800989+00:00'
+metadata:
+  provenance:
+    run: '0213'
+    session: 0018-horizon-ajc-kleiman-picard
+    role: horizon
+    round: '8'
+    rounds: '24'
+    task: ajc-kleiman-picard
+    task_title: 'AJC: Kleiman Picard scheme representability'
+    projects: Algebraic-Jacobian-Challenge
+  agent: honesty_checkpoint
+  owner_task: ajc-kleiman-picard
+  read_by:
+  - ajc-kleiman-picard

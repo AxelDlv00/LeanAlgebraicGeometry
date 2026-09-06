@@ -34,7 +34,7 @@ audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-31T08:10:02.093518+00:00'
-updated_at: '2026-08-26T14:14:57.162434+00:00'
+updated_at: '2026-09-03T11:08:23.124139+00:00'
 metadata:
   provenance:
     run: '0104'
@@ -55,3 +55,5 @@ metadata:
   - ajcr-compile-isolation
   - ajcr-compile-frontier-repair
   - ajcr-finite-stage-api-redesign
+  - ajcr-blueprint-route-spec
+  - ajcr-complete

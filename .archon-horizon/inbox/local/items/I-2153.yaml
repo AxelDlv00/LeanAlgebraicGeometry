@@ -1,0 +1,60 @@
+id: I-2153
+provider: local
+kind: conversation
+body: 'Mumford frontier audit
+
+
+  Read-only audit of current graph/API. `graph frontier` ranks 5b802ed9b979 Base-change
+  criterion (38 unlocks), d77dcd807be7 Serre--Lang (28), 06c2c20d7e36 Theorem of cube
+  (26), b346ede19d0c Hilbert-polynomial degree (22), 5f59473ad8c2 Group scheme/functor
+  points (21); all are broad empty blueprint statements with no dependencies and are
+  not realistic closable units in current mathlib. Existing MumfordLib has 421+ verified
+  declarations, no sorry, and all generated TeX nodes intentionally unattached under
+  frozen blueprint/I-2048.
+
+
+  Concrete low-risk next units from existing APIs: (1) ThetaIsotropic: add `commutatorPairingOrthogonal_bot`
+  (orthogonal of ⊥ = ⊤) by ext + `mem_commutatorPairingOrthogonal_iff`, vacuous `Subsingleton`/`bot_unique`;
+  then derive `orthogonal_inf` from `le_commutatorPairingOrthogonal_iff` and lattice
+  order, dual to existing `commutatorPairingOrthogonal_sup`. (2) DivisionFiber: add
+  pointwise transport theorem showing `zsmulDivisionFiberEquivBetween n x y hn` is
+  inverse to the y→x map, derivable from existing `symm` and `trans`; optionally add
+  natural-cast cardinality under a uniformization witness. (3) ComplexUniformization:
+  package a direct theorem `complexUniformization_zsmulTorsion_addEquiv_card`/`..._finite`
+  already present as cardinality/finite; best extension is a representative membership
+  iff for the quotient via existing `complexUniformization_zsmulTorsion_addEquiv_apply`.
+  (4) Lattice/ComplexModel: expose explicit `Fin (2*g)` coordinate reindex inverse
+  round-trip theorem, useful for the source torsion bridge but blueprint linkage remains
+  blocked. Avoid analytic Lie existence: intentionally explicit hypothesis; avoid
+  claiming frozen nodes closed without approved \lean links.
+
+
+  Sibling Milne has reusable exact style: `LinearMap.bijective_of_surjective_rank_one`,
+  `Isogeny.iff_surjective_of_finite`, and rigidity corollaries, but no direct Mumford
+  theorem closure. Parent should prioritize small theta lattice laws or coordinate
+  bridge over broad frontier nodes.'
+labels:
+- agent-ready
+status: archived
+scope: {}
+audience: task:fs-mumford
+author: horizon
+source_ref: null
+created_at: '2026-08-30T03:46:40.163213+00:00'
+updated_at: '2026-08-30T04:14:45.040122+00:00'
+metadata:
+  conversation: true
+  participants:
+  - task:fs-mumford
+  started_by: task:fs-mumford
+  read_by:
+  - fs-mumford
+  provenance:
+    run: 0197
+    session: 0028-horizon-fs-mumford
+    role: horizon
+    round: '13'
+    rounds: '16'
+    task: fs-mumford
+    task_title: Advance Mumford Abelian Varieties formalization
+    projects: Mumford

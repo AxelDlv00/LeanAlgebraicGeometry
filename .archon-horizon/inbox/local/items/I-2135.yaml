@@ -1,0 +1,64 @@
+id: I-2135
+provider: local
+kind: conversation
+body: 'Cross-project API search results (read-only):
+
+
+  AJC-Rebuild `AlgebraicJacobian/RiemannRoch/PrincipalDivisor.lean`: `Scheme.ordZ_support_finite
+  (f : X ⟶ Spec (CommRingCat.of K)) [SmoothOfRelativeDimension 1 f] [IsIntegral X]
+  [LocallyOfFiniteType f] [QuasiCompact f] (g : X.functionFieldˣ) : {p : {x : X //
+  x ≠ genericPoint X} | Scheme.ordZ f p.2 g ≠ 1}.Finite`; `Scheme.divOf` packages
+  this as `X.CurveDivisor`; `Scheme.divOf_apply`; additive `Scheme.divOf_mul`; `[simp]
+  Scheme.divOf_one`.
+
+
+  Same project `RiemannRoch/Ledger/DivisorSheaf.lean`: `divisorBound`, `boundedSections`,
+  `divisorSections`, `divisorPresheaf`, `isSheaf_divisorPresheaf`, `divisorSheaf`,
+  monotonicity `divisorSections_mono`, `divisorSheafLE`. Requires curve carrier indexed
+  by non-generic points, field K, smooth relative dim 1/integral/LFT/quasicompact.
+
+
+  AJC ledger `RiemannRoch/Ledger/ChiLedger.lean`: `chi_divisorSheaf (D : X.CurveDivisor)
+  : Sheaf.chi (X.divisorSheaf K D) = Sheaf.chi (X.moduleKSheaf K) + CurveDivisor.deg
+  K D`; `deg_divOf (g : X.functionFieldˣ) : CurveDivisor.deg K (Scheme.divOf (X ↘
+  Spec (CommRingCat.of K)) g) = 0`; uses `mulEquivDivisorSheaf` from `Ledger/MulEquiv.lean`,
+  an iso `divisorSheaf K D ≅ divisorSheaf K (D - Scheme.divOf ... g)`.
+
+
+  AJC main (non-Rebuild) `RiemannRoch/WeilDivisor.lean`: more general `Scheme.WeilDivisor
+  := X.PrimeDivisor →₀ ℤ`; `rationalMap_order_finite_support (f : X.functionField)`
+  under `[IsIntegral X] [IsNoetherian X] [Scheme.IsRegularInCodimensionOne X]`; `principal
+  f hf`; `principal_apply`; `principal_hom`; `principal_degree_zero` (complete nonsingular
+  curve). Portability caveat: Hartshorne carrier/API likely differs (PrimeDivisor
+  coheight=1 vs Rebuild CurveDivisor non-generic points), and all sibling declarations
+  live in MainProjects, not importable by FormalizedSources without dependency policy.
+
+
+  Also `chi_divisorSheaf_genus (C : Over (Spec (CommRingCat.of k))) [IsProper C.hom]
+  ... : Sheaf.chi (C.left.divisorSheaf k D) = 1 - genus C + Scheme.CurveDivisor.deg
+  k D` in `Ledger/GenusBridge.lean`.'
+labels:
+- agent-ready
+status: closed
+scope: {}
+audience: task:fs-hartshorne
+author: horizon
+source_ref: null
+created_at: '2026-08-29T18:47:34.334502+00:00'
+updated_at: '2026-08-29T19:12:30.081496+00:00'
+metadata:
+  conversation: true
+  participants:
+  - task:fs-hartshorne
+  started_by: task:fs-hartshorne
+  read_by:
+  - fs-hartshorne
+  provenance:
+    run: 0195
+    session: 0008-horizon-fs-hartshorne
+    role: horizon
+    round: '3'
+    rounds: '16'
+    task: fs-hartshorne
+    task_title: Advance Hartshorne Algebraic Geometry formalization
+    projects: Hartshorne

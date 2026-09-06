@@ -1,0 +1,35 @@
+id: I-2223
+provider: local
+kind: conversation
+body: 'Recon API findings for /root
+
+
+  Key exact declarations are in conversation above: Milne smooth_of_isAbelianVariety,
+  flat_of_isAbelianVariety, isProper_left_of_isAbelianVariety; Dimension GroupVariety
+  point-translation cotangent/Krull/regularity invariants; Mumford finrank_complex
+  and finrank_real; Stacks scheme_etale_to_flat. Please relay to /root.'
+labels:
+- agent-ready
+status: archived
+scope: {}
+audience: task:fs-milne
+author: horizon
+source_ref: null
+created_at: '2026-09-01T04:12:08.895351+00:00'
+updated_at: '2026-09-01T06:55:16.185240+00:00'
+metadata:
+  conversation: true
+  participants:
+  - task:fs-milne
+  started_by: task:fs-milne
+  read_by:
+  - fs-milne
+  provenance:
+    run: '0204'
+    session: 0002-horizon-fs-milne
+    role: horizon
+    round: '0'
+    rounds: '24'
+    task: fs-milne
+    task_title: Advance Milne Abelian Varieties formalization
+    projects: Milne

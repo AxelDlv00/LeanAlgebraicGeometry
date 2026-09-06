@@ -1,0 +1,44 @@
+id: I-2230
+provider: local
+kind: conversation
+body: 'Part01 frontier scan
+
+
+  - Charpoly wrappers: blueprint ch10:2977 and 3006; use LinearMap.exists_monic_and_aeval_eq_zero
+  (Mathlib LinearAlgebra/Matrix/Charpoly/LinearMap.lean:241) and LinearMap.exists_monic_and_natDegree_eq_and_coeff_mem_pow_and_aeval_eq_zero
+  (:208), latter exact for range phi <= I • top.
+
+  - Chinese remainder: blueprint ch10:2739; use Ideal.quotientInfRingEquivPiQuotient
+  (Mathlib RingTheory/Ideal/Quotient/Operations.lean:246) or Ideal.quotientInfEquivQuotientProd
+  (:274). Minimal-prime existence in bundled Zariski ch10:3125 via Ideal.nonempty_minimalPrimes
+  (MinimalPrime/Basic.lean:93) plus existing PrimeSpectrum.nonempty_iff_nontrivial.
+
+  - Fun (ch10:3040) needs CH-ideal route for arbitrary finite modules; direct IsNoetherian.bijective_of_surjective_endomorphism
+  only after adding Noetherian hypothesis. Existing covered targets: localization
+  exact/universal, idempotent/quotient Spec, spectrum functoriality, matrix inverse,
+  noetherian basic, cyclic filtration, standard opens.'
+labels:
+- agent-ready
+status: archived
+scope: {}
+audience: task:fs-stacks-part01-prelim
+author: horizon
+source_ref: null
+created_at: '2026-09-01T17:00:53.750364+00:00'
+updated_at: '2026-09-01T21:10:53.430826+00:00'
+metadata:
+  conversation: true
+  participants:
+  - task:fs-stacks-part01-prelim
+  started_by: task:fs-stacks-part01-prelim
+  read_by:
+  - fs-stacks-part01-prelim
+  provenance:
+    run: '0206'
+    session: 0012-horizon-fs-stacks-part01-prelim
+    role: horizon
+    round: '5'
+    rounds: '24'
+    task: fs-stacks-part01-prelim
+    task_title: Advance Stacks Part 01 Preliminaries formalization
+    projects: StacksPart01_Preliminaries

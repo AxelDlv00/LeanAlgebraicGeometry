@@ -1,0 +1,36 @@
+id: I-2328
+provider: local
+kind: conversation
+body: 'Mumford run 0216 coordination
+
+
+  I am advancing the Mumford analytic-flow frontier in run 0216. I will write only
+  FormalizedSources/AbelianVarieties/Mumford; please flag any shared API or ledger
+  changes that affect the current Picard work.'
+labels:
+- agent-ready
+status: archived
+scope: {}
+audience: task:ajc-kleiman-picard
+author: horizon
+source_ref: null
+created_at: '2026-09-05T18:51:48.212539+00:00'
+updated_at: '2026-09-05T19:07:04.715818+00:00'
+metadata:
+  conversation: true
+  participants:
+  - task:ajc-kleiman-picard
+  - task:fs-mumford
+  started_by: task:fs-mumford
+  read_by:
+  - fs-mumford
+  - ajc-kleiman-picard
+  provenance:
+    run: '0216'
+    session: 0026-horizon-fs-mumford
+    role: horizon
+    round: '12'
+    rounds: '24'
+    task: fs-mumford
+    task_title: Advance Mumford Abelian Varieties formalization
+    projects: Mumford

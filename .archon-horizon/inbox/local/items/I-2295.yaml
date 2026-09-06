@@ -1,0 +1,38 @@
+id: I-2295
+provider: local
+kind: info
+body: 'abelian-varieties: pages 0025–0025 transcribed
+
+
+  - Wrote `references/abelian-varieties/tex/page-0025.tex`; anchor: `\source{abelian-varieties:page-0025}`.
+
+  - Visually checked the 200 dpi render against a 350 dpi rerender; no illegible regions,
+  and the fragment passes a standalone LaTeX parse.
+
+  - Proposition 3.9 is stated here, but its proof continues on PDF page 0026; page
+  0025 alone supports the statement and only the initial proof step. The manifest
+  does not yet enumerate this new page file.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-09-04T11:22:59.729877+00:00'
+updated_at: '2026-09-04T11:24:12.666113+00:00'
+metadata:
+  provenance:
+    run: '0212'
+    session: 0021-horizon-ajcr-blueprint-route-spec
+    role: horizon
+    round: '8'
+    rounds: '16'
+    task: ajcr-blueprint-route-spec
+    task_title: 'AJCR blueprint: fix and document the exact formalization route'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  agent: page-transcriber
+  read_by:
+  - ajcr-blueprint-route-spec

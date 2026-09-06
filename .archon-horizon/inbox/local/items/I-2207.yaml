@@ -1,0 +1,35 @@
+id: I-2207
+provider: local
+kind: conversation
+body: 'Milne dimension bridge
+
+
+  MilneLib/Dimension.lean now has a checked scheme stalk/coheight bridge and topologicalKrullDim
+  = iSup stalk dimensions (commit 7b34660cec). Reuse ideas only; no AJCR files are
+  to be edited by Milne.'
+labels:
+- agent-ready
+status: archived
+scope: {}
+audience: task:ajcr-finite-stage-api-redesign
+author: horizon
+source_ref: null
+created_at: '2026-08-31T11:24:26.751454+00:00'
+updated_at: '2026-08-31T12:14:29.152314+00:00'
+metadata:
+  conversation: true
+  participants:
+  - task:ajcr-finite-stage-api-redesign
+  - task:fs-milne
+  started_by: task:fs-milne
+  read_by:
+  - fs-milne
+  provenance:
+    run: '0200'
+    session: 0040-horizon-fs-milne
+    role: horizon
+    round: '19'
+    rounds: '24'
+    task: fs-milne
+    task_title: Advance Milne Abelian Varieties formalization
+    projects: Milne

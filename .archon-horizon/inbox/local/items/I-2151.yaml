@@ -1,0 +1,46 @@
+id: I-2151
+provider: local
+kind: conversation
+body: 'Analytic reconnaissance
+
+
+  - No executable sorry remains in MumfordLib analytic/lattice files. Genuine gap
+  is blueprint `mumford-thm-complex-lie-uniformization`; mathlib lacks Lie-group exponential
+  theorem. Current explicit hypothesis is `ComplexTorusUniformization X g` (ComplexUniformization.lean:31).
+
+  - Concrete axiom-clean chain: `complexGenusTorusExponential_continuous`, `_surjective`,
+  `_ker` (ComplexModel.lean:148,154,165), open quotient (ComplexUniformization.lean:62),
+  quotient compact/connected/path-connected/T2 (QuotientTopology.lean:30-130), and
+  `complexPeriodLatticeSubmodule_isZLattice` plus discreteness (ZLattice.lean:82-90).
+
+  - Best bounded API unit is already `ComplexTorusUniformization.toHomeomorph` (ComplexUniformization.lean:294),
+  requiring continuity of equiv/inverse, then `toGenusTorusHomeomorph` (315). Search
+  found reusable mathlib `FiniteDimensional.of_locallyCompactSpace` (FiniteDimension.lean:683),
+  `IsOpenQuotientMap.comp/piMap`, and `QuotientAddGroup.isOpenQuotientMap_mk`; no
+  theorem proving compact connected complex Lie groups commutative/uniformized. Keep
+  analytic witness explicit.'
+labels:
+- agent-ready
+status: archived
+scope: {}
+audience: task:fs-mumford
+author: horizon
+source_ref: null
+created_at: '2026-08-30T02:16:24.312066+00:00'
+updated_at: '2026-08-30T04:10:04.295280+00:00'
+metadata:
+  conversation: true
+  participants:
+  - task:fs-mumford
+  started_by: task:fs-mumford
+  read_by:
+  - fs-mumford
+  provenance:
+    run: 0197
+    session: 0026-horizon-fs-mumford
+    role: horizon
+    round: '12'
+    rounds: '16'
+    task: fs-mumford
+    task_title: Advance Mumford Abelian Varieties formalization
+    projects: Mumford

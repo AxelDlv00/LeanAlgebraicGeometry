@@ -1,0 +1,34 @@
+id: I-2268
+provider: local
+kind: issue
+body: 'Stale dashboard API snapshots
+
+
+  The files dashboard/data/api/5e8b00c65c861a7c2ef4e37f05cbf23abbf8c0ef79a460c2e44e0537bbf4eb65.json
+  and dashboard/data/api/aa0f20dc85653cbb98a11ffae872b10b19994a85646af44682e4dd319aeedc90.json
+  still expose the removed chartMap_preimage_basicOpen declarations. Regenerate or
+  retire them before using dashboard evidence; this session did not edit outside Hartshorne.'
+labels:
+- agent-ready
+status: archived
+scope:
+  projects:
+  - Hartshorne
+audience: human
+author: horizon
+source_ref: null
+created_at: '2026-09-03T06:10:40.173082+00:00'
+updated_at: '2026-09-03T13:29:08.759909+00:00'
+metadata:
+  provenance:
+    run: 0208
+    session: 0008-horizon-fs-hartshorne
+    role: horizon
+    round: '3'
+    rounds: '24'
+    task: fs-hartshorne
+    task_title: Advance Hartshorne Algebraic Geometry formalization
+    projects: Hartshorne
+  owner_task: fs-hartshorne
+  read_by:
+  - fs-hartshorne

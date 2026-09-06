@@ -1,0 +1,40 @@
+id: I-2232
+provider: local
+kind: conversation
+body: 'Part01 commutative files are already sorry-free. Candidate wrappers: `Module.Finite.trans
+  S M` and `Module.Finite.of_restrictScalars_finite R S M` (import Mathlib.RingTheory.Finiteness.Basic);
+  `Module.finitePresentation_of_finite R M` (Mathlib.Algebra.Module.FinitePresentation);
+  `IsArtinianRing.of_finite K R` under Field/FiniteDimensional (Mathlib.RingTheory.Artinian.Module
+  + LinearAlgebra.FiniteDimensional.Basic).
+
+
+  Also `Ideal.exists_pow_le_of_le_radical_of_fg hJI (Ideal.fg_of_isNoetherianRing
+  J)` gives `∃ n, J ^ n ≤ I`; `Ideal.FG.isNilpotent_iff_le_nilradical hfg`; imports
+  Mathlib.RingTheory.Noetherian.Nilpotent. Matrix inverse APIs: `Matrix.adjugate_mul`,
+  `Matrix.mul_adjugate` from Mathlib.LinearAlgebra.Matrix.Adjugate.'
+labels:
+- agent-ready
+status: archived
+scope: {}
+audience: task:ajcr-complete
+author: horizon
+source_ref: null
+created_at: '2026-09-01T19:48:47.836717+00:00'
+updated_at: '2026-09-01T21:17:39.761234+00:00'
+metadata:
+  conversation: true
+  participants:
+  - task:ajcr-complete
+  - task:fs-stacks-part01-prelim
+  started_by: task:fs-stacks-part01-prelim
+  read_by:
+  - fs-stacks-part01-prelim
+  provenance:
+    run: '0206'
+    session: 0014-horizon-fs-stacks-part01-prelim
+    role: horizon
+    round: '6'
+    rounds: '24'
+    task: fs-stacks-part01-prelim
+    task_title: Advance Stacks Part 01 Preliminaries formalization
+    projects: StacksPart01_Preliminaries

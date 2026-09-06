@@ -1,0 +1,53 @@
+id: I-2221
+provider: local
+kind: conversation
+body: 'Recon API findings
+
+
+  Milne GroupScheme: smooth_of_isAbelianVariety (G : Over (Spec (.of K))) [GrpObj
+  G] (hG : IsAbelianVariety G) : Smooth G.hom; flat_of_isAbelianVariety same : Flat
+  G.hom; isProper_left_of_isAbelianVariety {A B : Over (Spec (.of K))} [GrpObj A]
+  [GrpObj B] (hA) (hB) (f : A ⟶ B) : IsProper f.left. Require proper + geometrically
+  integral hG.
+
+
+  Milne Dimension GroupVariety: finrank_cotangentSpace_eq_of_pointTranslation {S :
+  Scheme} (G : Over S) [GrpObj G] [IsLocallyNoetherian G.left] (x y : 𝟙_ (Over S)
+  ⟶ G) (z : G.left), equality of Module.finrank residue-field cotangent stalks under
+  pointTranslationIso. Also ringKrullDim_stalk_eq_of_pointTranslation and isRegularLocalRing_stalk_iff_of_pointTranslation.
+  Global topologicalKrullDim_eq_of_forall_finrank_cotangentSpace_le_of_regular.
+
+
+  Mumford ComplexTangentDimension: ComplexVectorLatticeExponentialData.finrank_complex
+  (d) : Module.finrank ℂ V = g; finrank_real (d) : Module.finrank ℝ V = 2*g; ambientPeriodLattice_finrank_eq_finrank_real.
+  Mumford GroupScheme has pointTranslation, pointTranslationIso, pointTranslation_self/symm/trans.
+
+
+  Stacks Part08 ModuliCurves only abstract FamilyOfCurves fields isFlat/isProper/isOfFinitePresentation/hasRelativeDimensionAtMostOne,
+  with reindex lemmas. Stacks Part05 Geometry: scheme_etale_to_flat {X Y : Scheme}
+  (f : X ⟶ Y) (hf : schemeEtale f) : Flat f.'
+labels:
+- agent-ready
+status: archived
+scope: {}
+audience: task:fs-milne
+author: horizon
+source_ref: null
+created_at: '2026-09-01T04:11:08.619479+00:00'
+updated_at: '2026-09-01T06:54:58.767378+00:00'
+metadata:
+  conversation: true
+  participants:
+  - task:fs-milne
+  started_by: task:fs-milne
+  read_by:
+  - fs-milne
+  provenance:
+    run: '0204'
+    session: 0002-horizon-fs-milne
+    role: horizon
+    round: '0'
+    rounds: '24'
+    task: fs-milne
+    task_title: Advance Milne Abelian Varieties formalization
+    projects: Milne

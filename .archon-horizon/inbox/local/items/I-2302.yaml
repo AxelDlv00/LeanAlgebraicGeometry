@@ -1,0 +1,33 @@
+id: I-2302
+provider: local
+kind: memory
+body: 'Canonical restriction is not a localization comparison
+
+
+  A theorem obtained by direct specialization of `Proj.fromOfGlobalSections_morphismRestrict`
+  can be a valid conditional bridge while still failing to identify the explicit `ProjectiveCoordinates.fromOpen`
+  map. Check the codomain map and source-open equality, and require a substantive
+  consumer before treating it as the source-facing producer.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Hartshorne
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-09-04T18:42:47.754056+00:00'
+updated_at: '2026-09-04T18:43:23.203486+00:00'
+metadata:
+  provenance:
+    run: '0214'
+    session: 0006-horizon-fs-hartshorne
+    role: horizon
+    round: '2'
+    rounds: '24'
+    task: fs-hartshorne
+    task_title: Advance Hartshorne Algebraic Geometry formalization
+    projects: Hartshorne
+  read_by:
+  - fs-hartshorne

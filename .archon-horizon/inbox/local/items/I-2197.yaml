@@ -1,0 +1,65 @@
+id: I-2197
+provider: local
+kind: conversation
+body: 'Mathlib/API reconnaissance
+
+
+  Useful exact declarations found:
+
+  - AlgebraicGeometry.IsFinite.of_isProper_of_locallyQuasiFinite [IsProper f] [LocallyQuasiFinite
+  f] : IsFinite f (ZariskisMainTheorem.lean:371); IsFinite.iff_isProper_and_locallyQuasiFinite
+  : IsFinite f ↔ IsProper f ∧ LocallyQuasiFinite f; exists_isFinite_morphismRestrict_of_finite_preimage_singleton
+  [IsProper f] (y) (hx : (f ⁻¹'' {y}).Finite) : ∃ V, y ∈ V ∧ IsFinite (f|_V).
+
+  - AlgebraicGeometry.IsFinite.iff_isProper_and_isAffineHom : IsFinite f ↔ IsProper
+  f ∧ IsAffineHom f (Proper.lean:92); IsFinite.isProjective_of_isAffine (AJC local)
+  : finite map to affine target -> IsProjective.
+
+  - AlgebraicGeometry.Flat.generalizingMap [Flat f] : GeneralizingMap f; Flat.epi_of_flat_of_surjective
+  (f) [Flat f] [Surjective f] : Epi f; Flat is multiplicative/stable under composition.
+  Flat.of_field (AJC local): any X→Spec(field) flat.
+
+  - RingHom.finite_isStableUnderBaseChange : IsStableUnderBaseChange @Finite; AlgebraicGeometry
+  IsFinite pullback instances (Finite f gives IsFinite pullback.snd/fst); RingHom.QuasiFinite.isStableUnderBaseChange.
+
+  - Scheme.residue_surjective (X) (x) : Function.Surjective (X.residue x).
+
+  - PrimeSpectrum.topologicalKrullDim_eq_ringKrullDim : topologicalKrullDim (PrimeSpectrum
+  R)=ringKrullDim R; IsHomeomorph.topologicalKrullDim_eq; topologicalKrullDim_subspace_le.
+
+  Milne already wraps key bridges in Isogeny.lean: IsFinite.of_isProper_of_finite_preimage_singleton
+  (line 279), IsFinite.of_isProper_of_faithfullyFlat_baseChange (289), isFinite_iff_finite_residue_fibres_of_isProper
+  (377), isFinite_fiberToSpecResidueField_iff_finite_preimage_singleton (394), Isogeny.isFinite_fiberToSpecResidueField
+  (757), baseChange_of_finite (895), GroupScheme.flat_of_isAbelianVariety (964), IsAbelianVariety.baseChange
+  (918). Dimension.lean has topologicalKrullDim_eq_of_isFinite_surjective_of_isAffineTarget
+  (82), requiring [IsAffine Y] [IsFinite f] [Surjective f] [IsReduced Y].
+
+  Application: remaining isogeny finite/projectivity frontier should use properness
+  from isProper_left_of_isAbelianVariety, then local finite-fibre→finite bridge or
+  FFA descent; flatness follows smooth_of_isAbelianVariety then infer_instance. No
+  source edits made.'
+labels:
+- agent-ready
+status: archived
+scope: {}
+audience: task:fs-milne
+author: horizon
+source_ref: null
+created_at: '2026-08-31T08:25:06.449710+00:00'
+updated_at: '2026-08-31T09:21:38.140586+00:00'
+metadata:
+  conversation: true
+  participants:
+  - task:fs-milne
+  started_by: task:fs-milne
+  read_by:
+  - fs-milne
+  provenance:
+    run: '0200'
+    session: 0036-horizon-fs-milne
+    role: horizon
+    round: '17'
+    rounds: '24'
+    task: fs-milne
+    task_title: Advance Milne Abelian Varieties formalization
+    projects: Milne

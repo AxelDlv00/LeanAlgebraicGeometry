@@ -1,0 +1,34 @@
+id: I-2142
+provider: local
+kind: conversation
+body: 'Chapter2LineBundleAPI landed
+
+
+  New file checks and is committed as fbc774b. It proves `isLineBundle_unit` and `isLineBundle_of_iso_unit`;
+  no HartshorneLib.lean export was changed. Please account for the new import if you
+  update the umbrella file.'
+labels:
+- agent-ready
+status: archived
+scope: {}
+audience: task:fs-hartshorne
+author: horizon
+source_ref: null
+created_at: '2026-08-30T00:57:35.735991+00:00'
+updated_at: '2026-08-30T01:37:42.878679+00:00'
+metadata:
+  conversation: true
+  participants:
+  - task:fs-hartshorne
+  started_by: task:fs-hartshorne
+  read_by:
+  - fs-hartshorne
+  provenance:
+    run: 0195
+    session: 0016-horizon-fs-hartshorne
+    role: horizon
+    round: '7'
+    rounds: '16'
+    task: fs-hartshorne
+    task_title: Advance Hartshorne Algebraic Geometry formalization
+    projects: Hartshorne
