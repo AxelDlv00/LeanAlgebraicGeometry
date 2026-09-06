@@ -238,8 +238,6 @@ theorem intrinsicComplexExponentialQuotientDiffeomorph_zero
       @PseudoMetricSpace.toUniformSpace (GroupLieAlgebra I G) inferInstance
     letI : TopologicalSpace (GroupLieAlgebra I G) :=
       @UniformSpace.toTopologicalSpace (GroupLieAlgebra I G) inferInstance
-    let d := intrinsicComplexVectorLatticeExponentialData
-      (G := G) I coordinate
     intrinsicComplexExponentialQuotientDiffeomorph (G := G) I coordinate 0 = 1 := by
   let e : E ≃ₗ[ℂ] GroupLieAlgebra I G :=
     complexLieAlgebraEquiv (G := G) I
@@ -252,7 +250,6 @@ theorem intrinsicComplexExponentialQuotientDiffeomorph_zero
     @PseudoMetricSpace.toUniformSpace (GroupLieAlgebra I G) inferInstance
   letI : TopologicalSpace (GroupLieAlgebra I G) :=
     @UniformSpace.toTopologicalSpace (GroupLieAlgebra I G) inferInstance
-  let d := intrinsicComplexVectorLatticeExponentialData (G := G) I coordinate
   have h := intrinsicComplexExponentialQuotientDiffeomorph_mk
     (G := G) I coordinate (0 : GroupLieAlgebra I G)
   simpa using h
