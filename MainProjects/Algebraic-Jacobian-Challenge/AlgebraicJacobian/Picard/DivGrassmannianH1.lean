@@ -5,6 +5,7 @@ Authors: The AlgebraicJacobian Contributors
 -/
 import AlgebraicJacobian.Picard.DivGrassmannianClass
 import AlgebraicJacobian.Picard.DivTwistPushforwardProducers
+import AlgebraicJacobian.Picard.DivisorModulesLocal
 import AlgebraicJacobian.Picard.AffineOpenStalkLocalization
 import AlgebraicJacobian.Picard.TensorObjSubstrate.Vestigial
 import AlgebraicJacobian.Cohomology.AffineSerreVanishing
@@ -300,6 +301,48 @@ noncomputable def grassmannianQuotientOfKernelAbsoluteCohomologyOneSubsingleton
     (grassmannianEval_epi_of_field_of_kernel_absoluteCohomology_one_subsingleton
       f L hL x)
     (pushforward_twist_isLocallyFreeOfRank_of_curve f L hL x hx)
+
+noncomputable section DivisorTwist
+
+variable {k : Type u} [Field k] {C : Over (Spec (CommRingCat.of k))}
+  [SmoothOfRelativeDimension 1 C.hom] [GeometricallyIntegral C.hom] [IsProper C.hom]
+
+local instance : C.left.Over (Spec (CommRingCat.of k)) := .ofHom C.hom
+
+local instance : SmoothOfRelativeDimension 1 (C.left ↘ Spec (CommRingCat.of k)) :=
+  inferInstanceAs (SmoothOfRelativeDimension 1 C.hom)
+
+local instance : LocallyOfFiniteType (C.left ↘ Spec (CommRingCat.of k)) :=
+  inferInstanceAs (LocallyOfFiniteType C.hom)
+
+local instance : QuasiCompact (C.left ↘ Spec (CommRingCat.of k)) :=
+  inferInstanceAs (QuasiCompact C.hom)
+
+/-- The actual Grassmannian quotient for the twist `O(D)`, with its line-bundle
+property supplied by local principalization of the curve divisor `D`.
+
+This discharges the local-triviality input in the divisor twist used in
+Kleiman's `sb:Q`. The remaining vanishing is for the actual twisted kernel on
+the total affine test family; producing it uniformly is a separate obligation.
+The field is arbitrary and no rational point is required. -/
+noncomputable def grassmannianQuotientOfDivisorKernelH1
+    {R : CommRingCat.{u}} [IsNoetherianRing R]
+    (f : Spec R ⟶ Spec (CommRingCat.of k)) (D : C.left.CurveDivisor)
+    (x : DivFamily C.hom (Over.mk f))
+    {d : ℕ} (hx : x.HasFiberDeg d)
+    [Subsingleton ((toModuleKSheafOfModules
+      (Over.mk (pullback.snd C.hom f ≫ f))
+      (kernel (x.twistQuotientMap (divisorModules k D)))).HModule 1)] :
+    LocallyFreeQuotient
+      ((Modules.pushforward C.hom).obj (divisorModules k D))
+      d (Over.mk f) :=
+  grassmannianQuotient (divisorModules k D) x
+    (grassmannianEval_epi_of_kernel_hModule_one_subsingleton
+      f (divisorModules k D) (divisorModules_isLocallyTrivial k D) x)
+    (pushforward_twist_isLocallyFreeOfRank_of_curve
+      f (divisorModules k D) (divisorModules_isLocallyTrivial k D) x hx)
+
+end DivisorTwist
 
 /-! ## The classifying-object endpoint
 
