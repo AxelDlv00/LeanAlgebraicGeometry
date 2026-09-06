@@ -5,6 +5,7 @@ Authors: The Mumford Contributors
 -/
 
 import MumfordLib.CompactKernelLattice
+import MumfordLib.LatticeTransport
 import Mathlib.Topology.IsLocalHomeomorph
 
 /-!
@@ -454,6 +455,99 @@ theorem intrinsicComplexExponentialQuotientContinuousAddEquiv_mk
       intrinsicComplexExponentialAddHom (G := G) I v := by
   rw [intrinsicComplexExponentialQuotientContinuousAddEquiv]
   exact intrinsicComplexExponentialQuotientHomeomorph_mk (G := G) I v
+
+/- The intrinsic and model period subgroups are carried to one another by the
+   representation equivalence.  This is the load-bearing bridge for consumers
+   that need to move between the tangent-fibre and coordinate quotients. -/
+theorem intrinsicComplexExponentialPeriodLattice_map_to_model :
+    AddSubgroup.map
+      (((complexLieAlgebraEquiv (G := G) I).symm.toAddEquiv) :
+        GroupLieAlgebra I G →+ E)
+      (intrinsicComplexExponentialPeriodLattice (G := G) I).toAddSubgroup =
+    (canonicalComplexExponentialPeriodLattice (G := G) I).toAddSubgroup := by
+  apply le_antisymm
+  · rw [AddSubgroup.map_le_iff_le_comap]
+    intro v hv
+    change v ∈ intrinsicComplexExponentialPeriodLattice (G := G) I at hv
+    rw [intrinsicComplexExponentialPeriodLattice_comap (G := G) I] at hv
+    exact hv
+  · intro x hx
+    rw [AddSubgroup.mem_map]
+    refine ⟨(complexLieAlgebraEquiv (G := G) I) x, ?_, ?_⟩
+    · change (complexLieAlgebraEquiv (G := G) I x) ∈
+        intrinsicComplexExponentialPeriodLattice (G := G) I
+      rw [intrinsicComplexExponentialPeriodLattice_comap (G := G) I]
+      change ((complexLieAlgebraEquiv (G := G) I).symm
+          ((complexLieAlgebraEquiv (G := G) I) x)) ∈
+          canonicalComplexExponentialPeriodLattice (G := G) I
+      rw [LinearEquiv.symm_apply_apply]
+      exact hx
+    · simp
+
+noncomputable def intrinsicToModelQuotientAddEquiv :
+    (GroupLieAlgebra I G ⧸
+      (intrinsicComplexExponentialPeriodLattice (G := G) I).toAddSubgroup) ≃+
+      (E ⧸ (canonicalComplexExponentialPeriodLattice (G := G) I).toAddSubgroup) :=
+  Mumford.Uniformization.periodLatticeQuotientAddEquivOfLinearEquiv
+    (intrinsicComplexExponentialPeriodLattice (G := G) I).toAddSubgroup
+    (canonicalComplexExponentialPeriodLattice (G := G) I).toAddSubgroup
+    ((complexLieAlgebraEquiv (G := G) I).symm)
+    (intrinsicComplexExponentialPeriodLattice_map_to_model (G := G) I)
+
+@[simp]
+theorem intrinsicToModelQuotientAddEquiv_mk (v : GroupLieAlgebra I G) :
+    intrinsicToModelQuotientAddEquiv (G := G) I
+      (QuotientAddGroup.mk'
+        (intrinsicComplexExponentialPeriodLattice (G := G) I).toAddSubgroup v) =
+      QuotientAddGroup.mk'
+        (canonicalComplexExponentialPeriodLattice (G := G) I).toAddSubgroup
+        ((complexLieAlgebraEquiv (G := G) I).symm v) := by
+  exact Mumford.Uniformization.periodLatticeQuotientAddEquivOfLinearEquiv_mk
+    _ _ _ _ v
+
+/-- Topological transport of the intrinsic quotient to the chosen model
+quotient.  It only compares the existing quotient topologies. -/
+noncomputable def intrinsicToModelQuotientHomeomorph :
+    (GroupLieAlgebra I G ⧸
+      (intrinsicComplexExponentialPeriodLattice (G := G) I).toAddSubgroup) ≃ₜ
+      (E ⧸ (canonicalComplexExponentialPeriodLattice (G := G) I).toAddSubgroup) := by
+  refine Homeomorph.mk (intrinsicToModelQuotientAddEquiv (G := G) I).toEquiv ?_ ?_
+  · rw [(QuotientAddGroup.isQuotientMap_mk
+      (intrinsicComplexExponentialPeriodLattice (G := G) I).toAddSubgroup).continuous_iff]
+    change Continuous (fun v : GroupLieAlgebra I G =>
+      QuotientAddGroup.mk'
+        (canonicalComplexExponentialPeriodLattice (G := G) I).toAddSubgroup
+        ((complexLieAlgebraEquiv (G := G) I).symm v))
+    apply QuotientAddGroup.continuous_mk.comp
+    exact continuous_id
+  · rw [(QuotientAddGroup.isQuotientMap_mk
+      (canonicalComplexExponentialPeriodLattice (G := G) I).toAddSubgroup).continuous_iff]
+    change Continuous (fun v : E =>
+      QuotientAddGroup.mk'
+        (intrinsicComplexExponentialPeriodLattice (G := G) I).toAddSubgroup
+        ((complexLieAlgebraEquiv (G := G) I) v))
+    apply QuotientAddGroup.continuous_mk.comp
+    exact continuous_id
+
+theorem intrinsicQuotientHomeomorph_comp_intrinsicToModel
+    (q : GroupLieAlgebra I G ⧸
+      (intrinsicComplexExponentialPeriodLattice (G := G) I).toAddSubgroup) :
+    intrinsicComplexExponentialQuotientHomeomorph (G := G) I q =
+      canonicalComplexExponentialQuotientHomeomorph (G := G) I
+        (intrinsicToModelQuotientAddEquiv (G := G) I q) := by
+  refine QuotientAddGroup.induction_on q ?_
+  intro v
+  change intrinsicComplexExponentialQuotientHomeomorph (G := G) I
+      (QuotientAddGroup.mk'
+        (intrinsicComplexExponentialPeriodLattice (G := G) I).toAddSubgroup v) =
+    canonicalComplexExponentialQuotientHomeomorph (G := G) I
+      (intrinsicToModelQuotientAddEquiv (G := G) I
+        (QuotientAddGroup.mk'
+          (intrinsicComplexExponentialPeriodLattice (G := G) I).toAddSubgroup v))
+  rw [intrinsicComplexExponentialQuotientHomeomorph_mk,
+    intrinsicToModelQuotientAddEquiv_mk,
+    canonicalComplexExponentialQuotientHomeomorph_mk]
+  rfl
 
 end Analytic
 end Mumford
