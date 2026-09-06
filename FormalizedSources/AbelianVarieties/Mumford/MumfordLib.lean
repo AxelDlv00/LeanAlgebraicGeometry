@@ -49,6 +49,7 @@ import MumfordLib.SingularCochains
 import MumfordLib.SingularCupProduct
 import MumfordLib.SingularSecondCohomology
 import MumfordLib.SingularCohomologyCup
+import MumfordLib.SingularCohomologyExteriorSquare
 import MumfordLib.ComplexLatticeAtlas
 import MumfordLib.ArbitraryLatticeTorsion
 import MumfordLib.ArbitraryLatticeFiniteTorsion
