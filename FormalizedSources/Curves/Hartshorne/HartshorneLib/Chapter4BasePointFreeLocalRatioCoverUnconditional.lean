@@ -7,6 +7,7 @@ Authors: The Hartshorne Contributors
 import HartshorneLib.Chapter4BasePointFreeLocalRatioCover
 import HartshorneLib.Chapter4CurvePointWitness
 import HartshorneLib.Chapter4ProjectiveMapProducer
+import HartshorneLib.Chapter4LocalRatioGluingInvariance
 
 /-!
 # Unconditional smooth-curve local-ratio cover
@@ -19,7 +20,7 @@ carry an extra existential hypothesis.
 
 set_option autoImplicit false
 
-universe u
+universe u v
 
 open CategoryTheory Limits Opposite TopologicalSpace
 open AlgebraicGeometry
@@ -68,8 +69,9 @@ coordinate index.  The target dimension is retained as a field of the
 producer and is recovered from the basis by `ProjectiveMapProducer.target_dimension`.
 
 The selected indices, opens, and regularizations are obtained with
-`Classical.choose`, so this is a choice-dependent construction rather than a
-canonical map.
+`Classical.choose`.  For the fixed basis, the resulting morphism is independent
+of those auxiliary choices by `gluedFromOpen_eq_gluedMap_of_smoothCurve`.
+No independence from the basis is asserted.
 -/
 noncomputable def projectiveMapProducer_of_smoothCurve
     (basis : Module.Basis (Fin (n + 1)) k (CurveDivisorSectionSpace D))
@@ -172,6 +174,31 @@ theorem projectiveMapProducer_of_smoothCurve_eq_of_chart_restrictions
   intro i
   rw [hf i, ← chartOpenCover_ι_projectiveMapProducer_of_smoothCurve]
   rfl
+
+/-- Any covering regularized family with the fixed basis section values gives
+the same map as the selected smooth-curve construction.  This removes dependence
+on the auxiliary opens, denominators, and regularizations, with the basis fixed. -/
+theorem gluedFromOpen_eq_gluedMap_of_smoothCurve
+    (basis : Module.Basis (Fin (n + 1)) k (CurveDivisorSectionSpace D))
+    (hD : BasePointFreeLinearSystem D)
+    {ι : Type v} (a : ι → LocalRatioCoordinateData D n)
+    (r : (i : ι) → LocalRatioRegularization (a i))
+    (hcover : IsOpenCover fun i => (a i).chart.U)
+    (hsame : ∀ i j, (a i).SameSectionValues (a j))
+    (hvalues : ∀ i j, ((a i).sections j : X.left.functionField) =
+      (basisSections (D := D) basis j : X.left.functionField)) :
+    LocalRatioProjectiveGluing.gluedFromOpen a r hcover hsame =
+      gluedMap_of_smoothCurve (D := D) basis hD := by
+  change LocalRatioProjectiveGluing.gluedFromOpen a r hcover hsame =
+    LocalRatioProjectiveGluing.gluedFromOpen
+      (fun x : NonGenericPoint X => selectedCoordinates (D := D) basis hD x)
+      (fun x => selectedRegularization (D := D) basis hD x)
+      (selectedCoordinates_isOpenCover_of_smoothCurve basis hD)
+      (selectedCoordinates_sameSectionValues (D := D) basis hD)
+  apply LocalRatioProjectiveGluing.gluedFromOpen_eq_of_sameSectionValues
+  intro i x j
+  exact (hvalues i j).trans
+    (selectedCoordinates_section_value (D := D) basis hD x j).symm
 
 end BasePointFreeLocalRatioCover
 
