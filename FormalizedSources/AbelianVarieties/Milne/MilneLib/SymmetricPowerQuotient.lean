@@ -155,6 +155,25 @@ theorem symmetricPowerQuotientProjection_isFinite
     (relativePower V n).hom (quotientPermutationAction_comp_base V n)
       (quotientPermutationAction_orbits V n h)
 
+/-! Étaleness of the finite quotient is local on the affine stable charts.  The
+chart-level hypothesis is kept explicit because freeness of the action does not
+yet have an affine invariant-ring implementation in Mathlib. -/
+
+theorem symmetricPowerQuotientProjection_isEtale_of_chart_maps
+    (hEtale : ∀ i : (finiteStableAffineCover (quotientPermutationAction V n)
+        (quotientPermutationAction_orbits V n h)).I₀,
+      Etale (finiteStableQuotientChartMap (quotientPermutationAction V n)
+        (relativePower V n).hom (quotientPermutationAction_comp_base V n)
+        (quotientPermutationAction_orbits V n h) i ≫
+        (finiteStableQuotientCrossChartDatum (quotientPermutationAction V n)
+          (relativePower V n).hom (quotientPermutationAction_comp_base V n)
+          (quotientPermutationAction_orbits V n h)).toGlueData.ι i)) :
+    Etale (symmetricPowerQuotientProjection V n h).left := by
+  exact finiteStableCanonicalQuotientProjection_etale_of_chart_maps
+    (quotientPermutationAction V n) (relativePower V n).hom
+    (quotientPermutationAction_comp_base V n)
+    (quotientPermutationAction_orbits V n h) hEtale
+
 /-- Symmetric-power data produced by the finite invariant-ring quotient,
 under the explicit affine-orbit and compactness hypotheses. -/
 noncomputable def symmetricPowerDataOfOrbits : SymmetricPowerData V n where
