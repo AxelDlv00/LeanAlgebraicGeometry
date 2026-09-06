@@ -6,7 +6,7 @@ Authors: The AlgebraicJacobian Contributors
 import AlgebraicJacobian.Picard.CartierKernelLocalEquation
 import AlgebraicJacobian.Picard.DivisorModules
 import AlgebraicJacobian.Cohomology.StructureSheafModuleK.ModulesFunctor
-import AlgebraicJacobian.RiemannRoch.Ledger.ChiLedger
+import AlgebraicJacobian.RiemannRoch.Ledger.ChiCurve
 
 /-!
 # Cartier kernels and principal Weil divisors on a smooth curve
@@ -183,10 +183,10 @@ theorem subsingleton_hModule_one_kernel_of_divisor_bound
   exact (Equiv.subsingleton_congr (Sheaf.HModule.mapEquiv e 1).toEquiv).mpr
     (hb (0 - localDivisor K q eO eI) hdeg)
 
-/-- The Cartier equation defines a principal divisor, so its residue-weighted degree
-vanishes over an arbitrary field. -/
+/-- The Cartier equation has degree zero on a proper geometrically integral curve,
+by the general-field principal-divisor ledger. -/
 theorem localDivisor_deg_zero
-    [IsProper C.hom]
+    [IsProper C.hom] [GeometricallyIrreducible C.hom]
     {E F : C.left.Modules} (q : E ⟶ F)
     (eO : E ≅ SheafOfModules.unit C.left.ringCatSheaf)
     (eI : kernel q ≅ SheafOfModules.unit C.left.ringCatSheaf) :
