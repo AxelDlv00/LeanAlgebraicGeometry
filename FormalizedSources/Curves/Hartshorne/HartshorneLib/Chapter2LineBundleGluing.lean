@@ -188,6 +188,28 @@ noncomputable def modulePresheaf : X.PresheafOfModules :=
 noncomputable def gluedModule : X.Modules :=
   ⟨modulePresheaf U g, isSheaf_presheaf U g⟩
 
+section SectionConstructor
+
+variable (W : X.Opens) (s : ∀ i : J, Γ(X, W ⊓ U i))
+  (hs : ∀ i j,
+    X.resHom (inf_le_left : W ⊓ U i ⊓ U j ≤ W ⊓ U i) (s i) =
+      X.resHom (inclCoc U W i j) (g i j : Γ(X, U i ⊓ U j)) *
+        X.resHom (inclSnd U W i j) (s j))
+
+/-- Construct a section of the glued module from a matching family. -/
+noncomputable def mkSection : Γ(gluedModule U g, W) := ⟨s, hs⟩
+
+@[simp]
+lemma mkSection_apply (i : J) : (mkSection U g W s hs).val i = s i := rfl
+
+@[simp]
+lemma map_mkSection {V : X.Opens} (h : V ≤ W) :
+    (gluedModule U g).presheaf.map (homOfLE h).op (mkSection U g W s hs) =
+      mkSection U g V (fun i => X.resHom (inf_le_inf_right (U i) h) (s i))
+        (section_res U g h hs) := rfl
+
+end SectionConstructor
+
 variable {U g} (hc : IsCocycle U g)
 
 /-- Projection to the chosen component trivializes sections on a chart. -/
@@ -231,6 +253,12 @@ noncomputable def sectionTriv (j : J) {W : X.Opens} (hW : W ≤ U j) :
           X.resHom (inf_le_left : W ⊓ U j ≤ W) t) = t
     rw [map_mul, hc.unit_self j, map_one, map_one, one_mul, Scheme.resHom_resHom,
       Scheme.resHom_self]
+
+@[simp]
+lemma sectionTriv_mkSection (j : J) {W : X.Opens} (hW : W ≤ U j)
+    (s : ∀ i : J, Γ(X, W ⊓ U i)) (hs) :
+    sectionTriv hc j hW (mkSection U g W s hs) =
+      X.resHom (le_inf le_rfl hW) (s j) := rfl
 
 lemma sectionTriv_res (j : J) {W' W : X.Opens} (h : W' ≤ W) (hW : W ≤ U j)
     (s : sectionSubmodule U g W) :
