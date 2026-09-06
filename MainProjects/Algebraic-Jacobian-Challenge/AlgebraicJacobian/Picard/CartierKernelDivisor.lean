@@ -5,6 +5,8 @@ Authors: The AlgebraicJacobian Contributors
 -/
 import AlgebraicJacobian.Picard.CartierKernelLocalEquation
 import AlgebraicJacobian.Picard.DivisorModules
+import AlgebraicJacobian.Cohomology.StructureSheafModuleK.ModulesFunctor
+import AlgebraicJacobian.RiemannRoch.Ledger.ChiLedger
 
 /-!
 # Cartier kernels and principal Weil divisors on a smooth curve
@@ -138,5 +140,59 @@ theorem kernelDivisorIso_hom_value (q : E ⟶ F)
       (X.presheaf.map (homOfLE (le_top : U ≤ ⊤)).op (localEquation q eO eI)) = _ at h
   rw [X.presheaf.germ_res_apply] at h
   exact (mul_comm _ _).trans h
+
+end AlgebraicGeometry.Scheme.CartierKernel
+
+namespace AlgebraicGeometry.Scheme.CartierKernel
+
+noncomputable section
+
+variable (K : Type u) [Field K] {C : Over (Spec (CommRingCat.of K))}
+  [SmoothOfRelativeDimension 1 C.hom] [IsIntegral C.left]
+  [LocallyOfFiniteType C.hom] [QuasiCompact C.hom]
+
+local instance : C.left.Over (Spec (CommRingCat.of K)) := .ofHom C.hom
+local instance : SmoothOfRelativeDimension 1
+    (C.left ↘ Spec (CommRingCat.of K)) := inferInstanceAs
+      (SmoothOfRelativeDimension 1 C.hom)
+local instance : LocallyOfFiniteType
+    (C.left ↘ Spec (CommRingCat.of K)) := inferInstanceAs
+      (LocallyOfFiniteType C.hom)
+local instance : QuasiCompact
+    (C.left ↘ Spec (CommRingCat.of K)) := inferInstanceAs
+      (QuasiCompact C.hom)
+
+/-- Degree-one vanishing for a Cartier kernel follows from the corresponding
+vanishing bound for its divisor module.  The kernel is the actual input to the
+Grassmannian lifting map; `kernelDivisorIso` identifies it with
+`divisorModules (0 - localDivisor ...)`, and the bound is then transported
+through the induced field-sheaf isomorphism. -/
+theorem subsingleton_hModule_one_kernel_of_divisor_bound
+    {E F : C.left.Modules} (q : E ⟶ F)
+    (eO : E ≅ SheafOfModules.unit C.left.ringCatSheaf)
+    (eI : kernel q ≅ SheafOfModules.unit C.left.ringCatSheaf)
+    {b : ℤ}
+    (hb : ∀ D : C.left.CurveDivisor, b ≤ CurveDivisor.deg K D →
+      Subsingleton (Sheaf.HModule
+        (toModuleKSheafOfModules C (divisorModules K D)) 1))
+    (hdeg : b ≤ CurveDivisor.deg K
+      (0 - localDivisor K q eO eI)) :
+    Subsingleton (Sheaf.HModule (toModuleKSheafOfModules C (kernel q)) 1) := by
+  let e := (toModuleKSheafOfModulesFunctor C).mapIso
+    (kernelDivisorIso K q eO eI)
+  exact (Equiv.subsingleton_congr (Sheaf.HModule.mapEquiv e 1).toEquiv).mpr
+    (hb (0 - localDivisor K q eO eI) hdeg)
+
+/-- The Cartier equation defines a principal divisor, so its residue-weighted degree
+vanishes over an arbitrary field. -/
+theorem localDivisor_deg_zero
+    [IsProper C.hom]
+    {E F : C.left.Modules} (q : E ⟶ F)
+    (eO : E ≅ SheafOfModules.unit C.left.ringCatSheaf)
+    (eI : kernel q ≅ SheafOfModules.unit C.left.ringCatSheaf) :
+    CurveDivisor.deg K (localDivisor K q eO eI) = 0 := by
+  exact AlgebraicGeometry.deg_divOf K (localEquationUnit q eO eI)
+
+end
 
 end AlgebraicGeometry.Scheme.CartierKernel
