@@ -6,6 +6,7 @@ Authors: The Milne Contributors
 
 import MilneLib.InvariantLocalizationTransitions
 import MilneLib.InvariantQuotientOpen
+import Mathlib.Topology.Sheaves.SheafCondition.UniqueGluing
 
 /-!
 # Sections on invariant quotient charts
@@ -405,7 +406,7 @@ theorem affineInvariantQuotientMap_app_basicOpen_range [Finite G]
           (PrimeSpectrum.basicOpen b)).hom s) ∈
       fixedAway (b : A) hb
     rw [h']
-    simpa [hb] using (quotientBasicOpenSectionsEquiv b s).property
+    exact (quotientBasicOpenSectionsEquiv b s).property
   · intro hx
     let y : fixedAway (b : A) b.property :=
       ⟨invariantSourceBasicOpenPreimageSectionsEquiv b x, hx⟩
@@ -451,6 +452,87 @@ theorem affineInvariantQuotientMap_app_injective [Finite G]
       ((Spec (CommRingCat.of A)).presheaf.map
         ((Opens.map q.base).map (homOfLE hbU)).op).hom z) hst).trans
       (congrArg (fun f => f.hom t) hn).symm)
+
+/-- A section over the inverse image of an open lifts from the quotient
+exactly when its restrictions over all contained principal opens lift. -/
+theorem affineInvariantQuotientMap_mem_range_app_iff_basicOpen [Finite G]
+    (U : (Spec (CommRingCat.of (FixedPoints.subalgebra k A G))).Opens)
+    (s : Γ(Spec (CommRingCat.of A),
+      (affineInvariantQuotientMap (k := k) (A := A) (G := G)) ⁻¹ᵁ U)) :
+    s ∈ Set.range ((affineInvariantQuotientMap (k := k) (A := A) (G := G)).app U).hom ↔
+      ∀ (b : FixedPoints.subalgebra k A G) (hb : PrimeSpectrum.basicOpen b ≤ U),
+        ((Spec (CommRingCat.of A)).presheaf.map
+          ((Opens.map (affineInvariantQuotientMap (k := k) (A := A) (G := G)).base).map
+            (homOfLE hb)).op).hom s ∈
+          Set.range ((affineInvariantQuotientMap (k := k) (A := A) (G := G)).app
+            (PrimeSpectrum.basicOpen b)).hom := by
+  classical
+  let X := Spec (CommRingCat.of A)
+  let Y := Spec (CommRingCat.of (FixedPoints.subalgebra k A G))
+  let q : X ⟶ Y := affineInvariantQuotientMap (k := k) (A := A) (G := G)
+  have hn (V W : Y.Opens) (hWV : W ≤ V) (t : Γ(Y, V)) :
+      (q.app W).hom ((Y.presheaf.map (homOfLE hWV).op).hom t) =
+        (X.presheaf.map ((Opens.map q.base).map (homOfLE hWV)).op).hom
+          ((q.app V).hom t) :=
+    congrArg (fun f => f.hom t) (q.naturality (homOfLE hWV).op)
+  constructor
+  · rintro ⟨t, rfl⟩ b hb
+    exact ⟨(Y.presheaf.map (homOfLE hb).op).hom t, hn U _ hb t⟩
+  · intro hs
+    let I := {b : FixedPoints.subalgebra k A G // PrimeSpectrum.basicOpen b ≤ U}
+    let V : I → Y.Opens := fun b => PrimeSpectrum.basicOpen b.val
+    have hcover : U ≤ ⨆ b, V b := by
+      intro y hy
+      obtain ⟨_, ⟨b, rfl⟩, hby, hbU⟩ :=
+        PrimeSpectrum.isTopologicalBasis_basic_opens.mem_nhds_iff.mp
+          (U.isOpen.mem_nhds hy)
+      exact Opens.mem_iSup.mpr ⟨⟨b, hbU⟩, hby⟩
+    have hl : ∀ b : I, ∃ t : Γ(Y, V b), (q.app (V b)).hom t =
+        (X.presheaf.map ((Opens.map q.base).map (homOfLE b.property)).op).hom s :=
+      fun b => hs b.val b.property
+    choose t ht using hl
+    have hcpt : TopCat.Presheaf.IsCompatible Y.presheaf V t := by
+      intro i j
+      apply affineInvariantQuotientMap_app_injective (V i ⊓ V j)
+      change (q.app (V i ⊓ V j)).hom
+          ((Y.presheaf.map (homOfLE inf_le_left).op).hom (t i)) =
+        (q.app (V i ⊓ V j)).hom
+          ((Y.presheaf.map (homOfLE inf_le_right).op).hom (t j))
+      rw [hn, hn, ht, ht]
+      simp only [← CommRingCat.comp_apply, ← X.presheaf.map_comp]
+      rfl
+    obtain ⟨a, ha, _⟩ := Y.sheaf.existsUnique_gluing' V U
+      (fun b => homOfLE b.property) hcover t hcpt
+    refine ⟨a, ?_⟩
+    apply TopCat.Presheaf.IsSheaf.section_ext X.sheaf.2
+    intro x hx
+    obtain ⟨_, ⟨b, rfl⟩, hbx, hbU⟩ :=
+      PrimeSpectrum.isTopologicalBasis_basic_opens.mem_nhds_iff.mp
+        (U.isOpen.mem_nhds hx)
+    refine ⟨q ⁻¹ᵁ PrimeSpectrum.basicOpen b,
+      (Opens.map q.base).monotone hbU, hbx, ?_⟩
+    have hnat := hn U (PrimeSpectrum.basicOpen b) hbU a
+    have ha' : (Y.presheaf.map (homOfLE hbU).op).hom a = t ⟨b, hbU⟩ :=
+      ha ⟨b, hbU⟩
+    exact hnat.symm.trans
+      ((congrArg (q.app (PrimeSpectrum.basicOpen b)).hom ha').trans (ht ⟨b, hbU⟩))
+
+/-- The all-open lifting criterion expressed in the fixed-localization
+presentations of the principal-open restrictions. -/
+theorem affineInvariantQuotientMap_mem_range_app_iff_fixed_basicOpen [Finite G]
+    (U : (Spec (CommRingCat.of (FixedPoints.subalgebra k A G))).Opens)
+    (s : Γ(Spec (CommRingCat.of A),
+      (affineInvariantQuotientMap (k := k) (A := A) (G := G)) ⁻¹ᵁ U)) :
+    s ∈ Set.range ((affineInvariantQuotientMap (k := k) (A := A) (G := G)).app U).hom ↔
+      ∀ (b : FixedPoints.subalgebra k A G) (hb : PrimeSpectrum.basicOpen b ≤ U),
+        invariantSourceBasicOpenPreimageSectionsEquiv b
+          (((Spec (CommRingCat.of A)).presheaf.map
+            ((Opens.map (affineInvariantQuotientMap (k := k) (A := A) (G := G)).base).map
+              (homOfLE hb)).op).hom s) ∈ fixedAway (b : A) b.property := by
+  rw [affineInvariantQuotientMap_mem_range_app_iff_basicOpen]
+  apply forall_congr' fun b => forall_congr' fun hb => ?_
+  rw [affineInvariantQuotientMap_app_basicOpen_range (k := k) (A := A) (G := G) b]
+  rfl
 
 end InvariantLocalization
 end MilneLib
