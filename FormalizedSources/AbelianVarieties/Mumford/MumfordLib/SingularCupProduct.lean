@@ -71,7 +71,7 @@ theorem singularCochainCupZero_zero
   intro σ
   simp [singularCochainCupZero]
 
-/-- The constant-one degree-zero cochain is a unit for the cup product. -/
+/-- The constant-one degree-zero cochain used as the cup-product unit. -/
 def singularCochainOne (X : TopCat) : IntegralSingularCochain X 0 :=
   singularCochainOfSimplexFunction (fun _ => 1)
 
