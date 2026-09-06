@@ -95,6 +95,100 @@ noncomputable def divisorModules (D : X.CurveDivisor) : X.Modules := by
         (forget₂ (ModuleCat.{u} K) AddCommGrpCat.{u})).obj
         (X.divisorSheaf K D)).property }
 
+/-- On an affine open, divisor-module sections localize along each basic open. -/
+theorem divisorModules_isLocalizedModule (D : X.CurveDivisor)
+    {U : X.Opens} (hU : IsAffineOpen U) (g : Γ(X, U)) :
+    letI : Module Γ(X, U) Γ(divisorModules K D, X.basicOpen g) :=
+      Module.compHom _ (algebraMap Γ(X, U) Γ(X, X.basicOpen g))
+    letI : IsScalarTower Γ(X, U) Γ(X, X.basicOpen g)
+        Γ(divisorModules K D, X.basicOpen g) :=
+      IsScalarTower.of_algebraMap_smul (fun _ _ => rfl)
+    IsLocalizedModule (Submonoid.powers g)
+      (Modules.restrictBasicOpenₗ (divisorModules K D) g) := by
+  letI : Module Γ(X, U) Γ(divisorModules K D, X.basicOpen g) :=
+    Module.compHom _ (algebraMap Γ(X, U) Γ(X, X.basicOpen g))
+  letI : IsScalarTower Γ(X, U) Γ(X, X.basicOpen g)
+      Γ(divisorModules K D, X.basicOpen g) :=
+    IsScalarTower.of_algebraMap_smul (fun _ _ => rfl)
+  refine ⟨?_, ?_, ?_⟩
+  · intro s
+    obtain ⟨n, hn⟩ := s.2
+    have hu : IsUnit (algebraMap Γ(X, U) Γ(X, X.basicOpen g) (s : Γ(X, U))) := by
+      rw [← hn, map_pow]
+      exact (X.toLocallyRingedSpace.toRingedSpace.isUnit_res_basicOpen g).pow n
+    rw [← (Algebra.lsmul Γ(X, U) (A := Γ(X, X.basicOpen g)) Γ(X, U)
+      Γ(divisorModules K D, X.basicOpen g)).commutes]
+    exact hu.map _
+  · intro y
+    obtain ⟨n, e, he⟩ := QcohOn.exists_secRes_eq_qsmul_pow
+      (F := X.divisorSheaf K D) hU le_rfl g
+      (secRes (X.divisorSheaf K D) inf_le_right y)
+    refine ⟨⟨e, ⟨g ^ n, n, rfl⟩⟩, ?_⟩
+    change QcohOn.qsmul le_rfl (X.resHom (X.basicOpen_le g) (g ^ n)) y =
+      secRes (X.divisorSheaf K D) (X.basicOpen_le g) e
+    rw [← divisorSheaf_qsmul_restrict]
+    have hback : X.basicOpen g ≤ U ⊓ X.basicOpen g := le_inf (X.basicOpen_le g) le_rfl
+    have hh := congrArg (secRes (X.divisorSheaf K D) hback) he
+    rw [secRes_secRes, QcohOn.secRes_qsmul, secRes_secRes, secRes_self] at hh
+    exact hh.symm
+  · intro x₁ x₂ h
+    have hh := congrArg (secRes (X.divisorSheaf K D)
+      (inf_le_right : U ⊓ X.basicOpen g ≤ X.basicOpen g)) h
+    change secRes (X.divisorSheaf K D) inf_le_right
+      (secRes (X.divisorSheaf K D) (X.basicOpen_le g) x₁) =
+        secRes (X.divisorSheaf K D) inf_le_right
+          (secRes (X.divisorSheaf K D) (X.basicOpen_le g) x₂) at hh
+    rw [secRes_secRes, secRes_secRes] at hh
+    have hz : secRes (X.divisorSheaf K D)
+        (inf_le_left : U ⊓ X.basicOpen g ≤ U) (x₁ - x₂) = 0 := by
+      exact (map_sub (secRes (X.divisorSheaf K D) inf_le_left) x₁ x₂).trans
+        (sub_eq_zero.mpr hh)
+    obtain ⟨n, hn⟩ := QcohOn.exists_qsmul_pow_eq_zero
+      (F := X.divisorSheaf K D) hU le_rfl g (x₁ - x₂) hz
+    refine ⟨⟨g ^ n, n, rfl⟩, ?_⟩
+    change QcohOn.qsmul (F := X.divisorSheaf K D) le_rfl (g ^ n) x₁ =
+      QcohOn.qsmul (F := X.divisorSheaf K D) le_rfl (g ^ n) x₂
+    exact sub_eq_zero.mp ((QcohOn.qsmul_sub (F := X.divisorSheaf K D)
+      le_rfl (g ^ n) x₁ x₂).symm.trans hn)
+
+/-- Affine restrictions of the divisor module admit a presentation by free modules. -/
+private theorem divisorModules_isQuasicoherent_over_affine (D : X.CurveDivisor)
+    {U : X.Opens} (hU : IsAffineOpen U) :
+    ((divisorModules K D).over U).IsQuasicoherent := by
+  let M := divisorModules K D
+  haveI hP1 : IsIso (Modules.fromTildeΓ ((Modules.pullback hU.fromSpec).obj M)) :=
+    Modules.isIso_fromTildeΓ_pullback_fromSpec_of_isLocalizedModule M hU
+      (divisorModules_isLocalizedModule K D hU)
+  let e : tilde ((modulesSpecToSheaf.obj
+      ((Modules.pullback hU.fromSpec).obj M)).presheaf.obj (op ⊤)) ≅
+        (Modules.pullback hU.fromSpec).obj M :=
+    asIso (Modules.fromTildeΓ ((Modules.pullback hU.fromSpec).obj M))
+  let P : ((Modules.pullback hU.fromSpec).obj M).Presentation :=
+    SheafOfModules.Presentation.ofIsIso.{u} e.hom
+      (presentationTilde.{u} _ Set.univ (by simp) _ (Submodule.span_eq _))
+  have hcomp : hU.isoSpec.hom ≫ hU.fromSpec = U.ι := by
+    rw [← hU.isoSpec_inv_ι, Iso.hom_inv_id_assoc]
+  let P' : ((Modules.pullback U.ι).obj M).Presentation :=
+    SheafOfModules.Presentation.ofIsIso.{u, u, u}
+      ((Modules.pullbackComp hU.isoSpec.hom hU.fromSpec).app M ≪≫
+        (Modules.pullbackCongr hcomp).app M).hom
+      (Modules.presentationPullbackOfSchemeIso hU.isoSpec.symm
+        ((Modules.pullback hU.fromSpec).obj M) P)
+  exact (Modules.overRestrictPresentationInv U M P').isQuasicoherent
+
+/-- The divisor module is quasi-coherent, by its basic-open section localizations. -/
+instance divisorModules_isQuasicoherent (D : X.CurveDivisor) :
+    (divisorModules K D).IsQuasicoherent := by
+  haveI : ∀ U : X.affineOpens, ((divisorModules K D).over U.1).IsQuasicoherent :=
+    fun U => divisorModules_isQuasicoherent_over_affine K D U.2
+  apply SheafOfModules.IsQuasicoherent.of_coversTop (divisorModules K D)
+    (fun U : X.affineOpens => U.1)
+  intro W x hx
+  obtain ⟨V, hV, hxV, hVW⟩ := Opens.isBasis_iff_nbhd.mp (Scheme.isBasis_affineOpens X) hx
+  refine ⟨V, homOfLE hVW, ?_, hxV⟩
+  rw [Sieve.mem_ofObjects_iff]
+  exact ⟨⟨V, hV⟩, ⟨𝟙 V⟩⟩
+
 noncomputable section FieldComparison
 
 variable (C : Over (Spec (CommRingCat.of K)))
