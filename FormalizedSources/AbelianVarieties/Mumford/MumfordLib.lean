@@ -57,6 +57,7 @@ import MumfordLib.SingularCohomologyExteriorOne
 import MumfordLib.SingularCohomologyExteriorZero
 import MumfordLib.SingularFirstCohomologyProduct
 import MumfordLib.SingularCohomologyContractible
+import MumfordLib.SingularCohomologyPuncturedSphere
 import MumfordLib.ComplexLatticeAtlas
 import MumfordLib.ArbitraryLatticeTorsion
 import MumfordLib.ArbitraryLatticeFiniteTorsion
