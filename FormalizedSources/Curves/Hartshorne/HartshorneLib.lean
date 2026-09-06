@@ -144,6 +144,9 @@ import HartshorneLib.Chapter4GenericStalkSurjectivity
 import HartshorneLib.Chapter4ResidueMap
 import HartshorneLib.Chapter4ProjectiveMapClosedImmersion
 import HartshorneLib.Chapter4DenominatorTrivialization
+import HartshorneLib.Chapter4DenominatorTransition
+import HartshorneLib.Chapter4ProjectiveCoordinatePullback
+import HartshorneLib.Chapter4ProjectiveTwistingSheaf
 
 /-!
 # HartshorneLib
