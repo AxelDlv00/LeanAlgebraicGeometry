@@ -6,6 +6,9 @@ Authors: The Milne Contributors
 
 import Mathlib.AlgebraicGeometry.Limits
 import Mathlib.CategoryTheory.Limits.Shapes.SingleObj
+import Mathlib.CategoryTheory.Limits.MorphismProperty
+import Mathlib.AlgebraicGeometry.Morphisms.FiniteType
+import Mathlib.AlgebraicGeometry.Morphisms.Separated
 import MilneLib.StableAffineCover
 
 /-!
@@ -43,6 +46,47 @@ namespace MilneLib
 When `S = Spec(k)`, this is the fibre power `V^n` over `k`. -/
 noncomputable abbrev relativePower {S : Scheme.{u}} (V : Over S) (n : ℕ) : Over S :=
   ∏ᶜ (fun _ : Fin n => V)
+
+private theorem relativePower_property {S : Scheme.{u}}
+    (P : MorphismProperty Scheme.{u}) [P.IsMultiplicative]
+    [P.IsStableUnderBaseChange] [P.HasOfPostcompProperty P]
+    (V : Over S) (n : ℕ) (hV : P V.hom) : P (relativePower V n).hom := by
+  let V' : P.Over ⊤ S := MorphismProperty.Over.mk ⊤ V.hom hV
+  let D := Discrete.functor (fun _ : Fin n => V')
+  let F := MorphismProperty.Over.forget P ⊤ S
+  let e := preservesLimitIso F D
+  exact (P.over_iso_iff e).mp (limit D).prop
+
+/-- A finite relative power is locally of finite type whenever its factor is. -/
+theorem relativePower_locallyOfFiniteType {S : Scheme.{u}} (V : Over S) (n : ℕ)
+    [LocallyOfFiniteType V.hom] : LocallyOfFiniteType (relativePower V n).hom := by
+  letI : MorphismProperty.HasOfPostcompProperty
+      (@LocallyOfFiniteType) (@LocallyOfFiniteType) := {
+    of_postcomp := fun f g _ hfg => by
+      letI := hfg
+      exact locallyOfFiniteType_of_comp f g }
+  exact relativePower_property (@LocallyOfFiniteType) V n inferInstance
+
+/-- Finite relative powers preserve quasi-compact, quasi-separated structure
+morphisms. -/
+theorem relativePower_quasiCompact {S : Scheme.{u}} (V : Over S) (n : ℕ)
+    [QuasiCompact V.hom] [QuasiSeparated V.hom] :
+    QuasiCompact (relativePower V n).hom := by
+  let P : MorphismProperty Scheme.{u} := (@QuasiCompact) ⊓ (@QuasiSeparated)
+  letI : P.HasOfPostcompProperty P := {
+    of_postcomp := fun f g hg hfg => by
+      letI := hg.2
+      letI := hfg.1
+      letI := hfg.2
+      exact ⟨QuasiCompact.of_comp f g, QuasiSeparated.of_comp f g⟩ }
+  exact (relativePower_property P V n ⟨inferInstance, inferInstance⟩).1
+
+/-- A finite relative power of a separated morphism is separated over the base. -/
+theorem relativePower_isSeparated {S : Scheme.{u}} (V : Over S) (n : ℕ)
+    [IsSeparated V.hom] : IsSeparated (relativePower V n).hom := by
+  letI : MorphismProperty.HasOfPostcompProperty (@IsSeparated) (@IsSeparated) :=
+    MorphismProperty.HasOfPostcompProperty.of_le _ ⊤ le_top
+  exact relativePower_property (@IsSeparated) V n inferInstance
 
 /-! The affine case of the relative product is available directly from the
 wide-pullback presentation used to construct products in `Over`. -/
