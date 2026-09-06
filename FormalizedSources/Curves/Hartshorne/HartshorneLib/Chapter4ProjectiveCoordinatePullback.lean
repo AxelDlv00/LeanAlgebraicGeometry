@@ -6,6 +6,8 @@ Authors: The Hartshorne Contributors
 
 import HartshorneLib.Chapter4ProjectiveChartImmersion
 import HartshorneLib.Chapter4LocalRatioCanonicalBridge
+import HartshorneLib.Chapter4ProjectiveTwistTransition
+import HartshorneLib.Chapter4BasePointFreeLocalRatioCoverUnconditional
 
 /-!
 # Pullback of projective coordinate sections
@@ -127,6 +129,80 @@ theorem toBasicOpen_appTop_chartCoord (r : LocalRatioRegularization a)
     ProjectiveCoordinates.toBasicOpen_appTop_chartCoord,
     Scheme.Opens.toSpecΓ_appTop, CommRingCat.comp_apply, Iso.inv_hom_id_apply]
 
+/-- A morphism agreeing with the regularized chart map sends the whole
+source chart into its denominator's projective chart. -/
+theorem chart_le_preimage_of_restrict_eq (r : LocalRatioRegularization a)
+    (f : X.left ⟶ projectiveSpace k n)
+    (hf : a.chart.U.ι ≫ f = r.chartMap) :
+    a.chart.U ≤ f ⁻¹ᵁ ProjectiveTwist.chart a.denominator_index := by
+  have hpre : (a.chart.U.ι ≫ f) ⁻¹ᵁ
+      ProjectiveTwist.chart a.denominator_index = ⊤ := by
+    rw [hf, ProjectiveTwist.chart, r.chartMap_preimage_basicOpen_ambient,
+      r.regularized_denominator_eq_one, Scheme.basicOpen_one, Scheme.Opens.ι_preimage_self]
+  intro x hx
+  have hmem : (⟨x, hx⟩ : a.chart.U) ∈
+      (a.chart.U.ι ≫ f) ⁻¹ᵁ ProjectiveTwist.chart a.denominator_index := by
+    rw [hpre]
+    trivial
+  exact hmem
+
+/-- The actual morphism's section pullback is the regularized coordinate,
+provided its restriction is the local-ratio map. -/
+theorem appLE_coordinate_of_restrict_eq (r : LocalRatioRegularization a)
+    (f : X.left ⟶ projectiveSpace k n)
+    (hf : a.chart.U.ι ≫ f = r.chartMap) (j : Fin (n + 1)) :
+    (f.appLE (ProjectiveTwist.chart a.denominator_index) a.chart.U
+        (r.chart_le_preimage_of_restrict_eq f hf)).hom
+      (ProjectiveTwist.coordinate a.denominator_index j) = r.regularized j := by
+  let h := r.chart_le_preimage_of_restrict_eq f hf
+  have hres : f.resLE (ProjectiveTwist.chart a.denominator_index) a.chart.U h =
+      a.chart.U.toSpecΓ ≫ ProjectiveCoordinates.toBasicOpen (k := k)
+        a.denominator_index r.regularized r.regularized_denominator_eq_one := by
+    apply (cancel_mono (ProjectiveTwist.chart (k := k) a.denominator_index).ι).1
+    exact (Scheme.Hom.resLE_comp_ι f h).trans (hf.trans r.toBasicOpen_factor_chartMap.symm)
+  have hp := r.toBasicOpen_appTop_chartCoord j
+  rw [← hres] at hp
+  have htop : (f.resLE (ProjectiveTwist.chart a.denominator_index) a.chart.U h).appTop =
+      (ProjectiveTwist.chart a.denominator_index).topIso.hom ≫
+        f.appLE (ProjectiveTwist.chart a.denominator_index) a.chart.U h ≫
+        a.chart.U.topIso.inv := Scheme.Hom.resLE_app_top f h
+  erw [htop] at hp
+  apply (ConcreteCategory.bijective_of_isIso a.chart.U.topIso.inv).1
+  simp only [CommRingCat.comp_apply, Iso.inv_hom_id_apply] at hp
+  convert hp using 1
+  rfl
+
 end LocalRatioRegularization
+
+namespace BasePointFreeLocalRatioCover
+
+/-- Each selected denominator chart maps into the corresponding standard
+projective chart under the glued smooth-curve morphism. -/
+theorem selectedChart_le_preimage_chart
+    (basis : Module.Basis (Fin (n + 1)) k (CurveDivisorSectionSpace D))
+    (hD : BasePointFreeLinearSystem D) (x : NonGenericPoint X) :
+    (selectedCoordinates basis hD x).chart.U ≤
+      gluedMap_of_smoothCurve basis hD ⁻¹ᵁ
+        ProjectiveTwist.chart (selectedCoordinates basis hD x).denominator_index :=
+  (selectedRegularization basis hD x).chart_le_preimage_of_restrict_eq
+    (gluedMap_of_smoothCurve basis hD)
+    (chartOpenCover_ι_projectiveMapProducer_of_smoothCurve basis hD x)
+
+/-- The glued map pulls `X_j / X_d` back to the selected normalized divisor
+section on the chart with denominator `d`. -/
+theorem gluedMap_of_smoothCurve_appLE_coordinate
+    (basis : Module.Basis (Fin (n + 1)) k (CurveDivisorSectionSpace D))
+    (hD : BasePointFreeLinearSystem D) (x : NonGenericPoint X) (j : Fin (n + 1)) :
+    ((gluedMap_of_smoothCurve basis hD).appLE
+        (ProjectiveTwist.chart (selectedCoordinates basis hD x).denominator_index)
+        (selectedCoordinates basis hD x).chart.U
+        (selectedChart_le_preimage_chart basis hD x)).hom
+      (ProjectiveTwist.coordinate (selectedCoordinates basis hD x).denominator_index j) =
+      (selectedRegularization basis hD x).regularized j :=
+  (selectedRegularization basis hD x).appLE_coordinate_of_restrict_eq
+    (gluedMap_of_smoothCurve basis hD)
+    (chartOpenCover_ι_projectiveMapProducer_of_smoothCurve basis hD x) j
+
+end BasePointFreeLocalRatioCover
 end
 end Hartshorne
