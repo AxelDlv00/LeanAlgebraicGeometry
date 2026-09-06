@@ -143,6 +143,7 @@ import HartshorneLib.Chapter4FiniteInjectiveStalks
 import HartshorneLib.Chapter4GenericStalkSurjectivity
 import HartshorneLib.Chapter4ResidueMap
 import HartshorneLib.Chapter4ProjectiveMapClosedImmersion
+import HartshorneLib.Chapter4TautologicalPullback
 
 /-!
 # HartshorneLib
