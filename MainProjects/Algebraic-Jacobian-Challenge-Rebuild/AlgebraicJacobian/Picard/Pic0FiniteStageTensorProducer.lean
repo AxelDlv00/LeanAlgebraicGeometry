@@ -55,7 +55,8 @@ theorem exists_pic0Subgroup_tensorStage
     haveI : Module.FaithfullyFlat (S.stage ⊗[F] B) (K ⊗[F] B) :=
       DatG0.tensorStageMap_faithfullyFlat (B := B) S.toFinSubext
     have halg : algebraMap (S.stage ⊗[F] B) (K ⊗[F] B) = φ.toRingHom := rfl
-    exact RingHom.faithfullyFlat_algebraMap_iff.mpr (halg.symm ▸ inferInstance)
+    rw [← halg]
+    exact RingHom.faithfullyFlat_algebraMap_iff.mpr inferInstance
   have hzero : lamS ∈ pic0Subgroup C (overSpec F (S.stage ⊗[F] B)) := by
     apply mem_pic0Subgroup_of_faithfullyFlat (C := C) φ hff lamS
     rw [hmap]
@@ -65,6 +66,41 @@ theorem exists_pic0Subgroup_tensorStage
   change picEtMap C (Over.overSpecMap φ) lamS =
     (x : picEt C (overSpec F (K ⊗[F] B)))
   exact hmap
+
+/-- A finite family of degree-zero classes descends simultaneously after enlarging any
+prescribed finite stage.  The enlargement retains coefficients already used for chart
+rings and restriction maps.  Compatibility between different family members is a separate
+obligation. -/
+theorem exists_pic0Subgroup_tensorStage_finite
+    {ι : Type*} [Finite ι]
+    (A : ι → Type u) [∀ i, CommRing (A i)] [∀ i, Algebra F (A i)]
+    (S₀ : DatG0.FiniteStageData F K)
+    (x : ∀ i, pic0Subgroup C (overSpec F (K ⊗[F] A i))) :
+    ∃ (S : DatG0.FiniteStageData F K), S₀.stage ≤ S.stage ∧
+      ∃ xS : ∀ i, pic0Subgroup C (overSpec F (S.stage ⊗[F] A i)),
+        ∀ i, pic0Map C (Over.overSpecMap (S.tensorMap (A := A i))) (xS i) = x i := by
+  classical
+  choose M xM hxM using fun i => exists_pic0Subgroup_tensorStage C (x i)
+  obtain ⟨N, hN⟩ := Finite.exists_le fun i => (M i).toFinSubext
+  obtain ⟨S, hNS, hS₀S⟩ := DatG0.directed_finSubext N S₀.toFinSubext
+  have hMS (i : ι) : (M i).stage ≤ (DatG0.FiniteStageData.ofFinSubext S).stage :=
+    (hN i).trans hNS
+  let j (i : ι) : (M i).stage ⊗[F] A i →ₐ[F]
+      (DatG0.FiniteStageData.ofFinSubext S).stage ⊗[F] A i :=
+    Algebra.TensorProduct.map (IntermediateField.inclusion (hMS i)) (AlgHom.id F (A i))
+  refine ⟨DatG0.FiniteStageData.ofFinSubext S, hS₀S,
+    fun i => pic0Map C (Over.overSpecMap (j i)) (xM i), ?_⟩
+  intro i
+  apply Subtype.ext
+  change picEtMap C (Over.overSpecMap
+      ((DatG0.FiniteStageData.ofFinSubext S).tensorMap (A := A i)))
+      (picEtMap C (Over.overSpecMap (j i)) (xM i).val) = (x i).val
+  rw [← picEtMap_comp, ← Over.overSpecMap_comp]
+  have hcomp : ((DatG0.FiniteStageData.ofFinSubext S).tensorMap (A := A i)).comp
+      (j i) = (M i).tensorMap := by
+    ext z <;> rfl
+  rw [hcomp]
+  exact congrArg Subtype.val (hxM i)
 
 end
 
