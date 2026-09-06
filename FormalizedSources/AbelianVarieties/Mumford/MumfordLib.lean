@@ -31,6 +31,7 @@ import MumfordLib.ComplexLieExponentialUniqueness
 import MumfordLib.ComplexLieCommutativity
 import MumfordLib.CompactKernelLattice
 import MumfordLib.CanonicalComplexQuotient
+import MumfordLib.CanonicalQuotientDiffeomorph
 import MumfordLib.ComplexVectorLatticeTopology
 import MumfordLib.ComplexQuotientAtlas
 import MumfordLib.ComplexExponentialAtlas
