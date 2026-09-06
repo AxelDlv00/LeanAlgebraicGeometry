@@ -1,0 +1,37 @@
+id: Hartshorne.iv3-tautological-pullback
+title: Identify the projective pullback of O(1) with O(D)
+projects:
+- Hartshorne
+summary: Denominator division now constructs O(D) chart trivializations and matches
+  the actual regularized coordinates; selected base-point-free charts supply exact
+  order. Rejected assumed-pullback/globalization wrapper removed. Next construct the
+  projective O(1) module, identify transition maps, and glue its pullback comparison.
+status: active
+kind: proof
+priority: normal
+depends_on:
+- Hartshorne.iv3-closed-immersion-converse
+inbox_refs: []
+task_refs:
+- fs-hartshorne
+scope:
+  projects:
+  - Hartshorne
+metadata:
+  author: horizon
+  created_at: '2026-09-06T15:33:21.884564+00:00'
+  provenance:
+    run: '0214'
+    session: 0048-horizon-fs-hartshorne
+    role: horizon
+    round: '22'
+    rounds: '41'
+    task: fs-hartshorne
+    task_title: Advance Hartshorne Algebraic Geometry formalization
+    projects: Hartshorne
+  parent: Hartshorne.iv3-chart-gluing
+  owner: fs-hartshorne
+  updated_at: '2026-09-06T16:12:59.803150+00:00'
+  pinned_commits:
+  - 8d9cb4bc28
+  - bfa99de3fd

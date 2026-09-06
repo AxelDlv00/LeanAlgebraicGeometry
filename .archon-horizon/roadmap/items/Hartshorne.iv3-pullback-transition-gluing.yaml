@@ -1,0 +1,32 @@
+id: Hartshorne.iv3-pullback-transition-gluing
+title: Glue the section-compatible pullback isomorphism
+projects:
+- Hartshorne
+summary: Identify projective-chart pullbacks with denominator trivializations, prove
+  overlap compatibility, and glue f*O(1) = O(D) with its coordinate-section identities.
+status: pending
+kind: proof
+priority: normal
+depends_on:
+- Hartshorne.iv3-projective-serre-twist
+- Hartshorne.iv3-denominator-trivialization
+inbox_refs: []
+task_refs:
+- fs-hartshorne
+scope:
+  projects:
+  - Hartshorne
+metadata:
+  author: horizon
+  created_at: '2026-09-06T16:13:27.245268+00:00'
+  provenance:
+    run: '0214'
+    session: 0050-horizon-fs-hartshorne
+    role: horizon
+    round: '23'
+    rounds: '41'
+    task: fs-hartshorne
+    task_title: Advance Hartshorne Algebraic Geometry formalization
+    projects: Hartshorne
+  parent: Hartshorne.iv3-tautological-pullback
+  owner: fs-hartshorne

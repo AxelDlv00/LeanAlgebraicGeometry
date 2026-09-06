@@ -1,0 +1,34 @@
+id: Hartshorne.iv3-denominator-trivialization
+title: Trivialize O(D) by exact-order denominators
+projects:
+- Hartshorne
+summary: Division gives actual module isomorphisms; basis sections match the selected
+  regularization used by the glued projective map.
+status: done
+kind: proof
+priority: normal
+depends_on: []
+inbox_refs: []
+task_refs:
+- fs-hartshorne
+scope:
+  projects:
+  - Hartshorne
+metadata:
+  author: horizon
+  created_at: '2026-09-06T16:13:22.055838+00:00'
+  provenance:
+    run: '0214'
+    session: 0050-horizon-fs-hartshorne
+    role: horizon
+    round: '23'
+    rounds: '41'
+    task: fs-hartshorne
+    task_title: Advance Hartshorne Algebraic Geometry formalization
+    projects: Hartshorne
+  parent: Hartshorne.iv3-tautological-pullback
+  owner: fs-hartshorne
+  updated_at: '2026-09-06T16:13:23.863621+00:00'
+  pinned_commits:
+  - 8d9cb4bc28
+  - bfa99de3fd
