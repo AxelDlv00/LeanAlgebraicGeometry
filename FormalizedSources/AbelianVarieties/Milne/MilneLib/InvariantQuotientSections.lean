@@ -366,5 +366,41 @@ theorem affineInvariantQuotientMap_app_basicOpen_fixed [Finite G]
         (quotientBasicOpenSectionsEquiv b).toRingHom).comp algebraMapQ :=
       (RingHom.comp_assoc _ _ _).symm
 
+/-- Pullback along the affine quotient is injective on sections of each
+principal open, since its localization presentation is a fixed-subring inclusion. -/
+theorem affineInvariantQuotientMap_app_basicOpen_injective [Finite G]
+    (b : FixedPoints.subalgebra k A G) :
+    Function.Injective ((affineInvariantQuotientMap (k := k) (A := A) (G := G)).app
+      (PrimeSpectrum.basicOpen b)).hom := by
+  intro s t hst
+  apply (quotientBasicOpenSectionsEquiv b).injective
+  apply Subtype.val_injective
+  have hs := RingHom.congr_fun (affineInvariantQuotientMap_app_basicOpen_fixed b) s
+  have ht := RingHom.congr_fun (affineInvariantQuotientMap_app_basicOpen_fixed b) t
+  exact hs.symm.trans ((congrArg (invariantSourceBasicOpenPreimageSectionsEquiv b) hst).trans ht)
+
+/-- Pullback of structure-sheaf sections along the affine quotient is injective
+on every open.  Equality is checked locally on principal opens, where the
+fixed-localization calculation identifies pullback with an inclusion. -/
+theorem affineInvariantQuotientMap_app_injective [Finite G]
+    (U : (Spec (CommRingCat.of (FixedPoints.subalgebra k A G))).Opens) :
+    Function.Injective
+      ((affineInvariantQuotientMap (k := k) (A := A) (G := G)).app U).hom := by
+  let q := affineInvariantQuotientMap (k := k) (A := A) (G := G)
+  intro s t hst
+  apply TopCat.Presheaf.IsSheaf.section_ext
+    (Spec (CommRingCat.of (FixedPoints.subalgebra k A G))).sheaf.2
+  intro x hx
+  obtain ⟨_, ⟨b, rfl⟩, hbx, hbU⟩ :=
+    PrimeSpectrum.isTopologicalBasis_basic_opens.mem_nhds_iff.mp (U.isOpen.mem_nhds hx)
+  refine ⟨PrimeSpectrum.basicOpen b, hbU, hbx, ?_⟩
+  apply affineInvariantQuotientMap_app_basicOpen_injective b
+  have hn := q.naturality (homOfLE hbU).op
+  exact (congrArg (fun f => f.hom s) hn).trans
+    ((congrArg (fun z =>
+      ((Spec (CommRingCat.of A)).presheaf.map
+        ((Opens.map q.base).map (homOfLE hbU)).op).hom z) hst).trans
+      (congrArg (fun f => f.hom t) hn).symm)
+
 end InvariantLocalization
 end MilneLib
