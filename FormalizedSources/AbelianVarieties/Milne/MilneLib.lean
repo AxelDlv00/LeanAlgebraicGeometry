@@ -13,6 +13,7 @@ import MilneLib.AlgebraDescent
 import MilneLib.AffineSchemeDescent
 import MilneLib.Descent
 import MilneLib.InvariantQuotient
+import MilneLib.InvariantQuotientFunctionField
 import MilneLib.InvariantQuotientTransitions
 import MilneLib.InvariantQuotientTransitionsOver
 import MilneLib.StableAffineSections
