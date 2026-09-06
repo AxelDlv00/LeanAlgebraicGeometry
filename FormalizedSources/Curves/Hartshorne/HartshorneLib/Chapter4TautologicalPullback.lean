@@ -6,6 +6,7 @@ Authors: The Hartshorne Contributors
 
 import HartshorneLib.Chapter4ProjectiveMapProducer
 import HartshorneLib.Chapter4DivisorModuleLocal
+import HartshorneLib.Chapter4DivisorSectionCoordinates
 
 /-!
 # Hartshorne IV.3.1: the tautological pullback interface
@@ -44,12 +45,16 @@ structure ProjectiveTautologicalLineBundle (k : Type u) [Field k] (n : ℕ) wher
   module : (projectiveSpace k n).Modules
   isLineBundle : IsLineBundle module
 
-/-- A section-compatible pullback certificate for a projective map.  The
+/-- A module pullback certificate for a projective map.  The
 isomorphism is the precise global module comparison needed by the divisor
 linear system.  Compatibility with local sections is obtained by restricting
 this same isomorphism, rather than by choosing unrelated chart data. -/
 structure ProjectiveMapTautologicalPullback
     (p : ProjectiveMapProducer D) where
+  coordinateData : DivisorSectionCoordinateData D p.n
+  coordinateData_basis : coordinateData.basis = p.basis
+  map_eq_coordinateData :
+    p.map = coordinateData.toProjectiveMapProducer.map
   tautological : ProjectiveTautologicalLineBundle k p.n
   pullbackIso :
     (Scheme.Modules.pullback p.map).obj tautological.module ≅ divisorModule D
