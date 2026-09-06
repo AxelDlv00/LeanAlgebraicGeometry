@@ -2,11 +2,11 @@ id: Hartshorne.iv3-chart-gluing
 title: IV.3.1 local-ratio chart restriction and gluing
 projects:
 - Hartshorne
-summary: The associated complete-linear-system map is a closed immersion iff the numerical
-  criterion holds; its actual pullback of O(1) is now identified with O(D), including
-  coordinate sections. Numerical very ampleness therefore gives an intrinsic divisor
-  embedding. Next recover numerical separation from an arbitrary projective embedding
-  with this pullback; ha-ch4-p31 remains empty.
+summary: The complete-linear-system map is a closed immersion iff the numerical criterion
+  holds, with pullback O(1) identified with O(D) and coordinate sections. Degree >=
+  2g+1 now also yields explicit repeated-point tangent witnesses. The remaining source-facing
+  gap is extracting normalized chart restrictions from an arbitrary projective embedding;
+  the conditional certificate records this boundary.
 status: active
 kind: proof
 priority: high
@@ -33,8 +33,9 @@ metadata:
   parent: Hartshorne
   owner: fs-hartshorne
   milestone: Hartshorne
-  updated_at: '2026-09-06T19:45:26.205872+00:00'
+  updated_at: '2026-09-06T21:48:01.875831+00:00'
   pinned_commits:
+  - 5fd0cf5edd
   - 698b32418f
   - a6da590bb8
   - 51808996fa
