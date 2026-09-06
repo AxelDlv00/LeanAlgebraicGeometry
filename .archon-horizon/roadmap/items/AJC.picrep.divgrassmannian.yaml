@@ -37,13 +37,17 @@ metadata:
       item'
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.picrep
-  updated_at: '2026-09-06T16:07:56.749128+00:00'
+  updated_at: '2026-09-06T16:28:16.451045+00:00'
   pinned_commits:
+  - 61a3e58
   - 38b0530ce0
   - d5a1557fb9
   - ebef25f77d
   - 957552a1c4
   - 166ffb5790
+  - c926712a1e
+  - 24c282d3ce
+  - eb7f355298
   - 4fc01fd80e
   - 30ddedbbc0
   - 3111dc5c3b
