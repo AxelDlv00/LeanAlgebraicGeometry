@@ -289,7 +289,7 @@ is surjective (the `H¹(V, ker q) = 0` content).  Transport the short exact sequ
 `0 → ker q → E → F → 0` along the exact `hV.fromSpec`-pullback to `Spec Γ(X,V)`, apply
 the Čech section-surjectivity `affine_surj_of_vanishing_affine`, then transport back through
 the (bijective, `q`-natural) `fromSpec` base map. -/
-private theorem section_surjective_of_epi_qcoh
+theorem section_surjective_of_epi_qcoh
     {X : Scheme.{u}} {E F : X.Modules} (q : E ⟶ F) [Epi q]
     [E.IsQuasicoherent] [F.IsQuasicoherent] [(Limits.kernel q).IsQuasicoherent]
     {V : X.Opens} (hV : IsAffineOpen V) :
