@@ -379,6 +379,56 @@ theorem affineInvariantQuotientMap_app_basicOpen_injective [Finite G]
   have ht := RingHom.congr_fun (affineInvariantQuotientMap_app_basicOpen_fixed b) t
   exact hs.symm.trans ((congrArg (invariantSourceBasicOpenPreimageSectionsEquiv b) hst).trans ht)
 
+/-- The image of pullback on an invariant quotient basic open is exactly the
+fixed subring inside the corresponding source localization.  This is the
+chartwise section-image statement used by the later sheaf descent argument. -/
+theorem affineInvariantQuotientMap_app_basicOpen_range [Finite G]
+    (b : FixedPoints.subalgebra k A G) :
+    Set.range ((affineInvariantQuotientMap (k := k) (A := A) (G := G)).app
+      (PrimeSpectrum.basicOpen b)).hom =
+      {x | invariantSourceBasicOpenPreimageSectionsEquiv b x ∈
+        fixedAway (b : A) b.property} := by
+  ext x
+  constructor
+  · rintro ⟨s, rfl⟩
+    let hb : ∀ g : G, g • (b : A) = b := b.property
+    have h := congrArg (fun z => z s)
+      (affineInvariantQuotientMap_app_basicOpen_fixed b)
+    have h' : (invariantSourceBasicOpenPreimageSectionsEquiv b).toRingHom
+          (((affineInvariantQuotientMap (k := k) (A := A) (G := G)).app
+            (PrimeSpectrum.basicOpen b)).hom s) =
+        (fixedAway (b : A) b.property).subtype
+          ((quotientBasicOpenSectionsEquiv b).toRingHom s) := by
+      simpa only [RingHom.comp_apply] using h
+    change (invariantSourceBasicOpenPreimageSectionsEquiv b).toRingHom
+        (((affineInvariantQuotientMap (k := k) (A := A) (G := G)).app
+          (PrimeSpectrum.basicOpen b)).hom s) ∈
+      fixedAway (b : A) hb
+    rw [h']
+    simpa [hb] using (quotientBasicOpenSectionsEquiv b s).property
+  · intro hx
+    let y : fixedAway (b : A) b.property :=
+      ⟨invariantSourceBasicOpenPreimageSectionsEquiv b x, hx⟩
+    let s : invariantQuotientBasicOpenSections b :=
+      (quotientBasicOpenSectionsEquiv b).symm y
+    refine ⟨s, ?_⟩
+    apply (invariantSourceBasicOpenPreimageSectionsEquiv b).injective
+    have h' := congrArg (fun z => z s)
+      (affineInvariantQuotientMap_app_basicOpen_fixed b)
+    have h'' : (invariantSourceBasicOpenPreimageSectionsEquiv b).toRingHom
+          (((affineInvariantQuotientMap (k := k) (A := A) (G := G)).app
+            (PrimeSpectrum.basicOpen b)).hom s) =
+        (fixedAway (b : A) b.property).subtype
+          ((quotientBasicOpenSectionsEquiv b).toRingHom s) := by
+      simpa only [RingHom.comp_apply] using h'
+    change (invariantSourceBasicOpenPreimageSectionsEquiv b).toRingHom
+        (((affineInvariantQuotientMap (k := k) (A := A) (G := G)).app
+          (PrimeSpectrum.basicOpen b)).hom s) =
+      (invariantSourceBasicOpenPreimageSectionsEquiv b).toRingHom x
+    rw [h'']
+    exact congrArg Subtype.val
+      ((quotientBasicOpenSectionsEquiv b).apply_symm_apply y)
+
 /-- Pullback of structure-sheaf sections along the affine quotient is injective
 on every open.  Equality is checked locally on principal opens, where the
 fixed-localization calculation identifies pullback with an inclusion. -/
