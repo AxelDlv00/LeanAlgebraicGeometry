@@ -27,6 +27,26 @@ variable {k : Type u} [Field k] (C : Over (Spec (.of k)))
 variable [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
   [GeometricallyIrreducible C.hom]
 
+/-! ## The exact binder-free representability handoff -/
+
+/-- Package a natural family of pullback bijections as a `RepresentableBy` certificate.
+
+This is the exact finite-stage handoff: the carrier `J` is fixed by the caller, and the
+only remaining producer obligation is to supply the displayed equivalences for arbitrary
+tests together with their pullback naturality.  No choice of a different carrier is made.
+-/
+noncomputable def pic0RepresentableBy_of_testEquiv
+    {J : Over (Spec (.of k))}
+    (testEquiv : ∀ T : Over (Spec (.of k)), (T ⟶ J) ≃ pic0Subgroup C T)
+    (testEquiv_comp : ∀ {T T' : Over (Spec (.of k))}
+      (f : T' ⟶ T) (g : T ⟶ J),
+      testEquiv T' (f ≫ g) = pic0Map C f (testEquiv T g)) :
+    (pic0TypeFunctor C).RepresentableBy J where
+  homEquiv := fun {T} => testEquiv T
+  homEquiv_comp := by
+    intro T T' f g
+    exact testEquiv_comp f g
+
 /-! ## The class-to-Yoneda construction -/
 
 /-- The Yoneda family induced by a degree-zero Picard class on `J`. -/
