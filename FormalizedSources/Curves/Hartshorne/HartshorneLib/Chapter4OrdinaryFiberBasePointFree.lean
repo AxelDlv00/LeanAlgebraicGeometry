@@ -131,6 +131,26 @@ lemma fiberEvaluation_surjective_iff_divisorModuleFiberJumpEvaluation_surjective
       (stalkJumpFiberAddHom_of_divisorModule (X := X) hx D z)
     exact ⟨s, stalkJumpFiberAddHom_of_divisorModule_injective hx D hs⟩
 
+/-- At one non-generic point, deleting that point lowers `h⁰` by one exactly
+when global sections of the divisor module surject onto its ordinary fiber. -/
+theorem h0_sub_h0_devissage_eq_one_iff_divisorModule_fiberEvaluation_surjective
+    {x : X.left} (hx : x ≠ genericPoint X.left) (D : CurveDivisor k X) :
+    (CategoryTheory.Sheaf.h0 (divisorSheaf D) : ℤ) -
+        CategoryTheory.Sheaf.h0
+          (divisorSheaf (CurveDivisor.devissageDivisor hx D)) = 1 ↔
+      Function.Surjective
+        (Scheme.Modules.fiberEvaluation (divisorModule D) x) := by
+  calc
+    _ ↔ Function.Surjective (jumpProj hx D ⊤ trivial) :=
+      h0_sub_h0_devissage_eq_one_iff_jumpProj_surjective hx D
+    _ ↔ Function.Surjective
+        (divisorModuleFiberJumpEvaluation (X := X) hx D) :=
+      (divisorModuleFiberJumpEvaluation_surjective_iff hx D).symm
+    _ ↔ Function.Surjective
+        (Scheme.Modules.fiberEvaluation (divisorModule D) x) :=
+      (fiberEvaluation_surjective_iff_divisorModuleFiberJumpEvaluation_surjective
+        hx D).symm
+
 /-- Numerical base-point-freeness is equivalent to surjectivity, at every
 non-generic point, of global ordinary-fiber evaluation after passage to the
 intrinsic jump quotient. -/

@@ -33,19 +33,47 @@ variable {X : Over (Spec (CommRingCat.of k))} [IsIntegral X.left]
 attribute [local instance] functionFieldOverModule
   AlgebraicGeometry.Scheme.residueFieldOverModule
 
-/-- Numerical base-point-freeness is equivalent to a nonzero local jump of
-some global divisor section at every non-generic point. -/
-theorem basePointFreeLinearSystem_iff_exists_jumpProj_ne_zero
-    (D : CurveDivisor k X) :
-    BasePointFreeLinearSystem D ↔
-      ∀ (x : X.left) (hx : x ≠ genericPoint X.left),
-        ∃ s : divisorSections D (⊤ : X.left.Opens),
-          jumpProj hx D ⊤ trivial s ≠ 0 := by
+/-- At one non-generic point, the numerical one-dimensional section drop is
+equivalent to the existence of a global section with nonzero local jump. -/
+theorem h0_sub_h0_devissage_eq_one_iff_exists_jumpProj_ne_zero
+    {x : X.left} (hx : x ≠ genericPoint X.left) (D : CurveDivisor k X) :
+    (CategoryTheory.Sheaf.h0 (divisorSheaf D) : ℤ) -
+        CategoryTheory.Sheaf.h0
+          (divisorSheaf (CurveDivisor.devissageDivisor hx D)) = 1 ↔
+      ∃ s : divisorSections D (⊤ : X.left.Opens),
+        jumpProj hx D ⊤ trivial s ≠ 0 := by
   constructor
-  · intro hD x hx
-    exact exists_jumpProj_ne_zero_of_basePointFree hD x hx
-  · intro hJ x hx
-    obtain ⟨s, hs⟩ := hJ x hx
+  · intro hdrop
+    have hltH :
+        CategoryTheory.Sheaf.h0
+            (divisorSheaf (CurveDivisor.devissageDivisor hx D)) <
+          CategoryTheory.Sheaf.h0 (divisorSheaf D) := by
+      omega
+    let eSmall := CategoryTheory.Sheaf.HModule.linearEquiv₀ isTerminalTop
+      (divisorSheaf (CurveDivisor.devissageDivisor hx D))
+    let eBig := CategoryTheory.Sheaf.HModule.linearEquiv₀ isTerminalTop
+      (divisorSheaf D)
+    have hlt :
+        divisorSections (CurveDivisor.devissageDivisor hx D) ⊤ <
+          divisorSections D ⊤ := by
+      apply Submodule.lt_of_le_of_finrank_lt_finrank
+        (divisorSections_mono (devissageDivisor_le hx D) ⊤)
+      have hltObj :
+          Module.finrank k
+              ((divisorSheaf (CurveDivisor.devissageDivisor hx D)).obj.obj
+                (Opposite.op (⊤ : X.left.Opens))) <
+            Module.finrank k
+              ((divisorSheaf D).obj.obj
+                (Opposite.op (⊤ : X.left.Opens))) := by
+        rw [← eSmall.finrank_eq, ← eBig.finrank_eq]
+        exact hltH
+      rw [divisorSheaf_obj, divisorSheaf_obj] at hltObj
+      exact hltObj
+    obtain ⟨g, hgD, hgnot⟩ := SetLike.exists_of_lt hlt
+    let s : divisorSections D (⊤ : X.left.Opens) := ⟨g, hgD⟩
+    exact ⟨s,
+      (jumpProj_ne_zero_iff_not_mem_divisorSections_devissage hx D s).mpr hgnot⟩
+  · rintro ⟨s, hs⟩
     have hnot : (s : X.left.functionField) ∉
         divisorSections (CurveDivisor.devissageDivisor hx D) ⊤ :=
       (jumpProj_ne_zero_iff_not_mem_divisorSections_devissage hx D s).mp hs
@@ -87,7 +115,10 @@ theorem basePointFreeLinearSystem_iff_exists_jumpProj_ne_zero
     have hupper := h0_le_h0_sub_point_add_one_of_smoothProperIntegralCurve hx D
     omega
 
-private theorem jump_surjective_iff_exists_ne_zero
+/-- A one-point jump projection is surjective exactly when some global section
+has nonzero jump. The target has dimension one over the algebraically closed
+ground field. -/
+theorem jumpProj_surjective_iff_exists_ne_zero
     {x : X.left} (hx : x ≠ genericPoint X.left) (D : CurveDivisor k X) :
     Function.Surjective (jumpProj hx D ⊤ trivial) ↔
       ∃ s : divisorSections D (⊤ : X.left.Opens),
@@ -140,6 +171,33 @@ private theorem jump_surjective_iff_exists_ne_zero
       omega
     exact LinearMap.range_eq_top.mp (Submodule.eq_top_of_finrank_eq heq)
 
+/-- At one non-generic point, a one-dimensional section drop is equivalent to
+surjectivity onto the intrinsic local jump. -/
+theorem h0_sub_h0_devissage_eq_one_iff_jumpProj_surjective
+    {x : X.left} (hx : x ≠ genericPoint X.left) (D : CurveDivisor k X) :
+    (CategoryTheory.Sheaf.h0 (divisorSheaf D) : ℤ) -
+        CategoryTheory.Sheaf.h0
+          (divisorSheaf (CurveDivisor.devissageDivisor hx D)) = 1 ↔
+      Function.Surjective (jumpProj hx D ⊤ trivial) := by
+  rw [jumpProj_surjective_iff_exists_ne_zero]
+  exact h0_sub_h0_devissage_eq_one_iff_exists_jumpProj_ne_zero hx D
+
+/-- Numerical base-point-freeness is equivalent to a nonzero local jump of
+some global divisor section at every non-generic point. -/
+theorem basePointFreeLinearSystem_iff_exists_jumpProj_ne_zero
+    (D : CurveDivisor k X) :
+    BasePointFreeLinearSystem D ↔
+      ∀ (x : X.left) (hx : x ≠ genericPoint X.left),
+        ∃ s : divisorSections D (⊤ : X.left.Opens),
+          jumpProj hx D ⊤ trivial s ≠ 0 := by
+  constructor
+  · intro hD x hx
+    exact (h0_sub_h0_devissage_eq_one_iff_exists_jumpProj_ne_zero hx D).mp
+      (hD x hx)
+  · intro hJ x hx
+    exact (h0_sub_h0_devissage_eq_one_iff_exists_jumpProj_ne_zero hx D).mpr
+      (hJ x hx)
+
 /-- Base-point-freeness is equivalently surjectivity onto each one-point jump
 space.  The target has rank one over the algebraically closed ground field. -/
 theorem basePointFreeLinearSystem_iff_jumpProj_surjective
@@ -150,9 +208,9 @@ theorem basePointFreeLinearSystem_iff_jumpProj_surjective
   rw [basePointFreeLinearSystem_iff_exists_jumpProj_ne_zero]
   constructor
   · intro h x hx
-    exact (jump_surjective_iff_exists_ne_zero hx D).mpr (h x hx)
+    exact (jumpProj_surjective_iff_exists_ne_zero hx D).mpr (h x hx)
   · intro h x hx
-    exact (jump_surjective_iff_exists_ne_zero hx D).mp (h x hx)
+    exact (jumpProj_surjective_iff_exists_ne_zero hx D).mp (h x hx)
 
 /-! ## Residue realization of the local jump -/
 
