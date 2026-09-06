@@ -60,6 +60,39 @@ lemma divisorModuleFiberJumpEvaluation_apply {x : X.left}
       (show divisorSections D (⊤ : X.left.Opens) from s)
   rw [stalkJumpFiberAddHom_of_divisorModule_fiberEvaluation, stalkJump_germ]
 
+/-- A global divisor section vanishes in the ordinary fiber at `x` exactly
+when it is a global section of the divisor lowered at `x`. -/
+lemma divisorModule_fiberEvaluation_eq_zero_iff
+    {x : X.left} (hx : x ≠ genericPoint X.left) (D : CurveDivisor k X)
+    (s : Γ(divisorModule D, (⊤ : X.left.Opens))) :
+    Scheme.Modules.fiberEvaluation (divisorModule D) x s = 0 ↔
+      (show divisorSections D (⊤ : X.left.Opens) from s :
+        X.left.functionField) ∈
+          divisorSections (CurveDivisor.devissageDivisor hx D) ⊤ := by
+  let f := stalkJumpFiberAddHom_of_divisorModule (X := X) hx D
+  constructor
+  · intro hs
+    have hmap : f (Scheme.Modules.fiberEvaluation (divisorModule D) x s) = 0 := by
+      rw [hs, map_zero]
+    have hjump : jumpProj hx D ⊤ trivial
+        (show divisorSections D (⊤ : X.left.Opens) from s) = 0 := by
+      rw [← divisorModuleFiberJumpEvaluation_apply hx D]
+      exact hmap
+    exact coe_mem_divisorSections_devissage hx D (W := ⊤) trivial
+      (show divisorSections D (⊤ : X.left.Opens) from s)
+      ((jumpProj_eq_zero_iff hx D (W := ⊤) trivial _).mp hjump)
+  · intro hs
+    apply stalkJumpFiberAddHom_of_divisorModule_injective hx D
+    rw [map_zero]
+    change f (Scheme.Modules.fiberEvaluation (divisorModule D) x s) = 0
+    rw [stalkJumpFiberAddHom_of_divisorModule_fiberEvaluation, stalkJump_germ]
+    apply (jumpProj_eq_zero_iff hx D (W := ⊤) trivial _).mpr
+    let t : divisorSections (CurveDivisor.devissageDivisor hx D)
+        (⊤ : X.left.Opens) :=
+      ⟨(show divisorSections D (⊤ : X.left.Opens) from s :
+          X.left.functionField), hs⟩
+    exact coe_mem_pointLattice_of_devissageSection hx D ⊤ trivial t
+
 /-- Surjectivity of the ordinary-fiber-to-jump composite is exactly
 surjectivity of the intrinsic jump projection. -/
 lemma divisorModuleFiberJumpEvaluation_surjective_iff {x : X.left}
