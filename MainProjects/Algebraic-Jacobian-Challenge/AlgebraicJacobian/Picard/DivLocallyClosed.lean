@@ -323,6 +323,28 @@ noncomputable def candidateIdeal (L : X.Modules) {d : ℕ}
     (pullback π T.hom).Modules :=
   kernel (candidateQuotient L q)
 
+/-- Equivalent Grassmannian quotients reconstruct isomorphic curve-side
+quotients, compatibly with the quotient of the pulled-back module. -/
+theorem candidateQuotient_rel (L : X.Modules) {d : ℕ}
+    {q q' : LocallyFreeQuotient ((Modules.pushforward π).obj L) d T}
+    (h : q.Rel q') :
+    ∃ e : cokernel (kernelEvaluation L q) ≅ cokernel (kernelEvaluation L q'),
+      candidateQuotient L q ≫ e.hom = candidateQuotient L q' := by
+  obtain ⟨e, he⟩ := h
+  let eK : kernel q.q ≅ kernel q'.q :=
+    kernel.mapIso q.q q'.q (Iso.refl _) e (by simpa using he)
+  have hk : (Modules.pullback (pullback.snd π T.hom)).map eK.hom ≫
+      kernelEvaluation L q' = kernelEvaluation L q := by
+    apply ((Modules.pullbackPushforwardAdjunction
+      (pullback.snd π T.hom)).homEquiv _ _).injective
+    rw [Adjunction.homEquiv_naturality_left]
+    simp [kernelEvaluation, eK]
+  let eC := cokernel.mapIso (kernelEvaluation L q) (kernelEvaluation L q')
+    ((Modules.pullback (pullback.snd π T.hom)).mapIso eK) (Iso.refl _)
+    (by simpa using hk.symm)
+  refine ⟨eC, ?_⟩
+  simp [eC, candidateQuotient, cokernel.mapIso]
+
 end LocallyFreeQuotient
 
 end Scheme
