@@ -2,12 +2,14 @@ id: AJCR.review-plan.p7-galois-descent.universal.compatible-values
 title: Compatible pinned atlas classes on one finite Galois stage
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: 'Checked: PicEtAff faithfully-flat injectivity and exists_pic0Subgroup_tensorStage_compatible
-  reflect ambient equations at a common finite stage; exists_pic0FiniteStageUniversalRingClass_compatible_tensorStage
-  derives both pinned restrictions given tensor ring models and algebra-map comparisons
-  (1d01c8dce2). Next instantiate actual transition models, retain final glue coefficients,
-  enlarge to a finite Galois stage, and hand compatible affine classes to gluing on
-  literal P.gluedOver. No Galois or glued-carrier claim is proved yet.'
+summary: 'Checked through 1d01c8dce2: the pinned chart/overlap values descend with
+  both restriction equations, given tensor ring models and algebra-map comparisons.
+  Actual Pic0FiniteStageTransitionModelsData specialization remains unverified after
+  repeated deterministic WHNF limits, including ordinary let sharing; replace the
+  costly package specialization before accepting it. Then retain final glue coefficients,
+  enlarge by normal closure in the intended separable-closure ambient, and glue on
+  literal P.gluedOver. IsSepClosed plus algebraicity alone does not ensure a finite
+  Galois enlargement; separability over the original field is required.'
 status: active
 kind: proof
 priority: normal
@@ -35,7 +37,7 @@ metadata:
     task_title: 'Phase 7: finite-Galois descent of Pic^0'
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.review-plan.p7-galois-descent.universal.glue-equivalence
-  updated_at: '2026-09-06T16:53:45.899634+00:00'
+  updated_at: '2026-09-06T17:25:42.762612+00:00'
   pinned_commits:
   - 1d01c8dce2
   - edcf0866c9
