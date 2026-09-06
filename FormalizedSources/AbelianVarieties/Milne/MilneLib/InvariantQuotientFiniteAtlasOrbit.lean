@@ -205,6 +205,13 @@ theorem finiteStableCanonicalQuotientProjection_eq_iff_exists_act
         act p hact h g)
     simpa only [Scheme.Hom.comp_apply] using hq.symm
 
+/- The pointwise surjectivity theorem above is also exposed through the
+scheme-morphism property API, so downstream finite/descent consumers can use
+the canonical projection directly. -/
+instance finiteStableCanonicalQuotientProjection_surjective_instance
+    : Surjective (finiteStableCanonicalQuotientProjection act p hact h) :=
+  ⟨finiteStableCanonicalQuotientProjection_surjective act p hact h⟩
+
 end FiniteCover
 
 end StableAffineOpen
