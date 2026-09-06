@@ -10,11 +10,12 @@ import HartshorneLib.Chapter4ProjectiveEmbeddingChartBridge
 /-!
 # Conditional arbitrary-embedding converse
 
-An arbitrary projective embedding can be used by the intrinsic converse once
-its pullback isomorphism has been extracted in normalized chart coordinates.
-This file records that extraction boundary explicitly and consumes it through
-the proved chart-restriction converse.  The extraction of the chart data from
-an unstructured pullback isomorphism remains a separate producer.
+An embedding defined by a complete section basis can be compared with the
+complete-linear-system map through normalized chart restrictions. The
+certificate below records these additional hypotheses. An arbitrary embedding
+with a pullback isomorphism need not supply a complete basis: even the standard
+inclusion of a projective line in a projective plane has a redundant coordinate.
+The intrinsic converse therefore requires the finite pulled-back section family.
 -/
 
 set_option autoImplicit false
@@ -35,9 +36,8 @@ variable {D : CurveDivisor k X}
 /-- Data for an arbitrary projective embedding together with the normalized
 chart restrictions needed to compare it with the complete-linear-system map.
 
-The pullback isomorphism and its coordinate-section law are intentionally
-fields of the certificate: they are the interface a future extraction theorem
-must construct from an arbitrary identification `f*O(1) ≅ O(D)`.
+The pullback isomorphism and its coordinate-section law record compatibility
+with the supplied complete section basis.
 The stored basis is a full basis of `H⁰(O(D))`; consequently this is a
 conditional complete-linear-system interface, rather than an extraction theorem
 for a bare projective embedding.
@@ -65,9 +65,9 @@ structure ArbitraryProjectiveEmbeddingCertificate (D : CurveDivisor k X) where
         (selectedCoordinates_isOpenCover_of_smoothCurve basis hbase)).f i ≫ map =
       (selectedRegularization (D := D) basis hbase i).chartMap
 
-/-- The target dimension of an arbitrary certificate is the complete
-section-space dimension minus one.  This is the numerical bridge needed by a
-future extraction of a basis from an unstructured projective embedding. -/
+/-- The full-basis hypothesis forces the target dimension to be the complete
+section-space dimension minus one. This equality need not hold for an arbitrary
+projective embedding with the same twisting-sheaf pullback. -/
 theorem ArbitraryProjectiveEmbeddingCertificate.target_dimension
     (c : ArbitraryProjectiveEmbeddingCertificate D) :
     (c.n : ℤ) = linearSystemDimension D := by
