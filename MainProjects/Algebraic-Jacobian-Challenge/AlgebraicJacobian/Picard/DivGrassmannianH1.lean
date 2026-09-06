@@ -10,6 +10,7 @@ import AlgebraicJacobian.Picard.TensorObjSubstrate.Vestigial
 import AlgebraicJacobian.Cohomology.AffineSerreVanishing
 import AlgebraicJacobian.Cohomology.QcohTildeSections
 import AlgebraicJacobian.Cohomology.AbsoluteCohomology
+import AlgebraicJacobian.Cohomology.StructureSheafModuleK.SectionsLifting
 
 /-!
 # Cohomological lifting for the divisor Grassmannian evaluation
@@ -17,9 +18,9 @@ import AlgebraicJacobian.Cohomology.AbsoluteCohomology
 This file supplies the `H^1`-lifting step in the divisor-to-Grassmannian
 construction without importing the much larger analytic embedding module.
 For a twisted divisor quotient over an affine test scheme, vanishing of the
-kernel's degree-one absolute cohomology makes the quotient surjective on
-sections.  Affine quasi-coherent descent then makes its pushforward an
-epimorphism.  Flat base change composes this with the canonical evaluation
+kernel's degree-one absolute cohomology, or of its ground-ring sheaf cohomology,
+makes the quotient surjective on sections. Affine quasi-coherent descent then
+makes its pushforward an epimorphism. Flat base change composes this with the canonical evaluation
 map, so the same vanishing proves that the Grassmannian evaluation is epi.
 
 This isolates the terminal long-exact-sequence lifting substep corresponding
@@ -145,23 +146,13 @@ noncomputable local instance hasExtModulesForDivGrassmannianH1 {Y : Scheme.{u}} 
 
 set_option maxHeartbeats 1000000 in
 -- Elaborating the pushed quasi-coherence witnesses traverses both pullback cones.
-/-- **The twisted divisor quotient remains epi after pushforward when its
-degree-one lifting obstruction vanishes.**  Over an affine test scheme, the
-vanishing is expressed by subsingleton `Ext^1` of the kernel over the top open.
-The long exact absolute-cohomology sequence then makes the quotient surjective
-on global sections, and affine quasi-coherent descent reflects that
-surjectivity to an epimorphism of pushed module sheaves.
-
-This is the terminal LES lifting substep corresponding to Kleiman,
-*The Picard scheme*, `sb:Q`, TeX lines 1926--1934; the preceding fibrewise
-`H^1`-to-higher-direct-image vanishing argument is not asserted here. -/
-theorem pushforward_twistQuotientMap_epi_of_kernel_absoluteCohomology_one_subsingleton
+/-- Affine quasi-coherent descent turns global lifting into epimorphy of the
+pushed twisted divisor quotient. -/
+private theorem pushforward_twistQuotientMap_epi_of_sections_surjective
     {R : CommRingCat.{u}} {S X : Scheme.{u}} {π : X ⟶ S} [IsProper π]
     (f : Spec R ⟶ S) (L : X.Modules) (hL : LineBundle.IsLocallyTrivial L)
     (x : DivFamily π (Over.mk f))
-    [Subsingleton (CategoryTheory.Abelian.Ext
-      (jShriekOU (⊤ : (pullback π f).Opens))
-      (kernel (x.twistQuotientMap L)) 1)] :
+    (hq : Function.Surjective ((x.twistQuotientMap L).app ⊤).hom) :
     Epi ((Modules.pushforward (pullback.snd π f)).map
       (x.twistQuotientMap L)) := by
   haveI : L.IsFinitePresentation := hL.isFinitePresentation
@@ -185,14 +176,69 @@ theorem pushforward_twistQuotientMap_epi_of_kernel_absoluteCohomology_one_subsin
   have hPushTwistqc : ((Modules.pushforward (pullback.snd π f)).obj
       (x.twist L)).IsQuasicoherent :=
     @Modules.pushforward_isQuasicoherent _ _ (pullback.snd π f) hqc hqs _ hTwistqc
-  have hqEpi : Epi (x.twistQuotientMap L) :=
-    twistQuotientMap_epi_for_divGrassmannianH1 L x
   apply Modules.epi_of_globalSections_surjective_for_divGrassmannianH1 _
     hPushPullqc hPushTwistqc
+  exact hq
+
+/-- **The twisted divisor quotient remains epi after pushforward when its
+degree-one lifting obstruction vanishes.** Over an affine test scheme,
+kernel `Ext^1` vanishing lifts global sections through the quotient.
+
+This is the terminal LES lifting substep corresponding to Kleiman,
+*The Picard scheme*, `sb:Q`, TeX lines 1926--1934; the preceding fibrewise
+`H^1`-to-higher-direct-image vanishing argument is not asserted here. -/
+theorem pushforward_twistQuotientMap_epi_of_kernel_absoluteCohomology_one_subsingleton
+    {R : CommRingCat.{u}} {S X : Scheme.{u}} {π : X ⟶ S} [IsProper π]
+    (f : Spec R ⟶ S) (L : X.Modules) (hL : LineBundle.IsLocallyTrivial L)
+    (x : DivFamily π (Over.mk f))
+    [Subsingleton (CategoryTheory.Abelian.Ext
+      (jShriekOU (⊤ : (pullback π f).Opens))
+      (kernel (x.twistQuotientMap L)) 1)] :
+    Epi ((Modules.pushforward (pullback.snd π f)).map
+      (x.twistQuotientMap L)) := by
+  have hqEpi : Epi (x.twistQuotientMap L) :=
+    twistQuotientMap_epi_for_divGrassmannianH1 L x
+  apply pushforward_twistQuotientMap_epi_of_sections_surjective f L hL x
   change Function.Surjective
     (Modules.Hom.app (x.twistQuotientMap L) (⊤ : (pullback π f).Opens)).hom
   exact @sections_surjective_of_kernel_absoluteCohomology_one_subsingleton _
     (⊤ : (pullback π f).Opens) _ _ (x.twistQuotientMap L) hqEpi inferInstance
+
+/-- The twisted divisor quotient is epi after pushforward if the ground-ring
+sheaf cohomology of its kernel vanishes. This is the cohomology used by
+`divisorModulesFieldSheafIso` and the divisor degree-bound theorems.
+Vanishing here is on the total pullback; its production from a uniform
+fibrewise bound is a separate obligation. -/
+theorem pushforward_twistQuotientMap_epi_of_kernel_hModule_one_subsingleton
+    {k : Type u} [CommRing k] {R : CommRingCat.{u}} {X : Scheme.{u}}
+    {π : X ⟶ Spec (CommRingCat.of k)} [IsProper π]
+    (f : Spec R ⟶ Spec (CommRingCat.of k))
+    (L : X.Modules) (hL : LineBundle.IsLocallyTrivial L)
+    (x : DivFamily π (Over.mk f))
+    [Subsingleton ((toModuleKSheafOfModules (Over.mk (pullback.snd π f ≫ f))
+      (kernel (x.twistQuotientMap L))).HModule 1)] :
+    Epi ((Modules.pushforward (pullback.snd π f)).map
+      (x.twistQuotientMap L)) := by
+  apply pushforward_twistQuotientMap_epi_of_sections_surjective f L hL x
+  exact @sections_surjective_of_kernel_hModule_one_subsingleton k _
+    (Over.mk (pullback.snd π f ≫ f)) _ _ (x.twistQuotientMap L)
+    (twistQuotientMap_epi_core L x) inferInstance
+
+/-- Kernel vanishing in ground-field sheaf cohomology supplies epimorphy of
+the D2 evaluation map over any affine test scheme. -/
+theorem grassmannianEval_epi_of_kernel_hModule_one_subsingleton
+    {k : Type u} [Field k] {R : CommRingCat.{u}} {X : Scheme.{u}}
+    {π : X ⟶ Spec (CommRingCat.of k)} [IsProper π]
+    (f : Spec R ⟶ Spec (CommRingCat.of k))
+    (L : X.Modules) (hL : LineBundle.IsLocallyTrivial L)
+    (x : DivFamily π (Over.mk f))
+    [Subsingleton ((toModuleKSheafOfModules (Over.mk (pullback.snd π f ≫ f))
+      (kernel (x.twistQuotientMap L))).HModule 1)] :
+    Epi (x.grassmannianEval L) := by
+  haveI : L.IsFinitePresentation := hL.isFinitePresentation
+  haveI : L.IsQuasicoherent := inferInstance
+  exact grassmannianEval_epi L x
+    (pushforward_twistQuotientMap_epi_of_kernel_hModule_one_subsingleton f L hL x)
 
 /-- The D2 evaluation map is epimorphic over an affine flat test when the
 twisted divisor kernel has vanishing degree-one absolute cohomology.  Flat
