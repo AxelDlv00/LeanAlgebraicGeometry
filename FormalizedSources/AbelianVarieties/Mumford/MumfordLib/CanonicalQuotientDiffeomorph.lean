@@ -7,7 +7,7 @@ Authors: The Mumford Contributors
 import MumfordLib.CanonicalComplexQuotient
 import MumfordLib.ComplexExponentialAtlas
 import MumfordLib.IntrinsicComplexUniformization
-import MumfordLib.LocalDiffeomorphDescent
+import MumfordLib.LatticeQuotientDiffeomorph
 import MumfordLib.TranslationTopology
 import Mathlib.Geometry.Manifold.Diffeomorph
 import Mathlib.Geometry.Manifold.LocalDiffeomorph
@@ -150,33 +150,8 @@ noncomputable def canonicalComplexExponentialQuotientDiffeomorph
   let d := canonicalComplexVectorLatticeExponentialData (G := G) I coordinate
   letI : ChartedSpace E (E ⧸ d.ambientPeriodLattice) :=
     analyticQuotientChartedSpace d
-  let e : (E ⧸ d.ambientPeriodLattice) ≃ G :=
-    d.quotientAddEquiv.toEquiv.trans Additive.toMul
-  let p : E → E ⧸ d.ambientPeriodLattice := QuotientAddGroup.mk
-  have he (v : E) : e (p v) = canonicalComplexExponential (G := G) I v := by
-    change Additive.toMul
-      (d.quotientAddEquiv (QuotientAddGroup.mk' d.ambientPeriodLattice v)) = _
-    rw [d.quotientAddEquiv_mk]
-    rfl
-  have he_comp : (e : (E ⧸ d.ambientPeriodLattice) → G) ∘ p =
-      canonicalComplexExponential (G := G) I := funext he
-  have he_symm_comp : (e.symm : G → E ⧸ d.ambientPeriodLattice) ∘
-      canonicalComplexExponential (G := G) I = p := by
-    funext v
-    exact e.symm_apply_eq.mpr (he v).symm
-  have hp : IsLocalDiffeomorph (𝓘(ℂ, E)) (𝓘(ℂ, E)) ω p :=
-    analyticQuotient_mk_isLocalDiffeomorph d
-  have hexp := canonicalComplexExponential_isLocalDiffeomorph (G := G) I
-  refine { toEquiv := e, contMDiff_toFun := ?_, contMDiff_invFun := ?_ }
-  · apply contMDiff_of_comp_surjective_localDiffeomorph
-      (show (1 : ℕ∞ω) ≤ ω from le_top) hp
-      (QuotientAddGroup.mk'_surjective d.ambientPeriodLattice)
-    rw [he_comp]
-    exact hexp.contMDiff
-  · apply contMDiff_of_comp_surjective_localDiffeomorph le_rfl hexp
-      (canonicalComplexExponential_surjective (G := G) I)
-    rw [he_symm_comp]
-    exact hp.contMDiff.of_le le_top
+  exact d.quotientDiffeomorph I
+    (canonicalComplexExponential_isLocalDiffeomorph (G := G) I)
 
 /-- The quotient diffeomorphism is the first-isomorphism equivalence on points. -/
 @[simp]
