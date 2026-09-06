@@ -149,6 +149,7 @@ import HartshorneLib.Chapter4ProjectiveCoordinatePullback
 import HartshorneLib.Chapter4ProjectiveTwistingSheaf
 import HartshorneLib.Chapter4DenominatorCocycle
 import HartshorneLib.Chapter4DenominatorGluing
+import HartshorneLib.Chapter4ProjectivePullbackLineBundle
 
 /-!
 # HartshorneLib
