@@ -105,6 +105,18 @@ lemma actApp_map {U V : X.Opens} (hU : IsStableOpen act U)
       X.presheaf.map (homOfLE hVU).op ≫ actApp act hV g := by
   rw [actApp, actApp, Scheme.Hom.appLE_map, Scheme.Hom.map_appLE]
 
+/-- Pullback along an equivariant morphism commutes with section actions on
+stable opens. -/
+@[reassoc]
+lemma appLE_actApp_of_equivariant {Y : Scheme.{u}} (actY : G →* Aut Y)
+    (f : X ⟶ Y) (hf : ∀ g : G, (act g).hom ≫ f = f ≫ (actY g).hom)
+    {U : Y.Opens} {V : X.Opens} (hU : IsStableOpen actY U)
+    (hV : IsStableOpen act V) (h : V ≤ f ⁻¹ᵁ U) (g : G) :
+    f.appLE U V h ≫ actApp act hV g =
+      actApp actY hU g ≫ f.appLE U V h := by
+  rw [actApp, actApp, Scheme.Hom.appLE_comp_appLE, Scheme.Hom.appLE_comp_appLE,
+    appLE_congr_hom (hf g)]
+
 /-! ## Pullback along invariant morphisms -/
 
 /-- The inverse image of an open under an invariant morphism is stable. -/
