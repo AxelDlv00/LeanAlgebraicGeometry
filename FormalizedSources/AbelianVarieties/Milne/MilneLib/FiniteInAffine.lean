@@ -6,6 +6,7 @@ Authors: The Milne Contributors
 
 import Mathlib.AlgebraicGeometry.AffineScheme
 import Mathlib.AlgebraicGeometry.Morphisms.Affine
+import Mathlib.AlgebraicGeometry.Morphisms.Immersion
 import MilneLib.StableAffineCover
 
 /-!
@@ -54,6 +55,37 @@ theorem finiteInAffine_of_isAffineHom {X Y : Scheme.{u}} (f : X ⟶ Y)
   obtain ⟨U, hU⟩ := hY (f.base '' s) (hs.image _)
   exact ⟨⟨f ⁻¹ᵁ U.1, U.2.preimage f⟩,
     fun x hx => hU ⟨x, hx, rfl⟩⟩
+
+/-- `FiniteInAffine` descends along an open immersion.  Finite prime
+avoidance shrinks an ambient affine open into the immersion range. -/
+theorem finiteInAffine_of_isOpenImmersion {X Y : Scheme.{u}} (f : X ⟶ Y)
+    [IsOpenImmersion f] (hY : FiniteInAffine Y) : FiniteInAffine X := by
+  classical
+  intro s hs
+  obtain ⟨U, hU⟩ := hY (f.base '' s) (hs.image f.base)
+  letI : Fintype s := hs.fintype
+  obtain ⟨r, hr, hrle⟩ :=
+    MilneLib.exists_basicOpen_le_of_finite U.2
+      (fun x : s => f.base x)
+      (fun x => hU ⟨x, x.2, rfl⟩)
+      (fun x => Scheme.Hom.mem_opensRange.mpr ⟨(x : X), rfl⟩)
+  refine ⟨⟨f ⁻¹ᵁ Y.basicOpen r,
+    (U.2.basicOpen r).preimage_of_isOpenImmersion f hrle⟩, ?_⟩
+  intro x hx
+  change f.base x ∈ Y.basicOpen r
+  exact hr ⟨x, hx⟩
+
+/-- `FiniteInAffine` descends along arbitrary immersions, by factoring an
+immersion into a closed immersion followed by an open immersion. -/
+theorem finiteInAffine_of_isImmersion {X Y : Scheme.{u}} (f : X ⟶ Y)
+    [IsImmersion f] (hY : FiniteInAffine Y) : FiniteInAffine X := by
+  obtain ⟨Z, g₁, g₂, hg₁, hg₂, -⟩ :=
+    (AlgebraicGeometry.IsImmersion.isImmersion_iff_exists (f := f)).mp
+      (inferInstance : IsImmersion f)
+  letI := hg₁
+  letI := hg₂
+  exact finiteInAffine_of_isAffineHom g₁
+    (finiteInAffine_of_isOpenImmersion g₂ hY)
 
 end Scheme
 end AlgebraicGeometry
