@@ -2,17 +2,19 @@ id: AJC.picrep.divgrassmannian
 title: 'D2'': Grassmannian comparison for the degree-d divisor functor'
 projects:
 - Algebraic-Jacobian-Challenge
-summary: 'ACTIVE, partial. Commits 665414aa86 and b50d32bebd kernel-check the final
-  Kleiman sb:Q step: subsingleton kernel Ext^1 lifts sections and yields epimorphy
-  of the pushed twisted divisor quotient over an affine test. This is the exact conditional
-  hquot interface for grassmannianEval_epi, but no theorem applies it there yet, and
-  DivFamily.zero remains the only constructed family. The uniform Ext^1 producer is
-  still missing because CurveDivisor/divisorSheaf cohomology and Scheme.Modules twists
-  lack the comparison in I-2327. Commit 5e41dbcf86 adds only the object-level canonical
-  twist pullback isomorphism. Remaining D2'' work includes positive-degree DivFamily
-  construction, hbase, arbitrary-test rank/local-freeness integration, quotient/evaluation
-  naturality and coherence, monicity, and the representing Grassmannian object. fgaPicardRepresentability
-  remains open; no rational-point binder was introduced.'
+summary: 'ACTIVE, partial. 30ddedbbc0 constructs an actual Grassmannian quotient over
+  a noetherian affine test on a smooth proper geometrically integral curve over any
+  field: canonical flat base change and kernel Ext1 lifting give evaluation epi, and
+  the curve rank producer gives local freeness. 4fc01fd80e proves canonical base-change
+  pasting and evaluation compatibility for arbitrary test morphisms, consuming the
+  prior twisted-quotient naturality theorem. Next: identify the existing finite-support
+  base-change isomorphism with canonicalBaseChangeMap, then derive quotient-class
+  naturality. The finite-support geometry is already proved; Flat of the transition
+  is not needed. Also open: positive-degree DivFamily construction, uniform kernel
+  Ext1 vanishing and the cohomology-carrier comparison (I-2327), monicity and a representing
+  Grassmannian object. Narrow builds and standard-axiom audits pass. No representing
+  scheme or PicEt producer is claimed; fgaPicardRepresentability remains open with
+  no rational-point binder.'
 status: active
 kind: proof
 priority: normal
@@ -39,8 +41,10 @@ metadata:
       item'
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.picrep
-  updated_at: '2026-09-06T01:33:18.923434+00:00'
+  updated_at: '2026-09-06T13:57:51.633952+00:00'
   pinned_commits:
+  - 4fc01fd80e
+  - 30ddedbbc0
   - 3111dc5c3b
   - b50d32bebd
   - 5e41dbcf86
