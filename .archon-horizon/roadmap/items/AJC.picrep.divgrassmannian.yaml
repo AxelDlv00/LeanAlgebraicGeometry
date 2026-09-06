@@ -2,15 +2,16 @@ id: AJC.picrep.divgrassmannian
 title: 'D2'': Grassmannian comparison for the degree-d divisor functor'
 projects:
 - Algebraic-Jacobian-Challenge
-summary: 'ACTIVE, partial. Constructed quasi-coherent O(D) and identified its underlying
-  field sheaf (166ffb5790, 38b0530ce0); the degree bound transports uniformly across
-  field extensions (957552a1c4). Restriction of scalars preserves kernels and epimorphisms,
-  giving global-section lifting (ebef25f77d) and D2 evaluation epimorphy from total-pullback
-  kernel HModule H1 (d5a1557fb9). Prior canonical base-change/naturality and candidate
-  epi results remain available. Next: construct D_x from local Cartier generators,
-  identify kernel(x.q) with O(-D_x) and its twist with O(A-D_x), prove deg(D_x)=d,
-  and pass fibrewise vanishing to the relative family. I-2327, D2, and fgaPicardRepresentability
-  remain open; no PicEt representing scheme was produced.'
+summary: 'ACTIVE, partial. Checked regular Cartier equations and affine quotient-ring
+  comparisons (490f591313); native zero/principal divisor-module maps (5ff035e021);
+  affine principalization and local triviality of O(D) over arbitrary fields (3af9165d47);
+  inclusion-compatible kernel/O(-div(a)) comparison and generator independence on
+  a fixed chart (5334a7791a). The concrete O(D) Grassmannian quotient consumes native
+  local triviality in evaluation epi and curve rank (2ed53a21e3), with actual total-family
+  kernel H1 still explicit. Focused builds and standard-axiom honesty audits pass.
+  Next: construct the actual field-fibre Weil divisor with chart compatibility, identify
+  the global twisted kernel and its degree, then uniform relative H1 vanishing. fgaPicardRepresentability
+  and picEt representability remain open.'
 status: active
 kind: proof
 priority: normal
@@ -37,8 +38,14 @@ metadata:
       item'
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.picrep
-  updated_at: '2026-09-06T16:28:16.451045+00:00'
+  updated_at: '2026-09-06T18:27:05.301729+00:00'
   pinned_commits:
+  - 2ed53a21e3
+  - 5334a7791a
+  - 3af9165d47
+  - 5ff035e021
+  - 490f591313
+  - 71558841c3
   - 61a3e58
   - 38b0530ce0
   - d5a1557fb9
