@@ -299,8 +299,7 @@ noncomputable def kernelEvaluation (L : X.Modules) {d : ℕ}
   ((Modules.pullbackPushforwardAdjunction
     (pullback.snd π T.hom)).homEquiv _ _).symm
     (kernel.ι q.q ≫
-      pushforwardBaseChangeMap π T.hom (pullback.snd π T.hom)
-        (pullback.fst π T.hom) pullback.condition L)
+      (canonicalBaseChangeMap (IsPullback.of_hasPullback π T.hom)).app L)
 
 /-- The quotient on `X_T` reconstructed from a Grassmannian quotient: take the
 cokernel of `kernelEvaluation`.  The later D3 locus is where this quotient is

@@ -97,14 +97,17 @@ lemma grassmannianEval_rel (L : X.Modules) {x y : DivFamily π T} (h : x.Rel y) 
       x.grassmannianEval L ≫ f.hom = y.grassmannianEval L := by
   obtain ⟨f, hf⟩ := twistQuotientMap_rel L h
   refine ⟨(Modules.pushforward (pullback.snd π T.hom)).mapIso f, ?_⟩
-  change (pushforwardBaseChangeMap π T.hom (pullback.snd π T.hom)
-      (pullback.fst π T.hom) pullback.condition L ≫
+  change ((canonicalBaseChangeMap
+      (IsPullback.of_hasPullback π T.hom)).app L ≫
         (Modules.pushforward (pullback.snd π T.hom)).map (x.twistQuotientMap L)) ≫
       (Modules.pushforward (pullback.snd π T.hom)).map f.hom =
-    pushforwardBaseChangeMap π T.hom (pullback.snd π T.hom)
-      (pullback.fst π T.hom) pullback.condition L ≫
+    (canonicalBaseChangeMap
+      (IsPullback.of_hasPullback π T.hom)).app L ≫
         (Modules.pushforward (pullback.snd π T.hom)).map (y.twistQuotientMap L)
-  rw [Category.assoc, ← Functor.map_comp, hf]
+  exact (Category.assoc _ _ _).trans
+    (congrArg ((canonicalBaseChangeMap (IsPullback.of_hasPullback π T.hom)).app L ≫ ·)
+      (((Modules.pushforward (pullback.snd π T.hom)).map_comp _ _).symm.trans
+        (congrArg (Modules.pushforward (pullback.snd π T.hom)).map hf)))
 
 /-- Epimorphy of the D2' evaluation map is invariant under
 `DivFamily.Rel`. -/

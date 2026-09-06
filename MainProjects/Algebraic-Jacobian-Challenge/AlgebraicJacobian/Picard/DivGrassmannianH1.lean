@@ -4,6 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: The AlgebraicJacobian Contributors
 -/
 import AlgebraicJacobian.Picard.DivGrassmannianClass
+import AlgebraicJacobian.Picard.DivTwistPushforwardProducers
 import AlgebraicJacobian.Picard.AffineOpenStalkLocalization
 import AlgebraicJacobian.Picard.TensorObjSubstrate.Vestigial
 import AlgebraicJacobian.Cohomology.AffineSerreVanishing
@@ -18,7 +19,8 @@ construction without importing the much larger analytic embedding module.
 For a twisted divisor quotient over an affine test scheme, vanishing of the
 kernel's degree-one absolute cohomology makes the quotient surjective on
 sections.  Affine quasi-coherent descent then makes its pushforward an
-epimorphism.
+epimorphism.  Flat base change composes this with the canonical evaluation
+map, so the same vanishing proves that the Grassmannian evaluation is epi.
 
 This isolates the terminal long-exact-sequence lifting substep corresponding
 to Kleiman, *The Picard scheme*, `sb:Q`, TeX lines 1926--1934.  Kleiman first
@@ -182,6 +184,67 @@ theorem pushforward_twistQuotientMap_epi_of_kernel_absoluteCohomology_one_subsin
     (Modules.Hom.app (x.twistQuotientMap L) (⊤ : (pullback π f).Opens)).hom
   exact @sections_surjective_of_kernel_absoluteCohomology_one_subsingleton _
     (⊤ : (pullback π f).Opens) _ _ (x.twistQuotientMap L) hqEpi inferInstance
+
+/-- The D2 evaluation map is epimorphic over an affine flat test when the
+twisted divisor kernel has vanishing degree-one absolute cohomology.  Flat
+base change supplies the first factor of the evaluation map, while the
+long-exact-sequence lifting theorem supplies the pushed quotient factor.
+
+The Ext vanishing remains the geometric input; this theorem applies the
+terminal lifting step of Kleiman's `sb:Q` directly to the D2 evaluation. -/
+theorem grassmannianEval_epi_of_kernel_absoluteCohomology_one_subsingleton
+    {R : CommRingCat.{u}} {S X : Scheme.{u}} {π : X ⟶ S} [IsProper π]
+    (f : Spec R ⟶ S) [Flat f]
+    (L : X.Modules) (hL : LineBundle.IsLocallyTrivial L)
+    (x : DivFamily π (Over.mk f))
+    [Subsingleton (CategoryTheory.Abelian.Ext
+      (jShriekOU (⊤ : (pullback π f).Opens))
+      (kernel (x.twistQuotientMap L)) 1)] :
+    Epi (x.grassmannianEval L) := by
+  haveI : L.IsFinitePresentation := hL.isFinitePresentation
+  haveI : L.IsQuasicoherent := inferInstance
+  letI : Flat (Over.mk f).hom := ‹Flat f›
+  exact grassmannianEval_epi L x
+    (pushforward_twistQuotientMap_epi_of_kernel_absoluteCohomology_one_subsingleton
+      f L hL x)
+
+/-- Over a field, the affine test map is automatically flat.  Consequently
+kernel `Ext^1` vanishing alone supplies the epimorphy input to the D2
+Grassmannian construction for a proper family. -/
+theorem grassmannianEval_epi_of_field_of_kernel_absoluteCohomology_one_subsingleton
+    {k : Type u} [Field k] {R : CommRingCat.{u}} {X : Scheme.{u}}
+    {π : X ⟶ Spec (CommRingCat.of k)} [IsProper π]
+    (f : Spec R ⟶ Spec (CommRingCat.of k))
+    (L : X.Modules) (hL : LineBundle.IsLocallyTrivial L)
+    (x : DivFamily π (Over.mk f))
+    [Subsingleton (CategoryTheory.Abelian.Ext
+      (jShriekOU (⊤ : (pullback π f).Opens))
+      (kernel (x.twistQuotientMap L)) 1)] :
+    Epi (x.grassmannianEval L) :=
+  grassmannianEval_epi_of_kernel_absoluteCohomology_one_subsingleton f L hL x
+
+/-- The actual rank-`d` Grassmannian quotient of a degree-`d` divisor family
+on a smooth proper geometrically integral curve.  The curve rank producer
+supplies local freeness, and kernel `Ext^1` vanishing supplies evaluation
+epimorphy.  No representation or rational-point hypothesis is used.
+
+This is the D2 quotient construction over a noetherian affine test scheme;
+uniform vanishing of the displayed kernel `Ext^1` remains open. -/
+noncomputable def grassmannianQuotientOfKernelAbsoluteCohomologyOneSubsingleton
+    {k : Type u} [Field k] {R : CommRingCat.{u}} [IsNoetherianRing R]
+    {X : Scheme.{u}} {π : X ⟶ Spec (CommRingCat.of k)}
+    [SmoothOfRelativeDimension 1 π] [GeometricallyIntegral π] [IsProper π]
+    (f : Spec R ⟶ Spec (CommRingCat.of k))
+    (L : X.Modules) (hL : LineBundle.IsLocallyTrivial L)
+    (x : DivFamily π (Over.mk f)) {d : ℕ} (hx : x.HasFiberDeg d)
+    [Subsingleton (CategoryTheory.Abelian.Ext
+      (jShriekOU (⊤ : (pullback π f).Opens))
+      (kernel (x.twistQuotientMap L)) 1)] :
+    LocallyFreeQuotient ((Modules.pushforward π).obj L) d (Over.mk f) :=
+  grassmannianQuotient L x
+    (grassmannianEval_epi_of_field_of_kernel_absoluteCohomology_one_subsingleton
+      f L hL x)
+    (pushforward_twist_isLocallyFreeOfRank_of_curve f L hL x hx)
 
 end DivFamily
 

@@ -3,7 +3,7 @@ Copyright (c) 2026 The AlgebraicJacobian authors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: The AlgebraicJacobian Contributors
 -/
-import AlgebraicJacobian.Picard.DivGrassmannianClass
+import AlgebraicJacobian.Picard.DivGrassmannianH1
 import AlgebraicJacobian.Picard.DivLocallyClosed
 
 /-!
@@ -48,8 +48,7 @@ theorem grassmannianKernelEvaluation_comp_twistQuotientMap
   rw [Adjunction.homEquiv_naturality_right]
   simp only [LocallyFreeQuotient.kernelEvaluation, Equiv.apply_symm_apply]
   change (kernel.ι q.q ≫
-      pushforwardBaseChangeMap π T.hom (pullback.snd π T.hom)
-        (pullback.fst π T.hom) pullback.condition L) ≫
+      (canonicalBaseChangeMap (IsPullback.of_hasPullback π T.hom)).app L) ≫
       (Modules.pushforward (pullback.snd π T.hom)).map
         (x.twistQuotientMap L) = _
   rw [Category.assoc]

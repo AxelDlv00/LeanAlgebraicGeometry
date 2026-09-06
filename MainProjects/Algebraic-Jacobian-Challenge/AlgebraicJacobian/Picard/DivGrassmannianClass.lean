@@ -50,21 +50,27 @@ from `S` to `T`, then pushes forward the twisted divisor quotient along
 noncomputable def grassmannianEval (L : X.Modules) (x : DivFamily π T) :
     (Modules.pullback T.hom).obj ((Modules.pushforward π).obj L) ⟶
       (Modules.pushforward (pullback.snd π T.hom)).obj (x.twist L) :=
-  pushforwardBaseChangeMap π T.hom (pullback.snd π T.hom)
-      (pullback.fst π T.hom) pullback.condition L ≫
+  (canonicalBaseChangeMap (IsPullback.of_hasPullback π T.hom)).app L ≫
     (Modules.pushforward (pullback.snd π T.hom)).map (x.twistQuotientMap L)
 
-/-- The evaluation map is epi as soon as its two displayed factors are epi. -/
+/-- The evaluation map is epi when the pushed divisor quotient is epi.
+The canonical base-change factor is an isomorphism by flat base change. -/
 theorem grassmannianEval_epi (L : X.Modules) (x : DivFamily π T)
-    (hbase : Epi (pushforwardBaseChangeMap π T.hom
-      (pullback.snd π T.hom) (pullback.fst π T.hom) pullback.condition L))
+    [QuasiCompact π] [QuasiSeparated π] [Flat T.hom] [L.IsQuasicoherent]
     (hquot : Epi ((Modules.pushforward (pullback.snd π T.hom)).map
       (x.twistQuotientMap L))) :
     Epi (x.grassmannianEval L) := by
-  letI := hbase
-  letI := hquot
+  haveI : IsIso ((canonicalBaseChangeMap
+      (IsPullback.of_hasPullback π T.hom)).app L) :=
+    canonicalBaseChangeMap_isIso (IsPullback.of_hasPullback π T.hom) L
+  letI : Epi ((Modules.pushforward (pullback.snd π T.hom)).map
+      (x.twistQuotientMap L)) := hquot
   dsimp [grassmannianEval]
-  infer_instance
+  exact epi_comp'
+    (inferInstance : Epi ((canonicalBaseChangeMap
+      (IsPullback.of_hasPullback π T.hom)).app L))
+    (inferInstance : Epi ((Modules.pushforward (pullback.snd π T.hom)).map
+      (x.twistQuotientMap L)))
 
 /-- Package the D2 evaluation as a rank-`d` locally free quotient. -/
 noncomputable def grassmannianQuotient (L : X.Modules) (x : DivFamily π T)
@@ -88,18 +94,17 @@ noncomputable def grassmannianClass (L : X.Modules) (x : DivFamily π T)
     (Grassmannian ((Modules.pushforward π).obj L) d).obj (Opposite.op T) :=
   Quotient.mk _ (grassmannianQuotient L x hEpi hLocFree)
 
-/-- The componentwise form of `grassmannianClass`: once the base-change and
-divisor-quotient factors are epi, only the target's rank condition remains. -/
+/-- The componentwise form of `grassmannianClass`: flat base change supplies
+the first epi factor, so only the divisor quotient and target rank remain. -/
 noncomputable def grassmannianClassOfComponents (L : X.Modules) (x : DivFamily π T)
-    [IsLocallyNoetherian S] {d : ℕ}
-    (hbase : Epi (pushforwardBaseChangeMap π T.hom
-      (pullback.snd π T.hom) (pullback.fst π T.hom) pullback.condition L))
+    [IsLocallyNoetherian S] [QuasiCompact π] [QuasiSeparated π]
+    [Flat T.hom] [L.IsQuasicoherent] {d : ℕ}
     (hquot : Epi ((Modules.pushforward (pullback.snd π T.hom)).map
       (x.twistQuotientMap L)))
     (hLocFree : SheafOfModules.IsLocallyFreeOfRank
       ((Modules.pushforward (pullback.snd π T.hom)).obj (x.twist L)) d) :
     (Grassmannian ((Modules.pushforward π).obj L) d).obj (Opposite.op T) :=
-  grassmannianClass L x (grassmannianEval_epi L x hbase hquot) hLocFree
+  grassmannianClass L x (grassmannianEval_epi L x hquot) hLocFree
 
 end DivFamily
 
