@@ -47,6 +47,7 @@ import MumfordLib.SourceComplexFundamentalGroup
 import MumfordLib.SourceComplexFirstCohomology
 import MumfordLib.SingularCochains
 import MumfordLib.SingularCupProduct
+import MumfordLib.SingularSecondCohomology
 import MumfordLib.ComplexLatticeAtlas
 import MumfordLib.ArbitraryLatticeTorsion
 import MumfordLib.ArbitraryLatticeFiniteTorsion
