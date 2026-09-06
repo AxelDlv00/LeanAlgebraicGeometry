@@ -93,6 +93,20 @@ theorem finiteStableCanonicalQuotientProjection_isFinite
     MorphismProperty.cancel_left_of_respectsIso @IsFinite]
   exact finiteStableQuotientChartMap_isFinite act p hact h i
 
+set_option backward.isDefEq.respectTransparency false in
+/-- The finite canonical quotient projection is universally closed.
+
+This exports the integral consequence of the chartwise finite construction so
+descent arguments can use universal closedness directly, without rebuilding
+the finite-to-integral instance at each call site.
+-/
+theorem finiteStableCanonicalQuotientProjection_isUniversallyClosed
+    [LocallyOfFiniteType p] :
+    UniversallyClosed (finiteStableCanonicalQuotientProjection act p hact h) := by
+  letI : IsFinite (finiteStableCanonicalQuotientProjection act p hact h) :=
+    finiteStableCanonicalQuotientProjection_isFinite act p hact h
+  infer_instance
+
 end FiniteCover
 
 end StableAffineOpen

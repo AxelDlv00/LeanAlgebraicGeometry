@@ -233,7 +233,8 @@ theorem finiteStableQuotientBaseMap_isSeparated [LocallyOfFiniteType p] :
   let q := finiteStableCanonicalQuotientProjection act p hact h
   let b := (finiteStableQuotientBaseMapData act p hact h).map
     (finiteStableQuotientCrossChartDatum act p hact h)
-  haveI : IsFinite q := finiteStableCanonicalQuotientProjection_isFinite act p hact h
+  haveI : UniversallyClosed q :=
+    finiteStableCanonicalQuotientProjection_isUniversallyClosed act p hact h
   haveI : Surjective q := ⟨finiteStableCanonicalQuotientProjection_surjective act p hact h⟩
   have hq : q ≫ b = p := by
     exact finiteStableCanonicalQuotientProjectionOver_comp_base act p hact h
