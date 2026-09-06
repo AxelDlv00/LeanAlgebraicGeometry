@@ -45,10 +45,12 @@ theorem tensorStageData_face_eq
       (q : relPic C (overSpec M.1 (S.stage ⊗[M.1] E.Carrier))),
       relPicAlgMap C (tensorStageDataCarrierMap (B := B) M E S) q = ξ →
       let f : R →ₐ[M.1] E.Carrier := (Algebra.ofId R E.Carrier).restrictScalars M.1
-      relPicAlgMap C (Algebra.TensorProduct.map (AlgHom.id M.1 S.stage)
-          (finiteStageTensorPushoutFaceLeft f f)) q =
-        relPicAlgMap C (Algebra.TensorProduct.map (AlgHom.id M.1 S.stage)
-          (finiteStageTensorPushoutFaceRight f f)) q := by
+      relPicAlgMap C ((AlgebraicJacobian.scalarExtensionMapOfAlgHom
+          (R := M.1) (K := S.stage)
+          (finiteStageTensorPushoutFaceLeft f f)).restrictScalars M.1) q =
+        relPicAlgMap C ((AlgebraicJacobian.scalarExtensionMapOfAlgHom
+          (R := M.1) (K := S.stage)
+          (finiteStageTensorPushoutFaceRight f f)).restrictScalars M.1) q := by
   dsimp only
   let iota : M.1 ⊗[F] B →ₐ[F] K ⊗[F] B :=
     Algebra.TensorProduct.map M.1.val (AlgHom.id F B)
@@ -58,10 +60,10 @@ theorem tensorStageData_face_eq
     (Algebra.ofId (M.1 ⊗[F] B) E.Carrier).restrictScalars M.1
   let jA := tensorStageDataCarrierMap (B := B) M E S
   let jQ := tensorStageDataOverlapMap (B := B) M E S
-  let q₁ := Algebra.TensorProduct.map (AlgHom.id M.1 S.stage)
-    (finiteStageTensorPushoutFaceLeft f f)
-  let q₂ := Algebra.TensorProduct.map (AlgHom.id M.1 S.stage)
-    (finiteStageTensorPushoutFaceRight f f)
+  let q₁ := (AlgebraicJacobian.scalarExtensionMapOfAlgHom
+    (R := M.1) (K := S.stage) (finiteStageTensorPushoutFaceLeft f f)).restrictScalars M.1
+  let q₂ := (AlgebraicJacobian.scalarExtensionMapOfAlgHom
+    (R := M.1) (K := S.stage) (finiteStageTensorPushoutFaceRight f f)).restrictScalars M.1
   have hjQ := tensorStageData_overlapMap_injective (B := B) M C E S
   have hleft := tensorStageData_faceLeft (B := B) M E S
   have hright := tensorStageData_faceRight (B := B) M E S
@@ -93,10 +95,12 @@ theorem exists_tensorStageData_class_faces
         (q : relPic C (overSpec M.1 (S.stage ⊗[M.1] E.Carrier))),
         relPicAlgMap C (tensorStageDataCarrierMap (B := B) M E S) q = ξ ∧
         let f : R →ₐ[M.1] E.Carrier := (Algebra.ofId R E.Carrier).restrictScalars M.1
-        relPicAlgMap C (Algebra.TensorProduct.map (AlgHom.id M.1 S.stage)
-            (finiteStageTensorPushoutFaceLeft f f)) q =
-          relPicAlgMap C (Algebra.TensorProduct.map (AlgHom.id M.1 S.stage)
-            (finiteStageTensorPushoutFaceRight f f)) q := by
+        relPicAlgMap C ((AlgebraicJacobian.scalarExtensionMapOfAlgHom
+            (R := M.1) (K := S.stage)
+            (finiteStageTensorPushoutFaceLeft f f)).restrictScalars M.1) q =
+          relPicAlgMap C ((AlgebraicJacobian.scalarExtensionMapOfAlgHom
+            (R := M.1) (K := S.stage)
+            (finiteStageTensorPushoutFaceRight f f)).restrictScalars M.1) q := by
   dsimp only
   let iota : M.1 ⊗[F] B →ₐ[F] K ⊗[F] B :=
     Algebra.TensorProduct.map M.1.val (AlgHom.id F B)
