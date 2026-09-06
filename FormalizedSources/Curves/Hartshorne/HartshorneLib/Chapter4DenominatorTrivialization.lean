@@ -137,6 +137,20 @@ lemma denominatorIsoZero_hom_app_sections
     exact @Subsingleton.elim (divisorSections (0 : CurveDivisor k X)
       (a.chart.U.ι ''ᵁ V)) inferInstance _ _
 
+/-- The denominator itself maps to the regular function `1`. -/
+lemma denominatorIsoZero_hom_app_denominator (V : a.chart.U.toScheme.Opens) :
+    (a.denominatorIsoZero hden).hom.app V
+        (show Γ((Scheme.Modules.restrictFunctor a.chart.U.ι).obj
+            (divisorModule D), V) from
+          divisorSectionsRes D (a.chart.U.ι_image_le V)
+            (a.sections a.denominator_index)) =
+      (show Γ((Scheme.Modules.restrictFunctor a.chart.U.ι).obj
+          (divisorModule (0 : CurveDivisor k X)), V) from
+        moduleToDivisorZeroPresheafApp (X := X) (a.chart.U.ι ''ᵁ V) 1) := by
+  rw [a.denominatorIsoZero_hom_app_sections hden
+    (LocalRatioRegularization.of_denominatorOrderEq a hden) V a.denominator_index,
+    LocalRatioRegularization.regularized_denominator_eq_one, map_one]
+
 end LocalRatioCoordinateData
 
 namespace BasePointFreeLocalRatioCover
@@ -157,6 +171,18 @@ lemma selectedCoordinates_denominatorOrderEq
   rw [selectedCoordinates_section_value]
   exact (selectedOpen_spec basis hD x).2 z hz hzU
 
+/-- Division by the selected denominator on a chart of the fixed-basis map. -/
+def selectedDenominatorIsoZero
+    (basis : Module.Basis (Fin (n + 1)) k (CurveDivisorSectionSpace D))
+    (hD : BasePointFreeLinearSystem D) (x : NonGenericPoint X) :
+    (Scheme.Modules.restrictFunctor
+        (selectedCoordinates (D := D) basis hD x).chart.U.ι).obj (divisorModule D) ≅
+      (Scheme.Modules.restrictFunctor
+        (selectedCoordinates (D := D) basis hD x).chart.U.ι).obj
+          (divisorModule (0 : CurveDivisor k X)) :=
+  (selectedCoordinates (D := D) basis hD x).denominatorIsoZero
+    (selectedCoordinates_denominatorOrderEq basis hD x)
+
 /-- Each chart of the actual fixed-basis projective-map construction has a
 divisor-module trivialization, supplied by its selected denominator. -/
 def selectedDenominatorTrivialization
@@ -166,8 +192,29 @@ def selectedDenominatorTrivialization
         (selectedCoordinates (D := D) basis hD x).chart.U.ι).obj (divisorModule D) ≅
       SheafOfModules.unit
         (selectedCoordinates (D := D) basis hD x).chart.U.toScheme.ringCatSheaf :=
-  (selectedCoordinates (D := D) basis hD x).denominatorTrivialization
+  selectedDenominatorIsoZero basis hD x ≪≫
+    restrictDivisorModuleZeroIsoUnit (selectedCoordinates (D := D) basis hD x).chart.U
+
+/-- On the cover used by the glued projective morphism, denominator division
+sends the chosen basis coordinates to that morphism's regularized coordinates. -/
+lemma selectedDenominatorIsoZero_hom_app_sections
+    (basis : Module.Basis (Fin (n + 1)) k (CurveDivisorSectionSpace D))
+    (hD : BasePointFreeLinearSystem D) (x : NonGenericPoint X)
+    (V : (selectedCoordinates (D := D) basis hD x).chart.U.toScheme.Opens)
+    (i : Fin (n + 1)) :
+    let a := selectedCoordinates (D := D) basis hD x
+    (selectedDenominatorIsoZero basis hD x).hom.app V
+        (show Γ((Scheme.Modules.restrictFunctor a.chart.U.ι).obj
+            (divisorModule D), V) from
+          divisorSectionsRes D (a.chart.U.ι_image_le V) (a.sections i)) =
+      (show Γ((Scheme.Modules.restrictFunctor a.chart.U.ι).obj
+          (divisorModule (0 : CurveDivisor k X)), V) from
+        moduleToDivisorZeroPresheafApp (X := X) (a.chart.U.ι ''ᵁ V)
+          ((X.left.presheaf.map (homOfLE (a.chart.U.ι_image_le V)).op).hom
+            ((selectedRegularization (D := D) basis hD x).regularized i))) := by
+  exact (selectedCoordinates (D := D) basis hD x).denominatorIsoZero_hom_app_sections
     (selectedCoordinates_denominatorOrderEq basis hD x)
+    (selectedRegularization (D := D) basis hD x) V i
 
 end BasePointFreeLocalRatioCover
 
