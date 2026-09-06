@@ -2,18 +2,18 @@ id: AJCR.review-plan.p7-galois-descent.representability.finite-stage
 title: Produce finite-stage RepresentableBy P.gluedOver
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: 'Target: (pic0TypeFunctor ((baseChange K P.N.1).obj C)).RepresentableBy P.gluedOver
-  with the exact glued carrier and no extra binder. Dependencies: universal.yoneda
-  and base-change.glued-comparison; this finite-stage certificate must be produced
-  before orbit-affine.exact-carrier, whose theorem signatures consume the same rep.
-  Pic0FiniteStageGluedOver defines the carrier, but no producer declaration constructs
-  this certificate; this is a mathematical blocker after compile certification. The
-  parent representability gate is for later original-field assembly and does not reorder
-  this child.'
+summary: Construct (pic0TypeFunctor ((baseChange K P.N.1).obj C)).RepresentableBy
+  P.gluedOver on the exact glued carrier without a supplied equivalence binder. The
+  arbitrary-test Yoneda producer and glued base-change comparison are its prerequisites.
+  This finite-stage result precedes exact-carrier orbit geometry and original-field
+  assembly; the enclosing representability node is organizational and does not make
+  its later-stage prerequisites requirements of this child.
 status: blocked
 kind: proof
 priority: urgent
-depends_on: []
+depends_on:
+- AJCR.review-plan.p7-galois-descent.universal.yoneda
+- AJCR.review-plan.p7-galois-descent.base-change.glued-comparison
 inbox_refs: []
 task_refs: []
 scope:
@@ -31,8 +31,8 @@ metadata:
     task: ajcr-roadmap-decomposition
     task_title: AJCR blocked-route decomposition and roadmap repair
     projects: Algebraic-Jacobian-Challenge-Rebuild,Algebraic-Jacobian-Challenge
-  parent: AJCR.review-plan.p7-galois-descent.universal.yoneda
+  parent: AJCR.review-plan.p7-galois-descent.representability
   milestone: AJCR.review-plan
-  updated_at: '2026-09-01T22:21:09.514081+00:00'
+  updated_at: '2026-09-06T17:22:34.547571+00:00'
   pinned_commits:
   - c17ac0d02d
