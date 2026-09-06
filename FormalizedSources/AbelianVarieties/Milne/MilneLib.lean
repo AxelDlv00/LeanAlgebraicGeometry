@@ -13,6 +13,11 @@ import MilneLib.AlgebraDescent
 import MilneLib.AffineSchemeDescent
 import MilneLib.Descent
 import MilneLib.InvariantQuotient
+import MilneLib.InvariantQuotientTensor
+import MilneLib.FreeAction
+import MilneLib.InvariantQuotientProjective
+import MilneLib.InvariantQuotientEtale
+import MilneLib.InvariantQuotientRationalPoints
 import MilneLib.InvariantQuotientFunctionField
 import MilneLib.InvariantQuotientTransitions
 import MilneLib.InvariantQuotientTransitionsOver
@@ -49,6 +54,7 @@ import MilneLib.InvariantQuotientStableAtlasMap
 import MilneLib.InvariantQuotientFiniteAtlasMap
 import MilneLib.InvariantQuotientStableBaseMap
 import MilneLib.InvariantQuotientFiniteAtlasCanonical
+import MilneLib.InvariantQuotientFree
 import MilneLib.InvariantQuotientFiniteAtlasFinite
 import MilneLib.InvariantQuotientFiniteAtlasOrbit
 import MilneLib.InvariantQuotientFiniteAtlasSections
