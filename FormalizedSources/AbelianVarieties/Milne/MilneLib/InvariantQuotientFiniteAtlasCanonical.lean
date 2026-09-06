@@ -5,6 +5,7 @@ Authors: The Milne Contributors
 -/
 
 import MilneLib.InvariantQuotientFiniteAtlasMap
+import Mathlib.AlgebraicGeometry.Morphisms.Etale
 
 /-!
 # Canonical finite-cover compatibility
@@ -209,6 +210,23 @@ theorem finiteStableCanonicalQuotientProjection_isQuotientMap :
     exact ((finiteStableAffineCover act h).f i).continuous.isOpen_preimage _ hU
   · intro hU
     exact (finiteStableCanonicalQuotientProjection act p hact h).continuous.isOpen_preimage U hU
+
+/-! Étaleness is local on the source.  The theorem below isolates the exact
+chart-level input still needed for the free-action clause of Milne's quotient
+theorem: once every affine quotient chart is étale, the glued projection is
+étale as well. -/
+
+theorem finiteStableCanonicalQuotientProjection_etale_of_chart_maps
+    (hétale : ∀ i : (finiteStableAffineCover act h).I₀,
+      Etale (finiteStableQuotientChartMap act p hact h i ≫
+        (finiteStableQuotientCrossChartDatum act p hact h).toGlueData.ι i)) :
+    Etale (finiteStableCanonicalQuotientProjection act p hact h) := by
+  apply IsZariskiLocalAtSource.of_openCover (P := @Etale)
+    (finiteStableAffineCover act h)
+  intro i
+  rw [finiteStableCover_f_finiteStableCanonicalQuotientProjection
+    act p hact h i]
+  exact hétale i
 
 /-- On a selected source chart, the canonical projection pulls a glued target
 chart back to the actual intersection of the two stable affine charts. -/

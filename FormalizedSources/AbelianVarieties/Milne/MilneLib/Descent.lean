@@ -200,6 +200,17 @@ theorem invariants_finite
   letI : IsNoetherian R M := isNoetherian_of_isNoetherianRing_of_finite R M
   exact Module.Finite.of_fg (IsNoetherian.noetherian D.invariants)
 
+/-! Over a field, the same invariant-submodule result is naturally expressed
+    as finite-dimensionality.  This is the linear algebra form used when a
+    Galois descent datum is applied to a finite-dimensional space of sections. -/
+
+theorem invariants_finiteDimensional
+    {K M G : Type*} [Field K] [AddCommGroup M] [Module K M] [Monoid G]
+    (D : LinearActionDatum K M G)
+    [FiniteDimensional K M] :
+    FiniteDimensional K D.invariants := by
+  exact D.invariants_finite
+
 /-- The trivial action has all of `M` as its invariant part. -/
 def trivial (R M G : Type*) [Semiring R] [AddCommMonoid M] [Module R M]
     [Monoid G] : LinearActionDatum R M G where

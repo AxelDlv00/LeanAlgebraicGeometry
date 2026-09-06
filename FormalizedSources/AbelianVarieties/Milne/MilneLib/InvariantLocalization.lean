@@ -319,6 +319,16 @@ theorem localizationAwayFixedRingEquiv_algebraMap [Finite G]
   exact (IsLocalization.algEquiv (Submonoid.powers b) (Localization.Away b)
     (fixedAway (b : A) b.property)).commutes a
 
+/-- The inverse comparison sends the fixed-localized image of an invariant
+element back to its canonical localization image. -/
+@[simp]
+theorem localizationAwayFixedRingEquiv_symm_invariantToFixedAway [Finite G]
+    (b a : FixedPoints.subalgebra k A G) :
+    (localizationAwayFixedRingEquiv b).symm (invariantToFixedAway b a) =
+      algebraMap (FixedPoints.subalgebra k A G) (Localization.Away b) a := by
+  rw [← localizationAwayFixedRingEquiv_algebraMap]
+  exact (localizationAwayFixedRingEquiv b).symm_apply_apply _
+
 /-- Including the fixed localized ring into `A[1/b]` after the canonical equivalence is the
 usual localization of the invariant-ring inclusion. -/
 theorem fixedAway_subtype_comp_localizationAwayFixedRingEquiv [Finite G]
