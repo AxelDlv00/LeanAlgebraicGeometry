@@ -250,7 +250,6 @@ theorem restrictionSpecMap_comp_chartBaseChangeMap
   unfold overlapBaseChangeMap
   rw [← Spec.map_comp]
   rw [chartBaseChangeStructureHom_comp_restriction]
-  rfl
 
 /-- The exact left restriction with indexed source and target rings.  Keeping
 the indexed rings avoids relying on typeclass transparency for their aliases. -/
