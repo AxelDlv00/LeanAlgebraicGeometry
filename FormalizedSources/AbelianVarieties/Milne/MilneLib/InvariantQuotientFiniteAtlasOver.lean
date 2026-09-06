@@ -167,6 +167,38 @@ theorem finiteStableQuotientBaseMap_quasiCompact :
   letI := finiteStableQuotientGlueData_compactSpace act p hact h
   infer_instance
 
+/-- A reduced source gives a reduced quotient target, since every quotient
+chart is the spectrum of a subring of a reduced section ring. -/
+theorem finiteStableQuotientGlueData_isReduced [IsReduced X] :
+    IsReduced (finiteStableQuotientGlueData act p hact h).glued := by
+  let D := finiteStableQuotientGlueData act p hact h
+  letI (i : D.openCover.I₀) : IsReduced (D.openCover.X i) := by
+    let C := finiteStableAffineChart act h i
+    letI := sectionsAlgebra p C.U
+    letI := sectionsMulSemiringAction act C.stable
+    letI := sectionsSMulCommClass act p hact C.stable
+    letI : _root_.IsReduced (FixedPoints.subalgebra k Γ(X, C.U) G) :=
+      isReduced_of_injective (FixedPoints.subalgebra k Γ(X, C.U) G).val
+        Subtype.val_injective
+    change IsReduced (Spec (CommRingCat.of (FixedPoints.subalgebra k Γ(X, C.U) G)))
+    infer_instance
+  exact IsReduced.of_openCover D.glued D.openCover
+
+/-- The quotient target of an irreducible source is irreducible, as the
+continuous image of the source under the surjective projection. -/
+theorem finiteStableQuotientGlueData_irreducibleSpace [IrreducibleSpace X] :
+    IrreducibleSpace (finiteStableQuotientGlueData act p hact h).glued :=
+  Function.Surjective.irreducibleSpace
+    (finiteStableCanonicalQuotientProjection act p hact h).continuous
+    (finiteStableCanonicalQuotientProjection_surjective act p hact h)
+
+/-- The quotient target of an integral source is integral. -/
+theorem finiteStableQuotientGlueData_isIntegral [AlgebraicGeometry.IsIntegral X] :
+    AlgebraicGeometry.IsIntegral (finiteStableQuotientGlueData act p hact h).glued := by
+  letI := finiteStableQuotientGlueData_isReduced act p hact h
+  letI := finiteStableQuotientGlueData_irreducibleSpace act p hact h
+  exact isIntegral_of_irreducibleSpace_of_isReduced _
+
 end FiniteCover
 
 end StableAffineOpen
