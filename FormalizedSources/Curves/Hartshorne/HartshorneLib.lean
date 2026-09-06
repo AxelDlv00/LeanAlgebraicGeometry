@@ -127,6 +127,7 @@ import HartshorneLib.Chapter4CurvePointWitness
 import HartshorneLib.Chapter4BasePointFreeLocalRatioCoverUnconditional
 import HartshorneLib.Chapter4BasePointFreeCriterion
 import HartshorneLib.Chapter4OrdinaryFiberBasePointFree
+import HartshorneLib.Chapter4DivisorModuleLocal
 
 /-!
 # HartshorneLib

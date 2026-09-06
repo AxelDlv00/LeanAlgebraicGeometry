@@ -23,6 +23,19 @@ universe u
 
 open AlgebraicGeometry
 
+/-- Restriction of the structure sheaf along an open immersion is the
+structure sheaf of the source. -/
+noncomputable def restrictUnitIso {X Y : Scheme.{u}} (f : Y ⟶ X)
+    [IsOpenImmersion f] :
+    (Scheme.Modules.restrictFunctor f).obj
+        (SheafOfModules.unit X.ringCatSheaf) ≅
+      SheafOfModules.unit Y.ringCatSheaf := by
+  letI : (TopologicalSpace.Opens.map f.base).Final :=
+    CategoryTheory.final_of_representablyFlat _
+  exact (Scheme.Modules.restrictFunctorIsoPullback f).app _ ≪≫
+    @asIso _ _ _ _ _ (inferInstance :
+      IsIso (SheafOfModules.pullbackObjUnitToUnit f.toRingCatSheafHom))
+
 /-- The structure sheaf, viewed as a module over itself, is a line bundle. -/
 theorem isLineBundle_unit {X : Scheme.{u}} :
     IsLineBundle (SheafOfModules.unit X.ringCatSheaf) := by
@@ -31,12 +44,7 @@ theorem isLineBundle_unit {X : Scheme.{u}} :
   have hx : x ∈ U := by
     trivial
   refine ⟨U, hx, ?_⟩
-  haveI : (TopologicalSpace.Opens.map U.ι.base).Final :=
-    CategoryTheory.final_of_representablyFlat _
-  refine ⟨?_⟩
-  exact (Scheme.Modules.restrictFunctorIsoPullback U.ι).app _ ≪≫
-    @asIso _ _ _ _ _ (inferInstance :
-      IsIso (SheafOfModules.pullbackObjUnitToUnit U.ι.toRingCatSheafHom))
+  exact ⟨restrictUnitIso U.ι⟩
 
 /-- Any module globally isomorphic to the structure sheaf is a line bundle. -/
 theorem isLineBundle_of_iso_unit {X : Scheme.{u}} {M : X.Modules}
