@@ -44,6 +44,7 @@ import MumfordLib.FundamentalGroupLattice
 import MumfordLib.FundamentalGroupEquivalence
 import MumfordLib.FundamentalGroupTransport
 import MumfordLib.SourceComplexFundamentalGroup
+import MumfordLib.SingularCochains
 import MumfordLib.ComplexLatticeAtlas
 import MumfordLib.ArbitraryLatticeTorsion
 import MumfordLib.ArbitraryLatticeFiniteTorsion
