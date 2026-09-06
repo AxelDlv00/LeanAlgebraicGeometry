@@ -1,25 +1,20 @@
 ## Progress
 
-- `AlgebraicJacobian/Picard/DivGrassmannianH1.lean`: rechecked the durable conditional producers `grassmannianQuotientOfDivisorKernelH1` and `grassmannianClassOfKernelAbsoluteCohomologyOneSubsingleton`; the focused Lean check exits 0.
-- `AlgebraicJacobian/Curve/FiniteLevelRationalPoint.lean` and `GaloisLevelRationalPoint.lean`: verified that the finite separable/Galois-level section is already represented in the Horizon ledger; no duplicate commit was made.
-- Task and roadmap metadata: recorded the verified frontier in commit `5e01c0e0d0`.
+- Verified `lake env lean AlgebraicJacobian/Picard/DivGrassmannianH1.lean` exits 0.
+- Confirmed existing conditional Grassmannian producers and finite separable/Galois-level substrate.
+- Recorded task and roadmap state in commits `5e01c0e0d0` and `6ea61fe231`.
+- Honesty reviewer used.
 
 ## Issues
 
-The conditional Grassmannian quotient still requires an explicit kernel `HModule`-degree-one `Subsingleton` premise. The field-fibre Cartier kernel has not yet been identified with `O(-D)`/`O(A-D)`, and no uniform relative `H1` theorem supplies that premise.
+`fgaPicardRepresentability` remains the sole `sorry`. I-2327 remains unresolved: the field-fibre Cartier kernel is not yet identified with `O(-D)`/`O(A-D)`, so uniform relative H¹ vanishing is unavailable.
 
 ## Why I stopped
 
-The objective is partly advanced, not complete. The source-facing `fgaPicardRepresentability` theorem remains the sole `sorry` in `FGAPicRepresentability.lean`; no unconditional `picEt` representing scheme was produced. The task remains running.
+The objective is partly advanced. No new Lean source theorem was added in this session because the existing AJC producer substrate was already durable and the next bridge is genuinely open. The task remains running; owned task, roadmap, and report paths are committed. Unrelated concurrent workspace changes remain untouched.
+
+The AJC umbrella build was not rerun; only the focused module check was run.
 
 ## Next
 
-Prove the inclusion-compatible field-fibre Cartier-kernel/divisor-sheaf identification, then establish the twisted-kernel degree and uniform relative `H1` vanishing needed to remove the conditional boundary.
-
-Claim class: proved producer (existing conditional substrate) | conditional interface (Grassmannian quotient/class) | axiom/sorry-backed (unconditional FGA headline)
-
-Frontier before/after: unchanged at I-2327; first unmet producer is still the field-fibre kernel identification, followed by twisted degree and uniform relative `H1`.
-
-Consumer: the natural degree-d Grassmannian divisor functor and ultimately `fgaPicardRepresentability` for `picEt`.
-
-Evidence: `lake env lean AlgebraicJacobian/Picard/DivGrassmannianH1.lean` exited 0; source grep confirms exactly one `sorry`, at `fgaPicardRepresentability`; Horizon roadmap `AJC.picrep.divgrassmannian` remains active with the same next node. `honesty-reviewer: used`.
+Prove the field-fibre kernel/divisor-sheaf identification, then twisted-kernel degree and uniform relative H¹ vanishing, before revisiting the unconditional `picEt` representability producer.
