@@ -301,6 +301,39 @@ noncomputable def grassmannianQuotientOfKernelAbsoluteCohomologyOneSubsingleton
       f L hL x)
     (pushforward_twist_isLocallyFreeOfRank_of_curve f L hL x hx)
 
+/-! ## The classifying-object endpoint
+
+The preceding theorem constructs the rank-indexed quotient datum.  The D2
+comparison consumes its quotient *class* in the Grassmannian functor, so expose
+that endpoint directly.  This keeps the two genuine geometric inputs visible:
+the kernel `H¹` vanishing supplies evaluation epimorphy, while the fibre-degree
+producer supplies the target rank.
+-/
+
+/-- **Grassmannian class of a divisor family with vanishing obstruction.**
+
+Over a noetherian affine test, a smooth proper geometrically integral curve
+and a degree-`d` divisor family determine an actual point of the Grassmannian
+of the chosen locally trivial twist as soon as the kernel `H¹` carrier is
+subsingleton.  The class is built from the evaluated quotient, so this is a
+producer for the D2 classifying functor rather than a certificate of a
+representability statement.
+-/
+noncomputable def grassmannianClassOfKernelAbsoluteCohomologyOneSubsingleton
+    {k : Type u} [Field k] {R : CommRingCat.{u}} [IsNoetherianRing R]
+    {X : Scheme.{u}} {π : X ⟶ Spec (CommRingCat.of k)}
+    [SmoothOfRelativeDimension 1 π] [GeometricallyIntegral π] [IsProper π]
+    (f : Spec R ⟶ Spec (CommRingCat.of k))
+    (L : X.Modules) (hL : LineBundle.IsLocallyTrivial L)
+    (x : DivFamily π (Over.mk f)) {d : ℕ} (hx : x.HasFiberDeg d)
+    [Subsingleton (CategoryTheory.Abelian.Ext
+      (jShriekOU (⊤ : (pullback π f).Opens))
+      (kernel (x.twistQuotientMap L)) 1)] :
+    (Grassmannian ((Modules.pushforward π).obj L) d).obj
+      (Opposite.op (Over.mk f)) :=
+  Quotient.mk _ (grassmannianQuotientOfKernelAbsoluteCohomologyOneSubsingleton
+    f L hL x hx)
+
 end DivFamily
 
 end Scheme
