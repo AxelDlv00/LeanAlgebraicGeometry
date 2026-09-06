@@ -70,6 +70,7 @@ import MilneLib.BasicLemmas
 import MilneLib.FibreCorollaries
 import MilneLib.SymmetricPower
 import MilneLib.SymmetricPowerCoherence
+import MilneLib.SymmetricPowerQuotient
 import MilneLib.StableAffineCover
 
 /-!
