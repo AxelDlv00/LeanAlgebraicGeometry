@@ -3,23 +3,25 @@ title: 'Phase 7: finite-Galois descent to the original field'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 - Algebraic-Jacobian-Challenge
-summary: 'HEAD audit 2026-08-23: the sep-closed rank-one route, finite atlas data,
-  universal chart/overlap class, and conditional Galois quotient consumers are real
-  and axiom-clean, but no acceptance edge closes Phase 7. Source sync labels several
-  declarations lean_ok; the current critical cache has no .olean for GluePackage,
-  GluingDiagramIso, top PreSnd, OverlapIsoSnd, or GluedComparison. Run 0154 is live
-  and owns only the four-file compile cone; do not edit or reassign it. Mathematical
-  gates after certification are binder-free RepresentableBy P.gluedOver, exact-carrier
-  orbit-affineness/projectivity, then original-field pic0_representableBy and same-carrier
-  PicRepDatum/JacobianData. Child rows below are the executable dependency breakdown.'
+summary: Phase 7 remains incomplete. Canonical finite-stage relative classes with
+  ambient comparison and reflected overlap equality are now kernel-checked. The next
+  producer is the corresponding PicEtAff stage/value/map_eq theorem, followed by simultaneous
+  degree-zero chart values and compatibility on one finite Galois stage. Then construct
+  the universal class on the final P.gluedOver, prove arbitrary-test Yoneda, establish
+  exact-carrier orbit geometry, and instantiate original-field representability before
+  the datum handoff. Current source-only producer and assembly claims are not verified
+  artifacts.
 status: blocked
 kind: proof
 priority: urgent
 depends_on:
 - AJCR.review-plan.p6-sepclosed-producer
-inbox_refs: []
+inbox_refs:
+- I-2011
+- I-2339
 task_refs:
 - ajcr-blueprint-reconcile
+- ajcr-p7-galois-descent
 scope:
   projects:
   - Algebraic-Jacobian-Challenge-Rebuild
@@ -29,7 +31,7 @@ metadata:
   created_at: '2026-08-04T01:52:30.932692+00:00'
   parent: AJCR.review-plan
   milestone: AJCR.review-plan
-  updated_at: '2026-08-23T02:20:24.638706+00:00'
+  updated_at: '2026-09-06T14:57:38.306876+00:00'
   pinned_commits:
   - 340206c19e
   - 7fabbbdedd

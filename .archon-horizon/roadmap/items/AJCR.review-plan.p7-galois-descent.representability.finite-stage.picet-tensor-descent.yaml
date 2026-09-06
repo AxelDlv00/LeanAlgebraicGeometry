@@ -1,0 +1,40 @@
+id: AJCR.review-plan.p7-galois-descent.representability.finite-stage.picet-tensor-descent
+title: Descend PicEtAff classes to finite tensor stages
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+summary: 'Kernel-checked exists_tensorStageData_class_faces now produces a finite
+  relative class with ambient comparison and reflected overlap equality; tensorStageData_face_eq
+  is its proved reflection step (e7641d3c4d, e8b2e8d4bc; only standard Lean axioms).
+  The next producer remains exists_picEtAff_tensorStage_data: construct the etale-plus
+  class from those equal faces, prove its ambient map equation, and flatten the nested
+  finite stage. No full PicEtAff producer or downstream degree-zero/common-stage module
+  is certified yet.'
+status: active
+kind: proof
+priority: high
+depends_on: []
+inbox_refs:
+- I-2339
+task_refs:
+- ajcr-complete
+- ajcr-p7-galois-descent
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+metadata:
+  author: horizon
+  created_at: '2026-09-03T04:10:43.652640+00:00'
+  provenance:
+    run: '0207'
+    session: 0002-horizon-ajcr-complete
+    role: horizon
+    round: '0'
+    rounds: '24'
+    task: ajcr-complete
+    task_title: Complete AJCR
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  parent: AJCR.review-plan.p7-galois-descent.representability.finite-stage
+  updated_at: '2026-09-06T14:58:01.353064+00:00'
+  pinned_commits:
+  - e7641d3c4d
+  - e8b2e8d4bc
