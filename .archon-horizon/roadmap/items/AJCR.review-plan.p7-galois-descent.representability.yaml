@@ -2,14 +2,13 @@ id: AJCR.review-plan.p7-galois-descent.representability
 title: Assemble and consume pic0_representableBy
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: 'Final original-field assembly gate: conditional quotient, invariant/equivariant,
-  transport, and PicRepDatum/JacobianData consumers are artifact-backed, but no unconditional
-  producer exists. The finite-stage RepresentableBy producer is structurally ordered
-  under universal.yoneda because orbit-affine.exact-carrier consumes it; this parent-level
-  dependency on orbit-affine applies only to the later quotient/original-field assembly
-  and is not a prerequisite for the finite-stage child. The filtered-colimit row remains
-  downstream.'
-status: pending
+summary: Original-field representability remains unproved. The supplied TestEquiv
+  identity-class handoff at 3e75b317ac is conditional; 1d01c8dce2 now produces compatible
+  pinned affine values given tensor ring models and comparisons. Actual model instantiation,
+  the universal class on literal P.gluedOver, arbitrary-test representability, and
+  exact-carrier Galois geometry remain upstream of original-field pic0_representableBy;
+  the same-carrier datum handoff follows it. GlueDataAssembly has no verified artifact.
+status: blocked
 kind: proof
 priority: urgent
 depends_on:
@@ -25,4 +24,7 @@ metadata:
   created_at: '2026-08-18T06:12:03.341554+00:00'
   parent: AJCR.review-plan.p7-galois-descent
   milestone: AJCR.review-plan
-  updated_at: '2026-08-23T03:04:03.654045+00:00'
+  updated_at: '2026-09-06T17:19:20.120059+00:00'
+  pinned_commits:
+  - 1d01c8dce2
+  - 3e75b317ac
