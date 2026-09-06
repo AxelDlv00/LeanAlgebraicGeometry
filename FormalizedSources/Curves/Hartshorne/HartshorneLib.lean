@@ -139,6 +139,10 @@ import HartshorneLib.Chapter4ProjectiveMapFinite
 import HartshorneLib.Chapter4LocalRatioTangent
 import HartshorneLib.Chapter4LocalRatioStalkRange
 import HartshorneLib.Chapter4ProjectiveMapTangent
+import HartshorneLib.Chapter4FiniteInjectiveStalks
+import HartshorneLib.Chapter4GenericStalkSurjectivity
+import HartshorneLib.Chapter4ResidueMap
+import HartshorneLib.Chapter4ProjectiveMapClosedImmersion
 
 /-!
 # HartshorneLib
