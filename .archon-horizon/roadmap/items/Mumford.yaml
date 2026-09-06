@@ -2,11 +2,11 @@ id: Mumford
 title: Mumford Abelian Varieties formalization
 projects:
 - Mumford
-summary: Advance source-faithful Mumford analytic formalization. The compact connected
-  complex-Lie commutativity node is now reviewer-approved, linked to Mumford.Analytic.complexLieGroup_isMulCommutative,
-  and graph lean_ok; its intrinsic jointly holomorphic exponential family is consumed
-  load-bearingly. Source lattice identification, quotient complex-Lie structure, and
-  holomorphic uniformization remain open, so the roadmap stays active.
+summary: Compact complex Lie commutativity, intrinsic uniformization, source torsion,
+  fundamental group and lattice-dual H1 are proved. Connected H0, product H1, graded
+  cups, degree-zero/one exterior bijectivity, homotopy invariance and positive contractible/punctured-circle
+  acyclicity are proved. Continue with singular small chains, circle gluing and all-degree
+  Kunneth; source integral cohomology remains open.
 status: active
 kind: proof
 priority: normal
@@ -29,7 +29,7 @@ metadata:
     task_title: Advance Mumford Abelian Varieties formalization
     projects: Mumford
   owner: fs-mumford
-  updated_at: '2026-09-06T01:02:17.291959+00:00'
+  updated_at: '2026-09-06T22:38:57.931156+00:00'
   pinned_commits:
   - dda3677f0d
   - 62bbf42834
