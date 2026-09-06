@@ -13,7 +13,9 @@ The finite subcover selected from compactness is definitionally a finite
 subfamily of the stable affine source cover.  After unfolding that subfamily,
 the generic stable-chart overlap calculation supplies the exact pullback
 compatibility required by `SourceChartMaps`.  This module consequently removes
-the conditional compatibility argument from the finite-cover projection.
+the conditional compatibility argument from the finite-cover projection and
+proves that the resulting global projection is surjective and carries the
+quotient topology.
 -/
 
 set_option autoImplicit false
@@ -161,6 +163,51 @@ theorem finiteStableCover_f_finiteStableCanonicalQuotientProjection
         (finiteStableQuotientCrossChartDatum act p hact h).toGlueData.ι i := by
   exact finiteStableCover_f_finiteStableQuotientProjection act p hact h
     (fun i j => finiteStableProjection_compat act p hact h i j) i
+
+/-- The canonical projection to the glued invariant quotient atlas is
+surjective on points. -/
+theorem finiteStableCanonicalQuotientProjection_surjective :
+    Function.Surjective
+      (finiteStableCanonicalQuotientProjection act p hact h).base := by
+  intro y
+  obtain ⟨i, z, hz⟩ :=
+    (finiteStableQuotientCrossChartDatum act p hact h).toGlueData.ι_jointly_surjective y
+  let C := finiteStableAffineChart act h i
+  letI := sectionsAlgebra p C.U
+  letI := sectionsMulSemiringAction act C.stable
+  letI := sectionsSMulCommClass act p hact C.stable
+  obtain ⟨x, hx⟩ := stableAffineQuotientMap_surjective act p hact C z
+  refine ⟨(finiteStableAffineCover act h).f i x, ?_⟩
+  rw [← hz, ← hx]
+  have hmap :=
+    finiteStableCover_f_finiteStableCanonicalQuotientProjection act p hact h i
+  exact congrArg (fun f => f x) hmap
+
+/-- The topology on the glued invariant quotient atlas is the quotient topology
+for the canonical projection. -/
+theorem finiteStableCanonicalQuotientProjection_isQuotientMap :
+    Topology.IsQuotientMap
+      (finiteStableCanonicalQuotientProjection act p hact h).base := by
+  refine ⟨Topology.IsCoinducing.of_isOpen_preimage_iff_isOpen ?_,
+    finiteStableCanonicalQuotientProjection_surjective act p hact h⟩
+  intro U
+  constructor
+  · intro hU
+    rw [(finiteStableQuotientCrossChartDatum act p hact h).toGlueData.isOpen_iff]
+    intro i
+    let C := finiteStableAffineChart act h i
+    letI := sectionsAlgebra p C.U
+    letI := sectionsMulSemiringAction act C.stable
+    letI := sectionsSMulCommClass act p hact C.stable
+    have hq := stableAffineQuotientMap_isQuotientMap act p hact C
+    apply hq.isCoinducing.isOpen_preimage.mp
+    change IsOpen (((finiteStableQuotientChartMap act p hact h i ≫
+      (finiteStableQuotientCrossChartDatum act p hact h).toGlueData.ι i).base) ⁻¹' U)
+    rw [← finiteStableCover_f_finiteStableCanonicalQuotientProjection
+      act p hact h i]
+    exact ((finiteStableAffineCover act h).f i).continuous.isOpen_preimage _ hU
+  · intro hU
+    exact (finiteStableCanonicalQuotientProjection act p hact h).continuous.isOpen_preimage U hU
 
 end FiniteCover
 
