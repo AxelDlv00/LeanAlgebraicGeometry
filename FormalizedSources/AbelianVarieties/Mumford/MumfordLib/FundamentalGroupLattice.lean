@@ -37,12 +37,12 @@ theorem quotient_liftPath_endpoint_mem_ambientPeriodLattice
     {γ : Path (0 : V ⧸ d.ambientPeriodLattice) 0} :
     let cov := d.quotient_mk_isCoveringMap
     let hstart : γ 0 = QuotientAddGroup.mk' d.ambientPeriodLattice 0 := by
-      simpa using γ.source
+      simp
     let Γ := cov.liftPath γ 0 hstart
     Γ 1 ∈ d.ambientPeriodLattice := by
   let cov := d.quotient_mk_isCoveringMap
   let hstart : γ 0 = QuotientAddGroup.mk' d.ambientPeriodLattice 0 := by
-    simpa using γ.source
+    simp
   let Γ := cov.liftPath γ 0 hstart
   have hlift :
       (QuotientAddGroup.mk' d.ambientPeriodLattice) (Γ 1) = γ 1 := by
@@ -96,7 +96,7 @@ theorem quotient_liftPath_endpoint_surjective
         simp [Γ, QuotientAddGroup.eq_zero_iff, u.property] }
   refine ⟨Path.Homotopic.Quotient.mk γ, ?_⟩
   let hstart : (γ : C(unitInterval, V ⧸ d.ambientPeriodLattice)) 0 = 0 := by
-    simpa using γ.source
+    simp
   change (d.quotient_mk_isCoveringMap.monodromy
       (Path.Homotopic.Quotient.mk γ) ⟨0, by simp⟩).1 = u
   change (d.quotient_mk_isCoveringMap.liftPath (γ : C(unitInterval, V ⧸
@@ -109,6 +109,60 @@ theorem quotient_liftPath_endpoint_surjective
       hstart).mpr ⟨hproj, by simp [Γ]⟩
   rw [← hlift]
   simp [Γ]
+
+/- The endpoint invariant has trivial kernel: a loop whose lift closes upstairs
+   is null-homotopic because the vector space cover is simply connected. -/
+theorem quotient_monodromy_endpoint_eq_zero_iff
+    {V X : Type*} [NormedAddCommGroup V] [NormedSpace ℂ V]
+    [AddCommGroup X] [TopologicalSpace X] {g : ℕ}
+    (d : ComplexVectorLatticeExponentialData V X g)
+    {γ : Path.Homotopic.Quotient
+      (0 : V ⧸ d.ambientPeriodLattice)
+      0} :
+    (d.quotient_mk_isCoveringMap.monodromy γ
+      ⟨0, by simp⟩).1 = 0 ↔ γ = Path.Homotopic.Quotient.refl 0 := by
+  induction γ using Path.Homotopic.Quotient.ind with
+  | _ p =>
+      let cov := d.quotient_mk_isCoveringMap
+      let hstart : (p : C(unitInterval, V ⧸ d.ambientPeriodLattice)) 0 = 0 := by
+        simp
+      let Γ := cov.liftPath p 0 hstart
+      constructor
+      · intro hzero
+        change Γ 1 = 0 at hzero
+        let Γp : Path (0 : V) 0 :=
+          { toFun := Γ
+            continuous_toFun := Γ.continuous
+            source' := by simpa [Γ] using cov.liftPath_zero p 0 hstart
+            target' := hzero }
+        apply Path.Homotopic.Quotient.eq.mpr
+        have hΓ : Γp.Homotopic (Path.refl 0) :=
+          SimplyConnectedSpace.paths_homotopic Γp (Path.refl 0)
+        have hmap := hΓ.map
+          (⟨QuotientAddGroup.mk' d.ambientPeriodLattice,
+            QuotientAddGroup.continuous_mk⟩ : C(V, V ⧸ d.ambientPeriodLattice))
+        have hproj : Γp.map
+            (⟨QuotientAddGroup.mk' d.ambientPeriodLattice,
+              QuotientAddGroup.continuous_mk⟩ :
+                C(V, V ⧸ d.ambientPeriodLattice)).continuous = p := by
+          ext t
+          exact congr_fun (cov.liftPath_lifts p 0 hstart) t
+        have hqrefl :
+            (Path.refl (0 : V)).map
+                (⟨QuotientAddGroup.mk' d.ambientPeriodLattice,
+                  QuotientAddGroup.continuous_mk⟩ : C(V, V ⧸ d.ambientPeriodLattice)).continuous =
+              Path.refl 0 := by
+          ext t
+          change QuotientAddGroup.mk' d.ambientPeriodLattice 0 = 0
+          simp
+        rw [hproj] at hmap
+        rw [hqrefl] at hmap
+        simpa [hzero] using hmap
+      · intro h
+        rw [h]
+        change (cov.monodromy (Path.Homotopic.Quotient.refl 0) ⟨0, by simp⟩).1 = 0
+        rw [cov.monodromy_refl]
+        rfl
 
 end Uniformization
 end Mumford
