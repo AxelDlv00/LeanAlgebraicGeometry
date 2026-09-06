@@ -2,11 +2,11 @@ id: Mumford.analytic-uniformization-bridge
 title: Intrinsic lattice and quotient uniformization
 projects:
 - Mumford
-summary: 'Next source-faithful frontier: construct or import the intrinsic holomorphic
-  exponential, identify its lattice kernel with the tangent model, and supply the
-  quotient complex-Lie/manifold isomorphism required by the frozen uniformization
-  theorem. Existing canonical real-flow quotient and lattice APIs are conditional
-  model/topological producers only; do not attach them as the source theorem.'
+summary: Scoped intrinsic candidate now reparametrizes canonical full lattice data
+  onto GroupLieAlgebra with local induced norm/topology; exact exponential/kernel
+  bridge, explicit quotient IsManifold atlas, omega-smooth quotient addition/negation,
+  and a conditional LieAddGroup certificate are verified. Source holomorphic exponential,
+  quotient Lie-group isomorphism, and frozen linkage remain open.
 status: pending
 kind: proof
 priority: high
@@ -33,8 +33,18 @@ metadata:
     projects: Mumford
   parent: Mumford
   owner: fs-mumford
-  updated_at: '2026-09-06T00:49:07.546970+00:00'
+  updated_at: '2026-09-06T05:39:25.704079+00:00'
   pinned_commits:
+  - 0b7e4e2bd0
+  - 02f7f6bf43
+  - 4f502715bf
+  - 3d4e8b7f47
+  - a122f7c5ca
+  - 451e5800fa
+  - 18204cfca6
+  - e49467827b
+  - 9934f351ad
+  - 87bca8f251
   - dda3677f0d
   - 62bbf42834
   - 44a3f63f9b
