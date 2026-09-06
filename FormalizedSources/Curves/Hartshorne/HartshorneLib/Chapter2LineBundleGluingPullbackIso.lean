@@ -31,7 +31,8 @@ universe u v
 
 noncomputable section
 
-private lemma restrictUnitIso_hom_app_top_one
+/-- Restricting the structure sheaf preserves its unit section. -/
+lemma restrictUnitIso_hom_app_top_one
     {A B : Scheme.{u}} (j : A ⟶ B) [IsOpenImmersion j] :
     ((restrictUnitIso j).hom.app ⊤).hom
       (1 : Γ(B, j ''ᵁ (⊤ : A.Opens))) = (1 : Γ(A, ⊤)) := by
