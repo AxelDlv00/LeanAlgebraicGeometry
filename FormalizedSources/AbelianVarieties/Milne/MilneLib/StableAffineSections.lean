@@ -105,6 +105,25 @@ lemma actApp_map {U V : X.Opens} (hU : IsStableOpen act U)
       X.presheaf.map (homOfLE hVU).op ≫ actApp act hV g := by
   rw [actApp, actApp, Scheme.Hom.appLE_map, Scheme.Hom.map_appLE]
 
+/-! ## Pullback along invariant morphisms -/
+
+/-- The inverse image of an open under an invariant morphism is stable. -/
+lemma isStableOpen_preimage_of_invariant {Y : Scheme.{u}} (q : X ⟶ Y)
+    (hq : ∀ g : G, (act g).hom ≫ q = q) (U : Y.Opens) :
+    IsStableOpen act (q ⁻¹ᵁ U) := by
+  intro g
+  change ((act g).hom ≫ q) ⁻¹ᵁ U = q ⁻¹ᵁ U
+  rw [hq g]
+
+/-- Pullback along an invariant morphism takes sections to fixed sections. -/
+@[reassoc]
+lemma app_actApp_of_invariant {Y : Scheme.{u}} (q : X ⟶ Y)
+    (hq : ∀ g : G, (act g).hom ≫ q = q) (U : Y.Opens) (g : G) :
+    q.app U ≫ actApp act (isStableOpen_preimage_of_invariant act q hq U) g =
+      q.app U := by
+  rw [actApp, ← Scheme.Hom.appLE_eq_app q, Scheme.Hom.appLE_comp_appLE,
+    appLE_congr_hom (hq g)]
+
 /-! ## Restrictions to stable opens -/
 
 /-- Restrict one action morphism to a stable open. -/
