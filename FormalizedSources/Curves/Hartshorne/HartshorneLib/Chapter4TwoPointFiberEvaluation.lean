@@ -100,12 +100,16 @@ theorem ker_twoPointJumpEvaluation_of_ne {x y : X.left}
   rw [LinearMap.mem_ker, twoPointJumpEvaluation_eq_zero_iff_of_ne hx hy hxy]
   rfl
 
-/-- Numerical very ampleness makes simultaneous intrinsic jump evaluation
-surjective at every pair of distinct points. -/
-theorem twoPointJumpEvaluation_surjective_of_veryAmple
-    {D : CurveDivisor k X} (hD : VeryAmpleLinearSystem D)
+/-- At two distinct points, a two-dimensional section drop makes simultaneous
+intrinsic jump evaluation surjective. -/
+theorem twoPointJumpEvaluation_surjective_of_h0_drop
     {x y : X.left} (hx : x ≠ genericPoint X.left)
-    (hy : y ≠ genericPoint X.left) (hxy : x ≠ y) :
+    (hy : y ≠ genericPoint X.left) (hxy : x ≠ y)
+    (D : CurveDivisor k X)
+    (hdrop : (CategoryTheory.Sheaf.h0 (divisorSheaf D) : ℤ) -
+      CategoryTheory.Sheaf.h0
+        (divisorSheaf (CurveDivisor.devissageDivisor hy
+          (CurveDivisor.devissageDivisor hx D))) = 2) :
     Function.Surjective (twoPointJumpEvaluation hx hy D) := by
   let Dxy := CurveDivisor.devissageDivisor hy
     (CurveDivisor.devissageDivisor hx D)
@@ -139,7 +143,6 @@ theorem twoPointJumpEvaluation_surjective_of_veryAmple
         Module.finrank k P := by
     rw [ker_twoPointJumpEvaluation_of_ne hx hy hxy D]
     exact (Submodule.submoduleOfEquivOfLe hle).finrank_eq
-  have hdrop := hD x y hx hy
   let eSmall := CategoryTheory.Sheaf.HModule.linearEquiv₀ isTerminalTop
     (divisorSheaf Dxy)
   let eBig := CategoryTheory.Sheaf.HModule.linearEquiv₀ isTerminalTop
@@ -160,6 +163,93 @@ theorem twoPointJumpEvaluation_surjective_of_veryAmple
         Module.finrank k (jumpModule hx D × jumpModule hy D) := by
     omega
   exact LinearMap.range_eq_top.mp (Submodule.eq_top_of_finrank_eq hrange)
+
+/-- Numerical very ampleness makes simultaneous intrinsic jump evaluation
+surjective at every pair of distinct points. -/
+theorem twoPointJumpEvaluation_surjective_of_veryAmple
+    {D : CurveDivisor k X} (hD : VeryAmpleLinearSystem D)
+    {x y : X.left} (hx : x ≠ genericPoint X.left)
+    (hy : y ≠ genericPoint X.left) (hxy : x ≠ y) :
+    Function.Surjective (twoPointJumpEvaluation hx hy D) :=
+  twoPointJumpEvaluation_surjective_of_h0_drop hx hy hxy D (hD x y hx hy)
+
+/-- At two distinct points, surjectivity of simultaneous intrinsic jump
+evaluation forces the two-dimensional section drop. -/
+theorem h0_drop_eq_two_of_twoPointJumpEvaluation_surjective
+    {x y : X.left} (hx : x ≠ genericPoint X.left)
+    (hy : y ≠ genericPoint X.left) (hxy : x ≠ y)
+    (D : CurveDivisor k X)
+    (hsurj : Function.Surjective (twoPointJumpEvaluation hx hy D)) :
+    (CategoryTheory.Sheaf.h0 (divisorSheaf D) : ℤ) -
+      CategoryTheory.Sheaf.h0
+        (divisorSheaf (CurveDivisor.devissageDivisor hy
+          (CurveDivisor.devissageDivisor hx D))) = 2 := by
+  let Dxy := CurveDivisor.devissageDivisor hy
+    (CurveDivisor.devissageDivisor hx D)
+  let P := divisorSections Dxy (⊤ : X.left.Opens)
+  have hle : P ≤ divisorSections D ⊤ :=
+    (divisorSections_mono
+      (devissageDivisor_le hy (CurveDivisor.devissageDivisor hx D)) ⊤).trans
+      (divisorSections_mono (devissageDivisor_le hx D) ⊤)
+  letI : Module.Finite k (CurveDivisorSectionSpace D) :=
+    (hasFiniteDivisorCohomology_of_smoothProperIntegralCurve (k := k) X D).1
+  letI : Module.Finite k (divisorSections D (⊤ : X.left.Opens)) :=
+    Module.Finite.equiv (divisorSectionSpaceEquiv (D := D))
+  letI : Module.Finite k (jumpModule hx D) := moduleFinite_jumpModule hx D
+  letI : Module.Finite k (jumpModule hy D) := moduleFinite_jumpModule hy D
+  letI : X.left.Over (Spec (CommRingCat.of k)) := .ofHom X.hom
+  letI : SmoothOfRelativeDimension 1
+      (X.left ↘ Spec (CommRingCat.of k)) :=
+    inferInstanceAs (SmoothOfRelativeDimension 1 X.hom)
+  letI : LocallyOfFiniteType (X.left ↘ Spec (CommRingCat.of k)) :=
+    inferInstanceAs (LocallyOfFiniteType X.hom)
+  have hxdeg : X.left.residueDeg k x = 1 :=
+    AlgebraicGeometry.Scheme.residueDeg_eq_one_of_isAlgClosed hx
+  have hydeg : X.left.residueDeg k y = 1 :=
+    AlgebraicGeometry.Scheme.residueDeg_eq_one_of_isAlgClosed hy
+  have htarget :
+      Module.finrank k (jumpModule hx D × jumpModule hy D) = 2 := by
+    rw [Module.finrank_prod, finrank_jumpModule, finrank_jumpModule,
+      hxdeg, hydeg]
+  have hker :
+      Module.finrank k (twoPointJumpEvaluation hx hy D).ker =
+        Module.finrank k P := by
+    rw [ker_twoPointJumpEvaluation_of_ne hx hy hxy D]
+    exact (Submodule.submoduleOfEquivOfLe hle).finrank_eq
+  have hrank :=
+    LinearMap.finrank_range_add_finrank_ker
+      (twoPointJumpEvaluation hx hy D)
+  rw [hker] at hrank
+  have hrange :
+      Module.finrank k (twoPointJumpEvaluation hx hy D).range =
+        Module.finrank k (jumpModule hx D × jumpModule hy D) := by
+    rw [LinearMap.range_eq_top.mpr hsurj]
+    exact finrank_top k (jumpModule hx D × jumpModule hy D)
+  let eSmall := CategoryTheory.Sheaf.HModule.linearEquiv₀ isTerminalTop
+    (divisorSheaf Dxy)
+  let eBig := CategoryTheory.Sheaf.HModule.linearEquiv₀ isTerminalTop
+    (divisorSheaf D)
+  change (CategoryTheory.Sheaf.h0 (divisorSheaf D) : ℤ) -
+      CategoryTheory.Sheaf.h0 (divisorSheaf Dxy) = 2
+  rw [CategoryTheory.Sheaf.h0, CategoryTheory.Sheaf.h0,
+    eBig.finrank_eq, eSmall.finrank_eq, divisorSheaf_obj, divisorSheaf_obj]
+  change (Module.finrank k (divisorSections D (⊤ : X.left.Opens)) : ℤ) -
+      Module.finrank k P = 2
+  omega
+
+/-- At two distinct points, the two-dimensional section drop is equivalent to
+surjectivity of simultaneous intrinsic jump evaluation. -/
+theorem h0_sub_h0_twoDevissage_eq_two_iff_twoPointJumpEvaluation_surjective
+    {x y : X.left} (hx : x ≠ genericPoint X.left)
+    (hy : y ≠ genericPoint X.left) (hxy : x ≠ y)
+    (D : CurveDivisor k X) :
+    (CategoryTheory.Sheaf.h0 (divisorSheaf D) : ℤ) -
+        CategoryTheory.Sheaf.h0
+          (divisorSheaf (CurveDivisor.devissageDivisor hy
+            (CurveDivisor.devissageDivisor hx D))) = 2 ↔
+      Function.Surjective (twoPointJumpEvaluation hx hy D) :=
+  ⟨twoPointJumpEvaluation_surjective_of_h0_drop hx hy hxy D,
+    h0_drop_eq_two_of_twoPointJumpEvaluation_surjective hx hy hxy D⟩
 
 /-- Simultaneous evaluation in the two ordinary divisor-module fibers. -/
 noncomputable def divisorModuleTwoPointFiberEvaluation (D : CurveDivisor k X)
@@ -230,6 +320,22 @@ theorem divisorModuleTwoPointFiberEvaluation_surjective_iff
       change divisorModuleFiberJumpEvaluation (X := X) hy D s = fy z.2
       rw [divisorModuleFiberJumpEvaluation_apply]
       exact hsy
+
+/-- At two distinct points, the two-dimensional section drop is equivalent to
+surjectivity of simultaneous evaluation in the ordinary divisor-module fibers. -/
+theorem h0_sub_h0_twoDevissage_eq_two_iff_twoPointFiberEvaluation_surjective
+    {x y : X.left} (hx : x ≠ genericPoint X.left)
+    (hy : y ≠ genericPoint X.left) (hxy : x ≠ y)
+    (D : CurveDivisor k X) :
+    (CategoryTheory.Sheaf.h0 (divisorSheaf D) : ℤ) -
+        CategoryTheory.Sheaf.h0
+          (divisorSheaf (CurveDivisor.devissageDivisor hy
+            (CurveDivisor.devissageDivisor hx D))) = 2 ↔
+      Function.Surjective (divisorModuleTwoPointFiberEvaluation D x y) := by
+  rw [divisorModuleTwoPointFiberEvaluation_surjective_iff hx hy D]
+  exact
+    h0_sub_h0_twoDevissage_eq_two_iff_twoPointJumpEvaluation_surjective
+      hx hy hxy D
 
 /-- A numerically very ample divisor module separates every pair of distinct
 points by simultaneous ordinary-fiber evaluation. -/
