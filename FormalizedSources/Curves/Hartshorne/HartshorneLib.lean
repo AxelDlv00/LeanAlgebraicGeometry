@@ -137,6 +137,8 @@ import HartshorneLib.Chapter4DivisorModuleLocal
 import HartshorneLib.Chapter4ProjectivePointSeparation
 import HartshorneLib.Chapter4ProjectiveMapFinite
 import HartshorneLib.Chapter4LocalRatioTangent
+import HartshorneLib.Chapter4LocalRatioStalkRange
+import HartshorneLib.Chapter4ProjectiveMapTangent
 
 /-!
 # HartshorneLib
