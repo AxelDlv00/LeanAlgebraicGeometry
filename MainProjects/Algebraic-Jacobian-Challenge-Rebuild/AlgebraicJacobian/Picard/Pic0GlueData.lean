@@ -97,6 +97,61 @@ theorem pic0Subgroup_existsUnique
   obtain ⟨i, y, hy⟩ := D.ι_jointly_surjective p
   exact ⟨i, y, hy⟩
 
+/-- Compatible classes on charts with prescribed structure maps glue uniquely.
+Keeping those maps explicit lets affine presentations use their canonical
+algebra structures without transporting every class along a chart equality. -/
+theorem pic0Subgroup_existsUnique_of_chartMaps
+    (σ : ∀ i, D.U i ⟶ Spec (.of k))
+    (ρ : ∀ i j, D.V (i, j) ⟶ Spec (.of k))
+    (hσ : ∀ i, D.ι i ≫ pi = σ i)
+    (hL : ∀ i j, D.f i j ≫ σ i = ρ i j)
+    (hR : ∀ i j, (D.t i j ≫ D.f j i) ≫ σ j = ρ i j)
+    (x : ∀ i, pic0Subgroup C (Over.mk (σ i)))
+    (hx : ∀ i j,
+      pic0Map C (Over.homMk (U := Over.mk (ρ i j)) (V := Over.mk (σ i))
+        (D.f i j) (hL i j)) (x i) =
+      pic0Map C (Over.homMk (U := Over.mk (ρ i j)) (V := Over.mk (σ j))
+        (D.t i j ≫ D.f j i) (hR i j)) (x j)) :
+    ∃! s : pic0Subgroup C (Over.mk pi),
+      ∀ i, pic0Map C (Over.homMk (U := Over.mk (σ i)) (V := Over.mk pi)
+        (D.ι i) (hσ i)) s = x i := by
+  let incl (i : D.J) : Over.mk (σ i) ⟶ Over.mk pi :=
+    Over.homMk (D.ι i) (hσ i)
+  letI (i : D.J) : IsOpenImmersion (incl i).left :=
+    inferInstanceAs (IsOpenImmersion (D.ι i))
+  refine pic0Subgroup_existsUnique_of_cover incl (fun p => ?_) x ?_
+  · obtain ⟨i, y, hy⟩ := D.ι_jointly_surjective p
+    exact ⟨i, y, hy⟩
+  intro i j Z gi gj h
+  have hleft : gi.left ≫ D.ι i = gj.left ≫ D.ι j :=
+    congrArg Over.Hom.left h
+  let cone := PullbackCone.mk gi.left gj.left hleft
+  let q : Z.left ⟶ D.V (i, j) := (D.vPullbackConeIsLimit i j).lift cone
+  have hqi : q ≫ D.f i j = gi.left :=
+    (D.vPullbackConeIsLimit i j).fac cone WalkingCospan.left
+  have hqj : q ≫ (D.t i j ≫ D.f j i) = gj.left :=
+    (D.vPullbackConeIsLimit i j).fac cone WalkingCospan.right
+  let qOver : Z ⟶ Over.mk (ρ i j) := Over.homMk q (by
+    change q ≫ ρ i j = Z.hom
+    rw [← hL i j, ← Category.assoc, hqi]
+    exact gi.w)
+  have hqiOver : qOver ≫ Over.homMk (V := Over.mk (σ i)) (D.f i j) (hL i j) = gi := by
+    ext
+    exact hqi
+  have hqjOver :
+      qOver ≫ Over.homMk (V := Over.mk (σ j)) (D.t i j ≫ D.f j i) (hR i j) = gj := by
+    ext
+    exact hqj
+  apply Subtype.ext
+  have hclasses := congrArg (fun z => (pic0Map C qOver z).val) (hx i j)
+  change picEtMap C qOver
+      (picEtMap C (Over.homMk (V := Over.mk (σ i)) (D.f i j) (hL i j)) (x i).val) =
+    picEtMap C qOver
+      (picEtMap C (Over.homMk (V := Over.mk (σ j))
+        (D.t i j ≫ D.f j i) (hR i j)) (x j).val) at hclasses
+  rw [← picEtMap_comp, ← picEtMap_comp, hqiOver, hqjOver] at hclasses
+  exact hclasses
+
 end
 
 end AlgebraicGeometry.Scheme.GlueData
