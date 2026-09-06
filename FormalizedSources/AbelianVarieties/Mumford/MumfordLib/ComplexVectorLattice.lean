@@ -54,6 +54,31 @@ structure ComplexVectorLatticeExponentialData
 
 namespace ComplexVectorLatticeExponentialData
 
+/-- Reparametrize a lattice exponential by a continuous complex-linear
+equivalence of its tangent model.  The standard-coordinate lattice is
+unchanged, while its inverse image and the exponential are pulled back along
+the equivalence. -/
+def reparam
+    {V W X : Type*}
+    [NormedAddCommGroup V] [NormedSpace ℂ V]
+    [NormedAddCommGroup W] [NormedSpace ℂ W]
+    [AddCommGroup X] [TopologicalSpace X] {g : ℕ}
+    (d : ComplexVectorLatticeExponentialData V X g)
+    (e : W ≃L[ℂ] V) :
+    ComplexVectorLatticeExponentialData W X g where
+  coordinate := e.trans d.coordinate
+  periodLattice := d.periodLattice
+  periodLatticeDiscrete := d.periodLatticeDiscrete
+  periodLatticeFull := d.periodLatticeFull
+  exponential := d.exponential.comp e.toLinearEquiv.toAddEquiv.toAddMonoidHom
+  surjective := d.surjective.comp e.surjective
+  continuous := d.continuous.comp e.continuous
+  kernel := by
+    ext w
+    change d.exponential (e w) = 0 ↔ d.coordinate (e w) ∈ d.periodLattice
+    rw [← AddMonoidHom.mem_ker, d.kernel]
+    rfl
+
 /-- The integral period lattice in the original tangent-space coordinates. -/
 def ambientPeriodLatticeSubmodule
     {V X : Type*} [NormedAddCommGroup V] [NormedSpace ℂ V]
