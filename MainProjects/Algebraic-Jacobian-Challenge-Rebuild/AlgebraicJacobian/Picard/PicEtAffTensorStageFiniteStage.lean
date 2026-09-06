@@ -45,7 +45,7 @@ structure PicEtAffTensorStageData
   map_eq : PicEtAff.mapAlg C (stage.tensorMap (A := B)) xStage = x
 
 set_option synthInstance.maxHeartbeats 100000 in
-set_option maxHeartbeats 2400000 in
+set_option maxHeartbeats 8000000 in
 set_option maxSynthPendingDepth 16 in
 /-- Every etale-plus Picard class over a tensor product is represented at one finite
 intermediate tensor stage.  The descended class is built on the nested stage over the
