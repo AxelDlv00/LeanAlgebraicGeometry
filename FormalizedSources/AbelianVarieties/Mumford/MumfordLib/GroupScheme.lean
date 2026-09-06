@@ -477,6 +477,18 @@ theorem jacobsonSpace_left_of_isAbelianVariety
     locallyOfFiniteType_of_isAbelianVariety G hG
   exact LocallyOfFiniteType.jacobsonSpace G.hom
 
+/-- Morphisms from an abelian variety to a separated scheme are determined
+by their restrictions to the residue fields of closed points. -/
+theorem morphism_eq_of_closedPoints_of_isAbelianVariety
+    (G : Over (Spec (.of K))) [GrpObj G] (hG : IsAbelianVariety G)
+    {Z : Scheme.{u}} [Z.IsSeparated] {f g : G.left ⟶ Z}
+    (h : ∀ x ∈ closedPoints G.left,
+      G.left.fromSpecResidueField x ≫ f = G.left.fromSpecResidueField x ≫ g) :
+    f = g := by
+  letI : IsReduced G.left := isReduced_left_of_isAbelianVariety G hG
+  letI : JacobsonSpace G.left := jacobsonSpace_left_of_isAbelianVariety G hG
+  exact GroupScheme.morphism_eq_of_eqAt_closedPoints h
+
 /-- The underlying scheme of an abelian variety over a field is locally
 Noetherian. -/
 theorem isLocallyNoetherian_left_of_isAbelianVariety
