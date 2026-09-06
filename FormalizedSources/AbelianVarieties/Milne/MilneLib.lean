@@ -36,6 +36,7 @@ import MilneLib.InvariantQuotientStableTripleCompat
 import MilneLib.InvariantQuotientSections
 import MilneLib.InvariantQuotientOrder
 import MilneLib.InvariantQuotientGlue
+import MilneLib.InvariantQuotientAffineGlue
 import MilneLib.InvariantQuotientCrossChart
 import MilneLib.InvariantQuotientCrossChartCompat
 import MilneLib.InvariantQuotientCrossChartMap
