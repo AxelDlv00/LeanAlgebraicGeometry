@@ -71,6 +71,29 @@ structure Pic0FiniteStageTestEquiv where
     homEquiv T' (f ≫ g) =
       pic0Map ((baseChange K P.N.1).obj C) f (homEquiv T g)
 
+/-! ## The exact-carrier universal class -/
+
+/-- The class represented by the identity of the finite-stage carrier.
+
+This is the finite-stage analogue of the universal class extracted from a
+`RepresentableBy` certificate.  Keeping it attached to the test-equivalence
+data makes the carrier and its field of definition explicit at the descent
+boundary. -/
+noncomputable def Pic0FiniteStageTestEquiv.universalClass
+    (data : Pic0FiniteStageTestEquiv C Ck P) :
+    pic0Subgroup ((baseChange K P.N.1).obj C) P.gluedOver :=
+  data.homEquiv P.gluedOver (𝟙 P.gluedOver)
+
+/-- Every value of the test equivalence is pullback of the pinned universal
+class on the literal carrier `P.gluedOver`. -/
+theorem Pic0FiniteStageTestEquiv.homEquiv_eq_pic0Map_universalClass
+    (data : Pic0FiniteStageTestEquiv C Ck P)
+    {T : Over (Spec (.of P.N.1))} (f : T ⟶ P.gluedOver) :
+    data.homEquiv T f =
+      pic0Map ((baseChange K P.N.1).obj C) f data.universalClass := by
+  simpa [Pic0FiniteStageTestEquiv.universalClass] using
+    (data.homEquiv_comp f (𝟙 P.gluedOver))
+
 /-- The exact finite-stage carrier is a `RepresentableBy` object once the
 all-test pullback equivalences have been constructed. -/
 noncomputable def pic0RepresentableBy_finiteStage_of_testEquiv
