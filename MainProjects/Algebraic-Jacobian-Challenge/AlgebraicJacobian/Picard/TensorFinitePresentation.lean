@@ -28,9 +28,9 @@ namespace Scheme
 
 namespace Modules
 
-/-! Keep the slice-site presentation transport opaque after construction.  This
-avoids unfolding the equivalence again while proving finiteness of its index
-types. -/
+/-! Keep the slice-site presentation transport behind a declaration boundary
+after construction.  This avoids unfolding the equivalence again while proving
+finiteness of its index types. -/
 noncomputable def tensorPresentationOver
     {X : Scheme.{u}} (L F : X.Modules) (W : X.Opens)
     (PF : (F.over W).Presentation)
@@ -47,6 +47,7 @@ noncomputable def tensorPresentationOver
   exact SheafOfModules.Presentation.ofIsIso.{u, u, u} eOver.inv PF
 
 set_option synthInstance.maxHeartbeats 1000000 in
+-- The finite-instance transport unfolds the locally defined presentation once.
 set_option maxRecDepth 10000 in
 lemma tensorPresentationOver_isFinite
     {X : Scheme.{u}} (L F : X.Modules) (W : X.Opens)
@@ -57,7 +58,21 @@ lemma tensorPresentationOver_isFinite
   dsimp only [tensorPresentationOver]
   infer_instance
 
+/-! Hoist the dependent presentation family out of the theorem body.  Keeping
+the family behind a declaration boundary prevents construction of the outer
+`QuasicoherentData` from repeatedly unfolding the slice-site transports. -/
+noncomputable def tensorPresentationFamily
+    {X : Scheme.{u}} (L F : X.Modules) {J : Type*}
+    (W : J → X.Opens)
+    (PF : ∀ j, (F.over (W j)).Presentation)
+    (eL : ∀ j, L.restrict (W j).ι ≅
+      SheafOfModules.unit (W j : Scheme).ringCatSheaf) :
+    ∀ j, ((tensorObj L F).over (W j)).Presentation :=
+  fun j => tensorPresentationOver L F (W j) (PF j) (eL j)
+
 set_option synthInstance.maxHeartbeats 1000000 in
+-- Cover refinement and the dependent presentation family require deeper
+-- synthesis than the project-wide defaults.
 set_option maxRecDepth 10000 in
 set_option maxHeartbeats 2000000 in
 /-- Tensoring a finitely presented module sheaf on the left by a locally
@@ -82,26 +97,26 @@ theorem isFinitePresentation_tensorObj_left_of_isLocallyTrivial
     obtain ⟨j, hxj⟩ := hxU
     exact ⟨V ⊓ W (i, j), homOfLE inf_le_left,
       ⟨(i, j), ⟨homOfLE inf_le_right⟩⟩, ⟨hx, ⟨hxq, hxj⟩⟩⟩
-  let P : ∀ ij, ((tensorObj L F).over (W ij)).Presentation := fun ij =>
-    tensorPresentationOver L F (W ij)
-      (presentationOverOpens (W ij) F (q.X ij.1)
+  let P : ∀ ij, ((tensorObj L F).over (W ij)).Presentation :=
+    tensorPresentationFamily L F W
+      (fun ij => presentationOverOpens (W ij) F (q.X ij.1)
         (q.presentation ij.1) inf_le_left)
-      (restrictIsoUnitOfLE inf_le_right (hUiso ij.2).some)
+      (fun ij => restrictIsoUnitOfLE inf_le_right (hUiso ij.2).some)
   let qT : (tensorObj L F).QuasicoherentData :=
     { I := q.I × I
       X := W
       coversTop := hWcover
       presentation := P }
-  have hqT : qT.IsFinitePresentation := by
-    apply SheafOfModules.QuasicoherentData.IsFinitePresentation.mk
+  have hP : ∀ ij, (P ij).IsFinite := by
     intro ij
     dsimp only [P]
     letI : (q.presentation ij.1).IsFinite := hq.isFinite_presentation _
     apply tensorPresentationOver_isFinite
-  have hsh : qT.shrink.IsFinitePresentation :=
-    { isFinite_presentation := fun ij =>
-        hqT.isFinite_presentation (Exists.choose ij.property) }
-  exact { exists_quasicoherentData := ⟨qT.shrink, hsh⟩ }
+  have hqT : qT.IsFinitePresentation := by
+    apply SheafOfModules.QuasicoherentData.IsFinitePresentation.mk
+    intro ij
+    exact hP ij
+  exact { exists_quasicoherentData := ⟨qT, hqT⟩ }
 
 end Modules
 

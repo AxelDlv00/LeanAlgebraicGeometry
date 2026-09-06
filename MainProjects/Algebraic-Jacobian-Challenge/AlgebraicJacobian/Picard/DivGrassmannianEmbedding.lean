@@ -735,6 +735,9 @@ theorem twist_isFiniteSupport
       (Modules.schematicSupportι x.F ≫ pullback.snd π T.hom) := x.properSupport
   exact IsFinite.of_isProper_of_locallyQuasiFinite _
 
+set_option maxHeartbeats 2500000 in
+-- The support descent and affine-pushforward transport provisions several
+-- dependent module structures; keep its larger elaboration budget local.
 /-- **Flatness of the twisted divisor pushforward over an affine test.**
 
 The support-descent argument used for `coherentSheafFlat_id_pushforward` applies
@@ -771,12 +774,22 @@ theorem twist_coherentSheafFlat_id_pushforward
     coherentSheafFlat_of_iso q hdesc (x.twist_isCoherentSheafFlat L hL)
   have h2 : CoherentSheafFlat (i ≫ q) N :=
     CoherentSheafFlat.of_pushforward_of_isAffineHom i q N h1
-  have h3 : CoherentSheafFlat (𝟙 (Spec R))
+  have h3 : CoherentSheafFlat (𝟙 ((Over.mk f).left : Scheme.{u}))
       ((Modules.pushforward (i ≫ q)).obj N) :=
     CoherentSheafFlat.pushforward_of_isAffineHom (i ≫ q)
-      (𝟙 (Spec R)) N (by rw [Category.comp_id])
+      (𝟙 ((Over.mk f).left : Scheme.{u})) N (by
+        intro U hU V hV eV
+        have hcomp :
+            ((i ≫ q) ≫ (𝟙 ((Over.mk f).left : Scheme.{u}))).appLE U V eV =
+              (i ≫ q).appLE U V eV := by
+          rw [← Scheme.Hom.appLE_comp_appLE (i ≫ q)
+            (𝟙 ((Over.mk f).left : Scheme.{u})) U U V le_rfl eV]
+          rw [Scheme.id_appLE]
+          simp
+        rw [hcomp]
+        exact h2 hU hV eV)
   intro U hU V hV eV
-  exact coherentSheafFlat_of_iso (𝟙 (Spec R))
+  exact coherentSheafFlat_of_iso (𝟙 ((Over.mk f).left : Scheme.{u}))
     ((Modules.pushforwardComp i q).app N ≪≫
       (Modules.pushforward q).mapIso hdesc.symm) h3 hU hV eV
 
@@ -853,12 +866,15 @@ theorem pushforward_isLocallyFreeOfRank
   exact (Modules.fiberRank_gammaTop_eq_fiberH0_of_isFinite_schematicSupport
     q x.F hsupport t).trans (hx t)
 
+set_option backward.isDefEq.respectTransparency false in
+set_option maxHeartbeats 2500000 in
+-- The finite-section criterion and projective-section tower require the same
+-- dependent normalization budget as the untwisted rank producer.
 /-- **Twisted D2 rank producer.**  On an affine test base, the pushforward of
 the locally trivial twist of a divisor family is locally free of the prescribed
 fibre-`H⁰` rank.  The fibre rank is kept as an explicit hypothesis: proving its
 constancy for the chosen positive twist is the separate Riemann--Roch/global
 generation obligation. -/
-set_option backward.isDefEq.respectTransparency false in
 theorem pushforward_twist_isLocallyFreeOfRank
     {R : CommRingCat.{u}} {S X : Scheme.{u}} {π : X ⟶ S}
     [IsProper π] (f : Spec R ⟶ S) [IsNoetherianRing R]
@@ -887,10 +903,19 @@ theorem pushforward_twist_isLocallyFreeOfRank
   haveI : QuasiSeparated q := by
     dsimp [q]
     infer_instance
-  haveI : M.IsFinitePresentation := by
-    exact Modules.isFinitePresentation_pushforward q (x.twist L)
   haveI : M.IsQuasicoherent := by
     exact Modules.pushforward_isQuasicoherent q (x.twist L)
+  haveI : M.IsFinitePresentation := by
+    apply Modules.isFinitePresentation_of_finite_sections M
+    intro V hV
+    have hfin : IsFinite
+        (Modules.schematicSupportι (x.twist L) ≫ q) := by
+      rw [twist_isFiniteSupport_iff L hL x]
+      haveI : IsProper
+          (Modules.schematicSupportι x.F ≫ q) := x.properSupport
+      exact IsFinite.of_isProper_of_locallyQuasiFinite _
+    exact Modules.module_finite_sections_pushforward_of_isFinite_schematicSupport
+      q (x.twist L) hfin hV
   letI baseM := ((𝟙 (Spec R)) : Spec R ⟶ Spec R).baseSectionsModule M
     (⊤ : (Spec R).Opens)
   haveI : IsNoetherianRing Γ(Spec R, (⊤ : (Spec R).Opens)) :=
