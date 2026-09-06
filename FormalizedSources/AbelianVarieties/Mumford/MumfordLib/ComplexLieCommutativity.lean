@@ -987,9 +987,12 @@ noncomputable def canonicalComplexLieExponentialData
   exponential := canonicalComplexExponential (G := G) I
   exponential_zero := canonicalComplexExponential_zero (G := G) I
   exponential_generates := by
-    rw [Set.range_eq_univ.mpr
-      (canonicalComplexExponential_surjective (G := G) I)]
-    exact Subgroup.closure_univ
+    letI : IsTopologicalGroup G := topologicalGroup_of_lieGroup I ⊤
+    apply subgroup_closure_eq_top_of_one_mem_interior
+    have hlocal :=
+      range_mem_interior_of_isLocalDiffeomorphAt
+        (canonicalComplexExponential_isLocalDiffeomorphAt (G := G) I)
+    simpa only [canonicalComplexExponential_zero] using hlocal
   conjugation_exp := canonicalComplexExponential_conjugation (G := G) I
 
 /-- The canonical complex exponential gives a direct central-generator proof
