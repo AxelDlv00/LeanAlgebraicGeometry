@@ -45,6 +45,7 @@ import MilneLib.InvariantQuotientCrossChartMap
 import MilneLib.InvariantQuotientCrossChartCover
 import MilneLib.InvariantQuotientAtlasMap
 import MilneLib.InvariantQuotientStableAtlasMap
+import MilneLib.InvariantQuotientFiniteAtlasMap
 import MilneLib.AffineQuotientOver
 import MilneLib.AffineTensorCarrier
 import MilneLib.Torsion
