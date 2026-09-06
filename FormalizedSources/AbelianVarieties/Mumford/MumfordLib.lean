@@ -53,6 +53,7 @@ import MumfordLib.SingularCohomologyCupGeneral
 import MumfordLib.SingularCupAssociativity
 import MumfordLib.SingularCohomologyExteriorSquare
 import MumfordLib.SingularCohomologyExteriorNaturality
+import MumfordLib.SingularCohomologyExteriorOne
 import MumfordLib.ComplexLatticeAtlas
 import MumfordLib.ArbitraryLatticeTorsion
 import MumfordLib.ArbitraryLatticeFiniteTorsion
