@@ -3,13 +3,14 @@ title: 'Phase 7: finite-Galois descent to the original field'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 - Algebraic-Jacobian-Challenge
-summary: Phase 7 remains incomplete. PicEtAff tensor-stage existence and its degree-zero
-  finite-family consumer are now kernel-checked, including pinned chart/overlap values
-  given the exact tensor ring models. Next instantiate those models and produce compatible
-  atlas classes on one finite Galois stage; then glue the universal class on literal
-  P.gluedOver, prove arbitrary-test Yoneda, establish exact-carrier orbit geometry,
-  and instantiate original-field representability before the datum handoff. GlueDataAssembly
-  still has no verified artifact.
+summary: Phase 7 remains incomplete. PicEtAff tensor-stage existence, faithfully-flat
+  equality reflection, and compatible degree-zero values of the pinned chart/overlap
+  classes are kernel-checked, with the latter given tensor ring models and algebra-map
+  comparisons. Next instantiate actual transition models, retain final glue coefficients
+  and enlarge to a finite Galois stage; then construct the universal class on literal
+  P.gluedOver, arbitrary-test Yoneda, exact-carrier orbit geometry, and original-field
+  representability before the datum handoff. GlueDataAssembly still has no verified
+  artifact.
 status: blocked
 kind: proof
 priority: urgent
@@ -30,8 +31,9 @@ metadata:
   created_at: '2026-08-04T01:52:30.932692+00:00'
   parent: AJCR.review-plan
   milestone: AJCR.review-plan
-  updated_at: '2026-09-06T16:29:03.968576+00:00'
+  updated_at: '2026-09-06T16:52:57.041946+00:00'
   pinned_commits:
+  - 1d01c8dce2
   - 88d9170c8b
   - 57687c5520
   - 340206c19e

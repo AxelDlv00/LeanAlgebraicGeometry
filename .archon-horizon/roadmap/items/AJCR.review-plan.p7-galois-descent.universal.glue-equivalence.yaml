@@ -2,11 +2,12 @@ id: AJCR.review-plan.p7-galois-descent.universal.glue-equivalence
 title: Assemble the glued universal Picard equivalence
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: Glue the actual compatible descended degree-zero atlas values to the universal
-  class on literal P.gluedOver, retaining its exact chart restriction equations. Common-stage
-  values are checked in 88d9170c8b; tensor-model instantiation and compatibility are
-  the next producer. Arbitrary-test Yoneda is the downstream representability gate.
-  No glued universal-class producer exists yet.
+summary: Glue actual compatible descended degree-zero atlas values to the universal
+  class on literal P.gluedOver, retaining exact chart restriction equations. Pinned
+  compatible finite-stage values are checked in 1d01c8dce2 given tensor ring models
+  and algebra-map comparisons; actual model instantiation and Galois enlargement remain
+  in compatible-values. No glued universal-class producer exists yet; arbitrary-test
+  Yoneda follows.
 status: blocked
 kind: proof
 priority: urgent
@@ -31,4 +32,4 @@ metadata:
     projects: Algebraic-Jacobian-Challenge-Rebuild,Algebraic-Jacobian-Challenge
   parent: AJCR.review-plan.p7-galois-descent.universal
   milestone: AJCR.review-plan
-  updated_at: '2026-09-06T16:29:35.423165+00:00'
+  updated_at: '2026-09-06T16:52:49.096855+00:00'
