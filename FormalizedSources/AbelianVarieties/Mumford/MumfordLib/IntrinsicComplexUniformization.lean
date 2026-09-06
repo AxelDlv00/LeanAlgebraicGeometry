@@ -287,9 +287,9 @@ theorem intrinsicComplexVectorLatticeExponentialData_quotient_isManifold
   let d := intrinsicComplexVectorLatticeExponentialData (G := G) I coordinate
   exact ComplexVectorLatticeExponentialData.analyticQuotient_isManifold d
 
-/- The same intrinsic quotient carries the explicit smooth additive-group
-   structure supplied by the branch atlas.  The charted-space value remains
-   local to the declaration, so this does not install a global instance. -/
+/-- The same intrinsic quotient carries the explicit smooth additive-group
+    structure supplied by the branch atlas.  The charted-space value remains
+    local to the declaration, so this does not install a global instance. -/
 theorem intrinsicComplexVectorLatticeExponentialData_quotient_isLieAddGroup
     {g : ℕ} (coordinate : E ≃L[ℂ] GenusComplexVector g) :
     let e : E ≃ₗ[ℂ] GroupLieAlgebra I G :=
