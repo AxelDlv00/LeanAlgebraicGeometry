@@ -7,6 +7,8 @@ Authors: The Mumford Contributors
 import MumfordLib.ComplexQuotientAtlas
 import Mathlib.Analysis.Calculus.ContDiff.Operations
 import Mathlib.Analysis.Normed.Module.Connected
+import Mathlib.Geometry.Manifold.LocalDiffeomorph
+import Mathlib.Geometry.Manifold.ContMDiff.Atlas
 
 /-!
 # Local exponential branches
@@ -20,7 +22,7 @@ translations.
 
 set_option autoImplicit false
 
-open scoped ContDiff
+open scoped Manifold ContDiff
 
 namespace Mumford
 namespace Uniformization
@@ -497,6 +499,267 @@ theorem exponentialBranchTransition_cocycle
       d.exponentialBranch u x
     rw [htw, (d.exponentialBranch w).left_inv hxw]
   exact htv_u.trans htw_u.symm
+
+/-! ### An explicit analytic atlas on the arbitrary tangent quotient
+
+The generic branch construction above is topological on the target `X`.  For
+the ambient lattice quotient itself, the same discrete-period argument gives
+analytic transition maps.  The resulting charted space is a conditional model
+certificate: it does not identify an external complex Lie group with this
+quotient or prove the source-level uniformization theorem.
+-/
+
+theorem quotientBranchTransition_sub_mem_ambientPeriodLattice
+    {V X : Type*} [NormedAddCommGroup V] [NormedSpace ℂ V]
+    [AddCommGroup X] [TopologicalSpace X] [T2Space X] [ContinuousAdd X]
+    {g : ℕ} (d : ComplexVectorLatticeExponentialData V X g)
+    (v w : V) {y : V}
+    (hy : y ∈ ((d.quotientLocalBranchAt v).symm.trans
+      (d.quotientLocalBranchAt w)).source) :
+    ((d.quotientLocalBranchAt v).symm.trans
+      (d.quotientLocalBranchAt w)) y - y ∈ d.ambientPeriodLattice := by
+  rw [OpenPartialHomeomorph.trans_source] at hy
+  have hyv : y ∈ (d.quotientLocalBranchAt v).target := hy.1
+  let q : V ⧸ d.ambientPeriodLattice :=
+    (d.quotientLocalBranchAt v).symm y
+  have hqv : q ∈ (d.quotientLocalBranchAt v).source :=
+    (d.quotientLocalBranchAt v).map_target hyv
+  have hqw : q ∈ (d.quotientLocalBranchAt w).source := hy.2
+  have hdiff := d.quotientLocalBranchAt_sub_mem_ambientPeriodLattice v w hqv hqw
+  have hrep : d.quotientLocalBranchAt v q = y :=
+    (d.quotientLocalBranchAt v).right_inv hyv
+  change d.quotientLocalBranchAt w q - y ∈ d.ambientPeriodLattice
+  simpa only [hrep, neg_sub] using (neg_mem hdiff)
+
+theorem quotientBranchTransition_eq_add_of_isPreconnected
+    {V X : Type*} [NormedAddCommGroup V] [NormedSpace ℂ V]
+    [AddCommGroup X] [TopologicalSpace X] [T2Space X] [ContinuousAdd X]
+    {g : ℕ} (d : ComplexVectorLatticeExponentialData V X g)
+    (v w : V) {s : Set V}
+    (hs : IsPreconnected s)
+    (hsub : s ⊆ ((d.quotientLocalBranchAt v).symm.trans
+      (d.quotientLocalBranchAt w)).source)
+    {y₀ : V} (hy₀ : y₀ ∈ s) :
+    ∃ period : d.ambientPeriodLattice,
+      ∀ y ∈ s,
+        ((d.quotientLocalBranchAt v).symm.trans
+          (d.quotientLocalBranchAt w)) y = y + (period : V) := by
+  let f : V → V := fun y =>
+    ((d.quotientLocalBranchAt v).symm.trans
+      (d.quotientLocalBranchAt w)) y - y
+  have hf : ContinuousOn f s := by
+    exact ((((d.quotientLocalBranchAt v).symm.trans
+      (d.quotientLocalBranchAt w)).continuousOn).mono hsub).sub
+      continuousOn_id
+  have hmaps : Set.MapsTo f s (d.ambientPeriodLattice : Set V) := by
+    intro y hy
+    exact quotientBranchTransition_sub_mem_ambientPeriodLattice d v w
+      (hsub hy)
+  have hconst : ∀ y ∈ s, f y = f y₀ := by
+    intro y hy
+    exact IsPreconnected.constant_of_mapsTo hs d.ambientPeriodLattice_isDiscrete
+      hf hmaps hy hy₀
+  let period : d.ambientPeriodLattice := ⟨f y₀, hmaps hy₀⟩
+  refine ⟨period, ?_⟩
+  intro y hy
+  have hyconst : f y = f y₀ := hconst y hy
+  dsimp [f, period] at hyconst ⊢
+  simpa only [OpenPartialHomeomorph.trans_apply] using (show
+    ((d.quotientLocalBranchAt v).symm.trans
+      (d.quotientLocalBranchAt w)) y = y +
+        (((d.quotientLocalBranchAt v).symm.trans
+          (d.quotientLocalBranchAt w)) y₀ - y₀) by
+    rw [OpenPartialHomeomorph.trans_apply]
+    calc
+      d.quotientLocalBranchAt w
+          ((d.quotientLocalBranchAt v).symm y) =
+          (d.quotientLocalBranchAt w
+            ((d.quotientLocalBranchAt v).symm y) - y) + y := by abel
+      _ = (d.quotientLocalBranchAt w
+            ((d.quotientLocalBranchAt v).symm y₀) - y₀) + y := by
+        rw [hyconst]
+      _ = y + (d.quotientLocalBranchAt w
+            ((d.quotientLocalBranchAt v).symm y₀) - y₀) := by abel)
+
+theorem quotientBranchTransition_contDiffOn
+    {V X : Type*} [NormedAddCommGroup V] [NormedSpace ℂ V]
+    [AddCommGroup X] [TopologicalSpace X] [T2Space X] [ContinuousAdd X]
+    {g : ℕ} (d : ComplexVectorLatticeExponentialData V X g)
+    (v w : V) :
+    ContDiffOn ℂ ω
+      ((d.quotientLocalBranchAt v).symm.trans
+        (d.quotientLocalBranchAt w))
+      ((d.quotientLocalBranchAt v).symm.trans
+        (d.quotientLocalBranchAt w)).source := by
+  apply contDiffOn_of_locally_contDiffOn
+  intro y hy
+  obtain ⟨r, hr, hball⟩ := Metric.mem_nhds_iff.mp
+    (((d.quotientLocalBranchAt v).symm.trans
+      (d.quotientLocalBranchAt w)).open_source.mem_nhds hy)
+  obtain ⟨period, hperiod⟩ :=
+    quotientBranchTransition_eq_add_of_isPreconnected d v w
+      Metric.isPreconnected_ball hball (Metric.mem_ball_self hr)
+  refine ⟨Metric.ball y r, Metric.isOpen_ball, Metric.mem_ball_self hr, ?_⟩
+  have htrans : ContDiffOn ℂ ω
+      (fun x : V => x + (period : V))
+      (((d.quotientLocalBranchAt v).symm.trans
+        (d.quotientLocalBranchAt w)).source ∩ Metric.ball y r) :=
+    contDiffOn_id.add contDiffOn_const
+  exact htrans.congr (by
+    intro x hx
+    exact hperiod x hx.2)
+
+/- The branch atlas is kept as a value, so callers explicitly choose the
+   analytic structure on the quotient rather than receiving a global instance. -/
+@[reducible]
+noncomputable def analyticQuotientChartedSpace
+    {V X : Type*} [NormedAddCommGroup V] [NormedSpace ℂ V]
+    [AddCommGroup X] [TopologicalSpace X] [T2Space X] [ContinuousAdd X]
+    {g : ℕ} (d : ComplexVectorLatticeExponentialData V X g) :
+    ChartedSpace V (V ⧸ d.ambientPeriodLattice) where
+  atlas := Set.range d.quotientLocalBranchAt
+  chartAt q := d.quotientLocalBranchAt
+    (Classical.choose (QuotientAddGroup.mk'_surjective
+      d.ambientPeriodLattice q))
+  mem_chart_source q := by
+    let v := Classical.choose (QuotientAddGroup.mk'_surjective
+      d.ambientPeriodLattice q)
+    have hv : QuotientAddGroup.mk' d.ambientPeriodLattice v = q :=
+      Classical.choose_spec (QuotientAddGroup.mk'_surjective
+        d.ambientPeriodLattice q)
+    change q ∈ (d.quotientLocalBranchAt v).source
+    rw [← hv]
+    exact d.quotientLocalBranchAt_quotient_mk_mem_source v
+  chart_mem_atlas q := by
+    exact ⟨Classical.choose (QuotientAddGroup.mk'_surjective
+      d.ambientPeriodLattice q), rfl⟩
+
+/-- The explicit branch atlas is a complex analytic manifold atlas on the
+arbitrary tangent-space lattice quotient. -/
+theorem analyticQuotient_isManifold
+    {V X : Type*} [NormedAddCommGroup V] [NormedSpace ℂ V]
+    [AddCommGroup X] [TopologicalSpace X] [T2Space X] [ContinuousAdd X]
+    {g : ℕ} (d : ComplexVectorLatticeExponentialData V X g) :
+    @IsManifold ℂ _ V _ _ V _
+      (𝓘(ℂ, V)) ω
+      (V ⧸ d.ambientPeriodLattice) _
+      (analyticQuotientChartedSpace d) := by
+  letI : ChartedSpace V (V ⧸ d.ambientPeriodLattice) :=
+    analyticQuotientChartedSpace d
+  apply isManifold_of_contDiffOn (𝓘(ℂ, V)) ω _
+  intro e e' he he'
+  rcases he with ⟨v, rfl⟩
+  rcases he' with ⟨w, rfl⟩
+  simpa using quotientBranchTransition_contDiffOn d v w
+
+/-- The ambient quotient projection is complex-analytic for this explicit
+branch atlas. -/
+theorem analyticQuotient_mk_contMDiff
+    {V X : Type*} [NormedAddCommGroup V] [NormedSpace ℂ V]
+    [AddCommGroup X] [TopologicalSpace X] [T2Space X] [ContinuousAdd X]
+    {g : ℕ} (d : ComplexVectorLatticeExponentialData V X g) :
+    letI : ChartedSpace V (V ⧸ d.ambientPeriodLattice) :=
+      analyticQuotientChartedSpace d
+    letI : IsManifold (𝓘(ℂ, V)) ω
+        (V ⧸ d.ambientPeriodLattice) := by
+      exact analyticQuotient_isManifold d
+    ContMDiff (𝓘(ℂ, V)) (𝓘(ℂ, V)) ω
+      (QuotientAddGroup.mk : V → V ⧸ d.ambientPeriodLattice) := by
+  letI : ChartedSpace V (V ⧸ d.ambientPeriodLattice) :=
+    analyticQuotientChartedSpace d
+  letI : IsManifold (𝓘(ℂ, V)) ω
+      (V ⧸ d.ambientPeriodLattice) := by
+    exact analyticQuotient_isManifold d
+  apply contMDiff_of_contMDiffOn_iUnion_of_isOpen
+    (s := fun v : V => (d.quotientLocalBranchAt v).target)
+  · intro v
+    have hbranch : d.quotientLocalBranchAt v ∈
+        IsManifold.maximalAtlas (𝓘(ℂ, V)) ω
+          (V ⧸ d.ambientPeriodLattice) :=
+      IsManifold.subset_maximalAtlas (I := 𝓘(ℂ, V))
+        (n := ω) (M := V ⧸ d.ambientPeriodLattice) ⟨v, rfl⟩
+    have hsmooth := contMDiffOn_symm_of_mem_maximalAtlas hbranch
+    exact hsmooth.congr (by
+      intro y hy
+      rw [d.quotientLocalBranchAt_symm])
+  · intro v
+    exact (d.quotientLocalBranchAt v).open_target
+  · apply Set.eq_univ_of_forall
+    intro y
+    exact Set.mem_iUnion.2 ⟨y, d.quotientLocalBranchAt_mem_target y⟩
+
+/- Each branch packages the quotient projection as a partial diffeomorphism. -/
+noncomputable def analyticQuotient_mk_partialDiffeomorph
+    {V X : Type*} [NormedAddCommGroup V] [NormedSpace ℂ V]
+    [AddCommGroup X] [TopologicalSpace X] [T2Space X] [ContinuousAdd X]
+    {g : ℕ} (d : ComplexVectorLatticeExponentialData V X g) (v : V) :
+    letI : ChartedSpace V (V ⧸ d.ambientPeriodLattice) :=
+      analyticQuotientChartedSpace d
+    letI : IsManifold (𝓘(ℂ, V)) ω
+        (V ⧸ d.ambientPeriodLattice) := by
+      exact analyticQuotient_isManifold d
+    PartialDiffeomorph (𝓘(ℂ, V)) (𝓘(ℂ, V)) V
+      (V ⧸ d.ambientPeriodLattice) ω := by
+  letI : ChartedSpace V (V ⧸ d.ambientPeriodLattice) :=
+    analyticQuotientChartedSpace d
+  letI : IsManifold (𝓘(ℂ, V)) ω
+      (V ⧸ d.ambientPeriodLattice) := by
+    exact analyticQuotient_isManifold d
+  have hbranch : d.quotientLocalBranchAt v ∈
+      IsManifold.maximalAtlas (𝓘(ℂ, V)) ω
+        (V ⧸ d.ambientPeriodLattice) :=
+    IsManifold.subset_maximalAtlas (I := 𝓘(ℂ, V))
+      (n := ω) (M := V ⧸ d.ambientPeriodLattice) ⟨v, rfl⟩
+  let branch := d.quotientLocalBranchAt v
+  exact {
+    toPartialEquiv := branch.symm.toPartialEquiv
+    open_source := branch.open_target
+    open_target := branch.open_source
+    contMDiffOn_toFun := contMDiffOn_symm_of_mem_maximalAtlas hbranch
+    contMDiffOn_invFun := contMDiffOn_of_mem_maximalAtlas hbranch }
+
+theorem analyticQuotient_mk_isLocalDiffeomorphAt
+    {V X : Type*} [NormedAddCommGroup V] [NormedSpace ℂ V]
+    [AddCommGroup X] [TopologicalSpace X] [T2Space X] [ContinuousAdd X]
+    {g : ℕ} (d : ComplexVectorLatticeExponentialData V X g) (x : V) :
+    letI : ChartedSpace V (V ⧸ d.ambientPeriodLattice) :=
+      analyticQuotientChartedSpace d
+    letI : IsManifold (𝓘(ℂ, V)) ω
+        (V ⧸ d.ambientPeriodLattice) := by
+      exact analyticQuotient_isManifold d
+    IsLocalDiffeomorphAt (𝓘(ℂ, V)) (𝓘(ℂ, V)) ω
+      (QuotientAddGroup.mk : V → V ⧸ d.ambientPeriodLattice) x := by
+  letI : ChartedSpace V (V ⧸ d.ambientPeriodLattice) :=
+    analyticQuotientChartedSpace d
+  letI : IsManifold (𝓘(ℂ, V)) ω
+      (V ⧸ d.ambientPeriodLattice) := by
+    exact analyticQuotient_isManifold d
+  let φ := analyticQuotient_mk_partialDiffeomorph d x
+  refine ⟨φ, ?_, ?_⟩
+  · exact d.quotientLocalBranchAt_mem_target x
+  · intro y hy
+    change (QuotientAddGroup.mk : V → V ⧸ d.ambientPeriodLattice) y =
+      (d.quotientLocalBranchAt x).symm y
+    rw [d.quotientLocalBranchAt_symm]
+
+theorem analyticQuotient_mk_isLocalDiffeomorph
+    {V X : Type*} [NormedAddCommGroup V] [NormedSpace ℂ V]
+    [AddCommGroup X] [TopologicalSpace X] [T2Space X] [ContinuousAdd X]
+    {g : ℕ} (d : ComplexVectorLatticeExponentialData V X g) :
+    letI : ChartedSpace V (V ⧸ d.ambientPeriodLattice) :=
+      analyticQuotientChartedSpace d
+    letI : IsManifold (𝓘(ℂ, V)) ω
+        (V ⧸ d.ambientPeriodLattice) := by
+      exact analyticQuotient_isManifold d
+    IsLocalDiffeomorph (𝓘(ℂ, V)) (𝓘(ℂ, V)) ω
+      (QuotientAddGroup.mk : V → V ⧸ d.ambientPeriodLattice) := by
+  letI : ChartedSpace V (V ⧸ d.ambientPeriodLattice) :=
+    analyticQuotientChartedSpace d
+  letI : IsManifold (𝓘(ℂ, V)) ω
+      (V ⧸ d.ambientPeriodLattice) := by
+    exact analyticQuotient_isManifold d
+  intro x
+  exact analyticQuotient_mk_isLocalDiffeomorphAt d x
 
 end ComplexVectorLatticeExponentialData
 
