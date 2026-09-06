@@ -66,6 +66,23 @@ lemma restrictUnitIso_hom_app_top_one
         (1 : Γ(B, j ''ᵁ (⊤ : A.Opens)))) = _
   rw [hopen, hbase', ModulePullbackFrames.pullbackUnitIso_baseMap_one]
 
+/-- A section with coefficient one becomes the unit in the chart trivialization. -/
+lemma trivialization_hom_app_top_eq_one
+    {Z : Scheme.{max u v}} {K : Type v} {U : K → Z.Opens}
+    {g : ∀ i j, Γ(Z, U i ⊓ U j)ˣ} (hc : IsCocycle U g) (j : K)
+    (s : sectionSubmodule U g (U j)) (hs : sectionTriv hc j le_rfl s = 1) :
+    ((trivialization hc j).hom.app ⊤).hom
+      (((gluedModule U g).presheaf.map
+        (eqToHom (Scheme.Opens.ι_image_top (U j))).op).hom s) =
+      (1 : Γ((U j).toScheme, ⊤)) := by
+  change ((restrictUnitIso (U j).ι).hom.app ⊤).hom
+    (sectionTriv hc j ((U j).ι_image_le ⊤)
+      (res U g (le_of_eq (Scheme.Opens.ι_image_top (U j))) s)) = _
+  have hcoeff : sectionTriv hc j ((U j).ι_image_le ⊤)
+      (res U g (le_of_eq (Scheme.Opens.ι_image_top (U j))) s) = 1 := by
+    rw [sectionTriv_res hc j ((U j).ι_image_le ⊤) le_rfl s, hs, map_one]
+  rw [hcoeff, restrictUnitIso_hom_app_top_one]
+
 variable {X Y : Scheme.{max u v}} (f : X ⟶ Y)
 variable {I : Type (max u v)} {J : Type v} (U : J → Y.Opens) (V : I → X.Opens)
   (g : ∀ i j, Γ(Y, U i ⊓ U j)ˣ) (h : ∀ i j, Γ(X, V i ⊓ V j)ˣ)
