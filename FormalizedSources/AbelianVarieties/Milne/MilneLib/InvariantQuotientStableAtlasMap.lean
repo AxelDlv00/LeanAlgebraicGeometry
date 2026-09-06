@@ -85,6 +85,28 @@ theorem stableAffineQuotientMap_isQuotientMap
   exact affineInvariantQuotientMap_isQuotientMap.comp
     i.affine.isoSpec.hom.homeomorph.isQuotientMap
 
+/-- Pulling the descended quotient overlap back along the stable chart quotient
+projection recovers the actual chart intersection. -/
+theorem stableAffineQuotientMap_preimage_quotientOverlapOpen
+    (p : X ⟶ Spec (CommRingCat.of k))
+    (hact : ∀ g : G, (act g).hom ≫ p = p)
+    (i j : StableAffineOpen act) :
+    letI := sectionsAlgebra p i.U
+    letI := sectionsMulSemiringAction act i.stable
+    letI := sectionsSMulCommClass act p hact i.stable
+    stableAffineQuotientMap act p hact i ⁻¹ᵁ
+        quotientOverlapOpen act p hact i j =
+      i.U.ι ⁻¹ᵁ (i.U ⊓ j.U) := by
+  letI := sectionsAlgebra p i.U
+  letI := sectionsMulSemiringAction act i.stable
+  letI := sectionsSMulCommClass act p hact i.stable
+  unfold stableAffineQuotientMap quotientOverlapOpen
+  rw [Scheme.Hom.comp_preimage,
+    InvariantLocalization.quotientOpenOfStable_preimage]
+  unfold overlapCoordinateOpen
+  rw [← Scheme.Hom.comp_preimage]
+  simp
+
 omit [Finite G] in
 /-- Restricting the affine presentation of a stable chart to an intersection
 agrees with the coordinate-open presentation used to define its quotient
