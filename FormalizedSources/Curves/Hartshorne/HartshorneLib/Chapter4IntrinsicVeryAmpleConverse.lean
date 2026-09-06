@@ -65,6 +65,15 @@ structure ArbitraryProjectiveEmbeddingCertificate (D : CurveDivisor k X) where
         (selectedCoordinates_isOpenCover_of_smoothCurve basis hbase)).f i ≫ map =
       (selectedRegularization (D := D) basis hbase i).chartMap
 
+/-- The target dimension of an arbitrary certificate is the complete
+section-space dimension minus one.  This is the numerical bridge needed by a
+future extraction of a basis from an unstructured projective embedding. -/
+theorem ArbitraryProjectiveEmbeddingCertificate.target_dimension
+    (c : ArbitraryProjectiveEmbeddingCertificate D) :
+    (c.n : ℤ) = linearSystemDimension D := by
+  exact ProjectiveMapProducer.target_dimension
+    (ProjectiveMapProducer.of_basis D c.n c.basis c.map c.map_over)
+
 /-- The normalized chart restrictions identify an arbitrary certified map with
 the explicit local-ratio gluing before it is compared with the fixed-basis
 smooth-curve producer. -/
