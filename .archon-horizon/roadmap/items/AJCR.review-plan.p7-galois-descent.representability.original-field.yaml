@@ -2,15 +2,18 @@ id: AJCR.review-plan.p7-galois-descent.representability.original-field
 title: Assemble unconditional original-field pic0_representableBy
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: 'Target: the original-field pic0_representableBy producer accepted by the
-  reviewer chain. Dependencies: representability.finite-stage, representability.galois-consumer,
-  representability.picrep-handoff, and orbit-affine.exact-carrier. No declaration
-  exists at HEAD; do not claim the conditional quotient or datum wrappers as this
-  endpoint.'
+summary: 'Target: original-field pic0_representableBy on the intended descended carrier.
+  Produce arbitrary-test representability at the final finite Galois stage, prove
+  its exact-carrier orbit geometry, and instantiate the checked conditional Galois
+  quotient. The PicRepDatum/JacobianData handoff follows this endpoint. No unconditional
+  original-field producer is currently verified.'
 status: blocked
 kind: proof
 priority: urgent
-depends_on: []
+depends_on:
+- AJCR.review-plan.p7-galois-descent.representability.finite-stage
+- AJCR.review-plan.p7-galois-descent.representability.galois-consumer
+- AJCR.review-plan.p7-galois-descent.orbit-affine.exact-carrier
 inbox_refs: []
 task_refs: []
 scope:
@@ -30,4 +33,4 @@ metadata:
     projects: Algebraic-Jacobian-Challenge-Rebuild,Algebraic-Jacobian-Challenge
   parent: AJCR.review-plan.p7-galois-descent.representability
   milestone: AJCR.review-plan
-  updated_at: '2026-08-23T02:47:34.901326+00:00'
+  updated_at: '2026-09-06T13:49:50.218764+00:00'

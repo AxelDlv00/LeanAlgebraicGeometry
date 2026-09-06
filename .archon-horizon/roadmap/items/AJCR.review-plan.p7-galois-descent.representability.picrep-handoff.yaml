@@ -2,14 +2,16 @@ id: AJCR.review-plan.p7-galois-descent.representability.picrep-handoff
 title: Package the same representation as PicRepDatum/JacobianData
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: 'Declarations: picRepDatum_finiteStageGaloisDescent_of_isProjective and jacobianData_finiteStageGaloisDescent_of_isProjective.
-  Dependencies: representability.galois-consumer and orbit-affine.exact-carrier. Pic0FiniteGaloisJacobianData.olean
-  is present; the wrappers remain conditional and must consume the same finite-stage
-  representation without choosing a second universal class.'
+summary: After original-field representability has been instantiated on the intended
+  descended carrier, use the same representative and the required geometry to produce
+  PicRepDatum and JacobianData. The existing finite-stage TestEquiv/projectivity adapters
+  are conditional interfaces; they do not produce their representability or geometry
+  inputs.
 status: blocked
 kind: proof
 priority: urgent
-depends_on: []
+depends_on:
+- AJCR.review-plan.p7-galois-descent.representability.original-field
 inbox_refs: []
 task_refs: []
 scope:
@@ -29,4 +31,6 @@ metadata:
     projects: Algebraic-Jacobian-Challenge-Rebuild,Algebraic-Jacobian-Challenge
   parent: AJCR.review-plan.p7-galois-descent.representability
   milestone: AJCR.review-plan
-  updated_at: '2026-09-01T23:16:41.847689+00:00'
+  updated_at: '2026-09-06T13:50:53.832390+00:00'
+  pinned_commits:
+  - 8d903b9cce
