@@ -269,6 +269,17 @@ theorem factor_unique (D : SymmetricPowerData V n)
     u = D.factor h hsym :=
   (D.desc h hsym).choose_spec.2 u hu
 
+/-! Factoring is stable under postcomposition, as required for the quotient
+    map functoriality below. -/
+
+theorem factor_comp (D : SymmetricPowerData V n)
+    {T U : Over S} (h : relativePower V n ⟶ T) (k : T ⟶ U)
+    (hsym : IsSymmetric V n h) :
+    D.factor (h ≫ k) (hsym.comp n) = D.factor h hsym ≫ k := by
+  apply (D.factor_unique (h ≫ k) (hsym.comp n)
+    (D.factor h hsym ≫ k) ?_).symm
+  rw [← Category.assoc, D.projection_comp_factor]
+
 end SymmetricPowerData
 
 /-! ## Colimit form of the interface -/

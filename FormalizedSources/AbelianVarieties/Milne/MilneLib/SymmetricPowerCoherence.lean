@@ -54,6 +54,26 @@ theorem map_comp_canonicalIso_naturality
     (DV.factor_unique h hsym _ hleft).trans
       (DV.factor_unique h hsym _ hright).symm
 
+/-! The same comparison isomorphism equation in the reverse direction. -/
+
+theorem canonicalIso_inv_comp_map_naturality
+    (DV EV : SymmetricPowerData V n) (DW EW : SymmetricPowerData W n)
+    (f : V ⟶ W) :
+    (canonicalIso DV EV).inv ≫ DV.map DW f =
+      EV.map EW f ≫ (canonicalIso DW EW).inv := by
+  have h := map_comp_canonicalIso_naturality DV EV DW EW f
+  calc
+    (canonicalIso DV EV).inv ≫ DV.map DW f =
+        (canonicalIso DV EV).inv ≫
+          (DV.map DW f ≫ (canonicalIso DW EW).hom) ≫
+            (canonicalIso DW EW).inv := by
+      simp [Category.assoc]
+    _ = (canonicalIso DV EV).inv ≫
+          ((canonicalIso DV EV).hom ≫ EV.map EW f) ≫
+            (canonicalIso DW EW).inv := by rw [h]
+    _ = EV.map EW f ≫ (canonicalIso DW EW).inv := by
+      simp [Category.assoc]
+
 /-- Canonical comparisons between supplied quotient presentations compose as
 expected on triple overlaps. -/
 theorem canonicalIso_hom_trans
