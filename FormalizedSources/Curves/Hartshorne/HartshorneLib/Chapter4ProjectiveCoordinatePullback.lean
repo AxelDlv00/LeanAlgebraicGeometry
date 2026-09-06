@@ -84,4 +84,49 @@ theorem toBasicOpen_appTop_chartCoord (i j : J) (c : J → B) (hi : c i = 1) :
 
 end
 end ProjectiveCoordinates
+
+noncomputable section
+
+variable {k : Type u} [Field k] [IsAlgClosed k]
+variable {X : Over (Spec (CommRingCat.of k))} [IsIntegral X.left]
+  [SmoothOfRelativeDimension 1 X.hom] [IsProper X.hom]
+variable {D : CurveDivisor k X} {n : ℕ}
+
+attribute [local instance] MvPolynomial.gradedAlgebra Scheme.overModule
+
+namespace LocalRatioRegularization
+
+variable {a : LocalRatioCoordinateData D n}
+
+noncomputable local instance coordinatePullbackAlgebra : Algebra k Γ(X.left, a.chart.U) :=
+  (X.left.overAlgebraMap k a.chart.U).toAlgebra
+
+/-- The explicit standard-chart factor belongs to the actual local-ratio
+projective morphism. -/
+theorem toBasicOpen_factor_chartMap (r : LocalRatioRegularization a) :
+    (a.chart.U.toSpecΓ ≫ ProjectiveCoordinates.toBasicOpen (k := k)
+        a.denominator_index r.regularized r.regularized_denominator_eq_one) ≫
+        (Proj.basicOpen (homogeneousSubmodule (Fin (n + 1)) k)
+          (MvPolynomial.X a.denominator_index)).ι = r.chartMap := by
+  rw [Category.assoc, ProjectiveCoordinates.toBasicOpen_ι, r.chartMap_eq_fromOpen]
+  rfl
+
+/-- The standard projective coordinate pulls back to the regularized divisor
+coordinate under the actual standard-chart factor of the curve morphism. -/
+theorem toBasicOpen_appTop_chartCoord (r : LocalRatioRegularization a)
+    (j : Fin (n + 1)) :
+    (a.chart.U.toSpecΓ ≫ ProjectiveCoordinates.toBasicOpen (k := k)
+        a.denominator_index r.regularized r.regularized_denominator_eq_one).appTop
+      ((Proj.basicOpen (homogeneousSubmodule (Fin (n + 1)) k)
+          (MvPolynomial.X a.denominator_index)).topIso.inv
+        (Proj.awayToSection (homogeneousSubmodule (Fin (n + 1)) k)
+          (MvPolynomial.X a.denominator_index)
+          (ProjectiveCoordinates.chartCoord (k := k) a.denominator_index j))) =
+      a.chart.U.topIso.inv (r.regularized j) := by
+  rw [Scheme.Hom.comp_appTop, CommRingCat.comp_apply,
+    ProjectiveCoordinates.toBasicOpen_appTop_chartCoord,
+    Scheme.Opens.toSpecΓ_appTop, CommRingCat.comp_apply, Iso.inv_hom_id_apply]
+
+end LocalRatioRegularization
+end
 end Hartshorne
