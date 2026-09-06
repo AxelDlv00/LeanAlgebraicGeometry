@@ -2,14 +2,15 @@ id: Hartshorne.iv3-chart-gluing
 title: IV.3.1 local-ratio chart restriction and gluing
 projects:
 - Hartshorne
-summary: 'Commits a68f3b1066 and c2aa15dec6 add a canonical ordinary Scheme.Modules
-  stalk-fiber/evaluation API and lift the bounded-rational-function divisor sheaf
-  to an actual O_X-module; d49f7a0921 corrects the IV.3.1 proof''s surjectivity polarity.
-  The 8,681-job umbrella build passes with standard axioms only. These are independent
-  intrinsic producers: the ordinary fiber has not yet been identified with jumpModule/jumpProj,
-  divisorModule is not yet proved locally invertible, and the geometric base-locus,
-  first-jet/tangent, closed-immersion, and final source IV.3.1 bridges remain open.
-  Existing local-ratio gluing remains explicit and choice-dependent.'
+summary: 'Exact divisor-fiber evaluation is now identified with the local jump quotient:
+  its kernel is H0(D-x), the raw ordinary-fiber evaluation is surjective exactly at
+  base-point-free points, and vanishing is membership in H0(D-x). The divisor module
+  now has zero and principal-divisor comparison isomorphisms, coefficient-local restriction
+  isomorphisms, local principalizations, and a proved IsLineBundle instance theorem;
+  all choice-dependent coordinates are explicitly labeled. Full HartshorneLib check
+  passes with standard axioms only. IV.3.1 itself remains empty: next prove two-point
+  and repeated-point/first-jet separation, then construct the projective morphism,
+  closed immersion, and chart gluing.'
 status: active
 kind: proof
 priority: high
@@ -36,8 +37,15 @@ metadata:
   parent: Hartshorne
   owner: fs-hartshorne
   milestone: Hartshorne
-  updated_at: '2026-09-05T21:43:26.833893+00:00'
+  updated_at: '2026-09-06T05:02:41.297364+00:00'
   pinned_commits:
+  - fd58ecb6b7
+  - fb13cd736f
+  - 6181eaf71a
+  - 1342bdb123
+  - 16f0bf9e31
+  - a4cdfc8ee2
+  - bbef1a5dca
   - c2aa15dec6
   - d49f7a0921
   - a68f3b1066a2b5986181d6e7e7757894a13365fc
