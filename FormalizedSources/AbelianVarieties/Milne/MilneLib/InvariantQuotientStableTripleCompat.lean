@@ -420,6 +420,120 @@ theorem fixedTripleSourceRotation_cocycle [Finite G]
     hPi hPj hPk eij ejk eki
   simpa [fixedTripleSourceRotationIso] using hcycle
 
+/-! ## Cyclic comparisons of descended triple charts -/
+
+/-- The cyclic comparison of the fixed-section presentations descends to the
+triple quotient charts. -/
+noncomputable def quotientTripleRotationIso [Finite G]
+    (p : X ⟶ Spec (CommRingCat.of k))
+    (hact : ∀ g : G, (act g).hom ≫ p = p)
+    (i j l : StableAffineOpen act) :
+    let m := overlap act j l
+    let n := overlap act l i
+    letI := sectionsAlgebra p i.U
+    letI := sectionsAlgebra p j.U
+    letI := sectionsAlgebra p m.U
+    letI := sectionsAlgebra p n.U
+    letI := sectionsAlgebra p (i.U ⊓ m.U)
+    letI := sectionsAlgebra p (j.U ⊓ n.U)
+    letI := sectionsMulSemiringAction act i.stable
+    letI := sectionsMulSemiringAction act j.stable
+    letI := sectionsMulSemiringAction act m.stable
+    letI := sectionsMulSemiringAction act n.stable
+    letI := sectionsMulSemiringAction act (overlap_stable act i m)
+    letI := sectionsMulSemiringAction act (overlap_stable act j n)
+    letI := sectionsSMulCommClass act p hact i.stable
+    letI := sectionsSMulCommClass act p hact j.stable
+    letI := sectionsSMulCommClass act p hact m.stable
+    letI := sectionsSMulCommClass act p hact n.stable
+    letI := sectionsSMulCommClass act p hact (overlap_stable act i m)
+    letI := sectionsSMulCommClass act p hact (overlap_stable act j n)
+    quotientTriple act p hact i j l ≅ quotientTriple act p hact j l i := by
+  let m := overlap act j l
+  let n := overlap act l i
+  letI := sectionsAlgebra p i.U
+  letI := sectionsAlgebra p j.U
+  letI := sectionsAlgebra p m.U
+  letI := sectionsAlgebra p n.U
+  letI := sectionsAlgebra p (i.U ⊓ m.U)
+  letI := sectionsAlgebra p (j.U ⊓ n.U)
+  letI := sectionsMulSemiringAction act i.stable
+  letI := sectionsMulSemiringAction act j.stable
+  letI := sectionsMulSemiringAction act m.stable
+  letI := sectionsMulSemiringAction act n.stable
+  letI := sectionsMulSemiringAction act (overlap_stable act i m)
+  letI := sectionsMulSemiringAction act (overlap_stable act j n)
+  letI := sectionsSMulCommClass act p hact i.stable
+  letI := sectionsSMulCommClass act p hact j.stable
+  letI := sectionsSMulCommClass act p hact m.stable
+  letI := sectionsSMulCommClass act p hact n.stable
+  letI := sectionsSMulCommClass act p hact (overlap_stable act i m)
+  letI := sectionsSMulCommClass act p hact (overlap_stable act j n)
+  exact (fixedTripleQuotientIso act p hact i j l).symm.trans
+    ((fixedTripleSourceRotationIso act p hact i j l).trans
+      (fixedTripleQuotientIso act p hact j l i))
+
+/-- The quotient rotation is compatible with the fixed-section inclusion of the
+cyclically reordered triple chart. -/
+@[reassoc]
+theorem quotientTripleRotationIso_hom_comp_ι [Finite G]
+    (p : X ⟶ Spec (CommRingCat.of k))
+    (hact : ∀ g : G, (act g).hom ≫ p = p)
+    (i j l : StableAffineOpen act) :
+    let m := overlap act j l
+    let n := overlap act l i
+    letI := sectionsAlgebra p i.U
+    letI := sectionsAlgebra p j.U
+    letI := sectionsAlgebra p m.U
+    letI := sectionsAlgebra p n.U
+    letI := sectionsAlgebra p (i.U ⊓ m.U)
+    letI := sectionsAlgebra p (j.U ⊓ n.U)
+    letI := sectionsMulSemiringAction act i.stable
+    letI := sectionsMulSemiringAction act j.stable
+    letI := sectionsMulSemiringAction act m.stable
+    letI := sectionsMulSemiringAction act n.stable
+    letI := sectionsMulSemiringAction act (overlap_stable act i m)
+    letI := sectionsMulSemiringAction act (overlap_stable act j n)
+    letI := sectionsSMulCommClass act p hact i.stable
+    letI := sectionsSMulCommClass act p hact j.stable
+    letI := sectionsSMulCommClass act p hact m.stable
+    letI := sectionsSMulCommClass act p hact n.stable
+    letI := sectionsSMulCommClass act p hact (overlap_stable act i m)
+    letI := sectionsSMulCommClass act p hact (overlap_stable act j n)
+    (quotientTripleRotationIso act p hact i j l).hom ≫
+        quotientTripleι act p hact j l i =
+      (fixedTripleQuotientIso act p hact i j l).inv ≫
+        (fixedTripleSourceRotationIso act p hact i j l).hom ≫
+          overlapFixedRestrictionMap act p hact j n := by
+  let m := overlap act j l
+  let n := overlap act l i
+  letI := sectionsAlgebra p i.U
+  letI := sectionsAlgebra p j.U
+  letI := sectionsAlgebra p m.U
+  letI := sectionsAlgebra p n.U
+  letI := sectionsAlgebra p (i.U ⊓ m.U)
+  letI := sectionsAlgebra p (j.U ⊓ n.U)
+  letI := sectionsMulSemiringAction act i.stable
+  letI := sectionsMulSemiringAction act j.stable
+  letI := sectionsMulSemiringAction act m.stable
+  letI := sectionsMulSemiringAction act n.stable
+  letI := sectionsMulSemiringAction act (overlap_stable act i m)
+  letI := sectionsMulSemiringAction act (overlap_stable act j n)
+  letI := sectionsSMulCommClass act p hact i.stable
+  letI := sectionsSMulCommClass act p hact j.stable
+  letI := sectionsSMulCommClass act p hact m.stable
+  letI := sectionsSMulCommClass act p hact n.stable
+  letI := sectionsSMulCommClass act p hact (overlap_stable act i m)
+  letI := sectionsSMulCommClass act p hact (overlap_stable act j n)
+  let F := fixedTripleQuotientIso act p hact i j l
+  let S := fixedTripleSourceRotationIso act p hact i j l
+  let H := fixedTripleQuotientIso act p hact j l i
+  change ((F.inv ≫ S.hom) ≫ H.hom) ≫
+      quotientTripleι act p hact j l i =
+    (F.inv ≫ S.hom) ≫ overlapFixedRestrictionMap act p hact j n
+  have hι := fixedTripleQuotientIso_hom_comp_ι act p hact j l i
+  exact congrArg (fun f => (F.inv ≫ S.hom) ≫ f) hι
+
 end StableAffineOpen
 end StableGroupAction
 end MilneLib
