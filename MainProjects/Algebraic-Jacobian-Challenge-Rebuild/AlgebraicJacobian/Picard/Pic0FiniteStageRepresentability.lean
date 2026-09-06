@@ -94,6 +94,17 @@ theorem Pic0FiniteStageTestEquiv.homEquiv_eq_pic0Map_universalClass
   simpa [Pic0FiniteStageTestEquiv.universalClass] using
     (data.homEquiv_comp f (𝟙 P.gluedOver))
 
+/-- Two finite-stage test equivalences with the same universal class agree on every
+test object.  Thus the descent producer only has to identify the class represented by
+the identity of `P.gluedOver`; naturality then determines the whole Yoneda family. -/
+theorem Pic0FiniteStageTestEquiv.homEquiv_eq_of_universalClass_eq
+    (data data' : Pic0FiniteStageTestEquiv C Ck P)
+    (h : data.universalClass = data'.universalClass)
+    {T : Over (Spec (.of P.N.1))} (f : T ⟶ P.gluedOver) :
+    data.homEquiv T f = data'.homEquiv T f := by
+  rw [data.homEquiv_eq_pic0Map_universalClass,
+    data'.homEquiv_eq_pic0Map_universalClass, h]
+
 /-- The exact finite-stage carrier is a `RepresentableBy` object once the
 all-test pullback equivalences have been constructed. -/
 noncomputable def pic0RepresentableBy_finiteStage_of_testEquiv
