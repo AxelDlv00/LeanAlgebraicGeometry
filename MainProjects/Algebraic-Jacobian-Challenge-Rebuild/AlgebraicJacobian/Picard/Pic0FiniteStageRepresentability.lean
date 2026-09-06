@@ -5,6 +5,7 @@ Authors: The AlgebraicJacobian Contributors
 -/
 import AlgebraicJacobian.Picard.Pic0Functor
 import AlgebraicJacobian.Picard.Pic0FiniteStageGluedOver
+import AlgebraicJacobian.Picard.Pic0RepresentableByTransport
 
 /-!
 # Exact-carrier finite-stage representability handoff
@@ -70,6 +71,44 @@ structure Pic0FiniteStageTestEquiv where
     (f : T' ⟶ T) (g : T ⟶ P.gluedOver),
     homEquiv T' (f ≫ g) =
       pic0Map ((baseChange K P.N.1).obj C) f (homEquiv T g)
+
+/-! ## Extracting the binder-free family from a certificate -/
+
+/-- A finite-stage `RepresentableBy` certificate already contains the required
+all-test equivalences.  This adapter exposes them at the exact carrier without
+introducing any chart or affine-test binder. -/
+noncomputable def Pic0FiniteStageTestEquiv.ofRepresentableBy
+    (rep : (pic0TypeFunctor ((baseChange K P.N.1).obj C)).RepresentableBy
+      P.gluedOver) :
+    Pic0FiniteStageTestEquiv C Ck P where
+  homEquiv := fun T => rep.homEquiv
+  homEquiv_comp := by
+    intro T T' f g
+    exact rep.homEquiv_comp f g
+
+/-- An explicit identification of the finite-stage carrier with a scalar extension of
+an already represented Picard-zero object supplies the binder-free finite-stage family.
+
+The carrier is retained literally as `P.gluedOver`; all finite-Galois descent and
+geometric content is concentrated in the displayed isomorphism. -/
+noncomputable def Pic0FiniteStageTestEquiv.ofBaseChangeRepresentableBy
+    {J : Over (Spec (.of K))}
+    (rep : (pic0TypeFunctor C).RepresentableBy J)
+    (carrierIso :
+      (Over.pullback
+        (Spec.map (CommRingCat.ofHom (algebraMap K P.N.1)))).obj J ≅
+        P.gluedOver) :
+    Pic0FiniteStageTestEquiv C Ck P :=
+  Pic0FiniteStageTestEquiv.ofRepresentableBy C Ck P
+    (pic0RepresentableBy_of_baseChangeObjectIso C rep carrierIso)
+
+@[simp]
+theorem Pic0FiniteStageTestEquiv.ofRepresentableBy_universalClass
+    (rep : (pic0TypeFunctor ((baseChange K P.N.1).obj C)).RepresentableBy
+      P.gluedOver) :
+    (Pic0FiniteStageTestEquiv.ofRepresentableBy C Ck P rep).universalClass =
+      rep.homEquiv (𝟙 P.gluedOver) :=
+  rfl
 
 /-! ## The exact-carrier universal class -/
 
