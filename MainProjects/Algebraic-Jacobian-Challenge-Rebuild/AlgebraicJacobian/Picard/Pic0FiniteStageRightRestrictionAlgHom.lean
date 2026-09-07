@@ -55,8 +55,8 @@ noncomputable def rightRestrictionBaseChangeAlgHom
       (pic0FiniteStageOverlapBaseChangeAlgebra
         C P.L P.n P.m P.relation P.M P.N U V) :=
   AlgebraicJacobian.scalarExtensionMapOfAlgHom
-    (R := P.M.1) (K := P.N.1)
-    (P.mapM (Sum.inl (Sum.inr (U, V))))
+    (R := P.context.models.M.1) (K := P.context.triple.N.1)
+    (P.context.models.mapM (Sum.inl (Sum.inr (U, V))))
 
 set_option synthInstance.maxHeartbeats 3200000 in
 -- The pinned wrapper fixes both dependent tensor-product structures.
@@ -118,8 +118,8 @@ theorem rightRestrictionBaseChangeAlgHom_eq_direct
     (P : Pic0FiniteStageGluePackage C F) (U V : Pic0FiniteStageChartIndex C) :
     rightRestrictionBaseChangeAlgHom C P U V =
       AlgebraicJacobian.scalarExtensionMapOfAlgHom
-        (R := P.M.1) (K := P.N.1)
-        (P.mapM (Sum.inl (Sum.inr (U, V)))) := by
+        (R := P.context.models.M.1) (K := P.context.triple.N.1)
+        (P.context.models.mapM (Sum.inl (Sum.inr (U, V)))) := by
   rfl
 
 end Pic0FiniteStageGluePackage
