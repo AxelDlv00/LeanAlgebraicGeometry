@@ -2,16 +2,11 @@ id: AJC.picrep.divgrassmannian
 title: 'D2'': Grassmannian comparison for the degree-d divisor functor'
 projects:
 - Algebraic-Jacobian-Challenge
-summary: 'ACTIVE, partial. Checked regular Cartier equations and affine quotient-ring
-  comparisons (490f591313); native zero/principal divisor-module maps (5ff035e021);
-  affine principalization and local triviality of O(D) over arbitrary fields (3af9165d47);
-  inclusion-compatible kernel/O(-div(a)) comparison and generator independence on
-  a fixed chart (5334a7791a). The concrete O(D) Grassmannian quotient consumes native
-  local triviality in evaluation epi and curve rank (2ed53a21e3), with actual total-family
-  kernel H1 still explicit. Focused builds and standard-axiom honesty audits pass.
-  Next: construct the actual field-fibre Weil divisor with chart compatibility, identify
-  the global twisted kernel and its degree, then uniform relative H1 vanishing. fgaPicardRepresentability
-  and picEt representability remain open.'
+summary: 'ACTIVE, partial. f39dc4a adds checked affine divisor-chart quotient equations;
+  080b1d5 adds curve-specialized twisted pushforward rank producer, discharging support
+  quasi-finiteness and fibre H0 rank from HasFiberDeg. Next: global field-fibre Cartier/Weil
+  identification and native evaluation comparison, then relative counit epi via section
+  base change/Nakayama. fgaPicardRepresentability remains open.'
 status: active
 kind: proof
 priority: normal
@@ -38,8 +33,13 @@ metadata:
       item'
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.picrep
-  updated_at: '2026-09-06T18:27:05.301729+00:00'
+  updated_at: '2026-09-06T23:56:27.795015+00:00'
   pinned_commits:
+  - 080b1d5
+  - '6687758615'
+  - f39dc4a
+  - 81527d7a6a
+  - c305aa50ce
   - 2ed53a21e3
   - 5334a7791a
   - 3af9165d47
