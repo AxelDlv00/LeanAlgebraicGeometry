@@ -81,8 +81,8 @@ def modelChartι (U : Pic0FiniteStageChartIndex Ck) :
       (Over.map (Spec.map (CommRingCat.ofHom
         (algebraMap P.context.models.M.1 P.context.triple.N.1)))).obj
         P.gluedOver := by
-  rcases P with ⟨⟨D, T⟩⟩
-  let P : Pic0FiniteStageGluePackage Ck F := ⟨⟨D, T⟩⟩
+  let D := P.context.models
+  let T := P.context.triple
   let A : CommAlgCat D.M.1 :=
     CommAlgCat.of D.M.1 T.N.1 ⊗ pic0FiniteStageModelAlgebra Ck D (Sum.inl U)
   letI : Algebra T.N.1 A :=

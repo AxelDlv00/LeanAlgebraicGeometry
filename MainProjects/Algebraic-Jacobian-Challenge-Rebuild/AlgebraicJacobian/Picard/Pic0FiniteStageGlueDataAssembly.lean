@@ -5,6 +5,7 @@ Authors: The AlgebraicJacobian Contributors
 -/
 import AlgebraicJacobian.Descent.AffineRingGlueData
 import AlgebraicJacobian.Picard.Pic0FiniteStageGluePackageCore
+import AlgebraicJacobian.Picard.Pic0FiniteStageModelRightLeg
 import AlgebraicJacobian.Picard.Pic0FiniteStageScalarExtendedAtlas
 import AlgebraicJacobian.Picard.Pic0FiniteStageTripleTransitionEquations
 import AlgebraicJacobian.Picard.Pic0FiniteStageTripleTransitionFaceReflection
@@ -113,15 +114,17 @@ variable {k : Type u} [Field k] (C : Over (Spec (.of k)))
 variable [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
   [GeometricallyIrreducible C.hom] [IsSepClosed k]
 
+variable {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
+  (D : Pic0FiniteStageTransitionModelsData C F)
+  (T : Pic0FiniteStageTripleTransitionFamilyData
+    C D.L D.n D.m D.relation D.M D.mapM
+      (pic0FiniteStageTripleModelComparisonFamily
+        C D.L D.n D.m D.relation D.e D.M D.mapM D.comparison))
+
 set_option maxHeartbeats 800000 in
 -- Comparing the reflected face package with the literal tensor family exceeds 200k.
-/-- Assemble the descended chart rings, overlap rings, and compatible triple transitions
-into the finite-stage affine glue presentation. -/
-noncomputable def pic0FiniteStageAffineRingGluePresentation
-    {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
-    (P : Pic0FiniteStageGlueContext C F) :
-    AlgebraicJacobian.AffineRingGluePresentation P.N.1 := by
-  rcases P with ⟨D, T⟩
+private def affineRingGluePresentationOfModels :
+    AlgebraicJacobian.AffineRingGluePresentation T.N.1 := by
   let A := Pic0FiniteStageChartModelRing C D.L D.n D.m D.relation D.M
   let B := Pic0FiniteStageOverlapModelRing C D.L D.n D.m D.relation D.M
   letI (U : Pic0FiniteStageChartIndex C) : Algebra D.M.1 (A U) :=
@@ -151,6 +154,40 @@ noncomputable def pic0FiniteStageAffineRingGluePresentation
       (pic0FiniteStageTripleModelComparisonFamily
         C D.L D.n D.m D.relation D.e D.M D.mapM D.comparison)
       T.N T.thetaN T.comparison U V W
+
+/-- Assemble the descended chart rings, overlap rings, and compatible triple transitions
+into the finite-stage affine glue presentation. -/
+noncomputable def pic0FiniteStageAffineRingGluePresentation
+    (P : Pic0FiniteStageGlueContext C F) :
+    AlgebraicJacobian.AffineRingGluePresentation P.N.1 :=
+  affineRingGluePresentationOfModels C P.models P.triple
+
+set_option maxHeartbeats 800000 in
+-- Identifying the assembled chart with its tensor-model source exceeds 200k.
+/-- The inclusion of a literal tensor-model chart into the assembled carrier. -/
+def pic0FiniteStageAffineRingGlueChartι (U : Pic0FiniteStageChartIndex C) :
+    Spec (.of (T.N.1 ⊗[D.M.1]
+      Pic0FiniteStageModelRing C D.L D.n D.m D.relation D.M (Sum.inl U))) ⟶
+        (pic0FiniteStageAffineRingGluePresentation C ⟨D, T⟩).glueData.glued :=
+  (pic0FiniteStageAffineRingGluePresentation C ⟨D, T⟩).glueData.ι U
+
+set_option synthInstance.maxHeartbeats 400000 in
+-- Resolving the tensor-model scheme instances crosses the assembled presentation.
+set_option maxHeartbeats 800000 in
+-- The four legs share the dependent tensor-model carrier from the assembly.
+/-- The literal tensor overlap of the descended models is the pullback of its
+two chart inclusions into the assembled finite-stage carrier. -/
+theorem pic0FiniteStageAffineRingGluePresentation_isPullback
+    (E : Pic0FiniteStageGlueContext C F)
+    (U V : Pic0FiniteStageChartIndex C) :
+    IsPullback
+      ((pic0FiniteStageAffineRingGluePresentation C E).glueData.f U V)
+      ((pic0FiniteStageAffineRingGluePresentation C E).glueData.t U V ≫
+        (pic0FiniteStageAffineRingGluePresentation C E).glueData.f V U)
+      ((pic0FiniteStageAffineRingGluePresentation C E).glueData.ι U)
+      ((pic0FiniteStageAffineRingGluePresentation C E).glueData.ι V) := by
+  let G := (pic0FiniteStageAffineRingGluePresentation C E).glueData
+  exact IsPullback.of_isLimit (G.vPullbackConeIsLimit U V)
 
 end
 

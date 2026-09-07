@@ -4,7 +4,8 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: The AlgebraicJacobian Contributors
 -/
 import AlgebraicJacobian.Picard.Pic0FiniteStageModelChartMaps
-import AlgebraicJacobian.Picard.PicEtCoverBridge
+import AlgebraicJacobian.Picard.Pic0GlueData
+import Lean.LibrarySuggestions.Basic
 
 /-!
 # Compatible classes on the finite-stage glued carrier
@@ -17,10 +18,19 @@ carrier regarded over the model field.
 
 set_option autoImplicit false
 
+-- Lean 4.31's symbol-frequency analysis of these dependent tensor signatures
+-- stalls module export. Exclude only automatic premise suggestions; the public
+-- declarations and their kernel checks are unchanged.
+run_cmd do
+  Lean.modifyEnv fun env =>
+    ["modelChartι_left", "modelChartι_isOpenImmersion", "modelChartι_jointly_surjective",
+      "modelChartι_isPullback", "existsUnique_gluedModelClass"].foldl
+      (fun env name => Lean.LibrarySuggestions.nameDenyListExt.addEntry env name) env
+
 universe u v
 
 open CategoryTheory CategoryTheory.Limits
-open scoped TensorProduct
+open scoped MonoidalCategory
 
 namespace AlgebraicGeometry.Pic0FiniteStageGluePackage
 
@@ -32,36 +42,64 @@ variable {F K : Type u} [Field F] [Field K] [Algebra F K]
   [IsProper Ck.hom] [GeometricallyIrreducible Ck.hom]
   (P : Pic0FiniteStageGluePackage Ck F)
 
-private theorem restriction_eq_of_compatible
-    (A : Pic0FiniteStageRingIndex Ck → Type v)
+private theorem existsUnique_of_indexed_cover
+    {k : Type u} [Field k] (CM : Over (Spec (.of k)))
+    [SmoothOfRelativeDimension 1 CM.hom] [IsProper CM.hom]
+    [GeometricallyIrreducible CM.hom]
+    (A : Pic0FiniteStageRingIndex Ck → Over (Spec (.of k)))
     (r : ∀ j : Pic0FiniteStageRestrictionIndex Ck,
-      A (Pic0FiniteStageRestrictionSource Ck j) →
-        A (Pic0FiniteStageRestrictionTarget Ck j))
-    (x : ∀ j, A j)
-    (hx : ∀ j, r j (x (Pic0FiniteStageRestrictionSource Ck j)) =
-      x (Pic0FiniteStageRestrictionTarget Ck j))
-    (U V : Pic0FiniteStageChartIndex Ck) :
-    r (Sum.inl (U, V)) (x (Sum.inl U)) =
-      r (Sum.inr (U, V)) (x (Sum.inl V)) :=
-  (hx (Sum.inl (U, V))).trans (hx (Sum.inr (U, V))).symm
+      A (Pic0FiniteStageRestrictionTarget Ck j) ⟶
+        A (Pic0FiniteStageRestrictionSource Ck j))
+    {X : Over (Spec (.of k))}
+    (incl : ∀ U, A (Sum.inl U) ⟶ X)
+    [∀ U, IsOpenImmersion (incl U).left]
+    (hcover : ∀ p : X.left, ∃ U, p ∈ (incl U).left.opensRange)
+    (hp : ∀ U V, IsPullback (r (Sum.inl (U, V))).left
+      (r (Sum.inr (U, V))).left (incl U).left (incl V).left)
+    (x : ∀ j, pic0Subgroup CM (A j))
+    (hx : ∀ j, pic0Map CM (r j) (x (Pic0FiniteStageRestrictionSource Ck j)) =
+      x (Pic0FiniteStageRestrictionTarget Ck j)) :
+    ∃! s : pic0Subgroup CM X, ∀ U, pic0Map CM (incl U) s = x (Sum.inl U) := by
+  apply pic0Subgroup_existsUnique_of_pullback_cover CM incl hcover
+    (fun U V => r (Sum.inl (U, V))) (fun U V => r (Sum.inr (U, V))) hp
+    (fun U => x (Sum.inl U))
+  intro U V
+  exact (hx (Sum.inl (U, V))).trans (hx (Sum.inr (U, V))).symm
 
 /-- The model-field chart inclusion has the underlying canonical gluing map. -/
 theorem modelChartι_left (U : Pic0FiniteStageChartIndex Ck) :
     (P.modelChartι Ck U).left = P.glueData.ι U := by
-  rcases P with ⟨⟨D, T⟩⟩
   rfl
 
 /-- The canonical tensor-model chart maps are open immersions. -/
 theorem modelChartι_isOpenImmersion (U : Pic0FiniteStageChartIndex Ck) :
     IsOpenImmersion (P.modelChartι Ck U).left := by
-  rcases P with ⟨⟨D, T⟩⟩
-  exact (show Pic0FiniteStageGluePackage Ck F from ⟨⟨D, T⟩⟩).glueData.ι_isOpenImmersion U
+  exact P.glueData.ι_isOpenImmersion U
 
 /-- The canonical tensor-model charts cover the glued carrier. -/
 theorem modelChartι_jointly_surjective (p : P.gluedOver.left) :
     ∃ U : Pic0FiniteStageChartIndex Ck, p ∈ Set.range (P.modelChartι Ck U).left.base := by
-  rcases P with ⟨⟨D, T⟩⟩
-  exact (show Pic0FiniteStageGluePackage Ck F from ⟨⟨D, T⟩⟩).glueData.ι_jointly_surjective p
+  exact P.glueData.ι_jointly_surjective p
+
+set_option maxHeartbeats 800000 in
+-- Comparing the literal tensor legs with the assembled overlap exceeds 200k.
+/-- The two tensor-model restrictions form the pullback of the model chart inclusions. -/
+theorem modelChartι_isPullback (U V : Pic0FiniteStageChartIndex Ck) :
+    IsPullback
+      (Over.overSpecMap ((CommAlgCat.of P.context.models.M.1 P.context.triple.N.1 ◁
+        pic0FiniteStageModelRestriction Ck P.context.models (Sum.inl (U, V))).hom)).left
+      (Over.overSpecMap ((CommAlgCat.of P.context.models.M.1 P.context.triple.N.1 ◁
+        pic0FiniteStageModelRestriction Ck P.context.models (Sum.inr (U, V))).hom)).left
+      (P.modelChartι Ck U).left (P.modelChartι Ck V).left := by
+  apply (congrArg₂ (fun f g =>
+      IsPullback f g (P.modelChartι Ck U).left (P.modelChartι Ck V).left)
+    (P.glueData_f_eq_tensorModelRestriction Ck U V).symm
+    (P.glueData_tf_eq_tensorModelRestriction Ck U V).symm).mpr
+  apply (congrArg₂ (IsPullback (P.glueData.f U V)
+    (P.glueData.t U V ≫ P.glueData.f V U))
+    (P.modelChartι_left Ck U) (P.modelChartι_left Ck V)).mpr
+  exact pic0FiniteStageAffineRingGluePresentation_isPullback
+    Ck P.context U V
 
 variable (CM : Over (Spec (.of P.context.models.M.1)))
   [SmoothOfRelativeDimension 1 CM.hom] [IsProper CM.hom]
@@ -74,93 +112,34 @@ finite-stage carrier, regarded over the model field. -/
 theorem existsUnique_gluedModelClass
     (x : ∀ j, pic0Subgroup CM
       (overSpec P.context.models.M.1
-        (P.context.triple.N.1 ⊗[P.context.models.M.1]
-          (pic0FiniteStageModelAlgebra Ck P.context.models j))))
+        (CommAlgCat.of P.context.models.M.1 P.context.triple.N.1 ⊗
+          pic0FiniteStageModelAlgebra Ck P.context.models j :
+            CommAlgCat P.context.models.M.1)))
     (hx : ∀ j : Pic0FiniteStageRestrictionIndex Ck,
       pic0Map CM (Over.overSpecMap
-        (Algebra.TensorProduct.map
-          (AlgHom.id P.context.models.M.1 P.context.triple.N.1)
-          (pic0FiniteStageModelRestriction Ck P.context.models j).hom))
+        ((CommAlgCat.of P.context.models.M.1 P.context.triple.N.1 ◁
+          pic0FiniteStageModelRestriction Ck P.context.models j).hom))
         (x (Pic0FiniteStageRestrictionSource Ck j)) =
           x (Pic0FiniteStageRestrictionTarget Ck j)) :
     ∃! s : pic0Subgroup CM
         ((Over.map (Spec.map (CommRingCat.ofHom
           (algebraMap P.context.models.M.1 P.context.triple.N.1)))).obj P.gluedOver),
       ∀ U, pic0Map CM (P.modelChartι Ck U) s = x (Sum.inl U) := by
-  letI (j : Pic0FiniteStageRingIndex Ck) :
-      Algebra P.context.models.M.1
-        (P.context.triple.N.1 ⊗[P.context.models.M.1]
-          (pic0FiniteStageModelAlgebra Ck P.context.models j)) :=
-    Algebra.TensorProduct.instAlgebra
-  let rL := fun U V => Algebra.TensorProduct.map
-    (AlgHom.id P.context.models.M.1 P.context.triple.N.1)
-    (pic0FiniteStageModelRestriction Ck P.context.models (Sum.inl (U, V))).hom
-  let rR := fun U V => Algebra.TensorProduct.map
-    (AlgHom.id P.context.models.M.1 P.context.triple.N.1)
-    (pic0FiniteStageModelRestriction Ck P.context.models (Sum.inr (U, V))).hom
   let incl := P.modelChartι Ck
-  have hι : ∀ U : Pic0FiniteStageChartIndex Ck, (incl U).left = P.glueData.ι U := by
-    intro U
-    exact P.modelChartι_left Ck U
-  let fL := fun U V => Over.overSpecMap (rL U V)
-  let fR := fun U V => Over.overSpecMap (rR U V)
-  have hL : ∀ U V : Pic0FiniteStageChartIndex Ck, (fL U V).left = P.glueData.f U V :=
-    fun U V => (P.glueData_f_eq_tensorModelRestriction Ck U V).symm
-  have hR : ∀ U V : Pic0FiniteStageChartIndex Ck,
-      (fR U V).left = P.glueData.t U V ≫ P.glueData.f V U :=
-    fun U V => (P.glueData_tf_eq_tensorModelRestriction Ck U V).symm
-  have hcompat : ∀ U V : Pic0FiniteStageChartIndex Ck,
-      pic0Map CM (fL U V) (x (Sum.inl U)) =
-      pic0Map CM (fR U V) (x (Sum.inl V)) := by
-    intro U V
-    exact restriction_eq_of_compatible Ck
-      (fun j => pic0Subgroup CM (overSpec P.context.models.M.1
-        (P.context.triple.N.1 ⊗[P.context.models.M.1]
-          (pic0FiniteStageModelAlgebra Ck P.context.models j))))
-      (fun j => pic0Map CM (Over.overSpecMap
-        (Algebra.TensorProduct.map
-          (AlgHom.id P.context.models.M.1 P.context.triple.N.1)
-          (pic0FiniteStageModelRestriction Ck P.context.models j).hom))) x hx U V
   letI (U : Pic0FiniteStageChartIndex Ck) : IsOpenImmersion (incl U).left :=
     P.modelChartι_isOpenImmersion Ck U
-  refine pic0Subgroup_existsUnique_of_cover incl (P.modelChartι_jointly_surjective Ck)
-    (fun U => x (Sum.inl U)) ?_
-  intro U V Z gi gj h
-  have hleft : gi.left ≫ P.glueData.ι U = gj.left ≫ P.glueData.ι V := by
-    have heq : gi.left ≫ (incl U).left = gj.left ≫ (incl V).left :=
-      congrArg Over.Hom.left h
-    exact (congrArg (fun a => gi.left ≫ a) (hι U)).symm.trans
-      (heq.trans (congrArg (fun a => gj.left ≫ a) (hι V)))
-  let cone := PullbackCone.mk gi.left gj.left hleft
-  let q := (P.glueData.vPullbackConeIsLimit U V).lift cone
-  have hqi : q ≫ (fL U V).left = gi.left := by
-    exact (congrArg (fun a => q ≫ a) (hL U V)).trans
-      ((P.glueData.vPullbackConeIsLimit U V).fac cone WalkingCospan.left)
-  have hqj : q ≫ (fR U V).left = gj.left := by
-    exact (congrArg (fun a => q ≫ a) (hR U V)).trans
-      ((P.glueData.vPullbackConeIsLimit U V).fac cone WalkingCospan.right)
-  let qOver : Z ⟶ overSpec P.context.models.M.1
-      (P.context.triple.N.1 ⊗[P.context.models.M.1]
-        (pic0FiniteStageModelAlgebra Ck P.context.models (Sum.inr (U, V)))) :=
-    Over.homMk q (by
-      exact (congrArg (fun a => q ≫ a) (fL U V).w.symm).trans
-        ((Category.assoc _ _ _).symm.trans
-          ((congrArg (fun a => a ≫ _) hqi).trans gi.w)))
-  have hqiOver : qOver ≫ fL U V = gi := by
-    ext
-    exact hqi
-  have hqjOver : qOver ≫ fR U V = gj := by
-    ext
-    exact hqj
-  apply Subtype.ext
-  have hclasses := congrArg (fun z => (pic0Map CM qOver z).val) (hcompat U V)
-  change picEtMap CM qOver (picEtMap CM (fL U V) (x (Sum.inl U)).val) =
-    picEtMap CM qOver (picEtMap CM (fR U V) (x (Sum.inl V)).val) at hclasses
-  exact (congrArg (fun f => picEtMap CM f (x (Sum.inl U)).val) hqiOver).symm.trans
-    ((picEtMap_comp CM (fL U V) qOver (x (Sum.inl U)).val).trans
-      (hclasses.trans
-        ((picEtMap_comp CM (fR U V) qOver (x (Sum.inl V)).val).symm.trans
-          (congrArg (fun f => picEtMap CM f (x (Sum.inl V)).val) hqjOver))))
+  have hcover : ∀ p : P.gluedOver.left,
+      ∃ U : Pic0FiniteStageChartIndex Ck, p ∈ (incl U).left.opensRange :=
+    P.modelChartι_jointly_surjective Ck
+  exact existsUnique_of_indexed_cover Ck CM
+    (fun j => overSpec P.context.models.M.1
+      (CommAlgCat.of P.context.models.M.1 P.context.triple.N.1 ⊗
+        pic0FiniteStageModelAlgebra Ck P.context.models j :
+          CommAlgCat P.context.models.M.1))
+    (fun j => Over.overSpecMap
+      (CommAlgCat.of P.context.models.M.1 P.context.triple.N.1 ◁
+        pic0FiniteStageModelRestriction Ck P.context.models j).hom)
+    incl hcover (P.modelChartι_isPullback Ck) x hx
 
 end
 
