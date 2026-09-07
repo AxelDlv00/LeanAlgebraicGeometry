@@ -5,6 +5,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 import AlgebraicJacobian.Picard.Pic0FiniteStageGluedOver
 import AlgebraicJacobian.Picard.Pic0FiniteStageUniversalModelClasses
 import AlgebraicJacobian.Picard.Pic0FiniteStageModelRightLeg
+import Mathlib.Algebra.Category.CommAlgCat.Monoidal
 
 /-!
 # Tensor-model charts of the finite-stage glued carrier
@@ -20,7 +21,7 @@ set_option autoImplicit false
 universe u
 
 open CategoryTheory
-open scoped TensorProduct
+open scoped MonoidalCategory
 
 namespace AlgebraicGeometry.Pic0FiniteStageGluePackage
 
@@ -37,6 +38,7 @@ private theorem chart_comp_specMap
   rw [← Category.assoc, h, ← Spec.map_comp, ← CommRingCat.ofHom_comp,
     hcomp]
 
+open scoped TensorProduct in
 private theorem specMap_tensor_comp_of_algHom_comp_eq
     {R S A B D : Type u} [CommRing R] [CommRing S]
     [CommRing A] [CommRing B] [CommRing D]
@@ -73,14 +75,16 @@ set_option maxHeartbeats 800000 in
 /-- The canonical tensor chart inclusion, regarded over the model field. -/
 def modelChartι (U : Pic0FiniteStageChartIndex Ck) :
     overSpec P.context.models.M.1
-        (P.context.triple.N.1 ⊗[P.context.models.M.1]
-          (pic0FiniteStageModelAlgebra Ck P.context.models (Sum.inl U))) ⟶
+        (CommAlgCat.of P.context.models.M.1 P.context.triple.N.1 ⊗
+          pic0FiniteStageModelAlgebra Ck P.context.models (Sum.inl U) :
+            CommAlgCat P.context.models.M.1) ⟶
       (Over.map (Spec.map (CommRingCat.ofHom
         (algebraMap P.context.models.M.1 P.context.triple.N.1)))).obj
         P.gluedOver := by
   rcases P with ⟨⟨D, T⟩⟩
   let P : Pic0FiniteStageGluePackage Ck F := ⟨⟨D, T⟩⟩
-  let A := T.N.1 ⊗[D.M.1] (pic0FiniteStageModelAlgebra Ck D (Sum.inl U))
+  let A : CommAlgCat D.M.1 :=
+    CommAlgCat.of D.M.1 T.N.1 ⊗ pic0FiniteStageModelAlgebra Ck D (Sum.inl U)
   letI : Algebra T.N.1 A :=
     Algebra.TensorProduct.leftAlgebra (R := D.M.1) (S := T.N.1)
       (A := T.N.1) (B := pic0FiniteStageModelAlgebra Ck D (Sum.inl U))
@@ -101,9 +105,8 @@ set_option maxHeartbeats 800000 in
 /-- The glued left overlap leg is the scalar extension of the model restriction. -/
 theorem glueData_f_eq_tensorModelRestriction (U V : Pic0FiniteStageChartIndex Ck) :
     P.glueData.f U V = (Over.overSpecMap
-      (Algebra.TensorProduct.map
-        (AlgHom.id P.context.models.M.1 P.context.triple.N.1)
-        (pic0FiniteStageModelRestriction Ck P.context.models (Sum.inl (U, V))).hom)).left :=
+      ((CommAlgCat.of P.context.models.M.1 P.context.triple.N.1 ◁
+        pic0FiniteStageModelRestriction Ck P.context.models (Sum.inl (U, V))).hom)).left :=
   rfl
 
 set_option maxHeartbeats 800000 in
@@ -111,9 +114,8 @@ set_option maxHeartbeats 800000 in
 /-- Transition followed by the reversed left leg is the actual right model restriction. -/
 theorem glueData_tf_eq_tensorModelRestriction (U V : Pic0FiniteStageChartIndex Ck) :
     P.glueData.t U V ≫ P.glueData.f V U = (Over.overSpecMap
-      (Algebra.TensorProduct.map
-        (AlgHom.id P.context.models.M.1 P.context.triple.N.1)
-        (pic0FiniteStageModelRestriction Ck P.context.models (Sum.inr (U, V))).hom)).left := by
+      ((CommAlgCat.of P.context.models.M.1 P.context.triple.N.1 ◁
+        pic0FiniteStageModelRestriction Ck P.context.models (Sum.inr (U, V))).hom)).left := by
   rcases P with ⟨⟨D, T⟩⟩
   exact specMap_tensor_comp_of_algHom_comp_eq (S := T.N.1)
     (D.mapM_transition_comp_restrictionLeft_eq_right Ck U V)

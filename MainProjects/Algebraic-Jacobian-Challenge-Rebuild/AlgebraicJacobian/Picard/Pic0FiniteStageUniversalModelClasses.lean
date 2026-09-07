@@ -5,7 +5,7 @@ Authors: The AlgebraicJacobian Contributors
 -/
 import AlgebraicJacobian.Picard.Pic0FiniteStageTripleModelComparison
 import AlgebraicJacobian.Picard.Pic0FiniteStageGaloisClasses
-import Mathlib.Algebra.Category.CommAlgCat.Basic
+import Mathlib.Algebra.Category.CommAlgCat.Monoidal
 
 /-!
 # Universal Picard classes on finite-stage model algebras
@@ -21,11 +21,17 @@ set_option autoImplicit false
 universe u
 
 open CategoryTheory
-open scoped TensorProduct
+open scoped MonoidalCategory
 
 namespace AlgebraicGeometry
 
 noncomputable section
+
+-- The bundled tensor retains the usual algebra structure over its left factor.
+local instance {R S : Type u} [CommRing R] [CommRing S] [Algebra R S]
+    (A : CommAlgCat.{u} R) :
+    Algebra S (CommAlgCat.of R S ⊗ A : CommAlgCat R) :=
+  Algebra.TensorProduct.leftAlgebra
 
 variable {F K : Type u} [Field F] [Field K] [Algebra F K]
   [Algebra.IsAlgebraic F K] [IsSepClosed K]
@@ -48,7 +54,7 @@ def pic0FiniteStageModelRestriction (j : Pic0FiniteStageRestrictionIndex Ck) :
 
 /-- Scalar extension identifies each actual model algebra with its pinned exact ring. -/
 def pic0FiniteStageModelAlgebraEquiv (j : Pic0FiniteStageRingIndex Ck) :
-    K ⊗[D.M.1] (pic0FiniteStageModelAlgebra Ck D j) ≃ₐ[K]
+    (CommAlgCat.of D.M.1 K ⊗ pic0FiniteStageModelAlgebra Ck D j : CommAlgCat D.M.1) ≃ₐ[K]
       Pic0FiniteStageRing Ck j :=
   pic0FiniteStageModelBaseChangeEquiv Ck D.L D.n D.m D.relation D.e D.M j
 
@@ -72,12 +78,13 @@ theorem pic0FiniteStageModelAlgebraEquiv_naturality
       (F := F) Ck D.L D.n D.m D.relation D.e D.M D.mapM D.comparison
       (Sum.inl (Sum.inr UV))
 
+set_option maxHeartbeats 800000 in
+-- The bundled tensor comparison unfolds the dependent model algebra structures.
 /-- Conjugating a model restriction by its comparison equivalences recovers its tensor map. -/
 theorem pic0FiniteStageModelRestriction_comparison
     (j : Pic0FiniteStageRestrictionIndex Ck) :
     let e := pic0FiniteStageModelAlgebraEquiv Ck D
-    Algebra.TensorProduct.map (AlgHom.id D.M.1 K)
-        (pic0FiniteStageModelRestriction Ck D j).hom =
+    (CommAlgCat.of D.M.1 K ◁ pic0FiniteStageModelRestriction Ck D j).hom =
       ((e (Pic0FiniteStageRestrictionTarget Ck j)).symm.toAlgHom.comp
         ((pic0FiniteStageRestriction Ck j).comp
           (e (Pic0FiniteStageRestrictionSource Ck j)).toAlgHom)).restrictScalars D.M.1 := by
@@ -104,13 +111,16 @@ def pic0FiniteStageUniversalModelClass
     (i : (baseChange D.M.1 K).obj CM ≅ Ck)
     (j : Pic0FiniteStageRingIndex Ck) :
     pic0Subgroup CM (overSpec D.M.1
-      (K ⊗[D.M.1] (pic0FiniteStageModelAlgebra Ck D j))) :=
+      (CommAlgCat.of D.M.1 K ⊗ pic0FiniteStageModelAlgebra Ck D j : CommAlgCat D.M.1)) :=
   pic0Map CM
-    (mapOverSpecIso D.M.1 K (K ⊗[D.M.1] (pic0FiniteStageModelAlgebra Ck D j))).inv
+    (mapOverSpecIso D.M.1 K
+      (CommAlgCat.of D.M.1 K ⊗ pic0FiniteStageModelAlgebra Ck D j : CommAlgCat D.M.1)).inv
     (pic0CrossBaseEquiv D.M.1 K CM
-      (overSpec K (K ⊗[D.M.1] (pic0FiniteStageModelAlgebra Ck D j)))
+      (overSpec K
+        (CommAlgCat.of D.M.1 K ⊗ pic0FiniteStageModelAlgebra Ck D j : CommAlgCat D.M.1))
       (pic0Pullback i.hom
-        (overSpec K (K ⊗[D.M.1] (pic0FiniteStageModelAlgebra Ck D j)))
+        (overSpec K
+          (CommAlgCat.of D.M.1 K ⊗ pic0FiniteStageModelAlgebra Ck D j : CommAlgCat D.M.1))
         (pic0Map Ck (Over.overSpecMap (pic0FiniteStageModelAlgebraEquiv Ck D j).symm.toAlgHom)
           (pic0FiniteStageUniversalRingClass Ck j))))
 
@@ -119,8 +129,7 @@ theorem pic0FiniteStageUniversalModelClass_restriction
     (i : (baseChange D.M.1 K).obj CM ≅ Ck)
     (j : Pic0FiniteStageRestrictionIndex Ck) :
     pic0Map CM (Over.overSpecMap
-      (Algebra.TensorProduct.map (AlgHom.id D.M.1 K)
-        (pic0FiniteStageModelRestriction Ck D j).hom))
+      (CommAlgCat.of D.M.1 K ◁ pic0FiniteStageModelRestriction Ck D j).hom)
         (pic0FiniteStageUniversalModelClass Ck D CM i
           (Pic0FiniteStageRestrictionSource Ck j)) =
       pic0FiniteStageUniversalModelClass Ck D CM i
@@ -150,14 +159,16 @@ theorem exists_pic0FiniteStageUniversalModelClass_compatible_isGalois [IsGalois 
     (S₀ : DatG0.FiniteStageData D.M.1 K) :
     ∃ S : DatG0.FiniteStageData D.M.1 K, S₀.stage ≤ S.stage ∧ IsGalois F S.stage ∧
       ∃ xS : ∀ j, pic0Subgroup CM
-          (overSpec D.M.1 (S.stage ⊗[D.M.1] (pic0FiniteStageModelAlgebra Ck D j))),
+          (overSpec D.M.1
+            (CommAlgCat.of D.M.1 S.stage ⊗ pic0FiniteStageModelAlgebra Ck D j :
+              CommAlgCat D.M.1)),
         (∀ j, pic0Map CM (Over.overSpecMap
-            (S.tensorMap (A := pic0FiniteStageModelAlgebra Ck D j))) (xS j) =
+            (CommAlgCat.ofHom S.inclusion ▷ pic0FiniteStageModelAlgebra Ck D j).hom)
+            (xS j) =
           pic0FiniteStageUniversalModelClass Ck D CM i j) ∧
         ∀ j : Pic0FiniteStageRestrictionIndex Ck,
           pic0Map CM (Over.overSpecMap
-            (Algebra.TensorProduct.map (AlgHom.id D.M.1 S.stage)
-              (pic0FiniteStageModelRestriction Ck D j).hom))
+            (CommAlgCat.of D.M.1 S.stage ◁ pic0FiniteStageModelRestriction Ck D j).hom)
             (xS (Pic0FiniteStageRestrictionSource Ck j)) =
               xS (Pic0FiniteStageRestrictionTarget Ck j) := by
   exact exists_pic0Subgroup_tensorStage_compatible_isGalois
