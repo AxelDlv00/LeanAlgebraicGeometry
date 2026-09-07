@@ -48,6 +48,27 @@ theorem pic0Map_eq_of_isPullback
   rw [← picEtMap_comp, ← picEtMap_comp, hqfOver, hqgOver] at heq
   exact heq
 
+/-- Degree-zero classes glue uniquely on an open cover when they agree on
+overlaps presented by pullback squares. -/
+theorem pic0Subgroup_existsUnique_of_pullback_cover
+    {k : Type u} [Field k] (C : Over (Spec (.of k)))
+    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+    [GeometricallyIrreducible C.hom]
+    {I : Type*} {X : Over (Spec (.of k))}
+    {U : I → Over (Spec (.of k))} {W : I → I → Over (Spec (.of k))}
+    (incl : ∀ i, U i ⟶ X) [∀ i, IsOpenImmersion (incl i).left]
+    (hcov : ∀ p : X.left, ∃ i, p ∈ (incl i).left.opensRange)
+    (f : ∀ i j, W i j ⟶ U i) (g : ∀ i j, W i j ⟶ U j)
+    (hp : ∀ i j, IsPullback (f i j).left (g i j).left
+      (incl i).left (incl j).left)
+    (x : ∀ i, pic0Subgroup C (U i))
+    (hx : ∀ i j, pic0Map C (f i j) (x i) = pic0Map C (g i j) (x j)) :
+    ∃! s : pic0Subgroup C X, ∀ i, pic0Map C (incl i) s = x i := by
+  refine pic0Subgroup_existsUnique_of_cover incl hcov x ?_
+  intro i j Z u v h
+  exact pic0Map_eq_of_isPullback C (f i j) (g i j) (incl i) (incl j)
+    (hp i j) (x i) (x j) (hx i j) u v h
+
 end AlgebraicGeometry
 
 namespace AlgebraicGeometry.Scheme.GlueData
