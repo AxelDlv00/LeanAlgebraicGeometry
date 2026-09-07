@@ -108,5 +108,49 @@ theorem veryAmple_of_arbitraryProjectiveEmbeddingCertificate
   exact veryAmple_of_closedImmersion_of_chart_restrictions
     c.basis c.hbase c.map c.chart_restrictions
 
+/-! ### Distinct-point consumers -/
+
+/-- A certified arbitrary embedding separates distinct closed points in the
+intrinsic divisor-section model.  The proof factors through the certificate's
+map equality, so the closed-immersion hypothesis is used load-bearingly. -/
+theorem ArbitraryProjectiveEmbeddingCertificate.exists_section_devissage_x_not_devissage_y
+    (c : ArbitraryProjectiveEmbeddingCertificate D)
+    (x y : X.left) (hx : x ≠ genericPoint X.left)
+    (hy : y ≠ genericPoint X.left) (hxy : x ≠ y) :
+    ∃ s : divisorSections (CurveDivisor.devissageDivisor hx D) ⊤,
+      (s : X.left.functionField) ∉
+        divisorSections (CurveDivisor.devissageDivisor hy D) ⊤ := by
+  exact exists_section_devissage_x_not_devissage_y_of_gluedMap_injective
+    c.basis c.hbase (by
+      rw [← c.map_eq_glued]
+      exact c.closedImmersion.isClosedEmbedding.injective) x y hx hy hxy
+
+/-- The distinct-point dimension drop follows from an arbitrary certified
+embedding, after identifying its map with the canonical glued map. -/
+theorem ArbitraryProjectiveEmbeddingCertificate.h0_sub_h0_twoDevissage_eq_two
+    (c : ArbitraryProjectiveEmbeddingCertificate D)
+    (x y : X.left) (hx : x ≠ genericPoint X.left)
+    (hy : y ≠ genericPoint X.left) (hxy : x ≠ y) :
+    (CategoryTheory.Sheaf.h0 (divisorSheaf D) : ℤ) -
+      CategoryTheory.Sheaf.h0 (divisorSheaf (CurveDivisor.devissageDivisor hy
+        (CurveDivisor.devissageDivisor hx D))) = 2 := by
+  exact h0_sub_h0_twoDevissage_eq_two_of_gluedMap_injective c.basis c.hbase (by
+    rw [← c.map_eq_glued]
+    exact c.closedImmersion.isClosedEmbedding.injective) x y hx hy hxy
+
+/-- Surjective stalk maps from the closed immersion supply the repeated-point
+tangent dimension drop for a certified arbitrary embedding. -/
+theorem ArbitraryProjectiveEmbeddingCertificate.h0_sub_h0_twoDevissage_eq_one
+    (c : ArbitraryProjectiveEmbeddingCertificate D)
+    (x : X.left) (hx : x ≠ genericPoint X.left) :
+    (CategoryTheory.Sheaf.h0 (divisorSheaf (CurveDivisor.devissageDivisor hx D)) : ℤ) -
+      CategoryTheory.Sheaf.h0 (divisorSheaf
+        (CurveDivisor.devissageDivisor hx (CurveDivisor.devissageDivisor hx D))) = 1 := by
+  letI : IsClosedImmersion c.map := c.closedImmersion
+  apply h0_sub_h0_twoDevissage_eq_one_of_gluedMap_stalkMap_surjective
+    c.basis c.hbase ⟨x, hx⟩
+  rw [← c.map_eq_glued]
+  exact SurjectiveOnStalks.stalkMap_surjective c.map x
+
 end
 end Hartshorne.BasePointFreeLocalRatioCover
