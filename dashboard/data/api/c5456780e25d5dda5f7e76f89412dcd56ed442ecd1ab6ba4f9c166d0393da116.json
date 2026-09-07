@@ -1,0 +1,1 @@
+{"markdown": "The pullback compatibility lemma is committed and checked. The assembly rewrite is still being checked; downstream checks are paused until it exports, since editor-triggered rebuilds were interrupting that verification.\n", "recommendation": ""}
