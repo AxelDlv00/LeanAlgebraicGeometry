@@ -45,7 +45,8 @@ variable (T : Pic0FiniteStageTripleTransitionFamilyData C L n m relation M mapM 
 
 /-- Enlarge the coefficient field of every triple map while keeping its ambient
 comparison and the original atlas models fixed. -/
-def enlarge (S : DatG0.FinSubext M.1 K) (h : T.N.1 ≤ S.1) :
+-- Instance synthesis must see the enlarged coefficient field through this constructor.
+abbrev enlarge (S : DatG0.FinSubext M.1 K) (h : T.N.1 ≤ S.1) :
     Pic0FiniteStageTripleTransitionFamilyData C L n m relation M mapM Q where
   N := S
   thetaN p := DatG0.tensorAlgHomOfLE h (T.thetaN p)
@@ -65,7 +66,8 @@ variable [Algebra.IsAlgebraic F K] (E : Pic0FiniteStageGlueContext C F)
 
 /-- Retain the chosen transition models and extend the triple-transition maps to
 the prescribed larger stage. -/
-def enlarge (S : DatG0.FinSubext E.models.M.1 K) (h : E.triple.N.1 ≤ S.1) :
+-- Instance synthesis must retain the literal model field after enlargement.
+abbrev enlarge (S : DatG0.FinSubext E.models.M.1 K) (h : E.triple.N.1 ≤ S.1) :
     Pic0FiniteStageGlueContext C F where
   models := E.models
   triple := E.triple.enlarge C S h
