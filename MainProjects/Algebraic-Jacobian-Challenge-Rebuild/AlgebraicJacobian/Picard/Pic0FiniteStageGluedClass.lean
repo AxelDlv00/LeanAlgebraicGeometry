@@ -24,7 +24,8 @@ set_option autoImplicit false
 run_cmd do
   Lean.modifyEnv fun env =>
     ["modelChartι_left", "modelChartι_isOpenImmersion", "modelChartι_jointly_surjective",
-      "modelChartι_isPullback", "existsUnique_gluedModelClass"].foldl
+      "modelChartι_isPullback", "existsUnique_gluedModelClass",
+      "exists_gluedModelClass_with_comparison"].foldl
       (fun env name => Lean.LibrarySuggestions.nameDenyListExt.addEntry env name) env
 
 universe u v
@@ -140,6 +141,39 @@ theorem existsUnique_gluedModelClass
       (CommAlgCat.of P.context.models.M.1 P.context.triple.N.1 ◁
         pic0FiniteStageModelRestriction Ck P.context.models j).hom)
     incl hcover (P.modelChartι_isPullback Ck) x hx
+
+/-- Compatible model classes glue with their prescribed pullbacks on additional
+test schemes. The comparisons are transported while the chart maps are abstract. -/
+theorem exists_gluedModelClass_with_comparison
+    (x : ∀ j, pic0Subgroup CM
+      (overSpec P.context.models.M.1
+        (CommAlgCat.of P.context.models.M.1 P.context.triple.N.1 ⊗
+          pic0FiniteStageModelAlgebra Ck P.context.models j :
+            CommAlgCat P.context.models.M.1)))
+    (hx : ∀ j : Pic0FiniteStageRestrictionIndex Ck,
+      pic0Map CM (Over.overSpecMap
+        ((CommAlgCat.of P.context.models.M.1 P.context.triple.N.1 ◁
+          pic0FiniteStageModelRestriction Ck P.context.models j).hom))
+        (x (Pic0FiniteStageRestrictionSource Ck j)) =
+          x (Pic0FiniteStageRestrictionTarget Ck j))
+    (Y : Pic0FiniteStageChartIndex Ck → Over (Spec (.of P.context.models.M.1)))
+    (q : ∀ U, Y U ⟶ overSpec P.context.models.M.1
+      (CommAlgCat.of P.context.models.M.1 P.context.triple.N.1 ⊗
+        pic0FiniteStageModelAlgebra Ck P.context.models (Sum.inl U) :
+          CommAlgCat P.context.models.M.1))
+    (y : ∀ U, pic0Subgroup CM (Y U))
+    (hbc : ∀ U, pic0Map CM (q U) (x (Sum.inl U)) = y U) :
+    ∃ s : pic0Subgroup CM
+        ((Over.map (Spec.map (CommRingCat.ofHom
+          (algebraMap P.context.models.M.1 P.context.triple.N.1)))).obj P.gluedOver),
+      ∀ U, pic0Map CM (q U) (pic0Map CM (P.modelChartι Ck U) s) = y U := by
+  have H := @existsUnique_gluedModelClass F K _ _ _ _ _ Ck _ _ _ P CM
+    (inferInstance : SmoothOfRelativeDimension 1 CM.hom)
+    (inferInstance : IsProper CM.hom) (inferInstance : GeometricallyIrreducible CM.hom) x hx
+  obtain ⟨s, hs, _⟩ := H
+  refine ⟨s, ?_⟩
+  intro U
+  exact (congrArg (pic0Map CM (q U)) (hs U)).trans (hbc U)
 
 end
 
