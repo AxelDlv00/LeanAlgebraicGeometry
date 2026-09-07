@@ -12,7 +12,8 @@ import AlgebraicJacobian.Picard.DivCurvePushforwardProducers
 Global sections detect a quasi-coherent module on an affine scheme.  By descent
 to schematic support, the same holds for a module whose support is finite over
 an affine base.  This supplies the vanishing step for degree-zero effective
-divisors in Kleiman, *The Picard scheme*, Section 3, `ex:DivC`.
+divisors, an elementary companion to Kleiman, *The Picard scheme*, Section 3,
+`ex:DivC`, using the relative divisor definition `df:red`.
 -/
 
 set_option autoImplicit false
@@ -80,5 +81,56 @@ theorem isZero_of_subsingleton_sections_of_isFinite_schematicSupport
       (pushforwardTopEquivBaseSections i N).symm.injective
   exact IsZero.of_iso
     ((pushforward i).map_isZero (isZero_of_subsingleton_sections_of_isAffine N hN)) e
+
+/-- A finitely presented module with support finite over a spectrum has
+finite global sections over the coordinate ring.  The scalar action is the
+structural action through `GammaSpecIso`. -/
+theorem module_finite_globalSections_of_isFinite_schematicSupport
+    {K : CommRingCat.{u}} {X : Scheme.{u}} (p : X ⟶ Spec K)
+    (F : X.Modules) [F.IsFinitePresentation]
+    (hfin : IsFinite (schematicSupportι F ≫ p)) :
+    letI : Module K Γ(F, (⊤ : X.Opens)) :=
+      Module.compHom _ (p.appTop.hom.comp (Scheme.ΓSpecIso K).inv.hom)
+    Module.Finite K Γ(F, (⊤ : X.Opens)) := by
+  letI := p.baseSectionsModule F (⊤ : X.Opens)
+  haveI : Module.Finite Γ(Spec K, (⊤ : (Spec K).Opens))
+      Γ((pushforward p).obj F, (⊤ : (Spec K).Opens)) :=
+    module_finite_sections_pushforward_of_isFinite_schematicSupport
+      p F hfin (isAffineOpen_top _)
+  have hGamma : Module.Finite Γ(Spec K, (⊤ : (Spec K).Opens))
+      Γ(F, (⊤ : X.Opens)) :=
+    Module.Finite.equiv (pushforwardTopEquivBaseSections p F)
+  letI : Module K Γ(F, (⊤ : X.Opens)) :=
+    Module.compHom _ (p.appTop.hom.comp (Scheme.ΓSpecIso K).inv.hom)
+  exact Module.Finite.of_addEquiv_semilinear
+    ((Scheme.ΓSpecIso K).commRingCatIsoToRingEquiv.symm : K →+* Γ(Spec K, ⊤))
+    (Scheme.ΓSpecIso K).commRingCatIsoToRingEquiv.symm.surjective
+    (AddEquiv.refl _) (fun r x => by
+      change p.appTop.hom ((Scheme.ΓSpecIso K).inv.hom r) • x = _
+      rw [Scheme.Hom.baseSectionsModule_smul_def]
+      have h : p.appLE ⊤ ⊤ le_top = p.appTop := Scheme.Hom.appLE_eq_app p
+      change p.appTop.hom ((Scheme.ΓSpecIso K).inv.hom r) • x =
+        (p.appLE ⊤ ⊤ le_top).hom ((Scheme.ΓSpecIso K).inv.hom r) • x
+      rw [h]) hGamma
+
+/-- Finite support prevents the infinite-dimensional junk value of `finrank`:
+zero dimension of global sections over the ground field forces the entire
+module sheaf to vanish. -/
+theorem isZero_of_finrank_globalSections_eq_zero_of_isFinite_schematicSupport
+    {K : CommRingCat.{u}} (hK : IsField K) {X : Scheme.{u}} (p : X ⟶ Spec K)
+    (F : X.Modules) [F.IsFinitePresentation]
+    (hfin : IsFinite (schematicSupportι F ≫ p))
+    (hzero :
+      letI : Field K := hK.toField
+      letI : Module K Γ(F, (⊤ : X.Opens)) :=
+        Module.compHom _ (p.appTop.hom.comp (Scheme.ΓSpecIso K).inv.hom)
+      Module.finrank K Γ(F, (⊤ : X.Opens)) = 0) : IsZero F := by
+  letI : Field K := hK.toField
+  letI : Module K Γ(F, (⊤ : X.Opens)) :=
+    Module.compHom _ (p.appTop.hom.comp (Scheme.ΓSpecIso K).inv.hom)
+  haveI : Module.Finite K Γ(F, (⊤ : X.Opens)) :=
+    module_finite_globalSections_of_isFinite_schematicSupport p F hfin
+  exact isZero_of_subsingleton_sections_of_isFinite_schematicSupport p F hfin
+    (Module.finrank_zero_iff.mp hzero)
 
 end AlgebraicGeometry.Scheme.Modules
