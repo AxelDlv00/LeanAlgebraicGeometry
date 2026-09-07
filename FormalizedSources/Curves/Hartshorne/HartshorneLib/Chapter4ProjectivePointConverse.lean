@@ -82,7 +82,7 @@ private theorem closedPointEvaluation_ne_zero_iff {x : X.left}
 namespace BasePointFreeLocalRatioCover
 
 omit [IsAlgClosed k] in
-private theorem projectivePoint_eq_of_linearForm_vanishing
+theorem projectivePoint_eq_of_linearForm_vanishing
     (z w : projectiveSpace k n) (a b : Fin (n + 1) → k)
     (i l : Fin (n + 1)) (hai : a i = 1) (hbl : b l = 1)
     (ha : ∀ (p : MvPolynomial (Fin (n + 1)) k) (m : ℕ) (_ : 0 < m)
@@ -144,6 +144,33 @@ private theorem projectivePoint_eq_of_linearForm_vanishing
   change p ∈ z.asHomogeneousIdeal.toIdeal ↔ p ∈ w.asHomogeneousIdeal.toIdeal
   simpa only [not_not, z.isPrime.mul_mem_iff_mem_or_mem,
     w.isPrime.mul_mem_iff_mem_or_mem, hzi, hwi, or_false] using h
+
+omit [IsAlgClosed k] in
+/-- Unequal projective points admit a linear form vanishing at the first
+point and nonvanishing at the second, once their homogeneous coordinates are
+normalized on the indicated charts. -/
+theorem exists_linearForm_vanishing_of_ne
+    (z w : projectiveSpace k n) (a b : Fin (n + 1) → k)
+    (i l : Fin (n + 1)) (hai : a i = 1) (hbl : b l = 1)
+    (ha : ∀ (p : MvPolynomial (Fin (n + 1)) k) (m : ℕ) (_ : 0 < m)
+      (_ : p ∈ homogeneousSubmodule (Fin (n + 1)) k m),
+      z ∈ Proj.basicOpen (homogeneousSubmodule (Fin (n + 1)) k) p ↔
+        ProjectiveCoordinates.eval a p ≠ 0)
+    (hb : ∀ (p : MvPolynomial (Fin (n + 1)) k) (m : ℕ) (_ : 0 < m)
+      (_ : p ∈ homogeneousSubmodule (Fin (n + 1)) k m),
+      w ∈ Proj.basicOpen (homogeneousSubmodule (Fin (n + 1)) k) p ↔
+        ProjectiveCoordinates.eval b p ≠ 0)
+    (hzw : z ≠ w) :
+    ∃ c : Fin (n + 1) → k,
+      ProjectiveCoordinates.eval a (ProjectiveCoordinates.linearForm c) = 0 ∧
+        ProjectiveCoordinates.eval b (ProjectiveCoordinates.linearForm c) ≠ 0 := by
+  classical
+  by_contra h
+  apply hzw
+  apply projectivePoint_eq_of_linearForm_vanishing z w a b i l hai hbl ha hb
+  intro c hca
+  by_contra hcb
+  exact h ⟨c, hca, hcb⟩
 
 private def selectedPointCoordinates
     (basis : Module.Basis (Fin (n + 1)) k (CurveDivisorSectionSpace D))
