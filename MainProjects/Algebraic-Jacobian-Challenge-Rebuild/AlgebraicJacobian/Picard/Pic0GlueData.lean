@@ -20,6 +20,36 @@ universe u
 
 open CategoryTheory CategoryTheory.Limits
 
+namespace AlgebraicGeometry
+
+/-- Equality on a pullback implies equality after restriction to any common test. -/
+theorem pic0Map_eq_of_isPullback
+    {k : Type u} [Field k] (C : Over (Spec (.of k)))
+    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+    [GeometricallyIrreducible C.hom]
+    {U V W X : Over (Spec (.of k))}
+    (f : W ⟶ U) (g : W ⟶ V) (i : U ⟶ X) (j : V ⟶ X)
+    (hp : IsPullback f.left g.left i.left j.left)
+    (a : pic0Subgroup C U) (b : pic0Subgroup C V)
+    (hab : pic0Map C f a = pic0Map C g b)
+    {Z : Over (Spec (.of k))} (u : Z ⟶ U) (v : Z ⟶ V)
+    (h : u ≫ i = v ≫ j) : pic0Map C u a = pic0Map C v b := by
+  let q := hp.lift u.left v.left (congrArg Over.Hom.left h)
+  have hqf : q ≫ f.left = u.left := hp.lift_fst _ _ _
+  have hqg : q ≫ g.left = v.left := hp.lift_snd _ _ _
+  let qOver : Z ⟶ W := Over.homMk q (by
+    rw [← f.w, ← Category.assoc, hqf, u.w])
+  have hqfOver : qOver ≫ f = u := by ext; exact hqf
+  have hqgOver : qOver ≫ g = v := by ext; exact hqg
+  apply Subtype.ext
+  have heq := congrArg (fun z => (pic0Map C qOver z).val) hab
+  change picEtMap C qOver (picEtMap C f a.val) =
+    picEtMap C qOver (picEtMap C g b.val) at heq
+  rw [← picEtMap_comp, ← picEtMap_comp, hqfOver, hqgOver] at heq
+  exact heq
+
+end AlgebraicGeometry
+
 namespace AlgebraicGeometry.Scheme.GlueData
 
 noncomputable section
@@ -57,31 +87,10 @@ theorem pic0Map_eq_of_overlap
     (gi : Z ⟶ Over.mk (D.ι i ≫ pi)) (gj : Z ⟶ Over.mk (D.ι j ≫ pi))
     (h : gi ≫ D.ιOver pi i = gj ≫ D.ιOver pi j) :
     pic0Map C gi (x i) = pic0Map C gj (x j) := by
-  have hleft : gi.left ≫ D.ι i = gj.left ≫ D.ι j :=
-    congrArg Over.Hom.left h
-  let cone := PullbackCone.mk gi.left gj.left hleft
-  let q : Z.left ⟶ D.V (i, j) := (D.vPullbackConeIsLimit i j).lift cone
-  have hqi : q ≫ D.f i j = gi.left :=
-    (D.vPullbackConeIsLimit i j).fac cone WalkingCospan.left
-  have hqj : q ≫ (D.t i j ≫ D.f j i) = gj.left :=
-    (D.vPullbackConeIsLimit i j).fac cone WalkingCospan.right
-  let qOver : Z ⟶ Over.mk (D.f i j ≫ D.ι i ≫ pi) :=
-    Over.homMk q (by
-      change q ≫ (D.f i j ≫ D.ι i ≫ pi) = Z.hom
-      rw [← Category.assoc, hqi]
-      exact gi.w)
-  have hqiOver : qOver ≫ D.fstOver pi i j = gi := by
-    ext
-    exact hqi
-  have hqjOver : qOver ≫ D.sndOver pi i j = gj := by
-    ext
-    exact hqj
-  apply Subtype.ext
-  have hclasses := congrArg (fun z => (pic0Map C qOver z).val) (hx i j)
-  change picEtMap C qOver (picEtMap C (D.fstOver pi i j) (x i).val) =
-    picEtMap C qOver (picEtMap C (D.sndOver pi i j) (x j).val) at hclasses
-  rw [← picEtMap_comp, ← picEtMap_comp, hqiOver, hqjOver] at hclasses
-  exact hclasses
+  exact pic0Map_eq_of_isPullback C (D.fstOver pi i j) (D.sndOver pi i j)
+    (D.ιOver pi i) (D.ιOver pi j)
+    (IsPullback.of_isLimit (D.vPullbackConeIsLimit i j))
+    (x i) (x j) (hx i j) gi gj h
 
 /-- A compatible family of degree-zero chart classes glues to a unique class on
 the literal glued scheme, with the prescribed structure map to the ground field. -/
