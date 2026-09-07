@@ -154,6 +154,11 @@ import HartshorneLib.Chapter4ProjectivePullbackComparison
 import HartshorneLib.Chapter4ProjectivePullbackIso
 import HartshorneLib.Chapter4ProjectiveEmbeddingChartBridge
 import HartshorneLib.Chapter4IntrinsicVeryAmpleConverse
+import HartshorneLib.Chapter4ModuleFrameEvaluation
+import HartshorneLib.Chapter4RestrictedModuleFiber
+import HartshorneLib.Chapter4ProjectivePullbackSections
+import HartshorneLib.Chapter4ProjectivePullbackCoordinateFibers
+import HartshorneLib.Chapter4ProjectivePullbackBasePointFree
 
 /-!
 # HartshorneLib
