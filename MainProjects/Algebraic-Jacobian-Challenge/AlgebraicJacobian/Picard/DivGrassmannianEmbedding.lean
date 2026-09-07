@@ -4,6 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: The AlgebraicJacobian Contributors
 -/
 import AlgebraicJacobian.Picard.DivPushforwardFlat
+import AlgebraicJacobian.Picard.DivCurvePushforwardProducers
 import AlgebraicJacobian.Picard.DivGrassmannianClass
 import AlgebraicJacobian.Picard.FiniteSupportPushforwardFiber
 import AlgebraicJacobian.Picard.TensorFinitePresentation
@@ -959,6 +960,11 @@ theorem pushforward_twist_isLocallyFreeOfRank
     IsFinite.of_isProper_of_locallyQuasiFinite _
   exact (Modules.fiberRank_gammaTop_eq_fiberH0_of_isFinite_schematicSupport
     q (x.twist L) hsupport t).trans (hRank t)
+
+/-! The preceding theorem exposes the affine rank criterion with its analytic
+inputs visible.  The curve-specialized producer is exported by
+`DivTwistPushforwardProducers.lean`, so callers of the D2 comparison only need
+to specify the divisor degree. -/
 
 end DivFamily
 
