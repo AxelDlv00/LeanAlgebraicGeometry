@@ -769,9 +769,12 @@ references:
       - { path: stacks-coherent.tex, format: tex }
       - { path: stacks-cohomology.tex, format: tex }
       - { path: stacks-constructions.tex, format: tex }
+      - { path: stacks-descent.tex, format: tex }
       - { path: stacks-divisors.tex, format: tex }
       - { path: stacks-fields.tex, format: tex }
+      - { path: stacks-groupoids.tex, format: tex }
       - { path: stacks-modules.tex, format: tex }
+      - { path: stacks-properties.tex, format: tex }
       - { path: stacks-schemes.tex, format: tex }
       - { path: stacks-sheaves.tex, format: tex }
       - { path: stacks-sites.tex, format: tex }
@@ -813,6 +816,15 @@ references:
       (freeness of Omega on the trailing coordinates makes S unramified, hence
       etale, over that subring), and is the tag both mathlib and the project's
       Lean docstrings name for it.
+      ALSO (2026-09-07, Algebraic-Jacobian-Challenge-Rebuild finite-Galois
+      descent): stacks-groupoids.tex, lemma-algebraic-quasi-projective
+      (0BF7); stacks-properties.tex, lemma-ample-finite-set-in-affine (01ZY);
+      stacks-algebra.tex, lemma-graded-silly (00JS); and stacks-descent.tex,
+      section-quasi-affine (0246) and
+      remark-morphisms-of-schemes-satisfy-fpqc-descent (040L). The newly added
+      groupoids, properties, and descent files are original TeX retrieved from
+      https://github.com/stacks/stacks-project on 2026-09-07. Cite the bare
+      stacks-project slug with the exact tag; no page anchors are defined.
     topics: [schemes, coherent-sheaves, cohomology, constructions, divisors, fields, modules, sheaves, sites, varieties]
     notes: "The two stale citations references/stacks-0BUG.md and references/hartshorne-ag.md are blueprint typos with no source file; see Cohomology_MayerVietoris.tex and Genus.tex."
 

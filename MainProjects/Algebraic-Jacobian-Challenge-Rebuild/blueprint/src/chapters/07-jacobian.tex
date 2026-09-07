@@ -74,7 +74,30 @@
   transport; all four comparison lemmas are proved by reflexivity.  This is
   the required same-carrier handoff.  It remains conditional until the first
   unresolved producer in Chapter~\ref{route-ch-universal} and the downstream
-  projectivity/orbit producer in Chapter~\ref{route-ch-galois} are supplied.
+  quasi-projectivity/orbit producer in Chapter~\ref{route-ch-galois} are supplied.
+\end{proof}
+
+\begin{corollary}[Original-field data from the descended representer]
+  \label{route-cor-original-field-data}
+  \notready
+  \dcref{custom: the original-field representer and its finiteness properties}
+  \uses{route-thm-original-field-representability, route-thm-public-handoff}
+
+  For every curve satisfying H1--H2, the quotient \(J/K\) of
+  Theorem~\ref{route-thm-original-field-representability} supplies data
+  \[
+    d:\operatorname{PicRepDatum}(K,K,C),\qquad
+    D:\operatorname{JacobianData}(C),
+  \]
+  with the same carrier and representing equivalence.
+\end{corollary}
+
+\begin{proof}
+  The original-field theorem supplies a representing scheme of finite
+  type.  Its representation, local finite type, and quasi-compactness
+  are exactly the inputs to
+  Theorem~\ref{route-thm-public-handoff}, whose constructors preserve the
+  carrier and equivalence.
 \end{proof}
 
 \section{Checked consumers of an arbitrary datum}

@@ -1,12 +1,19 @@
-\chapter{Universal class and the finite-stage representability gap}
+\chapter{Universal class and finite-stage representability}
 \label{route-ch-universal}
 
-Chapter~\ref{route-ch-finite-stage} proves the carrier comparison for any
-legacy \(P_0:\operatorname{Pic0FiniteStageGluePackage}(C_\Omega,K)\).  The
-route does not freeze that arbitrary stage.  Instead, the first missing
-producer must choose a final legacy package only after all carrier, class, and
-cocycle coefficients have been enlarged to one finite Galois subextension.
-This joint choice is what prevents a silent change of carrier.
+Use the carrier construction and comparison of
+Chapter~\ref{route-ch-finite-stage}.  All chart, class, and cocycle data will
+be defined over one finite Galois subextension \(L/K\) of \(\Omega/K\).
+The resulting package \(P\) has \(L=P.N.1\) and carrier
+\(J_L=P.\mathrm{gluedOver}\).  This same carrier is used throughout.
+
+For a field extension \(E'/E\) and an \(E'\)-scheme \(T\), we use the
+canonical identification between \(\operatorname{Pic}^0_{C_E}(T)\) and
+\(\operatorname{Pic}^0_{C_{E'}}(T)\).  Associativity of fibre products gives
+the identification on invertible sheaves and on classes modulo pullbacks
+from \(T\); it respects etale sheafification and field-valued degree.
+These identifications commute with pullbacks and with further field
+extension.
 
 \section{What is pinned over the separably closed field}
 
@@ -46,23 +53,105 @@ This joint choice is what prevents a silent change of carrier.
   Every class in this theorem still lives over \(\Omega\).
 \end{proof}
 
-The source tree additionally declares \texttt{pic0ClassYoneda} and
-\texttt{pic0SepClosedClassYoneda\_app}, which express the expected
-class-to-natural-transformation formula.  Their defining module is not
-reachable from the public \texttt{AlgebraicJacobian} root and has no current
-verified artifact.  They are therefore unverified implementation aids, not
-attachments or proof credit in this specification.
+\section{Reflection of equality}
 
-\section{The first unmet producer}
+\begin{lemma}[Faithfully flat reflection for relative Picard classes]
+  \label{route-lem-relative-picard-reflection}
+  \lean{AlgebraicGeometry.relPicAlgMap_faithfullyFlat_injective}
+  \dcref{custom: relative Picard faithful-flat kernel lemma}
+  \uses{route-conv-objects}
+
+  Let \(E\) be a field extension of \(K\) and let \(A\to B\) be a
+  faithfully flat map of \(E\)-algebras.  Pullback is injective on
+  \[
+    \operatorname{Pic}(C_A)/\operatorname{im}\operatorname{Pic}(\Spec A)
+      \longrightarrow
+    \operatorname{Pic}(C_B)/\operatorname{im}\operatorname{Pic}(\Spec B).
+  \]
+\end{lemma}
+
+\begin{proof}
+  Write \(p_A:C_A\to\Spec A\).  Properness and geometric integrality of
+  \(C_E\) give \(H^0(C_E,\mathcal O)=E\), and hence
+  \((p_A)_*\mathcal O_{C_A}=\mathcal O_{\Spec A}\) for every \(A\).
+  Indeed a finite affine cover of the separated curve computes global
+  sections by an equalizer, and tensoring over the field \(E\) preserves
+  that equalizer.  Thus this assertion also holds over \(B\).
+
+  Suppose an invertible sheaf \(\mathcal M\) on \(C_A\) becomes
+  \(p_B^*\mathcal N\) for an invertible sheaf \(\mathcal N\) on
+  \(\Spec B\).  Flat base change for global sections and the projection
+  formula identify the pullback of \((p_A)_*\mathcal M\) with
+  \((p_B)_*p_B^*\mathcal N=\mathcal N\).  Faithfully flat descent of
+  finite locally free modules implies that \((p_A)_*\mathcal M\) is
+  invertible.  The evaluation map
+  \(p_A^*(p_A)_*\mathcal M\to\mathcal M\) becomes an isomorphism over
+  \(B\), so it is an isomorphism over \(A\).  The original relative
+  class is therefore zero.  Apply this kernel statement to the difference
+  of two classes.
+\end{proof}
+
+\begin{lemma}[Faithfully flat reflection on affine degree-zero classes]
+  \label{route-lem-pic0-affine-reflection}
+  \lean{AlgebraicGeometry.pic0Map_faithfullyFlat_injective}
+  \dcref{custom: affine etale plus construction and relative Picard reflection}
+  \uses{route-lem-relative-picard-reflection}
+
+  For the same \(E\) and \(A\to B\), the map
+  \(\operatorname{Pic}^0_{C_E}(\Spec A)\to
+    \operatorname{Pic}^0_{C_E}(\Spec B)\) is injective.
+\end{lemma}
+
+\begin{proof}
+  The preceding lemma applied to faithfully flat etale covers shows that
+  the relative Picard presheaf is separated on affine tests.  Its map to
+  its etale sheafification is consequently injective.  Represent a
+  sheafified class \(z\) over \(A\) by a relative Picard class \(x\)
+  on an affine etale cover \(\Spec R\to\Spec A\).
+  If \(z\) becomes zero over \(B\), then over \(R\otimes_A B\) its
+  restriction is the image of the restriction of \(x\).
+  Injectivity of the relative-to-sheafified map makes that relative
+  restriction zero.  Since \(R\to R\otimes_A B\) is faithfully flat,
+  Lemma~\ref{route-lem-relative-picard-reflection} gives \(x=0\).
+  Etale separation now gives \(z=0\).  This proves injectivity on the
+  sheafified Picard group, and hence on its degree-zero subgroup.
+\end{proof}
+
+\begin{lemma}[Field-extension reflection on arbitrary tests]
+  \label{route-lem-pic0-field-reflection}
+  \notready
+  \dcref{custom: affine faithful-flat reflection and Zariski separation}
+  \uses{route-lem-pic0-affine-reflection}
+
+  For a field extension \(E'/E\) and every \(E\)-scheme \(T\),
+  restriction
+  \[
+    \operatorname{Pic}^0_{C_E}(T)\longrightarrow
+       \operatorname{Pic}^0_{C_{E'}}(T\times_E E')
+  \]
+  is injective.  No quasi-compactness assumption on \(T\) is needed.
+\end{lemma}
+
+\begin{proof}
+  Cover \(T\) by affine opens \(U_i=\Spec A_i\).  Their inverse images
+  are \(\Spec(A_i\otimes_E E')\), and each
+  \(A_i\to A_i\otimes_E E'\) is faithfully flat.  Two classes whose
+  restrictions to \(T\times_E E'\) agree therefore agree on every
+  \(U_i\), by Lemma~\ref{route-lem-pic0-affine-reflection}.  Zariski
+  separation of the etale Picard sheaf gives equality on \(T\).
+\end{proof}
+
+\section{The joint finite Galois stage}
 
 \begin{theorem}[Joint Galois-stage package and descended universal class]
   \label{route-thm-descended-universal-class}
   \notready
   \source{stacks-project}
   \dcref{Tags 01ZM, 0BMG, and 0EXM; Tag 0B9K as a source boundary}
-  \uses{route-thm-sepclosed-universal-class, route-thm-global-comparison}
+  \uses{route-thm-sepclosed-universal-class, route-thm-global-comparison,
+    route-lem-pic0-affine-reflection}
 
-  There must exist, simultaneously:
+  There exist, simultaneously:
   \begin{enumerate}
   \item a legacy package
     \(P:\operatorname{Pic0FiniteStageGluePackage}(C_\Omega,K)\);
@@ -84,9 +173,9 @@ attachments or proof credit in this specification.
   its compatibility with every chart and overlap comparison.  Without those
   fields, \(P_0\) is discarded after the comparison theorem and no field
   enlargement is allowed to silently replace its carrier.  All subsequent
-  occurrences of \(J_L\), \(\xi_L\), (FS-Rep), (Proj), and (OA) quantify over
+  occurrences of \(J_L\), \(\xi_L\), (FS-Rep), (QP), and (OA) quantify over
   this single final \(P\).
-  For the checked comparison
+  For the comparison
   \(\beta_P:J_L\times_L\Omega\xrightarrow{\sim}J_\Omega\), this class must
   satisfy
   \[
@@ -101,29 +190,40 @@ attachments or proof credit in this specification.
 \end{theorem}
 
 \begin{proof}
-  The field-theoretic part has no route choice.  Every finite coefficient set
-  lies in a finite separable subextension because \(\Omega/K\) is algebraic
-  and separable.  Normality of \(\Omega/K\) and Stacks Tag 0BMG place a finite
-  normal enlargement \(L/K\), containing that coefficient field, inside
-  \(\Omega\).  Separability inherited from \(\Omega/K\), equivalently Tag
-  0EXM applied to the normal closure of the finite separable input, makes
-  \(L/K\) finite Galois.  Only then re-run the finite-presentation descent of all chart
-  rings, restriction maps, inverse maps, and triple equations at \(L\), and
-  assemble the final legacy package with \(P.N.1=L\).  One must not retain an
-  earlier package while changing its field.
+  Start with finite-presentation models of the chart and overlap diagram.
+  On each chart the restriction of \(\xi_\Omega\) is etale-locally a
+  relative invertible-sheaf class.  Quasi-compactness permits finitely many
+  affine etale charts of finite presentation.  Invertible sheaves, their
+  gluing isomorphisms, and witnesses of equality modulo classes from the
+  base have finite presentations on these charts.  The etale descent
+  equations are witnessed on finitely many affine refinements of their
+  overlaps.  Applying finite-presentation descent to these objects,
+  morphisms, and equations, together with the carrier diagram, defines
+  the finitely many sheafified chart classes over a common finite stage.
+  This argument uses the actual etale equivalence relation, rather than
+  an identification with a different Picard sheaf.
 
-  The unresolved mathematical step is to descend finite presentations of
-  representatives of the finitely many chart classes, all transition
-  isomorphisms and their cocycle equations at that same \(L\), glue them using
-  the actual etale-sheafified relative Picard equivalence relation, and prove
-  degree zero after every field-valued pullback.  Comparison through
-  \(\beta_P\) must then prove (UC).  Tag 01ZM supplies finite-presentation,
-  morphism, and equality descent.  Section 44.4 (Tag 0B9K) describes the fppf
-  Picard sheaf and invertible-sheaf descent, but is only orientation: it does
-  not identify that object with AJCR's big-etale degree-zero carrier or
-  construct \(\xi_L\).  The planned Lean handoff is one dependent package
-  containing exactly \(P\), the finite-Galois certificates, \(\xi_L\), and
-  equation (UC).
+  Enlarge that stage to its finite normal closure \(L\) inside \(\Omega\).
+  Since \(\Omega/K\) is separable, \(L/K\) is finite Galois.  Base change
+  all the descended data to \(L\), and assemble the package \(P\) there.
+  In particular the chart classes and their restriction maps are on
+  the charts of this \(P\).  Their two restrictions to each affine
+  overlap agree after extension to \(\Omega\), because both come from
+  \(\xi_\Omega\).  Lemma~\ref{route-lem-pic0-affine-reflection}, applied
+  first to the ambient sheafified Picard groups as in its proof, reflects
+  those equalities to \(L\).
+
+  Each descended class has degree zero.  Indeed, given any field-valued
+  point with field \(F\) on a descended chart, the nonzero ring
+  \(F\otimes_L\Omega\) has a residue field \(F'\).  The induced point
+  over \(\Omega\) has degree zero, and invariance of degree under
+  \(F\to F'\) gives degree zero at the original point.
+  The compatible chart classes thus glue uniquely in the degree-zero
+  etale sheaf to \(\xi_L\) on \(J_L\).  After base change to
+  \(\Omega\), its restrictions on all the charts agree with those of
+  \(\beta_P^*\xi_\Omega\), by construction of the chart comparisons.
+  Zariski separation proves (UC).  No global representative by an
+  invertible sheaf on \(C_L\times_L J_L\) is asserted.
 \end{proof}
 
 \begin{theorem}[Yoneda equivalence on the same finite Galois carrier]
@@ -131,9 +231,10 @@ attachments or proof credit in this specification.
   \notready
   \source{stacks-project}
   \dcref{Tag 040L, descent of morphisms; exact RepresentableBy target}
-  \uses{route-thm-descended-universal-class}
+  \uses{route-thm-descended-universal-class, route-thm-sepclosed-representability,
+    route-lem-pic0-field-reflection}
 
-  For the same \((P,L,\xi_L)\), every \(L\)-scheme \(T\) must admit the
+  For the same \((P,L,\xi_L)\), every \(L\)-scheme \(T\) admits the
   bijection
   \[
     \Phi_T:\Hom_L(T,J_L)\xrightarrow{\sim}
@@ -141,8 +242,7 @@ attachments or proof credit in this specification.
     \qquad f\longmapsto f^*\xi_L.
     \tag{Y}
   \]
-  For every \(q:T'\to T\) and \(f:T\to J_L\), it must satisfy the correctly
-  typed naturality equation
+  For every \(q:T'\to T\) and \(f:T\to J_L\), the naturality equation is
   \[
     \Phi_{T'}(f\circ q)=q^*\Phi_T(f).
   \]
@@ -155,27 +255,47 @@ attachments or proof credit in this specification.
 \end{theorem}
 
 \begin{proof}
-  Pullback of \(\xi_L\) defines the transformation in (Y).  To prove every
-  component bijective, compare it after the faithfully flat extension
-  \(L\to\Omega\).  Equation (UC), \(\beta_P\), and \(r_\Omega\) identify the
-  result with a bijection.  Existence and equality of morphisms then descend;
-  Stacks Remark 35.35.12 (Tag 040L) supplies the abstract fpqc morphism-descent
-  principle.  The specialization must be performed uniformly for arbitrary
-  \(T\), including the curve scalar-tower and big-etale degree-zero transports.
+  Pullback of \(\xi_L\) defines \(\Phi_T\); functoriality of pullback
+  proves naturality.  For every \(\Omega\)-scheme \(S\), the base-change
+  adjunction, (UC), and \(r_\Omega\) give a bijection
+  \[
+    \Hom_L(S,J_L)\simeq\Hom_\Omega(S,(J_L)_\Omega)
+      \simeq\operatorname{Pic}^0_{C_L}(S)
+  \]
+  whose value on a morphism is its pullback of \(\xi_L\).
 
-  No public-root declaration proves (Y) or (FS-Rep).  In particular,
-  \texttt{pic0RepresentableBy\_finiteStageBaseChange} has target over
-  \(\Omega\), not over \(L\), and its own module is unrooted.
+  Let \(p:T_\Omega\to T\) and let
+  \(a\in\operatorname{Pic}^0_{C_L}(T)\).  The preceding bijection
+  supplies a unique \(L\)-morphism \(f_0:T_\Omega\to J_L\) with
+  \(f_0^*\xi_L=p^*a\).  Set
+  \(D=T_\Omega\times_TT_\Omega\) and denote its projections by
+  \(p_1,p_2\).  Give \(D\) its first \(\Omega\)-structure.  Both
+  \(f_0p_1\) and \(f_0p_2\) are \(L\)-morphisms, and their pullbacks
+  of \(\xi_L\) agree because \(pp_1=pp_2\).  The displayed bijection
+  for this \(\Omega\)-scheme \(D\) implies \(f_0p_1=f_0p_2\).
+  This uses the base-change adjunction for both \(L\)-morphisms; it does
+  not require \(p_2\) to preserve the chosen \(\Omega\)-structure.
+
+  The morphism \(p\) is faithfully flat and quasi-compact, as a base
+  change of the affine field-extension morphism.  Fpqc descent of scheme
+  morphisms (Stacks Tag 040L) therefore gives a unique
+  \(f:T\to J_L\) with \(fp=f_0\).
+  The equality \(p^*(f^*\xi_L)=p^*a\) descends by
+  Lemma~\ref{route-lem-pic0-field-reflection}; thus \(\Phi_T(f)=a\).
+  If \(\Phi_T(f)=\Phi_T(g)\), the bijection on \(T_\Omega\) gives
+  \(fp=gp\), and the uniqueness part of morphism descent gives \(f=g\).
+  Hence \(\Phi_T\) is bijective for every \(T\), with the stated
+  naturality.  The argument requires neither finite presentation of
+  \(T\) nor effectivity of arbitrary fpqc descent data for Picard classes.
 \end{proof}
 
-\begin{remark}[Frontier accounting]
+\begin{remark}[The universal class determines the transformation]
   \label{route-rem-first-frontier}
   \dcref{custom}
 
-  The first unmet mathematical producer is the class \(\xi_L\) and equation
-  (UC) in Theorem~\ref{route-thm-descended-universal-class}.  Choosing the
-  finite normal coefficient field and rebuilding the finite diagram there is
-  a fixed imported/planned prelude inside that same package, not a competing
-  route.  The frontier moves only when a class on the displayed literal
-  carrier exists; further transport or comparison wrappers do not move it.
+  For a fixed \(J_L\), Yoneda identifies natural transformations
+  \(h_{J_L}\to\operatorname{Pic}^0_{C_L}\) with classes on \(J_L\).
+  It does not assert that such a transformation is invertible.  Equation
+  (UC) and the reflection and descent arguments above prove invertibility
+  for the class constructed here.
 \end{remark}

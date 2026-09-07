@@ -56,20 +56,23 @@ R6 & Stacks, Fields Lemmas \emph{normal-closure-inside-normal}, Tag 0BMG, and
 closure of all coefficients inside the fixed normal extension \(\Omega/K\)
 before finalizing \(P\): Tag 0BMG supplies containment and Tag 0EXM supplies the
 Galois conclusion for the finite separable input.  Then descend the class and
-prove the all-tests Yoneda equivalence on \(P.\mathrm{gluedOver}\).  Tag 0B9K
-describes the fppf Picard sheaf only; a bespoke proof must connect it to AJCR's
-big-etale degree-zero carrier.  No citation supplies that connection already.\\
+prove the all-tests Yoneda equivalence on \(P.\mathrm{gluedOver}\) using
+arbitrary-test Picard reflection and descent of the representing morphism
+with its double-overlap compatibility.  Classes are constructed in AJCR's
+big-etale sheaf itself; Tag 0B9K describes the fppf Picard sheaf and is
+background rather than an identification of the two functors.\\
 \end{tabular}
 \end{center}
 
 \begin{center}
 \begin{tabular}{p{0.08\textwidth}p{0.32\textwidth}p{0.50\textwidth}}
 \textbf{Step} & \textbf{Precise anchor} & \textbf{Specialization used here}\\ \hline
-R7 & No accepted source-to-carrier specialization yet. & The one selected
-target is projectivity of the literal \(P.\mathrm{gluedMap}\); finite
-hyperplane avoidance then gives orbit-affineness on
-\(J_L=P.\mathrm{gluedOver}\).  The exact conditional Lean wrapper is
-source-present but not public-root reachable.\\
+R7 & Stacks, Groupoid Schemes Lemma 39.8.7, Tag 0BF7; Properties of Schemes
+Lemma 28.30.5, Tag 01ZY; Algebra Lemma 10.57.6, Tag 00JS. & Representation
+and finite type make the literal \(J_L=P.\mathrm{gluedOver}\) an algebraic
+group.  Tag 0BF7 gives quasi-projectivity over arbitrary \(L\), and
+homogeneous prime avoidance gives affine neighbourhoods of finite orbits.
+The field-general group theorem remains an unformalized source prerequisite.\\
 R8 & Stacks, Descent Section 35.38, Tag 0246, and Remark 35.35.12, Tag 040L. &
 Galois-stable quasi-affine charts descend effectively, and compatible
 morphisms descend uniquely.  The checked finite-Galois quotient theorem
@@ -103,9 +106,9 @@ R4 & \texttt{pic0\_sepClosed\_representableBy C} with carrier
 R5 & For arbitrary legacy
 \texttt{P0 : Pic0FiniteStageGluePackage C\_Omega K}, carrier
 \texttt{P0.gluedOver}; comparison \texttt{P0.finiteStageBaseChangeIso} plus
-its structure-map equation. & Proved only as a carrier base-change comparison;
-the package theorem assumes algebraicity only and supplies no separability or
-Galois certificate; the convenience \texttt{Over} wrapper is unrooted.\\
+its structure-map equation. & The global comparison remains unverified on
+current source.  Its target is only a carrier comparison; the package supplies
+no separability or Galois certificate.\\
 \end{tabular}
 \end{center}
 
@@ -117,11 +120,12 @@ then construct
 \texttt{xiL : pic0Subgroup ((baseChange K L).obj C) P.gluedOver}, (UC), and
 the exact \texttt{RepresentableBy} certificate. & Unresolved; the class is the
 first unmet mathematical producer.\\
-R7 & Prove \texttt{P.gluedMap.IsProjective}, then construct
-\texttt{(pic0SemilinearGalActionOfRepresentableBy C repL).OrbitsInAffineOpen}
-on the same \texttt{P.gluedOver}. & Projectivity planned and blocked by R6;
-exact conditional
-wrapper source-present but unrooted.\\
+R7 & Prove quasi-projectivity and \texttt{FiniteInAffine} on the represented
+finite-type group \texttt{P.gluedOver}, then construct
+\texttt{rho.OrbitsInAffineOpen} for the canonical semilinear action
+\texttt{rho} induced by \texttt{repL}. & Group quasi-projectivity is an independent unformalized
+theorem; its exact-carrier application additionally requires R6.
+Projectivity wrappers are stronger conditional consumers only.\\
 R8 & \texttt{pic0RepresentableBy\_finiteGaloisDescent C repL}; carrier
 \texttt{StableAffineOpen.gluedQuotientOver ...}. & Proved conditionally on
 \texttt{repL} and orbit-affineness.\\
@@ -167,9 +171,10 @@ still-sorry-bearing headline assembly are recorded below.\\
     etale-sheafified Picard functor.  No theorem currently identifies it with
     Kleiman's connected identity component, so those phrases are not
     interchangeable in Lean attachments or completion claims.
-  \item The projective-space immersion entry point is only the internal proof
-    of the selected projectivity-to-orbits implication; constructing an
-    immersion independently is not a second R7 producer.  Kleiman Theorem 4.8,
+  \item The R7 immersion is obtained by applying algebraic-group
+    quasi-projectivity to the represented final carrier.  Projectivity,
+    quasi-projectivity, and finite-in-affine are distinct properties;
+    projectivity is not an additional prerequisite for R8.  Kleiman Theorem 4.8,
     arbitrary object-isomorphism transport,
     post-base-change representability, and filtered-colimit preservation are
     comparison or consumer results.  None is an imported proof of R6 or R8.
@@ -202,7 +207,7 @@ The modules defining \texttt{finiteStageBaseChangeOverIso},
 the source tree but not reachable from the public \texttt{AlgebraicJacobian}
 root at this checkpoint.  They receive no \texttt{\textbackslash leanok}
 credit in the normative chapters.  The first two remain only slice/post-base-
-change comparisons, and the last remains conditional on (Proj), even after
+change comparisons, and the last remains conditional on projectivity, even after
 future root integration.
 
 The headline declarations \texttt{Jacobian}, \texttt{instGrpObj},
@@ -231,12 +236,17 @@ Jacobian-specific comparison or coherences.
     \texttt{P.gluedOver}, and prove (UC), including the exact big-etale and
     degree-zero transports.  Current tensor-stage work supplies local inputs
     only.
-  \item \textbf{B2:} prove every component of
-    pullback by \(\xi_L\) bijective on every \(L\)-scheme, yielding (FS-Rep).
-  \item \textbf{B3:} prove \texttt{P.gluedMap.IsProjective} on that exact
-    carrier; no stable-package or independently immersed substitute is allowed.
-  \item \textbf{B4:} root and instantiate the exact projectivity-to-orbits
-    wrapper, yielding (OA) for the canonical action on the same \(J_L\).
+  \item \textbf{B2:} globalize affine faithful-flat Picard reflection to
+    arbitrary tests.  After B1, use (UC) to prove double-overlap compatibility
+    of representing morphisms, apply fpqc morphism descent, and reflect
+    equality of classes.  This gives the all-test natural bijection (FS-Rep).
+  \item \textbf{B3:} formalize the field-general algebraic-group
+    quasi-projectivity theorem (0BF7) with its source prerequisites.
+    After B2, apply it to the finite-type group on the exact \(J_L\),
+    obtaining (QP).
+  \item \textbf{B4:} apply homogeneous prime avoidance to (QP), then
+    instantiate the finite-in-affine-to-orbits consumer to obtain (OA)
+    for the canonical action on the same \(J_L\).
   \item \textbf{B5:} instantiate the conditional finite-Galois theorem and
     same-carrier handoff, producing one original-field
     \texttt{JacobianData C}.
@@ -258,6 +268,9 @@ Jacobian-specific comparison or coherences.
     without changing carriers or signatures.
   \end{enumerate}
 
-  B2--B10 are blocked consumers, not parallel alternatives to B1.  This order is
-  the formalization route.
+  The arbitrary-test reflection lemma in B2 and the general group theorem
+  in B3 are independent prerequisites.  Their applications to the selected
+  carrier follow B1 and B2, respectively; B4--B5 consume those applications.
+  B6--B10 concern the subsequent datum and retain the dependencies stated
+  in Chapter~\ref{route-ch-handoff}.
 \end{remark}

@@ -63,8 +63,8 @@ of route.
     \text{ and prove }h_{P.\mathrm{gluedOver}}
       \simeq\operatorname{Pic}^0_{C_L}}\\
   \Downarrow\\
-  (R7)\ \text{prove }P.\mathrm{gluedMap}\text{ projective, hence
-       finite-in-affine for this same }J_L=P.\mathrm{gluedOver}\\
+  (R7)\ J_L\text{ is a finite-type group scheme, hence quasi-projective,}\\
+       \text{hence finite-in-affine on the same }J_L=P.\mathrm{gluedOver}\\
   \Downarrow\\
   (R8)\ J=J_L/\operatorname{Gal}(L/K)\text{ represents }
         \operatorname{Pic}^0_C\\
@@ -124,12 +124,14 @@ normal-closure theorem supplies the field enlargement; reflecting the whole
 finite diagram at that stage and producing the exact Lean package are planned
 parts of the first producer.\\
 H6 & \(h_{J_L}\simeq\operatorname{Pic}^0_{C_L}\) on the literal carrier
-\(J_L=P.\mathrm{gluedOver}\). & \textbf{Unresolved first mathematical
-producer}; it must come from a class \(\xi_L\) on this carrier and its Yoneda
-equivalence.\\
-H7 & \(P.\mathrm{gluedMap}\) is projective. & \textbf{Planned downstream
-geometry, blocked by H6}; this is the one selected sufficient input for
-orbit-affineness.\\
+\(J_L=P.\mathrm{gluedOver}\). & Derived from the joint class and its
+base-change comparison by arbitrary-test Picard reflection and fpqc descent
+of morphisms (Chapter~\ref{route-ch-universal}); the exact Lean producer
+remains unresolved.\\
+H7 & \(J_L\) is quasi-projective over \(L\). & H6 gives a group scheme
+and H8 gives finite type.  Stacks Tag 0BF7 then gives quasi-projectivity;
+Tag 01ZY gives finite-in-affine.  The field-general group-geometry theorem
+is an explicit unformalized prerequisite, not a projectivity assumption.\\
 H8 & \(J_L\to\Spec L\) is locally of finite type and quasi-compact. & Produced
 from the finite affine presentation; the conditional Galois wrappers consume
 these certificates.\\
