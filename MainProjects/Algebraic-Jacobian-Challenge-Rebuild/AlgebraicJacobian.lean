@@ -816,6 +816,7 @@ import AlgebraicJacobian.Picard.Pic0ChartForkNegativeBranch
 import AlgebraicJacobian.Picard.Pic0ChartSeamPairDecided
 import AlgebraicJacobian.Picard.Pic0RankOneIsoBaseChange
 import AlgebraicJacobian.Picard.Pic0CriticalPath
+import AlgebraicJacobian.Picard.Pic0RepresentabilityFieldDescent
 import AlgebraicJacobian.Picard.Pic0FiniteStageGeometry
 import AlgebraicJacobian.Picard.Pic0FiniteStageStableAffineCover
 import AlgebraicJacobian.Picard.Pic0ExactCarrierProducer

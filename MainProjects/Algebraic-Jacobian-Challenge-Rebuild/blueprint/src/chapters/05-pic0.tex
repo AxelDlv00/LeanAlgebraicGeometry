@@ -117,28 +117,47 @@ extension.
   sheafified Picard group, and hence on its degree-zero subgroup.
 \end{proof}
 
-\begin{lemma}[Field-extension reflection on arbitrary tests]
+\begin{lemma}[Affine faithfully flat reflection on arbitrary tests]
   \label{route-lem-pic0-field-reflection}
-  \notready
+  \lean{AlgebraicGeometry.pic0Map_affine_faithfullyFlat_injective,
+    AlgebraicGeometry.pic0CrossBaseMap_injective}
+  \leanok
   \dcref{custom: affine faithful-flat reflection and Zariski separation}
   \uses{route-lem-pic0-affine-reflection}
 
-  For a field extension \(E'/E\) and every \(E\)-scheme \(T\),
-  restriction
+  Let \(E\) be a field, let \(D/E\) be a smooth proper geometrically
+  irreducible curve, and let \(f:T'\to T\) be an affine faithfully
+  flat morphism of \(E\)-schemes. Then pullback
   \[
-    \operatorname{Pic}^0_{C_E}(T)\longrightarrow
-       \operatorname{Pic}^0_{C_{E'}}(T\times_E E')
+    f^*:\operatorname{Pic}^0_D(T)\longrightarrow
+      \operatorname{Pic}^0_D(T')
   \]
-  is injective.  No quasi-compactness assumption on \(T\) is needed.
+  is injective. In particular, for every field extension \(E'/E\),
+  simultaneous scalar extension of the curve and test gives an injection
+  \[
+    \operatorname{Pic}^0_D(T)\longrightarrow
+       \operatorname{Pic}^0_{D_{E'}}(T\times_E E').
+  \]
+  No quasi-compactness assumption on \(T\) is needed.
 \end{lemma}
 
 \begin{proof}
-  Cover \(T\) by affine opens \(U_i=\Spec A_i\).  Their inverse images
-  are \(\Spec(A_i\otimes_E E')\), and each
-  \(A_i\to A_i\otimes_E E'\) is faithfully flat.  Two classes whose
-  restrictions to \(T\times_E E'\) agree therefore agree on every
-  \(U_i\), by Lemma~\ref{route-lem-pic0-affine-reflection}.  Zariski
-  separation of the etale Picard sheaf gives equality on \(T\).
+  Cover \(T\) by affine opens \(U_i=\Spec A_i\). Since \(f\) is
+  affine, each inverse image is affine, say
+  \(V_i=f^{-1}(U_i)=\Spec B_i\). The restriction \(V_i\to U_i\) is
+  flat and surjective; therefore its map on section rings
+  \(A_i\to B_i\) is faithfully flat. If \(f^*x=f^*y\), the
+  restrictions of \(x\) and \(y\) to \(U_i\) agree after pullback
+  to \(V_i\). Lemma~\ref{route-lem-pic0-affine-reflection} gives
+  equality on every \(U_i\), and Zariski separation of the etale
+  Picard sheaf gives \(x=y\) on \(T\).
+
+  For the field-extension assertion, the projection
+  \(p:T\times_E E'\to T\) is affine faithfully flat, as the base
+  change of \(\Spec E'\to\Spec E\). Apply the first assertion to
+  \(p\), then compose with the canonical scalar-extension equivalence
+  \(\operatorname{Pic}^0_D(T\times_E E')\cong
+    \operatorname{Pic}^0_{D_{E'}}(T\times_E E')\).
 \end{proof}
 
 \section{The joint finite Galois stage}
@@ -226,13 +245,83 @@ extension.
   invertible sheaf on \(C_L\times_L J_L\) is asserted.
 \end{proof}
 
+\section{Representability from a compatible universal class}
+
+\begin{theorem}[Descent of representability along a field extension]
+  \label{route-thm-field-descent-representability}
+  \lean{AlgebraicGeometry.pic0RepresentableBy_of_fieldExtension,
+    AlgebraicGeometry.pic0RepresentableBy_of_fieldExtension_homEquiv}
+  \leanok
+  \source{stacks-project}
+  \dcref{Tag 040L, descent of morphisms}
+  \uses{route-thm-sepclosed-representability,
+    route-lem-pic0-field-reflection}
+
+  Let \(E\) be a field, let \(\Omega/E\) be a field extension with
+  \(\Omega\) separably closed, and let \(D/E\) be a smooth proper
+  geometrically irreducible curve. Let \((R_\Omega,r_\Omega)\) be the
+  representing pair for \(\operatorname{Pic}^0_{D_\Omega}\), and put
+  \(\eta_\Omega=r_\Omega(\mathrm{id}_{R_\Omega})\). Suppose that an
+  \(E\)-scheme \(J\), a class \(\xi\in\operatorname{Pic}^0_D(J)\),
+  and an \(\Omega\)-isomorphism \(\beta:J_\Omega\to R_\Omega\)
+  satisfy
+  \[
+    \operatorname{bc}_{E,\Omega}(\xi)=\beta^*\eta_\Omega
+      \quad\text{in}\quad\operatorname{Pic}^0_{D_\Omega}(J_\Omega).
+  \]
+  Then, for every \(E\)-scheme \(T\), pullback gives a bijection
+  \[
+    \Phi_T:\Hom_E(T,J)\xrightarrow{\sim}\operatorname{Pic}^0_D(T),
+    \qquad f\longmapsto f^*\xi.
+  \]
+  These bijections are natural in \(T\), so \(J\) represents
+  \(\operatorname{Pic}^0_D\) with universal class \(\xi\).
+\end{theorem}
+
+\begin{proof}
+  Pullback of \(\xi\) defines \(\Phi_T\); functoriality of pullback
+  proves naturality. For every \(\Omega\)-scheme \(S\), the
+  base-change adjunction, \(\beta\), and \(r_\Omega\) give a
+  bijection
+  \[
+    \Hom_E(S,J)\simeq\Hom_\Omega(S,J_\Omega)
+      \simeq\operatorname{Pic}^0_{D_\Omega}(S)
+      \simeq\operatorname{Pic}^0_D(S).
+  \]
+  Naturality and the assumed equality of universal classes identify
+  its value on each morphism with pullback of \(\xi\).
+
+  Let \(p:T_\Omega\to T\), and let
+  \(a\in\operatorname{Pic}^0_D(T)\). The preceding bijection supplies
+  a unique \(E\)-morphism \(f_0:T_\Omega\to J\) with
+  \(f_0^*\xi=p^*a\). Put \(W=T_\Omega\times_TT_\Omega\), with
+  projections \(p_1,p_2\), and give \(W\) its first
+  \(\Omega\)-structure. Both \(f_0p_1\) and \(f_0p_2\) are
+  \(E\)-morphisms. Their pullbacks of \(\xi\) agree because
+  \(pp_1=pp_2\). The displayed bijection for the
+  \(\Omega\)-scheme \(W\) gives \(f_0p_1=f_0p_2\). The
+  base-change adjunction applies to both \(E\)-morphisms, regardless
+  of whether \(p_2\) preserves the chosen \(\Omega\)-structure.
+
+  The morphism \(p\) is affine faithfully flat. Fpqc descent of
+  scheme morphisms, \cite[Tag 040L]{stacks-project}, gives a unique
+  \(f:T\to J\) with \(fp=f_0\). The equality
+  \(p^*(f^*\xi)=p^*a\) is reflected by
+  Lemma~\ref{route-lem-pic0-field-reflection}, so \(\Phi_T(f)=a\).
+  If \(\Phi_T(f)=\Phi_T(g)\), the bijection on \(T_\Omega\)
+  implies \(fp=gp\), and uniqueness in morphism descent gives
+  \(f=g\). Thus \(\Phi_T\) is bijective for every \(T\).
+  The identity of \(J\) pulls \(\xi\) back to itself, proving the
+  assertion about the universal class. Neither \(T\) nor the
+  extension \(\Omega/E\) is required to satisfy a finiteness
+  assumption.
+\end{proof}
+
 \begin{theorem}[Yoneda equivalence on the same finite Galois carrier]
   \label{route-thm-finite-stage-yoneda}
   \notready
-  \source{stacks-project}
-  \dcref{Tag 040L, descent of morphisms; exact RepresentableBy target}
-  \uses{route-thm-descended-universal-class, route-thm-sepclosed-representability,
-    route-lem-pic0-field-reflection}
+  \uses{route-thm-descended-universal-class,
+    route-thm-field-descent-representability}
 
   For the same \((P,L,\xi_L)\), every \(L\)-scheme \(T\) admits the
   bijection
@@ -246,47 +335,25 @@ extension.
   \[
     \Phi_{T'}(f\circ q)=q^*\Phi_T(f).
   \]
-  The exact public Lean handoff is
+  Consequently \(J_L=P.\mathrm{gluedOver}\) represents
+  \(\operatorname{Pic}^0_{C_L}\):
   \[
-    \operatorname{RepresentableBy}
-      (\operatorname{pic0TypeFunctor}(C_L),P.\mathrm{gluedOver}).
+    h_{J_L}\xrightarrow{\sim}\operatorname{Pic}^0_{C_L}.
     \tag{FS-Rep}
   \]
 \end{theorem}
 
 \begin{proof}
-  Pullback of \(\xi_L\) defines \(\Phi_T\); functoriality of pullback
-  proves naturality.  For every \(\Omega\)-scheme \(S\), the base-change
-  adjunction, (UC), and \(r_\Omega\) give a bijection
-  \[
-    \Hom_L(S,J_L)\simeq\Hom_\Omega(S,(J_L)_\Omega)
-      \simeq\operatorname{Pic}^0_{C_L}(S)
-  \]
-  whose value on a morphism is its pullback of \(\xi_L\).
-
-  Let \(p:T_\Omega\to T\) and let
-  \(a\in\operatorname{Pic}^0_{C_L}(T)\).  The preceding bijection
-  supplies a unique \(L\)-morphism \(f_0:T_\Omega\to J_L\) with
-  \(f_0^*\xi_L=p^*a\).  Set
-  \(D=T_\Omega\times_TT_\Omega\) and denote its projections by
-  \(p_1,p_2\).  Give \(D\) its first \(\Omega\)-structure.  Both
-  \(f_0p_1\) and \(f_0p_2\) are \(L\)-morphisms, and their pullbacks
-  of \(\xi_L\) agree because \(pp_1=pp_2\).  The displayed bijection
-  for this \(\Omega\)-scheme \(D\) implies \(f_0p_1=f_0p_2\).
-  This uses the base-change adjunction for both \(L\)-morphisms; it does
-  not require \(p_2\) to preserve the chosen \(\Omega\)-structure.
-
-  The morphism \(p\) is faithfully flat and quasi-compact, as a base
-  change of the affine field-extension morphism.  Fpqc descent of scheme
-  morphisms (Stacks Tag 040L) therefore gives a unique
-  \(f:T\to J_L\) with \(fp=f_0\).
-  The equality \(p^*(f^*\xi_L)=p^*a\) descends by
-  Lemma~\ref{route-lem-pic0-field-reflection}; thus \(\Phi_T(f)=a\).
-  If \(\Phi_T(f)=\Phi_T(g)\), the bijection on \(T_\Omega\) gives
-  \(fp=gp\), and the uniqueness part of morphism descent gives \(f=g\).
-  Hence \(\Phi_T\) is bijective for every \(T\), with the stated
-  naturality.  The argument requires neither finite presentation of
-  \(T\) nor effectivity of arbitrary fpqc descent data for Picard classes.
+  Use the canonical associativity isomorphism
+  \((C\times_K L)\times_L\Omega\cong C\times_K\Omega\) to
+  identify their degree-zero Picard functors. Compose \(\beta_P\)
+  with the unique isomorphism between the corresponding representing
+  schemes. Naturality of that isomorphism identifies their universal
+  classes, so (UC) is the universal-class compatibility required by
+  Theorem~\ref{route-thm-field-descent-representability}. Apply that
+  theorem with \(E=L\), \(D=C_L\), \(J=P.\mathrm{gluedOver}\),
+  and \(\xi=\xi_L\). Its evaluation formula and naturality give
+  (Y) and (FS-Rep).
 \end{proof}
 
 \begin{remark}[The universal class determines the transformation]
